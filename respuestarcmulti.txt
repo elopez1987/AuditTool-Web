@@ -1,0 +1,1574 @@
+[
+    {
+        "source": {
+            "plan": [
+                {
+                    "date": "2025-02-06T13:00:00-06:00",
+                    "carrier": {
+                        "fiscal_code": "TCB7401303A4",
+                        "company_name": "Transportes Castores de Baja California"
+                    },
+                    "event_key": "ENTRANCE"
+                },
+                {
+                    "date": "2025-02-06T18:00:00-06:00",
+                    "carrier": {
+                        "fiscal_code": "TCB7401303A4",
+                        "company_name": "Transportes Castores de Baja California"
+                    },
+                    "event_key": "GENERIC_04"
+                }
+            ],
+            "track": [
+                {
+                    "date": "2025-02-06T13:28:45-06:00",
+                    "event": [
+                        {
+                            "id": 170109137,
+                            "date": "2025-02-06T13:27:00-06:00",
+                            "source": "IRON_WEB",
+                            "created": "2025-02-06T13:30:24.02517-06:00",
+                            "latitude": null,
+                            "longitude": null
+                        },
+                        {
+                            "id": 170114549,
+                            "date": "2025-02-06T14:18:00-06:00",
+                            "source": "IRON_WEB",
+                            "created": "2025-02-06T14:20:13.157914-06:00",
+                            "latitude": null,
+                            "longitude": null
+                        },
+                        {
+                            "id": 170116797,
+                            "date": "2025-02-07T01:47:00.602231-06:00",
+                            "source": "IRON_WEB",
+                            "created": "2025-02-06T14:46:27.377745-06:00",
+                            "latitude": null,
+                            "longitude": null
+                        },
+                        {
+                            "id": 170119181,
+                            "date": "2025-02-06T15:00:00-06:00",
+                            "source": "IRON_WEB",
+                            "created": "2025-02-06T15:02:35.24282-06:00",
+                            "latitude": null,
+                            "longitude": null
+                        },
+                        {
+                            "id": 170123797,
+                            "date": "2025-02-06T15:42:00-06:00",
+                            "source": "IRON_WEB",
+                            "created": "2025-02-06T15:50:13.522922-06:00",
+                            "latitude": null,
+                            "longitude": null
+                        },
+                        {
+                            "id": 170126242,
+                            "date": "2025-02-06T16:08:00-06:00",
+                            "source": "IRON_WEB",
+                            "created": "2025-02-06T16:10:13.897531-06:00",
+                            "latitude": null,
+                            "longitude": null
+                        },
+                        {
+                            "id": 170109458,
+                            "date": "2025-02-06T13:28:45-06:00",
+                            "source": "IRON_ETA_GPS",
+                            "created": "2025-02-06T13:33:45.311331-06:00",
+                            "latitude": null,
+                            "longitude": null
+                        },
+                        {
+                            "id": 170127066,
+                            "date": "2025-02-06T16:14:34-06:00",
+                            "source": "IRON_ETA_GPS",
+                            "created": "2025-02-06T16:19:01.579864-06:00",
+                            "latitude": null,
+                            "longitude": null
+                        }
+                    ],
+                    "driver": {
+                        "certified": null,
+                        "full_name": "  ",
+                        "fiscal_code": null
+                    },
+                    "carrier": {
+                        "fiscal_code": null,
+                        "company_name": null
+                    },
+                    "vehicle": {
+                        "eco": null,
+                        "plate": "36BB5C"
+                    },
+                    "evidence": [],
+                    "latitude": 19.3554335,
+                    "event_key": "ENTRANCE",
+                    "longitude": -99.5903625
+                },
+                {
+                    "date": "2025-02-06T14:18:00-06:00",
+                    "event": [
+                        {
+                            "id": 170109137,
+                            "date": "2025-02-06T13:27:00-06:00",
+                            "source": "IRON_WEB",
+                            "created": "2025-02-06T13:30:24.02517-06:00",
+                            "latitude": null,
+                            "longitude": null
+                        },
+                        {
+                            "id": 170114549,
+                            "date": "2025-02-06T14:18:00-06:00",
+                            "source": "IRON_WEB",
+                            "created": "2025-02-06T14:20:13.157914-06:00",
+                            "latitude": null,
+                            "longitude": null
+                        },
+                        {
+                            "id": 170116797,
+                            "date": "2025-02-07T01:47:00.602231-06:00",
+                            "source": "IRON_WEB",
+                            "created": "2025-02-06T14:46:27.377745-06:00",
+                            "latitude": null,
+                            "longitude": null
+                        },
+                        {
+                            "id": 170119181,
+                            "date": "2025-02-06T15:00:00-06:00",
+                            "source": "IRON_WEB",
+                            "created": "2025-02-06T15:02:35.24282-06:00",
+                            "latitude": null,
+                            "longitude": null
+                        },
+                        {
+                            "id": 170123797,
+                            "date": "2025-02-06T15:42:00-06:00",
+                            "source": "IRON_WEB",
+                            "created": "2025-02-06T15:50:13.522922-06:00",
+                            "latitude": null,
+                            "longitude": null
+                        },
+                        {
+                            "id": 170126242,
+                            "date": "2025-02-06T16:08:00-06:00",
+                            "source": "IRON_WEB",
+                            "created": "2025-02-06T16:10:13.897531-06:00",
+                            "latitude": null,
+                            "longitude": null
+                        },
+                        {
+                            "id": 170109458,
+                            "date": "2025-02-06T13:28:45-06:00",
+                            "source": "IRON_ETA_GPS",
+                            "created": "2025-02-06T13:33:45.311331-06:00",
+                            "latitude": null,
+                            "longitude": null
+                        },
+                        {
+                            "id": 170127066,
+                            "date": "2025-02-06T16:14:34-06:00",
+                            "source": "IRON_ETA_GPS",
+                            "created": "2025-02-06T16:19:01.579864-06:00",
+                            "latitude": null,
+                            "longitude": null
+                        }
+                    ],
+                    "driver": {
+                        "certified": null,
+                        "full_name": "  ",
+                        "fiscal_code": null
+                    },
+                    "carrier": {
+                        "fiscal_code": null,
+                        "company_name": null
+                    },
+                    "vehicle": {
+                        "eco": null,
+                        "plate": "36BB5C"
+                    },
+                    "evidence": [],
+                    "latitude": null,
+                    "event_key": "START_LOAD",
+                    "longitude": null
+                },
+                {
+                    "date": "2025-02-07T01:47:00.602231-06:00",
+                    "event": [
+                        {
+                            "id": 170109137,
+                            "date": "2025-02-06T13:27:00-06:00",
+                            "source": "IRON_WEB",
+                            "created": "2025-02-06T13:30:24.02517-06:00",
+                            "latitude": null,
+                            "longitude": null
+                        },
+                        {
+                            "id": 170114549,
+                            "date": "2025-02-06T14:18:00-06:00",
+                            "source": "IRON_WEB",
+                            "created": "2025-02-06T14:20:13.157914-06:00",
+                            "latitude": null,
+                            "longitude": null
+                        },
+                        {
+                            "id": 170116797,
+                            "date": "2025-02-07T01:47:00.602231-06:00",
+                            "source": "IRON_WEB",
+                            "created": "2025-02-06T14:46:27.377745-06:00",
+                            "latitude": null,
+                            "longitude": null
+                        },
+                        {
+                            "id": 170119181,
+                            "date": "2025-02-06T15:00:00-06:00",
+                            "source": "IRON_WEB",
+                            "created": "2025-02-06T15:02:35.24282-06:00",
+                            "latitude": null,
+                            "longitude": null
+                        },
+                        {
+                            "id": 170123797,
+                            "date": "2025-02-06T15:42:00-06:00",
+                            "source": "IRON_WEB",
+                            "created": "2025-02-06T15:50:13.522922-06:00",
+                            "latitude": null,
+                            "longitude": null
+                        },
+                        {
+                            "id": 170126242,
+                            "date": "2025-02-06T16:08:00-06:00",
+                            "source": "IRON_WEB",
+                            "created": "2025-02-06T16:10:13.897531-06:00",
+                            "latitude": null,
+                            "longitude": null
+                        },
+                        {
+                            "id": 170109458,
+                            "date": "2025-02-06T13:28:45-06:00",
+                            "source": "IRON_ETA_GPS",
+                            "created": "2025-02-06T13:33:45.311331-06:00",
+                            "latitude": null,
+                            "longitude": null
+                        },
+                        {
+                            "id": 170127066,
+                            "date": "2025-02-06T16:14:34-06:00",
+                            "source": "IRON_ETA_GPS",
+                            "created": "2025-02-06T16:19:01.579864-06:00",
+                            "latitude": null,
+                            "longitude": null
+                        }
+                    ],
+                    "driver": {
+                        "certified": null,
+                        "full_name": "  ",
+                        "fiscal_code": null
+                    },
+                    "carrier": {
+                        "fiscal_code": null,
+                        "company_name": null
+                    },
+                    "vehicle": {
+                        "eco": null,
+                        "plate": null
+                    },
+                    "evidence": [],
+                    "latitude": null,
+                    "event_key": "BPO_MANAGEMENT",
+                    "longitude": null
+                },
+                {
+                    "date": "2025-02-06T15:00:00-06:00",
+                    "event": [
+                        {
+                            "id": 170109137,
+                            "date": "2025-02-06T13:27:00-06:00",
+                            "source": "IRON_WEB",
+                            "created": "2025-02-06T13:30:24.02517-06:00",
+                            "latitude": null,
+                            "longitude": null
+                        },
+                        {
+                            "id": 170114549,
+                            "date": "2025-02-06T14:18:00-06:00",
+                            "source": "IRON_WEB",
+                            "created": "2025-02-06T14:20:13.157914-06:00",
+                            "latitude": null,
+                            "longitude": null
+                        },
+                        {
+                            "id": 170116797,
+                            "date": "2025-02-07T01:47:00.602231-06:00",
+                            "source": "IRON_WEB",
+                            "created": "2025-02-06T14:46:27.377745-06:00",
+                            "latitude": null,
+                            "longitude": null
+                        },
+                        {
+                            "id": 170119181,
+                            "date": "2025-02-06T15:00:00-06:00",
+                            "source": "IRON_WEB",
+                            "created": "2025-02-06T15:02:35.24282-06:00",
+                            "latitude": null,
+                            "longitude": null
+                        },
+                        {
+                            "id": 170123797,
+                            "date": "2025-02-06T15:42:00-06:00",
+                            "source": "IRON_WEB",
+                            "created": "2025-02-06T15:50:13.522922-06:00",
+                            "latitude": null,
+                            "longitude": null
+                        },
+                        {
+                            "id": 170126242,
+                            "date": "2025-02-06T16:08:00-06:00",
+                            "source": "IRON_WEB",
+                            "created": "2025-02-06T16:10:13.897531-06:00",
+                            "latitude": null,
+                            "longitude": null
+                        },
+                        {
+                            "id": 170109458,
+                            "date": "2025-02-06T13:28:45-06:00",
+                            "source": "IRON_ETA_GPS",
+                            "created": "2025-02-06T13:33:45.311331-06:00",
+                            "latitude": null,
+                            "longitude": null
+                        },
+                        {
+                            "id": 170127066,
+                            "date": "2025-02-06T16:14:34-06:00",
+                            "source": "IRON_ETA_GPS",
+                            "created": "2025-02-06T16:19:01.579864-06:00",
+                            "latitude": null,
+                            "longitude": null
+                        }
+                    ],
+                    "driver": {
+                        "certified": null,
+                        "full_name": "  ",
+                        "fiscal_code": null
+                    },
+                    "carrier": {
+                        "fiscal_code": null,
+                        "company_name": null
+                    },
+                    "vehicle": {
+                        "eco": null,
+                        "plate": "36BB5C"
+                    },
+                    "evidence": [],
+                    "latitude": null,
+                    "event_key": "END_LOAD",
+                    "longitude": null
+                },
+                {
+                    "date": "2025-02-06T15:42:00-06:00",
+                    "event": [
+                        {
+                            "id": 170109137,
+                            "date": "2025-02-06T13:27:00-06:00",
+                            "source": "IRON_WEB",
+                            "created": "2025-02-06T13:30:24.02517-06:00",
+                            "latitude": null,
+                            "longitude": null
+                        },
+                        {
+                            "id": 170114549,
+                            "date": "2025-02-06T14:18:00-06:00",
+                            "source": "IRON_WEB",
+                            "created": "2025-02-06T14:20:13.157914-06:00",
+                            "latitude": null,
+                            "longitude": null
+                        },
+                        {
+                            "id": 170116797,
+                            "date": "2025-02-07T01:47:00.602231-06:00",
+                            "source": "IRON_WEB",
+                            "created": "2025-02-06T14:46:27.377745-06:00",
+                            "latitude": null,
+                            "longitude": null
+                        },
+                        {
+                            "id": 170119181,
+                            "date": "2025-02-06T15:00:00-06:00",
+                            "source": "IRON_WEB",
+                            "created": "2025-02-06T15:02:35.24282-06:00",
+                            "latitude": null,
+                            "longitude": null
+                        },
+                        {
+                            "id": 170123797,
+                            "date": "2025-02-06T15:42:00-06:00",
+                            "source": "IRON_WEB",
+                            "created": "2025-02-06T15:50:13.522922-06:00",
+                            "latitude": null,
+                            "longitude": null
+                        },
+                        {
+                            "id": 170126242,
+                            "date": "2025-02-06T16:08:00-06:00",
+                            "source": "IRON_WEB",
+                            "created": "2025-02-06T16:10:13.897531-06:00",
+                            "latitude": null,
+                            "longitude": null
+                        },
+                        {
+                            "id": 170109458,
+                            "date": "2025-02-06T13:28:45-06:00",
+                            "source": "IRON_ETA_GPS",
+                            "created": "2025-02-06T13:33:45.311331-06:00",
+                            "latitude": null,
+                            "longitude": null
+                        },
+                        {
+                            "id": 170127066,
+                            "date": "2025-02-06T16:14:34-06:00",
+                            "source": "IRON_ETA_GPS",
+                            "created": "2025-02-06T16:19:01.579864-06:00",
+                            "latitude": null,
+                            "longitude": null
+                        }
+                    ],
+                    "driver": {
+                        "certified": null,
+                        "full_name": "  ",
+                        "fiscal_code": null
+                    },
+                    "carrier": {
+                        "fiscal_code": null,
+                        "company_name": null
+                    },
+                    "vehicle": {
+                        "eco": null,
+                        "plate": "36BB5C"
+                    },
+                    "evidence": [],
+                    "latitude": null,
+                    "event_key": "DOCUMENT",
+                    "longitude": null
+                },
+                {
+                    "date": "2025-02-06T16:08:00-06:00",
+                    "event": [
+                        {
+                            "id": 170109137,
+                            "date": "2025-02-06T13:27:00-06:00",
+                            "source": "IRON_WEB",
+                            "created": "2025-02-06T13:30:24.02517-06:00",
+                            "latitude": null,
+                            "longitude": null
+                        },
+                        {
+                            "id": 170114549,
+                            "date": "2025-02-06T14:18:00-06:00",
+                            "source": "IRON_WEB",
+                            "created": "2025-02-06T14:20:13.157914-06:00",
+                            "latitude": null,
+                            "longitude": null
+                        },
+                        {
+                            "id": 170116797,
+                            "date": "2025-02-07T01:47:00.602231-06:00",
+                            "source": "IRON_WEB",
+                            "created": "2025-02-06T14:46:27.377745-06:00",
+                            "latitude": null,
+                            "longitude": null
+                        },
+                        {
+                            "id": 170119181,
+                            "date": "2025-02-06T15:00:00-06:00",
+                            "source": "IRON_WEB",
+                            "created": "2025-02-06T15:02:35.24282-06:00",
+                            "latitude": null,
+                            "longitude": null
+                        },
+                        {
+                            "id": 170123797,
+                            "date": "2025-02-06T15:42:00-06:00",
+                            "source": "IRON_WEB",
+                            "created": "2025-02-06T15:50:13.522922-06:00",
+                            "latitude": null,
+                            "longitude": null
+                        },
+                        {
+                            "id": 170126242,
+                            "date": "2025-02-06T16:08:00-06:00",
+                            "source": "IRON_WEB",
+                            "created": "2025-02-06T16:10:13.897531-06:00",
+                            "latitude": null,
+                            "longitude": null
+                        },
+                        {
+                            "id": 170109458,
+                            "date": "2025-02-06T13:28:45-06:00",
+                            "source": "IRON_ETA_GPS",
+                            "created": "2025-02-06T13:33:45.311331-06:00",
+                            "latitude": null,
+                            "longitude": null
+                        },
+                        {
+                            "id": 170127066,
+                            "date": "2025-02-06T16:14:34-06:00",
+                            "source": "IRON_ETA_GPS",
+                            "created": "2025-02-06T16:19:01.579864-06:00",
+                            "latitude": null,
+                            "longitude": null
+                        }
+                    ],
+                    "driver": {
+                        "certified": null,
+                        "full_name": "  ",
+                        "fiscal_code": null
+                    },
+                    "carrier": {
+                        "fiscal_code": null,
+                        "company_name": null
+                    },
+                    "vehicle": {
+                        "eco": null,
+                        "plate": "36BB5C"
+                    },
+                    "evidence": [],
+                    "latitude": null,
+                    "event_key": "EXIT",
+                    "longitude": null
+                }
+            ],
+            "seal_1": null,
+            "seal_2": null,
+            "ori_aux_1": null,
+            "ori_aux_2": null,
+            "ori_aux_3": null,
+            "ori_aux_4": null,
+            "ori_aux_5": null,
+            "region_name": null,
+            "src_ent_note": null,
+            "location_name": "One Roof",
+            "classification": null,
+            "location_equiv": [
+                "5KDA"
+            ],
+            "src_district_name": null,
+            "src_ccp_product_detail": null
+        },
+        "destiny": [
+            {
+                "ETA": "2025-02-06T23:37:43",
+                "plan": [
+                    {
+                        "date": "2025-02-07T01:00:00-06:00",
+                        "carrier": {
+                            "fiscal_code": "TCB7401303A4",
+                            "company_name": "Transportes Castores de Baja California"
+                        },
+                        "event_key": "ENTRANCE"
+                    }
+                ],
+                "grupo": null,
+                "orden": 1,
+                "track": [
+                    {
+                        "date": "2025-02-07T02:08:57.246573-06:00",
+                        "event": [
+                            {
+                                "id": 170160021,
+                                "date": "2025-02-06T23:34:58-06:00",
+                                "source": "IRON_ETA_GPS",
+                                "created": "2025-02-06T23:37:59.8476-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170160579,
+                                "date": "2025-02-06T23:43:22-06:00",
+                                "source": "IRON_ETA_GPS",
+                                "created": "2025-02-06T23:47:53.707699-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170169892,
+                                "date": "2025-02-07T02:08:48.774474-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T02:08:49.342427-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170169896,
+                                "date": "2025-02-07T02:08:57.246573-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T02:08:57.627145-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170169927,
+                                "date": "2025-02-07T02:09:57.275912-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T02:09:57.671859-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170190058,
+                                "date": "2025-02-07T07:32:42.354544-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T07:32:55.413393-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170190060,
+                                "date": "2025-02-07T07:32:50.93285-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T07:32:58.568653-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            }
+                        ],
+                        "driver": {
+                            "certified": null,
+                            "full_name": "  ",
+                            "fiscal_code": null
+                        },
+                        "carrier": {
+                            "fiscal_code": null,
+                            "company_name": null
+                        },
+                        "vehicle": {
+                            "eco": null,
+                            "plate": null
+                        },
+                        "evidence": [],
+                        "latitude": null,
+                        "event_key": "DOCUMENT",
+                        "longitude": null
+                    },
+                    {
+                        "date": "2025-02-07T02:09:57.275912-06:00",
+                        "event": [
+                            {
+                                "id": 170160021,
+                                "date": "2025-02-06T23:34:58-06:00",
+                                "source": "IRON_ETA_GPS",
+                                "created": "2025-02-06T23:37:59.8476-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170160579,
+                                "date": "2025-02-06T23:43:22-06:00",
+                                "source": "IRON_ETA_GPS",
+                                "created": "2025-02-06T23:47:53.707699-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170169892,
+                                "date": "2025-02-07T02:08:48.774474-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T02:08:49.342427-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170169896,
+                                "date": "2025-02-07T02:08:57.246573-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T02:08:57.627145-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170169927,
+                                "date": "2025-02-07T02:09:57.275912-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T02:09:57.671859-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170190058,
+                                "date": "2025-02-07T07:32:42.354544-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T07:32:55.413393-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170190060,
+                                "date": "2025-02-07T07:32:50.93285-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T07:32:58.568653-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            }
+                        ],
+                        "driver": {
+                            "certified": null,
+                            "full_name": "  ",
+                            "fiscal_code": null
+                        },
+                        "carrier": {
+                            "fiscal_code": null,
+                            "company_name": null
+                        },
+                        "vehicle": {
+                            "eco": null,
+                            "plate": null
+                        },
+                        "evidence": [
+                            {
+                                "path": "2025\/02\/07\/photo202502070209296.jpg",
+                                "type": "PICTURE"
+                            },
+                            {
+                                "path": "2025\/02\/07\/photo202502070209455.jpg",
+                                "type": "PICTURE"
+                            }
+                        ],
+                        "latitude": null,
+                        "event_key": "ASSIGN_RAMP",
+                        "longitude": null
+                    },
+                    {
+                        "date": "2025-02-07T07:32:42.354544-06:00",
+                        "event": [
+                            {
+                                "id": 170160021,
+                                "date": "2025-02-06T23:34:58-06:00",
+                                "source": "IRON_ETA_GPS",
+                                "created": "2025-02-06T23:37:59.8476-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170160579,
+                                "date": "2025-02-06T23:43:22-06:00",
+                                "source": "IRON_ETA_GPS",
+                                "created": "2025-02-06T23:47:53.707699-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170169892,
+                                "date": "2025-02-07T02:08:48.774474-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T02:08:49.342427-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170169896,
+                                "date": "2025-02-07T02:08:57.246573-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T02:08:57.627145-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170169927,
+                                "date": "2025-02-07T02:09:57.275912-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T02:09:57.671859-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170190058,
+                                "date": "2025-02-07T07:32:42.354544-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T07:32:55.413393-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170190060,
+                                "date": "2025-02-07T07:32:50.93285-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T07:32:58.568653-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            }
+                        ],
+                        "driver": {
+                            "certified": null,
+                            "full_name": "  ",
+                            "fiscal_code": null
+                        },
+                        "carrier": {
+                            "fiscal_code": null,
+                            "company_name": null
+                        },
+                        "vehicle": {
+                            "eco": null,
+                            "plate": null
+                        },
+                        "evidence": [
+                            {
+                                "path": "2025\/02\/07\/0_scan00120250207072900034.jpg",
+                                "type": "PICTURE"
+                            },
+                            {
+                                "path": "2025\/02\/07\/1_scan00120250207072924929.jpg",
+                                "type": "PICTURE"
+                            },
+                            {
+                                "path": "2025\/02\/07\/2_scan00320250207072900057.jpg",
+                                "type": "PICTURE"
+                            },
+                            {
+                                "path": "2025\/02\/07\/10_scan00120250207073052621.jpg",
+                                "type": "PICTURE"
+                            },
+                            {
+                                "path": "2025\/02\/07\/11_scan00320250207073052636.jpg",
+                                "type": "PICTURE"
+                            },
+                            {
+                                "path": "2025\/02\/07\/0_sign20250207073241434.png",
+                                "type": "PICTURE"
+                            },
+                            {
+                                "path": "2025\/02\/07\/8_scan00920250207072924987.jpg",
+                                "type": "PICTURE"
+                            },
+                            {
+                                "path": "2025\/02\/07\/3_scan00320250207072924951.jpg",
+                                "type": "PICTURE"
+                            },
+                            {
+                                "path": "2025\/02\/07\/4_scan00520250207072900073.jpg",
+                                "type": "PICTURE"
+                            },
+                            {
+                                "path": "2025\/02\/07\/5_scan00520250207072924961.jpg",
+                                "type": "PICTURE"
+                            },
+                            {
+                                "path": "2025\/02\/07\/6_scan00720250207072900087.jpg",
+                                "type": "PICTURE"
+                            },
+                            {
+                                "path": "2025\/02\/07\/7_scan00720250207072924973.jpg",
+                                "type": "PICTURE"
+                            },
+                            {
+                                "path": "2025\/02\/07\/9_scan00120250207073002765.jpg",
+                                "type": "PICTURE"
+                            }
+                        ],
+                        "latitude": null,
+                        "event_key": "POD",
+                        "longitude": null
+                    },
+                    {
+                        "date": "2025-02-06T23:34:58-06:00",
+                        "event": [
+                            {
+                                "id": 170160021,
+                                "date": "2025-02-06T23:34:58-06:00",
+                                "source": "IRON_ETA_GPS",
+                                "created": "2025-02-06T23:37:59.8476-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170160579,
+                                "date": "2025-02-06T23:43:22-06:00",
+                                "source": "IRON_ETA_GPS",
+                                "created": "2025-02-06T23:47:53.707699-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170169892,
+                                "date": "2025-02-07T02:08:48.774474-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T02:08:49.342427-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170169896,
+                                "date": "2025-02-07T02:08:57.246573-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T02:08:57.627145-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170169927,
+                                "date": "2025-02-07T02:09:57.275912-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T02:09:57.671859-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170190058,
+                                "date": "2025-02-07T07:32:42.354544-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T07:32:55.413393-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170190060,
+                                "date": "2025-02-07T07:32:50.93285-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T07:32:58.568653-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            }
+                        ],
+                        "driver": {
+                            "certified": null,
+                            "full_name": "  ",
+                            "fiscal_code": null
+                        },
+                        "carrier": {
+                            "fiscal_code": null,
+                            "company_name": null
+                        },
+                        "vehicle": {
+                            "eco": null,
+                            "plate": "36BB5C"
+                        },
+                        "evidence": [
+                            {
+                                "path": "2025\/02\/07\/photo202502070208269.jpg",
+                                "type": "PICTURE"
+                            },
+                            {
+                                "path": "2025\/02\/07\/photo202502070208351.jpg",
+                                "type": "PICTURE"
+                            }
+                        ],
+                        "latitude": 19.7352171,
+                        "event_key": "ENTRANCE",
+                        "longitude": -99.2007431
+                    },
+                    {
+                        "date": "2025-02-06T23:43:22-06:00",
+                        "event": [
+                            {
+                                "id": 170160021,
+                                "date": "2025-02-06T23:34:58-06:00",
+                                "source": "IRON_ETA_GPS",
+                                "created": "2025-02-06T23:37:59.8476-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170160579,
+                                "date": "2025-02-06T23:43:22-06:00",
+                                "source": "IRON_ETA_GPS",
+                                "created": "2025-02-06T23:47:53.707699-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170169892,
+                                "date": "2025-02-07T02:08:48.774474-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T02:08:49.342427-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170169896,
+                                "date": "2025-02-07T02:08:57.246573-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T02:08:57.627145-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170169927,
+                                "date": "2025-02-07T02:09:57.275912-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T02:09:57.671859-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170190058,
+                                "date": "2025-02-07T07:32:42.354544-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T07:32:55.413393-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170190060,
+                                "date": "2025-02-07T07:32:50.93285-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T07:32:58.568653-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            }
+                        ],
+                        "driver": {
+                            "certified": null,
+                            "full_name": "  ",
+                            "fiscal_code": null
+                        },
+                        "carrier": {
+                            "fiscal_code": null,
+                            "company_name": null
+                        },
+                        "vehicle": {
+                            "eco": null,
+                            "plate": null
+                        },
+                        "evidence": [],
+                        "latitude": 19.7440987,
+                        "event_key": "EXIT",
+                        "longitude": -99.1998878
+                    }
+                ],
+                "Reject": {
+                    "type": "",
+                    "cause": "",
+                    "status": false
+                },
+                "division": null,
+                "dst_aux_1": null,
+                "semaphore": "Con llegada a destino",
+                "dst_aux_13": null,
+                "dst_aux_14": null,
+                "region_name": "Centro",
+                "activity_num": "11583624",
+                "location_name": "NUEVA WAL MART DE MEXICO S DE RL DE",
+                "location_equiv": [
+                    "2969005"
+                ],
+                "type_operation": null,
+                "dst_district_name": null,
+                "dst_ccp_product_detail": null
+            },
+            {
+                "ETA": "2025-02-06T23:37:43",
+                "plan": [
+                    {
+                        "date": "2025-02-07T01:00:00-06:00",
+                        "carrier": {
+                            "fiscal_code": "TCB7401303A4",
+                            "company_name": "Transportes Castores de Baja California"
+                        },
+                        "event_key": "ENTRANCE"
+                    }
+                ],
+                "grupo": null,
+                "orden": 1,
+                "track": [
+                    {
+                        "date": "2025-02-07T02:08:57.246573-06:00",
+                        "event": [
+                            {
+                                "id": 170160021,
+                                "date": "2025-02-06T23:34:58-06:00",
+                                "source": "IRON_ETA_GPS",
+                                "created": "2025-02-06T23:37:59.8476-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170160579,
+                                "date": "2025-02-06T23:43:22-06:00",
+                                "source": "IRON_ETA_GPS",
+                                "created": "2025-02-06T23:47:53.707699-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170169892,
+                                "date": "2025-02-07T02:08:48.774474-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T02:08:49.342427-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170169896,
+                                "date": "2025-02-07T02:08:57.246573-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T02:08:57.627145-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170169927,
+                                "date": "2025-02-07T02:09:57.275912-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T02:09:57.671859-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170190058,
+                                "date": "2025-02-07T07:32:42.354544-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T07:32:55.413393-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170190060,
+                                "date": "2025-02-07T07:32:50.93285-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T07:32:58.568653-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            }
+                        ],
+                        "driver": {
+                            "certified": null,
+                            "full_name": "  ",
+                            "fiscal_code": null
+                        },
+                        "carrier": {
+                            "fiscal_code": null,
+                            "company_name": null
+                        },
+                        "vehicle": {
+                            "eco": null,
+                            "plate": null
+                        },
+                        "evidence": [],
+                        "latitude": null,
+                        "event_key": "DOCUMENT",
+                        "longitude": null
+                    },
+                    {
+                        "date": "2025-02-07T02:09:57.275912-06:00",
+                        "event": [
+                            {
+                                "id": 170160021,
+                                "date": "2025-02-06T23:34:58-06:00",
+                                "source": "IRON_ETA_GPS",
+                                "created": "2025-02-06T23:37:59.8476-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170160579,
+                                "date": "2025-02-06T23:43:22-06:00",
+                                "source": "IRON_ETA_GPS",
+                                "created": "2025-02-06T23:47:53.707699-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170169892,
+                                "date": "2025-02-07T02:08:48.774474-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T02:08:49.342427-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170169896,
+                                "date": "2025-02-07T02:08:57.246573-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T02:08:57.627145-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170169927,
+                                "date": "2025-02-07T02:09:57.275912-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T02:09:57.671859-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170190058,
+                                "date": "2025-02-07T07:32:42.354544-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T07:32:55.413393-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170190060,
+                                "date": "2025-02-07T07:32:50.93285-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T07:32:58.568653-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            }
+                        ],
+                        "driver": {
+                            "certified": null,
+                            "full_name": "  ",
+                            "fiscal_code": null
+                        },
+                        "carrier": {
+                            "fiscal_code": null,
+                            "company_name": null
+                        },
+                        "vehicle": {
+                            "eco": null,
+                            "plate": null
+                        },
+                        "evidence": [
+                            {
+                                "path": "2025\/02\/07\/photo202502070209296.jpg",
+                                "type": "PICTURE"
+                            },
+                            {
+                                "path": "2025\/02\/07\/photo202502070209455.jpg",
+                                "type": "PICTURE"
+                            }
+                        ],
+                        "latitude": null,
+                        "event_key": "ASSIGN_RAMP",
+                        "longitude": null
+                    },
+                    {
+                        "date": "2025-02-07T07:32:42.354544-06:00",
+                        "event": [
+                            {
+                                "id": 170160021,
+                                "date": "2025-02-06T23:34:58-06:00",
+                                "source": "IRON_ETA_GPS",
+                                "created": "2025-02-06T23:37:59.8476-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170160579,
+                                "date": "2025-02-06T23:43:22-06:00",
+                                "source": "IRON_ETA_GPS",
+                                "created": "2025-02-06T23:47:53.707699-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170169892,
+                                "date": "2025-02-07T02:08:48.774474-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T02:08:49.342427-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170169896,
+                                "date": "2025-02-07T02:08:57.246573-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T02:08:57.627145-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170169927,
+                                "date": "2025-02-07T02:09:57.275912-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T02:09:57.671859-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170190058,
+                                "date": "2025-02-07T07:32:42.354544-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T07:32:55.413393-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170190060,
+                                "date": "2025-02-07T07:32:50.93285-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T07:32:58.568653-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            }
+                        ],
+                        "driver": {
+                            "certified": null,
+                            "full_name": "  ",
+                            "fiscal_code": null
+                        },
+                        "carrier": {
+                            "fiscal_code": null,
+                            "company_name": null
+                        },
+                        "vehicle": {
+                            "eco": null,
+                            "plate": null
+                        },
+                        "evidence": [
+                            {
+                                "path": "2025\/02\/07\/0_scan00120250207072900034.jpg",
+                                "type": "PICTURE"
+                            },
+                            {
+                                "path": "2025\/02\/07\/1_scan00120250207072924929.jpg",
+                                "type": "PICTURE"
+                            },
+                            {
+                                "path": "2025\/02\/07\/2_scan00320250207072900057.jpg",
+                                "type": "PICTURE"
+                            },
+                            {
+                                "path": "2025\/02\/07\/10_scan00120250207073052621.jpg",
+                                "type": "PICTURE"
+                            },
+                            {
+                                "path": "2025\/02\/07\/11_scan00320250207073052636.jpg",
+                                "type": "PICTURE"
+                            },
+                            {
+                                "path": "2025\/02\/07\/0_sign20250207073241434.png",
+                                "type": "PICTURE"
+                            },
+                            {
+                                "path": "2025\/02\/07\/8_scan00920250207072924987.jpg",
+                                "type": "PICTURE"
+                            },
+                            {
+                                "path": "2025\/02\/07\/3_scan00320250207072924951.jpg",
+                                "type": "PICTURE"
+                            },
+                            {
+                                "path": "2025\/02\/07\/4_scan00520250207072900073.jpg",
+                                "type": "PICTURE"
+                            },
+                            {
+                                "path": "2025\/02\/07\/5_scan00520250207072924961.jpg",
+                                "type": "PICTURE"
+                            },
+                            {
+                                "path": "2025\/02\/07\/6_scan00720250207072900087.jpg",
+                                "type": "PICTURE"
+                            },
+                            {
+                                "path": "2025\/02\/07\/7_scan00720250207072924973.jpg",
+                                "type": "PICTURE"
+                            },
+                            {
+                                "path": "2025\/02\/07\/9_scan00120250207073002765.jpg",
+                                "type": "PICTURE"
+                            }
+                        ],
+                        "latitude": null,
+                        "event_key": "POD",
+                        "longitude": null
+                    },
+                    {
+                        "date": "2025-02-06T23:34:58-06:00",
+                        "event": [
+                            {
+                                "id": 170160021,
+                                "date": "2025-02-06T23:34:58-06:00",
+                                "source": "IRON_ETA_GPS",
+                                "created": "2025-02-06T23:37:59.8476-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170160579,
+                                "date": "2025-02-06T23:43:22-06:00",
+                                "source": "IRON_ETA_GPS",
+                                "created": "2025-02-06T23:47:53.707699-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170169892,
+                                "date": "2025-02-07T02:08:48.774474-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T02:08:49.342427-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170169896,
+                                "date": "2025-02-07T02:08:57.246573-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T02:08:57.627145-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170169927,
+                                "date": "2025-02-07T02:09:57.275912-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T02:09:57.671859-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170190058,
+                                "date": "2025-02-07T07:32:42.354544-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T07:32:55.413393-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170190060,
+                                "date": "2025-02-07T07:32:50.93285-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T07:32:58.568653-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            }
+                        ],
+                        "driver": {
+                            "certified": null,
+                            "full_name": "  ",
+                            "fiscal_code": null
+                        },
+                        "carrier": {
+                            "fiscal_code": null,
+                            "company_name": null
+                        },
+                        "vehicle": {
+                            "eco": null,
+                            "plate": "36BB5C"
+                        },
+                        "evidence": [
+                            {
+                                "path": "2025\/02\/07\/photo202502070208269.jpg",
+                                "type": "PICTURE"
+                            },
+                            {
+                                "path": "2025\/02\/07\/photo202502070208351.jpg",
+                                "type": "PICTURE"
+                            }
+                        ],
+                        "latitude": 19.7352171,
+                        "event_key": "ENTRANCE",
+                        "longitude": -99.2007431
+                    },
+                    {
+                        "date": "2025-02-06T23:43:22-06:00",
+                        "event": [
+                            {
+                                "id": 170160021,
+                                "date": "2025-02-06T23:34:58-06:00",
+                                "source": "IRON_ETA_GPS",
+                                "created": "2025-02-06T23:37:59.8476-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170160579,
+                                "date": "2025-02-06T23:43:22-06:00",
+                                "source": "IRON_ETA_GPS",
+                                "created": "2025-02-06T23:47:53.707699-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170169892,
+                                "date": "2025-02-07T02:08:48.774474-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T02:08:49.342427-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170169896,
+                                "date": "2025-02-07T02:08:57.246573-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T02:08:57.627145-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170169927,
+                                "date": "2025-02-07T02:09:57.275912-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T02:09:57.671859-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170190058,
+                                "date": "2025-02-07T07:32:42.354544-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T07:32:55.413393-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            },
+                            {
+                                "id": 170190060,
+                                "date": "2025-02-07T07:32:50.93285-06:00",
+                                "source": "BPO_ONSITE",
+                                "created": "2025-02-07T07:32:58.568653-06:00",
+                                "latitude": null,
+                                "longitude": null
+                            }
+                        ],
+                        "driver": {
+                            "certified": null,
+                            "full_name": "  ",
+                            "fiscal_code": null
+                        },
+                        "carrier": {
+                            "fiscal_code": null,
+                            "company_name": null
+                        },
+                        "vehicle": {
+                            "eco": null,
+                            "plate": null
+                        },
+                        "evidence": [],
+                        "latitude": 19.7440987,
+                        "event_key": "EXIT",
+                        "longitude": -99.1998878
+                    }
+                ],
+                "Reject": {
+                    "type": "",
+                    "cause": "",
+                    "status": false
+                },
+                "division": null,
+                "dst_aux_1": null,
+                "semaphore": "Con llegada a destino",
+                "dst_aux_13": null,
+                "dst_aux_14": null,
+                "region_name": "Centro",
+                "activity_num": "11583624",
+                "location_name": "NUEVA WAL MART DE MEXICO S DE RL DE",
+                "location_equiv": [
+                    "2969005"
+                ],
+                "type_operation": null,
+                "dst_district_name": null,
+                "dst_ccp_product_detail": null
+            }
+        ],
+        "stop_id": 97673863,
+        "vehicle": {
+            "eco": null,
+            "plate": "36BB5C"
+        },
+        "shipment": "11583624",
+        "tendering": null,
+        "trailer_1": {
+            "eco": null,
+            "plate": "800XRC",
+            "type_plate": null
+        },
+        "trailer_2": null,
+        "fh_created": "2025-02-05T10:04:44.521349-06:00",
+        "appo_update": null,
+        "created_ccp": null,
+        "vehicle_type": "",
+        "PDFCartaPorte": false,
+        "supplier_name": "HENKEL MEXICANA S.A. DE C.V.",
+        "supply_chain_id": 26699761
+    }
+]

@@ -1,0 +1,145 @@
+@extends('layouts.app')
+
+@section('content')
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    Parametrizar Centro de distribución
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{url('systemcenterdistributionsparameters/' . $center->centerid)}}">
+                        {{ method_field('PUT') }}
+                        @csrf
+                        <div class="row">
+                            <div class="col-12">
+                                <a href="">
+                                    @include('buttons.save')
+                                </a>
+                                <a href="{{route('systemcenterdistributions.index')}}">
+                                    @include('buttons.back')
+                                </a>
+                            </div>
+                        </div>
+                        <hr class="mb-3">
+                        <div class="row">
+                            <div class="col-lg-2 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="name">Centro de distribución </label>
+                                    <input type="text" class="form-control" id="name" name="name" maxlength="100"
+                                           aria-describedby="auxiliary05" value="{{$center->name}}" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-10">
+                                <table class="table table-striped table-bordered table-condensed table-list">
+                                    <thead>
+                                    <tr>
+                                        <th width="10%">Secuencia</th>
+                                        <th width="10%">Activar/Desactivar</th>
+                                        <th>Parametro</th>
+                                        <th>Descripción</th>
+                                        <th width="20%">Comentario</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($parameters as $parameter)
+                                        <tr>
+                                            <td>{{$loop->iteration}}</td>
+                                            <td style="width: 100px;" class="switch">
+                                                <input
+                                                    type="checkbox"
+                                                    value="{{$parameter->statusid}}"
+                                                    @if(!empty($center->configurationflag))
+                                                        @foreach ($center->configurationflag as $check)
+                                                            @if ($check == $parameter->statusid)
+                                                                checked
+                                                             @endif
+                                                        @endforeach
+                                                    @endif
+                                                    name="parameter[]"
+                                                    data-size="mini" data-on-color="success" data-off-color="danger"
+                                                    data-on-text="<i class='ti ti-check'></i>"
+                                                    data-off-text="<i class='ti ti-close'></i>"
+                                                >
+                                            </td>
+                                            <td>{{$parameter->statusid}}</td>
+                                            <td>{{$parameter->name}}</td>
+                                            <td>{{$parameter->comment}}</td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+
+@section('css')
+    <link rel="stylesheet" href="{{asset('/theme/assets/libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css')}}">
+@endsection
+
+
+@section('script')
+    <script src="{{asset('/theme/assets/libs/bootstrap-switch/dist/js/bootstrap-switch.min.js')}}"></script>
+    <script>
+        $(".switch input[type='checkbox']").bootstrapSwitch();
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".table-list").DataTable({
+                "paging": true,
+                "lengthChange": true,
+                "searching": true,
+                "ordering": true,
+                "sScrollY": "400px",
+                "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
+                "lengthMenu": [[-1], ["Todos"]],
+                buttons: [
+                    {
+                        "extend": "colvis",
+                        "text": "<img src=\"{{asset('/pics/adbuscar.png')}}\"  alt=''><span  style='font-size: 11px;'> Mostar/Ocultar</span>",
+                        "className": "btn btn-outline-info btn-md  btn-bold",
+                        columns: ':not(:first):not(:last)'
+                    },
+                    {
+                        "extend": "csv",
+                        "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16'><span  style='font-size: 11px;'> Csv</span>",
+                        "className": "btn btn-outline-info btn-md  btn-bold",
+                    },
+                    {
+                        "extend": "excel",
+                        "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt=''><span  style='font-size: 11px;'> Excel</span>",
+                        "className": "btn btn-outline-info btn-md  btn-bold",
+                    }
+                ],
+                language: {
+                    "decimal": "",
+                    "emptyTable": "No hay información",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                    "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "Mostrar _MENU_ Entradas",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "zeroRecords": "Sin resultados encontrados",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Ultimo",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                },
+            });
+        })
+    </script>
+@endsection

@@ -1,0 +1,1 @@
+<img src="{{asset('/ico/accept.png')}}" alt="" class="img-16">

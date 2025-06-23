@@ -1,0 +1,35 @@
+@extends('layouts.app')
+
+@section('content')
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    Crear Esquema
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{url('systemschemas')}}">
+                        @csrf
+                        <div class="row">
+                            <div class="col-12">
+                                <a >
+                                    @include('buttons.save')
+                                </a>
+                                <a href="{{route('systemschemas.index')}}">
+                                    @include('buttons.back')
+                                </a>
+                            </div>
+                        </div>
+                        <hr class="mb-2">
+                        @include('Configuration.SystemSchemas.partials.formCreate')
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+
+@section('script')
+
+@endsection
+

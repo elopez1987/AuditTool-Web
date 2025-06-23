@@ -1,0 +1,55 @@
+<?php
+
+namespace {{ namespace }};
+
+use Illuminate\Database\Eloquent\Model;
+use App\Models\Configuration\SystemStatus;
+
+
+class {{ class }} extends Model
+{
+     protected $table = '';
+        public $timestamps = false;
+
+
+        protected $fillable = [
+        'centerid',
+            'name',
+            'auxiliary01',
+            'auxiliary02',
+            'auxiliary03',
+            'auxiliary04',
+            'auxiliary05',
+              'statusid'
+        ];
+
+        protected $hidden = [
+  'created_at',
+            'updated_at',
+            'schemaid'
+        ];
+
+ protected $attributes = [
+        'statusid' => 'UN',
+        'schemaid' => 'CAT',
+        'centerid' => 'HENKEL01'
+    ];
+
+     public function status(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+        {
+            return $this->belongsTo(SystemStatus::class,'statusid','statusid');
+        }
+
+         public function scopeName($query, $name)
+            {
+                if (trim($name) != "") {
+                    $query->where('name', 'like', "%$name%");
+                }
+            }
+
+              public static function TypeMoventActive()
+                {
+                    return {{ class }}::whereStatusid('UN')
+                        ->pluck('name', 'id')->toArray();
+                }
+}

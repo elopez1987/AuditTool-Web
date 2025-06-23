@@ -1,0 +1,871 @@
+@extends('layouts.app')
+
+@section('content')
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    Kardex de unidad
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a href="{{route('tracereceiptunit.index')}}">
+                                @include('buttons.cancel')
+                            </a>
+                            <a href="{{url('generateinvoicekardex/' . $receiptunit->id)}}" data-toggle="tooltip"
+                               data-placement="top" title="Detalle del folio">
+                                <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
+                                    <img src="{{asset('/ico/papeleta.png')}}" alt="" class="img-16 ml-1">
+                                    <span style="font-size: 11px;"> Generar Kardex</span>
+                                </button>
+                            </a>
+                            @can('receiptunits.princhecklistbrid')
+                                <a href="{{url('printchecklistbrind/' . $receiptunit->id)}}" data-toggle="tooltip"
+                                   data-placement="top" title="Detalle del folio">
+                                    <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
+                                        <img src="{{asset('/ico/papeleta.png')}}" alt="" class="img-16 ml-1">
+                                        <span style="font-size: 11px;"> Generar Check List Bridgestone</span>
+                                    </button>
+                                </a>
+                            @endcan
+                            @can('receiptunits.calidadbridgestone')
+                                <a href="{{url('printqualitybridge/' . $receiptunit->id)}}" data-toggle="tooltip"
+                                   data-placement="top" title="Detalle del folio">
+                                    <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
+                                        <img src="{{asset('/ico/papeleta.png')}}" alt="" class="img-16 ml-1">
+                                        <span style="font-size: 11px;"> Generar Check List Calidad</span>
+                                    </button>
+                                </a>
+                            @endcan
+                            @if($receiptunit->statusid == 'TR')
+                                @can('receiptunits.realodunit')
+                                    <a onclick="reloadunit( {!! $receiptunit->id!!} )">
+                                        <button type="button"
+                                                class="btn waves-effect waves-light btn-outline-info btn-md">
+                                            <img src="{{asset('/ico/go-back256_24856.png')}}" alt="" class="img-16">
+                                            <span style="font-size: 11px;"> Revivir Folio</span>
+                                        </button>
+                                    </a>
+                                @endcan
+                            @endif
+                            @can('receiptunits.downloadfiles')
+                                <a href="{{url('downloadfilesunit/' . $receiptunit->id)}}" data-toggle="tooltip"
+                                   data-placement="top" title="Descargar evidencias fotograficas">
+                                    <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
+                                        <img src="{{asset('/ico/galeria-de-fotos.png')}}" alt=""
+                                             class="img-16 ml-1">
+                                        <span style="font-size: 11px;">Descargar Evidencias</span>
+                                    </button>
+                                </a>
+                            @endcan
+                            @can('receiptunits.ticket')
+                                <a href="{{url('downloadticket/' . $receiptunit->id)}}" data-toggle="tooltip"
+                                   data-placement="top" title="Descargar evidencias fotograficas">
+                                    <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
+                                        <img src="{{asset('/ico/papeleta.png')}}" alt=""
+                                             class="img-16 ml-1">
+                                        <span style="font-size: 11px;">Descargar Ticket de bascula</span>
+                                    </button>
+                                </a>
+                            @endcan
+                            @can('generateinvoicetransport')
+                                <a href="{{url('generateinvoicetransport/' . $receiptunit->id)}}" data-toggle="tooltip"
+                                   data-placement="top" title="Descargar evidencias fotograficas">
+                                    <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
+                                        <img src="{{asset('/ico/papeleta.png')}}" alt=""
+                                             class="img-16 ml-1">
+                                        <span style="font-size: 11px;">Descargar Folio</span>
+                                    </button>
+                                </a>
+                            @endcan
+                        </div>
+                    </div>
+                    <hr class="mt-3">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs customtab" role="tablist">
+                                <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#view01"
+                                                        role="tab"><span class="hidden-sm-up"><i
+                                                class="ti-home"></i></span> <span class="hidden-xs-down">Detalle de movimientos</span></a>
+                                </li>
+                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view02"
+                                                        role="tab"><span class="hidden-sm-up"><i
+                                                class="ti-list"></i></span> <span class="hidden-xs-down">Check list y Evidencia de Entrada</span></a>
+                                </li>
+                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view03"
+                                                        role="tab"><span class="hidden-sm-up"><i
+                                                class="ti-list"></i></span> <span class="hidden-xs-down">Evidencia de Proceso</span></a>
+                                </li>
+                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view04"
+                                                        role="tab"><span class="hidden-sm-up"><i
+                                                class="ti-list"></i></span> <span class="hidden-xs-down">Check list y Evidencia de Calidad</span></a>
+                                </li>
+                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view05"
+                                                        role="tab"><span class="hidden-sm-up"><i
+                                                class="ti-list"></i></span> <span class="hidden-xs-down">Check list y Evidencia de Salida</span></a>
+                                </li>
+                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view07"
+                                                        role="tab"><span class="hidden-sm-up"><i
+                                                class="ti-list"></i></span> <span
+                                            class="hidden-xs-down">Sellos</span></a>
+                                </li>
+                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view08"
+                                                        role="tab"><span class="hidden-sm-up"><i
+                                                class="ti-list"></i></span> <span
+                                            class="hidden-xs-down">Pesos de unidad</span></a>
+                                </li>
+                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view09"
+                                                        role="tab"><span class="hidden-sm-up"><i
+                                                class="ti-list"></i></span> <span
+                                            class="hidden-xs-down">Sellos LOTO</span></a>
+                                </li>
+                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view06"
+                                                        role="tab"><span class="hidden-sm-up"><i
+                                                class="ti-list"></i></span> <span
+                                            class="hidden-xs-down">Comentarios</span></a>
+                                </li>
+                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view10"
+                                                        role="tab"><span class="hidden-sm-up"><i
+                                                class="ti-list"></i></span> <span
+                                            class="hidden-xs-down">Firmas</span></a>
+                                </li>
+                            </ul>
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="view01" role="tabpanel">
+                                    <div class="p-20">
+                                        @include('Yards.KardexReceiptUnit.tabletrace')
+                                    </div>
+                                </div>
+                                <div class="tab-pane  p-20" id="view02" role="tabpanel">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <table class="table table-condensed table-bordered table-striped">
+                                                <thead>
+                                                <tr>
+                                                    <th>Concepto</th>
+                                                    <th>Estatus</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                @foreach($checklisttransports as $check)
+                                                    @if($check->type == 'IN')
+                                                        <tr>
+                                                            <td>{{$check->checklistdetail ? $check->checklistdetail->description : ''}}</td>
+                                                            <td class="bg-{{$check->verified == 'NO' ? 'red text-white' : ''}}">{{$check->verified}}</td>
+                                                        </tr>
+                                                @endif
+                                                @endforeach
+                                            </table>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="card">
+                                                <div class="card-header"></div>
+                                                <div class="card-body">
+                                                    @if (!empty($evidences))
+                                                        <div class="row el-element-overlay">
+                                                            @foreach($evidences as $photo)
+                                                                @if ($photo->auxiliary01 == 'IN')
+                                                                    <div class="col-lg-3 col-md-6">
+                                                                        <div class="card">
+                                                                            <div class="el-card-item">
+                                                                                <div
+                                                                                    class="el-card-avatar el-overlay-1">
+                                                                                    <img
+                                                                                        src="{{asset('storage/' . $photo->path)}}"
+                                                                                        alt="user"
+                                                                                        style="height: 300px;max-height: 400px"/>
+                                                                                    <div class="el-overlay">
+                                                                                        <ul class="list-style-none el-info">
+                                                                                            <li class="el-item">
+                                                                                                <a href="{{url('downloadphoto/' . $photo->id)}}"
+                                                                                                   data-togggle="tooltip"
+                                                                                                   title="Descargar"
+                                                                                                   class="btn default btn-outline el-link">
+                                                                                                    <i class="mdi mdi-download"></i>
+                                                                                                </a>
+                                                                                            </li>
+                                                                                            @can('destroyphotocheckin')
+                                                                                                <li class="el-item">
+                                                                                                    <a href="{{url('destroyphoto/' . $photo->id)}}"
+                                                                                                       class="btn default btn-outline el-link">
+                                                                                                        <i class="mdi mdi-delete"></i>
+                                                                                                    </a>
+                                                                                                </li>
+                                                                                            @endcan
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="el-card-content">
+                                                                                    <h4 class="m-b-0 font-10 font-weight-light"> {{$photo->user->name}} </h4>
+                                                                                    <span
+                                                                                        class="text-muted">{{$photo->created_at}}</span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                @endif
+                                                            @endforeach
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane p-20" id="view03" role="tabpanel">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="card">
+                                                <div class="card-header"></div>
+                                                <div class="card-body">
+                                                    @if (!empty($evidences))
+                                                        <div class="row el-element-overlay">
+                                                            @foreach($evidences as $photo)
+                                                                @if ($photo->auxiliary01 == 'IP')
+                                                                    <div class="col-lg-3 col-md-6">
+                                                                        <div class="card">
+                                                                            <div class="card-header">
+                                                                                {{$photo->tipo}}
+                                                                            </div>
+                                                                            <div class="el-card-item">
+                                                                                <div
+                                                                                    class="el-card-avatar el-overlay-1">
+                                                                                    <img
+                                                                                        src="{{asset('storage/' . $photo->path)}}"
+                                                                                        alt="user"
+                                                                                        style="height: 300px;max-height: 400px"/>
+                                                                                    <div class="el-overlay">
+                                                                                        <ul class="list-style-none el-info">
+                                                                                            <li class="el-item">
+                                                                                                <a href="{{url('downloadphoto/' . $photo->id)}}"
+                                                                                                   data-togggle="tooltip"
+                                                                                                   title="Descargar"
+                                                                                                   class="btn default btn-outline el-link">
+                                                                                                    <i class="mdi mdi-download"></i>
+                                                                                                </a>
+                                                                                            </li>
+                                                                                            @can('destroyphotocheckin')
+                                                                                                <li class="el-item">
+                                                                                                    <a href="{{url('destroyphoto/' . $photo->id)}}"
+                                                                                                       class="btn default btn-outline el-link">
+                                                                                                        <i class="mdi mdi-delete"></i>
+                                                                                                    </a>
+                                                                                                </li>
+                                                                                            @endcan
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="el-card-content">
+                                                                                    <h4 class="m-b-0 font-10 font-weight-light"> {{$photo->user->name}} </h4>
+                                                                                    <span
+                                                                                        class="text-muted">{{$photo->created_at}}</span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                @endif
+                                                            @endforeach
+                                                        </div>
+                                                    @endif
+                                                    @if (!empty($evidencesTiros))
+                                                        <div class="row el-element-overlay">
+                                                            @foreach($evidencesTiros as $photo)
+                                                                <div class="col-lg-3 col-md-6">
+                                                                    <div class="card">
+                                                                        <div class="card-header">
+                                                                            {{$photo->description}}
+                                                                        </div>
+                                                                        <div class="el-card-item">
+                                                                            <div
+                                                                                class="el-card-avatar el-overlay-1">
+                                                                                <img
+                                                                                    src="{{asset('storage/' . $photo->path)}}"
+                                                                                    alt="user"
+                                                                                    style="height: 300px;max-height: 400px"/>
+                                                                                <div class="el-overlay">
+                                                                                    <ul class="list-style-none el-info">
+                                                                                        <li class="el-item">
+                                                                                            <a href="{{url('downloadPhotoTireProcess/' . $photo->id)}}"
+                                                                                               data-togggle="tooltip"
+                                                                                               title="Descargar"
+                                                                                               class="btn default btn-outline el-link">
+                                                                                                <i class="mdi mdi-download"></i>
+                                                                                            </a>
+                                                                                        </li>
+                                                                                        @can('destroyphotocheckin')
+                                                                                            <li class="el-item">
+                                                                                                <a href="{{url('destroyPhotoTireProcess/' . $photo->id)}}"
+                                                                                                   class="btn default btn-outline el-link">
+                                                                                                    <i class="mdi mdi-delete"></i>
+                                                                                                </a>
+                                                                                            </li>
+                                                                                        @endcan
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="el-card-content">
+                                                                                <h4 class="m-b-0 font-10 font-weight-light"> {{$photo->user ? $photo->user->name : ''}} </h4>
+                                                                                <span
+                                                                                    class="text-muted">{{$photo->updated_at}}</span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane p-20" id="view04" role="tabpanel">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="col-lg-6">
+                                                <table class="table table-condensed table-bordered table-striped">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Concepto</th>
+                                                        <th>Estatus</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    @foreach($checklisttransports as $check)
+                                                        @if($check->type == 'QI')
+                                                            <tr>
+                                                                <td>{{$check->checklistdetail ? $check->checklistdetail->description : ''}}</td>
+                                                                <td class="bg-{{$check->verified == 'NO' ? 'red text-white' : ''}}">{{$check->verified}}</td>
+                                                            </tr>
+                                                        @endif
+                                                    @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="card">
+                                                <div class="card-header"></div>
+                                                <div class="card-body">
+                                                    @if (!empty($evidences))
+                                                        <div class="row el-element-overlay">
+                                                            @foreach($evidences as $photo)
+                                                                @if ($photo->auxiliary01 == 'QI')
+                                                                    <div class="col-lg-3 col-md-6">
+                                                                        <div class="card">
+                                                                            <div class="card-header">
+                                                                                {{$photo->auxiliary05}}
+                                                                            </div>
+                                                                            <div class="el-card-item">
+                                                                                <div
+                                                                                    class="el-card-avatar el-overlay-1">
+                                                                                    <img
+                                                                                        src="{{asset('storage/' . $photo->path)}}"
+                                                                                        alt="user"
+                                                                                        style="height: 300px;max-height: 400px"/>
+                                                                                    <div class="el-overlay">
+                                                                                        <ul class="list-style-none el-info">
+                                                                                            <li class="el-item">
+                                                                                                <a href="{{url('downloadphoto/' . $photo->id)}}"
+                                                                                                   data-togggle="tooltip"
+                                                                                                   title="Descargar"
+                                                                                                   class="btn default btn-outline el-link">
+                                                                                                    <i class="mdi mdi-download"></i>
+                                                                                                </a>
+                                                                                            </li>
+                                                                                            @can('destroyphotocheckin')
+                                                                                                <li class="el-item">
+                                                                                                    <a href="{{url('destroyphoto/' . $photo->id)}}"
+                                                                                                       class="btn default btn-outline el-link">
+                                                                                                        <i class="mdi mdi-delete"></i>
+                                                                                                    </a>
+                                                                                                </li>
+                                                                                            @endcan
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="el-card-content">
+                                                                                    <h4 class="m-b-0 font-10 font-weight-light"> {{$photo->user->name}} </h4>
+                                                                                    <span
+                                                                                        class="text-muted">{{$photo->created_at}}</span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                @endif
+                                                            @endforeach
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane p-20" id="view05" role="tabpanel">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <table class="table table-condensed table-bordered table-striped">
+                                                <thead>
+                                                <tr>
+                                                    <th>Concepto</th>
+                                                    <th>Estatus</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                @foreach($checklisttransports as $check)
+                                                    @if($check->type == 'OUT')
+                                                        <tr>
+                                                            <td>{{$check->checklistdetail ? $check->checklistdetail->description : ''}}</td>
+                                                            <td class="bg-{{$check->verified == 'NO' ? 'red text-white' : ''}}">{{$check->verified}}</td>
+                                                        </tr>
+                                                    @endif
+                                                @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="card">
+                                                <div class="card-header"></div>
+                                                <div class="card-body">
+                                                    @if (!empty($evidences))
+                                                        <div class="row el-element-overlay">
+                                                            @foreach($evidences as $photo)
+                                                                @if ($photo->auxiliary01 == 'OUT')
+                                                                    <div class="col-lg-3 col-md-6">
+                                                                        <div class="card">
+                                                                            <div class="el-card-item">
+                                                                                <div
+                                                                                    class="el-card-avatar el-overlay-1">
+                                                                                    <img
+                                                                                        src="{{asset('storage/' . $photo->path)}}"
+                                                                                        alt="user"
+                                                                                        style="height: 300px;max-height: 400px"/>
+                                                                                    <div class="el-overlay">
+                                                                                        <ul class="list-style-none el-info">
+                                                                                            <li class="el-item">
+                                                                                                <a href="{{url('downloadphoto/' . $photo->id)}}"
+                                                                                                   data-togggle="tooltip"
+                                                                                                   title="Descargar"
+                                                                                                   class="btn default btn-outline el-link">
+                                                                                                    <i class="mdi mdi-download"></i>
+                                                                                                </a>
+                                                                                            </li>
+                                                                                            @can('destroyphotocheckin')
+                                                                                                <li class="el-item">
+                                                                                                    <a href="{{url('destroyphoto/' . $photo->id)}}"
+                                                                                                       class="btn default btn-outline el-link">
+                                                                                                        <i class="mdi mdi-delete"></i>
+                                                                                                    </a>
+                                                                                                </li>
+                                                                                            @endcan
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="el-card-content">
+                                                                                    <h4 class="m-b-0 font-10 font-weight-light"> {{$photo->user->name}} </h4>
+                                                                                    <span
+                                                                                        class="text-muted">{{$photo->created_at}}</span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                @endif
+                                                            @endforeach
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane p-20" id="view06" role="tabpanel">
+                                    <div class="row">
+                                        <div class="col-lg-12" style="height: 500px;overflow-y: scroll;">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    Historico
+                                                </div>
+                                                <div class="card-body">
+                                                    @foreach($comments as $comment)
+                                                        <div class="row">
+                                                            <div class="col-lg-12">
+                                                                <div class="p-2"><img
+                                                                        src="{{asset('/ico/edilogs.png')}}"
+                                                                        alt="user" width="50"
+                                                                        class="rounded-circle">{{$comment->user->name}}
+                                                                </div>
+                                                                <div class="comment-text active w-100">
+                                                                    <h6 class="font-medium"></h6>
+                                                                    <span
+                                                                        class="m-b-15 d-block">{{$comment->comment}} </span>
+                                                                    <div class="comment-footer ">
+                                                                <span
+                                                                    class="text-muted float-right">{{$comment->created_at}}</span>
+                                                                        <span
+                                                                            class="label label-success label-rounded">Approved</span>
+                                                                        <span class="action-icons active">
+                                                                     </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @endforeach
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane p-20" id="view07" role="tabpanel">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <table
+                                                                class="table table-condensed table-bordered table-striped table-hover">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th>Tipo</th>
+                                                                    <th>Sello 01</th>
+                                                                    <th>Sello 02</th>
+                                                                    <th>Fecha de creación</th>
+                                                                    <th>Usuario</th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                @foreach($seals as $seal)
+                                                                    <tr>
+                                                                        <td>{{$seal->value01}}</td>
+                                                                        <td>{{$seal->seal01}}</td>
+                                                                        <td>{{$seal->seal02}}</td>
+                                                                        <td>{{$seal->created_at}}</td>
+                                                                        <td>{{$seal->user->name}}</td>
+                                                                    </tr>
+                                                                @endforeach
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="card">
+                                                <div class="card-header"></div>
+                                                <div class="card-body">
+                                                    @if (!empty($evidences))
+                                                        <div class="row el-element-overlay">
+                                                            @foreach($evidences as $photo)
+                                                                @if ($photo->auxiliary01 == 'SE')
+                                                                    <div class="col-lg-3 col-md-6">
+                                                                        <div class="card">
+                                                                            <div class="card-header">
+                                                                                {{$photo->auxiliary05}}
+                                                                            </div>
+                                                                            <div class="el-card-item">
+                                                                                <div
+                                                                                    class="el-card-avatar el-overlay-1">
+                                                                                    <img
+                                                                                        src="{{asset('storage/' . $photo->path)}}"
+                                                                                        alt="user"
+                                                                                        style="height: 300px;max-height: 400px"/>
+                                                                                    <div class="el-overlay">
+                                                                                        <ul class="list-style-none el-info">
+                                                                                            <li class="el-item">
+                                                                                                <a href="{{url('downloadphoto/' . $photo->id)}}"
+                                                                                                   data-togggle="tooltip"
+                                                                                                   title="Descargar"
+                                                                                                   class="btn default btn-outline el-link">
+                                                                                                    <i class="mdi mdi-download"></i>
+                                                                                                </a>
+                                                                                            </li>
+                                                                                            @can('destroyphotocheckin')
+                                                                                                <li class="el-item">
+                                                                                                    <a href="{{url('destroyphoto/' . $photo->id)}}"
+                                                                                                       class="btn default btn-outline el-link">
+                                                                                                        <i class="mdi mdi-delete"></i>
+                                                                                                    </a>
+                                                                                                </li>
+                                                                                            @endcan
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="el-card-content">
+                                                                                    <h4 class="m-b-0 font-10 font-weight-light"> {{$photo->user->name}} </h4>
+                                                                                    <span
+                                                                                        class="text-muted">{{$photo->created_at}}</span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                @endif
+                                                            @endforeach
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane p-20" id="view08" role="tabpanel">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <table
+                                                        class="table table-condensed table-bordered table-striped table-hover">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>Folio</th>
+                                                            <th>Número de ticket</th>
+                                                            <th>Peso de entrada</th>
+                                                            <th>Usuario de entrada</th>
+                                                            <th>Fecha de entrada</th>
+                                                            <th>Peso de salida</th>
+                                                            <th>Usuario de salida</th>
+                                                            <th>Fecha de salida</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @foreach($pesos as $peso)
+                                                            <tr>
+                                                                <td>{{$peso->folionumber}}</td>
+                                                                <td>{{$peso->ticket}}</td>
+                                                                <td>{{$peso->weightin}}</td>
+                                                                <td>{{$peso->usercreate ? $peso->usercreate->name : ''}}</td>
+                                                                <td>{{$peso->createddate}}</td>
+                                                                <td>{{$peso->weightout}}</td>
+                                                                <td>{{$peso->userupdate ? $peso->userupdate->name : ''}}</td>
+                                                                <td>{{$peso->updateddate}}</td>
+                                                            </tr>
+                                                        @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane " id="view09" role="tabpanel">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <table
+                                                        class="table table-condensed table-bordered table-striped table-hover">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>Folio</th>
+                                                            <th>Número de LOTO</th>
+                                                            <th>Evento</th>
+                                                            <th>Usuario</th>
+                                                            <th>Fecha de asignación</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @foreach($lotos as $loto)
+                                                            <tr>
+                                                                <td>{{$loto->id}}</td>
+                                                                <td>{{$loto->loto ? $loto->loto->description : ''}}</td>
+                                                                <td>{{$loto->event ? $loto->event->name : ''}}</td>
+                                                                <td>{{$loto->user ? $loto->user->name : ''}}</td>
+                                                                <td>{{$loto->created_at}}</td>
+                                                            </tr>
+                                                        @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane " id="view10" role="tabpanel">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <table
+                                                        class="table table-condensed table-bordered table-striped table-hover">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>Firma de vigilante de entrada</th>
+                                                            <th>Frima de operador de entrada</th>
+                                                            <th>Firma de vigilante de salida</th>
+                                                            <th>Firma de operador de salida</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr>
+                                                            @if($receiptunit->key)
+                                                                <td style="height: 150px">
+                                                                    <img
+                                                                        src="{{asset('storage/' . $receiptunit->key->keyguard01)}}"
+                                                                        alt="Firma"
+                                                                        style="height: 100px;max-height: 200px"/>
+                                                                </td>
+                                                                <td>
+                                                                    <img
+                                                                        src="{{asset('storage/' . $receiptunit->key->keyoperator01 )}}"
+                                                                        alt="Firma"
+                                                                        style="height: 100px;max-height: 200px"/>
+                                                                </td>
+                                                                <td>
+                                                                    <img
+                                                                        src="{{asset('storage/' . $receiptunit->key->keyguard03 )}}"
+                                                                        alt="Firma"
+                                                                        style="height: 100px;max-height: 200px"/>
+                                                                </td>
+                                                                <td>
+                                                                    <img
+                                                                        src="{{asset('storage/' . $receiptunit->key->keyoperator03)}}"
+                                                                        alt="Firma"
+                                                                        style="height: 100px;max-height: 200px"/>
+                                                                </td>
+                                                            @endif
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-center">
+                    Kardex de Unidad
+                </div>
+            </div>
+        </div>
+    </div>
+
+@endsection
+
+@section('css')
+    <link rel="stylesheet" href="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.min.css')}}">
+@endsection
+
+
+
+@section('script')
+    <script src="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.all.min.js')}}"></script>
+    <script>
+        let oTable = $("#table-detailkardex").DataTable({
+            bDestroy: true,
+            "paging": true,
+            "searching": true,
+            "ordering": true,
+            "sScrollY": "350px",
+            "sScrollX": true,
+            "processing": true,
+            "responsive": true,
+            "colReorder": true,
+            "stateSave": true,
+            "stateDuration": 0,
+            "columnDefs": [
+                {"width": "100px", "targets": 0},
+                {"width": "280px", "targets": 1},
+                {"width": "120px", "targets": 2},
+                {"width": "150px", "targets": 3},
+                {"width": "150px", "targets": 4},
+                {"width": "150px", "targets": 5},
+                {"width": "250px", "targets": 6},
+                {"width": "100px", "targets": 7},
+                {"width": "100px", "targets": 8},
+                {"width": "120px", "targets": 9},
+                {"width": "120px", "targets": 10},
+                {"width": "280px", "targets": 11},
+                {"width": "120px", "targets": 12},
+                {"width": "280px", "targets": 13},
+            ],
+            "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
+            "lengthMenu": [[1, 5, 10, 30, 50, 100, 150, 200, 250, -1], [1, 5, 10, 30, 50, 100, 150, 200, 250, "Todos"]],
+            buttons: [
+                {
+                    "extend": "colvis",
+                    "text": "<img src=\"{{asset('/pics/adbuscar.png')}}\"  alt=''><span  style='font-size: 11px;'> Mostar/Ocultar</span>",
+                    "className": "btn btn-outline-info btn-md  btn-bold",
+                    columns: ':not(:first):not(:last)'
+                },
+                {
+                    "extend": "csv",
+                    "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16'><span  style='font-size: 11px;'> Csv</span>",
+                    "className": "btn btn-outline-info btn-md  btn-bold",
+                },
+                {
+                    "extend": "excel",
+                    "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt=''><span  style='font-size: 11px;'> Excel</span>",
+                    "className": "btn btn-outline-info btn-md  btn-bold",
+                }
+            ],
+            language: {
+                "decimal": "",
+                "emptyTable": "No hay información",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                "infoPostFix": "",
+                "thousands": ",",
+                "lengthMenu": "Mostrar _MENU_ Entradas",
+                "loadingRecords": "Cargando...",
+                "processing": '<i class="fa fa-spinner fa-spin fa-4x fa-fw text-info"></i><span class="sr-only">Loading...</span> ',
+                "search": "Buscar:",
+                "zeroRecords": "Sin resultados encontrados",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Ultimo",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                }
+            },
+        });
+    </script>
+
+    <script>
+        function reloadunit($id) {
+            Swal.fire({
+                title: '¿Estas seguro?',
+                text: "Revivir folio de unidad!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, reingresar el folio a la existencia!'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        data: {
+                            id: $id,
+                        },
+                        url: '{!! route('reloadunit') !!}',
+                        type: "POST",
+                        dataType: 'json',
+                        success: data => {
+                            Swal.fire({
+                                type: 'success',
+                                title: `Evento realizado con exito`,
+                                width: 350,
+                            })
+                            setTimeout(function () {
+                                window.location.reload()
+                            }, 2000)
+                        },
+                    })
+
+                }
+            })
+        }
+    </script>
+@endsection

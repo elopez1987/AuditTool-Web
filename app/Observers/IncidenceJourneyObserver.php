@@ -1,0 +1,27 @@
+<?php
+
+namespace App\Observers;
+
+use App\Models\Configuration\WhatsApp\StorageTaskWhatsapp;
+use App\Models\Shipments\StorageIncidenceJourney;
+use App\Traits\GetParameters;
+
+class IncidenceJourneyObserver
+{
+    use GetParameters;
+
+    public function created(StorageIncidenceJourney $storageIncidenceJourney)
+    {
+        $parameter = $this->getParametersOfWarehouse($storageIncidenceJourney->warehouseid);
+        if (in_array('SWH-28', $parameter)) {
+            StorageTaskWhatsapp::create([
+                'centerid' => $storageIncidenceJourney->centerid,
+                'warehouseid' =>$storageIncidenceJourney->warehouseid,
+                'modelid' => $storageIncidenceJourney->orderid,
+                'modeltype' => 'StorageIncidenceJourney',
+                'whatsappid' => 'WTH-REGINC',
+            ]);
+        }
+    }
+
+}

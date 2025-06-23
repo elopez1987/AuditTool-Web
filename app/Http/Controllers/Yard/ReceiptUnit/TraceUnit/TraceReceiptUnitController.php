@@ -1,0 +1,145 @@
+<?php
+
+namespace App\Http\Controllers\Yard\ReceiptUnit\TraceUnit;
+
+use App\Http\Controllers\BaseController;
+use App\Models\General\EvidencePhoto;
+use App\Models\General\StorageComment;
+use App\Models\Yard\CheckListEvidenceProcessUnit;
+use App\Models\Yard\CheckListTransport;
+use App\Models\Yard\ReceiptTruck;
+use App\Models\Yard\ReceiptUnit;
+use App\Models\Yard\ReceiptUnitSeal;
+use App\Models\Yard\ReceiptUnitTicket;
+use App\Models\Yard\StorageLoto\StorageTraceLoto;
+use App\Models\Yard\StorageUnitTrace;
+use Illuminate\Http\Request;
+use PDF;
+
+class TraceReceiptUnitController extends BaseController
+{
+
+    public function index()
+    {
+        $this->authorize('tracereceiptunit.index');
+        return view('Yards.KardexReceiptUnit.KardexForFolio.index');
+    }
+
+    public function getDataReceiptUnitToKardex(Request $request)
+    {
+        $data = ReceiptUnit::controlAccessUser()
+            ->join('shipmentcarriers', 'receiptunits.carrierid', '=', 'shipmentcarriers.id')
+            ->select(['receiptunits.*', 'shipmentcarriers.name as carriername'])
+            ->Folio($request->get('folionumber'))
+            ->Shipmentid($request->get('shipmentid'))
+            ->BoxNumber($request->get('boxnumber'))
+            ->Code($request->get('barcode'))
+            ->FilterForRangeDate($request->get('startDate'), $request->get('endDate'))
+            ->get();
+        return $this->showDataToView($data, 'Yards.KardexReceiptUnit.KardexForFolio.buttons');
+    }
+
+    public function show($id)
+    {
+        $receiptunit = ReceiptUnit::findOrFail($id);
+        $traces = StorageUnitTrace::controlAccessUser()->where('receiptunitid', '=', $id)->get();
+        $evidences = EvidencePhoto::where('model_id', $id)
+            ->leftJoin('systemstatus', 'storageevidencephotos.auxiliary04', '=', 'systemstatus.statusid')
+            ->where('model_type', '=', 'ReceiptUnit')
+            ->select(['storageevidencephotos.*', 'systemstatus.name as tipo'])->get();
+        $evidencesTiros = CheckListEvidenceProcessUnit::where('modelid', $receiptunit->id)
+            ->whereNotNull('path')->where('modeltype', 'ReceiptUnits')->get();
+        $checklisttransports = $this->getChecklistTransports($receiptunit);
+        $comments = StorageComment::where('modeltype', 'ReceiptUnits')
+            ->where('modelid', $id)->get();
+        $seals = ReceiptUnitSeal::controlAccessUser()->where('folionumber', '=', $id)->get();
+        $pesos = ReceiptUnitTicket::where('folionumber', '=', $id)->get();
+        $lotos = StorageTraceLoto::controlAccessUser()->where('folionumber', '=', $id)->get();
+        return view('Yards.KardexReceiptUnit.KardexForFolio.show',
+            compact('traces', 'evidences', 'comments',
+                'checklisttransports', 'receiptunit', 'evidencesTiros', 'seals','pesos','lotos'));
+    }
+
+    public function getChecklistTransports($receiptunit)
+    {
+        return CheckListTransport::where('receiptunitid', $receiptunit->id)
+            ->where('centerid', $receiptunit->centerid)->get();
+    }
+
+    public function generateinvoicekardex($id)
+    {
+        $receiptunit = ReceiptUnit::controlAccessUser()->where('id', $id)->first();
+        $evidences = EvidencePhoto::where('model_id', $id)
+            ->where('model_type', '=', 'ReceiptUnit')
+            ->leftJoin('systemstatus', 'storageevidencephotos.auxiliary04', '=', 'systemstatus.statusid')
+            ->select(['storageevidencephotos.*', 'systemstatus.name as tipo'])
+            ->get();
+        $evidencesTiros = CheckListEvidenceProcessUnit::where('modelid', $receiptunit->id)
+            ->whereNotNull('path')
+            ->where('modeltype', 'ReceiptUnits')->get();
+        $comments = StorageComment::where('modeltype', 'ReceiptUnits')
+            ->where('modelid', $id)->get();
+        $traces = StorageUnitTrace::controlAccessUser()->where('receiptunitid', '=', $id)->get();
+        $fortmat = 'Yards.KardexReceiptUnit.Formats.Kardex';
+        $pdf = PDF::loadView($fortmat, compact('receiptunit',
+            'evidences', 'traces', 'evidencesTiros', 'comments'));
+        return $pdf->download('Kardex de unidad -' . $id . '.pdf');
+    }
+
+    public function printchecklistbrind($id)
+    {
+        $receiptunit = ReceiptUnit::controlAccessUser()->where('id', $id)->first();
+        $tracto = ReceiptTruck::controlAccessUser()->whereNotIn('statusid', ['TR'])
+            ->where('barcode', $receiptunit->auxiliary01)->first();
+        $verified = CheckListTransport::whereReceiptunitid($receiptunit->id)->get();
+        $fortmat = 'Yards.ReceiptUnits.InvoiceFormats.InvoiceBridgestonePT';
+        $pdf = PDF::loadView($fortmat, compact('receiptunit', 'verified', 'tracto'));
+        return $pdf->download('Folio_De_Entrada-' . $receiptunit->id . '.pdf');
+    }
+
+
+    public function printqualitybridge($id)
+    {
+        $receiptunit = ReceiptUnit::controlAccessUser()->where('id', $id)->first();
+        $comments = StorageComment::where('modeltype', 'ReceiptUnits')->where('modelid', $id)->get();
+        $checklisttransports = $this->getChecklistTransports($receiptunit);
+        $photos = EvidencePhoto::where('model_id', $id)
+            ->where('model_type', 'ReceiptUnit')->where('auxiliary01', 'QI')->get();
+        $fortmat = 'Yards.KardexReceiptUnit.Formats.CalidaBridgestone';
+        $pdf = PDF::loadView($fortmat, compact('receiptunit', 'comments', 'checklisttransports', 'photos'));
+        return $pdf->download('Folio_De_Calidad-' . $receiptunit->id . '.pdf');
+
+    }
+
+    public function downloadfiles($id)
+    {
+        $receiptunit = ReceiptUnit::controlAccessUser()->findOrFail($id);
+        $zip = new \ZipArchive();
+        $zip->open($receiptunit->id . ".zip", \ZipArchive::CREATE);
+        $files = EvidencePhoto::where('model_type', '=', 'ReceiptUnit')
+            ->where('model_id', $receiptunit->id)->get();
+        foreach ($files as $file) {
+            $filepath = storage_path() . '/app/' . $file->path;
+            $ultimo = strrpos($file->path, '/');
+            $newPath = substr($file->path, $ultimo + 1);
+            $zip->addFile($filepath, $newPath);
+        }
+
+        $zip->close();
+        header("Content-type: application/octet-stream");
+        header("Content-disposition: attachment; filename=$receiptunit->id.zip");
+        readfile($receiptunit->id . '.zip');
+        unlink($receiptunit->id . '.zip');
+    }
+
+
+    public function downloadticket($id)
+    {
+        $receiptunit = ReceiptUnit::controlAccessUser()->findOrFail($id);
+        $trace = StorageUnitTrace::controlAccessUser()->where('receiptunitid', $id)->first();
+        $fortmat = 'Yards.ReceiptUnits.InvoiceFormats.Bridgestone.ticket';
+        $pdf = PDF::loadView($fortmat, compact('receiptunit','trace'));
+        return $pdf->download('Ticket de peso -' . $receiptunit->id . '.pdf');
+    }
+
+}

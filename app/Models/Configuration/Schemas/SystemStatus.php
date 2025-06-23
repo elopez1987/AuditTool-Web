@@ -1,0 +1,74 @@
+<?php
+
+namespace App\Models\Configuration\Schemas;
+
+use Illuminate\Database\Eloquent\Model;
+
+/**
+ * @method static where(string $string, mixed $schemaid)
+ * @method static create(array $array)
+ * @method static whereSchemaid(string $string)
+ */
+class SystemStatus extends Model
+{
+    public $incrementing = false;
+    protected $table = 'systemstatus';
+    protected $primaryKey = 'statusid';
+    public $keyType = 'string';
+    protected $dateFormat = 'Y-m-d H:i:s';
+
+
+    protected $fillable = [
+        'schemaid',
+        'statusid',
+        'name',
+        'comment',
+        'auxiliary01',
+        'auxiliary02',
+        'auxiliary03',
+        'auxiliary04',
+        'auxiliary05',
+    ];
+
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
+
+    public static function SchemaSTS()
+    {
+        return SystemStatus::whereSchemaid('STS')
+            ->whereNotIn('statusid', ['B'])->pluck('name', 'statusid')->toArray();
+    }
+
+    public static function SchemaRUS()
+    {
+        return SystemStatus::whereSchemaid('RUS')->pluck('name', 'statusid')->toArray();
+    }
+
+    public static function SchemaSRE()
+    {
+        return SystemStatus::whereSchemaid('SRE')->pluck('name', 'statusid')->toArray();
+    }
+
+    public static function SchemaSCHIndex()
+    {
+        return SystemStatus::whereSchemaid('KLE')
+            ->whereAuxiliary01('F')
+            ->pluck('systemstatus.name', 'statusid')->toArray();
+    }
+
+    public static function SchemaEIJ()
+    {
+        return SystemStatus::where('schemaid', 'EIJ')
+            ->whereIn('statusid', ['AB', 'CD'])
+            ->pluck('systemstatus.name', 'statusid')->toArray();
+    }
+
+    public static function SchemaEIJDetail()
+    {
+        return SystemStatus::where('schemaid', 'EIJ')
+            ->whereIn('systemstatus.statusid', ['P', 'N'])
+            ->pluck('name', 'statusid')->toArray();
+    }
+}

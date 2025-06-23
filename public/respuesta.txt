@@ -1,0 +1,224 @@
+[
+    {
+        "source": {
+            "plan": [
+                {
+                    "date": "2023-09-19T06:00:00-06:00",
+                    "carrier": {
+                        "fiscal_code": null,
+                        "company_name": "Nueva Walmart De Mexico S De RL"
+                    },
+                    "event_key": "ENTRANCE"
+                },
+                {
+                    "date": "2023-09-19T07:00:00-06:00",
+                    "carrier": {
+                        "fiscal_code": null,
+                        "company_name": "Nueva Walmart De Mexico S De RL"
+                    },
+                    "event_key": "GENERIC_04"
+                }
+            ],
+            "track": [
+                {
+                    "date": "2023-09-19T03:38:51-06:00",
+                    "driver": {
+                        "certified": null,
+                        "full_name": "  ",
+                        "fiscal_code": null
+                    },
+                    "carrier": {
+                        "fiscal_code": null,
+                        "company_name": null
+                    },
+                    "vehicle": {
+                        "eco": null,
+                        "plate": "37AZ4K"
+                    },
+                    "evidence": [],
+                    "latitude": null,
+                    "event_key": "START_LOAD",
+                    "longitude": null
+                },
+                {
+                    "date": "2023-09-19T05:15:33-06:00",
+                    "driver": {
+                        "certified": null,
+                        "full_name": "  ",
+                        "fiscal_code": null
+                    },
+                    "carrier": {
+                        "fiscal_code": null,
+                        "company_name": null
+                    },
+                    "vehicle": {
+                        "eco": null,
+                        "plate": "37AZ4K"
+                    },
+                    "evidence": [],
+                    "latitude": null,
+                    "event_key": "DOCUMENT",
+                    "longitude": null
+                },
+                {
+                    "date": "2023-09-19T04:24:15-06:00",
+                    "driver": {
+                        "certified": null,
+                        "full_name": "  ",
+                        "fiscal_code": null
+                    },
+                    "carrier": {
+                        "fiscal_code": null,
+                        "company_name": null
+                    },
+                    "vehicle": {
+                        "eco": null,
+                        "plate": "37AZ4K"
+                    },
+                    "evidence": [],
+                    "latitude": null,
+                    "event_key": "END_LOAD",
+                    "longitude": null
+                },
+                {
+                    "date": "2023-09-19T09:25:31-06:00",
+                    "driver": {
+                        "certified": null,
+                        "full_name": "  ",
+                        "fiscal_code": null
+                    },
+                    "carrier": {
+                        "fiscal_code": null,
+                        "company_name": null
+                    },
+                    "vehicle": {
+                        "eco": null,
+                        "plate": "37AZ4K"
+                    },
+                    "evidence": [],
+                    "latitude": null,
+                    "event_key": "EXIT",
+                    "longitude": null
+                },
+                {
+                    "date": "2023-09-19T08:14:03-06:00",
+                    "driver": {
+                        "certified": null,
+                        "full_name": "  ",
+                        "fiscal_code": null
+                    },
+                    "carrier": {
+                        "fiscal_code": null,
+                        "company_name": null
+                    },
+                    "vehicle": {
+                        "eco": null,
+                        "plate": "37AZ4K"
+                    },
+                    "evidence": [],
+                    "latitude": null,
+                    "event_key": "ENTRANCE",
+                    "longitude": null
+                }
+            ],
+            "seal_1": null,
+            "seal_2": null,
+            "ori_aux_1": null,
+            "ori_aux_2": null,
+            "ori_aux_3": null,
+            "ori_aux_4": null,
+            "ori_aux_5": null,
+            "region_name": null,
+            "location_name": "One Roof",
+            "location_equiv": [
+                "5KDA"
+            ]
+        },
+        "destiny": [
+            {
+                "ETA": null,
+                "plan": [
+                    {
+                        "date": "2023-09-19T12:00:00-06:00",
+                        "carrier": {
+                            "fiscal_code": null,
+                            "company_name": "Nueva Walmart De Mexico S De RL"
+                        },
+                        "event_key": "ENTRANCE"
+                    }
+                ],
+                "orden": 1,
+                "track": [
+                    {
+                        "date": "2023-09-19T13:24:23-06:00",
+                        "driver": {
+                            "certified": null,
+                            "full_name": "  ",
+                            "fiscal_code": null
+                        },
+                        "carrier": {
+                            "fiscal_code": null,
+                            "company_name": null
+                        },
+                        "vehicle": {
+                            "eco": null,
+                            "plate": null
+                        },
+                        "evidence": [],
+                        "latitude": 19.6935,
+                        "event_key": "ENTRANCE",
+                        "longitude": -99.2022
+                    },
+                    {
+                        "date": "2023-09-19T16:08:52-06:00",
+                        "driver": {
+                            "certified": null,
+                            "full_name": "  ",
+                            "fiscal_code": null
+                        },
+                        "carrier": {
+                            "fiscal_code": null,
+                            "company_name": null
+                        },
+                        "vehicle": {
+                            "eco": null,
+                            "plate": null
+                        },
+                        "evidence": [],
+                        "latitude": 19.7162,
+                        "event_key": "EXIT",
+                        "longitude": -99.21
+                    }
+                ],
+                "Reject": {
+                    "type": "",
+                    "cause": "",
+                    "status": false
+                },
+                "dst_aux_1": null,
+                "semaphore": "Con llegada a destino",
+                "region_name": "Estado de M\u00e9xico",
+                "activity_num": "3268056723912734665",
+                "location_name": "WM-SC-Cuautitlan-Nave2-7464",
+                "semaphore_tnt": "Con p\u00e9rdida",
+                "location_equiv": [
+                    "459183"
+                ],
+                "delivery_sequence": null
+            }
+        ],
+        "stop_id": 67288989,
+        "vehicle": {
+            "eco": null,
+            "plate": "37AZ4K"
+        },
+        "shipment": "11283334",
+        "tendering": null,
+        "trailer_1": null,
+        "trailer_2": null,
+        "vehicle_type": "",
+        "PDFCartaPorte": false,
+        "supplier_name": "HENKEL MEXICANA S.A. DE C.V.",
+        "supply_chain_id": 19337138
+    }
+]

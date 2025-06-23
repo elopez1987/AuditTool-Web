@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+.navbar-blue{
+    height: 110px;
+}
+
+.nav-item{
+    color: white;
+}
+
+.cliente{
+    color: blue;
+    font-size: 25px;
+    margin-top: 50px;
+    text-align: center;
+}
+
+footer {
+    background-image: linear-gradient( 108.5deg,  rgba(0,67,122,1) 22.6%, rgba(46,101,146,1) 81.1% );
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 100px;
+    color: white;
+}
+
+.derechos{
+    text-align: center;
+    color: black;
+    font-weight: 300;
+    font-size: 12px;
+    padding-top: 20px;
+}
+
+
+body{
+    font-size: 11px;
+    font-family: 'Roboto', sans-serif !important;
+}
+
+.form-control{
+    font-size: .740rem;
+}
+.lider{
+    color: white;
+    font-size: 30px;
+    font-family: 'Abel', sans-serif;
+    margin-left: 250px;
+}
+
+
+
+.auth-wrapper .auth-box {
+
+    background: #fff;
+    padding: 20px;
+    box-shadow: 1px 0 20px rgba(0,0,0,.08);
+    max-width: 400px;
+    width: 90%;
+    margin: 1% 0 !important;
+
+}
+
+.auth-wrapper {
+    min-height: 50vh !important;
+    position: relative;
+}
+
+.text-red{
+    color: red;
+    font-weight: 300;
+}
+
+.loginform{
+    border: 2px solid;
+}

@@ -1,0 +1,97 @@
+.container{
+    padding: 0px;
+    border: 0px;
+    width: 690px;
+}
+html {
+    margin: 0;
+}
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 10mm 10mm 10mm 10mm;
+    font-size: 11px;
+    color:black;
+}
+.column {
+    float: left;
+    width: 33.33%;
+}
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+}
+th, td {
+    text-align: center;
+    padding: 5px;
+    border: 1px solid #212121;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+}
+th:first-child, td:first-child {
+    text-align: left;
+}
+tr:nth-child(even) {
+    background-color: #f2f2f2
+}
+.table-bordered{
+    border: 1px solid #f4f4f4;
+}
+.border-none{
+    border:0px;
+}
+.logo{
+    width: 150px;
+    height: 60px;
+    margin: auto;
+}
+.formato{
+    padding-top: 10px;
+}
+.centro{
+    text-align: center;
+    display: block;
+    font-weight:bold;
+    background-color: #f5f5f5 ;
+}
+.datos{
+    background-color: #f5f5f5 ;
+    width: 30%;
+}
+.w80{
+    width: 80%;
+}
+.w50{
+    width: 50%;
+    text-align: center;
+}
+.w20{
+    width: 20%;
+}
+.w70{
+    width: 70%;
+}
+.name-station{
+    border-left: 0px;
+    border-right: 0px;
+    border-bottom: 0px;
+}
+.nota{
+    color: red;
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: italic;
+    font-weight: 400;
+    text-align: center;
+    font-size: 11px;
+}
+.pleft{
+    text-align: left;
+}
+.pd2{
+    padding: 2px;
+}
