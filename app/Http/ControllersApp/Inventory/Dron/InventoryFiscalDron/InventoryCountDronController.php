@@ -38,7 +38,7 @@ class InventoryCountDronController extends BaseController
         $card = InventoryCard::where('cardid', $location->cardid)->where('inventoryid', $inventoryHead->id)->first();
         if (empty($card->startdate01)) {
             $card->startdate01 = Carbon::now();
-            $card->responsible01= $request['piloto'];
+            $card->responsible01 = $request['piloto'];
             $card->save();
         }
         if ($location->statusid == 'C') {
@@ -49,7 +49,6 @@ class InventoryCountDronController extends BaseController
         $this->savePhotosEvidences($request, $inventoryHead, $location);
         return $this->getResponseWithSuccess('saveCountForFiscal', 'Ubicación registrada con exito.');
     }
-
 
 
     public function saveCountForDronLaser(Request $request)
@@ -76,9 +75,7 @@ class InventoryCountDronController extends BaseController
     }
 
 
-
-
-    public function saveLogError($inventoryHead,$card,$location)
+    public function saveLogError($inventoryHead, $card, $location)
     {
         InventoryLocationLog::create([
             'inventoryid' => $inventoryHead->id,

@@ -37,6 +37,7 @@ class OrderDeliverie extends Model
         return LogOptions::defaults()->logFillable();
     }
 
+
     protected $fillable = ['centerid', 'warehouseid', 'shipmentid', 'workday',
         'turnid', 'carrierid', 'customerid', 'shipmenttypeid', 'folionumber',
         'loadingdate', 'downloaddate', 'auxiliary01', 'auxiliary02', 'auxiliary03',
@@ -164,7 +165,7 @@ class OrderDeliverie extends Model
     }
 
 
-    
+
 
 
 //  -----------------------------  Scopes para filtros  ------------------------------------------
