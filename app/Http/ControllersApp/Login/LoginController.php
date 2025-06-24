@@ -127,7 +127,7 @@ class LoginController extends Controller
      */
     public function getPermissions($user): array
     {
-        
+
 //        return DB::table('role_has_permissions')
 //            ->whereIn('role_id', (function ($query) use ($user) {
 //                $query->from('model_has_roles')
