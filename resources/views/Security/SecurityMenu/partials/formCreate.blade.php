@@ -25,6 +25,7 @@
             <label for="description">Descripción <span style="color: red">*</span></label>
             <input type="text" class="form-control" id="description" name="description"
                    value="{{old('description')}}"
+                   onKeyUp=this.value=this.value.toUpperCase()
             >
         </div>
     </div>

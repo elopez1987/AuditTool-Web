@@ -33,7 +33,7 @@ class SecurityMenuController extends BaseController
 
     public function store(CreateNewMenuRequest $request)
     {
-        $menu = new SecurityMenu($request->validated());
+        SecurityMenu::create($request->validated());;
         return $this->redirectBackSuccessMessage('Registro agregado con exito.');
     }
 
@@ -59,7 +59,7 @@ class SecurityMenuController extends BaseController
     public function destroy($id)
     {
         $this->authorize('securitymenustructure.destroy');
-        SecurityMenu::controlAccessUser()->where('menustrucid',$id)->delete();
+        SecurityMenu::controlAccessUser()->where('menustrucid', $id)->delete();
         return $this->redirectBackSuccessMessage('Menu eliminado con exito.');
     }
 
