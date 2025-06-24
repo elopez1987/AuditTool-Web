@@ -52,7 +52,7 @@ class StorageLocationController extends BaseController
         $this->authorize('storagelocations.create');
         $centers = $this->getCenterForSelect();
         $warehouses = $this->getWarehouseForSelect();
-        return view('Yards.StorageLocations.create', compact('zones', 'centers', 'warehouses'));
+        return view('Yards.StorageLocations.create', compact('centers', 'warehouses'));
     }
 
     public function store(CreateLocationRequest $request): RedirectResponse
