@@ -6,6 +6,7 @@ use App\Auth\UserRepository;
 use App\Http\Controllers\Controller;
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Configuration\Warehouses\SystemWarehouse;
+use App\Models\Security\Modules\ModelHasRole;
 use App\Models\Security\Users\SecurityUsersSession;
 use App\Models\Security\Users\StorageUserDevice;
 use App\User;
@@ -126,13 +127,33 @@ class LoginController extends Controller
      */
     public function getPermissions($user): array
     {
-        return DB::table('role_has_permissions')
-            ->whereIn('role_id', (function ($query) use ($user) {
-                $query->from('model_has_roles')
-                    ->select('role_id')
-                    ->where('model_id', '=', $user->id);
-//                    ->where('model_id', '=', 1);
-            }))->pluck('permission_id')->toArray();
+        
+//        return DB::table('role_has_permissions')
+//            ->whereIn('role_id', (function ($query) use ($user) {
+//                $query->from('model_has_roles')
+//                    ->select('role_id')
+//                    ->where('model_id', '=', $user->id);
+//            }))->pluck('permission_id')->toArray();
+
+        $modelId = ModelHasRole::where('role_id', '=', $user->roles->first()->id)->value('role_id');
+        return DB::table('permissions')
+            ->select(DB::raw("CAST(id AS NVARCHAR(MAX)) AS Resultado"))
+            ->whereIn('id', function ($query) use ($modelId) {
+                $query->select('permission_id')
+                    ->from('role_has_permissions')
+                    ->where('role_id', $modelId);
+            })
+            ->unionAll(
+                DB::table('permissions')
+                    ->select(DB::raw("CAST(name AS NVARCHAR(MAX)) AS Resultado"))
+                    ->whereIn('id', function ($query) use ($modelId) {
+                        $query->select('permission_id')
+                            ->from('role_has_permissions')
+                            ->where('role_id', $modelId);
+                    })
+            )
+            ->pluck('Resultado')->toArray();
+
     }
 
     /**
