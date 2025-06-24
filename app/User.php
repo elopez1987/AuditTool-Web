@@ -6,30 +6,39 @@ use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Security\Modules\ModelHasRole;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\Models\Security\Users\SecurityUsersSession;
+use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Laravel\Passport\HasApiTokens;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\Traits\HasPermissions;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable
+class User extends Model implements AuthenticatableContract, AuthorizableContract
 {
-    use Notifiable;
-    use HasRoles;
     use HasApiTokens;
-    use SoftDeletes;
+    use Notifiable;
+    use HasFactory;
     use LogsActivity;
+    use HasPermissions;
+    use HasRoles;
+    use SoftDeletes;
+
+
 
 
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()->logFillable();
     }
+
 
     protected $fillable = [
         'uuiduser',
@@ -160,6 +169,41 @@ class User extends Authenticatable
 
 
 
+    //
+    public function getAuthIdentifierName()
+    {
+        // TODO: Implement getAuthIdentifierName() method.
+    }
+
+    public function getAuthIdentifier()
+    {
+        // TODO: Implement getAuthIdentifier() method.
+    }
+
+    public function getAuthPassword()
+    {
+        // TODO: Implement getAuthPassword() method.
+    }
+
+    public function getRememberToken()
+    {
+        // TODO: Implement getRememberToken() method.
+    }
+
+    public function setRememberToken($value)
+    {
+        // TODO: Implement setRememberToken() method.
+    }
+
+    public function getRememberTokenName()
+    {
+        // TODO: Implement getRememberTokenName() method.
+    }
+
+    public function can($abilities, $arguments = [])
+    {
+        // TODO: Implement can() method.
+    }
 
 
 
