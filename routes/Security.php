@@ -6,6 +6,7 @@ use App\Http\Controllers\Security\Fuctions\SecurityFunctionsMenuController;
 use App\Http\Controllers\Security\MenuStructure\SecurityDetailMenuController;
 use App\Http\Controllers\Security\MenuStructure\SecurityMenuController;
 use App\Http\Controllers\Security\Modules\SecurityModulesController;
+use App\Http\Controllers\Security\Okta\OktaController;
 use App\Http\Controllers\Security\Permission\PermissionController;
 use App\Http\Controllers\Security\Roles\ParameterRoleController;
 use App\Http\Controllers\Security\Roles\RoleController;
@@ -34,6 +35,12 @@ Route::middleware(['auth'])->group(function () {
 //    ----------------------------------------------- Eventos de usuarios---------------------------------------------------------------------
 //  Restaurar usuarios eliminados
     Route::put('restoreuser/{id}',[EventUserController::class,'restoreuser'])->name('restoreuser');
+
+    ////Crear usuario OKTA
+    Route::put('createOktaUser/{id}', [OktaController::class,'createOktaUser'])->name('createOktaUser');
+    Route::put('deleteuser/{id}',[OktaController::class,'deleteuser'])->name('deleteuser');
+
+
 //    Importar usuarios masivos
     Route::post('importusers',[EventUserController::class,'importusers'])->name('importusers');
 //    Parametrizar usuarios

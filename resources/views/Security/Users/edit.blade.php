@@ -25,43 +25,103 @@
                         @include('Security.Users.partials.formEdit')
                     </form>
                     <hr>
+{{--                    <div class="row mt-4">--}}
+{{--                        @can('securityusers.destroy')--}}
+{{--                            <div class="col-lg-12">--}}
+{{--                                @if($user->statusid == 'E')--}}
+{{--                                    <a href="" data-target="#modal-delete-{{$user->uuiduser}}" data-toggle="modal">--}}
+{{--                                        <button type="button"--}}
+{{--                                                class="btn waves-effect waves-light btn-outline-info btn-md">--}}
+{{--                                            <img--}}
+{{--                                                src="{{asset('/ico/delete_delete_deleteusers_delete_male_user_maleclient_2348.png')}}"--}}
+{{--                                                alt="" class="img-16 ml-2">--}}
+{{--                                            <span style="font-size: 0.675rem "> Eliminar Usuario</span>--}}
+{{--                                        </button>--}}
+{{--                                    </a>--}}
+{{--                                @endif--}}
+{{--                                @if($user->statusid == 'D')--}}
+{{--                                    <a href="" data-target="#modal-restore-{{$user->uuiduser}}" data-toggle="modal">--}}
+{{--                                        <button type="button"--}}
+{{--                                                class="btn waves-effect waves-light btn-outline-info btn-md ml-3">--}}
+{{--                                            <img--}}
+{{--                                                src="{{asset('/ico/cloudrefresh_icon-icons.com_54403.png')}}"--}}
+{{--                                                alt="" class="img-16 ml-2">--}}
+{{--                                            <span style="font-size: 0.675rem "> Restaurar Usuario</span>--}}
+{{--                                        </button>--}}
+{{--                                    </a>--}}
+{{--                                @endif--}}
+
+{{--                            </div>--}}
+
+{{--                            @include('Security.Users.delete')--}}
+{{--                            @include('Security.Users.restore')--}}
+{{--                        @endcan--}}
+{{--                    </div>--}}
+
+
                     <div class="row mt-4">
                         @can('securityusers.destroy')
                             <div class="col-lg-12">
-                                @if($user->statusid == 'E')
-                                    <a href="" data-target="#modal-delete-{{$user->uuiduser}}" data-toggle="modal">
-                                        <button type="button"
-                                                class="btn waves-effect waves-light btn-outline-info btn-md">
-                                            <img
-                                                src="{{asset('/ico/delete_delete_deleteusers_delete_male_user_maleclient_2348.png')}}"
-                                                alt="" class="img-16 ml-2">
-                                            <span style="font-size: 0.675rem "> Eliminar Usuario</span>
-                                        </button>
-                                    </a>
-                                @endif
-                                @if($user->statusid == 'D')
-                                    <a href="" data-target="#modal-restore-{{$user->uuiduser}}" data-toggle="modal">
+
+                                <a href="" data-target="#modal-delete-{{$user->id}}" data-toggle="modal">
+                                    <button type="button"
+                                            class="btn waves-effect waves-light btn-outline-info btn-md">
+                                        <img
+                                            src="{{asset('/ico/delete_delete_deleteusers_delete_male_user_maleclient_2348.png')}}"
+                                            alt="" class="img-16 ml-2">
+                                        <span style="font-size: 0.675rem "> Eliminar Usuario</span>
+                                    </button>
+                                </a>
+
+                                <a href="" data-target="#modal-restore-{{$user->id}}" data-toggle="modal">
+                                    <button type="button"
+                                            class="btn waves-effect waves-light btn-outline-info btn-md ml-3">
+                                        <img
+                                            src="{{asset('/ico/cloudrefresh_icon-icons.com_54403.png')}}"
+                                            alt="" class="img-16 ml-2">
+                                        <span style="font-size: 0.675rem "> Restaurar Usuario</span>
+                                    </button>
+                                </a>
+                                @include('Security.Users.restore')
+
+                                @if(empty($user->auth0))
+                                    <a href="" data-target="#modal-okta-{{$user->id}}" data-toggle="modal">
                                         <button type="button"
                                                 class="btn waves-effect waves-light btn-outline-info btn-md ml-3">
                                             <img
-                                                src="{{asset('/ico/cloudrefresh_icon-icons.com_54403.png')}}"
+                                                src="{{asset('/ico/save02.png')}}"
                                                 alt="" class="img-16 ml-2">
-                                            <span style="font-size: 0.675rem "> Restaurar Usuario</span>
+                                            <span style="font-size: 0.675rem "> Enviar a Okta</span>
                                         </button>
                                     </a>
+                                    @include('Security.Users.okta')
+                                @endif
+
+                                @if(!empty($user->auth0))
+                                    <a href="" data-target="#modal-deleteokta-{{$user->id}}" data-toggle="modal">
+                                        <button type="button"
+                                                class="btn waves-effect waves-light btn-outline-info btn-md ml-3">
+                                            <img
+                                                src="{{asset('/ico/addestroy1.png')}}"
+                                                alt="" class="img-16 ml-2">
+                                            <span style="font-size: 0.675rem "> Eliminar de Okta</span>
+                                        </button>
+                                    </a>
+                                    @include('Security.Users.oktadelete')
                                 @endif
 
                             </div>
 
                             @include('Security.Users.delete')
-                            @include('Security.Users.restore')
+
                         @endcan
                     </div>
-                    @include('layouts.Partials.Errors')
+
                 </div>
             </div>
         </div>
     </div>
+    @include('layouts.Partials.Errors')
 @endsection
 
 @section('css')
