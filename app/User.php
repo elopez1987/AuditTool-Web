@@ -32,8 +32,6 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     use SoftDeletes;
 
 
-
-
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()->logFillable();

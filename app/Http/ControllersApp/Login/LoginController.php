@@ -11,6 +11,7 @@ use App\Models\Security\Users\SecurityUsersSession;
 use App\Models\Security\Users\StorageUserDevice;
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,6 +21,7 @@ use Illuminate\Support\Facades\DB;
 class LoginController extends Controller
 {
     protected $userRepository;
+
 
     public function __construct(UserRepository $userRepository)
     {
@@ -35,33 +37,40 @@ class LoginController extends Controller
             ]);
             $username = filter_var($validatedData['username']);
             $password = filter_var($validatedData['password']);
-            $user = User::where('username', $username)->where('password2', $password)->first();
-            if (empty($user)) {
-                return $this->errorResponseJson('El usuario o contraseña son invalidos');
+            $user = User::where('username', $username)->first();
+
+
+            if (!$user || !\Hash::check($password, $user->password)) {
+                return $this->errorResponseJson('El usuario o contraseña son inválidos');
             }
+
+
             if ($user->statusid != 'E') {
                 return $this->errorResponseJson('El usuario se encuentra inactivo, favor de validar.');
             }
             if (empty($user->auth0)) {
                 return $this->errorResponseJson('El usuario no tiene asignado un perfil de usuario en Auth0');
             }
+
             $sub = $user->auth0;
-            $user = $this->userRepository->fromSession([
+            $userLogin = $this->userRepository->fromSession([
                 'sub' => $sub,
             ]);
-            $token = $user->createToken('YMS')->accessToken;
-            $paramters = $this->getParameterSystem($user);
-            $this->updateLastSession($user);
+
+            $token = $userLogin->createToken('YMS')->accessToken;
+            \Log::info($token);
+
+            $paramters = $this->getParameterSystem();
+            $this->updateLastSession();
             $this->registerDevice($request['serialnumber']);
-            $permissions = $this->getPermissions($user);
-            $response = $this->responseSuccessJson($token, $paramters, $permissions, $user);
+            $permissions = $this->getPermissions();
+            $response = $this->responseSuccessJson($token, $paramters, $permissions);
             return $response;
 
         } catch (InvalidTokenException $e) {
             return response()->json(['error' => 'Invalid token'], 401);
         }
     }
-
 
     public function responseSuccessJson(string $token, array $paramters, array $permissions, $user): JsonResponse
     {
@@ -81,10 +90,10 @@ class LoginController extends Controller
     }
 
 
-    public function getParameterSystem($user)
+    public function getParameterSystem()
     {
-        $parameterWare = SystemWarehouse::where('warehouseid', '=', $user->access->warehouseid)->value('configurationflag');
-        $parameterCenter = SystemCenterDistribution::where('centerid', $user->access->centerid)->value('auxiliary05');
+        $parameterWare = SystemWarehouse::where('warehouseid', '=', Auth::user()->access->warehouseid)->value('configurationflag');
+        $parameterCenter = SystemCenterDistribution::where('centerid', Auth::user()->access->centerid)->value('auxiliary05');
         $parameterWare = is_array($parameterWare) ? $parameterWare : (array)$parameterWare;
         $parameterCenter = is_array($parameterCenter) ? $parameterCenter : (array)$parameterCenter;
         if ($parameterWare !== null && $parameterCenter !== null) {
@@ -114,10 +123,10 @@ class LoginController extends Controller
         ]);
     }
 
-    public function updateLastSession($user): void
+    public function updateLastSession(): void
     {
         SecurityUsersSession::updateOrCreate(
-            ['username' => $user->username],
+            ['username' => Auth::user()->username],
             ['lastsessiondate' => Carbon::now(),]
         );
     }
@@ -125,7 +134,7 @@ class LoginController extends Controller
     /**
      * @return array
      */
-    public function getPermissions($user): array
+    public function getPermissions(): array
     {
 
 //        return DB::table('role_has_permissions')
@@ -135,7 +144,7 @@ class LoginController extends Controller
 //                    ->where('model_id', '=', $user->id);
 //            }))->pluck('permission_id')->toArray();
 
-        $modelId = ModelHasRole::where('role_id', '=', $user->roles->first()->id)->value('role_id');
+        $modelId = ModelHasRole::where('role_id', '=', Auth::user()->roles->first()->id)->value('role_id');
         return DB::table('permissions')
             ->select(DB::raw("CAST(id AS NVARCHAR(MAX)) AS Resultado"))
             ->whereIn('id', function ($query) use ($modelId) {

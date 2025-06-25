@@ -27,7 +27,7 @@ class ImportProviders implements ToCollection, WithHeadingRow, WithValidation
                 ],
                 [
                     'name' => trim($row['name']),
-                    'auxiliary10' => Auth::user()->username,
+                    'auxiliary05' => Auth::user()->username,
                 ]
             );
         }

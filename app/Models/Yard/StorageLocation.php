@@ -81,32 +81,6 @@ class StorageLocation extends Model
         }
     }
 
-    protected static function booted()
-    {
-        static::created(function (StorageLocation $model) {
-            self::clearRelevantCache($model);
-        });
-        static::updated(function (StorageLocation $model) {
-            self::clearRelevantCache($model);
-        });
-        static::deleted(function (StorageLocation $model) {
-            self::clearRelevantCache($model);
-        });
-    }
-
-
-    protected static function clearRelevantCache(StorageLocation $model)
-    {
-        $keys = [
-            'locations_' . md5(json_encode(['name' => $model->name, 'zoneid' => $model->zone_id, 'statusid' => $model->status_id])),
-        ];
-        foreach ($keys as $key) {
-            \Cache::forget($key);
-        }
-    }
-
-
-
 
     public static function controlAccessUser()
     {

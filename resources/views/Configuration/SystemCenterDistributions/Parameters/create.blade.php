@@ -98,7 +98,7 @@
                 "lengthChange": true,
                 "searching": true,
                 "ordering": true,
-                "sScrollY": "400px",
+                "sScrollY": "700px",
                 "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
                 "lengthMenu": [[-1], ["Todos"]],
                 buttons: [

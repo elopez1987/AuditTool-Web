@@ -29,21 +29,13 @@ class StorageLocationController extends BaseController
 
     public function getDataLocations(Request $request)
     {
-
-        $cacheKey = 'locations_' . md5(json_encode($request->all()));
-        $data = \Cache::remember($cacheKey, 60, function () use ($request) {
-            return StorageLocation::controlAccessUser()
-                ->with(['zone', 'center', 'status'])
-                ->Name($request->get('name'))
-                ->Zone($request->get('zoneid'))
-                ->Status($request->get('statusid'))
-                ->get();
-        });
+        $data = StorageLocation::controlAccessUser()
+            ->with(['zone:id,name,zoneid', 'center:centerid,name,description', 'status:statusid,name','warehouse:warehouseid,name'])
+            ->Name($request->get('name'))
+            ->Zone($request->get('zoneid'))
+            ->Status($request->get('statusid'));
         return DataTables::of($data)
             ->addColumn('btn', 'Yards.StorageLocations.partials.buttons')
-            ->addColumn('warehousename', function ($row) {
-                return $row->warehouse ? $row->warehouse->name : '';
-            })
             ->rawColumns(['btn'])->toJson();
     }
 

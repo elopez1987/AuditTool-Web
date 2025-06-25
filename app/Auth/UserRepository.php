@@ -25,11 +25,12 @@ final class UserRepository extends UserRepositoryAbstract implements UserReposit
 
     public function fromSession(array $user): ?Authenticatable
     {
+
         $identifier = $user['sub'] ?? $user['auth0'] ?? null;
         $profile = [
             'auth0' => $identifier,
-            'name' => $user['name'] ?? '',
-            'email' => $user['email'] ?? '',
+//            'name' => $user['name'] ?? '',
+//            'email' => $user['email'] ?? '',
 //            'email_verified' => in_array($user['email_verified'], [1, true], true),
         ];
         $cached = $this->withoutRecording(fn() => Cache::get('auth0_user_' . $identifier));
@@ -50,10 +51,10 @@ final class UserRepository extends UserRepositoryAbstract implements UserReposit
         if (null !== $user) {
             $updates = [];
 
-            if ($user->auth0 !== $profile['auth0']) {
-                $updates['auth0'] = $profile['auth0'];
-            }
-
+//            if ($user->auth0 !== $profile['auth0']) {
+//                $updates['auth0'] = $profile['auth0'];
+//            }
+//
 //            if ($user->name !== $profile['name']) {
 //                $updates['name'] = $profile['name'];
 //            }
@@ -61,7 +62,7 @@ final class UserRepository extends UserRepositoryAbstract implements UserReposit
 //            if ($user->email !== $profile['email']) {
 //                $updates['email'] = $profile['email'];
 //            }
-//
+
 //            $emailVerified = in_array($user->email_verified, [1, true], true);
 
 //            if ($emailVerified !== $profile['email_verified']) {
@@ -78,11 +79,10 @@ final class UserRepository extends UserRepositoryAbstract implements UserReposit
             }
         }
 
-        if (null === $user) {
-            $profile['password'] = Hash::make(Str::random(32));
-
-            $user = \App\User::create($profile);
-        }
+//        if (null === $user) {
+//            $profile['password'] = Hash::make(Str::random(32));
+//            $user = \App\User::create($profile);
+//        }
 
         $this->withoutRecording(fn() => Cache::put('auth0_user_' . $identifier, $user, 30));
 

@@ -21,7 +21,7 @@
         },
         "columns": [
             {data: 'center.description', name: 'center.description'},
-            {data: 'warehousename'},
+            {data: 'warehouse.name', name: 'warehouse.name'},
             {data: 'zone.name', name: 'zone.name'},
             {data: 'name'},
             {data: 'locationid'},

@@ -36,7 +36,7 @@
                                             <img src="{{asset('/ico/systemfunctions.png')}}" alt="" class="img-25 ml-1">
                                         </a>
                                     </td>
-                                    <td>One Roof</td>
+                                    <td> </td>
                                 </tr>
                                 <tr>
                                     <td class="font-12"> Enviar datos a Izel</td>
@@ -63,7 +63,7 @@
                                             <img src="{{asset('/ico/systemfunctions.png')}}" alt="" class="img-25 ml-1">
                                         </a>
                                     </td>
-                                    <td>One Roof</td>
+                                    <td> </td>
                                 </tr>
                                 <tr>
                                     <td class="font-12"> Enviar mensajes de unidades sin arrivar a carga.</td>
@@ -72,7 +72,7 @@
                                             <img src="{{asset('/ico/systemfunctions.png')}}" alt="" class="img-25 ml-1">
                                         </a>
                                     </td>
-                                    <td>One Roof</td>
+                                    <td> </td>
                                 </tr>
                                 <tr>
                                     <td class="font-12"> Obtener PODs de RControl.</td>
@@ -81,7 +81,7 @@
                                             <img src="{{asset('/ico/systemfunctions.png')}}" alt="" class="img-25 ml-1">
                                         </a>
                                     </td>
-                                    <td>One Roof</td>
+                                    <td> </td>
                                 </tr>
                                 <tr>
                                     <td class="font-12"> Ajustar Caja de Patios</td>
@@ -99,7 +99,7 @@
                                             <img src="{{asset('/ico/systemfunctions.png')}}" alt="" class="img-25 ml-1">
                                         </a>
                                     </td>
-                                    <td>One Roof</td>
+                                    <td> </td>
                                 </tr>
                                 <tr>
                                     <td class="font-12"> Enviar mensaje unidades sin enrampar de embarques</td>
@@ -108,7 +108,7 @@
                                             <img src="{{asset('/ico/systemfunctions.png')}}" alt="" class="img-25 ml-1">
                                         </a>
                                     </td>
-                                    <td>One Roof</td>
+                                    <td> </td>
                                 </tr>
                                 <tr>
                                     <td class="font-12"> Obtener la ETA de los embaques</td>
@@ -117,16 +117,7 @@
                                             <img src="{{asset('/ico/systemfunctions.png')}}" alt="" class="img-25 ml-1">
                                         </a>
                                     </td>
-                                    <td>One Roof</td>
-                                </tr>
-                                <tr>
-                                    <td class="font-12"> Enviar correo de visita segura</td>
-                                    <td>
-                                        <a href="{{url('getEnvioMailVisita')}}">
-                                            <img src="{{asset('/ico/systemfunctions.png')}}" alt="" class="img-25 ml-1">
-                                        </a>
-                                    </td>
-                                    <td>One Roof</td>
+                                    <td> </td>
                                 </tr>
                                 <tr>
                                     <td class="font-12"> Borra el log de envios de mensajes de whatsapp.</td>
@@ -190,7 +181,7 @@
             "serverSide" :false,
             'colReorder': true,
             "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
-            "lengthMenu": [[10, 30, 50, 100, 150, 200, 250, -1], [10, 30, 50, 100, 150, 200, 250, "Todos"]],
+            "lengthMenu": [[30, 50, 100, 150, 200, 250, -1], [30, 50, 100, 150, 200, 250, "Todos"]],
 
             buttons: [
                 {

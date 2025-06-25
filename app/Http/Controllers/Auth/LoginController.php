@@ -43,10 +43,10 @@ class LoginController extends Controller
             ->select(['id', 'statusid', 'username'])->first();
         if (!empty($user)) {
             if ($user->statusid == 'E') {
-//                SecurityUsersSession::updateOrCreate(
-//                    ['username' => $user->username],
-//                    ['lastsessiondate' => Carbon::now(),]
-//                );
+                SecurityUsersSession::updateOrCreate(
+                    ['username' => $user->username],
+                    ['lastsessiondate' => Carbon::now(),]
+                );
                 return $this->guard()->attempt($this->credentials($request), $request->filled('remember'));
             } else {
                 throw ValidationException::withMessages([$this->username() => [trans('auth.user')],]);
