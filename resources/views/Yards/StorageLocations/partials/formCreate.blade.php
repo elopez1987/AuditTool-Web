@@ -13,6 +13,7 @@
         <div class="form-group">
             <label for="warehouseid">Bodega <span style="color: red">*</span></label>
             <select name="warehouseid" id="warehouseid" required class="form-control select2">
+                <option value="" selected>Seleccione una opción</option>
                 @foreach($warehouses as $model)
                     <option value="{{$model->warehouseid}}"> {{$model->name}} </option>
                 @endforeach
