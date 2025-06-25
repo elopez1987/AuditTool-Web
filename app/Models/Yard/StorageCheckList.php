@@ -60,7 +60,9 @@ class StorageCheckList extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
-        return StorageCheckList::whereIn('storagechecklists.centerid', $centers);
+        $warehouses = SecurityAccessWarehouse::Warehouses();
+        return StorageCheckList::whereIn('storagechecklists.centerid', $centers)
+            ->whereIn('storagechecklists.warehouseid', $warehouses);;
     }
 
     public function center()
