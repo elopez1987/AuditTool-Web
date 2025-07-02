@@ -59,7 +59,7 @@ class OrderDeliverie extends Model
         parent::boot();
         if (!app()->runningInConsole()) {
             self::creating(function (OrderDeliverie $model) {
-                $model->createuser = Auth::id();
+                $model->createuser = Auth::user()->id;
                 $model->auxiliary05 = bin2hex(random_bytes(30));
             });
         }
