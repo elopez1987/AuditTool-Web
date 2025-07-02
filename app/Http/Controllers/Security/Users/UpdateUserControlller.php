@@ -36,19 +36,8 @@ class UpdateUserControlller extends Controller
             return redirect()->back()->withErrors(['uuiduser' => 'El usuario no fue encontrado.']);
         }
         try {
-            $user->email = $request['email'];
+//            $user->email = $request['email'];
             $user->name = $request['name'];
-            if ($request->has('password3') && $request->filled('password3')) {
-                $validatedData = $request->validate([
-                    'password3' => ['required', 'string', Password::min(8)->mixedCase()
-                        ->uncompromised()->symbols()->letters()->numbers()],
-                ]);
-                $session = $this->updatePassword($validatedData['password3'], $user);
-                if ($session === '0') {
-                    Auth::logout();
-                    return Redirect::to('/');
-                }
-            }
             $this->saveAvatarToUser($request, $user);
             $user->save();
             return redirect()->back()->with('info', 'Datos actualizados con éxito.');

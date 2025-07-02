@@ -47,19 +47,6 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="example-email" class="col-md-12">Correo electronico</label>
-                                    <div class="col-md-12">
-                                        <input type="email" value="{{$user->email}}"
-                                               class="form-control form-control-line" name="email" required id="email">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-12">Nueva contraseña</label>
-                                    <div class="col-md-12">
-                                        <input type="password" name="password3" id="password3" class="form-control form-control-line">
-                                    </div>
-                                </div>
-                                <div class="form-group">
                                     <label for="" class="col-md-12">Imagen de Perfil</label>
                                     <div class="input-group mb-3 col-md-12">
                                         <div class="custom-file">
