@@ -25,11 +25,12 @@ trait QuerysDashboard
         return ReceiptUnit::controlAccessUser()
             ->leftJoin('storagezones as sz', function ($join) {
                 $join->on('receiptunits.zoneid', '=', 'sz.id')
-                    ->on('receiptunits.centerid', '=', 'sz.centerid');
+                    ->on('receiptunits.centerid', '=', 'sz.centerid')
+                    ->on('receiptunits.warehouseid', '=', 'sz.warehouseid');
             })
             ->whereNotIn('receiptunits.statusid', ['TR'])
             ->select('sz.name', DB::raw('COUNT(receiptunits.zoneid) as total'))
-            ->groupBy('sz.name','receiptunits.statusid')
+            ->groupBy('sz.name')
             ->get();
     }
 
