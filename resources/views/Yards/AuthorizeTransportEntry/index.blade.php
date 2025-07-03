@@ -48,6 +48,8 @@
                             <table id="table-authorize" width="100%" class="table table-bordered table-striped table-condensed">
                                 <thead>
                                 <tr>
+                                    <th class="bg-inverse text-white">C.Distribución</th>
+                                    <th class="bg-inverse text-white">Bodega</th>
                                     <th class="bg-inverse text-white">Folio</th>
                                     <th class="bg-inverse text-white">C.Barra</th>
                                     <th class="bg-inverse text-white">Linea</th>
@@ -57,6 +59,7 @@
                                     <th class="bg-inverse text-white">Sello</th>
                                     <th class="bg-inverse text-white">Fecha de registro</th>
                                     <th class="bg-inverse text-white">Concepto de entrada</th>
+                                    <th class="bg-inverse text-white">Origen</th>
                                     <th class="bg-inverse text-white">Opciones</th>
                                 </tr>
                                 </thead>

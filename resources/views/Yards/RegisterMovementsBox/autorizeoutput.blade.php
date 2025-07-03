@@ -11,14 +11,17 @@
                     @csrf
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-lg-8">
+                            <div class="col-lg-6">
                                 <div class="card-input">
                                     <div class="row">
                                         <div class="col-lg-4 col-md-6 col-xs-12">
                                             <div class="form-group">
                                                 <label for="folionumber">Número de Folio</label>
-                                                <input type="text" class="form-control @error('folionumber') is-invalid @enderror"  id="folionumber" required
-                                                       name="folionumber" maxlength="20" value="{{ old('folionumber') }}">
+                                                <input type="text"
+                                                       class="form-control @error('folionumber') is-invalid @enderror"
+                                                       id="folionumber" required
+                                                       name="folionumber" maxlength="20"
+                                                       value="{{ old('folionumber') }}">
                                                 @error('folionumber')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -28,9 +31,10 @@
                                             <div class="form-group">
                                                 <label for="barcode">Código de barra</label>
                                                 <div class="input-group">
-                                                    <input type="number"  readonly class="form-control numeric" id="barcode"
+                                                    <input type="number" readonly class="form-control numeric"
+                                                           id="barcode"
                                                            name="barcode"
-                                                            value="{{ old('barcode') }}">
+                                                           value="{{ old('barcode') }}">
                                                 </div>
                                             </div>
                                         </div>
@@ -61,7 +65,7 @@
                                                 <label for="boxnumber">Placa De caja</label>
                                                 <input type="text" class="form-control" readonly id="boxnumber"
                                                        name="boxnumber"
-                                                     value="{{ old('boxnumber') }}"
+                                                       value="{{ old('boxnumber') }}"
                                                 >
                                             </div>
                                         </div>
@@ -135,49 +139,58 @@
                                     </div>
                                 @endif
                             </div>
-                            <div class="col-lg-4">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="card card-input">
-                                            <div class="card-body">
-                                                <textarea id="comment" name="comment" cols="80" style="height: 100px;"></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                @php
-                                    $exists = !empty($parameter) &&  in_array('SWH-40', $parameter);
-                                @endphp
-                                @if ($exists)
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="card-input">
-                                                <table
-                                                    class="table table-condensed table-hover table-striped table-bordered">
-                                                    <thead>
-                                                    <th>Descripción</th>
-                                                    <th>SI</th>
-                                                    <th>NO</th>
-                                                    </thead>
-                                                    <thead>
-                                                    @foreach($checkAS as $item)
-                                                        <tr>
-                                                            <td class="hide"><input type="text" value="{{$item->checklistid}}" id="checklistid[]" name="checklistid[]" class="hide"></td>
-                                                            <td class="hide"><input type="text" value="{{$item->id}}" id="checklitsdetailid[]" name="checklitsdetailid[]" class="hide"></td>
-                                                            <td>{{$item->description}}</td>
-                                                            <td><input type="radio" id="response[]" @if($exists) required @endif value="1" name="response[]-{{$item->id}}"></td>
-                                                            <td><input type="radio" id="response[]" @if($exists) required @endif value="0" name="response[]-{{$item->id}}"></td>
-                                                        </tr>
-                                                    @endforeach
-                                                    </thead>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endif
-                            </div>
                         </div>
 
+                        @php
+                            $exists = !empty($parameter) &&  in_array('SWH-40', $parameter);
+                        @endphp
+                        @if ($exists)
+                            <div class="row mt-4">
+                                <div class="col-lg-6">
+                                    <div class="card-input">
+                                        <table
+                                            class="table table-condensed table-hover table-striped table-bordered">
+                                            <thead>
+                                            <th>Descripción</th>
+                                            <th>SI</th>
+                                            <th>NO</th>
+                                            </thead>
+                                            <thead>
+                                            @foreach($checkAS as $item)
+                                                <tr>
+                                                    <td class="hide"><input type="text"
+                                                                            value="{{$item->checklistid}}"
+                                                                            id="checklistid[]" name="checklistid[]"
+                                                                            class="hide"></td>
+                                                    <td class="hide"><input type="text" value="{{$item->id}}"
+                                                                            id="checklitsdetailid[]"
+                                                                            name="checklitsdetailid[]" class="hide">
+                                                    </td>
+                                                    <td>{{$item->description}}</td>
+                                                    <td><input type="radio" id="response[]" @if($exists) required
+                                                               @endif value="1" name="response[]-{{$item->id}}">
+                                                    </td>
+                                                    <td><input type="radio" id="response[]" @if($exists) required
+                                                               @endif value="0" name="response[]-{{$item->id}}">
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+
+                        <div class="row mt-4">
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="">Comentario</label>
+                                    <textarea class="form-control" rows="10" name="comment"
+                                              placeholder="Ingrese un comentario corto..."></textarea>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-footer">
                         <div class="row">
@@ -210,11 +223,11 @@
 @section('script')
     <script src="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.all.min.js')}}"></script>
     <script src="{{asset('/theme/assets/libs/quill/dist/quill.min.js')}}"></script>
-    <script>
-        var quill = new Quill('#comment', {
-            theme: 'snow'
-        });
-    </script>
+    {{--    <script>--}}
+    {{--        var quill = new Quill('#comment', {--}}
+    {{--            theme: 'snow'--}}
+    {{--        });--}}
+    {{--    </script>--}}
     <script>
         $("#zoneid").change(event => {
             $.get(`./getLocationForZone/${event.target.value}`, function (res) {

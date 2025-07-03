@@ -42,15 +42,9 @@ class AuthorizeTransportEntriesController extends BaseController
     public function getDataTransportES(Request $request)
     {
         $data = ReceiptUnit::controlAccessUser()
-            ->select([
-                'receiptunits.id', 'receiptunits.boxnumber', 'receipttrucks.trucknumber', 'receiptunits.containerseal',
-                'receipttrucks.operatorname', 'receiptunits.entrydate', 'receiptunits.barcode', 'receiptunits.statusid',
-                'shipmentcarriers.name as carriername', 'storagereasons.name as razon'
-            ])
-            ->leftJoin('systemstatus', 'receiptunits.statusid', '=', 'systemstatus.statusid')
-            ->leftJoin('shipmentcarriers', 'receiptunits.carrierid', '=', 'shipmentcarriers.id')
-            ->leftJoin('storagereasons', 'receiptunits.razonstatusid', '=', 'storagereasons.id')
-            ->leftjoin('receipttrucks', 'receiptunits.foliotruck', '=', 'receipttrucks.id')
+            ->with('unittype:id,description', 'warehouse:warehouseid,name',
+                'carrier:id,name', 'reason:id,name',
+                'center:centerid,description','status:statusid,name','unittype:id,description')
             ->Folio($request->get('folionumber'))
             ->BoxNumber($request->get('boxnumber'))
             ->Barcode($request->get('barcode'))

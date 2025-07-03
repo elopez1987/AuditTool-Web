@@ -22,15 +22,18 @@
             }
         },
         "columns": [
+            {data: 'center.description',name: 'center.description',},
+            {data: 'warehouse.name',name: 'warehouse.name',},
             {data: 'id'},
             {data: 'barcode'},
-            {data: 'carriername',},
+            {data: 'carrier.name',name: 'carrier.name',},
             {data: 'operatorname'},
             {data: 'boxnumber'},
             {data: 'trucknumber'},
             {data: 'containerseal'},
             {data: 'entrydate'},
-            {data: 'razon',},
+            {data: 'reason.name',name: 'reasone.name'},
+            {data:'unittype.description',name:'unittype.description'},
             {data: 'btn'},
         ],
         "columnDefs": [
@@ -44,6 +47,9 @@
             {"width": "260px", "targets": 7},
             {"width": "120px", "targets": 8},
             {"width": "120px", "targets": 9},
+            {"width": "120px", "targets": 10},
+            {"width": "120px", "targets": 11},
+            {"width": "120px", "targets": 12},
         ],
 
         "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',

@@ -12,18 +12,6 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-lg-12 col-md-6 col-sm-12">
-                            <div class="form-group">
-                                <label for="carriernamet">Linea de transporte<span style="color: red">*</span></label>
-                                <input type="text" class="form-control" readonly id="carriername" name="carriername"
-                                       value="{{$carriername}}"
-                                       onKeyUp=this.value=this.value.toUpperCase()
-                                >
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="form-group">
                                 <label for="folionumbert">Folio de patio<span style="color: red">*</span></label>
