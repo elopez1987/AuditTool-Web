@@ -24,11 +24,11 @@ class ReceiptUnitTicket extends Model
         parent::boot();
         if (!app()->runningInConsole()) {
             self::creating(function (ReceiptUnitTicket $model) {
-                $model->createuser = \Auth::id();
+                $model->createuser = \Auth::user()->id;
                 $model->createddate = Carbon::now();
             });
             self::updating(function (ReceiptUnitTicket $model) {
-                $model->updateuser = \Auth::id();
+                $model->updateuser = \Auth::user()->id;
                 $model->updateddate = Carbon::now();
             });
         }
@@ -69,7 +69,7 @@ class ReceiptUnitTicket extends Model
             ->where('ticket', $request['ticket'])
             ->update([
                 'weightout' => $request['weightout'],
-                'updateuser' => \Auth::id(),
+                'updateuser' => \Auth::user()->id,
                 'updateddate' => Carbon::now(),
                 'value02' => Carbon::now(),
             ]);

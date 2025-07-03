@@ -99,7 +99,7 @@ class ReceiptUnit extends Model
         parent::boot();
         if (!app()->runningInConsole()) {
             self::creating(function (ReceiptUnit $model) {
-                $model->createuser = Auth::id();
+                $model->createuser = Auth::user()->id;
                 $model->entrydate = Carbon::now();
             });
         }
@@ -208,7 +208,7 @@ class ReceiptUnit extends Model
     {
         return $this->belongsTo(ReceiptTruck::class, 'foliotruck','id');
     }
-    
+
 //    --Scopes para filtros de tabla
     public function scopeFolio($query, $folionumber)
     {

@@ -21,7 +21,7 @@ class ReceiptUnitSeal extends Model
         parent::boot();
         if (!app()->runningInConsole()) {
             self::creating(function (ReceiptUnitSeal $model) {
-                $model->createuser = Auth::id();
+                $model->createuser = Auth::user()->id;
             });
         }
     }

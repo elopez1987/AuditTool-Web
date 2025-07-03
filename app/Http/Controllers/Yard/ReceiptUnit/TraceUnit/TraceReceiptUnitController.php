@@ -14,6 +14,7 @@ use App\Models\Yard\ReceiptUnitTicket;
 use App\Models\Yard\StorageLoto\StorageTraceLoto;
 use App\Models\Yard\StorageUnitTrace;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use PDF;
 
 class TraceReceiptUnitController extends BaseController
@@ -89,11 +90,30 @@ class TraceReceiptUnitController extends BaseController
     public function printchecklistbrind($id)
     {
         $receiptunit = ReceiptUnit::controlAccessUser()->where('id', $id)->first();
-        $tracto = ReceiptTruck::controlAccessUser()->whereNotIn('statusid', ['TR'])
-            ->where('barcode', $receiptunit->auxiliary01)->first();
-        $verified = CheckListTransport::whereReceiptunitid($receiptunit->id)->get();
+        $tracto = ReceiptTruck::controlAccessUser()->where('id', $receiptunit->foliotruck)->first();
+
+        $verified = DB::table('storagechecklisttransports as s')
+            ->select('s.id', 's.centerid', 's.checklistid', 's.receiptunitid',
+                's.checklitsdetailid', 's.verified', 's.type', 'ch.auxiliary01 as idcheck', 'ch.description',)
+            ->leftJoin('storagechecklistdetails as ch', function ($join) {
+                $join->on('s.checklistid', '=', 'ch.checklistid')->on('s.checklitsdetailid', '=', 'ch.id');
+            })
+            ->where('s.receiptunitid', $receiptunit->id)
+            ->whereIn('s.type', ['IN', 'QI'])
+            ->get();
+
+        $verifiedOut = DB::table('storagechecklisttransports as s')
+            ->select('s.id', 's.centerid', 's.checklistid', 's.receiptunitid',
+                's.checklitsdetailid', 's.verified', 's.type', 'ch.auxiliary01 as idcheckOut', 'ch.description',)
+            ->leftJoin('storagechecklistdetails as ch', function ($join) {
+                $join->on('s.checklistid', '=', 'ch.checklistid')->on('s.checklitsdetailid', '=', 'ch.id');
+            })
+            ->where('s.receiptunitid', $receiptunit->id)
+            ->whereIn('s.type', ['OUT'])->get();
+
+
         $fortmat = 'Yards.ReceiptUnits.InvoiceFormats.InvoiceBridgestonePT';
-        $pdf = PDF::loadView($fortmat, compact('receiptunit', 'verified', 'tracto'));
+        $pdf = PDF::loadView($fortmat, compact('receiptunit', 'verified', 'tracto','verifiedOut'));
         return $pdf->download('Folio_De_Entrada-' . $receiptunit->id . '.pdf');
     }
 
@@ -102,11 +122,19 @@ class TraceReceiptUnitController extends BaseController
     {
         $receiptunit = ReceiptUnit::controlAccessUser()->where('id', $id)->first();
         $comments = StorageComment::where('modeltype', 'ReceiptUnits')->where('modelid', $id)->get();
-        $checklisttransports = $this->getChecklistTransports($receiptunit);
+        $verified = DB::table('storagechecklisttransports as s')
+            ->select('s.id', 's.centerid', 's.checklistid', 's.receiptunitid',
+                's.checklitsdetailid', 's.verified', 's.type', 'ch.auxiliary01 as idcheck', 'ch.description',)
+            ->leftJoin('storagechecklistdetails as ch', function ($join) {
+                $join->on('s.checklistid', '=', 'ch.checklistid')->on('s.checklitsdetailid', '=', 'ch.id');
+            })
+            ->where('s.receiptunitid', $receiptunit->id)
+            ->whereIn('s.type', ['QI','AS'])
+            ->get();
         $photos = EvidencePhoto::where('model_id', $id)
             ->where('model_type', 'ReceiptUnit')->where('auxiliary01', 'QI')->get();
         $fortmat = 'Yards.KardexReceiptUnit.Formats.CalidaBridgestone';
-        $pdf = PDF::loadView($fortmat, compact('receiptunit', 'comments', 'checklisttransports', 'photos'));
+        $pdf = PDF::loadView($fortmat, compact('receiptunit', 'comments', 'verified', 'photos'));
         return $pdf->download('Folio_De_Calidad-' . $receiptunit->id . '.pdf');
 
     }

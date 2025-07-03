@@ -78,7 +78,19 @@
                     <img src="img/Bridgestone.png" alt="" style="height: 25px;width: 100px">
                 </th>
                 <th>INSPECCION DEL TRACTOCAMION Y DEL SEMIREMOLQUE</th>
-                <th width="30%" style="font-size: 14px;color: red">Folio: {{$receiptunit->id}}</th>
+                <th width="30%" style="font-size: 14px;color: red; padding: 0;">
+                    <table style="width: 100%; height: 10px; border: none; border-collapse: collapse;">
+                        <tr>
+                            <td style="border: none; vertical-align: middle; text-align: left; width: 60%;">
+                                Folio: {{$receiptunit->id}}
+                            </td>
+                            <td style="border: none; vertical-align: middle; text-align: right; width: 40%;">
+                                {!! DNS2D::getBarcodeHTML($receiptunit->barcode, 'QRCODE',1.5,1.5) !!}
+                            </td>
+                        </tr>
+                    </table>
+                </th>
+
             </tr>
         </table>
     </div>
@@ -112,13 +124,11 @@
                     <table class="border-none">
                         <tr>
                             <th>
-                                <div
-                                    style="width: 10px;height:10px;border:1px solid;border-radius: 5px;border: none;height: 15px"></div>
+                                <div style="width: 10px;height:10px;border:1px solid;border-radius: 5px;border: none;height: 15px">{{$receiptunit->unittypeid == '4' ? 'X' : ''}}</div>
                             </th>
                             <th style="border-bottom: 0px;width: 20%;font-size: 9px;height: 15px">Importación</th>
                             <th>
-                                <div
-                                    style="width: 10px;height:10px;border:1px solid;border-radius: 5px;border: none">{{$receiptunit->unittypeid == '1' ? 'X' : ''}}</div>
+                                <div style="width: 10px;height:10px;border:1px solid;border-radius: 5px;border: none">{{$receiptunit->unittypeid == '1' ? 'X' : ''}}</div>
                             </th>
                             <th style="border-bottom: 0px;font-size: 9px">Exportación</th>
                             <th>
@@ -136,11 +146,12 @@
                             <th style="border-bottom: 0px;font-size: 9px">Nombre del operador:</th>
                         </tr>
                         <tr>
-                            <th style="height: 15px;border-top: 0px;background-color: white">{{$receiptunit->user ? $receiptunit->user->name : ''}}</th>
-                            <th style="border-top: 0px;background-color: white">{{$receiptunit->operatorname}}</th>
+                            <th style="height: 15px;border-top: 0px;background-color: white">{{$receiptunit->key ? $receiptunit->key->nameguard01 : '' }}</th>
+                            <th style="border-top: 0px;background-color: white">{{$receiptunit->key ? $receiptunit->key->nameoperator01 : ''}}</th>
                         </tr>
                     </table>
                 </div>
+
                 <div class="row">
                     <table class="border-none">
                         <tr>
@@ -209,8 +220,7 @@
                             <th style="border-bottom: 0px;font-size: 9px">Nivel del combustible:</th>
                         </tr>
                         <tr>
-                            <th style="height: 15px;border-top: 0px;background-color: white;width: 60%">{{$receiptunit->unitdata ? $receiptunit->unitdata->expedition : ''}}
-                                / {{$receiptunit->unitdata ? $receiptunit->unitdata->holder : ''}}</th>
+                            <th style="height: 15px;border-top: 0px;background-color: white;width: 60%">  {{$receiptunit->unitdata ? $receiptunit->unitdata->expedition : ''}} / {{$receiptunit->unitdata ? $receiptunit->unitdata->holder : ''}}</th>
                             <th style="border-top: 0px;background-color: white;width: 40%">{{$receiptunit->unitdata ? $receiptunit->unitdata->fuellevel : ''}}</th>
                         </tr>
                     </table>
@@ -225,7 +235,7 @@
                             <th style="border-bottom: 0px;font-size: 9px;border-right: 0px;border-left: 0px">
                                 <div style="width: 10px;height:10px;border:1px solid;border-radius: 10px">
                                     @if(!empty($receiptunit->unitdata))
-                                        {{$receiptunit->unitdata->mirrorright == 'B' ? 'X' : ''}}
+                                        {{$receiptunit->unitdata->mirrorright == 'b' ? 'X' : ''}}
                                     @endif
                                 </div>
                             </th>
@@ -233,7 +243,7 @@
                             <th style="border-bottom: 0px;font-size: 9px;border-right: 0px;border-left: 0px">
                                 <div style="width: 10px;height:10px;border:1px solid;border-radius: 10px;">
                                     @if(!empty($receiptunit->unitdata))
-                                        {{$receiptunit->unitdata->mirrorright == 'R' ? 'X' : ''}}
+                                        {{$receiptunit->unitdata->mirrorright == 'r' ? 'X' : ''}}
                                     @endif
                                 </div>
                             </th>
@@ -243,7 +253,7 @@
                             <th style="border-bottom: 0px;font-size: 9px;border-left: 0px;border-right: 0px">
                                 <div style="width: 10px;height:10px;border:1px solid;border-radius: 10px;">
                                     @if(!empty($receiptunit->unitdata))
-                                        {{$receiptunit->unitdata->mirrorleft == 'B' ? 'X' : ''}}
+                                        {{$receiptunit->unitdata->mirrorleft == 'b' ? 'X' : ''}}
                                     @endif
                                 </div>
                             </th>
@@ -251,7 +261,7 @@
                             <th style="border-bottom: 0px;font-size: 9px;border-left: 0px;">
                                 <div style="width: 10px;height:10px;border:1px solid;border-radius: 10px;">
                                     @if(!empty($receiptunit->unitdata))
-                                        {{$receiptunit->unitdata->mirrorleft == 'R' ? 'X' : ''}}
+                                        {{$receiptunit->unitdata->mirrorleft == 'r' ? 'X' : ''}}
                                     @endif
                                 </div>
                             </th>
@@ -392,8 +402,16 @@
                         </tr>
                         <tr>
                             <th style="height: 15px;border-top: 0px;background-color: white">{{$receiptunit->tiket ? $receiptunit->tiket->ticket : ''}}</th>
-                            <th style="border-top: 0px;background-color: white">{{Carbon::parse($receiptunit->entrydate)->format('Y-m-d')}}</th>
-                            <th style="border-top: 0px;background-color: white">{{Carbon::parse($receiptunit->entrydate)->format('H:i:s')}}</th>
+                            <th style="border-top: 0;background-color: white">
+                                @if($receiptunit->outputdate)
+                                    {{ Carbon::parse($receiptunit->outputdate)->format('Y-m-d') }}
+                                @endif
+                            </th>
+                            <th style="border-top: 0px;background-color: white">
+                                @if($receiptunit->outputdate)
+                                    {{ Carbon::parse($receiptunit->outputdate)->format('H:i:s') }}
+                                @endif
+                            </th>
                         </tr>
                     </table>
                 </div>
@@ -402,7 +420,7 @@
                         <tr>
                             <th>
                                 <div
-                                    style="width: 10px;height:10px;border:1px solid;border-radius: 5px;border: none;height: 15px"></div>
+                                    style="width: 10px;height:10px;border:1px solid;border-radius: 5px;border: none;height: 15px">{{$receiptunit->unittypeid == '4' ? 'X' : ''}}</div>
                             </th>
                             <th style="border-bottom: 0px;width: 20%;font-size: 9px;height: 15px">Importación</th>
                             <th>
@@ -425,8 +443,8 @@
                             <th style="border-bottom: 0px;font-size: 9px">Nombre del operador:</th>
                         </tr>
                         <tr>
-                            <th style="height: 15px;border-top: 0px;background-color: white">{{$receiptunit->user ? $receiptunit->user->name : ''}}</th>
-                            <th style="border-top: 0px;background-color: white">{{$receiptunit->operatorname}}</th>
+                            <th style="height: 15px;border-top: 0px;background-color: white">{{$receiptunit->key ? $receiptunit->key->nameguard03 : ''}}</th>
+                            <th style="border-top: 0px;background-color: white">{{$receiptunit->key ? $receiptunit->key->nameoperator03 : ''}}</th>
                         </tr>
                     </table>
                 </div>
@@ -498,8 +516,7 @@
                             <th style="border-bottom: 0px;font-size: 9px">Nivel del combustible:</th>
                         </tr>
                         <tr>
-                            <th style="height: 15px;border-top: 0px;background-color: white;width: 60%">{{$receiptunit->unitdata ? $receiptunit->unitdata->expedition : ''}}
-                                / {{$receiptunit->unitdata ? $receiptunit->unitdata->holder : ''}}</th>
+                            <th style="height: 15px;border-top: 0px;background-color: white;width: 60%">{{$receiptunit->unitdata ? $receiptunit->unitdata->expedition : ''}}/ {{$receiptunit->unitdata ? $receiptunit->unitdata->holder : ''}}</th>
                             <th style="border-top: 0px;background-color: white;width: 40%">{{$receiptunit->unitdata ? $receiptunit->unitdata->fuellevel : ''}}</th>
                         </tr>
                     </table>
@@ -514,7 +531,7 @@
                             <th style="border-bottom: 0px;font-size: 9px;border-right: 0px;border-left: 0px">
                                 <div style="width: 10px;height:10px;border:1px solid;border-radius: 10px">
                                     @if(!empty($receiptunit->unitdata))
-                                        {{$receiptunit->unitdata->mirrorright == 'B' ? 'X' : ''}}
+                                        {{$receiptunit->unitdata->mirrorright == 'b' ? 'X' : ''}}
                                     @endif
                                 </div>
                             </th>
@@ -522,7 +539,7 @@
                             <th style="border-bottom: 0px;font-size: 9px;border-right: 0px;border-left: 0px">
                                 <div style="width: 10px;height:10px;border:1px solid;border-radius: 10px;">
                                     @if(!empty($receiptunit->unitdata))
-                                        {{$receiptunit->unitdata->mirrorright == 'R' ? 'X' : ''}}
+                                        {{$receiptunit->unitdata->mirrorright == 'r' ? 'X' : ''}}
                                     @endif
                                 </div>
                             </th>
@@ -532,7 +549,7 @@
                             <th style="border-bottom: 0px;font-size: 9px;border-left: 0px;border-right: 0px">
                                 <div style="width: 10px;height:10px;border:1px solid;border-radius: 10px;">
                                     @if(!empty($receiptunit->unitdata))
-                                        {{$receiptunit->unitdata->mirrorleft == 'B' ? 'X' : ''}}
+                                        {{$receiptunit->unitdata->mirrorleft == 'b' ? 'X' : ''}}
                                     @endif
                                 </div>
                             </th>
@@ -540,7 +557,7 @@
                             <th style="border-bottom: 0px;font-size: 9px;border-left: 0px;">
                                 <div style="width: 10px;height:10px;border:1px solid;border-radius: 10px;">
                                     @if(!empty($receiptunit->unitdata))
-                                        {{$receiptunit->unitdata->mirrorleft == 'R' ? 'X' : ''}}
+                                        {{$receiptunit->unitdata->mirrorleft == 'r' ? 'X' : ''}}
                                     @endif
                                 </div>
                             </th>
@@ -734,31 +751,27 @@
                         <table class="border-none">
                             <tr>
                                 <th style="border-bottom: 0px;font-size: 9px;border-right: 0px;border-left: 0px;border-top: 0px;width: 5%">
-                                    <div
-                                        style="width: 10px;height:10px;border:1px solid;border-radius: 10px">{{$receiptunit->truckid == '10064' ? 'X' : ''}}</div>
+                                    <div style="width: 10px;height:10px;border:1px solid;border-radius: 10px">{{ $receiptunit->truck?->auxiliary01 == 'CJ-40' ? 'X' : '' }}</div>
                                 </th>
                                 <th style="border-bottom: 0px;font-size: 9px;border-left: 0px;border-right: 0px;border-top: 0px;width: 10%">
                                     40 Ft.
                                 </th>
                                 <th style="border-bottom: 0px;font-size: 9px;border-right: 0px;border-left: 0px;border-top: 0px;width: 5%">
-                                    <div
-                                        style="width: 10px;height:10px;border:1px solid;border-radius: 10px;">{{$receiptunit->truckid == '10058' ? 'X' : ''}}</div>
+                                    <div style="width: 10px;height:10px;border:1px solid;border-radius: 10px;">{{ $receiptunit->truck?->auxiliary01 == 'CJ-48' ? 'X' : '' }}</div>
                                 </th>
                                 <th style="border-bottom: 0px;font-size: 9px;border-right: 0px;border-left: 0px;border-top: 0px;width: 10%">
                                     48 Ft.
                                 </th>
                                 <th style="border-bottom: 0px;font-size: 9px;border-right: 0px;border-left: 0px;border-top: 0px;width: 5%">
                                     <div
-                                        style="width: 10px;height:10px;border:1px solid;border-radius: 10px;">{{$receiptunit->truckid == '10059' ? 'X' : ''}}</div>
+                                        style="width: 10px;height:10px;border:1px solid;border-radius: 10px;">{{ $receiptunit->truck?->auxiliary01 == 'CJ-53' ? 'X' : '' }}</div>
                                 </th>
                                 <th style="border-bottom: 0px;font-size: 9px;border-right: 0px;border-left: 0px;border-top: 0px;width: 10%">
                                     53 Ft.
                                 </th>
                                 <th style="border-bottom: 0px;font-size: 9px;border-right: 0px;border-left: 0px;border-top: 0px;text-align: left">
                                     ¿Cuales? :
-                                    @if($receiptunit->truckid != '10064' || $receiptunit->truckid != '10058' || $receiptunit->truckid != '10059')
                                         {{$receiptunit->truck ? $receiptunit->truck->name : ''}}
-                                    @endif
                                 </th>
                             </tr>
                         </table>
@@ -855,7 +868,7 @@
                                     </tr>
                                 </table>
                             </th>
-                            <th style="border-top: 0px;background-color: white">{{$receiptunit->containerseal}}</th>
+                            <th style="border-top: 0px;background-color: white">{{$receiptunit->key ? $receiptunit->key->containerseal : ''}}</th>
                         </tr>
                     </table>
                 </div>
@@ -930,7 +943,8 @@
                                             No
                                         </th>
                                         <th style="border-bottom: 0px;font-size: 9px;border-right: 0px;border-left: 0px;border-top: 0px;text-align: left">
-                                            ¿Cuales? : {{$receiptunit->unitdata ? $receiptunit->unitdata->lightstext : ''}}
+                                            ¿Cuales?
+                                            : {{$receiptunit->unitdata ? $receiptunit->unitdata->lightstext : ''}}
                                         </th>
                                     </tr>
                                 </table>
@@ -993,7 +1007,8 @@
                     <table class="border-none">
                         <tr>
                             <th style="border-bottom: 0px;width: 33%;font-size: 9px;text-align: left">Entrada</th>
-                            <th style="border-bottom: 0px;font-size: 9px;text-align: left">No de Sellos : {{$receiptunit->key ? $receiptunit->key->containerseal : ''}}</th>
+                            <th style="border-bottom: 0px;font-size: 9px;text-align: left">No de Sellos
+                                : {{$receiptunit->key ? $receiptunit->key->containersealout : ''}}</th>
                         </tr>
                         <tr>
                             <th style="height: 15px;border-top: 0px;background-color: white">
@@ -1253,7 +1268,7 @@
                             </th>
                         </tr>
                         <tr>
-                            <th style="font-size: 9px"> = Inspección Aprobado X= Inspeccionado NO Aprobado
+                            <th style="font-size: 9px"> <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px"> = Inspección Aprobado   <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">= Inspeccionado NO Aprobado
                                 N/A=No
                                 Aplica
                             </th>
@@ -1267,8 +1282,14 @@
                             </th>
                             <th style="width: 5%">
                                 @foreach($verified as $item)
-                                    @if($item->checklitsdetailid == "209")
-                                        {{$item->verified}}
+                                    @if($item->idcheck == "1")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
                                     @endif
                                 @endforeach
                             </th>
@@ -1277,8 +1298,14 @@
                             </th>
                             <th style="width: 5%">
                                 @foreach($verified as $item)
-                                    @if($item->checklitsdetailid == "225")
-                                        {{$item->verified}}
+                                    @if($item->idcheck == "17")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
                                     @endif
                                 @endforeach
                             </th>
@@ -1287,8 +1314,14 @@
                             <th style="font-size: 8px;text-align: left;width: 40%">2.-MOTOR</th>
                             <th style="width: 5%">
                                 @foreach($verified as $item)
-                                    @if($item->checklitsdetailid == "210")
-                                        {{$item->verified}}
+                                    @if($item->idcheck == "2")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
                                     @endif
                                 @endforeach
                             </th>
@@ -1297,8 +1330,14 @@
                             </th>
                             <th style="width: 5%">
                                 @foreach($verified as $item)
-                                    @if($item->checklitsdetailid == "226")
-                                        {{$item->verified}}
+                                    @if($item->idcheck == "18")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
                                     @endif
                                 @endforeach
                             </th>
@@ -1308,8 +1347,14 @@
                             </th>
                             <th style="width: 5%">
                                 @foreach($verified as $item)
-                                    @if($item->checklitsdetailid == "211")
-                                        {{$item->verified}}
+                                    @if($item->idcheck == "3")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
                                     @endif
                                 @endforeach
                             </th>
@@ -1318,8 +1363,14 @@
                             </th>
                             <th style="width: 5%">
                                 @foreach($verified as $item)
-                                    @if($item->checklitsdetailid == "227")
-                                        {{$item->verified}}
+                                    @if($item->idcheck == "19")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
                                     @endif
                                 @endforeach
                             </th>
@@ -1330,8 +1381,14 @@
                             </th>
                             <th style="width: 5%">
                                 @foreach($verified as $item)
-                                    @if($item->checklitsdetailid == "212")
-                                        {{$item->verified}}
+                                    @if($item->idcheck == "4")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
                                     @endif
                                 @endforeach
                             </th>
@@ -1340,8 +1397,14 @@
                             </th>
                             <th style="width: 5%">
                                 @foreach($verified as $item)
-                                    @if($item->checklitsdetailid == "228")
-                                        {{$item->verified}}
+                                    @if($item->idcheck == "20")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
                                     @endif
                                 @endforeach
                             </th>
@@ -1352,8 +1415,14 @@
                             </th>
                             <th style="width: 5%">
                                 @foreach($verified as $item)
-                                    @if($item->checklitsdetailid == "213")
-                                        {{$item->verified}}
+                                    @if($item->idcheck == "5")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
                                     @endif
                                 @endforeach
                             </th>
@@ -1362,8 +1431,14 @@
                             </th>
                             <th style="width: 5%">
                                 @foreach($verified as $item)
-                                    @if($item->checklitsdetailid == "229")
-                                        {{$item->verified}}
+                                    @if($item->idcheck == "21")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
                                     @endif
                                 @endforeach
                             </th>
@@ -1374,8 +1449,14 @@
                             </th>
                             <th style="width: 5%">
                                 @foreach($verified as $item)
-                                    @if($item->checklitsdetailid == "214")
-                                        {{$item->verified}}
+                                    @if($item->idcheck == "6")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
                                     @endif
                                 @endforeach
                             </th>
@@ -1384,8 +1465,14 @@
                             </th>
                             <th style="width: 5%">
                                 @foreach($verified as $item)
-                                    @if($item->checklitsdetailid == "230")
-                                        {{$item->verified}}
+                                    @if($item->idcheck == "22")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
                                     @endif
                                 @endforeach
                             </th>
@@ -1394,8 +1481,14 @@
                             <th style="font-size: 8px;text-align: left;width: 40%">7.-TANQUE DE AIRE</th>
                             <th style="width: 5%">
                                 @foreach($verified as $item)
-                                    @if($item->checklitsdetailid == "215")
-                                        {{$item->verified}}
+                                    @if($item->idcheck == "7")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
                                     @endif
                                 @endforeach
                             </th>
@@ -1404,8 +1497,14 @@
                             </th>
                             <th style="width: 5%">
                                 @foreach($verified as $item)
-                                    @if($item->checklitsdetailid == "231")
-                                        {{$item->verified}}
+                                    @if($item->idcheck == "23")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
                                     @endif
                                 @endforeach
                             </th>
@@ -1416,16 +1515,28 @@
                             </th>
                             <th style="width: 5%">
                                 @foreach($verified as $item)
-                                    @if($item->checklitsdetailid == "216")
-                                        {{$item->verified}}
+                                    @if($item->idcheck == "8")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
                                     @endif
                                 @endforeach
                             </th>
                             <th style="font-size: 8px;text-align: left;width: 40%">24.-ESCAPE DE MOTOR</th>
                             <th style="width: 5%">
                                 @foreach($verified as $item)
-                                    @if($item->checklitsdetailid == "232")
-                                        {{$item->verified}}
+                                    @if($item->idcheck == "24")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
                                     @endif
                                 @endforeach
                             </th>
@@ -1434,8 +1545,14 @@
                             <th style="font-size: 8px;text-align: left;width: 40%">9.-QUINTA RUEDA</th>
                             <th style="width: 5%">
                                 @foreach($verified as $item)
-                                    @if($item->checklitsdetailid == "217")
-                                        {{$item->verified}}
+                                    @if($item->idcheck == "9")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
                                     @endif
                                 @endforeach
                             </th>
@@ -1451,15 +1568,31 @@
                             </th>
                             <th style="width: 5%">
                                 @foreach($verified as $item)
-                                    @if($item->checklitsdetailid == "218")
-                                        {{$item->verified}}
+                                    @if($item->idcheck == "10")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
                                     @endif
                                 @endforeach
                             </th>
                             <th style="font-size: 8px;text-align: left;width: 40%">25.-PLANTAS Y SEMILLAS
                             </th>
                             <th style="width: 5%">
-
+                                @foreach($verified as $item)
+                                    @if($item->idcheck == "25")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
+                                    @endif
+                                @endforeach
                             </th>
                         </tr>
                         <tr>
@@ -1467,13 +1600,31 @@
                             </th>
                             <th style="width: 5%">
                                 @foreach($verified as $item)
-                                    @if($item->checklitsdetailid == "219")
-                                        {{$item->verified}}
+                                    @if($item->idcheck == "11")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
                                     @endif
                                 @endforeach
                             </th>
                             <th style="font-size: 8px;text-align: left;width: 40%">26.-HUMEDAD / HONGOS</th>
-                            <th style="width: 5%"></th>
+                            <th style="width: 5%">
+                                @foreach($verified as $item)
+                                    @if($item->idcheck == "26")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
+                                    @endif
+                                @endforeach
+                            </th>
                         </tr>
                         <tr>
                             <th style="font-size: 8px;text-align: left;width: 40%">12.-CHASIS
@@ -1481,15 +1632,33 @@
                             </th>
                             <th style="width: 5%">
                                 @foreach($verified as $item)
-                                    @if($item->checklitsdetailid == "220")
-                                        {{$item->verified}}
+                                    @if($item->idcheck == "12")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
                                     @endif
                                 @endforeach
                             </th>
                             <th style="font-size: 8px;text-align: left;width: 40%">27.-ANIMALES VIVOS O
                                 MUERTOS
                             </th>
-                            <th style="width: 5%"></th>
+                            <th style="width: 5%">
+                                @foreach($verified as $item)
+                                    @if($item->idcheck == "27")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
+                                    @endif
+                                @endforeach
+                            </th>
                         </tr>
                         <tr>
                             <th style="font-size: 8px;text-align: left;width: 40%">13.-PAREDES
@@ -1497,27 +1666,63 @@
                             </th>
                             <th style="width: 5%">
                                 @foreach($verified as $item)
-                                    @if($item->checklitsdetailid == "221")
-                                        {{$item->verified}}
+                                    @if($item->idcheck == "13")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
                                     @endif
                                 @endforeach
                             </th>
                             <th style="font-size: 8px;text-align: left;width: 40%">28.-TIERRA / LODO</th>
-                            <th style="width: 5%"></th>
+                            <th style="width: 5%">
+                                @foreach($verified as $item)
+                                    @if($item->idcheck == "28")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
+                                    @endif
+                                @endforeach
+                            </th>
                         </tr>
                         <tr>
                             <th style="font-size: 8px;text-align: left;width: 40%">14.-DEFENSA-REMOLQUE</th>
                             <th style="width: 5%">
                                 @foreach($verified as $item)
-                                    @if($item->checklitsdetailid == "222")
-                                        {{$item->verified}}
+                                    @if($item->idcheck == "14")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
                                     @endif
                                 @endforeach
                             </th>
                             <th style="font-size: 8px;text-align: left;width: 40%">29.-SANGRE /
                                 DESECHOS-ANIMALES
                             </th>
-                            <th style="width: 5%"></th>
+                            <th style="width: 5%">
+                                @foreach($verified as $item)
+                                    @if($item->idcheck == "29")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
+                                    @endif
+                                @endforeach
+                            </th>
                         </tr>
                         <tr>
                             <th style="font-size: 8px;text-align: left;width: 40%">15.-INTERIOR DE PUERTAS -
@@ -1525,15 +1730,33 @@
                             </th>
                             <th style="width: 5%">
                                 @foreach($verified as $item)
-                                    @if($item->checklitsdetailid == "223")
-                                        {{$item->verified}}
+                                    @if($item->idcheck == "15")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
                                     @endif
                                 @endforeach
                             </th>
                             <th style="font-size: 8px;text-align: left;width: 40%">30.-BASURA /
                                 DESPERDICIOS
                             </th>
-                            <th style="width: 5%"></th>
+                            <th style="width: 5%">
+                                @foreach($verified as $item)
+                                    @if($item->idcheck == "30")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
+                                    @endif
+                                @endforeach
+                            </th>
                         </tr>
                         <tr>
                             <th style="font-size: 8px;text-align: left;width: 40%">16.-PISO INTERIOR -
@@ -1541,14 +1764,32 @@
                             </th>
                             <th style="width: 5%">
                                 @foreach($verified as $item)
-                                    @if($item->checklitsdetailid == "224")
-                                        {{$item->verified}}
+                                    @if($item->idcheck == "16")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
                                     @endif
                                 @endforeach
                             </th>
                             <th style="font-size: 8px;text-align: left;width: 40%">31.-DETECCION DE OLORES
                             </th>
-                            <th style="width: 5%"></th>
+                            <th style="width: 5%">
+                                @foreach($verified as $item)
+                                    @if($item->idcheck == "31")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
+                                    @endif
+                                @endforeach
+                            </th>
                         </tr>
                     </table>
                 </div>
@@ -1603,7 +1844,7 @@
                             </th>
                         </tr>
                         <tr>
-                            <th style="font-size: 9px"> = Inspección Aprobado X= Inspeccionado NO Aprobado
+                            <th style="font-size: 9px"> <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px"> = Inspección Aprobado   <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">= Inspeccionado NO Aprobado
                                 N/A=No
                                 Aplica
                             </th>
@@ -1615,78 +1856,282 @@
                         <tr>
                             <th style="font-size: 8px;text-align: left;width: 40%">1.-DEFENSA DEL TRACTOR
                             </th>
-                            <th style="width: 5%"></th>
+                            <th style="width: 5%">
+                                @foreach($verifiedOut as $item)
+                                    @if($item->idcheckOut == "1")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
+                                    @endif
+                                @endforeach
+                            </th>
                             <th style="font-size: 8px;text-align: left;width: 40%">17.-PAREDES
                                 LATERALES-INTERIOR
                             </th>
-                            <th style="width: 5%"></th>
+                            <th style="width: 5%">
+                                @foreach($verifiedOut as $item)
+                                    @if($item->idcheckOut == "17")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
+                                    @endif
+                                @endforeach
+                            </th>
                         </tr>
                         <tr>
                             <th style="font-size: 8px;text-align: left;width: 40%">2.-MOTOR</th>
-                            <th style="width: 5%"></th>
+                            <th style="width: 5%">
+                                @foreach($verifiedOut as $item)
+                                    @if($item->idcheckOut == "2")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
+                                    @endif
+                                @endforeach
+                            </th>
                             <th style="font-size: 8px;text-align: left;width: 40%">18.-TECHO INTERIOR DEL
                                 REMOLQUE
                             </th>
-                            <th style="width: 5%"></th>
+                            <th style="width: 5%">
+                                @foreach($verifiedOut as $item)
+                                    @if($item->idcheckOut == "18")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
+                                    @endif
+                                @endforeach
+                            </th>
                         </tr>
                         <tr>
                             <th style="font-size: 8px;text-align: left;width: 40%">3.-LLANTAS DEL TRACTO
                             </th>
-                            <th style="width: 5%"></th>
+                            <th style="width: 5%">
+                                @foreach($verifiedOut as $item)
+                                    @if($item->idcheckOut == "3")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
+                                    @endif
+                                @endforeach
+                            </th>
                             <th style="font-size: 8px;text-align: left;width: 40%">19.-PARED
                                 FRONTAL-INTERIOR
                             </th>
-                            <th style="width: 5%"></th>
+                            <th style="width: 5%">
+                                @foreach($verifiedOut as $item)
+                                    @if($item->idcheckOut == "19")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
+                                    @endif
+                                @endforeach
+                            </th>
                         </tr>
                         <tr>
                             <th style="font-size: 8px;text-align: left;width: 40%">4.-PISO
                                 INTERIOR-TRACTOR
                             </th>
-                            <th style="width: 5%"></th>
+                            <th style="width: 5%">
+                                @foreach($verifiedOut as $item)
+                                    @if($item->idcheckOut == "4")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
+                                    @endif
+                                @endforeach
+                            </th>
                             <th style="font-size: 8px;text-align: left;width: 40%">
                                 20.-PUERTAS-REMOLQUE-EXTERIOR
                             </th>
-                            <th style="width: 5%"></th>
+                            <th style="width: 5%">
+                                @foreach($verifiedOut as $item)
+                                    @if($item->idcheckOut == "20")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
+                                    @endif
+                                @endforeach
+                            </th>
                         </tr>
                         <tr>
                             <th style="font-size: 8px;text-align: left;width: 40%">5.-CABINA Y
                                 COMPARTIMENTOS
                             </th>
-                            <th style="width: 5%"></th>
+                            <th style="width: 5%">
+                                @foreach($verifiedOut as $item)
+                                    @if($item->idcheckOut == "5")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
+                                    @endif
+                                @endforeach
+                            </th>
                             <th style="font-size: 8px;text-align: left;width: 40%">21.-PISO
                                 EXTERIOR-REMOLQUE
                             </th>
-                            <th style="width: 5%"></th>
+                            <th style="width: 5%">
+                                @foreach($verifiedOut as $item)
+                                    @if($item->idcheckOut == "21")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
+                                    @endif
+                                @endforeach
+                            </th>
                         </tr>
                         <tr>
                             <th style="font-size: 8px;text-align: left;width: 40%">6.-TANQUE DE
                                 COMBUSTIBLE
                             </th>
-                            <th style="width: 5%"></th>
+                            <th style="width: 5%">
+                                @foreach($verifiedOut as $item)
+                                    @if($item->idcheckOut == "6")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
+                                    @endif
+                                @endforeach
+                            </th>
                             <th style="font-size: 8px;text-align: left;width: 40%">22.-SELLOS EN PUERTA /
                                 V.V.T.T
                             </th>
-                            <th style="width: 5%"></th>
+                            <th style="width: 5%">
+                                @foreach($verifiedOut as $item)
+                                    @if($item->idcheckOut == "22")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
+                                    @endif
+                                @endforeach
+                            </th>
                         </tr>
                         <tr>
                             <th style="font-size: 8px;text-align: left;width: 40%">7.-TANQUE DE AIRE</th>
-                            <th style="width: 5%"></th>
+                            <th style="width: 5%">
+                                @foreach($verifiedOut as $item)
+                                    @if($item->idcheckOut == "7")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
+                                    @endif
+                                @endforeach
+                            </th>
                             <th style="font-size: 8px;text-align: left;width: 40%">
                                 23.-TECHO-EXTERIOR-REMOLQUE
                             </th>
-                            <th style="width: 5%"></th>
+                            <th style="width: 5%">
+                                @foreach($verifiedOut as $item)
+                                    @if($item->idcheckOut == "23")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
+                                    @endif
+                                @endforeach
+                            </th>
                         </tr>
                         <tr>
                             <th style="font-size: 8px;text-align: left;width: 40%">8.-TRACTOR CHASIS Y PISO
                                 EXTERIOR
                             </th>
-                            <th style="width: 5%"></th>
+                            <th style="width: 5%">
+                                @foreach($verifiedOut as $item)
+                                    @if($item->idcheckOut == "8")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
+                                    @endif
+                                @endforeach
+                            </th>
                             <th style="font-size: 8px;text-align: left;width: 40%">24.-ESCAPE DE MOTOR</th>
-                            <th style="width: 5%"></th>
+                            <th style="width: 5%">
+                                @foreach($verifiedOut as $item)
+                                    @if($item->idcheckOut == "24")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
+                                    @endif
+                                @endforeach
+                            </th>
                         </tr>
                         <tr>
                             <th style="font-size: 8px;text-align: left;width: 40%">9.-QUINTA RUEDA</th>
-                            <th style="width: 5%"></th>
+                            <th style="width: 5%">
+                                @foreach($verifiedOut as $item)
+                                    @if($item->idcheckOut == "9")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
+                                    @endif
+                                @endforeach
+                            </th>
                             <th style="font-size: 8px;text-align: left;width: 40%;background-color: #00ccae">
                                 INSPECCION
                                 DE AGRICULTURA
@@ -1697,61 +2142,228 @@
                             <th style="font-size: 8px;text-align: left;width: 40%">10.-PARED
                                 FRONTAL-EXTERIOR
                             </th>
-                            <th style="width: 5%"></th>
-                            <th style="font-size: 8px;text-align: left;width: 40%">25.-PLANTAS Y SEMILLAS
+                            <th style="width: 5%">
+                                @foreach($verifiedOut as $item)
+                                    @if($item->idcheckOut == "10")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
+                                    @endif
+                                @endforeach
                             </th>
-                            <th style="width: 5%"></th>
+                            <th style="font-size: 8px;text-align: left;width: 40%">25.-PLANTAS Y SEMILLAS</th>
+                            <th style="width: 5%">
+                                @foreach($verified as $item)
+                                    @if($item->idcheck == "25")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
+                                    @endif
+                                @endforeach
+                            </th>
                         </tr>
                         <tr>
                             <th style="font-size: 8px;text-align: left;width: 40%">11.-LLANTAS - REMOLQUE
                             </th>
-                            <th style="width: 5%"></th>
+                            <th style="width: 5%">
+                                @foreach($verifiedOut as $item)
+                                    @if($item->idcheckOut == "11")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
+                                    @endif
+                                @endforeach
+                            </th>
                             <th style="font-size: 8px;text-align: left;width: 40%">26.-HUMEDAD / HONGOS</th>
-                            <th style="width: 5%"></th>
+                            <th style="width: 5%">
+                                @foreach($verified as $item)
+                                    @if($item->idcheck == "26")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
+                                    @endif
+                                @endforeach
+                            </th>
                         </tr>
                         <tr>
                             <th style="font-size: 8px;text-align: left;width: 40%">12.-LLANTAS - REMOLQUE
                             </th>
-                            <th style="width: 5%"></th>
+                            <th style="width: 5%">
+                                @foreach($verifiedOut as $item)
+                                    @if($item->idcheckOut == "12")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
+                                    @endif
+                                @endforeach
+                            </th>
                             <th style="font-size: 8px;text-align: left;width: 40%">27.-ANIMALES VIVOS O
                                 MUERTOS
                             </th>
-                            <th style="width: 5%"></th>
+                            <th style="width: 5%">
+                                @foreach($verified as $item)
+                                    @if($item->idcheck == "27")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
+                                    @endif
+                                @endforeach
+                            </th>
                         </tr>
                         <tr>
                             <th style="font-size: 8px;text-align: left;width: 40%">13.-PAREDES
                                 LATERALES-EXTERIOR
                             </th>
-                            <th style="width: 5%"></th>
+                            <th style="width: 5%">
+                                @foreach($verifiedOut as $item)
+                                    @if($item->idcheckOut == "13")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
+                                    @endif
+                                @endforeach
+                            </th>
                             <th style="font-size: 8px;text-align: left;width: 40%">28.-TIERRA / LODO</th>
-                            <th style="width: 5%"></th>
+                            <th style="width: 5%">
+                                @foreach($verified as $item)
+                                    @if($item->idcheck == "28")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
+                                    @endif
+                                @endforeach
+                            </th>
                         </tr>
                         <tr>
                             <th style="font-size: 8px;text-align: left;width: 40%">14.-DEFENSA-REMOLQUE</th>
-                            <th style="width: 5%"></th>
+                            <th style="width: 5%">
+                                @foreach($verifiedOut as $item)
+                                    @if($item->idcheckOut == "14")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
+                                    @endif
+                                @endforeach
+                            </th>
                             <th style="font-size: 8px;text-align: left;width: 40%">29.-SANGRE /
                                 DESECHOS-ANIMALES
                             </th>
-                            <th style="width: 5%"></th>
+                            <th style="width: 5%">
+                                @foreach($verified as $item)
+                                    @if($item->idcheck == "29")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
+                                    @endif
+                                @endforeach
+                            </th>
                         </tr>
                         <tr>
                             <th style="font-size: 8px;text-align: left;width: 40%">15.-INTERIOR DE PUERTAS -
                                 REMOLQUE
                             </th>
-                            <th style="width: 5%"></th>
+                            <th style="width: 5%">
+                                @foreach($verifiedOut as $item)
+                                    @if($item->idcheckOut == "15")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
+                                    @endif
+                                @endforeach
+                            </th>
                             <th style="font-size: 8px;text-align: left;width: 40%">30.-BASURA /
                                 DESPERDICIOS
                             </th>
-                            <th style="width: 5%"></th>
+                            <th style="width: 5%">
+                                @foreach($verified as $item)
+                                    @if($item->idcheck == "30")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
+                                    @endif
+                                @endforeach
+                            </th>
                         </tr>
                         <tr>
                             <th style="font-size: 8px;text-align: left;width: 40%">16.-PISO INTERIOR -
                                 REMOLQUE
                             </th>
-                            <th style="width: 5%"></th>
+                            <th style="width: 5%">
+                                @foreach($verifiedOut as $item)
+                                    @if($item->idcheckOut == "16")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
+                                    @endif
+                                @endforeach
+                            </th>
                             <th style="font-size: 8px;text-align: left;width: 40%">31.-DETECCION DE OLORES
                             </th>
-                            <th style="width: 5%"></th>
+                            <th style="width: 5%">
+                                @foreach($verified as $item)
+                                    @if($item->idcheck == "31")
+                                        @if($item->verified == 'SI')
+                                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @elseif($item->verified == 'NO')
+                                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                        @else
+                                            {{$item->verified}}
+                                        @endif
+                                    @endif
+                                @endforeach
+                            </th>
                         </tr>
                     </table>
                 </div>
@@ -1792,7 +2404,6 @@
             </td>
         </table>
     </div>
-
 </div>
 
 </body>

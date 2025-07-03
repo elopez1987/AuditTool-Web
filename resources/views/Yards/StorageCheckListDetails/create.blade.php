@@ -95,7 +95,7 @@
             "sScrollY": "350px",
             "sScrollX": true,
             'colReorder': true,
-            "dom": '<"top"B>lrt<"bottom"p><"clear"i>',
+            "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
             "lengthMenu": [[10, 30, 50, 100, 150, 200, 250, -1], [10, 30, 50, 100, 150, 200, 250, "Todos"]],
             "columnDefs":
                 [

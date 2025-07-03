@@ -68,7 +68,7 @@ class ReceiptTruck extends Model
         parent::boot();
         if (!app()->runningInConsole()) {
             self::creating(function (ReceiptTruck $model) {
-                $model->createuser = Auth::id();
+                $model->createuser = Auth::user()->id;
                 $model->entrydate = Carbon::now();
             });
         }
