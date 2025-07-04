@@ -24,6 +24,10 @@
                                     class="hidden-sm-up">
                                 <img src="{{asset('ico/img.png')}}" alt="" class="img-16 ml-2 mr-2">
                                 </span> <span class="hidden-xs-down">Fotos</span></a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view04" role="tab"><span
+                                    class="hidden-sm-up">
+                                <img src="{{asset('ico/notepad_bloc_notes_15549.png')}}" alt="" class="img-16 ml-2 mr-2">
+                                </span> <span class="hidden-xs-down">Comentarios</span></a></li>
                     </ul>
                     <!-- Tab panes -->
                     <div class="tab-content">
@@ -765,7 +769,7 @@
                         </div>
 
                         {{--                        Fotos--}}
-                        <div class="tab-pane  p-20" id="view03" role="tabpanel">
+                        <div class="tab-pane  " id="view03" role="tabpanel">
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="card">
@@ -825,6 +829,38 @@
                                                     </div>
                                                 </div>
                                             @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{--                        Comentarios--}}
+                        <div class="tab-pane  " id="view04" role="tabpanel">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="col-lg-6">
+                                                <div class="card-input">
+                                                    <div class="comment-widgets scrollable" style="height:560px;">
+                                                        @foreach($comments as $comment)
+                                                        <div class="d-flex flex-row comment-row m-t-0">
+                                                            <div ><img src="{{asset('ico/notepad_bloc_notes_15549.png')}}" alt="user" width="50" class="rounded-circle" ></div>
+                                                            <div class="comment-text w-100">
+                                                                <h6 class="font-medium">{{$comment->user ? $comment->user->name : ''}}</h6>
+                                                                <span class="m-b-15 d-block">{{$comment->comment}}</span>
+                                                                <div class="comment-footer">
+                                                                    <span class="text-muted float-right">{{$comment->created_at}}</span> <span
+                                                                        class="label label-rounded label-primary">Creado</span> <span class="action-icons">
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

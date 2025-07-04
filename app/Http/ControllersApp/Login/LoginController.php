@@ -39,11 +39,9 @@ class LoginController extends Controller
             $password = filter_var($validatedData['password']);
             $user = User::where('username', $username)->first();
 
-
             if (!$user || !\Hash::check($password, $user->password)) {
                 return $this->errorResponseJson('El usuario o contraseña son inválidos');
             }
-
 
             if ($user->statusid != 'E') {
                 return $this->errorResponseJson('El usuario se encuentra inactivo, favor de validar.');
@@ -58,8 +56,6 @@ class LoginController extends Controller
             ]);
 
             $token = $userLogin->createToken('YMS')->accessToken;
-            \Log::info($token);
-
             $paramters = $this->getParameterSystem();
             $this->updateLastSession();
             $this->registerDevice($request['serialnumber']);

@@ -18,8 +18,8 @@
                                 <a>
                                     @include('buttons.reloadajax')
                                 </a>
-                                <a href="{{route('menushipment')}}">
-                                    @include('buttons.cancel')
+                                <a href="{{ url()->previous() }}">
+                                    @include('buttons.back')
                                 </a>
                             </div>
                         </div>

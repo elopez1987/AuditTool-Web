@@ -124,8 +124,8 @@
                                                 <a href="">
                                                     @include('buttons.save')
                                                 </a>
-                                                <a href="{{route('monitoroperation.index')}}" class="ml-4">
-                                                    @include('buttons.cancel')
+                                                <a href="{{ url()->previous() }}">
+                                                    @include('buttons.back')
                                                 </a>
                                             </div>
                                         </div>

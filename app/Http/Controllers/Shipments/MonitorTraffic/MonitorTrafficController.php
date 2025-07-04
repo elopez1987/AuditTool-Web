@@ -36,12 +36,11 @@ class MonitorTrafficController extends BaseController
             ->toJson();
     }
 
-
-
     public function edit(OrderDeliverie $monitoranalistatrafico)
     {
         $orderDelivery = $monitoranalistatrafico;
-        return view("Shipments.OrderMonitor.AnalystTraffic.edit", compact('orderDelivery'));
+        $comments = StorageComment::where('modeltype','orderdeliveries')->where('modelid',$orderDelivery->id)->get();
+        return view("Shipments.OrderMonitor.AnalystTraffic.edit", compact('orderDelivery','comments'));
     }
 
     public function update(Request $request, OrderDeliverie $monitoranalistatrafico)

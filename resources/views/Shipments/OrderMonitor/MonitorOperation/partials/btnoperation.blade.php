@@ -6,11 +6,21 @@
         Acciones
     </button>
     <div class="dropdown-menu animated flipInX">
+
+        @if ($statusid != 'DT')
+            @can('monitoranalistatrafico.edit')
+                <a href="{{url('monitoranalistatrafico/' . $id . '/edit')}}" class="dropdown-item">
+                    <img src="{{asset('/ico/viewdetail.png')}}" alt="" class="img-16 ml-2">
+                    <span style="text-transform: capitalize;font-size: 0.675rem !important;">Registrar eventos facturación</span>
+                </a>
+            @endcan
+        @endif
+
         @can('monitoroperation.edit')
             @if ($statusid != 'EJ')
                 <a href="{{url('monitoroperation/' . $id . '/edit')}}" class="dropdown-item">
                     <img src="{{asset('/ico/time.png')}}" alt="" class="img-20 ml-2 mr-2">
-                    <span style="text-transform: capitalize;font-size: 0.675rem !important;">Registrar eventos</span>
+                    <span style="text-transform: capitalize;font-size: 0.675rem !important;">Registrar eventos operativos</span>
                 </a>
             @endif
         @endcan

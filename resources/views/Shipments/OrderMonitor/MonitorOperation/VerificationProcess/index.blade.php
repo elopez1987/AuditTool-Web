@@ -19,7 +19,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-lg-12">
-                                <a href="{{route('monitoroperation.index')}}">
+                                <a href="{{ url()->previous() }}">
                                     @include('buttons.back')
                                 </a>
                                 @can('closecheckshipment')

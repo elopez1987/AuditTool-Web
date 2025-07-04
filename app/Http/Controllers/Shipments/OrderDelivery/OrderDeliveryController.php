@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Shipments\OrderDelivery;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Shipments\OrderDelivery\CreateOrderRequest;
 use App\Models\General\EvidencePhoto;
+use App\Models\General\StorageComment;
 use App\Models\Shipments\OrderDeliverie;
 use App\Models\Shipments\Storagechecklocationbridg;
 use App\Models\Yard\StorageUnitTrace;
@@ -95,8 +96,8 @@ class OrderDeliveryController extends BaseController
         $traces = StorageUnitTrace::controlAccessUser()
             ->where('receiptunitid', $orderdelivery->folionumber)->get();
         $conteo = Storagechecklocationbridg::controlAccessUser()->where('orderid', $orderdelivery->id)->first();
-//        dd($conteo);
-        return view('Shipments.OrderDeliveries.show', compact('orderdelivery', 'evidences', 'traces', 'conteo'));
+        $comments = StorageComment::where('modeltype','orderdeliveries')->where('modelid',$orderdelivery->id)->get();
+        return view('Shipments.OrderDeliveries.show', compact('orderdelivery', 'evidences', 'traces', 'conteo','comments'));
     }
 
     public function edit(OrderDeliverie $orderdelivery)

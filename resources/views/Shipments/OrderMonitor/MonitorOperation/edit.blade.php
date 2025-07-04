@@ -22,7 +22,7 @@
                                 <a href="">
                                     @include('buttons.save')
                                 </a>
-                                <a href="{{route('monitoroperation.index')}}">
+                                <a href="{{ url()->previous() }}">
                                     @include('buttons.back')
                                 </a>
                             </div>
@@ -456,113 +456,6 @@
                                                             @endif
                                                         </th>
                                                     </tr>
-
-                                                    <tr>
-                                                        <th style="font-size: 11px">Inicio de Facturación
-                                                        </th>
-                                                        <th>
-                                                            @if ($orderDelivery->operation->senddocument != '')
-                                                                @if ($orderDelivery->header->startgoodissuedate == '')
-                                                                    <a href=""
-                                                                       data-target="#modal-addstartgoodissuedate-{{$orderDelivery->id}}"
-                                                                       data-toggle="modal">
-                                                                        <button
-                                                                            class="btn waves-effect waves-light btn-outline-info btn-sm btn-block">
-                                                                            <img src="{{asset('/ico/priority.png')}}"
-                                                                                 alt="" class="img-16 ml-2 mr-2">
-                                                                            <span
-                                                                                style="font-size: 0.675rem "> Iniciar</span>
-                                                                        </button>
-                                                                    </a>
-                                                                    @include('Shipments.OrderMonitor.AnalystTraffic.partials.startgoodissuedate')
-                                                                @else
-                                                                    <span
-                                                                        style="font-size: 11px;">{{$orderDelivery->header->startgoodissuedate}}</span>
-                                                                @endif
-                                                            @endif
-                                                        </th>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <th style="font-size: 11px">Fin de Facturación
-                                                        </th>
-                                                        <th>
-                                                            @if ($orderDelivery->header->startgoodissuedate != '')
-                                                                @if ($orderDelivery->header->goodissuedate  == '')
-                                                                    <a href=""
-                                                                       data-target="#modal-goodissuedate-{{$orderDelivery->id}}"
-                                                                       data-toggle="modal">
-                                                                        <button
-                                                                            class="btn waves-effect waves-light btn-outline-info btn-sm btn-block">
-                                                                            <img src="{{asset('/ico/priority.png')}}"
-                                                                                 alt="" class="img-16 ml-2 mr-2">
-                                                                            <span
-                                                                                style="font-size: 0.675rem "> Iniciar</span>
-                                                                        </button>
-                                                                    </a>
-                                                                    @include('Shipments.OrderMonitor.AnalystTraffic.partials.goodissuedate')
-                                                                @else
-                                                                    <span
-                                                                        style="font-size: 11px "> {{$orderDelivery->header->goodissuedate}} </span>
-                                                                @endif
-                                                            @endif
-                                                        </th>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <th style="font-size: 11px">Solicitud de Carta Porte
-                                                        </th>
-                                                        <th>
-                                                            @if($orderDelivery->header->startgoodissuedate != '')
-                                                                @if ($orderDelivery->operation->requestletter == '')
-                                                                    <a href=""
-                                                                       data-target="#modal-requestletter-{{$orderDelivery->id}}"
-                                                                       data-toggle="modal">
-                                                                        <button
-                                                                            class="btn waves-effect waves-light btn-outline-info btn-sm btn-block">
-                                                                            <img src="{{asset('/ico/priority.png')}}"
-                                                                                 alt="" class="img-16 ml-2 mr-2">
-                                                                            <span
-                                                                                style="font-size: 0.675rem "> Iniciar</span>
-                                                                        </button>
-                                                                    </a>
-                                                                    @include('Shipments.OrderMonitor.MonitorOperation.Events.requestletter')
-                                                                @else
-                                                                    <span
-                                                                        style="font-size: 11px;">{{$orderDelivery->operation->requestletter}}
-                                                                    </span>
-                                                                @endif
-                                                            @endif
-                                                        </th>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <th style="font-size: 11px">Receipción de Carta Porte
-                                                        </th>
-                                                        <th>
-                                                            @if ($orderDelivery->operation->requestletter != null)
-                                                                @if ($orderDelivery->operation->responseletter == '')
-                                                                    <a href=""
-                                                                       data-target="#modal-responseletter-{{$orderDelivery->id}}"
-                                                                       data-toggle="modal">
-                                                                        <button
-                                                                            class="btn waves-effect waves-light btn-outline-info btn-sm btn-block">
-                                                                            <img src="{{asset('/ico/priority.png')}}"
-                                                                                 alt="" class="img-16 ml-2 mr-2">
-                                                                            <span
-                                                                                style="font-size: 0.675rem "> Iniciar</span>
-                                                                        </button>
-                                                                    </a>
-                                                                    @include('Shipments.OrderMonitor.MonitorOperation.Events.responseletter')
-                                                                @else
-                                                                    <span
-                                                                        style="font-size: 11px;">{{$orderDelivery->operation->responseletter}}
-                                                                    </span>
-                                                                @endif
-                                                            @endif
-                                                        </th>
-                                                    </tr>
-
                                                     </tbody>
                                                 </table>
                                             </div>
