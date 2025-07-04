@@ -91,6 +91,7 @@ class ShipmentSchedulleBridgestoneController extends BaseController
                 'orderdeliveries.statusid'
             ])
             ->whereNotIn('orderdeliveries.statusid', ['CA'])
+            ->orderBy('orderdeliveries.id', 'desc')->limit(500)
             ->get();
         return DataTables::of($data)
             ->addColumn('btn', 'Shipments.OrderMonitor.MonitorOperation.partials.btnoperation')
