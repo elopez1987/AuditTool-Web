@@ -39,12 +39,16 @@
                                         <th class="bg-inverse text-white">Linea</th>
                                         <th class="bg-inverse text-white">Placa de Caja</th>
                                         <th class="bg-inverse text-white">Eco. de Caja</th>
+                                        <th class="bg-inverse text-white">Tipo de Unidad</th>
+                                        <th class="bg-inverse text-white">Capacidad de Unidad</th>
                                         <th class="bg-inverse text-white">Ubicación</th>
                                         <th class="bg-inverse text-white">Estatus de Unidad</th>
                                         <th class="bg-inverse text-white">Estatus de Folio</th>
                                         <th class="bg-inverse text-white">F.Entrada</th>
                                         <th class="bg-inverse text-white">Motivo de Entrada</th>
-                                        <th class="bg-inverse text-white">Estadía</th>
+                                        <th class="bg-inverse text-white">Origen</th>
+                                        <th class="bg-inverse text-white">Estadía Total</th>
+                                        <th class="bg-inverse text-white">Tiempo de autorización de salida</th>
                                     </tr>
                                     </thead>
                                 </table>

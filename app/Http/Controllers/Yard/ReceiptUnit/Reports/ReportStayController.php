@@ -17,39 +17,21 @@ class ReportStayController extends Controller
         return view('Yards.ReportStays.index');
     }
 
-    public function getDataStays(Request $request)
+    public function getDataStays()
     {
-        $data = $this->getData($request);
+        $data = ReceiptUnit::controlAccessUser()
+            ->with(['status:statusid,name','carrier:id,name','unitstatus:id,name',
+                'location:id,name','warehouse:warehouseid,name','reason:id,name','unittype:id,description',
+                'truckcategory:truckcategoryid,description','truck:id,name'])
+            ->whereNotIn('receiptunits.statusid', ['TR'])->get();
         return DataTables::of($data)
             ->addColumn('stays', function ($data) {
                 return Carbon::now()->diff($data->entrydate)->format('%m m %d d %H:%i h/m');
             })
-            ->addColumn('time', function ($data) {
-                return Carbon::now()->diffInHours($data->entrydate);
+            ->addColumn('autorize', function ($data) {
+                return Carbon::now()->diff($data->autorizaoutputdate)->format('%m m %d d %H:%i h/m');
             })
-            ->addColumn('cellstays', 'Yards.ReportStays.partials.stays')
-            ->rawColumns(['cellstays'])
-            ->toJson();
-    }
-
-    private function getData(Request $request)
-    {
-        return ReceiptUnit::controlAccessUser()
-            ->leftJoin('systemstatus','receiptunits.statusid','=','systemstatus.statusid')
-            ->leftJoin('shipmentcarriers','receiptunits.carrierid','=','shipmentcarriers.id')
-            ->leftJoin('storagereasons','receiptunits.razonstatusid','=','storagereasons.id')
-            ->leftJoin('storagelocations','receiptunits.locationid','=','storagelocations.id')
-            ->leftJoin('systemwarehouses','receiptunits.warehouseid','=','systemwarehouses.warehouseid')
-            ->leftJoin('storageunitstatus','receiptunits.unitstatusid','=','storageunitstatus.id')
-            ->select([
-                'systemwarehouses.name as warehouse', 'receiptunits.id', 'receiptunits.shipmentid',
-                'shipmentcarriers.name as carrier', 'receiptunits.boxnumber', 'receiptunits.econumber',
-                'storagelocations.name as location', 'storageunitstatus.name as unitstatus',
-                'systemstatus.name as status', 'receiptunits.entrydate', 'storagereasons.name as razon',
-            ])
-            ->whereNotIn('receiptunits.statusid', ['TR'])
-            ->Folio($request->get('folionumber'))->get();
-
+            ->rawColumns(['stays','autorize'])->toJson();
     }
 
 
