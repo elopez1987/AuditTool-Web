@@ -139,10 +139,10 @@
                                         @include('Yards.KardexReceiptUnit.tabletrace')
                                     </div>
                                 </div>
-                                <div class="tab-pane  p-20" id="view02" role="tabpanel">
-                                    <div class="row">
+                                <div class="tab-pane" id="view02" role="tabpanel">
+                                    <div class="row mt-3">
                                         <div class="col-lg-6">
-                                            <table class="table table-condensed table-bordered table-striped">
+                                            <table width="100%" class="table table-condensed table-bordered table-striped">
                                                 <thead>
                                                 <tr>
                                                     <th>Concepto</th>
@@ -215,8 +215,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane p-20" id="view03" role="tabpanel">
-                                    <div class="row">
+                                <div class="tab-pane" id="view03" role="tabpanel">
+                                    <div class="row mt-3">
                                         <div class="col-lg-12">
                                             <div class="card">
                                                 <div class="card-header"></div>
@@ -323,10 +323,9 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane p-20" id="view04" role="tabpanel">
-                                    <div class="row">
+                                    <div class="row mt-3">
                                         <div class="col-lg-6">
-                                            <div class="col-lg-6">
-                                                <table class="table table-condensed table-bordered table-striped">
+                                                <table width="100%" class="table table-condensed table-bordered table-striped">
                                                     <thead>
                                                     <tr>
                                                         <th>Concepto</th>
@@ -344,7 +343,6 @@
                                                     @endforeach
                                                     </tbody>
                                                 </table>
-                                            </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="card">
@@ -404,10 +402,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane p-20" id="view05" role="tabpanel">
-                                    <div class="row">
+                                <div class="tab-pane" id="view05" role="tabpanel">
+                                    <div class="row mt-3">
                                         <div class="col-lg-6">
-                                            <table class="table table-condensed table-bordered table-striped">
+                                            <table width="100%" class="table table-condensed table-bordered table-striped">
                                                 <thead>
                                                 <tr>
                                                     <th>Concepto</th>
@@ -519,15 +517,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane p-20" id="view07" role="tabpanel">
-                                    <div class="row">
+                                <div class="tab-pane" id="view07" role="tabpanel">
+                                    <div class="row mt-3">
                                         <div class="col-lg-6">
                                             <div class="row">
                                                 <div class="col-lg-12">
                                                     <div class="card">
                                                         <div class="card-body">
-                                                            <table
-                                                                class="table table-condensed table-bordered table-striped table-hover">
+                                                            <table width="100%" class="table table-condensed table-bordered table-striped table-hover">
                                                                 <thead>
                                                                 <tr>
                                                                     <th>Tipo</th>
@@ -612,38 +609,58 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane p-20" id="view08" role="tabpanel">
-                                    <div class="row">
-                                        <div class="col-lg-6">
+                                <div class="tab-pane " id="view08" role="tabpanel">
+                                    <div class="row mt-3">
+                                        <div class="col-lg-12">
                                             <div class="card">
                                                 <div class="card-body">
-                                                    <table
-                                                        class="table table-condensed table-bordered table-striped table-hover">
+                                                    <table width="100%" class="table table-condensed table-bordered  table-hover">
                                                         <thead>
                                                         <tr>
                                                             <th>Folio</th>
                                                             <th>Número de ticket</th>
-                                                            <th>Peso de entrada</th>
+                                                            <th>Peso de entrada kilogramos</th>
+                                                            <th>Peso de entrada libras</th>
                                                             <th>Usuario de entrada</th>
                                                             <th>Fecha de entrada</th>
-                                                            <th>Peso de salida</th>
+                                                            <th>Peso de salida kilogramos</th>
+                                                            <th>Peso de salida libras</th>
+                                                            <th>Peso de material kilogramos</th>
+                                                            <th>Peso de material libras</th>
+                                                            <th>Peso de SAP libras</th>
                                                             <th>Usuario de salida</th>
                                                             <th>Fecha de salida</th>
+                                                            <th>% de diferencia</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
-                                                        @foreach($pesos as $peso)
-                                                            <tr>
-                                                                <td>{{$peso->folionumber}}</td>
-                                                                <td>{{$peso->ticket}}</td>
-                                                                <td>{{$peso->weightin}}</td>
-                                                                <td>{{$peso->usercreate ? $peso->usercreate->name : ''}}</td>
-                                                                <td>{{$peso->createddate}}</td>
-                                                                <td>{{$peso->weightout}}</td>
-                                                                <td>{{$peso->userupdate ? $peso->userupdate->name : ''}}</td>
-                                                                <td>{{$peso->updateddate}}</td>
-                                                            </tr>
-                                                        @endforeach
+                                                                @foreach($pesos as $peso)
+                                                                    <tr>
+                                                                        <td>{{$peso->folionumber}}</td>
+                                                                        <td>{{$peso->ticket}}</td>
+                                                                        <td>{{$peso->weightin}} Kg</td>
+                                                                        <td>{{ round($peso->weightin * 2.20462) }} lbs </td>
+                                                                        <td>{{$peso->usercreate ? $peso->usercreate->name : ''}}</td>
+                                                                        <td>{{$peso->createddate}}</td>
+                                                                        <td>{{$peso->weightout}} Kg</td>
+                                                                        <td>{{ round($peso->weightout * 2.20462)}} lbs</td>
+                                                                        <td>{{$peso->weightout - $peso->weightin}}  Kg</td>
+                                                                        <td>{{ round( ($peso->weightout - $peso->weightin) * 2.20462)}}  lbs</td>
+                                                                        <td>{{$peso->weightoutsap}} lbs</td>  {{-- Peso de SAP libras--}}
+                                                                        <td>{{$peso->userupdate ? $peso->userupdate->name : ''}}</td>
+                                                                        <td>{{$peso->updateddate}}</td>
+                                                                        <td>
+                                                                            @php
+                                                                                $pesoCalculado = round(($peso->weightout - $peso->weightin) * 2.20462,2);
+                                                                                $pesoSap = $peso->weightoutsap;
+                                                                                $porcentaje = $pesoSap != 0 ? round( (100 / $pesoCalculado ) * $pesoSap, 2) / 10: 0;
+                                                                            @endphp
+                                                                            <span class="{{ $porcentaje > 0 ? 'text-success' : ($porcentaje < 0 ? 'text-danger' : 'text-muted') }}">
+                                                                                {{ $porcentaje > 0 ? '+' : '' }}{{ number_format($porcentaje, 2) }} %
+                                                                            </span>
+                                                                        </td>
+                                                                    </tr>
+                                                                @endforeach
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -652,12 +669,11 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane " id="view09" role="tabpanel">
-                                    <div class="row">
+                                    <div class="row mt-3">
                                         <div class="col-lg-6">
                                             <div class="card">
                                                 <div class="card-body">
-                                                    <table
-                                                        class="table table-condensed table-bordered table-striped table-hover">
+                                                    <table width="100%" class="table table-condensed table-bordered table-striped table-hover">
                                                         <thead>
                                                         <tr>
                                                             <th>Folio</th>
@@ -685,12 +701,11 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane " id="view10" role="tabpanel">
-                                    <div class="row">
+                                    <div class="row mt-4">
                                         <div class="col-lg-6">
                                             <div class="card">
                                                 <div class="card-body">
-                                                    <table
-                                                        class="table table-condensed table-bordered table-striped table-hover">
+                                                    <table width="100%" class="table table-condensed table-bordered table-hover">
                                                         <thead>
                                                         <tr>
                                                             <th>Firma de vigilante de entrada</th>
@@ -756,78 +771,132 @@
 
 @section('script')
     <script src="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.all.min.js')}}"></script>
+{{--    <script>--}}
+{{--        let oTable = $("#table-detailkardex").DataTable({--}}
+{{--            bDestroy: true,--}}
+{{--            "paging": true,--}}
+{{--            "searching": true,--}}
+{{--            "ordering": true,--}}
+{{--            "sScrollY": "350px",--}}
+{{--            "sScrollX": true,--}}
+{{--            "processing": true,--}}
+{{--            "responsive": true,--}}
+{{--            "colReorder": true,--}}
+{{--            "stateSave": true,--}}
+{{--            "stateDuration": 0,--}}
+{{--            "columnDefs": [--}}
+{{--                {"width": "100px", "targets": 0},--}}
+{{--                {"width": "280px", "targets": 1},--}}
+{{--                {"width": "120px", "targets": 2},--}}
+{{--                {"width": "150px", "targets": 3},--}}
+{{--                {"width": "150px", "targets": 4},--}}
+{{--                {"width": "150px", "targets": 5},--}}
+{{--                {"width": "250px", "targets": 6},--}}
+{{--                {"width": "100px", "targets": 7},--}}
+{{--                {"width": "100px", "targets": 8},--}}
+{{--                {"width": "120px", "targets": 9},--}}
+{{--                {"width": "120px", "targets": 10},--}}
+{{--                {"width": "280px", "targets": 11},--}}
+{{--                {"width": "120px", "targets": 12},--}}
+{{--                {"width": "280px", "targets": 13},--}}
+{{--            ],--}}
+{{--            "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',--}}
+{{--            "lengthMenu": [[1, 5, 10, 30, 50, 100, 150, 200, 250, -1], [1, 5, 10, 30, 50, 100, 150, 200, 250, "Todos"]],--}}
+{{--            buttons: [--}}
+{{--                {--}}
+{{--                    "extend": "colvis",--}}
+{{--                    "text": "<img src=\"{{asset('/pics/adbuscar.png')}}\"  alt=''><span  style='font-size: 11px;'> Mostar/Ocultar</span>",--}}
+{{--                    "className": "btn btn-outline-info btn-md  btn-bold",--}}
+{{--                    columns: ':not(:first):not(:last)'--}}
+{{--                },--}}
+{{--                {--}}
+{{--                    "extend": "csv",--}}
+{{--                    "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16'><span  style='font-size: 11px;'> Csv</span>",--}}
+{{--                    "className": "btn btn-outline-info btn-md  btn-bold",--}}
+{{--                },--}}
+{{--                {--}}
+{{--                    "extend": "excel",--}}
+{{--                    "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt=''><span  style='font-size: 11px;'> Excel</span>",--}}
+{{--                    "className": "btn btn-outline-info btn-md  btn-bold",--}}
+{{--                }--}}
+{{--            ],--}}
+{{--            language: {--}}
+{{--                "decimal": "",--}}
+{{--                "emptyTable": "No hay información",--}}
+{{--                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",--}}
+{{--                "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",--}}
+{{--                "infoFiltered": "(Filtrado de _MAX_ total entradas)",--}}
+{{--                "infoPostFix": "",--}}
+{{--                "thousands": ",",--}}
+{{--                "lengthMenu": "Mostrar _MENU_ Entradas",--}}
+{{--                "loadingRecords": "Cargando...",--}}
+{{--                "processing": '<i class="fa fa-spinner fa-spin fa-4x fa-fw text-info"></i><span class="sr-only">Loading...</span> ',--}}
+{{--                "search": "Buscar:",--}}
+{{--                "zeroRecords": "Sin resultados encontrados",--}}
+{{--                "paginate": {--}}
+{{--                    "first": "Primero",--}}
+{{--                    "last": "Ultimo",--}}
+{{--                    "next": "Siguiente",--}}
+{{--                    "previous": "Anterior"--}}
+{{--                }--}}
+{{--            },--}}
+{{--        });--}}
+{{--    </script>--}}
+
     <script>
-        let oTable = $("#table-detailkardex").DataTable({
-            bDestroy: true,
-            "paging": true,
-            "searching": true,
-            "ordering": true,
-            "sScrollY": "350px",
-            "sScrollX": true,
-            "processing": true,
-            "responsive": true,
-            "colReorder": true,
-            "stateSave": true,
-            "stateDuration": 0,
-            "columnDefs": [
-                {"width": "100px", "targets": 0},
-                {"width": "280px", "targets": 1},
-                {"width": "120px", "targets": 2},
-                {"width": "150px", "targets": 3},
-                {"width": "150px", "targets": 4},
-                {"width": "150px", "targets": 5},
-                {"width": "250px", "targets": 6},
-                {"width": "100px", "targets": 7},
-                {"width": "100px", "targets": 8},
-                {"width": "120px", "targets": 9},
-                {"width": "120px", "targets": 10},
-                {"width": "280px", "targets": 11},
-                {"width": "120px", "targets": 12},
-                {"width": "280px", "targets": 13},
-            ],
-            "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
-            "lengthMenu": [[1, 5, 10, 30, 50, 100, 150, 200, 250, -1], [1, 5, 10, 30, 50, 100, 150, 200, 250, "Todos"]],
-            buttons: [
-                {
-                    "extend": "colvis",
-                    "text": "<img src=\"{{asset('/pics/adbuscar.png')}}\"  alt=''><span  style='font-size: 11px;'> Mostar/Ocultar</span>",
-                    "className": "btn btn-outline-info btn-md  btn-bold",
-                    columns: ':not(:first):not(:last)'
+        $(document).ready(function () {
+            $('a[data-toggle="tab"]').on('shown.bs.tab', function () {
+                $.fn.dataTable.tables({visible: true, api: true}).columns.adjust();
+            });
+            $('table.table').DataTable({
+                "paging": true,
+                "searching": true,
+                "ordering": true,
+                "sScrollY": "250px",
+                "sScrollX": true,
+                "processing": true,
+                "serverSide": false,
+                "responsive": true,
+                "colReorder": true,
+                "stateSave": true,
+                "stateDuration": 0,
+                "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
+                "lengthMenu": [[1, 5, 10, 30, 50, 100, 150, 200, 250, -1], [1, 5, 10, 30, 50, 100, 150, 200, 250, "Todos"]],
+                buttons: [
+                    {
+                        "extend": "csv",
+                        "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16'><span  style='font-size: 11px;'> Csv</span>",
+                        "className": "btn btn-outline-info btn-md  btn-bold",
+                    },
+                    {
+                        "extend": "excel",
+                        "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt=''><span  style='font-size: 11px;'> Excel</span>",
+                        "className": "btn btn-outline-info btn-md  btn-bold",
+                    }
+                ],
+                language: {
+                    "decimal": "",
+                    "emptyTable": "No hay información",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                    "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "Mostrar _MENU_ Entradas",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "zeroRecords": "Sin resultados encontrados",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Ultimo",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
                 },
-                {
-                    "extend": "csv",
-                    "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16'><span  style='font-size: 11px;'> Csv</span>",
-                    "className": "btn btn-outline-info btn-md  btn-bold",
-                },
-                {
-                    "extend": "excel",
-                    "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt=''><span  style='font-size: 11px;'> Excel</span>",
-                    "className": "btn btn-outline-info btn-md  btn-bold",
-                }
-            ],
-            language: {
-                "decimal": "",
-                "emptyTable": "No hay información",
-                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-                "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-                "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-                "infoPostFix": "",
-                "thousands": ",",
-                "lengthMenu": "Mostrar _MENU_ Entradas",
-                "loadingRecords": "Cargando...",
-                "processing": '<i class="fa fa-spinner fa-spin fa-4x fa-fw text-info"></i><span class="sr-only">Loading...</span> ',
-                "search": "Buscar:",
-                "zeroRecords": "Sin resultados encontrados",
-                "paginate": {
-                    "first": "Primero",
-                    "last": "Ultimo",
-                    "next": "Siguiente",
-                    "previous": "Anterior"
-                }
-            },
+            });
         });
     </script>
-
     <script>
         function reloadunit($id) {
             Swal.fire({

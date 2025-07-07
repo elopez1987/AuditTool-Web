@@ -25,9 +25,6 @@
                                 </div>
                             </div>
                         </div>
-
-
-
                         <hr class="mb-3">
                         @include('Security.Permissions.partials.formEdit')
                     </form>

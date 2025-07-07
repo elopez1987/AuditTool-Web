@@ -39,8 +39,7 @@
                 @enderror
                 <span style="color: red">*</span></label>
             <input type="text" class="form-control @error('name') is-invalid @enderror"
-                   required id="name" name="name" maxlength="20"
-                   aria-describedby="name" onKeyUp=this.value=this.value.toUpperCase();
+                   required id="name" name="name" maxlength="20" aria-describedby="name"
                    value="{{$securitypermission->name}}"
             >
         </div>

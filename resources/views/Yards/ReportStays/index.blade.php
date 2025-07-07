@@ -45,6 +45,7 @@
                                         <th class="bg-inverse text-white">Estatus de Unidad</th>
                                         <th class="bg-inverse text-white">Estatus de Folio</th>
                                         <th class="bg-inverse text-white">F.Entrada</th>
+                                        <th class="bg-inverse text-white">F.Autorización</th>
                                         <th class="bg-inverse text-white">Motivo de Entrada</th>
                                         <th class="bg-inverse text-white">Origen</th>
                                         <th class="bg-inverse text-white">Estadía Total</th>

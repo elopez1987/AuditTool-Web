@@ -110,8 +110,6 @@ class TraceReceiptUnitController extends BaseController
             })
             ->where('s.receiptunitid', $receiptunit->id)
             ->whereIn('s.type', ['OUT'])->get();
-
-
         $fortmat = 'Yards.ReceiptUnits.InvoiceFormats.InvoiceBridgestonePT';
         $pdf = PDF::loadView($fortmat, compact('receiptunit', 'verified', 'tracto','verifiedOut'));
         return $pdf->download('Folio_De_Entrada-' . $receiptunit->id . '.pdf');
@@ -136,7 +134,6 @@ class TraceReceiptUnitController extends BaseController
         $fortmat = 'Yards.KardexReceiptUnit.Formats.CalidaBridgestone';
         $pdf = PDF::loadView($fortmat, compact('receiptunit', 'comments', 'verified', 'photos'));
         return $pdf->download('Folio_De_Calidad-' . $receiptunit->id . '.pdf');
-
     }
 
     public function downloadfiles($id)

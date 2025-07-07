@@ -127,12 +127,8 @@
                                             <tbody>
                                             @for($i=1;$i <=8;$i++)
                                                 <tr>
-                                                    <td><input type="text" class="form-control" name="permisionid[]"
-                                                               onKeyUp=this.value=this.value.toUpperCase();>
-                                                    </td>
-                                                    <td><input type="text" class="form-control" name="permisionname[]"
-                                                               onKeyUp=this.value=this.value.toUpperCase();>
-                                                    </td>
+                                                    <td><input type="text" class="form-control" name="permisionid[]" ></td>
+                                                    <td><input type="text" class="form-control" name="permisionname[]" onKeyUp=this.value=this.value.toUpperCase();></td>
                                                 </tr>
                                             @endfor
                                             </tbody>

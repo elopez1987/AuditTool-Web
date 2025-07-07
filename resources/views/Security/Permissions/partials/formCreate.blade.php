@@ -37,8 +37,7 @@
                 <span style="color: red">*</span></label>
             <input type="text" class="form-control @error('name') is-invalid @enderror"
                    required id="name" name="name" maxlength="15"
-                   aria-describedby="name" onKeyUp=this.value=this.value.toUpperCase();
-                   value="{{old('name')}}"
+                   aria-describedby="name" value="{{old('name')}}"
             >
         </div>
     </div>

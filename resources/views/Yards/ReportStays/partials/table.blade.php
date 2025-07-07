@@ -31,6 +31,7 @@
             {data: 'unitstatus.name','name':'unitsstatus.name'},
             {data: 'status.name',name:'status.name'},
             {data: 'entrydate'},
+            {data: 'autorizaoutputdate'},
             {data: 'reason.name','name':'reason.name'},
             {data: 'unittype.description','name':'unittype.description'},
             {data: 'stays'},
