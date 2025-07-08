@@ -13,14 +13,16 @@ trait SendMessageToOperatorForFinishProcess
         $url = "https://api.1msg.io/HEI523482986/sendTemplate";
         $client = new Client();
         $receiptunit = ReceiptUnit::searchForId($order->folionumber);
-        if (!empty($receiptunit->phone)) {
+        if (empty($receiptunit)) {
+            return null;
+        }
+        if (!empty($receiptunit->phone) && strlen($receiptunit->phone) === 10 && ctype_digit($receiptunit->phone)) {
             try {
                 $data = $this->getBodyDataMessage($order, $receiptunit->phone);
                 $client->request('POST', $url, ['json' => $data, 'headers' => ['Content-Type' => 'application/json']]);
             } catch (\Exception $e) {
                 Log::error('Error al enviar mensaje al operador.');
             }
-
         }
     }
 

@@ -10,6 +10,7 @@ use App\Models\Shipments\ShipmentJourney\ShipmentJourney;
 use App\Models\Shipments\ShipmentPod\ShipmentPod;
 use App\Models\Shipments\ShipmentSeal;
 use App\Models\Yard\ReceiptUnit;
+use App\Traits\Web\Shipments\SendMessageToOperatorForFinishProcess;
 use App\Traits\Web\Shipments\SendMessageToSoriana;
 use App\Traits\Web\Yard\VirtualUnit\CheckOutVirtual;
 use Carbon\Carbon;
@@ -22,6 +23,7 @@ class FinishGoodIssueController extends BaseController
 {
     use CheckOutVirtual;
     use SendMessageToSoriana;
+    use SendMessageToOperatorForFinishProcess;
 
 
     public function index(Request $request, OrderDeliverie $id)
