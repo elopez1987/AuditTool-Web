@@ -12,7 +12,6 @@
                             <a href="{{route('schedulereceipt.index')}}">
                                 @include('buttons.back')
                             </a>
-
                             @if($receiptasn->statusid != 'IG')
                                 @if($receiptasn->statusid != 'CE')
                                     @can('cancellationReceipt')
@@ -28,7 +27,6 @@
                                     @endcan
                                 @endif
                             @endif
-
                             @if($receiptasn->statusid != 'IG')
                                 @if($receiptasn->statusid != 'CE')
                                     @can('receiptasn.destroy')
@@ -43,7 +41,6 @@
                                     @endcan
                                 @endif
                             @endif
-
                             @if($receiptasn->statusid != 'IG')
                                 @if($receiptasn->statusid != 'CE')
                                     @can('receiptasn.closereceipt')
@@ -59,7 +56,6 @@
                                     @endcan
                                 @endif
                             @endif
-
                             @if ($receiptasn->statusid == 'IG')
                                 @can('receiptasn.kardex')
                                     <a href="{{url('receiptasn/' . $receiptasn->id . '/kardex')}}">
@@ -71,7 +67,6 @@
                                     </a>
                                 @endcan
                             @endif
-
                             @if ($receiptasn->statusid != 'IG')
                                 <a href="" data-target="#modal-addnote-{{$receiptasn->id}}" data-toggle="modal">
                                     <button type="button"
@@ -82,7 +77,6 @@
                                 </a>
                                 @include('Receipt.ScheduleReceipt.options.addnote')
                             @endcan
-
                             @if($receiptasn->folionumber != null)
                                 <a href="{{url('tracereceiptunit/' . $receiptasn->folionumber)}}">
                                     <button type="button"
@@ -94,7 +88,6 @@
                                     </button>
                                 </a>
                             @endif
-
                             @if(!empty($receiptasn->folionumber))
                                 @if($receiptasn->unloadstartdate == null)
                                     @can('receiptasn.startprocess')
@@ -111,7 +104,6 @@
                                     @endif
                                 @endif
                             @endif
-
                             @if(!empty($receiptasn->folionumber))
                                 @if($receiptasn->unloadfinishdate == null)
                                     @can('receiptasn.finishprocess')
@@ -128,7 +120,6 @@
                                     @endif
                                 @endif
                             @endif
-
                         </div>
                     </div>
                     <hr class="m-t-1">
@@ -212,6 +203,13 @@
                                     <span
                                         class="m-b-15 d-block font-12"> {{$receiptasn->provider ? $receiptasn->provider->name : ''}}</span>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-6 col-sm-12">
+                            <div class="d-flex flex-row comment-row m-t-0">
+                              <span style="margin: auto;display: block;text-align: left">
+                                    {!! DNS2D::getBarcodeHTML((string)$receiptasn->shipmentid, 'QRCODE',4,4) !!}
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -301,20 +299,29 @@
                                                         <tr>
                                                             <th>Material</th>
                                                             <th>Description</th>
-                                                            <th>F.Producción</th>
                                                             <th>Lote</th>
-                                                            <th>Cantidad</th>
+                                                            <th>Cantidad esperada (Piezas)</th>
+                                                            <th>Cantidad escaneada (Piezas)</th>
                                                             <th>Opciones</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
                                                         @foreach($stocks as $stock)
                                                             <tr>
-                                                                <td>{{$stock->partnumber->prtnum}}</td>
-                                                                <td>{{$stock->partnumber->lngdsc}}</td>
-                                                                <td>{{$stock->productiondate}}</td>
+                                                                <td>{{$stock->prtnum}}</td>
+                                                                <td>{{$stock->lngdsc}}</td>
                                                                 <td>{{$stock->expirecode}}</td>
                                                                 <td>{{$stock->quantitytrue}}</td>
+                                                                <td>
+                                                                    @if(!empty($stock->totalescaneado))
+                                                                        @if($stock->quantitytrue != $stock->totalescaneado)
+                                                                            <span class="badge badge-danger"
+                                                                                  style="padding: 5px 10px">
+                                                                                {{$stock->totalescaneado}}
+                                                                        </span>
+                                                                        @endif
+                                                                    @endif
+                                                                </td>
                                                                 <td>
                                                                     <a href=""
                                                                        data-target="#modal-updatequantity-{{$stock->id}}"
@@ -471,6 +478,7 @@
                                                     <th>Descripción</th>
                                                     <th>Cantidad</th>
                                                     <th>Lpn</th>
+                                                    <th>Lote</th>
                                                     <th>Usuario</th>
                                                     <th>Fecha de creación</th>
                                                     <th></th>
@@ -483,6 +491,7 @@
                                                         <td>{{$container->partnumber ? $container->partnumber->lngdsc : ''}}</td>
                                                         <td>{{$container->quantity}}</td>
                                                         <td>{{$container->lpnid}}</td>
+                                                        <td>{{$container->batch}}</td>
                                                         <td>{{$container->user ? $container->user->name : ''}}</td>
                                                         <td>{{$container->created_at}}</td>
                                                         <td>
@@ -529,7 +538,7 @@
                 "ordering": true,
                 "sScrollY": "400px",
                 "serverSide": false,
-                "dom": '<"top"B>lrt<"bottom"p><"clear"i>',
+                "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
                 "lengthMenu": [[25, 50, -1], [25, 50, "All"]],
                 buttons: [
                     {

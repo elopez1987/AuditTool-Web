@@ -89,7 +89,7 @@ class ReceiptAsnsController extends BaseController
 
     public function show(ReceiptAsn $receiptasn)
     {
-        $stocks = ReceiptStock::whereReceiptid($receiptasn->id)->get();
+        $stocks = $this->getTotalsReceipt($receiptasn->id);
         $coments = StorageComment::getCommentForModel($receiptasn->id, 'ReceiptAsn');
         $evidences = EvidencePhoto::getPhotosForModel($receiptasn->id, 'ReceiptAsn');
         $incidences = $this->getIncidenceReceipt($receiptasn->id);
@@ -126,6 +126,35 @@ class ReceiptAsnsController extends BaseController
             ->get();
     }
 
+    public function getTotalsReceipt($receiptid)
+    {
+        return ReceiptStock::controlAccessUser()->select(
+            'inventorypartnumbers.prtnum',
+            'inventorypartnumbers.lngdsc',
+            'receiptstock.expirecode',
+            'receiptstock.quantitytrue',
+            DB::raw('(SUM(receiptcontainers.quantity) * inventorypartnumbers.untcas) as totalescaneado')
+        )
+            ->leftJoin('inventorypartnumbers', function ($join) {
+                $join->on('receiptstock.partnumberid', '=', 'inventorypartnumbers.id')
+                    ->on('receiptstock.centerid', '=', 'inventorypartnumbers.centerid');
+            })
+            ->leftJoin('receiptcontainers', function ($join) {
+                $join->on('receiptstock.receiptid', '=', 'receiptcontainers.receiptid')
+                    ->on('receiptstock.centerid', '=', 'receiptcontainers.centerid')
+                    ->on('receiptstock.warehouseid', '=', 'receiptcontainers.warehouseid')
+                    ->on('receiptstock.partnumberid', '=', 'receiptcontainers.partnumberid')
+                    ->on('receiptstock.expirecode', '=', 'receiptcontainers.batch');
+            })
+            ->where('receiptstock.receiptid', '=', $receiptid)
+            ->groupBy(
+                'inventorypartnumbers.prtnum',
+                'inventorypartnumbers.lngdsc',
+                'receiptstock.expirecode',
+                'receiptstock.quantitytrue',
+                'inventorypartnumbers.untcas'
 
-
+            )
+            ->get();
+    }
 }
