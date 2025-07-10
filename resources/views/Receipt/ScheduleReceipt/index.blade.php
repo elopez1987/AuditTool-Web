@@ -88,26 +88,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-2">
-                                <div class="card-input">
-                                    <table>
-                                        <tbody class="table">
-                                        <tr>
-                                            <td><span class="label label-success font-12"></span></td>
-                                            <td>Menor de 50 Minutos</td>
-                                        </tr>
-                                        <tr>
-                                            <td><span class="label label-warning font-12"></span></td>
-                                            <td>Mayor de 51 Min y menor de 70 Minutos</td>
-                                        </tr>
-                                        <tr>
-                                            <td><span class="label label-danger font-12"></span></td>
-                                            <td>Mayor de 70 Minutos</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
                         </div>
                     </form>
                 </div>

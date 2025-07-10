@@ -7,6 +7,7 @@ use App\Models\General\EvidencePhoto;
 use App\Models\General\StorageComment;
 use App\Models\Receipt\ReceiptAsn;
 use App\Models\Receipt\ReceiptAsnCheckList;
+use App\Models\Receipt\ReceiptContainer;
 use App\Models\Receipt\ReceiptIncidenceStock;
 use App\Models\Receipt\ReceiptStock;
 use App\Models\Receipt\StorageSchedulleReceipt;
@@ -62,7 +63,7 @@ class EventReceiptController extends BaseController
 
     public function kardexpdf($id)
     {
-        $receipt = ReceiptAsn::where('receiptasn.id', $id)
+        $receipt = ReceiptAsn::controlAccessUser()->where('receiptasn.id', $id)
             ->leftJoin('systemstatus as se', 'receiptasn.auxiliary04', '=', 'se.statusid')
             ->leftJoin('users as u1', 'receiptasn.auxiliary08', '=', 'u1.username')
             ->leftJoin('users as u2', 'receiptasn.auxiliary09', '=', 'u2.username')
@@ -70,17 +71,50 @@ class EventReceiptController extends BaseController
             ->select(['receiptasn.*', 'u1.name as analista', 'u2.name as monta', 'u3.name as verificador'])
             ->first();
         $checklistAsn = ReceiptAsnCheckList::where('receiptid', $id)->get();
-
         $images = EvidencePhoto::where('model_type', '=', 'ReceiptAsn')
             ->where('model_id', $id)->get();
-
-        $incidences = ReceiptIncidenceStock::where('receiptid', $id)->get();
-        $stocks = ReceiptStock::where('receiptid', $id)->get();
-
-        $pdf = PDF::loadView('Receipt.ReceiptAsn.partials.kardexpdf',
-            compact('receipt', 'checklistAsn', 'images', 'stocks', 'incidences'));
-        $pdf->setPaper('A4', 'landscape');
+        $incidences = ReceiptIncidenceStock::with(['partnumber','categoryincidence','subcategoryincidence'])
+            ->where('receiptid', $id)->get();
+        $stocks = $this->getTotalsReceipt($id);
+        $containers = ReceiptContainer::getContainersForReceipt($id);
+        $pdf = PDF::loadView('Receipt.ReceiptAsn.partials.kardex',
+            compact('receipt', 'checklistAsn', 'images', 'stocks', 'incidences','containers'));;
+//        $pdf->setPaper('A4', 'landscape');
         return $pdf->download('Kardex de descarga - ' . $receipt->id . '.pdf');
+    }
+
+    public function getTotalsReceipt($receiptid)
+    {
+        return ReceiptStock::controlAccessUser()->select(
+            'receiptstock.id',
+            'inventorypartnumbers.prtnum',
+            'inventorypartnumbers.lngdsc',
+            'receiptstock.expirecode',
+            'receiptstock.quantitytrue',
+            DB::raw('(SUM(receiptcontainers.quantity) * inventorypartnumbers.untcas) as totalescaneado')
+        )
+            ->leftJoin('inventorypartnumbers', function ($join) {
+                $join->on('receiptstock.partnumberid', '=', 'inventorypartnumbers.id')
+                    ->on('receiptstock.centerid', '=', 'inventorypartnumbers.centerid');
+            })
+            ->leftJoin('receiptcontainers', function ($join) {
+                $join->on('receiptstock.receiptid', '=', 'receiptcontainers.receiptid')
+                    ->on('receiptstock.centerid', '=', 'receiptcontainers.centerid')
+                    ->on('receiptstock.warehouseid', '=', 'receiptcontainers.warehouseid')
+                    ->on('receiptstock.partnumberid', '=', 'receiptcontainers.partnumberid')
+                    ->on('receiptstock.expirecode', '=', 'receiptcontainers.batch');
+            })
+            ->where('receiptstock.receiptid', '=', $receiptid)
+            ->groupBy(
+                'receiptstock.id',
+                'inventorypartnumbers.prtnum',
+                'inventorypartnumbers.lngdsc',
+                'receiptstock.expirecode',
+                'receiptstock.quantitytrue',
+                'inventorypartnumbers.untcas'
+
+            )
+            ->get();
     }
 
 

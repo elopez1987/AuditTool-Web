@@ -60,7 +60,7 @@ class ReceiptContainer extends Model
 
     static function getContainersForReceipt($receiptid)
     {
-        return ReceiptContainer::controlAccessUser()
+        return ReceiptContainer::controlAccessUser()->with('partnumber')
             ->where('receiptid', $receiptid)->get();
     }
 }
