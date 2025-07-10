@@ -10,7 +10,7 @@
                     <div class="row mb-1">
                         <div class="col-lg-12">
                             <a href="{{ url()->previous() }}">
-                            @include('buttons.back')
+                                @include('buttons.back')
                             </a>
                             @if($receiptasn->statusid != 'IG')
                                 @if($receiptasn->statusid != 'CE')
@@ -119,19 +119,6 @@
                                     @endif
                                 @endif
                             @endif
-                            @if($receiptasn->statusid != 'IG')
-                                <a href="" data-target="#modal-uploaddata-{{$receiptasn->id}}" data-toggle="modal"
-                                   data-placement="top">
-                                    <button type="button"
-                                            class="btn waves-effect waves-light btn-outline-info btn-md"
-                                            data-toggle="tooltip" data-placement="top" title="Importar archivo">
-                                        <img src="{{asset('/ico/uploadcsv.png')}}" alt="" class="img-16">
-                                        <span class="text-button"> Importar datos </span>
-                                    </button>
-                                </a>
-                                @include('Receipt.ReceiptAsn.uploaddata')
-                            @endif
-
                         </div>
                     </div>
                     <hr class="m-t-1">
@@ -341,7 +328,6 @@
                                                                 </td>
                                                                 <td>
                                                                     @if($receiptasn->statusid != 'IG')
-
                                                                         <a href=""
                                                                            data-target="#modal-updatequantity-{{$stock->id}}"
                                                                            data-toggle="modal" data-placement="top">
@@ -501,6 +487,9 @@
                                                     <th>Cantidad piezas</th>
                                                     <th>Lpn</th>
                                                     <th>Lote</th>
+                                                    <th>¿Corresponde en EAN?</th>
+                                                    <th>¿Corresponde la F.Caducidad?</th>
+                                                    <th>Evidencia</th>
                                                     <th>Usuario</th>
                                                     <th>Fecha de creación</th>
                                                     <th></th>
@@ -515,6 +504,40 @@
                                                         <td>{{$container->quantity * $container->partnumber->untcas}}</td>
                                                         <td>{{$container->lpnid}}</td>
                                                         <td>{{$container->batch}}</td>
+                                                        <td>
+                                                            @if($container->eanpz == $container->eanbox)
+                                                                <span class="badge badge-success" style="padding: 5px 10px">SI</span>
+                                                            @else
+                                                                <span class="badge badge-danger" style="padding: 5px 10px">NO</span>
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            @if($container->auxiliary01 == 'Y' )
+                                                                <span class="badge badge-success" style="padding: 5px 10px">SI</span>
+                                                            @else
+                                                                <span class="badge badge-danger" style="padding: 5px 10px">NO</span>
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            @if(!empty($container->photo))
+                                                                <div class="el-card-item">
+                                                                    <div class="el-card-avatar el-overlay-1">
+                                                                        <div class="el-overlay">
+                                                                            <ul class="list-style-none el-info">
+                                                                                <li class="el-item bg-grey">
+                                                                                    <a class="btn default btn-outline image-popup-vertical-fit el-link"
+                                                                                       href="{{asset('storage/' . $container->photo)}}">
+                                                                                        Ver
+                                                                                        <i class="icon-magnifier"></i>
+                                                                                    </a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            @else
+                                                            @endif
+                                                        </td>
                                                         <td>{{$container->user ? $container->user->name : ''}}</td>
                                                         <td>{{$container->created_at}}</td>
                                                         <td>
@@ -523,17 +546,14 @@
                                                                         onclick="deleteLpnOfReceipt( {!! $container->recordid!!} )">
                                                                     Eliminar
                                                                 </button>
-
                                                                 <a href=""
                                                                    data-target="#modal-updatequantity-{{$container->recordid}}"
                                                                    data-toggle="modal" data-placement="top">
                                                                     <button type="button" class="btn waves-effect waves-light btn-outline-info btn-sm ml-2">
-                                                                        {{--                                                                        <img src="{{asset('/ico/closemodal.png')}}" alt="" class="img-16">--}}
                                                                         Modificar
                                                                     </button>
                                                                 </a>
                                                                 @include('Receipt.ReceiptAsn.editquantitycontainer')
-
                                                             @endif
                                                         </td>
                                                     </tr>
@@ -545,8 +565,6 @@
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
                 </div>
             </div>

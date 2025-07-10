@@ -19,7 +19,7 @@ class ReceiptContainer extends Model
 
     protected $fillable = [
         'centerid', 'warehouseid', 'receiptid', 'partnumberid', 'quantity', 'lpnid',
-        'batch','productiondate'
+        'batch','productiondate','codeplant','eanbox','eanpz','photo'
     ];
 
     protected $hidden = [
