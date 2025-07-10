@@ -373,37 +373,40 @@
                                             <div class="card-body">
                                                 <div class="row el-element-overlay">
                                                     @foreach($evidences as $photo)
-                                                        <div class="col-lg-3 col-md-6">
-                                                            <div class="card">
-                                                                <div class="el-card-item">
-                                                                    <div
-                                                                        class="el-card-avatar el-overlay-1">
-                                                                        <img src="{{asset('storage/' . $photo->path)}}"
-                                                                             alt="Evidencia"
-                                                                             style="height: 200px;max-height: 200px"/>
-                                                                        <div class="el-overlay">
-                                                                            <ul class="list-style-none el-info">
-                                                                                <li class="el-item">
-                                                                                    <a href="{{url('downloadphotocheckin/' . $photo->id)}}"
-                                                                                       data-togggle="tooltip"
-                                                                                       title="Descargar"
-                                                                                       class="btn default btn-outline el-link">
-                                                                                        <i class="mdi mdi-download"></i>
-                                                                                    </a>
-                                                                                </li>
-                                                                            </ul>
+                                                        @if($photo->auxiliary01 == 'DES')
+                                                            <div class="col-lg-3 col-md-6">
+                                                                <div class="card">
+                                                                    <div class="el-card-item">
+                                                                        <div
+                                                                            class="el-card-avatar el-overlay-1">
+                                                                            <img
+                                                                                src="{{asset('storage/' . $photo->path)}}"
+                                                                                alt="Evidencia"
+                                                                                style="height: 200px;max-height: 200px"/>
+                                                                            <div class="el-overlay">
+                                                                                <ul class="list-style-none el-info">
+                                                                                    <li class="el-item">
+                                                                                        <a href="{{url('downloadphotocheckin/' . $photo->id)}}"
+                                                                                           data-togggle="tooltip"
+                                                                                           title="Descargar"
+                                                                                           class="btn default btn-outline el-link">
+                                                                                            <i class="mdi mdi-download"></i>
+                                                                                        </a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
-                                                                    <div
-                                                                        class="el-card-content">
-                                                                        <h4 class="m-b-0 font-10 font-weight-light"> {{$photo->user->name}} </h4>
-                                                                        <span
-                                                                            class="text-muted">{{$photo->created_at}}
+                                                                        <div
+                                                                            class="el-card-content">
+                                                                            <h4 class="m-b-0 font-10 font-weight-light"> {{$photo->user->name}} </h4>
+                                                                            <span
+                                                                                class="text-muted">{{$photo->created_at}}
                                                                         </span>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        @endif
                                                     @endforeach
                                                 </div>
                                             </div>
@@ -431,12 +434,12 @@
                                         <tbody>
                                         @foreach($incidences as $incidence)
                                             <tr>
-                                                <td>{{$incidence->prtnum}}</td>
-                                                <td>{{$incidence->lngdsc}}</td>
+                                                <td>{{$incidence->partnumber ? $incidence->partnumber->prtnum : ''}}</td>
+                                                <td>{{$incidence->partnumber ? $incidence->partnumber->lngdsc : ''}}</td>
                                                 <td>{{$incidence->quantity}}</td>
-                                                <td>{{$incidence->category}}</td>
-                                                <td>{{$incidence->subcategory}}</td>
-                                                <td>{{$incidence->name}}</td>
+                                                <td>{{$incidence->categoryincidence ? $incidence->categoryincidence->description : ''}}</td>
+                                                <td>{{$incidence->subcategoryincidence ? $incidence->subcategoryincidence->description : ''}}</td>
+                                                <td>{{$incidence->user ? $incidence->user->name : ''}}</td>
                                                 <td>{{$incidence->created_at}}</td>
                                             </tr>
                                         @endforeach
@@ -444,6 +447,54 @@
                                     </table>
                                 </div>
                             </div>
+                            @if (!empty($evidences))
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="row el-element-overlay">
+                                                    @foreach($evidences as $photo)
+                                                        @if($photo->auxiliary01 == 'INC')
+                                                            <div class="col-lg-3 col-md-6">
+                                                                <div class="card">
+                                                                    <div class="el-card-item">
+                                                                        <div
+                                                                            class="el-card-avatar el-overlay-1">
+                                                                            <img
+                                                                                src="{{asset('storage/' . $photo->path)}}"
+                                                                                alt="Evidencia"
+                                                                                style="height: 200px;max-height: 200px"/>
+                                                                            <div class="el-overlay">
+                                                                                <ul class="list-style-none el-info">
+                                                                                    <li class="el-item">
+                                                                                        <a href="{{url('downloadphotocheckin/' . $photo->id)}}"
+                                                                                           data-togggle="tooltip"
+                                                                                           title="Descargar"
+                                                                                           class="btn default btn-outline el-link">
+                                                                                            <i class="mdi mdi-download"></i>
+                                                                                        </a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div
+                                                                            class="el-card-content">
+                                                                            <h4 class="m-b-0 font-10 font-weight-light"> {{$photo->user->name}} </h4>
+                                                                            <span
+                                                                                class="text-muted">{{$photo->created_at}}
+                                                                        </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @endif
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                         <div class="tab-pane " id="view04" role="tabpanel">
                             <div class="row">
@@ -506,16 +557,20 @@
                                                         <td>{{$container->batch}}</td>
                                                         <td>
                                                             @if($container->eanpz == $container->eanbox)
-                                                                <span class="badge badge-success" style="padding: 5px 10px">SI</span>
+                                                                <span class="badge badge-success"
+                                                                      style="padding: 5px 10px">SI</span>
                                                             @else
-                                                                <span class="badge badge-danger" style="padding: 5px 10px">NO</span>
+                                                                <span class="badge badge-danger"
+                                                                      style="padding: 5px 10px">NO</span>
                                                             @endif
                                                         </td>
                                                         <td>
                                                             @if($container->auxiliary01 == 'Y' )
-                                                                <span class="badge badge-success" style="padding: 5px 10px">SI</span>
+                                                                <span class="badge badge-success"
+                                                                      style="padding: 5px 10px">SI</span>
                                                             @else
-                                                                <span class="badge badge-danger" style="padding: 5px 10px">NO</span>
+                                                                <span class="badge badge-danger"
+                                                                      style="padding: 5px 10px">NO</span>
                                                             @endif
                                                         </td>
                                                         <td>
@@ -549,7 +604,8 @@
                                                                 <a href=""
                                                                    data-target="#modal-updatequantity-{{$container->recordid}}"
                                                                    data-toggle="modal" data-placement="top">
-                                                                    <button type="button" class="btn waves-effect waves-light btn-outline-info btn-sm ml-2">
+                                                                    <button type="button"
+                                                                            class="btn waves-effect waves-light btn-outline-info btn-sm ml-2">
                                                                         Modificar
                                                                     </button>
                                                                 </a>
@@ -570,15 +626,30 @@
             </div>
         </div>
     </div>
-
+    <div class="row">
+        <div class="col-lg-12">
+            <div id="map"></div>
+        </div>
+    </div>
     @include('layouts.Partials.Errors')
 @endsection
 
 @section('css')
     <link rel="stylesheet" href="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.min.css')}}">
+    <style>
+        #map {
+            height: 900px;
+            width: 100%;
+        }
+    </style>
+    <link rel="stylesheet" href="{{asset('/theme/assets/extra-libs/prism/prism.css')}}">
+    <link rel="stylesheet" href="{{asset('/theme/assets/libs/magnific-popup/dist/magnific-popup.css')}}">
 @endsection
 
 @section('script')
+    <script src="{{asset('theme/assets/extra-libs/prism/prism.js')}}"></script>
+    <script src="{{asset('theme/assets/libs/magnific-popup/dist/jquery.magnific-popup.min.js')}}"></script>
+    <script src="{{asset('theme/assets/libs/magnific-popup/meg.init.js')}}"></script>
     <script src="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.all.min.js')}}"></script>
     <script>
         $(document).ready(function () {

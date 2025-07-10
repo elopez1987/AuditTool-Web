@@ -10,6 +10,7 @@ use App\Models\General\StorageComment;
 use App\Models\Inventory\Origin\InventoryStockCategory;
 use App\Models\Receipt\ReceiptAsn;
 use App\Models\Receipt\ReceiptContainer;
+use App\Models\Receipt\ReceiptIncidenceStock;
 use App\Models\Receipt\ReceiptStock;
 use App\Models\Receipt\StorageSchedulleReceipt;
 use App\Models\Yard\StorageReason;
@@ -92,7 +93,8 @@ class ReceiptAsnsController extends BaseController
         $stocks = $this->getTotalsReceipt($receiptasn->id);
         $coments = StorageComment::getCommentForModel($receiptasn->id, 'ReceiptAsn');
         $evidences = EvidencePhoto::getPhotosForModel($receiptasn->id, 'ReceiptAsn');
-        $incidences = $this->getIncidenceReceipt($receiptasn->id);
+        $incidences = ReceiptIncidenceStock::with(['partnumber','categoryincidence','subcategoryincidence'])
+            ->where('receiptid', $receiptasn->id)->get();
         $totalContainers = ReceiptContainer::getContainersForReceipt($receiptasn->id);
         return view('Receipt.ReceiptAsn.show',
             compact('receiptasn', 'stocks', 'coments', 'evidences', 'incidences', 'totalContainers'));
@@ -109,22 +111,6 @@ class ReceiptAsnsController extends BaseController
         return $this->successResponse('schedulereceipt.index');
     }
 
-    public function getIncidenceReceipt($receiptid)
-    {
-        return DB::table('receiptincidencestock')
-            ->select('receiptincidencestock.receiptid', 'inventorypartnumbers.prtnum', 'inventorypartnumbers.lngdsc',
-                'receiptincidencestock.quantity', 'storagecategoryincidences.description as category',
-                'storagecategoryincidencedetails.description as subcategory', 'users.name', 'receiptincidencestock.created_at')
-            ->join('inventorypartnumbers', function ($join) {
-                $join->on('receiptincidencestock.centerid', '=', 'inventorypartnumbers.centerid')
-                    ->on('receiptincidencestock.partnumberid', '=', 'inventorypartnumbers.id');
-            })
-            ->join('storagecategoryincidences', 'receiptincidencestock.categoryid', '=', 'storagecategoryincidences.categoryincid')
-            ->join('storagecategoryincidencedetails', 'receiptincidencestock.categorydetailid', '=', 'storagecategoryincidencedetails.categoryincdetailid')
-            ->join('users', 'receiptincidencestock.createuser', '=', 'users.username')
-            ->where('receiptid', '=', $receiptid)
-            ->get();
-    }
 
     public function getTotalsReceipt($receiptid)
     {

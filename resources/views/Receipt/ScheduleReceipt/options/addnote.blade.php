@@ -13,7 +13,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-lg-12 col-md-6 col-sm-12">
-                            <textarea cols="100" rows="10" name="comment" id="comment"></textarea>
+                            <textarea class="form-control" rows="10" name="comment" id="comment"></textarea>
                         </div>
                     </div>
                 </div>

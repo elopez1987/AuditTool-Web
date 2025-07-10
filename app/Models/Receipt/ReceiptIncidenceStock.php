@@ -3,6 +3,7 @@
 namespace App\Models\Receipt;
 
 use App\Models\Inventory\PartNumber\InventoryPartnumber;
+use App\User;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -57,6 +58,11 @@ class ReceiptIncidenceStock extends Model
     public function subcategoryincidence()
     {
         return $this->belongsTo(StorageCategoryIncidenceDetail::class, 'categorydetailid', 'categoryincdetailid');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'createuser', 'username');
     }
 
 
