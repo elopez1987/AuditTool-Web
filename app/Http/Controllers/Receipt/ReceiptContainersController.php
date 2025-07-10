@@ -6,6 +6,7 @@ use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Receipt\ReceiptProcess\CreateReceiptPalletsRequest;
 use App\Models\Inventory\PartNumber\InventoryPartnumber;
 use App\Models\Receipt\ReceiptAsn;
+use App\Models\Receipt\ReceiptContainer;
 use App\Models\Receipt\StorageReceiptPallet;
 use Illuminate\Http\Request;
 
@@ -75,11 +76,28 @@ class ReceiptContainersController extends BaseController
     }
 
 
+
+
+
+
+
+//    --------------------------------------------------------------------------------------------------------------------
+
+//    Borrar contenedores de recibo
     public function deleteLpnOfReceipt(Request $request)
     {
         $container = ReceiptContainer::where('recordid', '=', $request['id'])->first();
         $container->delete();
         return response()->json();
+    }
+
+//    Actualizar cantidad del contenedor
+    public function updateQuantityContainer(Request $request,$id)
+    {
+        $container = ReceiptContainer::controlAccessUser()->where('recordid', '=',$id)->first();
+        $container->quantity = $request['quantity'];
+        $container->save();
+        return $this->redirectBackSuccessMessage('Datos actualizados con exito!!');
     }
 
 

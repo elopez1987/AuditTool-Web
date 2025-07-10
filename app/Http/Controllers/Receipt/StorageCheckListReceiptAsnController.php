@@ -20,7 +20,9 @@ class StorageCheckListReceiptAsnController extends BaseController
         $receipt = ReceiptAsn::findOrFail($id);
         $checklist = StorageCheckList::controlAccessUser()->where('type', '=', 'REC')
             ->where('statusid', '=', 'E')->first(['id', 'name']);
-
+        if (empty($checklist)) {
+            return  $this->errorResponse('No existe check list de recibo configurado (REC).');
+        }
         $details = StorageCheckListDetail::controlAccessUser()->whereChecklistid($checklist->id)
             ->where('auxiliary01', '=', 'AR')
             ->select(['id', 'description', 'checklistid', 'auxiliary01'])
@@ -31,7 +33,9 @@ class StorageCheckListReceiptAsnController extends BaseController
             ->where('auxiliary02',$receipt->centerid)
             ->where('auxiliary03',$receipt->warehouseid)
             ->select(['name', 'statusid'])->get();
-
+        if($categories->isEmpty()){
+            return  $this->errorResponse('No existe categoria de material en el esquema CRE.');
+        }
         $actives = ReceiptAsnCheckList::where('receiptid', $id)
             ->where('typeid', 'AR')->where('checklistid', $checklist->id)
             ->select('checklistdetailid')->get();

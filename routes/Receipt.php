@@ -3,6 +3,7 @@
 use App\Http\Controllers\Receipt\AddPlanReceiptController;
 use App\Http\Controllers\Receipt\AssignStageController;
 use App\Http\Controllers\Receipt\EventReceiptController;
+use App\Http\Controllers\Receipt\ImportDataReceiptController;
 use App\Http\Controllers\Receipt\MonitorReceiptPlantController;
 use App\Http\Controllers\Receipt\ReceiptAsnsController;
 use App\Http\Controllers\Receipt\ReceiptAsnStockController;
@@ -41,6 +42,9 @@ Route::middleware(['auth'])->group(function () {
     Route::put('addstockstore/{id}',[ReceiptAsnStockController::class,'addstockstore'])->name('receiptasn.addstockstore');
     Route::put('updateQuantityStock/{id}',[ReceiptAsnStockController::class,'updateQuantityStock'])->name('updateQuantityStock');
     Route::delete('deletestock/{id}',[ReceiptAsnStockController::class,'deletestock'])->name('deletestock');
+    //    Importar datos de producto a recibir
+    Route::put('importdatareceipt/{id}',[ImportDataReceiptController::class,'index'])->name('importdatareceipt');
+
 //    Horario de descarga
     Route::get('schedulereceipt',[ScheduleReceiptController::class,'index'])->name('schedulereceipt.index');
     Route::get('getDataReceipt',[ScheduleReceiptController::class,'getDataReceipt'])->name('getDataReceipt');
@@ -53,6 +57,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('updatepallets/{id}',[ReceiptContainersController::class,'updatepallets'])->name('updatepallets');
     Route::delete('deletepallets/{id}',[ReceiptContainersController::class,'deletepallets'])->name('deletepallets');
     Route::post('deleteLpnOfReceipt',[ReceiptContainersController::class,'deleteLpnOfReceipt'])->name('deleteLpnOfReceipt');
+    Route::put('updateQuantityContainer/{id}',[ReceiptContainersController::class,'updateQuantityContainer'])->name('updateQuantityContainer');
 //    Kardex del folio
     Route::get('receiptasn/{id}/kardex',[EventReceiptController::class,'kardexpdf'])->name('kardexpdf');
 //    Exportar reporte de recibos

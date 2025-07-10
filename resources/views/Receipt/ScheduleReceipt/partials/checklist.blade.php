@@ -17,8 +17,8 @@
                                 <a href="">
                                     @include('buttons.save')
                                 </a>
-                                <a href="{{route('schedulereceipt.index')}}">
-                                    @include('buttons.back')
+                                <a href="{{ url()->previous() }}">
+                                @include('buttons.back')
                                 </a>
                             </div>
                         </div>
@@ -26,7 +26,7 @@
                         <div class="row">
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="checklistname">Tipo <span style="color: red">*</span></label>
+                                    <label for="checklistname">Tipo</label>
                                     <input type="text" class="form-control" readonly  id="checklistname" name="checklistname"
                                            value="{{$checklist->name}}"
                                     >
@@ -34,7 +34,7 @@
                             </div>
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="categoryid">Categoria<span style="color: red">*</span></label>
+                                    <label for="categoryid">Categoria</label>
                                     <select name="categoryid" id='categoryid' required class="form-control select2">
                                         @foreach($categories as $model)
                                             <option value="{{$model->statusid}}"
@@ -51,7 +51,7 @@
                         <div class="row">
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="shipmentid">Embarque <span style="color: red">*</span></label>
+                                    <label for="shipmentid">Embarque </label>
                                     <input type="text" class="form-control" readonly  id="shipmentid" name="shipmentid"
                                            value="{{$receipt->shipmentid}}"
                                     >
@@ -59,7 +59,7 @@
                             </div>
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="billoflading">Embarque <span style="color: red">*</span></label>
+                                    <label for="billoflading">Factura </label>
                                     <input type="text" class="form-control" readonly  id="billoflading" name="billoflading"
                                            value="{{$receipt->billoflading}}"
                                     >

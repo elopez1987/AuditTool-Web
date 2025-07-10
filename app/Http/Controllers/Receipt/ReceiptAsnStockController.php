@@ -16,8 +16,8 @@ class ReceiptAsnStockController extends BaseController
 {
     public function addstock($id)
     {
-        $receiptasn = ReceiptAsn::whereId($id)->first();
-        $stocks = ReceiptStock::whereReceiptid($id)->get();
+        $receiptasn = ReceiptAsn::controlAccessUser()->whereId($id)->first();
+        $stocks = ReceiptStock::controlAccessUser()->whereReceiptid($id)->get();
         return view('Receipt.ReceiptAsn.addStock',
             compact('receiptasn', 'stocks'));
     }
@@ -27,7 +27,7 @@ class ReceiptAsnStockController extends BaseController
         $error = null;
         DB::beginTransaction();
         try {
-            $receipt = ReceiptAsn::findOrFail($id);
+            $receipt = ReceiptAsn::controlAccessUser()->findOrFail($id);
             $this->createReceiptStock($request, $receipt);
             DB::commit();
             $success = true;
@@ -45,7 +45,7 @@ class ReceiptAsnStockController extends BaseController
 
     public function createReceiptStock($request, $receipt)
     {
-        $sku = InventoryPartnumber::wherePrtnum($request['prtnum'])->first();
+        $sku = InventoryPartnumber::controlAccessUser()->wherePrtnum($request['prtnum'])->first();
         if(empty($sku)){
             return $this->errorResponse('El número de parte no existe, favor de validar.');
         }
@@ -70,7 +70,7 @@ class ReceiptAsnStockController extends BaseController
     public function updateQuantityStock($id, Request $request)
     {
 
-        $stock = ReceiptStock::findOrFail($id);
+        $stock = ReceiptStock::controlAccessUser()->findOrFail($id);
         $stock->quantitytrue = $request['quantitytrue'];
         $stock->expirecode = $request['expirecode'];
         $stock->save();
@@ -80,7 +80,7 @@ class ReceiptAsnStockController extends BaseController
 
     public function deletestock($id)
     {
-        $stock = ReceiptStock::findOrFail($id);
+        $stock = ReceiptStock::controlAccessUser()->findOrFail($id);
         $stock->delete();
         return $this->redirectBackSuccess();
     }

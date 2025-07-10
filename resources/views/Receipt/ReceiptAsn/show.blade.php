@@ -9,8 +9,8 @@
                 <div class="card-body">
                     <div class="row mb-1">
                         <div class="col-lg-12">
-                            <a href="{{route('schedulereceipt.index')}}">
-                                @include('buttons.back')
+                            <a href="{{ url()->previous() }}">
+                            @include('buttons.back')
                             </a>
                             @if($receiptasn->statusid != 'IG')
                                 @if($receiptasn->statusid != 'CE')
@@ -78,9 +78,8 @@
                                 @include('Receipt.ScheduleReceipt.options.addnote')
                             @endcan
                             @if($receiptasn->folionumber != null)
-                                <a href="{{url('tracereceiptunit/' . $receiptasn->folionumber)}}">
-                                    <button type="button"
-                                            class="btn waves-effect waves-light btn-outline-info btn-md">
+                                <a href="{{url('tracereceiptunit/' . $receiptasn->folionumber)}}" target="_blank">
+                                    <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
                                         <img
                                             src="{{asset('/ico/data_hosting_information_internet_security_server_storage_icon_127051.png')}}"
                                             alt="" class="img-16 ml-2 mr-2">
@@ -120,6 +119,19 @@
                                     @endif
                                 @endif
                             @endif
+                            @if($receiptasn->statusid != 'IG')
+                                <a href="" data-target="#modal-uploaddata-{{$receiptasn->id}}" data-toggle="modal"
+                                   data-placement="top">
+                                    <button type="button"
+                                            class="btn waves-effect waves-light btn-outline-info btn-md"
+                                            data-toggle="tooltip" data-placement="top" title="Importar archivo">
+                                        <img src="{{asset('/ico/uploadcsv.png')}}" alt="" class="img-16">
+                                        <span class="text-button"> Importar datos </span>
+                                    </button>
+                                </a>
+                                @include('Receipt.ReceiptAsn.uploaddata')
+                            @endif
+
                         </div>
                     </div>
                     <hr class="m-t-1">
@@ -318,33 +330,42 @@
                                                                             <span class="badge badge-danger"
                                                                                   style="padding: 5px 10px">
                                                                                 {{$stock->totalescaneado}}
-                                                                        </span>
+                                                                            </span>
+                                                                        @else
+                                                                            <span class="badge badge-success"
+                                                                                  style="padding: 5px 10px">
+                                                                                {{$stock->totalescaneado}}
+                                                                            </span>
                                                                         @endif
                                                                     @endif
                                                                 </td>
                                                                 <td>
-                                                                    <a href=""
-                                                                       data-target="#modal-updatequantity-{{$stock->id}}"
-                                                                       data-toggle="modal" data-placement="top">
-                                                                        <button type="button"
-                                                                                class="btn waves-effect waves-light btn-outline-info btn-sm">
-                                                                            <img src="{{asset('/ico/adedit.png')}}"
-                                                                                 alt=""
-                                                                                 class="img-16">
-                                                                        </button>
-                                                                    </a>
-                                                                    @include('Receipt.ReceiptAsn.editquantity')
-                                                                    <a href=""
-                                                                       data-target="#modal-deletestock-{{$stock->id}}"
-                                                                       data-toggle="modal" data-placement="top">
-                                                                        <button type="button"
-                                                                                class="btn waves-effect waves-light btn-outline-info btn-sm">
-                                                                            <img src="{{asset('/ico/closemodal.png')}}"
-                                                                                 alt=""
-                                                                                 class="img-16">
-                                                                        </button>
-                                                                    </a>
-                                                                    @include('Receipt.ReceiptAsn.deletestock')
+                                                                    @if($receiptasn->statusid != 'IG')
+
+                                                                        <a href=""
+                                                                           data-target="#modal-updatequantity-{{$stock->id}}"
+                                                                           data-toggle="modal" data-placement="top">
+                                                                            <button type="button"
+                                                                                    class="btn waves-effect waves-light btn-outline-info btn-sm">
+                                                                                <img src="{{asset('/ico/adedit.png')}}"
+                                                                                     alt=""
+                                                                                     class="img-16">
+                                                                            </button>
+                                                                        </a>
+                                                                        @include('Receipt.ReceiptAsn.editquantity')
+                                                                        <a href=""
+                                                                           data-target="#modal-deletestock-{{$stock->id}}"
+                                                                           data-toggle="modal" data-placement="top">
+                                                                            <button type="button"
+                                                                                    class="btn waves-effect waves-light btn-outline-info btn-sm">
+                                                                                <img
+                                                                                    src="{{asset('/ico/closemodal.png')}}"
+                                                                                    alt=""
+                                                                                    class="img-16">
+                                                                            </button>
+                                                                        </a>
+                                                                        @include('Receipt.ReceiptAsn.deletestock')
+                                                                    @endif
                                                                 </td>
                                                             </tr>
                                                         @endforeach
@@ -467,7 +488,7 @@
                         </div>
                         <div class="tab-pane " id="view05" role="tabpanel">
                             <div class="row">
-                                <div class="col-lg-10">
+                                <div class="col-lg-12">
                                     <div class="card">
                                         <div class="card-body">
                                             <table
@@ -476,7 +497,8 @@
                                                 <tr>
                                                     <th>Número de parte</th>
                                                     <th>Descripción</th>
-                                                    <th>Cantidad</th>
+                                                    <th>Cantidad cajas</th>
+                                                    <th>Cantidad piezas</th>
                                                     <th>Lpn</th>
                                                     <th>Lote</th>
                                                     <th>Usuario</th>
@@ -489,7 +511,8 @@
                                                     <tr>
                                                         <td>{{$container->partnumber ? $container->partnumber->prtnum : ''}}</td>
                                                         <td>{{$container->partnumber ? $container->partnumber->lngdsc : ''}}</td>
-                                                        <td>{{$container->quantity}}</td>
+                                                        <td>{{$container->quantity }}</td>
+                                                        <td>{{$container->quantity * $container->partnumber->untcas}}</td>
                                                         <td>{{$container->lpnid}}</td>
                                                         <td>{{$container->batch}}</td>
                                                         <td>{{$container->user ? $container->user->name : ''}}</td>
@@ -500,6 +523,17 @@
                                                                         onclick="deleteLpnOfReceipt( {!! $container->recordid!!} )">
                                                                     Eliminar
                                                                 </button>
+
+                                                                <a href=""
+                                                                   data-target="#modal-updatequantity-{{$container->recordid}}"
+                                                                   data-toggle="modal" data-placement="top">
+                                                                    <button type="button" class="btn waves-effect waves-light btn-outline-info btn-sm ml-2">
+                                                                        {{--                                                                        <img src="{{asset('/ico/closemodal.png')}}" alt="" class="img-16">--}}
+                                                                        Modificar
+                                                                    </button>
+                                                                </a>
+                                                                @include('Receipt.ReceiptAsn.editquantitycontainer')
+
                                                             @endif
                                                         </td>
                                                     </tr>
@@ -519,6 +553,7 @@
         </div>
     </div>
 
+    @include('layouts.Partials.Errors')
 @endsection
 
 @section('css')
@@ -539,7 +574,7 @@
                 "sScrollY": "400px",
                 "serverSide": false,
                 "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
-                "lengthMenu": [[25, 50, -1], [25, 50, "All"]],
+                "lengthMenu": [[25, 50, 100, 150, -1], [25, 50, 100, 150, "All"]],
                 buttons: [
                     {
                         "extend": "colvis",

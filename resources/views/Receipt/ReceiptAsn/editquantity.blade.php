@@ -17,7 +17,7 @@
                             <div class="form-group">
                                 <label for="partnumber">Número de parte <span style="color: red">*</span></label>
                                 <input type="text" class="form-control" readonly id="partnumber" name="partnumber"
-                                       value="{{$stock->partnumber->prtnum}}"
+                                       value="{{$stock->prtnum}}"
                                 >
                             </div>
                         </div>
@@ -25,7 +25,7 @@
                             <div class="form-group">
                                 <label for="description">Descripción <span style="color: red">*</span></label>
                                 <input type="text" class="form-control" readonly id="description" name="description"
-                                       value="{{$stock->partnumber->lngdsc}}"
+                                       value="{{$stock->lngdsc}}"
                                 >
                             </div>
                         </div>
