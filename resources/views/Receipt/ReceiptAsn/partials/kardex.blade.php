@@ -177,7 +177,7 @@
     </div>
 
 
-    <div class="row" style="margin-top: 20px">
+    <div class="row" style="margin-top: 10px">
         <table class="border-none">
             <th class="border-none" style="text-align: center">Datos de contenedores</th>
         </table>
@@ -208,7 +208,7 @@
     </div>
 
 
-    <div class="row" style="margin-top: 20px">
+    <div class="row" style="margin-top: 10px">
         <table class="border-none">
             <th class="border-none" style="text-align: center">Datos de incidencias</th>
         </table>
@@ -239,20 +239,40 @@
     </div>
 
 
-    <div class="row" style="margin-top: 20px">
-        {{--    Fotos--}}
+    {{--    Fotos--}}
+    <div class="row" style="margin-top: 20px;margin-bottom: 20px">
+        <table class="border-none">
+            <th class="border-none" style="text-align: center">Fotos de Incidencias</th>
+        </table>
+    </div>
+    <div class="row" >
         @if ($images->isNotEmpty())
-            <div style="page-break-after:always;"></div>
             @foreach($images as $image)
-                <img src='{{asset('storage/' . $image->path)}}' style="width: 200px;height:200px;margin-top: 50px;margin-left: 10px;
-                 margin-right: 10px;border: 2px solid #cfdd01 !important" >
+                @if($image->auxiliary01 == 'INC')
+                    <img src='{{asset('storage/' . $image->path)}}' style="width: 200px;height:150px;margin-top: 20px;margin-left: 10px;margin-right: 10px;border: 1px solid #cfdd01 !important">
+                @endif
             @endforeach
         @endif
     </div>
 
 
+    <div class="row" style="margin-top: 10px;margin-bottom: 20px">
+        <table class="border-none">
+            <th class="border-none" style="text-align: center">Fotos de Descarga</th>
+        </table>
+    </div>
+    <div class="row" >
+        @if ($images->isNotEmpty())
+            @foreach($images as $image)
+                @if($image->auxiliary01 == 'DES')
+                    <img src='{{asset('storage/' . $image->path)}}' style="width: 200px;height:150px;margin-top: 20px;margin-left: 10px;margin-right: 10px;border: 1px solid #cfdd01 !important">
+                @endif
+            @endforeach
+        @endif
+    </div>
 
-    <div class="row" style="margin-top: 30px ">
+
+    <div class="row" style="margin-top: 50px ">
         <table class="border-none">
             <tr>
                 <td class="border-none" style="text-align: center;font-size: 11px">{{$receipt->analista}}</td>
