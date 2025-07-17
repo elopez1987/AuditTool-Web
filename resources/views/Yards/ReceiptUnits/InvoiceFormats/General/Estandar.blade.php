@@ -155,7 +155,8 @@
             </th>
             <th style="width: 40%;border-top: 0px;font-size: 10px;">{{$receiptunit->entrydate}} </th>
             <th style="width: 20%;border-top: 0px;font-size: 10px;background-color: #E8EAF6;">No.Placas Tracto</th>
-            <th style="width: 20%;border-top: 0px;text-align: center;font-size: 10px;"> {{$receiptunit->tracto ? $receiptunit->tracto->trucknumber : ''}} / {{$receiptunit->tracto ? $receiptunit->tracto->econumber : ''}}</th>
+            <th style="width: 20%;border-top: 0px;text-align: center;font-size: 10px;"> {{$receiptunit->tracto ? $receiptunit->tracto->trucknumber : ''}}
+                / {{$receiptunit->tracto ? $receiptunit->tracto->econumber : ''}}</th>
         </table>
     </div>
 
@@ -168,7 +169,8 @@
             </th>
             <th style="width: 40%;border-top: 0px;font-size: 10px;">{{$receiptunit->carrier ? $receiptunit->carrier->name : ''}} </th>
             <th style="width: 20%;border-top: 0px;font-size: 10px;background-color: #E8EAF6;">No. Placas Caja</th>
-            <th style="width: 20%;border-top: 0px;text-align: center;font-size: 10px;"> {{$receiptunit->boxnumber}}/ {{$receiptunit->econumber}}</th>
+            <th style="width: 20%;border-top: 0px;text-align: center;font-size: 10px;"> {{$receiptunit->boxnumber}}
+                / {{$receiptunit->econumber}}</th>
         </table>
     </div>
 
@@ -277,7 +279,6 @@
         </table>
     </div>
 
-
     <div class="row">
         <table class="border-none">
             <th
@@ -295,20 +296,25 @@
             </th>
         </table>
     </div>
-    <div class="row">
-        <table class="border-none">
-            <th class="border-none"></th>
-            <th style="border-top: 0;text-align: center;width: 25%;" class="border-none">
-                <img src="{{asset('storage/' . $firma->keyguard01 )}}" alt="Firma" style="height: 70px;max-height: 70px"/>
-            </th>
-            <th style="border-top: 0;text-align: center;width: 25%;" class="border-none">
 
-            </th>
-            <th style="border-top: 0;text-align: center;" class="border-none">
-                <img src="{{asset('storage/' . $firma->keyoperator01)}}" alt="Firma" style="height: 70px;max-height: 70px"/>
-            </th>
-        </table>
-    </div>
+    @if(!empty($firma))
+        <div class="row">
+            <table class="border-none">
+                <th class="border-none"></th>
+                <th style="border-top: 0;text-align: center;width: 25%;" class="border-none">
+                    <img src="{{asset('storage/' . $firma->keyguard01 )}}" alt="Firma"
+                         style="height: 70px;max-height: 70px"/>
+                </th>
+                <th style="border-top: 0;text-align: center;width: 25%;" class="border-none">
+
+                </th>
+                <th style="border-top: 0;text-align: center;" class="border-none">
+                    <img src="{{asset('storage/' . $firma->keyoperator01)}}" alt="Firma"
+                         style="height: 70px;max-height: 70px"/>
+                </th>
+            </table>
+        </div>
+    @endif
 
 
 </div>

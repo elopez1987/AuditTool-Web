@@ -217,6 +217,27 @@
                         <div class="col-lg-2 col-md-6 col-sm-12">
                             <div class="d-flex flex-row comment-row m-t-0">
                                 <div class="comment-text w-100">
+                                    <h6 class="font-weight-light">Inicio de verificación:</h6>
+                                    <span class="m-b-15 d-block font-12 font-12"> {{$receiptasn->unloadstartdate}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-6 col-sm-12">
+                            <div class="d-flex flex-row comment-row m-t-0">
+                                <div class="comment-text w-100">
+                                    <h6 class="font-weight-light">Fin de verificación:</h6>
+                                    <span
+                                        class="m-b-15 d-block font-12"> {{$receiptasn->unloadfinishdate}}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-2 col-md-6 col-sm-12">
+                            <div class="d-flex flex-row comment-row m-t-0">
+                                <div class="comment-text w-100">
                                     <h6 class="font-weight-light">Folio de control de patios:</h6>
                                     <span class="m-b-15 d-block font-12 font-12"> {{$receiptasn->folionumber}}</span>
                                 </div>
@@ -243,7 +264,7 @@
                         <div class="col-lg-2 col-md-6 col-sm-12">
                             <div class="d-flex flex-row comment-row m-t-0">
                                 <div class="comment-text w-100">
-                                    <h6 class="font-weight-light">Placa de caja:</h6>
+                                    <h6 class="font-weight-light">Operador:</h6>
                                     <span
                                         class="m-b-15 d-block font-12"> {{$receiptasn->folio ? $receiptasn->folio->tracto->operatorname : ''}}</span>
                                 </div>
@@ -255,7 +276,6 @@
             </div>
         </div>
     </div>
-
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
@@ -538,6 +558,7 @@
                                                     <th>Cantidad piezas</th>
                                                     <th>Lpn</th>
                                                     <th>Lote</th>
+                                                    <th>Fecha de caducidad</th>
                                                     <th>¿Corresponde en EAN?</th>
                                                     <th>¿Corresponde la F.Caducidad?</th>
                                                     <th>Evidencia</th>
@@ -555,6 +576,7 @@
                                                         <td>{{$container->quantity * $container->partnumber->untcas}}</td>
                                                         <td>{{$container->lpnid}}</td>
                                                         <td>{{$container->batch}}</td>
+                                                        <td>{{$container->expiredate}}</td>
                                                         <td>
                                                             @if($container->eanpz == $container->eanbox)
                                                                 <span class="badge badge-success"
@@ -565,7 +587,7 @@
                                                             @endif
                                                         </td>
                                                         <td>
-                                                            @if($container->auxiliary01 == 'Y' )
+                                                            @if($container->auxiliary01 == 'SI' )
                                                                 <span class="badge badge-success"
                                                                       style="padding: 5px 10px">SI</span>
                                                             @else
@@ -601,11 +623,13 @@
                                                                         onclick="deleteLpnOfReceipt( {!! $container->recordid!!} )">
                                                                     Eliminar
                                                                 </button>
+
                                                                 <a href=""
                                                                    data-target="#modal-updatequantity-{{$container->recordid}}"
                                                                    data-toggle="modal" data-placement="top">
                                                                     <button type="button"
                                                                             class="btn waves-effect waves-light btn-outline-info btn-sm ml-2">
+                                                                        {{--                                                                        <img src="{{asset('/ico/closemodal.png')}}" alt="" class="img-16">--}}
                                                                         Modificar
                                                                     </button>
                                                                 </a>
@@ -635,7 +659,6 @@
 @endsection
 
 @section('css')
-    <link rel="stylesheet" href="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.min.css')}}">
     <style>
         #map {
             height: 900px;
@@ -644,12 +667,14 @@
     </style>
     <link rel="stylesheet" href="{{asset('/theme/assets/extra-libs/prism/prism.css')}}">
     <link rel="stylesheet" href="{{asset('/theme/assets/libs/magnific-popup/dist/magnific-popup.css')}}">
+    <link rel="stylesheet" href="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.min.css')}}">
 @endsection
 
 @section('script')
     <script src="{{asset('theme/assets/extra-libs/prism/prism.js')}}"></script>
     <script src="{{asset('theme/assets/libs/magnific-popup/dist/jquery.magnific-popup.min.js')}}"></script>
     <script src="{{asset('theme/assets/libs/magnific-popup/meg.init.js')}}"></script>
+
     <script src="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.all.min.js')}}"></script>
     <script>
         $(document).ready(function () {
@@ -663,7 +688,7 @@
                 "sScrollY": "400px",
                 "serverSide": false,
                 "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
-                "lengthMenu": [[25, 50, 100, 150, -1], [25, 50, 100, 150, "All"]],
+                "lengthMenu": [[50, 100, 150, -1], [50, 100, 150, "All"]],
                 buttons: [
                     {
                         "extend": "colvis",
