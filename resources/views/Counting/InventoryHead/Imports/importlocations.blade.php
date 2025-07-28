@@ -29,6 +29,58 @@
                             </ul>
                         </div>
                     </div>
+
+                    <div class="row mt-4" >
+                        <div class="col-lg-12">
+                            <table class="table table-bordered table-condensed" >
+                                <thead>
+                                <tr>
+                                    <th>Nombre de columna</th>
+                                    <th>Descriptión</th>
+                                    <th>Tipo de dato</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>centerid</td>
+                                    <td>C.Distribución</td>
+                                    <td>Texto</td>
+                                </tr>
+                                <tr>
+                                    <td>warehouseid</td>
+                                    <td>Bodega</td>
+                                    <td>Texto</td>
+                                </tr>
+                                <tr>
+                                    <td>inventoryid</td>
+                                    <td>N°.Inventario</td>
+                                    <td>Númerico</td>
+                                </tr>
+                                <tr>
+                                    <td>locationid</td>
+                                    <td>Ubicación</td>
+                                    <td>Texto</td>
+                                </tr>
+                                <tr>
+                                    <td>cardid</td>
+                                    <td>Cédula</td>
+                                    <td>Texto</td>
+                                </tr>
+                                <tr>
+                                    <td>areaid</td>
+                                    <td>Área</td>
+                                    <td>Texto</td>
+                                </tr>
+                                <tr>
+                                    <td>aisleid</td>
+                                    <td>Pasillo</td>
+                                    <td>Texto</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary btn-sm  waves-effect waves-light"

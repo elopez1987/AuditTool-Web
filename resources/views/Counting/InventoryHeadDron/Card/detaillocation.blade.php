@@ -82,30 +82,85 @@
 
                 </div>
             </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-body d-flex justify-content-center">
-                            @if(empty($location->error))
-                                <a id="saveSuccess">
-                                    <button type="submit"
-                                            class="btn waves-effect waves-light btn-outline-success btn-md" value="0">
-                                        <img src="{{asset('/ico/ok.png')}}" alt="" class="img-16 ml-1">
-                                        <span style="font-size: 11px;"> Ubicación correcta</span>
-                                    </button>
-                                </a>
-                                <a id="saveErrorLocation" style="margin-left: 20px">
-                                    <button type="submit" class="btn waves-effect waves-light btn-outline-danger btn-md"
-                                            value="1">
-                                        <img src="{{asset('/ico/adcancelar.png')}}" alt="" class="img-16 ml-1">
-                                        <span style="font-size: 11px;"> Ubicación con error</span>
-                                    </button>
-                                </a>
-                            @endif
+
+            @if(!empty($stock))
+                @if(empty($location->error))
+                    @if($location->partnumberid != $stock->partnumberid || $location->quantity != $stock->quantity)
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <a id="saveErrorLocation" style="margin-left: 20px">
+                                            <button type="submit"
+                                                    class="btn waves-effect waves-light btn-outline-danger btn-md btn-block"
+                                                    value="1">
+                                                <img src="{{asset('/ico/adcancelar.png')}}" alt="" class="img-16 ml-1">
+                                                <span style="font-size: 11px;"> AUDITORIA</span>
+                                            </button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                @else
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-body d-flex justify-content-center">
+                                    @if(empty($location->error))
+                                        <a id="saveSuccess">
+                                            <button type="submit"
+                                                    class="btn waves-effect waves-light btn-outline-success btn-md"
+                                                    value="0">
+                                                <img src="{{asset('/ico/ok.png')}}" alt="" class="img-16 ml-1">
+                                                <span style="font-size: 11px;"> Ubicación correcta</span>
+                                            </button>
+                                        </a>
+                                        <a id="saveErrorLocation" style="margin-left: 20px">
+                                            <button type="submit"
+                                                    class="btn waves-effect waves-light btn-outline-danger btn-md"
+                                                    value="1">
+                                                <img src="{{asset('/ico/adcancelar.png')}}" alt="" class="img-16 ml-1">
+                                                <span style="font-size: 11px;"> Ubicación con error</span>
+                                            </button>
+                                        </a>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+            @else
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body d-flex justify-content-center">
+                                @if(empty($location->error))
+                                    <a id="saveSuccess">
+                                        <button type="submit"
+                                                class="btn waves-effect waves-light btn-outline-success btn-md"
+                                                value="0">
+                                            <img src="{{asset('/ico/ok.png')}}" alt="" class="img-16 ml-1">
+                                            <span style="font-size: 11px;"> Ubicación correcta</span>
+                                        </button>
+                                    </a>
+                                    <a id="saveErrorLocation" style="margin-left: 20px">
+                                        <button type="submit"
+                                                class="btn waves-effect waves-light btn-outline-danger btn-md"
+                                                value="1">
+                                            <img src="{{asset('/ico/adcancelar.png')}}" alt="" class="img-16 ml-1">
+                                            <span style="font-size: 11px;"> Ubicación con error</span>
+                                        </button>
+                                    </a>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            @endif
+
+
         </div>
     </div>
 

@@ -31,6 +31,7 @@
     <div class="row">
         <div class="col-lg-6">
             <div class="card">
+
                 @if (isset($errors) && $errors->any())
                     <div class="alert alert-danger" role="alert">
                         @foreach ($errors->all() as $error)
@@ -38,97 +39,94 @@
                         @endforeach
                     </div>
                 @endif
+
                 <div class="card-body">
-                    <table class="table table-condensed  table-bordered  table-striped">
-                        <thead>
-                        <tr>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>
-                                @if($inventoryhead->statusid == 'PN')
-                                    @can('imporlocationinventory')
-                                        <a href="" data-target="#modal-imporlocationinventory" data-toggle="modal"
-                                           data-placement="top">
-                                            <button type="button"
-                                                    class="btn waves-effect waves-light btn-outline-info btn-md"
-                                                    data-toggle="tooltip" data-placement="top" title="Importar archivo">
-                                                <img src="{{asset('/ico/uploadcsv.png')}}" alt="" class="img-16">
-                                                <span
-                                                    style="font-size: 0.675rem !important;;"> Importar Ubicaciones </span>
-                                            </button>
-                                        </a>
-                                        @include('Counting.InventoryHead.Imports.importlocations')
-                                    @endcan
-                                @endif
-                            </td>
-                            <td>
-                                @if($inventoryhead->statusid == 'PN')
-                                    @can('importinventorystock')
-                                        <a href="" data-target="#modal-importinventorystock" data-toggle="modal"
-                                           data-placement="top">
-                                            <button type="button"
-                                                    class="btn waves-effect waves-light btn-outline-info btn-md"
-                                                    data-toggle="tooltip" data-placement="top" title="Importar archivo">
-                                                <img src="{{asset('/ico/uploadcsv.png')}}" alt="" class="img-16">
-                                                <span
-                                                    style="font-size: 0.675rem !important;;"> Importar existencia </span>
-                                            </button>
-                                        </a>
-                                        @include('Counting.InventoryHead.Imports.importstock')
-                                    @endcan
-                                @endif
-                            </td>
-                            <td>
-                                @if($inventoryhead->statusid == 'PN')
-                                    <a href="" data-target="#modal-armedcard-{{$inventoryhead->id}}"
-                                       data-toggle="modal"
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            @if($inventoryhead->statusid == 'PN')
+                                @can('imporlocationinventory')
+                                    <a href="" data-target="#modal-imporlocationinventory" data-toggle="modal"
                                        data-placement="top">
                                         <button type="button"
-                                                class="btn waves-effect waves-light btn-outline-info btn-md">
-                                            <img src="{{asset('/ico/engine_gear_internet_option_security_setting_web_icon_127066.png')}}" alt="" class="img-16">
-                                            <span style="font-size: 0.675rem !important;;"> Armar Cédulas </span>
+                                                class="btn waves-effect waves-light btn-outline-info btn-md"
+                                                data-toggle="tooltip" data-placement="top" title="Importar archivo">
+                                            <img src="{{asset('/ico/uploadcsv.png')}}" alt="" class="img-16">
+                                            <span
+                                                style="font-size: 0.675rem !important;;"> Importar Ubicaciones </span>
                                         </button>
                                     </a>
-                                    @include('Counting.InventoryHead.armedCards')
-                                @endif
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <li class="nav-item" style="list-style-type: none">
-                                    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" role="tab"
-                                       aria-selected="false">
-                                        <span class="text-muted">Total de Ubicaciones</span>
-                                        <h3 class="m-b-0 text-dark">{{$totalLocations}} </h3>
+                                    @include('Counting.InventoryHead.Imports.importlocations')
+                                @endcan
+                            @endif
+                            @if($inventoryhead->statusid == 'PN')
+                                @can('importinventorystock')
+                                    <a href="" data-target="#modal-importinventorystock" data-toggle="modal"
+                                       data-placement="top">
+                                        <button type="button"
+                                                class="btn waves-effect waves-light btn-outline-info btn-md"
+                                                data-toggle="tooltip" data-placement="top" title="Importar archivo">
+                                            <img src="{{asset('/ico/uploadcsv.png')}}" alt="" class="img-16">
+                                            <span
+                                                style="font-size: 0.675rem !important;;"> Importar existencia </span>
+                                        </button>
                                     </a>
-                                </li>
-                            </td>
-                            <td>
-                                <li class="nav-item" style="list-style-type: none">
-                                    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" role="tab"
-                                       aria-selected="false">
-                                        <span class="text-muted">Sku Totales</span>
-                                        <h3 class="m-b-0 text-dark">{{$totalSkus}}</h3>
-                                    </a>
-                                </li>
-                            </td>
-                            <td>
-                                <li class="nav-item" style="list-style-type: none">
-                                    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" role="tab"
-                                       aria-selected="false">
-                                        <span class="text-muted">Total de Cedulas</span>
-                                        <h3 class="m-b-0 text-dark">{{$totalCards}} </h3>
-                                    </a>
-                                </li>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                                    @include('Counting.InventoryHead.Imports.importstock')
+                                @endcan
+                            @endif
+                            @if($inventoryhead->statusid == 'PN')
+                                <a href="" data-target="#modal-armedcard-{{$inventoryhead->id}}"
+                                   data-toggle="modal"
+                                   data-placement="top">
+                                    <button type="button"
+                                            class="btn waves-effect waves-light btn-outline-info btn-md">
+                                        <img src="{{asset('/ico/engine_gear_internet_option_security_setting_web_icon_127066.png')}}" alt="" class="img-16">
+                                        <span style="font-size: 0.675rem !important;;"> Armar Cédulas </span>
+                                    </button>
+                                </a>
+                                @include('Counting.InventoryHead.armedCards')
+                            @endif
+                        </div>
+                    </div>
+                    <hr class="mb-2">
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-4">
+                            <div class="card card-hover">
+                                <div class="card-body">
+                                    <div class="d-flex">
+                                        <div class="m-r-10">
+                                            <span>Total de ubicaciones</span>
+                                            <h3>{{$totalLocations}}</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-lg-4">
+                            <div class="card card-hover">
+                                <div class="card-body">
+                                    <div class="d-flex">
+                                        <div class="m-r-10">
+                                            <span>Total de Skus</span>
+                                            <h3>{{$totalSkus}}</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-lg-4">
+                            <div class="card card-hover">
+                                <div class="card-body">
+                                    <div class="d-flex">
+                                        <div class="m-r-10">
+                                            <span>Total de cédulas</span>
+                                            <h3>{{$totalCards}} </h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

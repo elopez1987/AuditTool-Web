@@ -7,6 +7,7 @@ use App\Models\Inventory\FiscalInventory\Cards\InventoryCard;
 use App\Models\Inventory\FiscalInventory\Dron\InventoryLocationForDron;
 use App\Models\Inventory\FiscalInventory\Dron\LocactionDronEvidence;
 use App\Models\Inventory\FiscalInventory\Head\InventoryHead;
+use App\Models\Inventory\FiscalInventory\Stock\InventoryStock;
 use App\Traits\Counting\QueryInventoryHead;
 use Carbon\Carbon;
 use DB;
@@ -37,8 +38,10 @@ class InventoryHeadDronController extends Controller
         $location = InventoryLocationForDron::findOrFail($id);
         $card = InventoryCard::where('cardid', $location->cardid)->where('inventoryid', $location->inventoryid)->first();
         $evidences = LocactionDronEvidence::where('locationid', $location->recordid)->get();
+        $stock = InventoryStock::controlAccessUser()->where('inventoryid', $location->inventoryid)
+            ->where('locationid',$location->locationid)->first();
         return view('Counting.InventoryHeadDron.Card.detaillocation',
-            compact('location', 'card', 'evidences'));
+            compact('location', 'card', 'evidences','stock'));
     }
 
     public function saveResponseSuccessLocation(Request $request)

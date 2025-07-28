@@ -76,6 +76,42 @@
                                     </button>
                                 </a>
                                 @include('Receipt.ScheduleReceipt.options.addnote')
+
+
+                                @if(!empty($receiptasn->folionumber))
+                                    @if($receiptasn->unloadstartdate == null)
+                                        @can('receiptasn.startprocess')
+                                            <a href="" data-target="#modal-startprocess-{{$receiptasn->id}}"
+                                               data-toggle="modal">
+                                                <button type="button"
+                                                        class="btn waves-effect waves-light btn-outline-info btn-md">
+                                                    <img src="{{asset('/ico/storageturns.png')}}" alt=""
+                                                         class="img-16 ml-1">
+                                                    <span class="text-button"> Iniciar Proceso</span>
+                                                </button>
+                                            </a>
+                                            @include('Receipt.SchedulleV2.Events.startprocess')
+                                        @endif
+                                    @endif
+                                @endif
+                                @if(!empty($receiptasn->folionumber))
+                                    @if($receiptasn->unloadfinishdate == null)
+                                        @can('receiptasn.finishprocess')
+                                            <a href="" data-target="#modal-finishprocess-{{$receiptasn->id}}"
+                                               data-toggle="modal">
+                                                <button type="button"
+                                                        class="btn waves-effect waves-light btn-outline-info btn-md">
+                                                    <img src="{{asset('/ico/storageturns.png')}}" alt=""
+                                                         class="img-16 ml-1">
+                                                    <span class="text-button"> Finalizar Proceso</span>
+                                                </button>
+                                            </a>
+                                            @include('Receipt.SchedulleV2.Events.finishprocess')
+                                        @endif
+                                    @endif
+                                @endif
+
+
                             @endcan
                             @if($receiptasn->folionumber != null)
                                 <a href="{{url('tracereceiptunit/' . $receiptasn->folionumber)}}" target="_blank">
@@ -87,38 +123,9 @@
                                     </button>
                                 </a>
                             @endif
-                            @if(!empty($receiptasn->folionumber))
-                                @if($receiptasn->unloadstartdate == null)
-                                    @can('receiptasn.startprocess')
-                                        <a href="" data-target="#modal-startprocess-{{$receiptasn->id}}"
-                                           data-toggle="modal">
-                                            <button type="button"
-                                                    class="btn waves-effect waves-light btn-outline-info btn-md">
-                                                <img src="{{asset('/ico/storageturns.png')}}" alt=""
-                                                     class="img-16 ml-1">
-                                                <span class="text-button"> Iniciar Proceso</span>
-                                            </button>
-                                        </a>
-                                        @include('Receipt.SchedulleV2.Events.startprocess')
-                                    @endif
-                                @endif
-                            @endif
-                            @if(!empty($receiptasn->folionumber))
-                                @if($receiptasn->unloadfinishdate == null)
-                                    @can('receiptasn.finishprocess')
-                                        <a href="" data-target="#modal-finishprocess-{{$receiptasn->id}}"
-                                           data-toggle="modal">
-                                            <button type="button"
-                                                    class="btn waves-effect waves-light btn-outline-info btn-md">
-                                                <img src="{{asset('/ico/storageturns.png')}}" alt=""
-                                                     class="img-16 ml-1">
-                                                <span class="text-button"> Finalizar Proceso</span>
-                                            </button>
-                                        </a>
-                                        @include('Receipt.SchedulleV2.Events.finishprocess')
-                                    @endif
-                                @endif
-                            @endif
+
+
+
                         </div>
                     </div>
                     <hr class="m-t-1">
