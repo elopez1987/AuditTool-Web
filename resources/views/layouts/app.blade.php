@@ -55,14 +55,25 @@
     <div class="page-wrapper">
         <div class="container-fluid">
             @yield('content')
-{{--            @include('layouts.Partials.soporte')--}}
         </div>
         <footer class="footer text-center">
             <div class="row d-flex justify-content-center">
                 <div class="col-lg-3">
                     @if(Auth::check())
-                        @if( Auth::user()->access->center->centerid == 'BRIDCUE'  )
-                            <img src="{{asset('/img/Bridgestone.png')}}" alt="" style="width:580px;height: 50px">
+                        @if(Auth::user()->access->center->centerid == 'SAHUARO' || Auth::user()->access->center->centerid == 'CONDESA')
+                            <img src="{{asset('/img/Garrett.jpg')}}" alt="" style="width: 280px;height: 100px">
+                        @endif
+                        @if(Auth::user()->access->center->centerid == 'PLANHENKTOL' || Auth::user()->access->center->centerid == 'HENKELTOL01')
+                            <img src="{{asset('/img/henkel.png')}}" alt="" style="width: 280px;height: 100px">
+                        @endif
+                        @if(Auth::user()->access->center->centerid == 'PRONUMEX02' || Auth::user()->access->center->centerid == 'KELLOGGS01'|| Auth::user()->access->center->centerid == 'KELLOGGS02')
+                            <img src="{{asset('/img/Kellogg.png')}}" alt="" style="width: 280px;height: 100px">
+                        @endif
+                        @if(Auth::user()->access->center->centerid == 'BRIDGESTONES' || Auth::user()->access->center->centerid == 'AVBSMX' || Auth::user()->access->center->centerid == 'BRIDCUE'  )
+                            <img src="{{asset('/img/Bridgestone.png')}}" alt="" style="width: 600px;height: 50px">
+                        @endif
+                        @if(Auth::user()->access->center->centerid == 'BARRYTOL')
+                            <img src="{{asset('/img/Barry.png')}}" alt="" style="width: 280px;height: 80px">
                         @endif
                     @endif
                 </div>

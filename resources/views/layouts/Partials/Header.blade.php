@@ -62,11 +62,11 @@
                                 {{Auth::user()->name}}
                                 ||  {!! Auth::user()->access ? Auth::user()->access->center->name : '' !!}
                                 ||
-{{--                                @if(App::environment('production'))--}}
-{{--                                  PRODUCCION--}}
-{{--                                @else--}}
-{{--                                    DESARROLLO--}}
-{{--                                @endif--}}
+                                @if(App::environment('production'))
+                                  PRODUCCION
+                                @else
+                                    DESARROLLO
+                                @endif
                             @endif
                         </span>
                         <span class="d-block d-md-none"><i class="fa fa-plus"></i></span>
@@ -88,9 +88,7 @@
                             <div class="ml-2">
                                 @auth()
                                     <h5 class="mb-0 font-14 mt-3"> {{Auth::user()->name}}</h5>
-                                    {{--                                    <p class=" mb-1 mt-1 font-12 "> USUARIO : {{Auth::user()->username}}</p>--}}
-                                    <p class=" mb-1 mt-1 font-12 ">PERFIL
-                                        : {{Auth::user()->roles ? Auth::user()->roles()->first()->description : ''}}</p>
+                                    <p class=" mb-1 mt-1 font-12 ">PERFIL: {{Auth::user()->roles ? Auth::user()->roles()->first()->description : ''}}</p>
                                 @endauth
                             </div>
                         </div>
