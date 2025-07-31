@@ -28,10 +28,10 @@ class HomeController extends BaseController
 //        return Redirect::to('/');
 
         Auth::logout();
-//        $request->session()->invalidate();
-//        $request->session()->regenerateToken();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
-        return Redirect::to('/login')
+        return Redirect::to('/')
             ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
             ->header('Pragma', 'no-cache')
             ->header('Expires', '0');

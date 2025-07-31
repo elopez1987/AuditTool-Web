@@ -46,12 +46,12 @@
                                 <span class="hide-menu mr-left"> Autorizar salida </span>
                             </a>
                         @endcan
-{{--                        @can('setwarehouse')--}}
-{{--                            <a href="{{route('setwarehouse')}}" class="dropdown-item">--}}
-{{--                                <img src="{{asset('/ico/fingerprint_117641.png')}}" alt="" class="img-16">--}}
-{{--                                <span class="hide-menu mr-left"> Fijar bodega </span>--}}
-{{--                            </a>--}}
-{{--                        @endcan--}}
+                        {{--                        @can('setwarehouse')--}}
+                        {{--                            <a href="{{route('setwarehouse')}}" class="dropdown-item">--}}
+                        {{--                                <img src="{{asset('/ico/fingerprint_117641.png')}}" alt="" class="img-16">--}}
+                        {{--                                <span class="hide-menu mr-left"> Fijar bodega </span>--}}
+                        {{--                            </a>--}}
+                        {{--                        @endcan--}}
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -61,12 +61,12 @@
                          @if(Auth::check())
                                 {{Auth::user()->name}}
                                 ||  {!! Auth::user()->access ? Auth::user()->access->center->name : '' !!}
-                                ||
-                                @if(App::environment('production'))
-                                    PRODUCCION
-                                @else
-                                    DESARROLLO
-                                @endif
+{{--                                ||--}}
+{{--                                @if(App::environment('production'))--}}
+{{--                                    PRODUCCION--}}
+{{--                                @else--}}
+{{--                                    DESARROLLO--}}
+{{--                                @endif--}}
                             @endif
                         </span>
                         <span class="d-block d-md-none"><i class="fa fa-plus"></i></span>
@@ -81,26 +81,27 @@
                         <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href=""
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
                                 src=" {{asset('/img/exit.png')}} " alt="user" width="30"></a>
-                    @endauth
-                    <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
-                        <span class="with-arrow"><span class="bg-info"></span></span>
-                        <div class="d-flex no-block align-items-center p-15 bg-grey mb-2">
-                            <div class="ml-2">
-                                @auth()
+
+                        <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
+                            <span class="with-arrow"><span class="bg-info"></span></span>
+                            <div class="d-flex no-block align-items-center p-15 bg-grey mb-2">
+                                <div class="ml-2">
+
                                     <h5 class="mb-0 font-14 mt-3"> {{Auth::user()->name}}</h5>
                                     <p class=" mb-1 mt-1 font-12 ">
                                         PERFIL: {{Auth::user()->roles ? Auth::user()->roles()->first()->description : ''}}</p>
-                                @endauth
+
+                                </div>
                             </div>
-                        </div>
-                        @auth
+
                             <a class="dropdown-item" href="{{url('profile/' . Auth::user()->uuiduser)}}"><i
                                     class="ti-user mr-1 ml-1 text-success font-14"></i> Mi perfil</a>
                             <div class="dropdown-divider"></div>
+
                             <a class="dropdown-item" href="{{route('logout')}}"><i
                                     class="fa fa-power-off mr-1 ml-1 text-danger font-14"></i> Cerrar Sesión</a>
-                        @endauth
-                    </div>
+                        </div>
+                    @endauth
                 </li>
             </ul>
         </div>

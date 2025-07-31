@@ -96,22 +96,22 @@
         });
     });
 </script>
-<script>
-    $(document).ready(function () {
-        setInterval(keepTokenAlive, 1000 * 60 * 15);
+{{--<script>--}}
+{{--    $(document).ready(function () {--}}
+{{--        setInterval(keepTokenAlive, 1000 * 60 * 15);--}}
 
-        function keepTokenAlive() {
-            $.ajax({
-                url: '/keep-token-alive',
-                method: 'post',
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            }).then(function (result) {
-            });
-        }
-    });
-</script>
+{{--        function keepTokenAlive() {--}}
+{{--            $.ajax({--}}
+{{--                url: '/keep-token-alive',--}}
+{{--                method: 'post',--}}
+{{--                headers: {--}}
+{{--                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
+{{--                }--}}
+{{--            }).then(function (result) {--}}
+{{--            });--}}
+{{--        }--}}
+{{--    });--}}
+{{--</script>--}}
 
 </body>
 

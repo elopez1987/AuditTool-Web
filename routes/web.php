@@ -15,6 +15,7 @@ Route::view('/politicaprivacidad', 'auth.policy')->name('politicaprivacidad');
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/home', 'HomeController@index')->name('home');
+//    Route::get('logout', 'HomeController@logout')->name('logout');
     Route::get('logout', 'HomeController@logout')->name('logout');
 
 //    Route::post('keep-token-alive', function () {
