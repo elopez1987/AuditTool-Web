@@ -46,12 +46,12 @@
                                 <span class="hide-menu mr-left"> Autorizar salida </span>
                             </a>
                         @endcan
-                        {{--                        @can('setwarehouse')--}}
-                        {{--                            <a href="{{route('setwarehouse')}}" class="dropdown-item">--}}
-                        {{--                                <img src="{{asset('/ico/fingerprint_117641.png')}}" alt="" class="img-16">--}}
-                        {{--                                <span class="hide-menu mr-left"> Fijar bodega </span>--}}
-                        {{--                            </a>--}}
-                        {{--                        @endcan--}}
+{{--                        @can('setwarehouse')--}}
+{{--                            <a href="{{route('setwarehouse')}}" class="dropdown-item">--}}
+{{--                                <img src="{{asset('/ico/fingerprint_117641.png')}}" alt="" class="img-16">--}}
+{{--                                <span class="hide-menu mr-left"> Fijar bodega </span>--}}
+{{--                            </a>--}}
+{{--                        @endcan--}}
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -63,7 +63,7 @@
                                 ||  {!! Auth::user()->access ? Auth::user()->access->center->name : '' !!}
                                 ||
                                 @if(App::environment('production'))
-                                  PRODUCCION
+                                    PRODUCCION
                                 @else
                                     DESARROLLO
                                 @endif
@@ -88,17 +88,18 @@
                             <div class="ml-2">
                                 @auth()
                                     <h5 class="mb-0 font-14 mt-3"> {{Auth::user()->name}}</h5>
-                                    <p class=" mb-1 mt-1 font-12 ">PERFIL: {{Auth::user()->roles ? Auth::user()->roles()->first()->description : ''}}</p>
+                                    <p class=" mb-1 mt-1 font-12 ">
+                                        PERFIL: {{Auth::user()->roles ? Auth::user()->roles()->first()->description : ''}}</p>
                                 @endauth
                             </div>
                         </div>
                         @auth
                             <a class="dropdown-item" href="{{url('profile/' . Auth::user()->uuiduser)}}"><i
                                     class="ti-user mr-1 ml-1 text-success font-14"></i> Mi perfil</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{{route('logout')}}"><i
+                                    class="fa fa-power-off mr-1 ml-1 text-danger font-14"></i> Cerrar Sesión</a>
                         @endauth
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{{route('logout')}}"><i
-                                class="fa fa-power-off mr-1 ml-1 text-danger font-14"></i> Cerrar Sesión</a>
                     </div>
                 </li>
             </ul>

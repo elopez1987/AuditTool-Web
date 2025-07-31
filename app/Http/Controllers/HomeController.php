@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Configuration\NameSystem\NameSystem;
 use App\Models\Shipments\OrderDeliverie;
-use App\Models\Yard\ReceiptUnit;
-use DB;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
@@ -23,10 +22,21 @@ class HomeController extends BaseController
         return view('home', compact('image'));
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
+//        Auth::logout();
+//        return Redirect::to('/');
+
         Auth::logout();
-        return Redirect::to('/');
+//        $request->session()->invalidate();
+//        $request->session()->regenerateToken();
+
+        return Redirect::to('/login')
+            ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
+            ->header('Pragma', 'no-cache')
+            ->header('Expires', '0');
+
+
     }
 
 
@@ -43,9 +53,6 @@ class HomeController extends BaseController
         $data = json_encode($data);
         return response()->json($data);
     }
-
-
-
 
 
 }
