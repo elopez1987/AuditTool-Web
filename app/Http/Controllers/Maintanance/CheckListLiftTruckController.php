@@ -38,6 +38,7 @@ class CheckListLiftTruckController extends BaseController
             'MT-02' => 'Maintenance.CheckListLiftTrucks.Formats.montacargaselectricohompie',
             'MT-03' => 'Maintenance.CheckListLiftTrucks.Formats.patinhidraulico',
             'MT-04' => 'Maintenance.CheckListLiftTrucks.Formats.montacargacombustion',
+            'MT-05' => 'Maintenance.CheckListLiftTrucks.Formats.patinelectrico',
         ];
         $typeId = $truckChecklist->truck->typeid;
         if (!array_key_exists($typeId, $typeIdToFormatMap)) {
