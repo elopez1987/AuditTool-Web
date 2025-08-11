@@ -48,8 +48,7 @@ class SendEmailForArriveUnitToReceipt extends Command
      */
     public function handle()
     {
-        $taskMails = StorageTaskMail::where('statusid', '=', 'E')
-            ->where('mailid', 'MAIL-RECYMS')->get();
+        $taskMails = StorageTaskMail::where('statusid', '=', 'E')->where('mailid', 'MAIL-RECYMS')->get();
         if ($taskMails->isNotEmpty()) {
             foreach ($taskMails as $taskMail) {
                 $parameter = $this->getParametersOfWarehouse($taskMail->warehouseid);
