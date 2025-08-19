@@ -51,7 +51,6 @@ class OktaController extends BaseController
         $datawsokta = EdiWsToken::where('servicetype', 'OKTA')->first();
         $client = new Client();
         $url = $datawsokta->baseuri . 'api/v2/users';
-        \Log::info($url);
         $headers = [
             'Content-Type' => 'application/json',
             'Accept' => 'application/json',
@@ -59,28 +58,23 @@ class OktaController extends BaseController
         ];
 
         $user = \App\User::where('id', $id)->first();
-        \Log::info($user);
         $body = json_encode([
             'email' => $user->email,
             'name' => $user->name,
             'nickname' => $user->username,
-//            'connection' => "Username-Password-Authentication",
-            'connection' => "BridgestoneCva",
+            'connection' => $datawsokta->audience,
             'password' => $user->password2,
             'verify_email' => true,
             'username' => $user->username,
         ]);
-        \Log::info($body);
         try {
             $response = $client->request('POST', $url, ['headers' => $headers, 'body' => $body]);
             $data = json_decode((string)$response->getBody(), true);
-            \Log::info($data);
             $user->auth0 = $data['user_id'];
             $user->save();
             return $this->redirectBackSuccessMessage('Usuario creado con exito.');
         } catch (\GuzzleHttp\Exception\ClientException $e) {
             $error = $e->getMessage();
-            \Log::error($error);
             return response()->json(['status' => 'Error de envio.']);
         }
     }
