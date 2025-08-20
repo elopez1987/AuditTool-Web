@@ -14,14 +14,12 @@ use Illuminate\Support\Facades\Http;
 class SendEventForShipmentCommand extends Command
 {
     protected $signature = 'rc:SendEventForShipmentCommand';
-    protected $description = 'Envia los eventos operativos a recurso confiable, registro de ingreso, inicio y fin de proceso, facturacion y salida
-    de unidad';
+    protected $description = 'Envia los eventos operativos a recurso confiable, registro de ingreso, inicio y fin de proceso, facturacion y salida de unidad';
     use GetParameters;
 
     public function handle(): void
     {
-        $shipments = EdiShipment::where('type', '=', 'EVENT')->where('centerid', 'HENKELTOL01')
-            ->where('client', 'RCONTROL')->get();
+        $shipments = EdiShipment::where('type', '=', 'EVENT')->where('centerid', 'HENKELTOL01')->where('client', 'RCONTROL')->get();
         if ($shipments->isEmpty()) {
             return;
         }

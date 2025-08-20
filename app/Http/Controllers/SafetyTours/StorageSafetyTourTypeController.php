@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\SafetyTours;
 
 use App\Http\Controllers\BaseController;
-use App\Http\Requests\StorageSafetyTourTypeRequest;
+use App\Http\Requests\Web\SafetyTours\StorageSafetyTourTypeRequest;
+use App\Models\SafetyTours\StorageSafetyTourType;
 use App\Models\SafetyTours\StorageSafetyTourTypeDetail;
 use App\Models\SafetyTours\StorageTags;
-use App\Models\StorageSafetyTourType;
 use Illuminate\Http\Request;
 
 class StorageSafetyTourTypeController extends BaseController

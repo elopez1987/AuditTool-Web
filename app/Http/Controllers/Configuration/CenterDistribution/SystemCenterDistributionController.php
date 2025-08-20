@@ -21,9 +21,9 @@ class SystemCenterDistributionController extends BaseController
 
     public function getDataCenterDistributions(Request $request)
     {
-        $data = SystemCenterDistribution::controlAccessUser()->with([
-                'status' => function ($q) {$q->select('statusid', 'name');},
-            ])->ForName($request->get('name'));
+        $data = SystemCenterDistribution::controlAccessUser()
+            ->with(['status:statusid,name'])
+            ->ForName($request->get('name'));
         return $this->showDataToView($data, "$this->viewPath.partials.buttons");
     }
 

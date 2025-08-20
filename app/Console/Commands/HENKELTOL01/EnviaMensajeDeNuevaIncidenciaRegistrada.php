@@ -6,6 +6,7 @@ use App\Models\Configuration\WhatsApp\StorageTaskWhatsapp;
 use App\Models\Configuration\WhatsApp\SystemDetailWhatsApp;
 use App\Models\Yard\LogMessageWhatsApp;
 use App\Traits\GetParameters;
+use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
@@ -42,7 +43,7 @@ class EnviaMensajeDeNuevaIncidenciaRegistrada extends Command
                             $response = $client->request('POST', $url, ['json' => $data, 'headers' => ['Content-Type' => 'application/json']]);
                             $respJson = $response->getBody();
                             LogMessageWhatsApp::createLog($shipment, $contact, json_decode($respJson), 'WTH-REGINC', 'Nueva incidencia de embarque registrada.');
-                        } catch (\Exception $e) {
+                        } catch (Exception) {
                             Log::error('Error al enviar mensaje de nueva incidencia reportada.');
                         }
                     }

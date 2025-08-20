@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Shipments\ScheduleInverse;
 
 use App\Http\Controllers\BaseController;
-use App\Http\Requests\Shipments\ScheduleInverse\ScheduleInverseRequest;
+use App\Http\Requests\Web\Shipments\SchedulleInverse\ScheduleInverseRequest;
 use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Shipments\ScheduleInverse\ScheduleInverse;
 use App\Models\Shipments\ScheduleInverse\ScheduleInverseDetail;

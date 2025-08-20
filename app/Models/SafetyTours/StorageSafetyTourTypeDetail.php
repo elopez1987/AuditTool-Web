@@ -4,14 +4,11 @@ namespace App\Models\SafetyTours;
 
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Security\Users\SecurityAccessWarehouse;
-use App\Models\StorageSafetyTourType;
 use App\User;
 use Auth;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Str;
 
 class StorageSafetyTourTypeDetail extends Model
 {
