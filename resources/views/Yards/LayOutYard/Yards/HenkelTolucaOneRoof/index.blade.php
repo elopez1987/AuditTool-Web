@@ -7,7 +7,10 @@
             <div class="card" style="background-color: #0b0b0b">
                 <div class="card-body">
                     <div style="max-width: 100%;">
-                        @include('Yards.LayOutYard.Yards.HenkelTolucaOneRoof.HenkelTol')
+                        @if(Auth::user()->access->center->centerid == 'HENKELTOL01')
+                            @include('Yards.LayOutYard.Yards.HenkelTolucaOneRoof.HenkelTol')
+                        @endif
+
                     </div>
                 </div>
             </div>

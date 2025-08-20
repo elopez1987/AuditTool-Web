@@ -325,7 +325,7 @@ Route::middleware(['auth'])->group(function () {
 //  Exportar el detalle de la zona consultada
     Route::get('exportDataLocationsForStatus',[CapacityYardController::class,'exportDataLocationsForStatus'])->name('exportDataLocationsForStatus');
 //  Patio de toluca one roof en 2d
-    Route::get('patiohenkeltoluca', [YardHenkelTolController::class, 'index'])->name('patiohenkeltoluca');
+    Route::get('vitualyard', [YardHenkelTolController::class, 'index'])->name('vitualyard');
 //  Vista de cortinas y stages
     Route::get('layoutyard',[LayOutDoorAndStageController::class,'index'])->name('layoutyard');
 
