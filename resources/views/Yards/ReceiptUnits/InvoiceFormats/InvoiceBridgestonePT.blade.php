@@ -109,7 +109,7 @@
                 <div class="row" style="margin-top: 5px">
                     <table class="border-none">
                         <tr>
-                            <th style="border-bottom: 0px;width: 33%">Tiket-Bascula #</th>
+                            <th style="border-bottom: 0px;width: 33%">Folio-Báscula #</th>
                             <th style="border-bottom: 0px;">Fecha</th>
                             <th style="border-bottom: 0px">Hora</th>
                         </tr>
@@ -124,16 +124,16 @@
                     <table class="border-none">
                         <tr>
                             <th>
-                                <div style="width: 10px;height:10px;border:1px solid;border-radius: 5px;border: none;height: 15px">{{$receiptunit->unittypeid == '4' ? 'X' : ''}}</div>
+                                <div style="width: 10px;height:10px;border:1px solid;border-radius: 5px;border: none;height: 15px">{{$receiptunit->unittype->auxiliary01 == '' ? 'X' : ''}}</div>
                             </th>
                             <th style="border-bottom: 0px;width: 20%;font-size: 9px;height: 15px">Importación</th>
                             <th>
-                                <div style="width: 10px;height:10px;border:1px solid;border-radius: 5px;border: none">{{$receiptunit->unittypeid == '1' ? 'X' : ''}}</div>
+                                <div style="width: 10px;height:10px;border:1px solid;border-radius: 5px;border: none">{{$receiptunit->unittype->auxiliary01  == 'EXP' ? 'X' : ''}}</div>
                             </th>
                             <th style="border-bottom: 0px;font-size: 9px">Exportación</th>
                             <th>
                                 <div
-                                    style="width: 10px;height:10px;border:1px solid;border-radius: 5px;border: none">{{$receiptunit->unittypeid == '2' ? 'X' : ''}}</div>
+                                    style="width: 10px;height:10px;border:1px solid;border-radius: 5px;border: none">{{$receiptunit->unittype->auxiliary01  == 'NAC' ? 'X' : ''}}</div>
                             </th>
                             <th style="border-bottom: 0px;font-size: 9px">Nacional</th>
                         </tr>
@@ -396,7 +396,7 @@
                 <div class="row" style="margin-top: 5px">
                     <table class="border-none">
                         <tr>
-                            <th style="border-bottom: 0px;width: 33%">Tiket-Bascula #</th>
+                            <th style="border-bottom: 0px;width: 33%">Folio-Báscula #</th>
                             <th style="border-bottom: 0px;">Fecha</th>
                             <th style="border-bottom: 0px">Hora</th>
                         </tr>
@@ -419,18 +419,16 @@
                     <table class="border-none">
                         <tr>
                             <th>
-                                <div
-                                    style="width: 10px;height:10px;border:1px solid;border-radius: 5px;border: none;height: 15px">{{$receiptunit->unittypeid == '4' ? 'X' : ''}}</div>
+                                <div style="width: 10px;height:10px;border:1px solid;border-radius: 5px;border: none;height: 15px">{{$receiptunit->unittype->auxiliary01 == '' ? 'X' : ''}}</div>
                             </th>
                             <th style="border-bottom: 0px;width: 20%;font-size: 9px;height: 15px">Importación</th>
                             <th>
-                                <div
-                                    style="width: 10px;height:10px;border:1px solid;border-radius: 5px;border: none">{{$receiptunit->unittypeid == '1' ? 'X' : ''}}</div>
+                                <div style="width: 10px;height:10px;border:1px solid;border-radius: 5px;border: none">{{$receiptunit->unittype->auxiliary01  == 'EXP' ? 'X' : ''}}</div>
                             </th>
                             <th style="border-bottom: 0px;font-size: 9px">Exportación</th>
                             <th>
                                 <div
-                                    style="width: 10px;height:10px;border:1px solid;border-radius: 5px;border: none">{{$receiptunit->unittypeid == '2' ? 'X' : ''}}</div>
+                                    style="width: 10px;height:10px;border:1px solid;border-radius: 5px;border: none">{{$receiptunit->unittype->auxiliary01  == 'NAC' ? 'X' : ''}}</div>
                             </th>
                             <th style="border-bottom: 0px;font-size: 9px">Nacional</th>
                         </tr>
