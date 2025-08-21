@@ -7,7 +7,7 @@ use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Configuration\Warehouses\SystemWarehouse;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\Models\Yard\Carriers\ShipmentCarrier;
-use App\Traits\GetParameters;
+use App\Traits\Web\General\GetParameters;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;

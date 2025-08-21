@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Traits;
+namespace App\Traits\Web\General;
 
 use App\Models\Configuration\Warehouses\SystemWarehouse;
 use App\Models\General\StorageComment;
 use App\Models\Yard\GenerateAccessWarehouse;
 use App\Models\Yard\ReceiptUnitKey;
 use App\Models\Yard\StorageFolioClient;
+use App\Traits\ResponseApi;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use PDF;
@@ -72,7 +73,7 @@ trait PrintFormat
             $pdf = PDF::loadView($fortmat, compact('receiptunit', 'verified', 'logo', 'comment','firma'));
             $pdf->setPaper('A4', 'landscape');
         }
-        
+
         $responseFormat = $this->printFormat($type, $receiptunit, $pdf);
         return $responseFormat;
     }

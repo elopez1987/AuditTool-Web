@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits\Counting;
+namespace App\Traits\Web\Counting;
 
 use App\Models\Evidence\EvidenceContainer;
 use App\Models\Evidence\StorageEvidenceProcess;

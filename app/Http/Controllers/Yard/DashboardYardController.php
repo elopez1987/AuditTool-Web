@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Yard;
 
 use App\Http\Controllers\BaseController;
-use App\Traits\Yard\QuerysDashboard;
+use App\Traits\Web\Yard\Dashboards\QuerysDashboard;
 use Illuminate\Http\Request;
 
 class DashboardYardController extends BaseController

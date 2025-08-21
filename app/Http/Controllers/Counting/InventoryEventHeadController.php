@@ -6,7 +6,7 @@ use App\Http\Controllers\BaseController;
 use App\Models\Inventory\FiscalInventory\Cards\InventoryCard;
 use App\Models\Inventory\FiscalInventory\Dron\InventoryLocationForDron;
 use App\Models\Inventory\FiscalInventory\Head\InventoryHead;
-use App\Traits\Counting\QueryInventoryHead;
+use App\Traits\Web\Counting\QueryInventoryHead;
 use DB;
 use Illuminate\Http\Request;
 use PDF;

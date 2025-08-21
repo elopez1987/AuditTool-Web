@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits\Counting;
+namespace App\Traits\Web\Counting;
 
 use App\Models\Inventory\FiscalInventory\Cards\InventoryCard;
 use App\Models\Inventory\FiscalInventory\Dron\InventoryLocationForDron;

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Configuration\Warehouses;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Configuration\Warehouse\CreateWarehouseRequest;
 use App\Models\Configuration\Warehouses\SystemWarehouse;
-use App\Traits\EvidencePhotoTrait;
+use App\Traits\Web\General\EvidencePhotoTrait;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;

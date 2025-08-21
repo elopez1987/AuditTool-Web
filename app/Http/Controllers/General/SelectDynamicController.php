@@ -25,7 +25,7 @@ use App\Models\Yard\StorageOperator;
 use App\Models\Yard\StorageReason;
 use App\Models\Yard\StorageUnitStatus;
 use App\Models\Yard\StorageZone\StorageZone;
-use App\Traits\GetParameters;
+use App\Traits\Web\General\GetParameters;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Http\JsonResponse;

@@ -7,7 +7,7 @@ use App\Http\Requests\Web\Yard\Inventory\CreateNewInventoryRequest;
 use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Yard\InventoryBox;
 use App\Models\Yard\ReceiptUnit;
-use App\Traits\Yard\QueryInventoryBox;
+use App\Traits\Web\Yard\ReceiptUnit\QueryInventoryBox;
 use Illuminate\Http\Request;
 
 class InventoryBoxesController extends BaseController

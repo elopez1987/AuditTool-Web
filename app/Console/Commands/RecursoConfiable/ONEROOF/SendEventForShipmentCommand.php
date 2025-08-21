@@ -6,7 +6,7 @@ use App\Models\Configuration\EDI\SystemEventWebServiceIzel;
 use App\Models\Configuration\Parameters\SystemDetailParameter;
 use App\Models\Shipments\EdiShipment;
 use App\Models\Shipments\OrderDeliverie;
-use App\Traits\GetParameters;
+use App\Traits\Web\General\GetParameters;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Traits;
+namespace App\Traits\Web\General;
 
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Configuration\Folios\SystemFolio;
@@ -149,7 +149,7 @@ trait GetParameters
         return StorageReason::whereIn('id', $code)->select(['id', 'name'])->get();
     }
 
-    
+
 //  ----------------------------------------  Filtros de estatus segun el esquema  -------------------------------------
     public function getStatusSTS()
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits\General;
+namespace App\Traits\Web\General;
 
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Configuration\Schemas\SystemStatus;

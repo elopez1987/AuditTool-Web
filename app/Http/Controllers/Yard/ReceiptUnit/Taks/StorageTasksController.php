@@ -9,7 +9,7 @@ use App\Models\Yard\StorageLocation;
 use App\Models\Yard\StorageTask;
 use App\Models\Yard\StorageUnitTrace;
 use App\Models\Yard\StorageZone\StorageZone;
-use App\Traits\Yard\SendMessageWhatsAppForTask;
+use App\Traits\Web\Yard\Task\SendMessageWhatsAppForTask;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;

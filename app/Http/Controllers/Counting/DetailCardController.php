@@ -8,7 +8,7 @@ use App\Models\Inventory\FiscalInventory\Cards\InventoryCard;
 use App\Models\Inventory\FiscalInventory\Head\InventoryHead;
 use App\Models\Inventory\FiscalInventory\Locations\InventoryLocationLog;
 use App\Models\Inventory\FiscalInventory\Locations\MonitorLocationInventory;
-use App\Traits\Counting\QueryInventoryHead;
+use App\Traits\Web\Counting\QueryInventoryHead;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 

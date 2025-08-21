@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Traits;
+namespace App\Traits\Web\General;
 
 
 use App\Models\Configuration\Labels\InventoryLabelDetail;

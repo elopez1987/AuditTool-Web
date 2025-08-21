@@ -3,7 +3,7 @@
 namespace App\Http\Services\Shipment;
 
 use App\Models\Shipments\ShipmentContainer;
-use App\Traits\EvidencePhotoTrait;
+use App\Traits\Web\General\EvidencePhotoTrait;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;

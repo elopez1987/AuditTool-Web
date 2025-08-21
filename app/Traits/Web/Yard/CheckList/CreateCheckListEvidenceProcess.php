@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits\Yard;
+namespace App\Traits\Web\Yard\CheckList;
 
 use App\Models\Yard\CheckListEvidenceProcessUnit;
 

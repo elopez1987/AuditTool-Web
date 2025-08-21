@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits\Yard;
+namespace App\Traits\Web\Yard\Task;
 
 use App\Models\Yard\LogMessageWhatsApp;
 use App\Models\Yard\ReceiptUnit;

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Configuration\NameSystem;
 
 use App\Http\Controllers\BaseController;
 use App\Models\Configuration\NameSystem\NameSystem;
-use App\Traits\EvidencePhotoTrait;
+use App\Traits\Web\General\EvidencePhotoTrait;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;

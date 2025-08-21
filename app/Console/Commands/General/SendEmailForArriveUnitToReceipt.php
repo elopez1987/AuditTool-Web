@@ -7,7 +7,7 @@ use App\Mail\NewVisitCreate;
 use App\Models\Configuration\Mails\StorageTaskMail;
 use App\Models\Configuration\Mails\SystemDetailMail;
 use App\Models\Receipt\ReceiptAsn;
-use App\Traits\GetParameters;
+use App\Traits\Web\General\GetParameters;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 

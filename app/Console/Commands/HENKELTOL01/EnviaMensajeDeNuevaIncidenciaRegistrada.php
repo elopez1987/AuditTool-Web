@@ -5,7 +5,7 @@ namespace App\Console\Commands\HENKELTOL01;
 use App\Models\Configuration\WhatsApp\StorageTaskWhatsapp;
 use App\Models\Configuration\WhatsApp\SystemDetailWhatsApp;
 use App\Models\Yard\LogMessageWhatsApp;
-use App\Traits\GetParameters;
+use App\Traits\Web\General\GetParameters;
 use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;

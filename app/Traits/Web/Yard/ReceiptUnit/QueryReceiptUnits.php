@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits\Yard;
+namespace App\Traits\Web\Yard\ReceiptUnit;
 
 use App\Models\Yard\ReceiptUnit;
 use App\Models\Yard\StorageBoxStock;

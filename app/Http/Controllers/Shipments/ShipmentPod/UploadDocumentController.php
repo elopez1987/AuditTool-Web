@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Shipments\OrderDeliverie;
 use App\Models\Shipments\ShipmentPod\ShipmentPod;
 use App\Models\Shipments\StorageShipmentsPods;
-use App\Traits\EvidencePhotoTrait;
+use App\Traits\Web\General\EvidencePhotoTrait;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

@@ -5,7 +5,7 @@ namespace App\Console\Commands\Izel;
 use App\Models\Configuration\EDI\SystemEventWebServiceIzel;
 use App\Models\Shipments\EdiShipment;
 use App\Models\Yard\ReceiptUnit;
-use App\Traits\GetParameters;
+use App\Traits\Web\General\GetParameters;
 use App\Traits\Web\Izel\WebServiceIzel;
 use Illuminate\Console\Command;
 

@@ -5,7 +5,7 @@ namespace App\Console\Commands\HENKELTOL01;
 use App\Models\Shipments\ShipmentHeader;
 use App\Models\Yard\ReceiptUnit;
 use App\Models\Yard\StorageLocation;
-use App\Traits\GetParameters;
+use App\Traits\Web\General\GetParameters;
 use Illuminate\Console\Command;
 
 class ClearLocationCommand extends Command

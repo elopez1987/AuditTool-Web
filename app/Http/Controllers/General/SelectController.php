@@ -9,7 +9,7 @@ use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\Models\Yard\Carriers\ShipmentCarrier;
 use App\Models\Yard\StorageAreas;
 use App\Models\Yard\StorageReason;
-use App\Traits\General\Responser;
+use App\Traits\Web\General\Responser;
 use App\User;
 use Auth;
 

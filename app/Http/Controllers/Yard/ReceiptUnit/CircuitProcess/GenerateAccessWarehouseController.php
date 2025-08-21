@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Yard\ReceiptUnit\CircuitProcess;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Yard\GenerateAccessWarehouse\CreateAccessWarehouseQrRequest;
 use App\Models\Yard\GenerateAccessWarehouse;
-use App\Traits\PrintFormat;
+use App\Traits\Web\General\PrintFormat;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 

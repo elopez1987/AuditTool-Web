@@ -8,7 +8,7 @@ use App\Models\Inventory\FiscalInventory\Dron\InventoryLocationForDron;
 use App\Models\Inventory\FiscalInventory\Dron\LocactionDronEvidence;
 use App\Models\Inventory\FiscalInventory\Head\InventoryHead;
 use App\Models\Inventory\FiscalInventory\Stock\InventoryStock;
-use App\Traits\Counting\QueryInventoryHead;
+use App\Traits\Web\Counting\QueryInventoryHead;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;

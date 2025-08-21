@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits\Yard;
+namespace App\Traits\Web\Yard\Dashboards;
 
 use App\Models\Yard\ReceiptUnit;
 use DB;

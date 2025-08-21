@@ -7,7 +7,7 @@ use App\Http\Services\Counting\ServiceAdjustmentInventory;
 use App\Models\Inventory\FiscalInventory\Cards\InventoryCard;
 use App\Models\Inventory\FiscalInventory\Dron\InventoryLocationForDron;
 use App\Models\Inventory\FiscalInventory\Head\InventoryHead;
-use App\Traits\Counting\QueryAdjustmentInventory;
+use App\Traits\Web\Counting\QueryAdjustmentInventory;
 use DB;
 use Exception;
 use Illuminate\Http\Request;

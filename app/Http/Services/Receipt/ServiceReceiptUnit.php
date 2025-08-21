@@ -16,9 +16,9 @@ use App\Models\Yard\StorageLabelTruck\StorageLabelTruck;
 use App\Models\Yard\StorageLocation;
 use App\Models\Yard\StorageOperator;
 use App\Models\Yard\StorageUnitTrace;
-use App\Traits\General\Responser;
-use App\Traits\GetParameters;
-use App\Traits\Yard\InsertSchedulleInverse;
+use App\Traits\Web\General\GetParameters;
+use App\Traits\Web\General\Responser;
+use App\Traits\Web\Yard\ReceiptUnit\InsertSchedulleInverse;
 use Illuminate\Http\Request;
 
 class ServiceReceiptUnit
