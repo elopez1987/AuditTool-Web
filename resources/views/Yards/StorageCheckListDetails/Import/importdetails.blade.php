@@ -22,7 +22,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <ul class="list-group">
-                                <li class="list-group-item font-12"> Seleecione archivo a importar (CSV)</li>
+                                <li class="list-group-item font-12"> Seleecione archivo a importar (Excel)</li>
                                 <li class="list-group-item font-12">
                                     <input type='file' name="file" id="file" required>
                                 </li>
