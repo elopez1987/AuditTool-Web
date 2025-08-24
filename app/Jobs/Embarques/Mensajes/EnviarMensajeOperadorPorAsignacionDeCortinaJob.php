@@ -1,25 +1,35 @@
 <?php
 
-namespace App\Traits\Web\Shipments;
+namespace App\Jobs\Embarques\Mensajes;
 
 use App\Http\Services\Yard\AssingDoorToUnitFromShipment;
+use App\Models\Shipments\OrderDeliverie;
 use App\Models\Yard\ReceiptUnit;
 use App\Models\Yard\StorageLocation;
-use Exception;
 use GuzzleHttp\Client;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 
-trait SendMessageToOperatorForLoadProcess
+class EnviarMensajeOperadorPorAsignacionDeCortinaJob implements ShouldQueue
 {
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    public $orderDelivery;
     private AssingDoorToUnitFromShipment $serviceAssingDoorToUnit;
 
-    public function __construct(AssingDoorToUnitFromShipment $assingDoorToUnitFromShipment)
+    public function __construct($orderDelivery,AssingDoorToUnitFromShipment $assingDoorToUnitFromShipment)
     {
+        $this->orderDelivery = $orderDelivery;
         $this->serviceAssingDoorToUnit = $assingDoorToUnitFromShipment;
     }
 
-    public function sendMessageForLoad($shipment)
+    public function handle(): void
     {
+        $shipment = OrderDeliverie::where('id', '=', $this->orderDelivery->id)->first();
         if (!empty($shipment->folionumber)) {
             $receiptunit = ReceiptUnit::controlAccessUser()->where('id', $shipment->folionumber)->first();
             if (!empty($receiptunit)) {
@@ -53,7 +63,7 @@ trait SendMessageToOperatorForLoadProcess
     public function getBodyDataMessageInProccess($location, $contact)
     {
         return array(
-            "token" => "mheZM8xq46kdZv6tCCIyvrtj8vG7nyNx",
+            "token" => "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbnN0YW5jZUlkIjoiSEVJNTIzNDgyOTg2IiwidG9rZW4iOiJtaGVaTTh4cTQ2a2RadjZ0Q0NJeXZydGo4dkc3bnlOeCIsImlzcyI6IjFtc2cuaW8iLCJpYXQiOjE3NTU2MTU3NTZ9.PNJB7YjZbqerW-s-r8TOSTlPOS_6OddKHxVbwfsQ9GY",
             "namespace" => "3686dca6_3e5f_4dc5_a838_74a7716b881c",
             "template" => "rampaasignadaaembarque",
             "language" => array(

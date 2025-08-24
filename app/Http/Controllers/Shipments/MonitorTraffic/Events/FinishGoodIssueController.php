@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Shipments\MonitorTraffic\Events;
 
 use App\Http\Controllers\BaseController;
+use App\Jobs\Embarques\Mensajes\EnviarMensajaSorianaJob;
+use App\Jobs\Embarques\Mensajes\EnviarMensajeAOperadorJob;
+use App\Jobs\Embarques\Mensajes\EnviarMensajeFinFacturacionJob;
 use App\Models\Shipments\OrderDeliverie;
 use App\Models\Shipments\OrderMonitor;
 use App\Models\Shipments\ShipmentHeader;
@@ -10,10 +13,7 @@ use App\Models\Shipments\ShipmentJourney\ShipmentJourney;
 use App\Models\Shipments\ShipmentPod\ShipmentPod;
 use App\Models\Shipments\ShipmentSeal;
 use App\Models\Yard\ReceiptUnit;
-use App\Traits\Web\Shipments\SendMessageToOperatorForFinishProcess;
-use App\Traits\Web\Shipments\SendMessageToSoriana;
 use App\Traits\Web\Yard\VirtualUnit\CheckOutVirtual;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -22,8 +22,6 @@ use Illuminate\Support\Facades\Log;
 class FinishGoodIssueController extends BaseController
 {
     use CheckOutVirtual;
-    use SendMessageToSoriana;
-    use SendMessageToOperatorForFinishProcess;
 
 
     public function index(Request $request, OrderDeliverie $id)
@@ -44,8 +42,7 @@ class FinishGoodIssueController extends BaseController
                 }
             }
 
-            $this->sendMessageToSorinaContacts($parameter, $orderDelivery);
-            $this->sendMessageToOperatorForFinishLoad($parameter, $orderDelivery);
+            $this->sendMessages($parameter, $orderDelivery);
             $this->closeUnitForProcessAmazon($orderDelivery);
             $this->updateOrderDelivery($orderDelivery);
             $this->updateShipmentHeader($orderDelivery, $request['delivery']);
@@ -123,7 +120,7 @@ class FinishGoodIssueController extends BaseController
     {
 //            Cierra la unidad virtual para clientes amazon
         $parameterCustomer = $this->getParameterOfCustomer($orderDelivery->customerid);
-        if (in_array('OCF-04', (array)$parameterCustomer)) {
+        if (!empty($parameterCustomer) && in_array('OCF-04', (array)$parameterCustomer)) {
             $this->checkOutVirtual($orderDelivery);
             $orderDelivery->statusid = 'DH';
             $orderDelivery->save();
@@ -135,25 +132,19 @@ class FinishGoodIssueController extends BaseController
      * @param $orderDelivery
      * @return void
      */
-    public function sendMessageToOperatorForFinishLoad($parameter, $orderDelivery): void
+    public function sendMessages($parameter, $orderDelivery): void
     {
-//            Envia mensaje a operador de fin de carga
-        if (in_array('SDC-09', (array)$parameter)) {
-            $this->sendMessageToOperator($orderDelivery);
+        if (!empty($parameter) && in_array('SDC-09', (array)$parameter)) {
+            EnviarMensajeAOperadorJob::dispatch($orderDelivery);
+        }
+        if (!empty($parameter) && in_array('SDC-03', (array)$parameter)) {
+            EnviarMensajaSorianaJob::dispatch($orderDelivery);
+        }
+        if (!empty($parameter) && in_array('SWH-17', (array)$parameter)) {
+            EnviarMensajeFinFacturacionJob::dispatch($orderDelivery);
         }
     }
 
-    /**
-     * @param $parameter
-     * @param $orderDelivery
-     * @return void
-     */
-    public function sendMessageToSorinaContacts($parameter, $orderDelivery): void
-    {
-        if (in_array('SDC-03', (array)$parameter)) {
-            $this->sendMessageGoodIssue($orderDelivery);
-        }
-    }
 
     /**
      * @param $orderDelivery
@@ -165,8 +156,6 @@ class FinishGoodIssueController extends BaseController
             'centerid' => $orderDelivery->centerid,
             'warehouseid' => $orderDelivery->warehouseid,
             'orderid' => $orderDelivery->id,
-        ],[
-            'created_at' => Carbon::now(),
         ]);
     }
 

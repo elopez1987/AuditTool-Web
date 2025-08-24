@@ -1,23 +1,39 @@
 <?php
 
-namespace App\Traits\Web\Shipments;
+namespace App\Jobs\Embarques\Mensajes;
 
 use App\Models\Configuration\WhatsApp\SystemDetailWhatsApp;
+use App\Models\Shipments\OrderDeliverie;
 use App\Models\Yard\Customer\OrderCustomer;
 use App\Models\Yard\LogMessageWhatsApp;
+use Exception;
 use GuzzleHttp\Client;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 
-trait SendMessageToSoriana
+class EnviarMensajaSorianaJob implements ShouldQueue
 {
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function sendMessageGoodIssue($order)
+    public $orderDelivery;
+
+    public function __construct($orderDelivery)
+    {
+        $this->orderDelivery = $orderDelivery;
+    }
+
+    public function handle(): void
     {
         $url = "https://api.1msg.io/HEI523482986/sendTemplate";
         $client = new Client();
+        $order = OrderDeliverie::where('id', '=', $this->orderDelivery->id)->first();
         $customer = OrderCustomer::where('id', $order->customerid)->select(['auxiliary02'])->first();
         if ($customer->auxiliary02 == 'S') {
-            $contacts = $this->getPhones($order, 'WTH-SORIANA');
+            $contacts = $this->getPhones($order);
             if (!empty($contacts)) {
                 foreach ($contacts as $contact) {
                     try {
@@ -25,17 +41,17 @@ trait SendMessageToSoriana
                         $response = $client->request('POST', $url, ['json' => $data, 'headers' => ['Content-Type' => 'application/json']]);
                         $respJson = $response->getBody();
                         LogMessageWhatsApp::createLog($order, $contact, json_decode($respJson), 'WTH-SORIANA', 'Facturación de Saorina Terminada.');
-                    } catch (\Exception $e) {
-                        Log::error('Error al enviar mensaje de nueva tarea de enrampe de unidad.');
+                    } catch (Exception $e) {
+                        Log::error('Error al enviar mensaje de nueva tarea de enrampe de unidad ' . $e->getMessage());
                     }
                 }
             }
         }
     }
 
-    public function getPhones($model, $whatsappid)
+    public function getPhones($model)
     {
-        $contacts = SystemDetailWhatsApp::where('whatsappid', '=', $whatsappid)
+        $contacts = SystemDetailWhatsApp::where('whatsappid', '=', 'WTH-SORIANA')
             ->where('centerid', $model->centerid)
             ->where('warehouseid', $model->warehouseid)->select(['phonenumber'])->get();
         return $contacts;
@@ -44,7 +60,7 @@ trait SendMessageToSoriana
     public function getBodyData($order, $contact)
     {
         return array(
-            "token" => "mheZM8xq46kdZv6tCCIyvrtj8vG7nyNx",
+            "token" => "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbnN0YW5jZUlkIjoiSEVJNTIzNDgyOTg2IiwidG9rZW4iOiJtaGVaTTh4cTQ2a2RadjZ0Q0NJeXZydGo4dkc3bnlOeCIsImlzcyI6IjFtc2cuaW8iLCJpYXQiOjE3NTU2MTU3NTZ9.PNJB7YjZbqerW-s-r8TOSTlPOS_6OddKHxVbwfsQ9GY",
             "namespace" => "3686dca6_3e5f_4dc5_a838_74a7716b881c",
             "template" => "mensajedefacturacionsoriana",
             "language" => array(
@@ -65,6 +81,5 @@ trait SendMessageToSoriana
             "phone" => '1' . $contact->phonenumber
         );
     }
-
 
 }

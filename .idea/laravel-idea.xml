@@ -12,16 +12,33 @@
         <option name="generationBooleanSettings">
           <map>
             <entry key="createBladeComponent:inTheNewMenu" value="true" />
+            <entry key="createClass:inTheNewMenu" value="true" />
             <entry key="createConsoleCommand:inTheNewMenu" value="true" />
+            <entry key="createDatabaseClassFactory:inTheNewMenu" value="true" />
+            <entry key="createDatabaseMigration:inTheNewMenu" value="true" />
+            <entry key="createEloquentCast:inTheNewMenu" value="true" />
             <entry key="createEloquentScope:inTheNewMenu" value="true" />
+            <entry key="createEnum:inTheNewMenu" value="true" />
+            <entry key="createEvent:inTheNewMenu" value="true" />
+            <entry key="createException:inTheNewMenu" value="true" />
+            <entry key="createFacade:inTheNewMenu" value="true" />
+            <entry key="createFeatureTest:inTheNewMenu" value="true" />
+            <entry key="createHttpException:inTheNewMenu" value="true" />
+            <entry key="createJob:inTheNewMenu" value="true" />
             <entry key="createJsonResource:inTheNewMenu" value="true" />
+            <entry key="createJsonResourceCollection:inTheNewMenu" value="true" />
+            <entry key="createListener:inTheNewMenu" value="true" />
             <entry key="createMailable:inTheNewMenu" value="true" />
             <entry key="createMiddleware:inTheNewMenu" value="true" />
             <entry key="createNotification:inTheNewMenu" value="true" />
             <entry key="createObserver:inTheNewMenu" value="true" />
             <entry key="createPolicy:inTheNewMenu" value="true" />
             <entry key="createResourceController:inTheNewMenu" value="true" />
+            <entry key="createRule:inTheNewMenu" value="true" />
             <entry key="createSeeder:inTheNewMenu" value="true" />
+            <entry key="createService:inTheNewMenu" value="true" />
+            <entry key="createServiceProvider:inTheNewMenu" value="true" />
+            <entry key="createUnitTest:inTheNewMenu" value="true" />
             <entry key="createView:inTheNewMenu" value="true" />
             <entry key="createViewComposer:inTheNewMenu" value="true" />
           </map>
@@ -30,6 +47,7 @@
           <map>
             <entry key="createBladeComponent:classSuffix" value="" />
             <entry key="createChannel:classSuffix" value="Channel" />
+            <entry key="createClass:classSuffix" value="" />
             <entry key="createConsoleCommand:classSuffix" value="Command" />
             <entry key="createController:classSuffix" value="Controller" />
             <entry key="createDatabaseClassFactory:classSuffix" value="Factory" />
@@ -37,12 +55,17 @@
             <entry key="createEloquentScope:classSuffix" value="Scope" />
             <entry key="createEloquentScope:inModuleNamespace" value="Models\Scopes" />
             <entry key="createEloquentScope:namespace" value="Models\Scopes" />
+            <entry key="createEnum:classSuffix" value="" />
+            <entry key="createEvent:classSuffix" value="Event" />
+            <entry key="createException:classSuffix" value="Exception" />
+            <entry key="createFacade:classSuffix" value="" />
             <entry key="createFeatureTest:classSuffix" value="Test" />
             <entry key="createFormRequest:classSuffix" value="Request" />
             <entry key="createHttpException:classSuffix" value="Exception" />
             <entry key="createJob:classSuffix" value="Job" />
             <entry key="createJsonResource:classSuffix" value="Resource" />
             <entry key="createJsonResourceCollection:classSuffix" value="Collection" />
+            <entry key="createListener:classSuffix" value="Listener" />
             <entry key="createMailable:classSuffix" value="Mail" />
             <entry key="createMiddleware:classSuffix" value="Middleware" />
             <entry key="createModel:classSuffix" value="" />
@@ -54,6 +77,7 @@
             <entry key="createResourceController:classSuffix" value="Controller" />
             <entry key="createRule:classSuffix" value="Rule" />
             <entry key="createSeeder:classSuffix" value="Seeder" />
+            <entry key="createService:classSuffix" value="Service" />
             <entry key="createServiceProvider:classSuffix" value="ServiceProvider" />
             <entry key="createUnitTest:classSuffix" value="Test" />
             <entry key="createViewComposer:classSuffix" value="ViewComposer" />
