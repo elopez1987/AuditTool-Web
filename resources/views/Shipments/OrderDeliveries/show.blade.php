@@ -698,6 +698,7 @@
                                     </div>
                                 </div>
 
+                            @foreach($conteos as $conteo)
                                 <div class="row mt-4">
                                     <div class="col-lg-2 col-md-6 col-sm-12">
                                         <div class="form-group">
@@ -724,13 +725,6 @@
                                 <div class="row">
                                     <div class="col-lg-2 col-md-6 col-sm-12">
                                         <div class="form-group">
-                                            <label for="shipmentid">Comlemento</label>
-                                            <input type="text" class="form-control " value="{{$conteo->complemento}}"
-                                                   disabled>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2 col-md-6 col-sm-12">
-                                        <div class="form-group">
                                             <label for="shipmentid">Contador</label>
                                             <input type="text" class="form-control " value="{{$conteo->name}}" disabled>
                                         </div>
@@ -742,7 +736,6 @@
                                     <th class="text-center font-16">Lado Derecho</th>
                                     </thead>
                                     <tbody>
-                                    @foreach($conteos as $conteo)
                                         <td width="50%">
                                             <!-- Códigos Izquierdo -->
                                             <div class="mb-3">
@@ -807,9 +800,10 @@
                                         <td width="50%">
 
                                         </td>
-                                    @endforeach
                                     </tbody>
                                 </table>
+
+                                @endforeach
                             @endif
                         </div>
 
