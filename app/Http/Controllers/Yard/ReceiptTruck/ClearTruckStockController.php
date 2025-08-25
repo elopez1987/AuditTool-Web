@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Yard\ReceiptTruck;
 
 use App\Http\Controllers\BaseController;
+use App\Models\Yard\ReceiptTruck;
+use App\Models\Yard\ReceiptUnit;
 
 class ClearTruckStockController extends BaseController
 {
