@@ -26,7 +26,8 @@
                                 </span> <span class="hidden-xs-down">Fotos</span></a></li>
                         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view04" role="tab"><span
                                     class="hidden-sm-up">
-                                <img src="{{asset('ico/notepad_bloc_notes_15549.png')}}" alt="" class="img-16 ml-2 mr-2">
+                                <img src="{{asset('ico/notepad_bloc_notes_15549.png')}}" alt=""
+                                     class="img-16 ml-2 mr-2">
                                 </span> <span class="hidden-xs-down">Comentarios</span></a></li>
                     </ul>
                     <!-- Tab panes -->
@@ -669,21 +670,27 @@
                             </div>
                         </div>
 
- {{--                   Conteo de bridgestone--}}
+                        {{--                   Conteo de bridgestone--}}
                         <div class="tab-pane " id="view02" role="tabpanel">
                             @if(!empty($conteo))
 
                                 <div class="row mt-2">
                                     <div class="col-lg-12">
-                                        <a href="{{url('printformatcountbridgestone/' . $orderdelivery->id)}}" target="_blank">
-                                            <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md" style="padding-right: 3px;">
+                                        <a href="{{url('printformatcountbridgestone/' . $orderdelivery->id)}}"
+                                           target="_blank">
+                                            <button type="button"
+                                                    class="btn waves-effect waves-light btn-outline-info btn-md"
+                                                    style="padding-right: 3px;">
                                                 <img src="{{asset('/ico/papeleta.png')}}" alt="" class="img-16">
                                                 Imprimir Conteo Anden
                                             </button>
                                         </a>
 
-                                        <a href="{{url('printformatcountaptbridgestone/' . $orderdelivery->id)}}" target="_blank">
-                                            <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md" style="padding-right: 3px;">
+                                        <a href="{{url('printformatcountaptbridgestone/' . $orderdelivery->id)}}"
+                                           target="_blank">
+                                            <button type="button"
+                                                    class="btn waves-effect waves-light btn-outline-info btn-md"
+                                                    style="padding-right: 3px;">
                                                 <img src="{{asset('/ico/papeleta.png')}}" alt="" class="img-16">
                                                 Imprimir Conteo APT
                                             </button>
@@ -735,34 +742,72 @@
                                     <th class="text-center font-16">Lado Derecho</th>
                                     </thead>
                                     <tbody>
-                                    <td width="50%">
-                                        <table class="table table-bordered mt-1">
-                                            @foreach(array_chunk($conteo->detalleizquierdo, 12) as $fila)
-                                                <tr>
-                                                    @foreach($fila as $item)
-                                                        <td style="width: 20px; height: 20px; border: 2px solid; font-size: 15px; text-align: center;"
-                                                            class="{{ $item !== '0' ? 'bg-inverse text-white font-16' : 'bg-light' }}">
-                                                            {{ $item }}
-                                                        </td>
-                                                    @endforeach
-                                                </tr>
-                                            @endforeach
-                                        </table>
-                                    </td>
-                                    <td width="50%">
-                                        <table class="table table-bordered  mt-1">
-                                            @foreach(array_chunk($conteo->detallederecho, 12) as $fila)
-                                                <tr>
-                                                    @foreach($fila as $item)
-                                                        <td style="width: 20px; height: 20px; border: 2px solid; font-size: 18px; text-align: center;"
-                                                            class="{{ $item !== '0' ? 'bg-inverse text-white font-16' : 'bg-light' }}">
-                                                            {{ $item }}
-                                                        </td>
-                                                    @endforeach
-                                                </tr>
-                                            @endforeach
-                                        </table>
-                                    </td>
+                                    @foreach($conteos as $conteo)
+                                        <td width="50%">
+                                            <!-- Códigos Izquierdo -->
+                                            <div class="mb-3">
+                                                <h6 class="font-weight-bold">Códigos Izquierdo</h6>
+                                                <table class="table table-bordered mt-1">
+                                                    <tr>
+                                                        @if(isset($conteo->codigoIzq))
+                                                            @foreach($conteo->codigoIzq as $key => $codigo)
+                                                                <td style="width: 80px; height: 30px; border: 2px solid; font-size: 12px; text-align: center; background-color: #f8f9fa;">
+                                                                    <strong>{{ $key }}</strong><br>{{ $codigo }}
+                                                                </td>
+                                                                @if(($loop->index + 1) % 5 == 0)
+                                                    </tr>
+                                                    <tr>
+                                                        @endif
+                                                        @endforeach
+                                                        @endif
+                                                    </tr>
+                                                </table>
+                                            </div>
+
+                                            <!-- Canal Izquierdo -->
+                                            <div class="mb-3">
+                                                <h6 class="font-weight-bold">Canal Izquierdo</h6>
+                                                <table class="table table-bordered mt-1">
+                                                    <tr>
+                                                        @if(isset($conteo->canalizquierdo))
+                                                            @foreach($conteo->canalizquierdo as $key => $canal)
+                                                                <td style="width: 80px; height: 30px; border: 2px solid; font-size: 12px; text-align: center; background-color: #e3f2fd;">
+                                                                    <strong>{{ $key }}</strong><br>{{ $canal }}
+                                                                </td>
+                                                                @if(($loop->index + 1) % 5 == 0)
+                                                    </tr>
+                                                    <tr>
+                                                        @endif
+                                                        @endforeach
+                                                        @endif
+                                                    </tr>
+                                                </table>
+                                            </div>
+
+                                            <!-- Detalle Izquierdo -->
+                                            <div class="mb-3">
+                                                <h6 class="font-weight-bold">Detalle Izquierdo</h6>
+                                                <table class="table table-bordered mt-1">
+                                                    @if(isset($conteo->detalleizquierdo))
+                                                        @foreach(array_chunk((array)$conteo->detalleizquierdo, 10) as $fila)
+                                                            <tr>
+                                                                @foreach($fila as $key => $item)
+                                                                    <td style="width: 20px; height: 20px; border: 2px solid; font-size: 15px; text-align: center;"
+                                                                        class="{{ $item !== '0' ? 'bg-inverse text-white font-16' : 'bg-light' }}">
+                                                                        {{ $item }}
+                                                                    </td>
+                                                                @endforeach
+                                                            </tr>
+                                                        @endforeach
+                                                    @endif
+                                                </table>
+                                            </div>
+
+                                        </td>
+                                        <td width="50%">
+
+                                        </td>
+                                    @endforeach
                                     </tbody>
                                 </table>
                             @endif
@@ -845,18 +890,25 @@
                                                 <div class="card-input">
                                                     <div class="comment-widgets scrollable" style="height:560px;">
                                                         @foreach($comments as $comment)
-                                                        <div class="d-flex flex-row comment-row m-t-0">
-                                                            <div ><img src="{{asset('ico/notepad_bloc_notes_15549.png')}}" alt="user" width="50" class="rounded-circle" ></div>
-                                                            <div class="comment-text w-100">
-                                                                <h6 class="font-medium">{{$comment->user ? $comment->user->name : ''}}</h6>
-                                                                <span class="m-b-15 d-block">{{$comment->comment}}</span>
-                                                                <div class="comment-footer">
-                                                                    <span class="text-muted float-right">{{$comment->created_at}}</span> <span
-                                                                        class="label label-rounded label-primary">Creado</span> <span class="action-icons">
+                                                            <div class="d-flex flex-row comment-row m-t-0">
+                                                                <div><img
+                                                                        src="{{asset('ico/notepad_bloc_notes_15549.png')}}"
+                                                                        alt="user" width="50" class="rounded-circle">
+                                                                </div>
+                                                                <div class="comment-text w-100">
+                                                                    <h6 class="font-medium">{{$comment->user ? $comment->user->name : ''}}</h6>
+                                                                    <span
+                                                                        class="m-b-15 d-block">{{$comment->comment}}</span>
+                                                                    <div class="comment-footer">
+                                                                        <span
+                                                                            class="text-muted float-right">{{$comment->created_at}}</span>
+                                                                        <span
+                                                                            class="label label-rounded label-primary">Creado</span>
+                                                                        <span class="action-icons">
                                                                     </span>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
                                                         @endforeach
                                                     </div>
                                                 </div>

@@ -20,8 +20,7 @@ class OrderMonitorSchedulle extends Model
     {
         $centers = SecurityAccessWarehouse::Centers();
         $warehouses = SecurityAccessWarehouse::Warehouses();
-        return OrderMonitorSchedulle::whereIn('centerid', $centers)
-            ->whereIn('warehouseid', $warehouses);
+        return OrderMonitorSchedulle::whereIn('centerid', $centers)->whereIn('warehouseid', $warehouses);
     }
 
     protected $casts = [
