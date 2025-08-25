@@ -672,7 +672,7 @@
 
                         {{--                   Conteo de bridgestone--}}
                         <div class="tab-pane " id="view02" role="tabpanel">
-                            @if(!empty($conteo))
+                            @if(!empty($conteos))
 
                                 <div class="row mt-2">
                                     <div class="col-lg-12">
