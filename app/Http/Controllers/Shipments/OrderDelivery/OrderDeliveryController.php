@@ -6,8 +6,9 @@ use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Shipments\OrderDelivery\CreateOrderRequest;
 use App\Models\General\EvidencePhoto;
 use App\Models\General\StorageComment;
+use App\Models\Shipments\Bridgestone\Verificacion\Storagechecklocationbridg;
+use App\Models\Shipments\Bridgestone\Verificacion\StoragechecklocationbridgVig;
 use App\Models\Shipments\OrderDeliverie;
-use App\Models\Shipments\Storagechecklocationbridg;
 use App\Models\Yard\StorageUnitTrace;
 use App\Traits\Web\Shipments\OrderDelivery\CreateNewOrder;
 use App\Traits\Web\Shipments\OrderDelivery\UpdateOrderDelivery;
@@ -96,8 +97,9 @@ class OrderDeliveryController extends BaseController
         $traces = StorageUnitTrace::controlAccessUser()
             ->where('receiptunitid', $orderdelivery->folionumber)->get();
         $conteos = Storagechecklocationbridg::controlAccessUser()->where('orderid', $orderdelivery->id)->get();
+        $conteosVig = StoragechecklocationbridgVig::controlAccessUser()->where('orderid', $orderdelivery->id)->get();
         $comments = StorageComment::where('modeltype', 'orderdeliveries')->where('modelid', $orderdelivery->id)->get();
-        return view('Shipments.OrderDeliveries.show', compact('orderdelivery', 'evidences', 'traces', 'conteos', 'comments'));
+        return view('Shipments.OrderDeliveries.show', compact('orderdelivery', 'evidences', 'traces', 'conteos', 'comments','conteosVig'));
     }
 
     public function edit(OrderDeliverie $orderdelivery)

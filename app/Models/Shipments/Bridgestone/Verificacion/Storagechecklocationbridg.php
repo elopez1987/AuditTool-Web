@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Models\Shipments;
+namespace App\Models\Shipments\Bridgestone\Verificacion;
 
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Configuration\Turns\StorageTurn;
 use App\Models\Configuration\Warehouses\SystemWarehouse;
 use App\Models\Security\Users\SecurityAccessWarehouse;
+use App\Models\Shipments\OrderDeliverie;
 use App\Models\Yard\StorageLocation;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

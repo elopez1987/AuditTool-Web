@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Shipments\OrderDelivery\Bridgestone;
 
 use App\Http\Controllers\BaseController;
+use App\Models\Shipments\Bridgestone\Verificacion\Storagechecklocationbridg;
 use App\Models\Shipments\OrderDeliverie;
 use App\Models\Shipments\OrderDelivery\StorageShipmentCheckTotal;
-use App\Models\Shipments\Storagechecklocationbridg;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class ImprimirConteoAndenController extends BaseController
