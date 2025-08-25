@@ -777,24 +777,24 @@
                                                 </table>
                                             </div>
 
-                                            <!-- Detalle Izquierdo -->
-                                            <div class="mb-3">
-                                                <h6 class="font-weight-bold">Detalle Izquierdo</h6>
-                                                <table class="table table-bordered mt-1">
-                                                    @if(isset($conteo->detalleizquierdo))
-                                                        @foreach(array_chunk((array)$conteo->detalleizquierdo, 10) as $fila)
-                                                            <tr>
-                                                                @foreach($fila as $key => $item)
-                                                                    <td style="width: 20px; height: 20px; border: 2px solid; font-size: 15px; text-align: center;"
-                                                                        class="{{ $item !== '0' ? 'bg-inverse text-white font-16' : 'bg-light' }}">
-                                                                        {{ $item }}
-                                                                    </td>
-                                                                @endforeach
-                                                            </tr>
-                                                        @endforeach
-                                                    @endif
-                                                </table>
-                                            </div>
+{{--                                            <!-- Detalle Izquierdo -->--}}
+{{--                                            <div class="mb-3">--}}
+{{--                                                <h6 class="font-weight-bold">Detalle Izquierdo</h6>--}}
+{{--                                                <table class="table table-bordered mt-1">--}}
+{{--                                                    @if(isset($conteo->detalleizquierdo))--}}
+{{--                                                        @foreach(array_chunk((array)$conteo->detalleizquierdo, 10) as $fila)--}}
+{{--                                                            <tr>--}}
+{{--                                                                @foreach($fila as $key => $item)--}}
+{{--                                                                    <td style="width: 20px; height: 20px; border: 2px solid; font-size: 15px; text-align: center;"--}}
+{{--                                                                        class="{{ $item !== '0' ? 'bg-inverse text-white font-16' : 'bg-light' }}">--}}
+{{--                                                                        {{ $item }}--}}
+{{--                                                                    </td>--}}
+{{--                                                                @endforeach--}}
+{{--                                                            </tr>--}}
+{{--                                                        @endforeach--}}
+{{--                                                    @endif--}}
+{{--                                                </table>--}}
+{{--                                            </div>--}}
 
                                         </td>
                                         <td width="50%">
