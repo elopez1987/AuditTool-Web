@@ -96,7 +96,6 @@ class OrderDeliveryController extends BaseController
         $traces = StorageUnitTrace::controlAccessUser()
             ->where('receiptunitid', $orderdelivery->folionumber)->get();
         $conteos = Storagechecklocationbridg::controlAccessUser()->where('orderid', $orderdelivery->id)->get();
-
         $comments = StorageComment::where('modeltype', 'orderdeliveries')->where('modelid', $orderdelivery->id)->get();
         return view('Shipments.OrderDeliveries.show', compact('orderdelivery', 'evidences', 'traces', 'conteos', 'comments'));
     }
