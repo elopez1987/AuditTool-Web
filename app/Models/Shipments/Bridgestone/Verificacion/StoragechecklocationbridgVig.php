@@ -52,8 +52,8 @@ class StoragechecklocationbridgVig extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
-        return StoragechecklocationbridgVig::whereIn('storagechecklocationbridg.warehouseid', $warehouses)
-            ->whereIn('storagechecklocationbridg.centerid', $centers);
+        return StoragechecklocationbridgVig::whereIn('storagechecklocationbridgvig.warehouseid', $warehouses)
+            ->whereIn('storagechecklocationbridgvig.centerid', $centers);
     }
 
 
