@@ -683,19 +683,15 @@
                                             Imprimir Conteo Anden
                                         </button>
                                     </a>
-                                    <a href="{{url('printformatcountaptbridgestone/' . $orderdelivery->id)}}"
-                                       target="_blank">
-                                        <button type="button"
-                                                class="btn waves-effect waves-light btn-outline-info btn-md"
-                                                style="padding-right: 3px;">
-                                            <img src="{{asset('/ico/papeleta.png')}}" alt="" class="img-16">
-                                            Imprimir Conteo APT
-                                        </button>
-                                    </a>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-lg-6">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <h3 class="text-center">Conteo Operativo</h3>
+                                        </div>
+                                    </div>
                                     @if(!empty($conteos))
                                         @foreach($conteos as $conteo)
                                             <hr class="mt-5">
@@ -784,7 +780,7 @@
                                                         <thead>
                                                         <tr>
                                                             <th>Rack</th>
-                                                            <th>Clave</th>
+                                                            <th>Código</th>
                                                             <th>Canal</th>
                                                             <th>Cantidad</th>
                                                         </tr>
@@ -823,7 +819,7 @@
                                                         <thead>
                                                         <tr>
                                                             <th>Rack</th>
-                                                            <th>Clave</th>
+                                                            <th>Código</th>
                                                             <th>Canal</th>
                                                             <th>Cantidad</th>
                                                         </tr>
@@ -862,6 +858,11 @@
                                     @endif
                                 </div>
                                 <div class="col-lg-6">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <h3 class="text-center">Conteo Vigilancia</h3>
+                                        </div>
+                                    </div>
                                     @if(!empty($conteosVig))
                                         @foreach($conteosVig as $conteo)
                                             <hr class="mt-5">
@@ -950,7 +951,7 @@
                                                         <thead>
                                                         <tr>
                                                             <th>Rack</th>
-                                                            <th>Clave</th>
+                                                            <th>Código</th>
                                                             <th>Canal</th>
                                                             <th>Cantidad</th>
                                                         </tr>
@@ -989,7 +990,7 @@
                                                         <thead>
                                                         <tr>
                                                             <th>Rack</th>
-                                                            <th>Clave</th>
+                                                            <th>Código</th>
                                                             <th>Canal</th>
                                                             <th>Cantidad</th>
                                                         </tr>

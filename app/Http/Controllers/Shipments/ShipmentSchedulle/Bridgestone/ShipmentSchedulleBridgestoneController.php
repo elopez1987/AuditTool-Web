@@ -21,7 +21,6 @@ class ShipmentSchedulleBridgestoneController extends BaseController
 
     public function getDataSchedulleShipmentBridgestone(Request $request)
     {
-//        $data = DB::table('orderdeliveries as o')
         $data = OrderDeliverie::controlAccessUser()
             ->ForStatus($request->get('statusid'))
             ->Shipmentid($request->get('shipmentid'))
@@ -91,8 +90,7 @@ class ShipmentSchedulleBridgestoneController extends BaseController
                 'orderdeliveries.statusid'
             ])
             ->whereNotIn('orderdeliveries.statusid', ['CA'])
-            ->orderBy('orderdeliveries.id', 'desc')->limit(500)
-            ->get();
+            ->orderBy('orderdeliveries.id', 'desc')->limit(200)->get();
         return DataTables::of($data)
             ->addColumn('btn', 'Shipments.OrderMonitor.MonitorOperation.partials.btnoperation')
             ->rawColumns(['btn'])

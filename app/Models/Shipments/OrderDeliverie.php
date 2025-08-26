@@ -222,8 +222,6 @@ class OrderDeliverie extends Model
     {
         if (trim($workday) != "") {
             $query->where('orderdeliveries.workday', '=', $workday);
-        }else{
-            $query->whereDate('orderdeliveries.loadingdate', '=', now()->format('Y-m-d'));
         }
     }
 

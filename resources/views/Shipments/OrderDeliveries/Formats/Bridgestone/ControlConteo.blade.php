@@ -56,20 +56,12 @@
             padding: 1px;
             border: 1px solid #212121;
             font-family: Arial, Helvetica, sans-serif;
-            /*font-size: 11px;*/
+            font-size: 9px !important;
         }
 
         th:first-child,
         td:first-child {
             text-align: left;
-        }
-
-        /*tr:nth-child(even) {*/
-        /*    background-color: #f2f2f2*/
-        /*}*/
-
-        .table-bordered {
-            border: 1px solid #212121;
         }
 
         .border-none {
@@ -122,9 +114,11 @@
                 <div class="row" style="margin-bottom: 10px;margin-top: 10px">
                     <table class="border-none">
                         <th class="border-none" style="height: 20px;padding-left: 10px;width: 20%">Nombre del oficial:</th>
-                        <th style="border-bottom: 1px solid;width: 20%" class="border-none">{{$controlCount->user ? $controlCount->user->name : ''}}</th>
+                        <th style="border-bottom: 1px solid;width: 20%" class="border-none">{{$controlCount->name}}</th>
                         <th style="" class="border-none">Grupo</th>
-                        <th style="border-bottom: 1px solid;width: 10%" class="border-none">{{$conteo->team}}</th>
+                        <th style="border-bottom: 1px solid;width: 10%" class="border-none">
+{{--                            {{$conteo->team}}--}}
+                        </th>
                         <th class="border-none" style="width: 10%">Turno</th>
                         <th class="border-none" style="border-bottom: 1px solid;width: 10%">{{$conteo->turn ? $conteo->turn->name : ''}}</th>
                         <th class="border-none">Fecha</th>
@@ -141,12 +135,9 @@
                                 <th>TRANSPORTE</th>
                                 <th>SELLO</th>
                                 <th>N°.CAJA</th>
-                                <th>N°.LLANTAS</th>
                                 <th>N°.ANDEN</th>
                                 <th>HORA FINAL</th>
                                 <th>EMBARQUE/REMISION</th>
-                                <th>COMPLEMENTO</th>
-                                <th>CAMBIO</th>
                                 <th>TOTAL DE LLANTAS</th>
                                 <th>FIRMA APT</th>
                                 <th>FIRMA OPERADOR</th>
@@ -160,12 +151,9 @@
                                 <th>{{$orderDelivery->folio ? $orderDelivery->folio->carrier->name : ''}}</th>
                                 <th>{{$orderDelivery->folio ? $orderDelivery->folio->containerseal : ''}}</th>
                                 <th>{{$orderDelivery->folio ? $orderDelivery->folio->boxnumber : ''}}</th>
-                                <th>{{$controlCount->quantity}}</th>
                                 <th>{{$controlCount->location ? $controlCount->location->name : ''}}</th>
                                 <th>{{$controlCount->finishprocess}}</th>
                                 <th>{{$orderDelivery->shipmentid}}</th>
-                                <th>{{$controlCount->accessories}}</th>
-                                <th>{{$controlCount->changes}}</th>
                                 <th>{{$controlCount->quantity}}</th>
                                 <th>
                                     <img src="{{asset('storage/' . $controlCount->keysupervisor )}}" alt="Firma" style="height: 70px;max-height: 70px"/>
@@ -185,8 +173,7 @@
                            class="border-none">
                         <tr>
                             <td class="border-none">Clave: SEG-CA-013PC</td>
-                            <td class="border-none" style="border-top: 1px solid">Nombre y Firma del supervisor de
-                                embarques.
+                            <td class="border-none" style="border-top: 1px solid">Nombre y Firma del lider.
                             </td>
                             <td align="right" class="border-none">Bridgestone de México SA. de C.V</td>
                         </tr>

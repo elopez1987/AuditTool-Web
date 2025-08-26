@@ -35,7 +35,8 @@ class ImprimirConteoAndenController extends BaseController
         $conteo = Storagechecklocationbridg::controlAccessUser()->where('orderid', $orderDelivery->id)->first();
         $fortmat = 'Shipments.OrderDeliveries.Formats.Bridgestone.ControlConteo';
         $pdf = Pdf::loadView($fortmat, compact('orderDelivery','controlCount','conteo'));
-        return response($pdf->output(), 200)
-            ->header('Content-Type', 'application/pdf');
+        return response($pdf->output(), 200)->header('Content-Type', 'application/pdf');
     }
+
+
 }
