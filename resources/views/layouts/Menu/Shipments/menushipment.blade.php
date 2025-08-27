@@ -85,36 +85,6 @@
                     </div>
                 </a>
             @endcan
-            {{--            @can('shipmentmonitor.index')--}}
-            {{--                <a href="{{route('shipmentmonitor')}}">--}}
-            {{--                    <div class="box" data-toggle="tooltip" data-placement="top"--}}
-            {{--                         title="Permite darle seguimiento a las entregas con los cliente.">--}}
-            {{--                        <i class="lni lni-dashboard"></i>--}}
-            {{--                        <h5>Monitor de Traking</h5>--}}
-            {{--                        <h4>Monitor de Traking</h4>--}}
-            {{--                    </div>--}}
-            {{--                </a>--}}
-            {{--            @endcan--}}
-            {{--            @can('shipmentheader.index')--}}
-            {{--                <a href="{{route('shipmentheader.index')}}">--}}
-            {{--                    <div class="box" data-toggle="tooltip" data-placement="top"--}}
-            {{--                         title="Módulo para datos generales de los embarques, catidad de pallets, cajas de picking,etc.">--}}
-            {{--                        <i class="lni lni-graph"></i>--}}
-            {{--                        <h5>Datos del Emb.</h5>--}}
-            {{--                        <h4>Datos del Emb.</h4>--}}
-            {{--                    </div>--}}
-            {{--                </a>--}}
-            {{--            @endcan--}}
-            {{--            @can('shipmentstages.index')--}}
-            {{--                <a href="{{route('shipmentstages.index')}}">--}}
-            {{--                    <div class="box" data-toggle="tooltip" data-placement="top" title="Permite asignar cortinas esperadas a los embarques que se mostraran al registrar la unidad en el modulo de control--}}
-            {{--                    de patios.">--}}
-            {{--                        <i class="lni lni-enter"></i>--}}
-            {{--                        <h5>Asignar cortina</h5>--}}
-            {{--                        <h4>Asignar cortina</h4>--}}
-            {{--                    </div>--}}
-            {{--                </a>--}}
-            {{--            @endcan--}}
 
             @can('storagedoorstage.index')
                 <a href="{{route('storagedoorstage.index')}}">
@@ -267,29 +237,6 @@
                     </div>
                 </a>
             @endcan
-            {{--            @can('dashboarshipments')--}}
-            {{--                <a href="{{route('dashboarshipments')}}">--}}
-            {{--                    <div class="box" data-toggle="tooltip" data-placement="top"--}}
-            {{--                         title="Valide el estatus de su transporte en base a su cita de carga en el centro de distribución.">--}}
-            {{--                        <i class="lni lni-dashboard"></i>--}}
-            {{--                        <h5>Mon. De Tracking</h5>--}}
-            {{--                        <h4>Mon. De Tracking</h4>--}}
-            {{--                    </div>--}}
-            {{--                </a>--}}
-            {{--            @endcan--}}
-
-
-
-            {{--            @can('stagesanddoors')--}}
-            {{--                <a href="{{route('stagesanddoors')}}">--}}
-            {{--                    <div class="box" data-toggle="tooltip" data-placement="top"--}}
-            {{--                         title="Catálogo de categorias de incidencia en los modulos de recibo y embarques.">--}}
-            {{--                        <i class="lni lni-layers"></i>--}}
-            {{--                        <h5>Lay-Out de Cortinas</h5>--}}
-            {{--                        <h4>Lay-Out de Cortinas</h4>--}}
-            {{--                    </div>--}}
-            {{--                </a>--}}
-            {{--            @endcan--}}
             @can('layoutyard')
                 <a href="{{route('layoutyard')}}" target="_blank">
                     <div class="box" data-toggle="tooltip" data-placement="top" title="Muestra el plano digital del patio con información
@@ -297,57 +244,6 @@
                         <i class="lni lni-microsoft"></i>
                         <h5>LayOut</h5>
                         <h4>LayOut</h4>
-                    </div>
-                </a>
-            @endcan
-        </div>
-
-        <div class="container__box">
-            @can('storageevidenceprocess.index')
-                <a href="{{route('storageevidenceprocess.index')}}">
-                    <div class="box">
-                        <i class="lni lni-travel"></i>
-                        <h5>Embarques</h5>
-                        <h4>Embarques</h4>
-                    </div>
-                </a>
-            @endcan
-            @can('storageevidenceprocess.dashboard')
-                <a href="{{route('storageevidenceprocess.dashboard')}}">
-                    <div class="box">
-                        <i class="lni lni-dashboard"></i>
-                        <h5>Seguimiento Emb.</h5>
-                        <h4>Seguimiento Emb.</h4>
-                    </div>
-                </a>
-            @endcan
-
-            @can('reportevidence.index')
-                <a href="{{route('reportevidence.index')}}">
-                    <div class="box">
-                        <i class="lni lni-select"></i>
-                        <h5>Reporte Embarque</h5>
-                        <h4>Reporte Embarque</h4>
-                    </div>
-                </a>
-            @endcan
-
-            @can('reportauditshipments.index')
-                <a href="{{route('reportauditshipments.index')}}">
-                    <div class="box">
-                        <i class="lni lni-search"></i>
-                        <h5>Reporte Auditoria</h5>
-                        <h4>Reporte Auditoria</h4>
-                    </div>
-                </a>
-            @endcan
-
-            @can('reportauditshipments.dashboard')
-                <a href="{{route('reportdashboard')}}">
-                    <div class="box">
-                        <i class="lni lni-layout"></i>
-                        <h5>Seguimiento DC</h5>
-                        <h4>Seguimiento DC</h4>
                     </div>
                 </a>
             @endcan

@@ -51,10 +51,8 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapShipmentsRoutes();
         $this->mapYardsRoutes();
         $this->mapReceiptsRoutes();
-        $this->mapEvidencesRoutes();
         $this->mapInventoryRoutes();
         $this->mapReportsRoutes();
-        $this->mapCountingRoutes();
         $this->mapMaintenanceRoutes();
         $this->mapToursRoutes();
 
@@ -90,13 +88,6 @@ class RouteServiceProvider extends ServiceProvider
             ->group(base_path('routes/Inventory.php'));
     }
 
-    protected function mapCountingRoutes()
-    {
-        Route::middleware('web')
-            ->namespace($this->namespace)
-            ->group(base_path('routes/Counting.php'));
-    }
-
     protected function mapYardsRoutes()
     {
         Route::middleware('web')
@@ -104,12 +95,6 @@ class RouteServiceProvider extends ServiceProvider
             ->group(base_path('routes/Yards.php'));
     }
 
-    protected function mapEvidencesRoutes()
-    {
-        Route::middleware('web')
-            ->namespace($this->namespace)
-            ->group(base_path('routes/Evidences.php'));
-    }
 
     protected function mapReceiptsRoutes()
     {
