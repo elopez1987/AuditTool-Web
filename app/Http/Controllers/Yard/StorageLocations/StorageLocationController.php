@@ -30,7 +30,7 @@ class StorageLocationController extends BaseController
     public function getDataLocations(Request $request)
     {
         $data = StorageLocation::controlAccessUser()
-            ->with(['zone:id,name,zoneid', 'center:centerid,name,description', 'status:statusid,name','warehouse:warehouseid,name'])
+            ->with(['zone:id,name,zoneid', 'center:centerid,name,description', 'status:statusid,name,auxiliary01','warehouse:warehouseid,name'])
             ->Name($request->get('name'))
             ->Zone($request->get('zoneid'))
             ->Status($request->get('statusid'));
