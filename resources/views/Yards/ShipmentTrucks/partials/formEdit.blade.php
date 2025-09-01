@@ -25,23 +25,23 @@
 <div class="row">
     <div class="col-lg-2 col-md-6 col-sm-12">
         <div class="form-group">
-            <label for="value01">Valor 01 </label>
-            <input type="text" class="form-control" id="value01" name="value01" maxlength="15"
-                   aria-describedby="value01" >
+            <label for="auxiliary01">Auxiliar 01 </label>
+            <input type="text" class="form-control" id="auxiliary01" name="auxiliary01" maxlength="100"
+                   aria-describedby="auxiliary01"  value="{{$shipmenttruck->auxiliary01}}">
         </div>
     </div>
     <div class="col-lg-2 col-md-6 col-sm-12">
         <div class="form-group">
-            <label for="value02">Valor 02</label>
-            <input type="text" class="form-control" id="value02" name="value02" maxlength="15"
-                   aria-describedby="value02" >
+            <label for="auxiliary02">Auxiliar 02</label>
+            <input type="text" class="form-control" id="auxiliary02" name="auxiliary02" maxlength="100"
+                   aria-describedby="auxiliary02" value="{{$shipmenttruck->auxiliary02}}">
         </div>
     </div>
     <div class="col-lg-2 col-md-6 col-sm-12">
         <div class="form-group">
-            <label for="value03">Valor 03 </label>
-            <input type="text" class="form-control" id="value03" name="value03" maxlength="15"
-                   aria-describedby="value03" >
+            <label for="auxiliary03">Auxiliar 03 </label>
+            <input type="text" class="form-control" id="auxiliary03" name="auxiliary03" maxlength="100"
+                   aria-describedby="auxiliary03" value="{{$shipmenttruck->auxiliary03}}">
         </div>
     </div>
 
@@ -49,18 +49,19 @@
 <div class="row">
     <div class="col-lg-2 col-md-6 col-sm-12">
         <div class="form-group">
-            <label for="value04">Valor 04 </label>
-            <input type="text" class="form-control" id="value04" name="value04" maxlength="15"
-                   aria-describedby="value04" >
+            <label for="auxiliary04">Auxiliar 04 </label>
+            <input type="text" class="form-control" id="auxiliary04" name="auxiliary04" maxlength="100"
+                   aria-describedby="auxiliary04"  value="{{$shipmenttruck->auxiliary04}}">
         </div>
     </div>
     <div class="col-lg-2 col-md-6 col-sm-12">
         <div class="form-group">
-            <label for="value05">Valor 05 </label>
-            <input type="text" class="form-control" id="value05" name="value05" maxlength="15"
-                   aria-describedby="value05" >
+            <label for="auxiliary05">Auxiliar 05 </label>
+            <input type="text" class="form-control" id="auxiliary05" name="auxiliary05" maxlength="100"
+                   aria-describedby="auxiliary05" value="{{$shipmenttruck->auxiliary05}}">
         </div>
     </div>
 </div>
+
 
 
