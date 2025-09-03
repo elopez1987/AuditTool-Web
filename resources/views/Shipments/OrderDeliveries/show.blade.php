@@ -672,19 +672,19 @@
 
                         {{--                   Conteo de bridgestone--}}
                         <div class="tab-pane " id="view02" role="tabpanel">
-                            <div class="row mt-2">
+                            <hr class="m-t-1">
+                            <div class="row mt-3">
                                 <div class="col-lg-12">
                                     <a href="{{url('printformatcountbridgestone/' . $orderdelivery->id)}}"
                                        target="_blank">
-                                        <button type="button"
-                                                class="btn waves-effect waves-light btn-outline-info btn-md"
-                                                style="padding-right: 3px;">
+                                        <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md" style="padding-right: 3px;">
                                             <img src="{{asset('/ico/papeleta.png')}}" alt="" class="img-16">
-                                            Imprimir Conteo Anden
+                                            Imprimir Conteo Operaciones
                                         </button>
                                     </a>
                                 </div>
                             </div>
+                            <hr class="m-t-1">
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="row">
@@ -802,7 +802,6 @@
                                                                                 $cantidad = $value;
                                                                             }
                                                                         }
-
                                                                     @endphp
                                                                     <td>Rack-{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</td>
                                                                     <td>{{ $codigo }}</td>
