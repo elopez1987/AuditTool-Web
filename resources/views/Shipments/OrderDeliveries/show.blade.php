@@ -682,6 +682,15 @@
                                             Imprimir Conteo Operaciones
                                         </button>
                                     </a>
+                                    <a href="{{url('printformatcountbridgestonevig/' . $orderdelivery->id)}}"
+                                       target="_blank">
+                                        <button type="button"
+                                                class="btn waves-effect waves-light btn-outline-info btn-md"
+                                                style="padding-right: 3px;">
+                                            <img src="{{asset('/ico/papeleta.png')}}" alt="" class="img-16">
+                                            Imprimir Conteo Vigilancia
+                                        </button>
+                                    </a>
                                 </div>
                             </div>
                             <hr class="m-t-1">

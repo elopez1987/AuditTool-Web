@@ -11,7 +11,6 @@
             padding: 0;
             border: 0;
             width: 1050px;
-            /*width: 820px;*/
             height: 12px;
         }
 
@@ -81,7 +80,7 @@
                         <th
                             style="height:15px;border-top: 0;border-left: 0;border-right: 0;
                         align-content: center;text-align: center;width: 100%;padding: 0;border-bottom: 0;font-size: 18px;">
-                            BRIDGESTONE DE MEXICO S.A DE C.V
+                            Conteo de Embarques de Supervisor
                         </th>
                         <br>
                     </table>
@@ -118,7 +117,7 @@
                     @if(!empty($conteos))
                         @foreach($conteos as $conteo)
                             <table
-                                style="width: 20%;border: 0;border-collapse: collapse;border-spacing: 0;margin-top: 10px;padding-left: 15px "
+                                style="width: 20%;border: 0;border-collapse: collapse;border-spacing: 0;margin-top: 10px;padding-left: 15px;margin-bottom: 80px "
                                 class="table-bordered">
                                 <thead>
                                 <th style="font-size: 10px;background-color: black;color: white">Lado Izquierdo</th>

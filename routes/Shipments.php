@@ -89,6 +89,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('loadevidenceorder/{id}/upload', [EvidenceOrderDeliveryController::class, 'loadevidenceorder'])->name('loadevidenceorder');
 //    Imprimir formato de conteo de anden de bridgestone
     Route::get('printformatcountbridgestone/{id}',[ImprimirConteoAndenController::class,'index'])->name('printformatcountbridgestone');;
+//    Imprimir conteo de vigilante
+    Route::get('printformatcountbridgestonevig/{id}', [ImprimirConteoAndenController::class, 'printformatcountbridgestonevig'])->name('printformatcountbridgestonevig');;
 //    Imprimir formato de conteo APT Bridgestone
     Route::get('printformatcountaptbridgestone/{id}',[ImprimirConteoAndenController::class,'printformatcountaptbridgestone'])->name('printformatcountaptbridgestone');;
 
