@@ -10,6 +10,8 @@ use App\Models\Yard\StorageLocation;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 
 /**
@@ -17,6 +19,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class ShipmentHeader extends Model
 {
+    use LogsActivity;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
+    
+
     protected $table = 'shipmentheader';
     protected $dateFormat = 'Y-m-d H:i:s';
 

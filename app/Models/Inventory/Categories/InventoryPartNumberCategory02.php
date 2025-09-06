@@ -57,7 +57,7 @@ class InventoryPartNumberCategory02 extends Model
             ->whereIn('centerid', $centers);
     }
 
-    public static function category02ActiveToSelect()
+    public function category02ActiveToSelect()
     {
         $centers = SecurityAccessWarehouse::Centers();
         $warehouses = SecurityAccessWarehouse::Warehouses();

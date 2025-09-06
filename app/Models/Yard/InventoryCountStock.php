@@ -6,9 +6,17 @@ use App\Models\Security\Users\SecurityAccessWarehouse;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class InventoryCountStock extends Model
 {
+    use LogsActivity;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
     protected $table = 'inventorycountstock';
     protected $primaryKey = 'id';
@@ -66,11 +74,6 @@ class InventoryCountStock extends Model
         ]);
     }
 
-    static function getTotalCount($countid)
-    {
-        return InventoryCountStock::controlAccessUser()->where('countid', $countid)
-            ->where('isupdate', '=', 'Y')->count();
-    }
 
     static function searchForFolioNumber($id, $inventory)
     {

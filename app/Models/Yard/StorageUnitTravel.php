@@ -3,9 +3,18 @@
 namespace App\Models\Yard;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class StorageUnitTravel extends Model
 {
+    use LogsActivity;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
+
     protected $table = 'storageunittravels';
     protected $primaryKey = 'id';
     public $timestamps = false;

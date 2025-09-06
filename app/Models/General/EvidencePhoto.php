@@ -8,10 +8,20 @@ use File;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Storage;
 
 class EvidencePhoto extends Model
 {
+
+    use LogsActivity;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
+
     protected $table = 'storageevidencephotos';
 
     protected $dateFormat = 'Y-m-d H:i:s';
@@ -63,7 +73,7 @@ class EvidencePhoto extends Model
             return $path;
         }
     }
-    
+
     public static function registerEvidence(string $modeltype, $folioid, string $pathdb, string $typeFile, $shipment)
     {
         EvidencePhoto::create([

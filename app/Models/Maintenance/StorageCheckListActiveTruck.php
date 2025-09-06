@@ -7,9 +7,19 @@ use App\User;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class StorageCheckListActiveTruck extends Model
 {
+
+    use LogsActivity;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
+    
     public $timestamps = false;
     protected $table = 'storagechecklistactivetruck';
     protected $primaryKey = 'id';

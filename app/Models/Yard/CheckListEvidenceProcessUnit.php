@@ -5,9 +5,18 @@ namespace App\Models\Yard;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class CheckListEvidenceProcessUnit extends Model
 {
+    use LogsActivity;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
+
 //    Tabla para guardar las fotos de proceso de carga o descarga mediante check list
     public $timestamps = true;
     protected $table = 'storagecheckListevidenceprocessunit';

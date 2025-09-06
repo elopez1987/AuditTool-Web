@@ -10,9 +10,17 @@ use App\Models\Shipments\OrderDeliverie;
 use App\Models\Yard\StorageLocation;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class StoragechecklocationbridgVig extends Model
 {
+    use LogsActivity;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
     public $timestamps = false;
 
@@ -74,14 +82,13 @@ class StoragechecklocationbridgVig extends Model
 
     public function location()
     {
-        return $this->belongsTo(StorageLocation::class, 'locationid','id');
+        return $this->belongsTo(StorageLocation::class, 'locationid', 'id');
     }
 
     public function turn()
     {
-        return $this->belongsTo(StorageTurn::class, 'turnid','id');
+        return $this->belongsTo(StorageTurn::class, 'turnid', 'id');
     }
-
 
 
 }

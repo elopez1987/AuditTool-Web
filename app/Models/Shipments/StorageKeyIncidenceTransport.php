@@ -7,10 +7,19 @@ use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\User;
 use DB;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 
 class StorageKeyIncidenceTransport extends Model
 {
+    use LogsActivity;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
+
     public $timestamps = false;
     protected $table = 'storageincidencekeytransport';
 

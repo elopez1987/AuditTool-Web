@@ -14,7 +14,6 @@ use Auth;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Http\Request;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -89,9 +88,6 @@ class ReceiptUnit extends Model
     ];
 
     protected $casts = [
-//        'entrydate' => 'datetime:d/m/Y H:i',
-//        'deliverdate' => 'datetime:d/m/Y H:i',
-//        'keydate' => 'datetime:d/m/Y H:i'
     ];
 
     protected static function boot()
@@ -383,8 +379,7 @@ class ReceiptUnit extends Model
 //------------------------------------------------------ Funciones auxiliares ---------------------------------------------
     static function updateUnitForRefuse($folio)
     {
-        $unit = ReceiptUnit::controlAccessUser()->where('id', '=', $folio)
-            ->whereNotIn('statusid', ['TR'])->first();
+        $unit = ReceiptUnit::controlAccessUser()->where('id', '=', $folio)->whereNotIn('statusid', ['TR'])->first();
         $unit->autorizaoutputdate = now();
         $unit->statusid = 'OU';
         $unit->shipmentid = '';
@@ -394,39 +389,7 @@ class ReceiptUnit extends Model
         return $unit;
     }
 
-
-
-
-
 //------------------------------------------------------ Funciones auxiliares ---------------------------------------------
-
-
-
-    static function updateUnitForAssingTruck($unit)
-    {
-        $unit->operatorname = "";
-        $unit->phone = "";
-        $unit->drivernumber = "";
-        $unit->trucknumber = "";
-        $unit->auxiliary01 = "";
-        $unit->save();
-    }
-
-    static function updateStatusForFinishProcess($folionumber)
-    {
-        $folionumber->finishdate = now();
-        $folionumber->statusid = 'FI';
-        $folionumber->unitstatusid = $folionumber->razonstatusid == 1 ? 2 : 1;
-        $folionumber->save();
-    }
-
-    public function updateLocation($receiptunit, $zoneid, $locationid)
-    {
-        $receiptunit->zoneid = $zoneid;
-        $receiptunit->locationid = $locationid;
-        $receiptunit->save();
-    }
-
     static function moveUnitToLostForInventory($receiptunit, $location)
     {
         $receiptunit->zoneid = $location->value02;
@@ -442,17 +405,6 @@ class ReceiptUnit extends Model
         $receiptunit->save();
     }
 
-    static function closeReceiptUnit(ReceiptUnit $receiptUnit, Request $request)
-    {
-        $shipment = $request['shipment'] ?? 0;
-        $seal = $request['seal'] ?? 0;
-        $receiptUnit->containerseal = $seal;
-        $receiptUnit->shipmentid = $shipment;
-        $receiptUnit->outputdate = Carbon::now();
-        $receiptUnit->updateuser = Auth::user()->id;
-        $receiptUnit->statusid = 'TR';
-        $receiptUnit->save();
-    }
 
 
 }

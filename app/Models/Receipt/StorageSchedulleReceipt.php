@@ -9,9 +9,19 @@ use App\Models\Configuration\Warehouses\SystemWarehouse;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class StorageSchedulleReceipt extends Model
 {
+
+    use LogsActivity;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
+
     protected $table = 'storageschedullereceipt';
 
     protected $fillable = [
@@ -31,10 +41,6 @@ class StorageSchedulleReceipt extends Model
         'statusid',
     ];
 
-    protected $casts = [
-//        'workday' => 'date',
-    ];
-
     protected $attributes = [
         'statusid' => 'DPR-01',
         'schemaid' => 'DPR',
@@ -45,7 +51,6 @@ class StorageSchedulleReceipt extends Model
         parent::boot();
         if (!app()->runningInConsole()) {
             self::creating(function (StorageSchedulleReceipt $model) {
-//                $model->userid = \Auth::id();
             });
         }
     }

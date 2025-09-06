@@ -33,16 +33,6 @@ class StorageSafetyTourDetail extends Model
         'schematype' => 'CTR',  // Esquema de categorias de registro
     ];
 
-//    protected static function boot()
-//    {
-//        parent::boot();
-//        if (!app()->runningInConsole()) {
-//            self::creating(function (StorageSafetyTourDetail $model) {
-//                $model->userid = Auth::id();
-//            });
-//        }
-//    }
-
 
     public static function controlAccessUser()
     {

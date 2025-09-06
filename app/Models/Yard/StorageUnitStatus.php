@@ -6,9 +6,19 @@ use App\Models\Configuration\Schemas\SystemStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class StorageUnitStatus extends Model
 {
+    use LogsActivity;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
+
+
     protected $table = 'storageunitstatus';
     protected $dateFormat = 'Y-m-d H:i:s';
     use SoftDeletes;
