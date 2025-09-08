@@ -10,7 +10,7 @@ class CreateWhatsApp extends FormRequest
     {
         return [
             'whatsappid' => 'required|string|max:15|unique:systemwhatsapps,whatsappid',
-            'description' => 'required|string|max:50',
+            'description' => 'required|string|max:100',
         ];
     }
 
