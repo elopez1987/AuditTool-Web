@@ -29,7 +29,7 @@ class SendEmailForArriveUnitToReceipt extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Envia el correo de llegada de proveedor en el registro de unidad';
 
     /**
      * Create a new command instance.
@@ -41,11 +41,6 @@ class SendEmailForArriveUnitToReceipt extends Command
         parent::__construct();
     }
 
-    /**
-     * Execute the console command.
-     *
-     * @return int
-     */
     public function handle()
     {
         $taskMails = StorageTaskMail::where('statusid', '=', 'E')->where('mailid', 'MAIL-RECYMS')->get();

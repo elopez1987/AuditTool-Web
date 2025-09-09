@@ -8,6 +8,7 @@ use App\Models\Configuration\WhatsApp\SystemDetailWhatsApp;
 use App\Models\Receipt\ReceiptProvider;
 use App\Models\Yard\LogMessageWhatsApp;
 use App\Models\Yard\ReceiptUnit;
+use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
@@ -38,11 +39,6 @@ class SendMessageForReceiptEntry extends Command
         parent::__construct();
     }
 
-    /**
-     * Execute the console command.
-     *
-     * @return int
-     */
     public function handle()
     {
         $client = new Client();
@@ -64,7 +60,7 @@ class SendMessageForReceiptEntry extends Command
                                     $response = $client->request('POST', $url, ['json' => $data, 'headers' => ['Content-Type' => 'application/json']]);
                                     $respJson = $response->getBody();
                                     $this->createLog(json_decode($respJson), $contact, $task);
-                                } catch (\Exception $e) {
+                                } catch (Exception $e) {
                                     Log::error($e->getMessage());
                                     Log::error('Error al enviar mensaje de ingreso de proveedor a CeDis.');
                                 }

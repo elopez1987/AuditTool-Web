@@ -156,6 +156,7 @@
     <script src="{{asset('theme/assets/libs/magnific-popup/dist/jquery.magnific-popup.min.js')}}"></script>
     <script src="{{asset('theme/assets/libs/magnific-popup/meg.init.js')}}"></script>
     @include('layouts.Partials.DataTable')
+    
     <script>
         const locations = @json($locations);
         function initMap() {

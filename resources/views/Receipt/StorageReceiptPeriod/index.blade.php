@@ -76,7 +76,7 @@
     @include('Receipt.StorageReceiptPeriod.partials.table')
     <script>
         function reloadtable() {
-            $('#table-receiptperiodss').DataTable().ajax.reload();
+            $('#table-receiptperiods').DataTable().ajax.reload();
         }
     </script>
     <script>

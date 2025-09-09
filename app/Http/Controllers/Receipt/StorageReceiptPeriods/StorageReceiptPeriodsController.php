@@ -7,7 +7,10 @@ use App\Http\Requests\Web\Receipt\StorageReceiptPeriods\StorageReceiptPeriodRequ
 use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Receipt\StorageReceiptPeriods\StorageReceiptPeriod;
 use App\Models\Receipt\StorageSchedulleReceipt;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Log;
 
 
 class StorageReceiptPeriodsController extends BaseController
@@ -45,40 +48,52 @@ class StorageReceiptPeriodsController extends BaseController
                 return $this->errorResponse('Ya existe un periodo activo para la fecha seleccionada');
             }
         }
-        $storageReceiptPeriod = new StorageReceiptPeriod($request->validated());
-        $storageReceiptPeriod->save();
-        $bloks = SystemStatus::where('auxiliary02', $storageReceiptPeriod->centerid)
-            ->where('auxiliary03', $storageReceiptPeriod->warehouseid)
+        $bloks = SystemStatus::where('centerid', $request['centerid'])
+            ->where('warehouseid', $request['warehouseid'])
             ->where('schemaid', 'BHR')->select('statusid', 'name')->get();
-        foreach ($dates as $date) {
-            foreach ($bloks as $bloq) {
-                StorageSchedulleReceipt::create(
-                    [
-                        'centerid' => $storageReceiptPeriod->centerid,
-                        'warehouseid' => $storageReceiptPeriod->warehouseid,
-                        'periodid' => $storageReceiptPeriod->id,
-                        'workday' => $date,
-                        'secuence' => $bloq->statusid,
-                    ]
-                );
-            }
+        if ($bloks->isEmpty()) {
+            return $this->errorResponse('No existen bloques de horario para el almacen y centro seleccionado');
         }
-        return $this->successResponse('storagereceiptperiods.index');
+
+        DB::beginTransaction();
+        try {
+            $storageReceiptPeriod = new StorageReceiptPeriod($request->validated());
+            $storageReceiptPeriod->save();
+            foreach ($dates as $date) {
+                foreach ($bloks as $bloq) {
+                    StorageSchedulleReceipt::create(
+                        [
+                            'centerid' => $storageReceiptPeriod->centerid,
+                            'warehouseid' => $storageReceiptPeriod->warehouseid,
+                            'periodid' => $storageReceiptPeriod->id,
+                            'workday' => $date,
+                            'secuence' => $bloq->statusid,
+                        ]
+                    );
+                }
+            }
+            DB::commit();
+            return $this->successResponse('storagereceiptperiods.index');
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+            DB::rollback();
+            return $this->errorResponse('No se pudo crear el periodo de recibo, favor de intentar nuevamente');
+        }
+
+
     }
 
-    public function show(StorageReceiptPeriod $storageReceiptPeriod)
+    public function show($id)
     {
         $this->authorize('storagereceiptperiods.show');
-
+        $status = $this->getStatusForSchema('EPR');
+        $periods = StorageReceiptPeriod::controlAccessUser()->where('id', $id)->first();
+        $detalle = StorageSchedulleReceipt::controlAccessUser()
+            ->with(['center', 'warehouse', 'status', 'statussecuence', 'receipt', 'period'])
+            ->where('periodid', $id)->get();
+        return view('Receipt.StorageReceiptPeriod.show', compact('periods', 'status', 'detalle'));
     }
 
-
-    public function destroy(StorageReceiptPeriod $storageReceiptPeriod)
-    {
-        $this->authorize('storagereceiptperiods.destroy');
-
-
-    }
 
     public function activeperiod($id)
     {
@@ -92,11 +107,10 @@ class StorageReceiptPeriodsController extends BaseController
                     $periodActive->save();
                 }
                 $period->statusid = 'EPR-02';
-                $period->save();
             } else {
                 $period->statusid = 'EPR-01';
-                $period->save();
-            };
+            }
+            $period->save();
         }
         return $this->redirectBackSuccessMessage('Periodo actualizado con exito');
     }

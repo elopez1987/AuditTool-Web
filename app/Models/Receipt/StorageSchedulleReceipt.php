@@ -6,6 +6,7 @@ use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Configuration\Turns\StorageTurn;
 use App\Models\Configuration\Warehouses\SystemWarehouse;
+use App\Models\Receipt\StorageReceiptPeriods\StorageReceiptPeriod;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -84,15 +85,22 @@ class StorageSchedulleReceipt extends Model
         return $this->belongsTo(SystemStatus::class, 'statusid');
     }
 
-    public function secuence(): BelongsTo
+    public function statussecuence(): BelongsTo
     {
-        return $this->belongsTo(SystemStatus::class, 'secuence');
+        return $this->belongsTo(SystemStatus::class, 'secuence', 'statusid');
     }
 
     public function receipt(): BelongsTo
     {
-        return $this->belongsTo(ReceiptAsn::class, 'receiptid');
+        return $this->belongsTo(ReceiptAsn::class, 'receiptid', 'id');
     }
+
+    public function period(): BelongsTo
+    {
+        return $this->belongsTo(StorageReceiptPeriod::class, 'periodid');
+
+    }
+
 
 //    Filtros
     public function scopeWorkday($query, $workday)
@@ -108,7 +116,6 @@ class StorageSchedulleReceipt extends Model
             $query->where('storageschedullereceipt.shipmentid', '=', $shipment);
         }
     }
-
 
 
 }
