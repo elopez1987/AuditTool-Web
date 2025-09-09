@@ -17,14 +17,12 @@ class StorageLocationController extends BaseController
     {
         $this->authorize('storagelocations.index');
         $status = $this->getStatusSTS();
-        $zones = $this->getActiveZonesForCenter();
         $locations = StorageLocation::controlAccessUser()
             ->whereNotIn('storagelocations.name', ['DUMMY'])
             ->select(['zoneid', DB::raw('COUNT(id) as total_locations')])
             ->groupBy('zoneid')->get();
         $warehouses = $this->getWarehouseForSelect();
-        return view('Yards.StorageLocations.index',
-            compact('status', 'zones', 'locations','warehouses'));
+        return view('Yards.StorageLocations.index', compact('status', 'locations', 'warehouses'));
     }
 
     public function getDataLocations(Request $request)
@@ -33,6 +31,7 @@ class StorageLocationController extends BaseController
             ->with(['zone:id,name,zoneid', 'center:centerid,name,description', 'status:statusid,name,auxiliary01','warehouse:warehouseid,name'])
             ->Name($request->get('name'))
             ->Zone($request->get('zoneid'))
+            ->Warehouse($request->get('warehouseid'))
             ->Status($request->get('statusid'));
         return DataTables::of($data)
             ->addColumn('btn', 'Yards.StorageLocations.partials.buttons')

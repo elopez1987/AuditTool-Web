@@ -45,8 +45,7 @@ class SelectDynamicController extends Controller
         if ($request->ajax()) {
             $warehouses = SystemWarehouse::where('centerid', $centerid)
                 ->whereStatusid('E')
-                ->select(['warehouseid', 'name'])->get()->toArray();
-            array_unshift($warehouses, ['warehouseid' => '', 'name' => 'Seleccione una opción']);
+                ->select(['warehouseid', 'name'])->get();
         }
         return response()->json($warehouses);
     }
@@ -57,7 +56,7 @@ class SelectDynamicController extends Controller
             $zones = StorageZone::controlAccessUser()
                 ->whereStatusid('E')
                 ->where('centerid', $centerid)
-                ->select(['id', 'name'])->get()->toArray();
+                ->select(['id', 'name'])->get();
         }
         return response()->json($zones);
     }
@@ -80,8 +79,7 @@ class SelectDynamicController extends Controller
             $carriers = ShipmentCarrier::controlAccessUser()
                 ->whereStatusid('E')
                 ->where('centerid', $centerid)
-                ->select(['id', 'name'])->get()->toArray();
-            array_unshift($carriers, ['id' => '', 'name' => 'Seleccione una opción']);
+                ->select(['id', 'name'])->get();
         }
         return response()->json($carriers);
     }
@@ -91,7 +89,7 @@ class SelectDynamicController extends Controller
         if ($request->ajax()) {
             $statusunit = StorageUnitStatus::where('auxiliary01', $razonstatusid)
                 ->whereStatusid('E')
-                ->select(['id', 'name'])->get()->toArray();
+                ->select(['id', 'name'])->get();
         }
         return response()->json($statusunit);
     }
@@ -100,7 +98,7 @@ class SelectDynamicController extends Controller
     {
         if ($request->ajax()) {
             $statusunit = StorageUnitStatus::select(['id', 'name'])
-                ->whereStatusid('E')->get()->toArray();
+                ->whereStatusid('E')->get();
         }
         return response()->json($statusunit);
     }
@@ -111,8 +109,7 @@ class SelectDynamicController extends Controller
             $trucks = ShipmentTruck::controlAccessUser()
                 ->whereStatusid('E')
                 ->where('centerid', $centerid)
-                ->select(['id', 'name'])->get()->toArray();
-            array_unshift($trucks, ['id' => '', 'name' => 'Seleccione una opción']);
+                ->select(['id', 'name'])->get();
         }
         return response()->json($trucks);
     }
@@ -121,8 +118,7 @@ class SelectDynamicController extends Controller
     {
         if ($request->ajax()) {
             $rasons = StorageReason::whereType('IN')
-                ->select(['id', 'name'])->get()->toArray();
-            array_unshift($rasons, ['id' => '', 'name' => 'Seleccione una opción']);
+                ->select(['id', 'name'])->get();
         }
         return response()->json($rasons);
     }
@@ -131,8 +127,7 @@ class SelectDynamicController extends Controller
     {
         if ($request->ajax()) {
             $unitsstatus = StorageUnitStatus::select(['id', 'name'])
-                ->whereStatusid('E')->get()->toArray();
-            array_unshift($unitsstatus, ['id' => '', 'name' => 'Seleccione una opción']);
+                ->whereStatusid('E')->get();
         }
         return response()->json($unitsstatus);
     }
@@ -151,8 +146,7 @@ class SelectDynamicController extends Controller
                 ->where('zoneid', $zoneid)
                 ->where('statusid', 'E')
                 ->whereNotIn('name', ['DUMMY'])
-                ->select(['id', 'name'])->get()->toArray();
-            array_unshift($locations, ['id' => '', 'name' => 'Seleccione una opción']);
+                ->select(['id', 'name'])->get();
         }
         return response()->json($locations);
     }
@@ -164,8 +158,7 @@ class SelectDynamicController extends Controller
                 ->where('zoneid', $zoneid)
                 ->whereNotIn('statusid', ['B'])
                 ->whereNotIn('name', ['DUMMY'])
-                ->select(['id', 'name'])->get()->toArray();
-            array_unshift($locations, ['id' => '', 'name' => 'Seleccione una opción']);
+                ->select(['id', 'name'])->get();
         }
         return response()->json($locations);
     }

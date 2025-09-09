@@ -44,9 +44,6 @@
                                     <label for="zoneid">Zonas<span style="color: red">*</span></label>
                                     <select name="zoneid" id='zoneid'  class="form-control select2">
                                         <option value="" selected>Seleccione una opción</option>
-                                        @foreach($zones as $model)
-                                            <option value="{{$model->id}}"> {{$model->name}} </option>
-                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -149,6 +146,17 @@
     <script>
         $("#zoneid,#statusid,#warehouseid").change(function () {
             reloadtable();
+        });
+    </script>
+
+    <script>
+        $("#warehouseid").change(event => {
+            $.get(`./getZoneForWarehouse/${event.target.value}`, function (res) {
+                $("#zoneid").empty();
+                res.forEach(element => {
+                    $("#zoneid").append(`<option value=${element.id}> ${element.name} </option>`);
+                });
+            });
         });
     </script>
 @endsection
