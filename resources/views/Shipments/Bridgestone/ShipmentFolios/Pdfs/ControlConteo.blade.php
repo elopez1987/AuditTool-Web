@@ -150,26 +150,26 @@
                         <tbody>
                         @foreach($detalleFolio as $controlCount)
                             <tr>
-                                <th></th>
+                                <th>{{$controlCount->order ? $controlCount->order->check->startdate : ''}}</th>
                                 <th>{{$controlCount->order ? $controlCount->order->folio->tracto->operatorname : ''}}</th>
                                 <th>{{$controlCount->order ? $controlCount->order->folio->carrier->name : ''}}</th>
                                 <th>{{$controlCount->order ? $controlCount->order->folio->containerseal : ''}}</th>
                                 <th>{{$controlCount->order ? $controlCount->order->folio->boxnumber : ''}}</th>
                                 <th>{{$controlCount->location ? $controlCount->location->name : ''}}</th>
-                                <th></th>
+                                <th>{{$controlCount->order ? $controlCount->order->check->finishdate : ''}}</th>
                                 <th>{{$controlCount->order ? $controlCount->order->shipmentid : ''}}</th>
                                 <th>{{$controlCount->quantity}}</th>
                                 <th>
                                     <img src="{{asset('storage/' . $controlCount->keysupervisor )}}" alt="Firma"
-                                         style="height: 70px;max-height: 70px"/>
+                                         style="height: 40px;max-height: 40px"/>
                                 </th>
                                 <th>
                                     <img src="{{asset('storage/' . $controlCount->keyoperator )}}" alt="Firma"
-                                         style="height: 70px;max-height: 70px"/>
+                                         style="height: 40px;max-height: 40px"/>
                                 </th>
                                 <th>
                                     <img src="{{asset('storage/' . $controlCount->keyguard )}}" alt="Firma"
-                                         style="height: 70px;max-height: 70px"/>
+                                         style="height: 40px;max-height: 40px"/>
                                 </th>
                             </tr>
                         @endforeach
@@ -180,9 +180,15 @@
                     <table width="100%" border="0" cellspacing="0" cellpadding="5" style="margin-top: 100px"
                            class="border-none">
                         <tr>
+                            <td class="border-none"></td>
+                            <td class="border-none">{{$folio->namesupervisor}} <img
+                                    src="{{asset('storage/' . $folio->keysupervisor )}}" alt="Firma"
+                                    style="height: 70px;max-height: 70px"/></td>
+                            <td align="right" class="border-none"></td>
+                        </tr>
+                        <tr>
                             <td class="border-none">Clave: SEG-CA-013PC</td>
-                            <td class="border-none" style="border-top: 1px solid">Nombre y Firma del lider.
-                            </td>
+                            <td class="border-none" style="border-top: 1px solid">Nombre y Firma del lider.</td>
                             <td align="right" class="border-none">Bridgestone de México SA. de C.V</td>
                         </tr>
                     </table>
