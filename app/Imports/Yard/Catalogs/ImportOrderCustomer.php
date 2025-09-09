@@ -3,7 +3,7 @@
 namespace App\Imports\Yard\Catalogs;
 
 use App\Models\Yard\Customer\OrderCustomer;
-use App\Traits\General\Responser;
+use App\Traits\Web\General\Responser;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;

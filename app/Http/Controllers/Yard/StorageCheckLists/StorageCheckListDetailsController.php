@@ -13,8 +13,7 @@ class StorageCheckListDetailsController extends BaseController
     {
         $details = StorageCheckListDetail::whereChecklistid($storagechecklist->id)->get();
         $status = $this->getStatusSTS();
-        return view('Yards.StorageCheckListDetails.create',
-            compact('storagechecklist', 'details', 'status'));
+        return view('Yards.StorageCheckListDetails.create', compact('storagechecklist', 'details', 'status'));
     }
 
     public function storedetail(Request $request, StorageCheckList $storagechecklist)

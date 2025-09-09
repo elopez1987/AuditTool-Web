@@ -108,17 +108,5 @@ class GenerateAccessWarehouse extends Model
     }
 
 
-    static function getAccessWarehouse($code)
-    {
-        return GenerateAccessWarehouse::where('storageaccesswarehouse.auxiliary01', '=', $code)
-            ->leftJoin('storageoperators as s2', 'storageaccesswarehouse.operatorid', '=', 's2.id')
-            ->leftJoin('storagelabeltrucks as s3', 'storageaccesswarehouse.boxid', '=', 's3.id')
-            ->leftJoin('shipmentcarriers as s5', 's3.carrierid', '=', 's5.id')
-            ->leftJoin('storagelabeltrucks as s4', 'storageaccesswarehouse.truckid', '=', 's4.id')
-            ->select(['storageaccesswarehouse.id as codigokey', 'storageaccesswarehouse.statusid as statuskey', 's2.barcode as barcodeoperator',
-                's2.name as operatorname', 's2.phone', 's2.drivernumber', 's3.carrierid', 's3.truckid', 's3.barcode as barcodebox',
-                's3.boxnumber as boxnumberbox', 's4.barcode as barcodetruck', 's4.boxnumber as boxnumbertruck', 's5.name as carriername'
-            ])->first();
-    }
 
 }

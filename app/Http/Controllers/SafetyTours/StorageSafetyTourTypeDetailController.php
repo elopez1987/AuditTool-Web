@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\SafetyTours;
 
 use App\Http\Controllers\BaseController;
+use App\Models\SafetyTours\StorageSafetyTourType;
 use App\Models\SafetyTours\StorageSafetyTourTypeDetail;
-use App\Models\StorageSafetyTourType;
 use Illuminate\Http\Request;
 
 class StorageSafetyTourTypeDetailController extends BaseController

@@ -60,24 +60,7 @@ class StorageZone extends Model
             ->whereIn('storagezones.warehouseid', $warehouses);
     }
 
-    public function scopeName($query, $name)
-    {
-        if (trim($name) != "") {
-            $query->where('storagezones.name', 'like', "%$name%");
-        }
-    }
-
-    public function scopeWarehouse($query, $warehouseid)
-    {
-        if (trim($warehouseid) != "") {
-            $query->where('storagezones.warehouseid', '=', $warehouseid);
-        }
-    }
-
-
-
-
-//    --Relaciones  entre modelos
+//    --Relaciones entre modelos
     public function center()
     {
         return $this->belongsTo(SystemCenterDistribution::class, 'centerid');
@@ -92,5 +75,19 @@ class StorageZone extends Model
         return $this->belongsTo(SystemWarehouse::class, 'warehouseid', 'warehouseid');
     }
 
+//    --Filtros para modelos
+    public function scopeName($query, $name)
+    {
+        if (trim($name) != "") {
+            $query->where('storagezones.name', 'like', "%$name%");
+        }
+    }
+
+    public function scopeWarehouse($query, $warehouseid)
+    {
+        if (trim($warehouseid) != "") {
+            $query->where('storagezones.warehouseid', '=', $warehouseid);
+        }
+    }
 
 }

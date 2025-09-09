@@ -6,12 +6,13 @@ use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Security\Modules\ModelHasRole;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\Models\Security\Users\SecurityUsersSession;
+use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Laravel\Passport\HasApiTokens;
@@ -25,11 +26,12 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 {
     use HasApiTokens;
     use Notifiable;
-    use HasFactory;
     use LogsActivity;
     use HasPermissions;
     use HasRoles;
     use SoftDeletes;
+    use Authenticatable;
+    use Authorizable;
 
 
     public function getActivitylogOptions(): LogOptions
@@ -156,76 +158,6 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
             $query->where('users.statusid', '=', 'E');
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-    //
-    public function getAuthIdentifierName()
-    {
-        // TODO: Implement getAuthIdentifierName() method.
-    }
-
-    public function getAuthIdentifier()
-    {
-        // TODO: Implement getAuthIdentifier() method.
-    }
-
-    public function getAuthPassword()
-    {
-        // TODO: Implement getAuthPassword() method.
-    }
-
-    public function getRememberToken()
-    {
-        // TODO: Implement getRememberToken() method.
-    }
-
-    public function setRememberToken($value)
-    {
-        // TODO: Implement setRememberToken() method.
-    }
-
-    public function getRememberTokenName()
-    {
-        // TODO: Implement getRememberTokenName() method.
-    }
-
-    public function can($abilities, $arguments = [])
-    {
-        // TODO: Implement can() method.
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

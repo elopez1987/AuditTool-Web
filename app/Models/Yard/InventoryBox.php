@@ -8,9 +8,17 @@ use App\Models\Security\Users\SecurityAccessWarehouse;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class InventoryBox extends Model
 {
+    use LogsActivity;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
     protected $table = 'inventoryboxstock';
     public $timestamps = false;
@@ -67,17 +75,6 @@ class InventoryBox extends Model
         return InventoryBox::whereIn('inventoryboxstock.centerid', $centers);
     }
 
-
-    static function createNewInventory($request, $total)
-    {
-        return InventoryBox::create([
-            'centerid' => $request['centerid'],
-            'statustypeid' => $request['statustypeid'],
-            'description' => $request['description'],
-            'quantitybox' => $total,
-        ]);
-    }
-
     public function scopeForStatus($query, $statusid)
     {
         if (trim($statusid) != '') {
@@ -92,6 +89,16 @@ class InventoryBox extends Model
         if (trim($folio) != '') {
             $query->where('inventoryboxstock.id', $folio);
         }
+    }
+
+    static function createNewInventory($request, $total)
+    {
+        return InventoryBox::create([
+            'centerid' => $request['centerid'],
+            'statustypeid' => $request['statustypeid'],
+            'description' => $request['description'],
+            'quantitybox' => $total,
+        ]);
     }
 
 }

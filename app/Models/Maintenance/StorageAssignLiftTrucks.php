@@ -8,9 +8,18 @@ use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\User;
 use Auth;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class StorageAssignLiftTrucks extends Model
 {
+    use LogsActivity;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
+
     protected $table = 'storageassignlifttrucks';
 
     protected $fillable = [

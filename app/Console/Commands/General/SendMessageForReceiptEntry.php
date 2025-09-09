@@ -8,6 +8,7 @@ use App\Models\Configuration\WhatsApp\SystemDetailWhatsApp;
 use App\Models\Receipt\ReceiptProvider;
 use App\Models\Yard\LogMessageWhatsApp;
 use App\Models\Yard\ReceiptUnit;
+use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
@@ -38,11 +39,6 @@ class SendMessageForReceiptEntry extends Command
         parent::__construct();
     }
 
-    /**
-     * Execute the console command.
-     *
-     * @return int
-     */
     public function handle()
     {
         $client = new Client();
@@ -64,7 +60,7 @@ class SendMessageForReceiptEntry extends Command
                                     $response = $client->request('POST', $url, ['json' => $data, 'headers' => ['Content-Type' => 'application/json']]);
                                     $respJson = $response->getBody();
                                     $this->createLog(json_decode($respJson), $contact, $task);
-                                } catch (\Exception $e) {
+                                } catch (Exception $e) {
                                     Log::error($e->getMessage());
                                     Log::error('Error al enviar mensaje de ingreso de proveedor a CeDis.');
                                 }
@@ -108,7 +104,7 @@ class SendMessageForReceiptEntry extends Command
             ->where('receiptunits.warehouseid', $task->warehouseid)->where('receiptunits.id', $task->modelid)
             ->select(['receiptunits.boxnumber', 'receiptunits.shipmentid','shipmentcarriers.name as carriername'])->first();
         return array(
-            "token" => "mheZM8xq46kdZv6tCCIyvrtj8vG7nyNx",
+            "token" => "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbnN0YW5jZUlkIjoiSEVJNTIzNDgyOTg2IiwidG9rZW4iOiJtaGVaTTh4cTQ2a2RadjZ0Q0NJeXZydGo4dkc3bnlOeCIsImlzcyI6IjFtc2cuaW8iLCJpYXQiOjE3NTU2MTU3NTZ9.PNJB7YjZbqerW-s-r8TOSTlPOS_6OddKHxVbwfsQ9GY",
             "namespace" => "3686dca6_3e5f_4dc5_a838_74a7716b881c",
             "template" => "arribodedescargaacedis",
             "language" => array(

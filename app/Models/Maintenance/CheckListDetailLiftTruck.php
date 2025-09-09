@@ -3,9 +3,18 @@
 namespace App\Models\Maintenance;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class CheckListDetailLiftTruck extends Model
 {
+    use LogsActivity;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
+
     protected $table = 'checklistlifttruckdetails';
     protected $primaryKey = 'id';
     public $timestamps = false;

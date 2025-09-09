@@ -11,12 +11,11 @@ use App\Models\Security\Users\AccessCarrier;
 use App\Models\Shipments\OrderDeliverie;
 use App\Models\Shipments\ShipmentPod\ShipmentPod;
 use App\Models\Shipments\StorageShipmentsPods;
-use App\Traits\EvidencePhotoTrait;
+use App\Traits\Web\General\EvidencePhotoTrait;
 use Auth;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Facades\DataTables;
 
 

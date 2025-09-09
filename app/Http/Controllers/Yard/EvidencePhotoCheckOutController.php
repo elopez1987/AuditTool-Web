@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Yard;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Web\Evidence\UploadImageRequest;
+use App\Http\Requests\Web\Shipments\Evidence\UploadImageRequest;
 use App\Models\General\EvidencePhoto;
 use App\Models\Yard\ReceiptUnit;
-use App\Traits\EvidencePhotoTrait;
+use App\Traits\Web\General\EvidencePhotoTrait;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 use Storage;
@@ -59,7 +59,7 @@ class EvidencePhotoCheckOutController extends Controller
 
 
 
-    
+
     public function downloadPhotoCheckOut()
     {
         return $this->downloadPhoto($id);

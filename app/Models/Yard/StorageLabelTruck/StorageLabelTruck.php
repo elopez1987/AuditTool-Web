@@ -61,9 +61,7 @@ class StorageLabelTruck extends Model
         $centers = SecurityAccessWarehouse::Centers();
         return StorageLabelTruck::whereIn('storagelabeltrucks.centerid', $centers);
     }
-
-
-
+    
 //    Relations with models
     public function center()
     {

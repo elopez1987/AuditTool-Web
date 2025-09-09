@@ -26,7 +26,8 @@
                                 </span> <span class="hidden-xs-down">Fotos</span></a></li>
                         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view04" role="tab"><span
                                     class="hidden-sm-up">
-                                <img src="{{asset('ico/notepad_bloc_notes_15549.png')}}" alt="" class="img-16 ml-2 mr-2">
+                                <img src="{{asset('ico/notepad_bloc_notes_15549.png')}}" alt=""
+                                     class="img-16 ml-2 mr-2">
                                 </span> <span class="hidden-xs-down">Comentarios</span></a></li>
                     </ul>
                     <!-- Tab panes -->
@@ -669,103 +670,374 @@
                             </div>
                         </div>
 
- {{--                   Conteo de bridgestone--}}
+                        {{--                   Conteo de bridgestone--}}
                         <div class="tab-pane " id="view02" role="tabpanel">
-                            @if(!empty($conteo))
-
-                                <div class="row mt-2">
-                                    <div class="col-lg-12">
-                                        <a href="{{url('printformatcountbridgestone/' . $orderdelivery->id)}}" target="_blank">
-                                            <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md" style="padding-right: 3px;">
-                                                <img src="{{asset('/ico/papeleta.png')}}" alt="" class="img-16">
-                                                Imprimir Conteo Anden
-                                            </button>
-                                        </a>
-
-                                        <a href="{{url('printformatcountaptbridgestone/' . $orderdelivery->id)}}" target="_blank">
-                                            <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md" style="padding-right: 3px;">
-                                                <img src="{{asset('/ico/papeleta.png')}}" alt="" class="img-16">
-                                                Imprimir Conteo APT
-                                            </button>
-                                        </a>
-                                    </div>
+                            <hr class="m-t-1">
+                            <div class="row mt-3">
+                                <div class="col-lg-12">
+                                    <a href="{{url('printformatcountbridgestone/' . $orderdelivery->id)}}"
+                                       target="_blank">
+                                        <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md" style="padding-right: 3px;">
+                                            <img src="{{asset('/ico/papeleta.png')}}" alt="" class="img-16">
+                                            Imprimir Conteo Operaciones
+                                        </button>
+                                    </a>
+                                    <a href="{{url('printformatcountbridgestonevig/' . $orderdelivery->id)}}"
+                                       target="_blank">
+                                        <button type="button"
+                                                class="btn waves-effect waves-light btn-outline-info btn-md"
+                                                style="padding-right: 3px;">
+                                            <img src="{{asset('/ico/papeleta.png')}}" alt="" class="img-16">
+                                            Imprimir Conteo Vigilancia
+                                        </button>
+                                    </a>
                                 </div>
+                            </div>
+                            <hr class="m-t-1">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <h3 class="text-center">Conteo Operativo</h3>
+                                        </div>
+                                    </div>
+                                    @if(!empty($conteos))
+                                        @foreach($conteos as $conteo)
+                                            <hr class="mt-5">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="row">
+                                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                                            <div class="form-group">
+                                                                <label for="shipmentid">Sobrante</label>
+                                                                <input type="text" class="form-control "
+                                                                       value="{{$conteo->sobranteizq}}"
+                                                                       disabled>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                                            <div class="form-group">
+                                                                <label for="shipmentid">Llantas NC</label>
+                                                                <input type="text" class="form-control "
+                                                                       value="{{$conteo->ncizq}}"
+                                                                       disabled>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                                            <div class="form-group">
+                                                                <label for="shipmentid">Total Izquierdo</label>
+                                                                <input type="text" class="form-control "
+                                                                       value="{{$conteo->totalIzquierdo}}"
+                                                                       disabled>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="row">
+                                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                                            <div class="form-group">
+                                                                <label for="shipmentid">Sobrante</label>
+                                                                <input type="text" class="form-control "
+                                                                       value="{{$conteo->sobranteder}}"
+                                                                       disabled>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                                            <div class="form-group">
+                                                                <label for="shipmentid">Llantas NC</label>
+                                                                <input type="text" class="form-control "
+                                                                       value="{{$conteo->ncder}}"
+                                                                       disabled>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                                            <div class="form-group">
+                                                                <label for="shipmentid">Total Derecho</label>
+                                                                <input type="text" class="form-control "
+                                                                       value="{{$conteo->totalderecho}}"
+                                                                       disabled>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-2 col-md-6 col-sm-12">
+                                                    <div class="form-group">
+                                                        <label for="shipmentid">Total</label>
+                                                        <input type="text" class="form-control " value="{{$conteo->totalfinal}}"
+                                                               disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2 col-md-6 col-sm-12">
+                                                    <div class="form-group">
+                                                        <label for="shipmentid">Contador</label>
+                                                        <input type="text" class="form-control " value="{{$conteo->name}}"
+                                                               disabled>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <table class="table table-bordered  table-condensed ">
+                                                <thead>
+                                                <th class="text-center font-16">Lado Izquierdo</th>
+                                                <th class="text-center font-16">Lado Derecho</th>
+                                                </thead>
+                                                <tbody>
+                                                <td width="50%">
+                                                    <table class="table table-bordered  table-condensed">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>Rack</th>
+                                                            <th>Código</th>
+                                                            <th>Canal</th>
+                                                            <th>Cantidad</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @if(isset($conteo->detalleizquierdo))
+                                                            @foreach($conteo->detalleizquierdo as $detalle)
+                                                                <tr>
+                                                                    @php
+                                                                        $codigo = '';
+                                                                        $canal = '';
+                                                                        $cantidad = '';
+                                                                        foreach($detalle as $key => $value) {
+                                                                            if(strpos($key, 'codigoIzq_') !== false) {
+                                                                                $codigo = $value;
+                                                                            } elseif(strpos($key, 'canalIzq_') !== false) {
+                                                                                $canal = $value;
+                                                                            } elseif(strpos($key, 'cantidadIzq_') !== false) {
+                                                                                $cantidad = $value;
+                                                                            }
+                                                                        }
+                                                                    @endphp
+                                                                    <td>Rack-{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</td>
+                                                                    <td>{{ $codigo }}</td>
+                                                                    <td>{{ $canal }}</td>
+                                                                    <td>{{ $cantidad }}</td>
+                                                                </tr>
+                                                            @endforeach
+                                                        @endif
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                                <td width="50%">
+                                                    <table class="table table-bordered  table-condensed">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>Rack</th>
+                                                            <th>Código</th>
+                                                            <th>Canal</th>
+                                                            <th>Cantidad</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @if(isset($conteo->detallederecho))
+                                                            @foreach($conteo->detallederecho as $detalle)
+                                                                <tr>
+                                                                    @php
+                                                                        $codigo = '';
+                                                                        $canal = '';
+                                                                        $cantidad = '';
+                                                                        foreach($detalle as $key => $value) {
+                                                                            if(strpos($key, 'codigoDer_') !== false) {
+                                                                                $codigo = $value;
+                                                                            } elseif(strpos($key, 'canalDer_') !== false) {
+                                                                                $canal = $value;
+                                                                            } elseif(strpos($key, 'cantidadDer_') !== false) {
+                                                                                $cantidad = $value;
+                                                                            }
+                                                                        }
+                                                                    @endphp
+                                                                    <td>Rack-{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</td>
+                                                                    <td>{{ $codigo }}</td>
+                                                                    <td>{{ $canal }}</td>
+                                                                    <td>{{ $cantidad }}</td>
+                                                                </tr>
+                                                            @endforeach
+                                                        @endif
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                                </tbody>
+                                            </table>
+                                        @endforeach
+                                    @endif
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <h3 class="text-center">Conteo Vigilancia</h3>
+                                        </div>
+                                    </div>
+                                    @if(!empty($conteosVig))
+                                        @foreach($conteosVig as $conteo)
+                                            <hr class="mt-5">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="row">
+                                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                                            <div class="form-group">
+                                                                <label for="shipmentid">Sobrante</label>
+                                                                <input type="text" class="form-control "
+                                                                       value="{{$conteo->sobranteizq}}"
+                                                                       disabled>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                                            <div class="form-group">
+                                                                <label for="shipmentid">Llantas NC</label>
+                                                                <input type="text" class="form-control "
+                                                                       value="{{$conteo->ncizq}}"
+                                                                       disabled>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                                            <div class="form-group">
+                                                                <label for="shipmentid">Total Izquierdo</label>
+                                                                <input type="text" class="form-control "
+                                                                       value="{{$conteo->totalIzquierdo}}"
+                                                                       disabled>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="row">
+                                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                                            <div class="form-group">
+                                                                <label for="shipmentid">Sobrante</label>
+                                                                <input type="text" class="form-control "
+                                                                       value="{{$conteo->sobranteder}}"
+                                                                       disabled>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                                            <div class="form-group">
+                                                                <label for="shipmentid">Llantas NC</label>
+                                                                <input type="text" class="form-control "
+                                                                       value="{{$conteo->ncder}}"
+                                                                       disabled>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                                            <div class="form-group">
+                                                                <label for="shipmentid">Total Derecho</label>
+                                                                <input type="text" class="form-control "
+                                                                       value="{{$conteo->totalderecho}}"
+                                                                       disabled>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-2 col-md-6 col-sm-12">
+                                                    <div class="form-group">
+                                                        <label for="shipmentid">Total</label>
+                                                        <input type="text" class="form-control " value="{{$conteo->totalfinal}}"
+                                                               disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2 col-md-6 col-sm-12">
+                                                    <div class="form-group">
+                                                        <label for="shipmentid">Contador</label>
+                                                        <input type="text" class="form-control " value="{{$conteo->name}}"
+                                                               disabled>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <table class="table table-bordered  table-condensed ">
+                                                <thead>
+                                                <th class="text-center font-16">Lado Izquierdo</th>
+                                                <th class="text-center font-16">Lado Derecho</th>
+                                                </thead>
+                                                <tbody>
+                                                <td width="50%">
+                                                    <table class="table table-bordered  table-condensed">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>Rack</th>
+                                                            <th>Código</th>
+                                                            <th>Canal</th>
+                                                            <th>Cantidad</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @if(isset($conteo->detalleizquierdo))
+                                                            @foreach($conteo->detalleizquierdo as $detalle)
+                                                                <tr>
+                                                                    @php
+                                                                        $codigo = '';
+                                                                        $canal = '';
+                                                                        $cantidad = '';
+                                                                        foreach($detalle as $key => $value) {
+                                                                            if(strpos($key, 'codigoIzq_') !== false) {
+                                                                                $codigo = $value;
+                                                                            } elseif(strpos($key, 'canalIzq_') !== false) {
+                                                                                $canal = $value;
+                                                                            } elseif(strpos($key, 'cantidadIzq_') !== false) {
+                                                                                $cantidad = $value;
+                                                                            }
+                                                                        }
 
-                                <div class="row mt-4">
-                                    <div class="col-lg-2 col-md-6 col-sm-12">
-                                        <div class="form-group">
-                                            <label for="shipmentid">Total Izquierdo</label>
-                                            <input type="text" class="form-control " value="{{$conteo->totalizquierdo}}"
-                                                   disabled>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2 col-md-6 col-sm-12">
-                                        <div class="form-group">
-                                            <label for="shipmentid">Total Derecho</label>
-                                            <input type="text" class="form-control " value="{{$conteo->totalderecho}}"
-                                                   disabled>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2 col-md-6 col-sm-12">
-                                        <div class="form-group">
-                                            <label for="shipmentid">Total</label>
-                                            <input type="text" class="form-control " value="{{$conteo->totalfinal}}"
-                                                   disabled>
-                                        </div>
-                                    </div>
+                                                                    @endphp
+                                                                    <td>Rack-{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</td>
+                                                                    <td>{{ $codigo }}</td>
+                                                                    <td>{{ $canal }}</td>
+                                                                    <td>{{ $cantidad }}</td>
+                                                                </tr>
+                                                            @endforeach
+                                                        @endif
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                                <td width="50%">
+                                                    <table class="table table-bordered  table-condensed">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>Rack</th>
+                                                            <th>Código</th>
+                                                            <th>Canal</th>
+                                                            <th>Cantidad</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @if(isset($conteo->detallederecho))
+                                                            @foreach($conteo->detallederecho as $detalle)
+                                                                <tr>
+                                                                    @php
+                                                                        $codigo = '';
+                                                                        $canal = '';
+                                                                        $cantidad = '';
+                                                                        foreach($detalle as $key => $value) {
+                                                                            if(strpos($key, 'codigoDer_') !== false) {
+                                                                                $codigo = $value;
+                                                                            } elseif(strpos($key, 'canalDer_') !== false) {
+                                                                                $canal = $value;
+                                                                            } elseif(strpos($key, 'cantidadDer_') !== false) {
+                                                                                $cantidad = $value;
+                                                                            }
+                                                                        }
+                                                                    @endphp
+                                                                    <td>Rack-{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</td>
+                                                                    <td>{{ $codigo }}</td>
+                                                                    <td>{{ $canal }}</td>
+                                                                    <td>{{ $cantidad }}</td>
+                                                                </tr>
+                                                            @endforeach
+                                                        @endif
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                                </tbody>
+                                            </table>
+                                        @endforeach
+                                    @endif
                                 </div>
-                                <div class="row">
-                                    <div class="col-lg-2 col-md-6 col-sm-12">
-                                        <div class="form-group">
-                                            <label for="shipmentid">Comlemento</label>
-                                            <input type="text" class="form-control " value="{{$conteo->complemento}}"
-                                                   disabled>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2 col-md-6 col-sm-12">
-                                        <div class="form-group">
-                                            <label for="shipmentid">Contador</label>
-                                            <input type="text" class="form-control " value="{{$conteo->name}}" disabled>
-                                        </div>
-                                    </div>
-                                </div>
-                                <table class="table table-bordered  table-condensed mt-5">
-                                    <thead>
-                                    <th class="text-center font-16">Lado Izquierdo</th>
-                                    <th class="text-center font-16">Lado Derecho</th>
-                                    </thead>
-                                    <tbody>
-                                    <td width="50%">
-                                        <table class="table table-bordered mt-1">
-                                            @foreach(array_chunk($conteo->detalleizquierdo, 12) as $fila)
-                                                <tr>
-                                                    @foreach($fila as $item)
-                                                        <td style="width: 20px; height: 20px; border: 2px solid; font-size: 15px; text-align: center;"
-                                                            class="{{ $item !== '0' ? 'bg-inverse text-white font-16' : 'bg-light' }}">
-                                                            {{ $item }}
-                                                        </td>
-                                                    @endforeach
-                                                </tr>
-                                            @endforeach
-                                        </table>
-                                    </td>
-                                    <td width="50%">
-                                        <table class="table table-bordered  mt-1">
-                                            @foreach(array_chunk($conteo->detallederecho, 12) as $fila)
-                                                <tr>
-                                                    @foreach($fila as $item)
-                                                        <td style="width: 20px; height: 20px; border: 2px solid; font-size: 18px; text-align: center;"
-                                                            class="{{ $item !== '0' ? 'bg-inverse text-white font-16' : 'bg-light' }}">
-                                                            {{ $item }}
-                                                        </td>
-                                                    @endforeach
-                                                </tr>
-                                            @endforeach
-                                        </table>
-                                    </td>
-                                    </tbody>
-                                </table>
-                            @endif
+                            </div>
+
                         </div>
 
                         {{--                        Fotos--}}
@@ -845,18 +1117,25 @@
                                                 <div class="card-input">
                                                     <div class="comment-widgets scrollable" style="height:560px;">
                                                         @foreach($comments as $comment)
-                                                        <div class="d-flex flex-row comment-row m-t-0">
-                                                            <div ><img src="{{asset('ico/notepad_bloc_notes_15549.png')}}" alt="user" width="50" class="rounded-circle" ></div>
-                                                            <div class="comment-text w-100">
-                                                                <h6 class="font-medium">{{$comment->user ? $comment->user->name : ''}}</h6>
-                                                                <span class="m-b-15 d-block">{{$comment->comment}}</span>
-                                                                <div class="comment-footer">
-                                                                    <span class="text-muted float-right">{{$comment->created_at}}</span> <span
-                                                                        class="label label-rounded label-primary">Creado</span> <span class="action-icons">
+                                                            <div class="d-flex flex-row comment-row m-t-0">
+                                                                <div><img
+                                                                        src="{{asset('ico/notepad_bloc_notes_15549.png')}}"
+                                                                        alt="user" width="50" class="rounded-circle">
+                                                                </div>
+                                                                <div class="comment-text w-100">
+                                                                    <h6 class="font-medium">{{$comment->user ? $comment->user->name : ''}}</h6>
+                                                                    <span
+                                                                        class="m-b-15 d-block">{{$comment->comment}}</span>
+                                                                    <div class="comment-footer">
+                                                                        <span
+                                                                            class="text-muted float-right">{{$comment->created_at}}</span>
+                                                                        <span
+                                                                            class="label label-rounded label-primary">Creado</span>
+                                                                        <span class="action-icons">
                                                                     </span>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
                                                         @endforeach
                                                     </div>
                                                 </div>

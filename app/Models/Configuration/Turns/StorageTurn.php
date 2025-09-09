@@ -7,12 +7,20 @@ use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * @method static whereStatusid(string $string)
  */
 class StorageTurn extends Model
 {
+    use LogsActivity;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
     protected $table = 'storageturns';
 

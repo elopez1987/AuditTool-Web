@@ -5,9 +5,18 @@ namespace App\Models\Shipments\ShipmentPod;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\Models\Shipments\OrderDeliverie;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class ShipmentPod extends Model
 {
+    use LogsActivity;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
+
     public $timestamps = true;
     protected $table = 'shipmentpods';
 

@@ -3,15 +3,20 @@
 namespace App\Http\Controllers\Shipments\MonitorOperation\Events;
 
 use App\Http\Controllers\BaseController;
+use App\Jobs\Embarques\Mensajes\EnviarMensajeAFacturacionJob;
 use App\Models\Shipments\OrderDeliverie;
 use App\Models\Shipments\ShipmentDataOperation;
 use App\Models\Shipments\ShipmentHeader;
 use App\Models\Shipments\ShipmentSeal;
+use App\Traits\Web\General\GetParameters;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class SendDocumentOrderDeliveryController extends BaseController
 {
+
+    use GetParameters;
+
     public function index($id)
     {
         DB::beginTransaction();
@@ -20,6 +25,12 @@ class SendDocumentOrderDeliveryController extends BaseController
             $this->updateShipmentDataOperation($orderDelivery);
             $this->updateShipmentHeader($orderDelivery);
             $this->updateShipmentSeal($orderDelivery);
+
+            $parameter = $this->getParametersOfWarehouse($orderDelivery->warehouseid);
+            if (!empty($parameter) && in_array('SWH-16', (array)$parameter)) {
+                EnviarMensajeAFacturacionJob::dispatch($orderDelivery);
+            }
+
             DB::commit();
             return $this->redirectBackSuccess();
         } catch (Exception $e) {

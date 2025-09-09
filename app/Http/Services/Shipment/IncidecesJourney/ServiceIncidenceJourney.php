@@ -5,7 +5,7 @@ namespace App\Http\Services\Shipment\IncidecesJourney;
 use App\Models\General\StorageComment;
 use App\Models\Shipments\StorageIncidenceJourney;
 use App\Models\Shipments\StorageIncidenceJourneyDetails;
-use App\Traits\GetParameters;
+use App\Traits\Web\General\GetParameters;
 use Auth;
 
 

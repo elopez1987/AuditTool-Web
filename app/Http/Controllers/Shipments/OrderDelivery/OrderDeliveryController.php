@@ -6,8 +6,9 @@ use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Shipments\OrderDelivery\CreateOrderRequest;
 use App\Models\General\EvidencePhoto;
 use App\Models\General\StorageComment;
+use App\Models\Shipments\Bridgestone\Verificacion\Storagechecklocationbridg;
+use App\Models\Shipments\Bridgestone\Verificacion\StoragechecklocationbridgVig;
 use App\Models\Shipments\OrderDeliverie;
-use App\Models\Shipments\Storagechecklocationbridg;
 use App\Models\Yard\StorageUnitTrace;
 use App\Traits\Web\Shipments\OrderDelivery\CreateNewOrder;
 use App\Traits\Web\Shipments\OrderDelivery\UpdateOrderDelivery;
@@ -95,9 +96,10 @@ class OrderDeliveryController extends BaseController
             ->where('auxiliary01', '=', 'SH')->get();
         $traces = StorageUnitTrace::controlAccessUser()
             ->where('receiptunitid', $orderdelivery->folionumber)->get();
-        $conteo = Storagechecklocationbridg::controlAccessUser()->where('orderid', $orderdelivery->id)->first();
-        $comments = StorageComment::where('modeltype','orderdeliveries')->where('modelid',$orderdelivery->id)->get();
-        return view('Shipments.OrderDeliveries.show', compact('orderdelivery', 'evidences', 'traces', 'conteo','comments'));
+        $conteos = Storagechecklocationbridg::controlAccessUser()->where('orderid', $orderdelivery->id)->get();
+        $conteosVig = StoragechecklocationbridgVig::controlAccessUser()->where('orderid', $orderdelivery->id)->get();
+        $comments = StorageComment::where('modeltype', 'orderdeliveries')->where('modelid', $orderdelivery->id)->get();
+        return view('Shipments.OrderDeliveries.show', compact('orderdelivery', 'evidences', 'traces', 'conteos', 'comments','conteosVig'));
     }
 
     public function edit(OrderDeliverie $orderdelivery)
@@ -129,8 +131,8 @@ class OrderDeliveryController extends BaseController
 
     public function destroy(OrderDeliverie $orderdelivery)
     {
+        $this->authorize('orderdeliveries.delete');
         try {
-            $this->authorize('orderdeliveries.delete');
             $orderdelivery->delete();
         } catch (AuthorizationException $e) {
             return $this->errorResponse('No tienes permisos para eliminar este registro', 403);

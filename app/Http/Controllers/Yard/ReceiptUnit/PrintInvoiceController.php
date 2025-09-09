@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Yard\ReceiptUnit;
 
 use App\Http\Controllers\Controller;
 use App\Models\Yard\ReceiptUnit;
-use App\Traits\GenerateLabel;
-use App\Traits\PrintFormat;
+use App\Traits\Web\General\GenerateLabel;
+use App\Traits\Web\General\PrintFormat;
 
 class PrintInvoiceController extends Controller
 {

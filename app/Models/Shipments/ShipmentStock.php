@@ -6,11 +6,20 @@ use App\Models\Inventory\PartNumber\InventoryPartnumber;
 use App\User;
 use Auth;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 
 class ShipmentStock extends Model
 {
-//    public $timestamps = false;
+
+    use LogsActivity;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
+    
     protected $table = 'shipmentstock';
 
     protected $fillable = [

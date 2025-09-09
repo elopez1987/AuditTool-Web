@@ -4,8 +4,8 @@ namespace App\Traits\Web\Yard\ReceiptUnit\ArriveUnit;
 
 use App\Models\Yard\ReceiptUnit;
 use App\Models\Yard\StorageUnitTrace;
-use App\Traits\General\Responser;
 use App\Traits\ResponseApi;
+use App\Traits\Web\General\Responser;
 
 trait SaveArriveUnit
 {

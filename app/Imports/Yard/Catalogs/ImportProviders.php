@@ -3,8 +3,7 @@
 namespace App\Imports\Yard\Catalogs;
 
 use App\Models\Receipt\ReceiptProvider;
-use App\Traits\General\Responser;
-use App\Traits\GetParameters;
+use App\Traits\Web\General\Responser;
 use Auth;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;

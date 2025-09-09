@@ -3,7 +3,7 @@
 namespace App\Traits\Web\Izel;
 
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
-use App\Traits\GetParameters;
+use App\Traits\Web\General\GetParameters;
 use DB;
 use Illuminate\Support\Facades\Http;
 

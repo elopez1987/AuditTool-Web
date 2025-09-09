@@ -5,9 +5,18 @@ namespace App\Models\Shipments;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use Auth;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class StorageScheduleInverseOperation extends Model
 {
+    use LogsActivity;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
+
     protected $table = 'storagescheduleinverseoperation';
 
     protected $fillable = [
@@ -15,11 +24,6 @@ class StorageScheduleInverseOperation extends Model
         'wmsdate', 'warehousedate', 'statusid'
     ];
 
-//    protected $hidden = [
-//        'created_at',
-//        'updated_at',
-//        'schemaid'
-//    ];
 
     protected $attributes = [
         'statusid' => 'PT',

@@ -92,7 +92,7 @@
                 </a>
             @endcan
             @can('patiohenkeltoluca')
-                <a href="{{route('patiohenkeltoluca')}}">
+                <a href="{{route('vitualyard')}}">
                     <div class="box" data-toggle="tooltip" data-placement="top"
                          title="Visualice el uso de su patio.">
                         <i class="lni lni-dashboard"></i>

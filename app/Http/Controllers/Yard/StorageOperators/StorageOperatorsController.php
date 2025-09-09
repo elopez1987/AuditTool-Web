@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Yard\StorageOperators;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Yard\Operator\CreateOperatorRequest;
 use App\Models\Yard\StorageOperator;
-use App\Traits\GenerateLabel;
+use App\Traits\Web\General\GenerateLabel;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 

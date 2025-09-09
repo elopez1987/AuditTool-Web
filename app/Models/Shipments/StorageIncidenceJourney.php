@@ -132,11 +132,5 @@ class StorageIncidenceJourney extends Model
     }
 
 
-    public function scopeCarrierIn($query, $carrierid)
-    {
-        if (!empty($carrierid)) {
-            $query->whereIn('o.carrierid', $carrierid);
-        }
-    }
 
 }

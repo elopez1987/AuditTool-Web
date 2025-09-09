@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Yard\ReceiptUnit\Event;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Yard\RefuseUnit\RegisterRefuseUnitRequest;
 use App\Models\Yard\ReceiptUnit;
-use App\Traits\GetParameters;
+use App\Traits\Web\General\GetParameters;
 use App\Traits\Web\Yard\ReceiptUnit\DeclineUnit\DeclineUnitForReceipt;
 use App\Traits\Web\Yard\ReceiptUnit\DeclineUnit\DeclineUnitForShipment;
 use DB;

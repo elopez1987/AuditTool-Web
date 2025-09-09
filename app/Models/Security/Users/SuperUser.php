@@ -2,12 +2,21 @@
 
 namespace App\Models\Security\Users;
 
-use App\Models\Shipments\OrderDeliverie;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class SuperUser extends Model
 {
+    use LogsActivity;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
+
+
     public $timestamps = false;
     protected $table = 'securitysuperusers';
     protected $primaryKey = 'id';

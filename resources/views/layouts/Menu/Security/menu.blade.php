@@ -99,15 +99,15 @@
                     </div>
                 </a>
             @endcan
-            {{--            @can('filemanager')--}}
-            {{--                <a href="{{route('filemanager')}}">--}}
-            {{--                    <div class="box">--}}
-            {{--                        <i class="lni lni-files"></i>--}}
-            {{--                        <h5>Archivos</h5>--}}
-            {{--                        <h4>Archivos</h4>--}}
-            {{--                    </div>--}}
-            {{--                </a>--}}
-            {{--            @endcan--}}
+{{--            @can('filemanager')--}}
+{{--                <a href="{{route('filemanager')}}">--}}
+{{--                    <div class="box">--}}
+{{--                        <i class="lni lni-files"></i>--}}
+{{--                        <h5>Archivos</h5>--}}
+{{--                        <h4>Archivos</h4>--}}
+{{--                    </div>--}}
+{{--                </a>--}}
+{{--            @endcan--}}
             @can('systemprinters.index')
                 <a href="{{route('systemprinters.index')}}">
                     <div class="box">

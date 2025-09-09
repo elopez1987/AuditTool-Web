@@ -3,7 +3,6 @@
 
 @section('content')
     <main>
-        {{--        <h1 class="name-menu">Inventario</h1>--}}
         <div class="container__box">
             @can('inventorypartnumbers.index')
                 <a href="{{route('inventorypartnumbers.index')}}">
@@ -50,25 +49,6 @@
                     </div>
                 </a>
             @endcan
-            @can('inventoryhead.index')
-                <a href="{{route('inventoryhead.index')}}">
-                    <div class="box">
-                        <i class="lni lni-list"></i>
-                        <h5>Conteo Fiscal</h5>
-                        <h4>Conteo Fiscal</h4>
-                    </div>
-                </a>
-            @endcan
-            @can('storagecountdronhead.index')
-                <a href="{{route('storagecountdronhead.index')}}">
-                    <div class="box">
-                        <i class="lni lni-download"></i>
-                        <h5>Conteo Dron</h5>
-                        <h4>Conteo Dron</h4>
-                    </div>
-                </a>
-            @endcan
-
         </div>
     </main>
 

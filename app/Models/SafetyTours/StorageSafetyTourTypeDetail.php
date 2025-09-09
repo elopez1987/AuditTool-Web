@@ -4,18 +4,23 @@ namespace App\Models\SafetyTours;
 
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Security\Users\SecurityAccessWarehouse;
-use App\Models\StorageSafetyTourType;
 use App\User;
 use Auth;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Str;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class StorageSafetyTourTypeDetail extends Model
 {
     use SoftDeletes;
+    use LogsActivity;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
     protected $table = 'storagesafetytourtypedetails';
 

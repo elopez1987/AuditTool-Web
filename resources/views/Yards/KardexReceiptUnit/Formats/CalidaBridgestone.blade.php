@@ -119,13 +119,13 @@
                     <th style="border-right: 0px;border-left: 0px;border-top:0px">SI</th>
                     <th style="border-left: 0px;border-right: 0px;border-top:0px">
                         <div style="width: 10px;height: 10px;border: 1px solid #D5D5D5;align-items: center">
-                            {{$receiptunit->unittypeid == '1' ? 'X' : ''}}
+                            {{$receiptunit->unittype->auxiliary01  == 'EXP' ? 'X' : ''}}
                         </div>
                     </th>
                     <th style="border-left: 0px;border-right: 0px;border-top:0px">NO</th>
                     <th style="border-right: 0px;border-left: 0px;border-top:0px">
                         <div style="width: 10px;height: 10px;border: 1px solid #D5D5D5;align-items: center;">
-                            {{$receiptunit->unittypeid == '2' ? 'X' : ''}}
+                            {{$receiptunit->unittype->auxiliary01  == 'NAC' ? 'X' : ''}}
                         </div>
                     </th>
                 </table>

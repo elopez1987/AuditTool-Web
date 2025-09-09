@@ -6,12 +6,21 @@ use App\User;
 use Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * @method static where(string $string, mixed $id)
  */
 class StorageComment extends Model
 {
+    use LogsActivity;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
+
     protected $table = 'storagecomments';
     protected $fillable = [
         'modeltype', 'modelid', 'comment', 'createuser',
