@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Shipments\Bridgestone\StorageShipmentFoliosController;
 use App\Http\Controllers\Shipments\CategoryIncidences\StorageCategoryIncidenceDetailController;
 use App\Http\Controllers\Shipments\CategoryIncidences\StorageCategoryIncidencesController;
 use App\Http\Controllers\Shipments\Dashboard\DashboardShipmentsController;
@@ -88,11 +89,11 @@ Route::middleware(['auth'])->group(function () {
 //    Subir evidencia por ajax
     Route::post('loadevidenceorder/{id}/upload', [EvidenceOrderDeliveryController::class, 'loadevidenceorder'])->name('loadevidenceorder');
 //    Imprimir formato de conteo de anden de bridgestone
-    Route::get('printformatcountbridgestone/{id}',[ImprimirConteoAndenController::class,'index'])->name('printformatcountbridgestone');;
+    Route::get('printformatcountbridgestone/{id}', [ImprimirConteoAndenController::class, 'index'])->name('printformatcountbridgestone');;
 //    Imprimir conteo de vigilante
     Route::get('printformatcountbridgestonevig/{id}', [ImprimirConteoAndenController::class, 'printformatcountbridgestonevig'])->name('printformatcountbridgestonevig');;
 //    Imprimir formato de conteo APT Bridgestone
-    Route::get('printformatcountaptbridgestone/{id}',[ImprimirConteoAndenController::class,'printformatcountaptbridgestone'])->name('printformatcountaptbridgestone');;
+    Route::get('printformatcountaptbridgestone/{id}', [ImprimirConteoAndenController::class, 'printformatcountaptbridgestone'])->name('printformatcountaptbridgestone');;
 
 //    ------------------------------------------------- Importadores ---------------------------------------------------
 //  Importar comentarios a los embarques
@@ -360,6 +361,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('monitoroperationbrid', [ShipmentSchedulleBridgestoneController::class, 'index'])->name('monitoroperationbrid');
     Route::get('getDataSchedulleShipmentBridgestone', [ShipmentSchedulleBridgestoneController::class, 'getDataSchedulleShipmentBridgestone'])->name('getDataSchedulleShipmentBridgestone');
 
-
+//    Folios de conteos de andén para vigilancia
+    Route::resource('storageshipmentfolios', StorageShipmentFoliosController::class)->except(['create', 'store']);
+    Route::get('getDataShipmentFolios', [StorageShipmentFoliosController::class, 'getDataShipmentFolios'])->name('getDataShipmentFolios');
+    Route::get('storageshipmentfoliospdf/{id}', [StorageShipmentFoliosController::class, 'storageshipmentfoliospdf'])->name('storageshipmentfoliospdf');
 });
 

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>CONTROL DE CONTEO EN APT - {{$orderDelivery->shipmentid}}</title>
+    <title>CONTROL DE CONTEO EN APT </title>
     <style>
         /* Definir orientación horizontal */
         @page {
@@ -76,7 +76,7 @@
 <div class="container">
 
     <div class="row">
-        <table >
+        <table>
             <th style="padding: 10px">
 
                 <div class="row">
@@ -113,58 +113,66 @@
 
                 <div class="row" style="margin-bottom: 10px;margin-top: 10px">
                     <table class="border-none">
-                        <th class="border-none" style="height: 20px;padding-left: 10px;width: 20%">Nombre del oficial:</th>
-                        <th style="border-bottom: 1px solid;width: 20%" class="border-none">{{$controlCount->name}}</th>
+                        <th class="border-none" style="height: 20px;padding-left: 10px;width: 20%">Nombre del oficial:
+                        </th>
+                        <th style="border-bottom: 1px solid;width: 20%"
+                            class="border-none">{{$folio->user ? $folio->user->name : ''}}</th>
                         <th style="" class="border-none">Grupo</th>
                         <th style="border-bottom: 1px solid;width: 10%" class="border-none">
-{{--                            {{$conteo->team}}--}}
+                            {{$folio->team}}
                         </th>
                         <th class="border-none" style="width: 10%">Turno</th>
-                        <th class="border-none" style="border-bottom: 1px solid;width: 10%">{{$conteo->turn ? $conteo->turn->name : ''}}</th>
+                        <th class="border-none"
+                            style="border-bottom: 1px solid;width: 10%">{{$folio->turn ? $folio->turn->name : ''}}</th>
                         <th class="border-none">Fecha</th>
-                        <th class="border-none" style="border-bottom: 1px solid;width: 10%">{{$orderDelivery->workday}}</th>
+                        <th class="border-none" style="border-bottom: 1px solid;width: 10%">{{$folio->workday}}</th>
                     </table>
                 </div>
 
                 <div class="row" style="margin-top: 20px">
                     <table style="padding: 10px">
-                        <thead >
-                            <tr>
-                                <th style="height: 15px">HORA INICIO</th>
-                                <th>NOMBNRE DEL OPERADOR</th>
-                                <th>TRANSPORTE</th>
-                                <th>SELLO</th>
-                                <th>N°.CAJA</th>
-                                <th>N°.ANDEN</th>
-                                <th>HORA FINAL</th>
-                                <th>EMBARQUE/REMISION</th>
-                                <th>TOTAL DE LLANTAS</th>
-                                <th>FIRMA APT</th>
-                                <th>FIRMA OPERADOR</th>
-                                <th>FIRMA GUARDIA</th>
-                            </tr>
+                        <thead>
+                        <tr>
+                            <th style="height: 15px">HORA INICIO</th>
+                            <th>NOMBNRE DEL OPERADOR</th>
+                            <th>TRANSPORTE</th>
+                            <th>SELLO</th>
+                            <th>N°.CAJA</th>
+                            <th>N°.ANDEN</th>
+                            <th>HORA FINAL</th>
+                            <th>EMBARQUE/REMISION</th>
+                            <th>TOTAL DE LLANTAS</th>
+                            <th>FIRMA APT</th>
+                            <th>FIRMA OPERADOR</th>
+                            <th>FIRMA GUARDIA</th>
+                        </tr>
                         </thead>
                         <tbody>
+                        @foreach($detalleFolio as $controlCount)
                             <tr>
-                                <th>{{$controlCount->startprocess}}</th>
-                                <th>{{$orderDelivery->folio ? $orderDelivery->folio->tracto->operatorname : ''}}</th>
-                                <th>{{$orderDelivery->folio ? $orderDelivery->folio->carrier->name : ''}}</th>
-                                <th>{{$orderDelivery->folio ? $orderDelivery->folio->containerseal : ''}}</th>
-                                <th>{{$orderDelivery->folio ? $orderDelivery->folio->boxnumber : ''}}</th>
+                                <th></th>
+                                <th>{{$controlCount->order ? $controlCount->order->folio->tracto->operatorname : ''}}</th>
+                                <th>{{$controlCount->order ? $controlCount->order->folio->carrier->name : ''}}</th>
+                                <th>{{$controlCount->order ? $controlCount->order->folio->containerseal : ''}}</th>
+                                <th>{{$controlCount->order ? $controlCount->order->folio->boxnumber : ''}}</th>
                                 <th>{{$controlCount->location ? $controlCount->location->name : ''}}</th>
-                                <th>{{$controlCount->finishprocess}}</th>
-                                <th>{{$orderDelivery->shipmentid}}</th>
+                                <th></th>
+                                <th>{{$controlCount->order ? $controlCount->order->shipmentid : ''}}</th>
                                 <th>{{$controlCount->quantity}}</th>
                                 <th>
-                                    <img src="{{asset('storage/' . $controlCount->keysupervisor )}}" alt="Firma" style="height: 70px;max-height: 70px"/>
+                                    <img src="{{asset('storage/' . $controlCount->keysupervisor )}}" alt="Firma"
+                                         style="height: 70px;max-height: 70px"/>
                                 </th>
                                 <th>
-                                    <img src="{{asset('storage/' . $controlCount->keyoperator )}}" alt="Firma" style="height: 70px;max-height: 70px"/>
+                                    <img src="{{asset('storage/' . $controlCount->keyoperator )}}" alt="Firma"
+                                         style="height: 70px;max-height: 70px"/>
                                 </th>
                                 <th>
-                                    <img src="{{asset('storage/' . $controlCount->keyguard )}}" alt="Firma" style="height: 70px;max-height: 70px"/>
+                                    <img src="{{asset('storage/' . $controlCount->keyguard )}}" alt="Firma"
+                                         style="height: 70px;max-height: 70px"/>
                                 </th>
                             </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </div>

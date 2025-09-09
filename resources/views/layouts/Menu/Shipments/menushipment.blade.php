@@ -247,6 +247,15 @@
                     </div>
                 </a>
             @endcan
+                @can('storageshipmentfolios.index')
+                    <a href="{{route('storageshipmentfolios.index')}}">
+                        <div class="box" data-toggle="tooltip" data-placement="top" title="">
+                            <i class="lni lni-microsoft"></i>
+                            <h5>Folios de conteo</h5>
+                            <h4>Folios de conteo</h4>
+                        </div>
+                    </a>
+                @endcan
         </div>
 
         <div class="container__box">
