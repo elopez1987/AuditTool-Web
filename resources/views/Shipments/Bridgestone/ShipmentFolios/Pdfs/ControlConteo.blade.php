@@ -106,7 +106,7 @@
                             PLANTA CUERNAVACA 2025
                         </th>
                         <th style="width: 50%;text-align: left;padding-left: 90px;font-size: 14px" class="border-none">
-                            Folio N°:
+                            Folio N°: {{$folio->folioid}}
                         </th>
                     </table>
                 </div>
