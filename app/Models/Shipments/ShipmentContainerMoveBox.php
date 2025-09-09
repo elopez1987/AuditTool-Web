@@ -7,11 +7,20 @@ use App\User;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class ShipmentContainerMoveBox extends Model
 {
     public $timestamps = false;
     protected $table = 'shipmentcontainermoveboxlog';
+    use LogsActivity;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
+
 
     protected $fillable = [
         'orderid', 'containerid', 'lpnid', 'partnumberid', 'quantity', 'createuser', 'type',

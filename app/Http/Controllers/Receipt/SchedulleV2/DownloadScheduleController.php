@@ -94,6 +94,7 @@ class DownloadScheduleController extends BaseController
             ->rawColumns(['btn','prioridad','po'])
             ->toJson();
     }
+    
 
     public function addShipmentToSchedule($id)
     {

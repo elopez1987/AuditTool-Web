@@ -6,7 +6,7 @@ use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Yard\LabelTruck\RegisterLabelRequest;
 use App\Models\Security\Users\AccessCarrier;
 use App\Models\Yard\StorageLabelTruck\StorageLabelTruck;
-use App\Traits\GenerateLabel;
+use App\Traits\Web\General\GenerateLabel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;

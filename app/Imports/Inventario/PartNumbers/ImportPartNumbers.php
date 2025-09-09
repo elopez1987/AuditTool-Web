@@ -5,7 +5,7 @@ namespace App\Imports\Inventario\PartNumbers;
 use App\Models\Inventory\Categories\InventoryPartNumberCategory01;
 use App\Models\Inventory\Categories\InventoryPartNumberCategory02;
 use App\Models\Inventory\PartNumber\InventoryPartnumber;
-use App\Traits\General\Responser;
+use App\Traits\Web\General\Responser;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithChunkReading;

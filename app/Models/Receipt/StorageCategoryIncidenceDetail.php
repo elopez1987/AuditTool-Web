@@ -45,19 +45,6 @@ class StorageCategoryIncidenceDetail extends Model
         return $this->belongsTo(SystemStatus::class, 'statusid');
     }
 
-    public static function getRazonCodes($type)
-    {
-        return StorageCategoryIncidenceDetail::controlAccessUser()
-            ->where('auxiliary01', '=', $type)
-            ->select(['description', 'categoryincdetailid'])
-            ->get();
-    }
 
-    public static function getRazonCodesForArray($type)
-    {
-        return StorageCategoryIncidenceDetail::controlAccessUser()
-            ->where('auxiliary01', '=', $type)
-            ->pluck('description', 'categoryincdetailid')->toArray();
-    }
 
 }

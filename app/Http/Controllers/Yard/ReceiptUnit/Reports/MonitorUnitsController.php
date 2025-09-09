@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Yard\ReceiptUnit\Reports;
 
 use App\Http\Controllers\Controller;
 use App\Models\Yard\StorageReason;
-use App\Traits\Yard\QueryReceiptUnits;
+use App\Traits\Web\Yard\ReceiptUnit\QueryReceiptUnits;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 

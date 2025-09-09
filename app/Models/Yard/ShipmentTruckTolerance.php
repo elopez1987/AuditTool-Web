@@ -8,8 +8,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class ShipmentTruckTolerance extends Model
 {
-    public $timestamps = false;
-    protected $table = 'shipmenttrucktolerance';
+
     use LogsActivity;
 
     public function getActivitylogOptions(): LogOptions
@@ -17,6 +16,10 @@ class ShipmentTruckTolerance extends Model
         return LogOptions::defaults()->logFillable();
     }
 
+    public $timestamps = false;
+    protected $table = 'shipmenttrucktolerance';
+
+    
     protected $fillable =[
       'centerid','truckid','description',
         'value01','value02','value03','value04','value05','value06','value07',

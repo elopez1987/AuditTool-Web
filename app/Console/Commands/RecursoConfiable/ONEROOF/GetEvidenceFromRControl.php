@@ -5,7 +5,7 @@ namespace App\Console\Commands\RecursoConfiable\ONEROOF;
 use App\Models\Configuration\Parameters\SystemDetailParameter;
 use App\Models\Shipments\OrderDeliverie;
 use App\Models\Shipments\StorageShipmentsPods;
-use App\Traits\GetParameters;
+use App\Traits\Web\General\GetParameters;
 use Carbon\Carbon;
 use DB;
 use GuzzleHttp\Client;

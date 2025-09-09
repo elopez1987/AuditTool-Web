@@ -11,7 +11,6 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class ReceiptStage extends Model
 {
-//    public $timestamps = false;
 
     use LogsActivity;
 

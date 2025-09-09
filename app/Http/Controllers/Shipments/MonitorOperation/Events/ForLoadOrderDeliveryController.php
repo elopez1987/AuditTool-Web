@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Shipments\MonitorOperation\Events;
 
 use App\Http\Controllers\BaseController;
+use App\Jobs\Embarques\Mensajes\EnviarMensajeOperadorPorAsignacionDeCortinaJob;
 use App\Models\Shipments\OrderDeliverie;
 use App\Models\Shipments\ShipmentCheck;
 use App\Models\Shipments\ShipmentDataOperation;
 use App\Models\Shipments\ShipmentHeader;
 use App\Models\Shipments\ShipmentSeal;
-use App\Traits\Web\Shipments\SendMessageToOperatorForLoadProcess;
 use App\Traits\Web\Yard\VirtualUnit\CheckOutVirtual;
 use App\Traits\Web\Yard\VirtualUnit\NewUnitVirtual;
 use Illuminate\Support\Facades\Auth;
@@ -18,11 +18,10 @@ class ForLoadOrderDeliveryController extends BaseController
 {
     use NewUnitVirtual;
     use CheckOutVirtual;
-    use SendMessageToOperatorForLoadProcess;
+
 
     public function index($id)
     {
-        $error = null;
         DB::beginTransaction();
         try {
 
@@ -36,7 +35,7 @@ class ForLoadOrderDeliveryController extends BaseController
             $this->sendMessageToOperator($parameterWarehouse, $orderDelivery);
 
 //          Validamos el cierre del proceso de verificación
-            if (in_array('SWH-34', (array)$parameterWarehouse)) {
+            if (!empty($parameterWarehouse) && in_array('SWH-34', (array)$parameterWarehouse)) {
                 $shipmentCheck = ShipmentCheck::where('orderid', '=', $orderDelivery->id)->first();
                 if ($shipmentCheck->statusid != 'VY') {
                     return $this->errorResponse('El embarque no se encuentra verificado.');
@@ -105,7 +104,7 @@ class ForLoadOrderDeliveryController extends BaseController
     public function createUnitVirtualForCustomer($parameterCustomer, OrderDeliverie $orderDelivery): void
     {
 //      Creamos la unidad virtual si el cliente tiene activo el parametro OCF-04
-        if (in_array('OCF-04', (array)$parameterCustomer)) {
+        if (!empty($parameterCustomer) && in_array('OCF-04', (array)$parameterCustomer)) {
             $receiptunit = $this->newUnitVirtual($orderDelivery);
             $orderDelivery->folionumber = $receiptunit->id;
             $orderDelivery->save();
@@ -120,8 +119,8 @@ class ForLoadOrderDeliveryController extends BaseController
     public function sendMessageToOperator($parameterWarehouse, OrderDeliverie $orderDelivery): void
     {
 //     Proceso para enviar mensaje a operador que está en patio para enrampar
-        if (in_array('SWH-43', (array)$parameterWarehouse)) {
-            $this->sendMessageForLoad($orderDelivery);
+        if (!empty($parameterWarehouse) && in_array('SWH-43', (array)$parameterWarehouse)) {
+            EnviarMensajeOperadorPorAsignacionDeCortinaJob::dispatch($orderDelivery);
         }
     }
 

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Yard;
 
 use App\Http\Controllers\BaseController;
-use App\Http\Requests\Yard\StorageAreasRequest;
+use App\Http\Requests\Web\Yard\Areas\StorageAreasRequest;
 use App\Models\Yard\StorageAreas;
 use Illuminate\Http\Request;
 

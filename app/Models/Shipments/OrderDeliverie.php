@@ -13,7 +13,6 @@ use App\Models\Yard\Carriers\ShipmentCarrier;
 use App\Models\Yard\Customer\OrderCustomer;
 use App\Models\Yard\ReceiptUnit;
 use App\Models\Yard\ShipmentType\ShipmentType;
-use App\Models\Yard\StorageLocation;
 use App\User;
 use Auth;
 use Illuminate\Database\Eloquent\Model;
@@ -222,8 +221,6 @@ class OrderDeliverie extends Model
     {
         if (trim($workday) != "") {
             $query->where('orderdeliveries.workday', '=', $workday);
-        }else{
-            $query->whereDate('orderdeliveries.loadingdate', '=', now()->format('Y-m-d'));
         }
     }
 
@@ -244,8 +241,7 @@ class OrderDeliverie extends Model
 
     static public function getOrderForStatus()
     {
-        return OrderDeliverie::controlAccessUser()
-            ->select(['statusid', DB::raw('COUNT(statusid) as total_for_status')])->groupBy('statusid')->get();
+        return OrderDeliverie::controlAccessUser()->select(['statusid', DB::raw('COUNT(statusid) as total_for_status')])->groupBy('statusid')->get();
     }
 
     static function searchForShipment($shipment)
@@ -263,56 +259,5 @@ class OrderDeliverie extends Model
     {
         return OrderDeliverie::controlAccessUser()->where('orderdeliveries.folionumber', $folio)->first();
     }
-
-
-//  ---------------------------  Funciones Auxiliares -------------------------------------------------
-
-
-//    Registra Inicio de proceso de carga
-    static function updateStatusForStartProcess($shipment): void
-    {
-        $shipment->statusid = 'IP';
-        $shipment->save();
-
-        $operationData = ShipmentDataOperation::whereOrderid($shipment->id)->first();
-        $operationData->startload = now();
-        $operationData->lastuserid = Auth::user()->id;
-        $operationData->save();
-
-        $shipmentheader = ShipmentHeader::whereOrderid($shipment->id)->first();
-        $shipmentheader->statusid = 'IP';
-        $shipmentheader->startdate = now();
-        $shipmentheader->save();
-
-        $shipmentseal = ShipmentSeal::whereOrderid($shipment->id)->first();
-        $shipmentseal->statusorderid = 'IP';
-        $shipmentseal->save();
-    }
-
-
-//    Registra fin de proceso de carga
-    static function updateStatusForFinishProcess($shipment)
-    {
-        $shipment->statusid = 'FO';
-        $shipment->save();
-        $operationData = ShipmentDataOperation::whereOrderid($shipment->id)->first();
-        $operationData->endload = now();
-        $operationData->lastuserid = \Illuminate\Support\Facades\Auth::user()->id;
-        $operationData->save();
-        $shipmentheader = ShipmentHeader::whereOrderid($shipment->id)->first();
-        $shipmentheader->statusid = 'FO';
-        $shipmentheader->finishdate = now();
-        $shipmentheader->save();
-        $shipmentseal = ShipmentSeal::whereOrderid($shipment->id)->first();
-        $shipmentseal->statusorderid = 'FO';
-        $shipmentseal->save();
-        //Libera el stage para el siguiente embarque
-        StorageLocation::updateLocation($shipmentheader->locationid, 'E', '');
-    }
-
-
-
-
-
 
 }

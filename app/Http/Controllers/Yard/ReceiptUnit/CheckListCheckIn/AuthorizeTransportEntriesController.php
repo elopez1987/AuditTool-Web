@@ -10,7 +10,7 @@ use App\Models\Yard\ReceiptUnit;
 use App\Models\Yard\StorageCheckListDetail;
 use App\Models\Yard\StorageUnitTrace;
 use App\Traits\GetIdFromReasonTrait;
-use App\Traits\PrintFormat;
+use App\Traits\Web\General\PrintFormat;
 use App\Traits\Web\Izel\RegisterEdiShipment;
 use App\Traits\Web\Yard\CheckList\CheckListTransportTrait;
 use App\Traits\Web\Yard\ReceiptTruck\QueryReceiptTruck;

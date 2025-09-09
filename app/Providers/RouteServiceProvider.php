@@ -15,7 +15,7 @@ class RouteServiceProvider extends ServiceProvider
      * @var string
      */
     protected $namespace = 'App\Http\Controllers';
-    protected $namespaceApp = 'App\Http\ControllersApp';
+
 
     /**
      * The path to the "home" route for your application.
@@ -42,8 +42,6 @@ class RouteServiceProvider extends ServiceProvider
     public function map()
     {
         $this->mapApiRoutes();
-        $this->mapApiAppRoutes();
-
         $this->mapWebRoutes();
         $this->mapConfigurationRoutes();
         $this->mapSecurityRoutes();
@@ -51,14 +49,10 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapShipmentsRoutes();
         $this->mapYardsRoutes();
         $this->mapReceiptsRoutes();
-        $this->mapEvidencesRoutes();
         $this->mapInventoryRoutes();
         $this->mapReportsRoutes();
-        $this->mapCountingRoutes();
         $this->mapMaintenanceRoutes();
         $this->mapToursRoutes();
-
-
     }
 
 
@@ -90,13 +84,6 @@ class RouteServiceProvider extends ServiceProvider
             ->group(base_path('routes/Inventory.php'));
     }
 
-    protected function mapCountingRoutes()
-    {
-        Route::middleware('web')
-            ->namespace($this->namespace)
-            ->group(base_path('routes/Counting.php'));
-    }
-
     protected function mapYardsRoutes()
     {
         Route::middleware('web')
@@ -104,12 +91,6 @@ class RouteServiceProvider extends ServiceProvider
             ->group(base_path('routes/Yards.php'));
     }
 
-    protected function mapEvidencesRoutes()
-    {
-        Route::middleware('web')
-            ->namespace($this->namespace)
-            ->group(base_path('routes/Evidences.php'));
-    }
 
     protected function mapReceiptsRoutes()
     {
@@ -163,11 +144,5 @@ class RouteServiceProvider extends ServiceProvider
             ->group(base_path('routes/api.php'));
     }
 
-    protected function mapApiAppRoutes()
-    {
-        Route::prefix('api')
-            ->middleware('api')
-            ->namespace($this->namespaceApp)
-            ->group(base_path('routes/apiapp.php'));
-    }
+
 }

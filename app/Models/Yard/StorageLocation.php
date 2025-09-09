@@ -112,6 +112,7 @@ class StorageLocation extends Model
         return $this->belongsTo(StorageZone::class, 'zoneid', 'id');
     }
 
+
 //    Filtros Scopes
     public function scopeName($query, $name)
     {
@@ -143,14 +144,6 @@ class StorageLocation extends Model
 
 
 //    Funciones auxiliares para otros modulos
-    static function searchLocationForCode($barcode)
-    {
-        return StorageLocation::controlAccessUser()
-            ->where('barcode', '=', $barcode)
-            ->select(['id', 'name', 'locationid', 'barcode', 'zoneid', 'statusid'])
-            ->first();
-    }
-
     static function updateLocation($locationid, $statusid, $boxnumber)
     {
         StorageLocation::controlAccessUser()

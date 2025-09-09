@@ -59,9 +59,11 @@
                                         <td>{{$detail->auxiliary05}}</td>
                                         <td>
                                             @if($detail->statusid == 'E')
-                                                <span class="label label-green font-table text-black">{{$detail->status->name}}</span>
+                                                <span
+                                                    class="label label-green font-table text-black">{{$detail->status->name}}</span>
                                             @elseif($detail->statusid == 'D')
-                                                <span class="label label-red font-table text-white">{{$detail->status->name}}</span>
+                                                <span
+                                                    class="label label-red font-table text-white">{{$detail->status->name}}</span>
                                             @endif
                                         </td>
                                         <td>
@@ -80,9 +82,23 @@
                     </div>
 
                 </div>
+                <div class="card-footer">
+                    <a href="" data-target="#modal-importchecklistdetails" data-toggle="modal"
+                       data-placement="top">
+                        <button type="button"
+                                class="btn waves-effect waves-light btn-outline-info btn-md"
+                                data-toggle="tooltip" data-placement="top" title="Importar archivo">
+                            <img src="{{asset('/ico/uploadcsv.png')}}" alt="" class="img-16">
+                            <span
+                                style="font-size: 0.675rem !important;;"> Importar Detalle </span>
+                        </button>
+                    </a>
+                    @include('Yards.StorageCheckListDetails.Import.importdetails')
+                </div>
             </div>
         </div>
     </div>
+    @include('layouts.Partials.Errors')
 @endsection
 
 @section('script')

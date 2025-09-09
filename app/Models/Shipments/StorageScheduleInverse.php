@@ -7,10 +7,19 @@ use App\Models\Security\Users\SecurityAccessWarehouse;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 
 class StorageScheduleInverse extends Model
 {
+    use LogsActivity;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
+
     protected $table = 'storagescheduleinverse';
     protected $primaryKey = 'id';
 

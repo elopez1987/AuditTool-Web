@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Yard\ReceiptUnit\Evidences;
 
 use App\Http\Controllers\Controller;
 use App\Models\Yard\ReceiptUnit;
-use App\Traits\General\Responser;
+use App\Traits\Web\General\Responser;
 use App\Traits\Web\General\StorageWebPhotoTrait;
 use Illuminate\Http\Request;
 

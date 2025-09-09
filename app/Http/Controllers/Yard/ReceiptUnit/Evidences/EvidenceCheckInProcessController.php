@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Yard\ReceiptUnit\Evidences;
 
 use App\Http\Controllers\BaseController;
-use App\Http\Requests\Web\Evidence\UploadImageRequest;
+use App\Http\Requests\Web\Shipments\Evidence\UploadImageRequest;
 use App\Models\Yard\ReceiptUnit;
 use App\Traits\Web\General\StorageWebPhotoTrait;
 

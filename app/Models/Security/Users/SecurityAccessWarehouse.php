@@ -6,9 +6,19 @@ use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Configuration\Warehouses\SystemWarehouse;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class SecurityAccessWarehouse extends Model
 {
+
+    use LogsActivity;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
+
     protected $table = 'securityaccesswarehouses';
     protected $dateFormat = 'Y-m-d H:i:s';
 
@@ -23,7 +33,6 @@ class SecurityAccessWarehouse extends Model
     {
         return (new SecurityAccessWarehouse())
             ->where('username', Auth::user()->username)
-//            ->where('defaultlevel','S')
             ->select('centerid')
             ->get()
             ->toArray();
@@ -33,7 +42,6 @@ class SecurityAccessWarehouse extends Model
     {
         return (new SecurityAccessWarehouse())
             ->where('username', Auth::user()->username)
-//            ->where('defaultlevel','S')
             ->select('warehouseid')
             ->get()
             ->toArray();

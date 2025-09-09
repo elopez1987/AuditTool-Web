@@ -2,14 +2,19 @@
 
 namespace App\Models\Shipments;
 
-use App\Models\Configuration\Parameters\SystemDetailParameter;
-use App\Models\Yard\Customer\OrderCustomer;
-use Auth;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class OrderMonitor extends Model
 {
+    use LogsActivity;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
+
     protected $table = 'ordermonitor';
     public $timestamps = false;
 

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Maintanance;
 
 use App\Http\Controllers\BaseController;
 use App\Models\Configuration\Schemas\SystemStatus;
-use App\Traits\General\Responser;
+use App\Traits\Web\General\Responser;
 use Illuminate\Http\Request;
 
 class StorageCatalogTruckController extends BaseController

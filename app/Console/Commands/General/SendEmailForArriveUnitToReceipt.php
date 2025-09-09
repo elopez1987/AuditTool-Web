@@ -7,7 +7,7 @@ use App\Mail\NewVisitCreate;
 use App\Models\Configuration\Mails\StorageTaskMail;
 use App\Models\Configuration\Mails\SystemDetailMail;
 use App\Models\Receipt\ReceiptAsn;
-use App\Traits\GetParameters;
+use App\Traits\Web\General\GetParameters;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 
@@ -29,7 +29,7 @@ class SendEmailForArriveUnitToReceipt extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Envia el correo de llegada de proveedor en el registro de unidad';
 
     /**
      * Create a new command instance.
@@ -41,15 +41,9 @@ class SendEmailForArriveUnitToReceipt extends Command
         parent::__construct();
     }
 
-    /**
-     * Execute the console command.
-     *
-     * @return int
-     */
     public function handle()
     {
-        $taskMails = StorageTaskMail::where('statusid', '=', 'E')
-            ->where('mailid', 'MAIL-RECYMS')->get();
+        $taskMails = StorageTaskMail::where('statusid', '=', 'E')->where('mailid', 'MAIL-RECYMS')->get();
         if ($taskMails->isNotEmpty()) {
             foreach ($taskMails as $taskMail) {
                 $parameter = $this->getParametersOfWarehouse($taskMail->warehouseid);

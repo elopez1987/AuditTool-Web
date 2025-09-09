@@ -54,6 +54,7 @@ use App\Http\Controllers\Yard\ShipmentTruck\ShipmentTruckController;
 use App\Http\Controllers\Yard\ShipmentTruck\ShipmentTruckToleranceController;
 use App\Http\Controllers\Yard\ShipmentTruck\StorageTruckController;
 use App\Http\Controllers\Yard\StorageAreasController;
+use App\Http\Controllers\Yard\StorageCheckLists\Imports\ImportCheckListDetailsController;
 use App\Http\Controllers\Yard\StorageCheckLists\StorageCheckListDetailsController;
 use App\Http\Controllers\Yard\StorageCheckLists\StorageCheckListsController;
 use App\Http\Controllers\Yard\StorageLocations\ImportLocationsController;
@@ -279,7 +280,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('createchecklistdetails/{storagechecklist}', [StorageCheckListDetailsController::class, 'createdetail'])->name('createchecklistdetails');
     Route::put('storechecklistdetails/{storagechecklist}', [StorageCheckListDetailsController::class, 'storedetail'])->name('storagechecklistdetails.storedetail');
     Route::put('updatestatuscategory/{id}', [StorageCheckListDetailsController::class, 'updatestatuscategory'])->name('updatestatuscategory');
-
+//    Importar detallde de ubicaciones
+    Route::post('importchecklistdetails', [ImportCheckListDetailsController::class, 'index'])->name('importchecklistdetails');
 // ----------------------------- Categorias de transporte (Contenedor, Caja seca,termica, etc.) -----------------------------------|
     Route::resource('shipmenttruckcategories', ShipmentTruckCategoriesController::class);
     Route::get('getDataTruckCategories', [ShipmentTruckCategoriesController::class, 'getDataTruckCategories'])->name('getDataTruckCategories');
@@ -325,7 +327,7 @@ Route::middleware(['auth'])->group(function () {
 //  Exportar el detalle de la zona consultada
     Route::get('exportDataLocationsForStatus',[CapacityYardController::class,'exportDataLocationsForStatus'])->name('exportDataLocationsForStatus');
 //  Patio de toluca one roof en 2d
-    Route::get('patiohenkeltoluca', [YardHenkelTolController::class, 'index'])->name('patiohenkeltoluca');
+    Route::get('vitualyard', [YardHenkelTolController::class, 'index'])->name('vitualyard');
 //  Vista de cortinas y stages
     Route::get('layoutyard',[LayOutDoorAndStageController::class,'index'])->name('layoutyard');
 

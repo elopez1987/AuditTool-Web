@@ -150,7 +150,6 @@ Route::group(['middleware' => ['role:ADMINISTRADOR']], function () {
     Route::get('systemtables/{id}/addColumnToTable', [SystemTableController::class, 'addColumnToTable'])->name('systemtables.addColumnToTable');
     Route::put('updatecolumntotable/{id}', [SystemTableController::class, 'updatecolumntotable'])->name('updatecolumntotable');
 
-
 //    ---------------------------------------------------- Comandos del sistema  ----------------------------------------------------
     Route::get('commandmenu', [CommandController::class, 'commandmenu'])->name('commandmenu');
     Route::get('clearcachesystem', [CommandController::class, 'clearcachesystem'])->name('clearcachesystem');

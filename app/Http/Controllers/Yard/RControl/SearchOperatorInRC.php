@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Yard\RControl;
 
 use App\Http\Controllers\Controller;
 use App\Models\Configuration\Parameters\SystemDetailParameter;
-use App\Traits\General\Responser;
+use App\Traits\Web\General\Responser;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;

@@ -3,7 +3,7 @@
 namespace App\Imports\Yard\Catalogs;
 
 use App\Models\Yard\Carriers\ShipmentCarrier;
-use App\Traits\General\Responser;
+use App\Traits\Web\General\Responser;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;

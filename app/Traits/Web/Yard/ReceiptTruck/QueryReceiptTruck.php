@@ -4,8 +4,8 @@ namespace App\Traits\Web\Yard\ReceiptTruck;
 
 use App\Models\Yard\ReceiptTruck;
 use App\Models\Yard\StorageLabelTruck\StorageLabelTruck;
-use App\Traits\General\Responser;
-use App\Traits\GetParameters;
+use App\Traits\Web\General\GetParameters;
+use App\Traits\Web\General\Responser;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

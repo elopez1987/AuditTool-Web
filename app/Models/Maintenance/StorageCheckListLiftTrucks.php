@@ -7,9 +7,18 @@ use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class StorageCheckListLiftTrucks extends Model
 {
+    use LogsActivity;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
+
     protected $primaryKey = "id";
     protected $table = 'storagechecklistslifttrucks';
 
@@ -53,18 +62,7 @@ class StorageCheckListLiftTrucks extends Model
         'created_at' => 'datetime:d/m/Y H:s',
         'updated_At' => 'datetime:d/m/Y H:s',
     ];
-
-
-//    protected static function boot()
-//    {
-//        parent::boot();
-//        if (!app()->runningInConsole()) {
-//            self::creating(function (StorageCheckListLiftTrucks $model) {
-//                $model->createuser = Auth::user()->username;
-//            });
-//        }
-//    }
-
+    
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();

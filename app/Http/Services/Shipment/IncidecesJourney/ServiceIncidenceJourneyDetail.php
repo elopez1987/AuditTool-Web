@@ -6,7 +6,7 @@ use App\Models\Receipt\StorageCategoryIncidenceDetail;
 use App\Models\Shipments\StorageIncidenceJourney;
 use App\Models\Shipments\StorageIncidenceJourneyDetails;
 use App\Models\Shipments\StorageKeyIncidenceOperation;
-use App\Traits\GetParameters;
+use App\Traits\Web\General\GetParameters;
 use Auth;
 use DB;
 use Illuminate\Database\Eloquent\Builder;

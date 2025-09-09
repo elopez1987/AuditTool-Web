@@ -4,7 +4,7 @@ namespace App\Observers;
 
 use App\Models\Configuration\WhatsApp\StorageTaskWhatsapp;
 use App\Models\Shipments\StorageIncidenceJourney;
-use App\Traits\GetParameters;
+use App\Traits\Web\General\GetParameters;
 
 class IncidenceJourneyObserver
 {

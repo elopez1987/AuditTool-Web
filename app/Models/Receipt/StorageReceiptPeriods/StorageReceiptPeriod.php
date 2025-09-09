@@ -11,10 +11,18 @@ use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class StorageReceiptPeriod extends Model
 {
     use SoftDeletes;
+    use LogsActivity;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
     protected $table = 'storagereceiptperiods';
 
@@ -33,8 +41,7 @@ class StorageReceiptPeriod extends Model
     ];
 
     protected $casts = [
-//        'startdate' => 'date',
-//        'finishdate' => 'date',
+
     ];
 
 

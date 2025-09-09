@@ -6,7 +6,7 @@ use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Yard\Loto\CreateStorageLotoRequest;
 use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Yard\StorageSealLoto;
-use App\Traits\General\Responser;
+use App\Traits\Web\General\Responser;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 

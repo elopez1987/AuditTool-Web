@@ -4,7 +4,7 @@ namespace App\Imports\Yard\Catalogs;
 
 use App\Models\Yard\StorageLocation;
 use App\Models\Yard\StorageZone\StorageZone;
-use App\Traits\General\Responser;
+use App\Traits\Web\General\Responser;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;

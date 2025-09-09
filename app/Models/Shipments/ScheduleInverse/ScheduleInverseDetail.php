@@ -22,29 +22,12 @@ class ScheduleInverseDetail extends Model
         'statusid',
     ];
 
-    //DIS = Disponible
-    //RES = Reservado
-
-
-
     protected $attributes = [
         'statusid' => 'DIS',
         'schemaid' => 'SKD',
         'schemasecuenceid' => 'KLH'
     ];
-
-
-//
-//    protected static function boot()
-//    {
-////        parent::boot();
-////        if (!app()->runningInConsole()) {
-////            self::creating(function (ScheduleInverseDetail $model) {
-////                $model->createuser = Auth::id();
-////            });
-////        }
-//    }
-
+    
     public static function controlAccessUser()
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();

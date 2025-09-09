@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use App\Console\Commands\Bridgestone\SendMailForDifferenceWeightCommand;
+use App\Console\Commands\Bridgestone\SendMessageDifferenceWeightCommand;
 use App\Console\Commands\General\ClearReceiptAsnCommand;
 use App\Console\Commands\General\CloseValidateQRReceipt;
 use App\Console\Commands\General\DeleteHistLogWebServiceIzel;
@@ -51,6 +53,10 @@ class Kernel extends ConsoleKernel
         ClearLocationCommand::class,
 
 
+        SendMessageDifferenceWeightCommand::class,
+        SendMailForDifferenceWeightCommand::class,
+
+
     ];
 
     /**
@@ -71,6 +77,11 @@ class Kernel extends ConsoleKernel
         $schedule->command('app:send-email-for-arrive-unit-to-receipt')->everyFiveMinutes();
 
 
+//        Comandos para la cuenta de Bridgestone
+//        Envio del correo de discrepancia en peso de salida de la unidad
+        $schedule->command('send:mail-for-difference-weight')->everyFiveMinutes();
+//        Envío de mensaje de discrepancia en peso de salida de la unidad
+        $schedule->command('send:message-difference-weight')->everyFiveMinutes();
 
 //      Comandos para Kellogg Toluca
         $schedule->command('command:SendDataToWmsIzel')->everyTenMinutes();
@@ -87,7 +98,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('rc:SendPlanForShipmentCommand')->everyTwoHours();
 //        Enviar los eventos logisticos de la unidad a recurso confiable
         $schedule->command('rc:SendEventForShipmentCommand')->everyTenMinutes();
- //        Obtiene la ETA del embarque conectado a RC.
+        //        Obtiene la ETA del embarque conectado a RC.
         $schedule->command('rc:ObtenerETAdeRecursoConfiable')->everyThirtyMinutes();
 //        Recolectar evidencia de POD de recurso confiable
         $schedule->command('rc:getevidencefromrcontrol')->dailyAt('10:00');

@@ -6,12 +6,23 @@ use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Configuration\Turns\StorageTurn;
 use App\Models\Configuration\Warehouses\SystemWarehouse;
+use App\Models\Receipt\StorageReceiptPeriods\StorageReceiptPeriod;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class StorageSchedulleReceipt extends Model
 {
+
+    use LogsActivity;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
+
     protected $table = 'storageschedullereceipt';
 
     protected $fillable = [
@@ -31,10 +42,6 @@ class StorageSchedulleReceipt extends Model
         'statusid',
     ];
 
-    protected $casts = [
-//        'workday' => 'date',
-    ];
-
     protected $attributes = [
         'statusid' => 'DPR-01',
         'schemaid' => 'DPR',
@@ -45,7 +52,6 @@ class StorageSchedulleReceipt extends Model
         parent::boot();
         if (!app()->runningInConsole()) {
             self::creating(function (StorageSchedulleReceipt $model) {
-//                $model->userid = \Auth::id();
             });
         }
     }
@@ -79,15 +85,22 @@ class StorageSchedulleReceipt extends Model
         return $this->belongsTo(SystemStatus::class, 'statusid');
     }
 
-    public function secuence(): BelongsTo
+    public function statussecuence(): BelongsTo
     {
-        return $this->belongsTo(SystemStatus::class, 'secuence');
+        return $this->belongsTo(SystemStatus::class, 'secuence', 'statusid');
     }
 
     public function receipt(): BelongsTo
     {
-        return $this->belongsTo(ReceiptAsn::class, 'receiptid');
+        return $this->belongsTo(ReceiptAsn::class, 'receiptid', 'id');
     }
+
+    public function period(): BelongsTo
+    {
+        return $this->belongsTo(StorageReceiptPeriod::class, 'periodid');
+
+    }
+
 
 //    Filtros
     public function scopeWorkday($query, $workday)
@@ -103,7 +116,6 @@ class StorageSchedulleReceipt extends Model
             $query->where('storageschedullereceipt.shipmentid', '=', $shipment);
         }
     }
-
 
 
 }

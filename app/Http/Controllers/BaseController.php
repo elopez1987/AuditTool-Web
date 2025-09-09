@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Traits\General\Responser;
-use App\Traits\GetParameters;
+use App\Traits\Web\General\GetParameters;
+use App\Traits\Web\General\Responser;
 
 
 class BaseController extends Controller

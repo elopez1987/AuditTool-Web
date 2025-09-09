@@ -6,7 +6,7 @@ use App\Http\Controllers\BaseController;
 use App\Models\Yard\ReceiptTruck;
 use App\Models\Yard\ReceiptUnit;
 use App\Models\Yard\StorageUnitTrace;
-use App\Traits\Yard\QueryReceiptUnits;
+use App\Traits\Web\Yard\ReceiptUnit\QueryReceiptUnits;
 use DB;
 use Exception;
 use Illuminate\Http\Request;

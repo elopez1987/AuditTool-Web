@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Yard\ReceiptUnit\CheckIn;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Yard\ReceiptUnit\CreateEasyUnitRequest;
-use App\Http\Services\ServiceReceiptUnit;
+use App\Http\Services\Receipt\ServiceReceiptUnit;
 use App\Models\Yard\ReceiptUnit;
 use App\Traits\Web\Izel\RegisterEdiShipment;
 use App\Traits\Web\Receipt\ReceiptAsn\ValidateReceiptInCheckInProcess;

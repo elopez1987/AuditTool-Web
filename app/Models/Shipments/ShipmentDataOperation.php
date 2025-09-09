@@ -4,13 +4,13 @@ namespace App\Models\Shipments;
 
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\User;
-use Auth;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 class ShipmentDataOperation extends Model
 {
+
     protected $table = "shipmentdataoperation";
     protected $primaryKey = 'id';
     public $timestamps = false;

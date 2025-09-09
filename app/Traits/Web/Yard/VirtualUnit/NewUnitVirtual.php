@@ -3,7 +3,7 @@
 namespace App\Traits\Web\Yard\VirtualUnit;
 
 use App\Models\Yard\ReceiptUnit;
-use App\Traits\GetParameters;
+use App\Traits\Web\General\GetParameters;
 use Illuminate\Support\Facades\Auth;
 
 trait NewUnitVirtual

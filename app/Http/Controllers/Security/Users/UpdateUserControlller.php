@@ -5,13 +5,10 @@ namespace App\Http\Controllers\Security\Users;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Web\Security\Users\UpdatePasswordUserRequest;
 use App\Models\General\StorageMedia;
-use App\Traits\EvidencePhotoTrait;
+use App\Traits\Web\General\EvidencePhotoTrait;
 use App\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 
 class UpdateUserControlller extends Controller
