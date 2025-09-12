@@ -6,13 +6,15 @@ use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Yard\Inventory\CreateNewInventoryRequest;
 use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Yard\InventoryBox;
+use App\Models\Yard\InventoryCountStock;
 use App\Models\Yard\ReceiptUnit;
-use App\Traits\Web\Yard\ReceiptUnit\QueryInventoryBox;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class InventoryBoxesController extends BaseController
 {
-    use QueryInventoryBox;
+
 
     public function index()
     {
@@ -24,7 +26,19 @@ class InventoryBoxesController extends BaseController
 
     public function getdatainventories(Request $request)
     {
-        $data = $this->getInventoryBoxes($request);
+
+        $data = InventoryBox::controlAccessUser()
+            ->leftjoin("systemcenterdistributions as s", "inventoryboxstock.centerid", "=", "s.centerid")
+            ->leftjoin("systemstatus as s2", "inventoryboxstock.statusid", '=', "s2.statusid")
+            ->leftjoin("systemstatus as s3", "inventoryboxstock.statustypeid", '=', "s3.statusid")
+            ->leftjoin("users as u", "inventoryboxstock.createuser", '=', "u.id")
+            ->ForStatus($request->get('statusid'))
+            ->ForFolio($request->get('folio'))
+            ->select([
+                "s.name as centername", "s3.name as type", "inventoryboxstock.description",
+                "inventoryboxstock.createdate", "inventoryboxstock.quantitybox", 'inventoryboxstock.id as folioinv',
+                "inventoryboxstock.quantityboxtrue", "u.name as user", "s2.name as status", "inventoryboxstock.id", "s2.statusid"
+            ])->get();
         return $this->showDataToView($data, 'Yards.InventoryBoxes.partials.buttons');
     }
 
@@ -40,19 +54,36 @@ class InventoryBoxesController extends BaseController
     {
         $total = ReceiptUnit::getCountUnit($request['centerid']);
         $inventory = InventoryBox::createNewInventory($request, $total);
-        $this->insertDetailCount($inventory);
-        return redirect('inventorybox/' . $inventory->id . '/edit');
+        DB::beginTransaction();
+        try {
+            $units = ReceiptUnit::whereCenterid($inventory->centerid)
+                ->select(['id', 'barcode', 'boxnumber', 'zoneid', 'locationid', 'statusid'])
+                ->whereNotIn('statusid', ['TR'])
+                ->get();
+            foreach ($units as $unit) {
+                InventoryCountStock::createDetailCount($inventory, $unit);
+            }
+            DB::commit();
+            return redirect('inventorybox/' . $inventory->id . '/edit');
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            DB::rollBack();
+            return redirect()->back()->withInput()->with(session()->flash('error', 'Error al procesar la solicitud'));
+        }
     }
 
     public function edit(InventoryBox $inventorybox)
     {
         $this->authorize('inventorybox.edit');
-        $data = $this->getInventoryCountStocks($inventorybox);
+        $data = InventoryCountStock::controlAccessUser()->where('countid', $inventorybox->id)
+            ->with(['center:centerid,name,description', 'status:statusid,name', 'locationold:locationid,name',
+                'locationnew:locationid,name', 'user:id,name', 'zoneold:zoneid,name',
+                'zonenew:zoneid,name', 'inventory', 'folio'])->get();
         return view('Yards.InventoryBoxes.edit', compact('inventorybox', 'data')
         );
     }
 
-    public function update( InventoryBox $inventorybox)
+    public function update(InventoryBox $inventorybox)
     {
         $inventorybox->statusid = 'TO';
         $inventorybox->save();

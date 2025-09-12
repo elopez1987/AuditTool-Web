@@ -36,7 +36,7 @@
                                             <img src="{{asset('/ico/systemfunctions.png')}}" alt="" class="img-25 ml-1">
                                         </a>
                                     </td>
-                                    <td> </td>
+                                    <td></td>
                                 </tr>
                                 <tr>
                                     <td class="font-12"> Enviar datos a Izel</td>
@@ -63,8 +63,9 @@
                                             <img src="{{asset('/ico/systemfunctions.png')}}" alt="" class="img-25 ml-1">
                                         </a>
                                     </td>
-                                    <td> </td>
+                                    <td></td>
                                 </tr>
+
                                 <tr>
                                     <td class="font-12"> Enviar mensajes de unidades sin arrivar a carga.</td>
                                     <td>
@@ -72,7 +73,7 @@
                                             <img src="{{asset('/ico/systemfunctions.png')}}" alt="" class="img-25 ml-1">
                                         </a>
                                     </td>
-                                    <td> </td>
+                                    <td></td>
                                 </tr>
                                 <tr>
                                     <td class="font-12"> Obtener PODs de RControl.</td>
@@ -81,7 +82,7 @@
                                             <img src="{{asset('/ico/systemfunctions.png')}}" alt="" class="img-25 ml-1">
                                         </a>
                                     </td>
-                                    <td> </td>
+                                    <td></td>
                                 </tr>
                                 <tr>
                                     <td class="font-12"> Ajustar Caja de Patios</td>
@@ -99,7 +100,7 @@
                                             <img src="{{asset('/ico/systemfunctions.png')}}" alt="" class="img-25 ml-1">
                                         </a>
                                     </td>
-                                    <td> </td>
+                                    <td></td>
                                 </tr>
                                 <tr>
                                     <td class="font-12"> Enviar mensaje unidades sin enrampar de embarques</td>
@@ -108,7 +109,7 @@
                                             <img src="{{asset('/ico/systemfunctions.png')}}" alt="" class="img-25 ml-1">
                                         </a>
                                     </td>
-                                    <td> </td>
+                                    <td></td>
                                 </tr>
                                 <tr>
                                     <td class="font-12"> Obtener la ETA de los embaques</td>
@@ -117,7 +118,7 @@
                                             <img src="{{asset('/ico/systemfunctions.png')}}" alt="" class="img-25 ml-1">
                                         </a>
                                     </td>
-                                    <td> </td>
+                                    <td></td>
                                 </tr>
                                 <tr>
                                     <td class="font-12"> Borra el log de envios de mensajes de whatsapp.</td>
@@ -155,6 +156,42 @@
                                     </td>
                                     <td>Notificaciones</td>
                                 </tr>
+                                <tr>
+                                    <td class="font-12"> Enviar correo de arribo de proveedor.</td>
+                                    <td>
+                                        <a href="{{url('sendmessagefornewarrivereceipt')}}">
+                                            <img src="{{asset('/ico/systemfunctions.png')}}" alt="" class="img-25 ml-1">
+                                        </a>
+                                    </td>
+                                    <td>Notificaciones</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-12"> Enviar correo de unidad con diferencia de peso.</td>
+                                    <td>
+                                        <a href="{{url('sendmaiilfordifferenceweight')}}">
+                                            <img src="{{asset('/ico/systemfunctions.png')}}" alt="" class="img-25 ml-1">
+                                        </a>
+                                    </td>
+                                    <td>Notificaciones</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-12"> Enviar mensaje de unidad con diferencia de peso.</td>
+                                    <td>
+                                        <a href="{{url('sendmessagefordifferenceweight')}}">
+                                            <img src="{{asset('/ico/systemfunctions.png')}}" alt="" class="img-25 ml-1">
+                                        </a>
+                                    </td>
+                                    <td>Notificaciones</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-12">Crear UUID a Usuario</td>
+                                    <td>
+                                        <a href="{{url('createuuidtouser')}}">
+                                            <img src="{{asset('/ico/systemfunctions.png')}}" alt="" class="img-25 ml-1">
+                                        </a>
+                                    </td>
+                                    <td>Notificaciones</td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -174,11 +211,11 @@
 
 @section('script')
     <script>
-        var oTable =   $(".tablegeneral").DataTable({
-            "paging"      : true,
-            "searching"  : true,
-            "ordering"    : true,
-            "serverSide" :false,
+        var oTable = $(".tablegeneral").DataTable({
+            "paging": true,
+            "searching": true,
+            "ordering": true,
+            "serverSide": false,
             'colReorder': true,
             "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
             "lengthMenu": [[30, 50, 100, 150, 200, 250, -1], [30, 50, 100, 150, 200, 250, "Todos"]],

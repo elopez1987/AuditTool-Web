@@ -165,6 +165,10 @@ Route::group(['middleware' => ['role:ADMINISTRADOR']], function () {
     Route::get('deleteusers', [CommandController::class, 'deleteusers'])->name('deleteusers');
     Route::get('clearReceiptAsn', [CommandController::class, 'clearReceiptAsn'])->name('clearReceiptAsn');
     Route::get('sendmessagefornewarrivereceipt', [CommandController::class, 'sendmessagefornewarrivereceipt'])->name('sendmessagefornewarrivereceipt');
+	Route::get('sendmailfornewarrivereceipt', [CommandController::class, 'sendmailfornewarrivereceipt'])->name('sendmailfornewarrivereceipt');
+	Route::get('sendmaiilfordifferenceweight', [CommandController::class, 'sendmaiilfordifferenceweight'])->name('sendmaiilfordifferenceweight');
+	Route::get('sendmessagefordifferenceweight', [CommandController::class, 'sendmessagefordifferenceweight'])->name('sendmessagefordifferenceweight');
+	Route::get('createuuidtouser', [CommandController::class, 'createuuidtouser'])->name('createuuidtouser');
 
 //    -------------------------------------  Logs de inicio de sesion de dispositivos  ----------------------------------------------------
     Route::get('logdeviceforuser', [LogDeviceForUserController::class, 'index'])->name('logdeviceuser');
