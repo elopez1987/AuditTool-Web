@@ -2,7 +2,11 @@
 
 namespace App\Models\Yard;
 
+use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
+use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Security\Users\SecurityAccessWarehouse;
+use App\Models\Yard\StorageZone\StorageZone;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
@@ -49,6 +53,41 @@ class InventoryCountStock extends Model
         return InventoryCountStock::whereIn('inventorycountstock.centerid', $centers);
     }
 
+
+    public function center()
+    {
+        return $this->belongsTo(SystemCenterDistribution::class, 'centerid');
+    }
+
+    public function status()
+    {
+        return $this->belongsTo(SystemStatus::class, 'statusid', 'statusid');
+    }
+
+    public function locationold()
+    {
+        return $this->belongsTo(StorageLocation::class, 'locationid', 'id');
+    }
+
+    public function locationnew()
+    {
+        return $this->belongsTo(StorageLocation::class, 'newlocationid', 'id');
+    }
+
+    public function zoneold()
+    {
+        return $this->belongsTo(StorageZone::class, 'zoneid', 'id');
+    }
+
+    public function zonenew()
+    {
+        return $this->belongsTo(StorageZone::class, 'newzoneid', 'id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'userid', 'id')->withTrashed()->select('id', 'username', 'name');
+    }
     public function folio()
     {
         return $this->belongsTo(ReceiptUnit::class, 'folionumber', 'id');
@@ -58,6 +97,7 @@ class InventoryCountStock extends Model
     {
         return $this->belongsTo(InventoryBox::class, 'countid', 'id');
     }
+
 
     static function createDetailCount($inventory, $unit)
     {

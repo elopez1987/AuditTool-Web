@@ -1,3 +1,4 @@
+@php use Illuminate\Support\Carbon; @endphp
 @extends('layouts.app')
 
 @section('content')
@@ -16,7 +17,8 @@
                             <div class="col-12">
                                 @if ($inventorybox->statusid != 'TO')
                                     <a href="">
-                                        <button type="submit" class="btn waves-effect waves-light btn-outline-info btn-md">
+                                        <button type="submit"
+                                                class="btn waves-effect waves-light btn-outline-info btn-md">
                                             <img src="{{asset('/ico/save02.png')}}" alt="" class="img-16">
                                             <span style="font-size: 0.675rem "> Cerrar Inventario</span>
                                         </button>
@@ -43,6 +45,15 @@
                                 <th class="bg-inverse text-white">Placa de caja</th>
                                 <th class="bg-inverse text-white">Eco. de caja</th>
                                 <th class="bg-inverse text-white">Estatus de caja</th>
+
+                                <th class="bg-inverse text-white">Origen de caja</th>
+                                <th class="bg-inverse text-white">Concepto de entrada</th>
+                                <th class="bg-inverse text-white">Tipo de unidad</th>
+                                <th class="bg-inverse text-white">Categoria</th>
+                                <th class="bg-inverse text-white">Fecha de entrada</th>
+                                <th class="bg-inverse text-white">Estadia</th>
+
+
                                 <th class="bg-inverse text-white">Zona</th>
                                 <th class="bg-inverse text-white">Ubicación</th>
                                 <th class="bg-inverse text-white">Nueva Zona</th>
@@ -54,20 +65,26 @@
                                 <tbody>
                                 @foreach($data as $item)
                                     <tr>
-                                        <td>{{$item->centername}}</td>
+                                        <td>{{$item->center ? $item->center->description : ''}}</td>
                                         <td>{{$item->countid}}</td>
-                                        <td>{{$item->inventory->description}}</td>
+                                        <td>{{$item->inventory ? $item->inventory->description : ''}}</td>
                                         <td>{{$item->folionumber}}</td>
-                                        <td>{{$item->folio->carrier->name}}</td>
+                                        <td>{{$item->folio ? $item->folio->carrier->name : ''}}</td>
                                         <td>{{$item->barcode}}</td>
                                         <td>{{$item->boxnumber}}</td>
                                         <td>{{$item->folio ? $item->folio->econumber : ''}}</td>
-                                        <td>{{$item->folio->unitstatus->name}}</td>
-                                        <td>{{$item->zoneid}}</td>
-                                        <td>{{$item->location}}</td>
-                                        <td>{{$item->newzoneid}}</td>
-                                        <td>{{$item->newlocationid}}</td>
-                                        <td>{{$item->status}}</td>
+                                        <td>{{$item->folio ? $item->folio->unitstatus->name : ''}}</td>
+                                        <td>{{$item->folio ? $item->folio->unittype->description : ''}}</td>
+                                        <td>{{$item->folio ? $item->folio->reason->name : ''}}</td>
+                                        <td>{{$item->folio ? $item->folio->truckcategory->description : ''}}</td>
+                                        <td>{{$item->folio ? $item->folio->truck->name : ''}}</td>
+                                        <td>{{$item->folio ? $item->folio->entrydate : ''}}</td>
+                                        <td>{{Carbon::now()->diff($item->folio->entrydate)->format('%m m %d d %H:%i h/m')}}</td>
+                                        <td>{{$item->zoneold ? $item->zoneold->name : ''}}</td>
+                                        <td>{{$item->locationold ? $item->locationold->name : ''}}</td>
+                                        <td>{{$item->zonenew ? $item->zonenew->name : ''}}</td>
+                                        <td>{{$item->locationnew ? $item->locationnew->name : ''}}</td>
+                                        <td>{{$item->status ? $item->status->name : ''}}</td>
                                         <td
                                             @if ($item->isupdate == 'Y')
                                                 class="bg-cyan text-white text-center"
@@ -108,7 +125,7 @@
             "stateSave": true,
             "stateDuration": 0,
 
-            "dom": '<"top"B>lrt<"bottom"p><"clear"i>',
+            "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
             "lengthMenu": [[-1], ["Todos"]],
             "columnDefs": [
                 {"width": "100px", "targets": 0},
@@ -127,6 +144,11 @@
                 {"width": "100px", "targets": 13},
                 {"width": "180px", "targets": 14},
                 {"width": "180px", "targets": 15},
+                {"width": "180px", "targets": 16},
+                {"width": "180px", "targets": 17},
+                {"width": "180px", "targets": 18},
+                {"width": "180px", "targets": 19},
+                {"width": "180px", "targets": 20},
             ],
             buttons: [
                 {

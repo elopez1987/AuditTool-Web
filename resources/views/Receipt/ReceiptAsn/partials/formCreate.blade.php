@@ -226,7 +226,7 @@
                                 @error("folionumber")
                                 <span class="message-error">{{$message}}</span>
                                 @enderror
-                                <span style="color: red">*</span></label>
+                            </label>
                             <input type="text" class="form-control @error('folionumber') is-invalid @enderror"
                                    id="folionumber" name="folionumber"
                                    aria-describedby="folionumber"

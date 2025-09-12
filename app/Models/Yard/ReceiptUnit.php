@@ -18,7 +18,7 @@ use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 
-//Auxiliary01 = Codigo de barra del tracto
+//Auxiliary01 = NOmbre del cliente o proveedor
 //Auxiliary02 = Número de folio del cual fue generado en el proceso de Reautilizar folio
 //Auxiliary03 = Tipo de entrada en los modulos de registro (TR = Transporte, QR = Acceso por QR, ST = Registro Estandar)
 //Auxiliary04 =

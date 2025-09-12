@@ -93,6 +93,31 @@ class CommandController extends Controller
     {
         Artisan::call('app:send-message-for-receipt-entry');
         return redirect()->back()->with(session()->flash('success', 'Proceso terminado con exito'));
-    }
+	}
+
+	public function sendmailfornewarrivereceipt()
+	{
+		Artisan::call('app:send-email-for-arrive-unit-to-receipt');
+		return redirect()->back()->with(session()->flash('success', 'Proceso terminado con exito'));
+	}
+
+	public function sendmaiilfordifferenceweight()
+	{
+		Artisan::call('send:mail-for-difference-weight');
+		return redirect()->back()->with(session()->flash('success', 'Proceso terminado con exito'));
+	}
+
+	public function sendmessagefordifferenceweight()
+	{
+		Artisan::call('send:message-difference-weight');
+		return redirect()->back()->with(session()->flash('success', 'Proceso terminado con exito'));
+	}
+
+	public function createuuidtouser()
+	{
+		Artisan::call('create:uuid-to-user');
+		return redirect()->back()->with(session()->flash('success', 'Proceso terminado con exito'));
+	}
+
 
 }
