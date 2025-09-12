@@ -7,9 +7,6 @@
         <entry key="createDatabaseMigration.create" value="" />
         <entry key="newModelSimpleOption:addFillable" value="1" />
         <entry key="newModelSimpleOption:softDeletes" value="1" />
-        <entry key="postGeneration:controller" value="1" />
-        <entry key="postGeneration:formRequest" value="1" />
-        <entry key="postGeneration:jsonResource" value="1" />
         <entry key="postGeneration:migration" value="" />
         <entry key="postGeneration:migration2" value="" />
       </map>

@@ -391,14 +391,7 @@
                                                     ECO. DE CAJA : {{$receipt->folio ? $receipt->folio->econumber : ''}}  </p></div>
                                         </div>
                                     </div>
-
-                                    <div class="">
-                                        <div style="color:#555555;line-height:120%;font-family:'Roboto', Tahoma, Verdana, Segoe, sans-serif; padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;">
-                                            <div style="font-size:12px;line-height:14px;font-family:Roboto, Tahoma, Verdana, Segoe, sans-serif;color:#555555;text-align:left;"><p style="margin: 0;font-size: 12px;line-height: 14px">
-                                                    TICKET : {{$receipt->folio ? $receipt->folio->tiket->ticket : ''}}  </p></div>
-                                        </div>
-                                    </div>
-
+                                    
                                     <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
                             </div>
                         </div>
