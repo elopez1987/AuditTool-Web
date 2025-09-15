@@ -99,15 +99,6 @@
                     </div>
                 </a>
             @endcan
-{{--            @can('filemanager')--}}
-{{--                <a href="{{route('filemanager')}}">--}}
-{{--                    <div class="box">--}}
-{{--                        <i class="lni lni-files"></i>--}}
-{{--                        <h5>Archivos</h5>--}}
-{{--                        <h4>Archivos</h4>--}}
-{{--                    </div>--}}
-{{--                </a>--}}
-{{--            @endcan--}}
             @can('systemprinters.index')
                 <a href="{{route('systemprinters.index')}}">
                     <div class="box">
@@ -183,7 +174,25 @@
                         <h4>Dispositivos</h4>
                     </div>
                 </a>
+                @endcan
+                @can('storagetaskwhatsapp')
+                    <a href="{{route('storagetaskwhatsapp.index')}}">
+                        <div class="box">
+                            <i class="lni lni-menu"></i>
+                            <h5>Mensajes pendientes</h5>
+                            <h4>Mensajes pendientes</h4>
+                        </div>
+                    </a>
             @endcan
+                @can('storagetaskmail')
+                    <a href="{{route('storagetaskmail.index')}}">
+                        <div class="box">
+                            <i class="lni lni-menu"></i>
+                            <h5>Mensajes pendientes</h5>
+                            <h4>Mensajes pendientes</h4>
+                        </div>
+                    </a>
+                @endcan
 
             @endrole
         </div>

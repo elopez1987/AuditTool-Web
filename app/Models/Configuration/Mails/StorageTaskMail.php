@@ -16,7 +16,6 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class StorageTaskMail extends Model
 {
-//    use HasUuids;
     use LogsActivity;
 
     public function getActivitylogOptions(): LogOptions
