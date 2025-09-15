@@ -19,3 +19,8 @@ npm-debug.log
 yarn-error.log
 public/LabelLocation.txt
 public/LabelWallmart.txt
+.phpstorm.meta.php
+_ide_helper.php
+modules_statuses.json
+respuestarcmulti.txt
+respuestarcmulti.json
