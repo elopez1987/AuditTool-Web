@@ -12144,6 +12144,16 @@ div.dataTables_wrapper div.dataTables_length select {
   border-color: #c1d5e0;
 }
 
+thead, tbody, tfoot, tr, td, th {
+  border-color: inherit;
+  border-style: none !important;
+}
+
+.page-item.disabled .page-link {
+  font-size: 0.765rem;
+  padding: 6px;
+}
+
 .flex-wrap {
   margin-left: 3px;
 }

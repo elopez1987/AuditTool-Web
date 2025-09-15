@@ -47,6 +47,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'email',
         'password',
         'password2',
+        'password_changed_at',
         'avatar',
         'auxiliary01',
         'auxiliary02',
@@ -66,6 +67,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'password_changed_at' => 'datetime',
         'created_at' => 'datetime:d/m/Y H:s',
         'updated_at' => 'datetime:d/m/Y H:s',
         'lastlogin' => 'datetime:d/m/Y H:s',

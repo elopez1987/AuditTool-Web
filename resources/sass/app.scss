@@ -126,6 +126,15 @@ div.dataTables_wrapper div.dataTables_length select {
   border-color: #c1d5e0;
 }
 
+thead, tbody, tfoot, tr, td, th {
+  border-color: inherit;
+  border-style: none !important;
+}
+
+.page-item.disabled .page-link {
+  font-size: 0.765rem;
+  padding: 6px;
+}
 
 //Mueve los botones para exportar
 .flex-wrap {
@@ -348,12 +357,6 @@ span.select2-container {
     color: black;
     text-transform: uppercase !important;
     border-bottom: 1px solid #e0e0e0;
-}
-
-.table-hover tbody tr:hover {
-    color: red !important;
-    font-size: 0.675rem !important;
-    font-weight: 600;
 }
 
 .btn-outline-info {
