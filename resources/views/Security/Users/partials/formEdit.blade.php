@@ -12,8 +12,8 @@
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-12">
                     <div class="form-group">
-                        <label for="email">Nombre<span style="color: red">*</span></label>
-                        <input type="email" class="form-control" required id="email" name="email"
+                        <label for="email">Correo electronico</label>
+                        <input type="email" class="form-control" readonly id="email" name="email"
                                value="{{$user->email}}"
                         >
                     </div>
@@ -22,7 +22,7 @@
             <div class="row">
                 <div class="col-lg-4 col-md-6 col-sm-12">
                     <div class="form-group">
-                        <label for="username">Nombre de usuario<span style="color: red">*</span></label>
+                        <label for="username">Nombre de usuario</label>
                         <input type="text" class="form-control" readonly id="username" name="username"
                                value="{{$user->username}}"
                         >
@@ -54,10 +54,10 @@
             <div class="row">
                 <div class="col-lg-4 col-md-6 col-sm-12">
                     <div class="form-group">
-                        <label for="name">Número de contacto </label>
+                        <label for="auxiliary01">Auxiliary 01</label>
                         <input type="text" class="form-control numeric" id="auxiliary01" name="auxiliary01"
                                maxlength="10"
-                               aria-describedby="auxiliary01" value="{{old('auxiliary01')}}">
+                               aria-describedby="auxiliary01" value="{{$user->auxiliary01}}">
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-12">
@@ -88,13 +88,6 @@
                         <label for="auxiliary05">Auxiliar 05 </label>
                         <input type="text" class="form-control" id="auxiliary05" name="auxiliary05" maxlength="100"
                                aria-describedby="auxiliary05" value="{{$user->auxiliary05}}">
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-12">
-                    <div class="form-group">
-                        <label for="auxiliary06">Auxiliar 06 </label>
-                        <input type="text" class="form-control" id="auxiliary06" name="auxiliary06" maxlength="100"
-                               aria-describedby="auxiliary06" value="{{$user->auxiliary06}}">
                     </div>
                 </div>
             </div>

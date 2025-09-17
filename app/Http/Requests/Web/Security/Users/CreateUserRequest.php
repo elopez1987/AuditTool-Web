@@ -16,12 +16,17 @@ class CreateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:50',
+			'name' => 'required|string|max:150',
             'email' => 'required|email|unique:users,email',
-            'password' => ['required', 'string', Password::min(8)->mixedCase()
+			'password' => ['required', 'string', Password::min(10)->mixedCase()
                 ->uncompromised()->symbols()->letters()->numbers()],
             'role_id' => 'required|exists:roles,name',
-            'username' => 'required|max:8|string|unique:users,username'
+			'username' => 'required|max:8|string|unique:users,username',
+			'auxiliary01' => 'nullable|string|max:190|regex:/^[a-zA-Z0-9\s]+$/',
+			'auxiliary02' => 'nullable|string|max:190|regex:/^[a-zA-Z0-9\s]+$/',
+			'auxiliary03' => 'nullable|string|max:190|regex:/^[a-zA-Z0-9\s]+$/',
+			'auxiliary04' => 'nullable|string|max:190|regex:/^[a-zA-Z0-9\s]+$/',
+			'auxiliary05' => 'nullable|string|max:190|regex:/^[a-zA-Z0-9\s]+$/',
         ];
     }
 
@@ -54,4 +59,6 @@ class CreateUserRequest extends FormRequest
             'password.letters' => 'El campo contraseña debe contener letras.',
         ];
     }
+
+	
 }
