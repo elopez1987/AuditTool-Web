@@ -30,16 +30,6 @@
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-12">
                     <div class="form-group">
-                        <label for="password">Contraseña<span style="color: red">*</span></label>
-                        <input type="text" class="form-control" id="password" name="password"
-                               value="{{$user->password2}}"
-                        >
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 col-md-6 col-sm-12">
-                    <div class="form-group">
                         <label for="role_id">Perfil de usuario <span style="color: red">*</span></label>
                         <select name="role_id" class="form-control select2">
                             @foreach($roles as $rol)
