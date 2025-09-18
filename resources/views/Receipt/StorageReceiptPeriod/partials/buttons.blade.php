@@ -10,3 +10,12 @@
     </a>
     @include('Receipt.StorageReceiptPeriod.partials.active')
 @endcan
+
+@can('storagereceiptperiods.destroy')
+    <a href="" data-target="#modal-delete-{{$id}}" data-toggle="modal">
+        <img src="{{asset('/ico/destroy2.png')}}" alt=""
+             class="img-16 ml-2">
+    </a>
+    @include('Receipt.StorageReceiptPeriod.delete')
+@endcan
+

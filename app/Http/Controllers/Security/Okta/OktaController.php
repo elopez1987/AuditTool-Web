@@ -34,7 +34,6 @@ class OktaController extends BaseController
             ]);
             $body = $response->getBody()->getContents();
             $data = json_decode($body, true);
-            \Log::info($data);
             return $data;
         } catch (RequestException $e) {
             echo "HTTP Request failed:\n";
@@ -63,7 +62,7 @@ class OktaController extends BaseController
             'name' => $user->name,
             'nickname' => $user->username,
             'connection' => $datawsokta->audience,
-            'password' => $user->password2,
+			'password' => 'Temporal12##',
             'verify_email' => true,
             'username' => $user->username,
         ]);

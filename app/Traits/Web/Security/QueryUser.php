@@ -26,7 +26,7 @@ trait QueryUser
             ->leftJoin('roles', 'roles.id', '=', 'model_has_roles.role_id')
             ->leftJoin('securityaccesswarehouses', 'users.username', '=', 'securityaccesswarehouses.username')
             ->leftJoin('securityuserssessions', 'users.username', '=', 'securityuserssessions.username')
-            ->select(['users.name', 'users.password2', 'users.id', 'users.email','users.uuiduser',
+			->select(['users.name', 'users.id', 'users.email', 'users.uuiduser',
                 'users.username', 'roles.description as role', 'securityuserssessions.lastsessiondate as lastlogin',
                 'systemstatus.name as status', 'users.created_at', 'users.updated_at'])
             ->Name($request->get('name'))

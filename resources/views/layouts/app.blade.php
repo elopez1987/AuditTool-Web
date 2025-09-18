@@ -91,28 +91,11 @@
 
 <script type="text/javascript">
     jQuery(document).ready(function () {
-        jQuery(".numeric").on('input', function (evt) {
+        jQuery(".numeric").on('input', function () {
             jQuery(this).val(jQuery(this).val().replace(/[^0-9]/g, ''));
         });
     });
 </script>
-{{--<script>--}}
-{{--    $(document).ready(function () {--}}
-{{--        setInterval(keepTokenAlive, 1000 * 60 * 15);--}}
-
-{{--        function keepTokenAlive() {--}}
-{{--            $.ajax({--}}
-{{--                url: '/keep-token-alive',--}}
-{{--                method: 'post',--}}
-{{--                headers: {--}}
-{{--                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
-{{--                }--}}
-{{--            }).then(function (result) {--}}
-{{--            });--}}
-{{--        }--}}
-{{--    });--}}
-{{--</script>--}}
-
 </body>
 
 </html>

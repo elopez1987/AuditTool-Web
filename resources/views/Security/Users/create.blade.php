@@ -23,11 +23,11 @@
                         <hr class="mt-3">
                         @include('Security.Users.partials.formCreate')
                     </form>
-                    @include('layouts.Partials.Errors')
                 </div>
             </div>
         </div>
     </div>
+    @include('layouts.Partials.Errors')
 @endsection
 
 @section('script')

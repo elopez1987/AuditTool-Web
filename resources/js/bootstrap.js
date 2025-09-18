@@ -7,9 +7,11 @@ window._ = require('lodash');
  */
 
 try {
-    window.Popper = require('popper.js').default;
+    // Bootstrap 5 usa @popperjs/core en lugar de popper.js
+    window.Popper = require('@popperjs/core');
     window.$ = window.jQuery = require('jquery');
 
+    // Importar Bootstrap 5
     require('bootstrap');
 } catch (e) {}
 

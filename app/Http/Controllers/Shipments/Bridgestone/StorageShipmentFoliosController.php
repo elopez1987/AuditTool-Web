@@ -24,25 +24,7 @@ class StorageShipmentFoliosController extends BaseController
         return $this->showDataToView($data, 'Shipments.Bridgestone.ShipmentFolios.partials.buttons');
     }
 
-
-    public function show($id)
-    {
-    }
-
-    public function edit($id)
-    {
-    }
-
-    public function update(Request $request, $id)
-    {
-
-    }
-
-    public function destroy($id)
-    {
-    }
-
-    public function storageshipmentfoliospdf(string $id)
+	public function storageshipmentfoliospdf(string $id)
     {
         $folio = StorageShipmentFolios::controlAccessUser()
             ->with(['center:centerid,name,description', 'warehouse:warehouseid,name',
