@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Counting\StorageCountDronHeadController;
 use App\Http\Controllers\Inventory\InventoryPartNumberCategory01sController;
 use App\Http\Controllers\Inventory\InventoryPartNumberCategory02sController;
 use App\Http\Controllers\Inventory\InventoryPartNumbers\ImportPartNumbersController;
@@ -42,8 +41,4 @@ Route::middleware(['auth'])->group(function () {
     Route::put('inventorypartnumbersaddparameters/{id}', [ParameterPartNumberController::class, 'addparameters'])->name('addparameters');
 
 
-    Route::resource('storagecountdronhead',StorageCountDronHeadController::class)->only('index', 'show');
-    Route::get('getInventoryHeadDron',[StorageCountDronHeadController::class,'getInventoryHeadDron'])->name('getInventoryHeadDron');
-
-    Route::get('getinventoryheaddrondetail',[StorageCountDronHeadController::class,'getInventoryHeadDronDetail'])->name('getinventoryheaddrondetail');
 });

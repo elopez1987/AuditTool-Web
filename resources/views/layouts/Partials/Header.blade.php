@@ -86,20 +86,21 @@
                             <span class="with-arrow"><span class="bg-info"></span></span>
                             <div class="d-flex no-block align-items-center p-15 bg-grey mb-2">
                                 <div class="ml-2">
-
                                     <h5 class="mb-0 font-14 mt-3"> {{Auth::user()->name}}</h5>
-                                    <p class=" mb-1 mt-1 font-12 ">
-                                        PERFIL: {{Auth::user()->roles ? Auth::user()->roles()->first()->description : ''}}</p>
-
                                 </div>
                             </div>
 
-                            <a class="dropdown-item" href="{{url('profile/' . Auth::user()->uuiduser)}}"><i
-                                    class="ti-user mr-1 ml-1 text-success font-14"></i> Mi perfil</a>
-                            <div class="dropdown-divider"></div>
+                            {{--    <a class="dropdown-item" href="{{url('profile/' . Auth::user()->uuiduser)}}"><i class="ti-user mr-1 ml-1 text-success font-14"></i> Mi perfil</a>--}}
+                            <div class="d-flex no-block align-items-center p-15  mb-2">
+                                <div class="ml-2">
+                                    <p class=" mb-1 mt-1 font-12 ">
+                                        PERFIL: {{Auth::user()->roles ? Auth::user()->roles()->first()->description : ''}}</p>
+                                </div>
+                            </div>
+
 
                             <a class="dropdown-item" href="{{route('logout')}}"><i
-                                    class="fa fa-power-off mr-1 ml-1 text-danger font-14"></i> Cerrar Sesión</a>
+                                        class="fa fa-power-off mr-1 ml-1 text-danger font-14"></i> Cerrar Sesión</a>
                         </div>
                     @endauth
                 </li>

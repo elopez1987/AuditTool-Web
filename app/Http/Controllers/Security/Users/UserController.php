@@ -65,11 +65,9 @@ class UserController extends BaseController
             DB::rollback();
         }
         if ($success) {
-            return redirect::back()->with(session()
-                ->flash('success', 'Datos agregados correctamente!!'));
+			return redirect::back()->with(session()->flash('success', 'Datos agregados correctamente!!'));
         } else {
-            return redirect::back()->withInput()->with(session()
-                ->flash('success', 'No se pudieron guardar los datos!!' . $error));
+			return redirect::back()->withInput()->with(session()->flash('success', 'No se pudieron guardar los datos!!' . $error));
         }
     }
 
@@ -84,8 +82,9 @@ class UserController extends BaseController
 
     public function update(UpdateUserRequest $request, $uuiduser)
     {
-        $user = $this->serviceuser->updateUser($uuiduser, $request);
-        $user->syncRoles([$request['role_id']]);
+		$securityuser = User::where('uuiduser', $uuiduser)->first();
+		$securityuser->update($request->validated());
+		$securityuser->syncRoles([$request['role_id']]);
         return $this->infoResponse('securityusers.index');
     }
 

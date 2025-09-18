@@ -25,40 +25,6 @@
                         @include('Security.Users.partials.formEdit')
                     </form>
                     <hr>
-{{--                    <div class="row mt-4">--}}
-{{--                        @can('securityusers.destroy')--}}
-{{--                            <div class="col-lg-12">--}}
-{{--                                @if($user->statusid == 'E')--}}
-{{--                                    <a href="" data-target="#modal-delete-{{$user->uuiduser}}" data-toggle="modal">--}}
-{{--                                        <button type="button"--}}
-{{--                                                class="btn waves-effect waves-light btn-outline-info btn-md">--}}
-{{--                                            <img--}}
-{{--                                                src="{{asset('/ico/delete_delete_deleteusers_delete_male_user_maleclient_2348.png')}}"--}}
-{{--                                                alt="" class="img-16 ml-2">--}}
-{{--                                            <span style="font-size: 0.675rem "> Eliminar Usuario</span>--}}
-{{--                                        </button>--}}
-{{--                                    </a>--}}
-{{--                                @endif--}}
-{{--                                @if($user->statusid == 'D')--}}
-{{--                                    <a href="" data-target="#modal-restore-{{$user->uuiduser}}" data-toggle="modal">--}}
-{{--                                        <button type="button"--}}
-{{--                                                class="btn waves-effect waves-light btn-outline-info btn-md ml-3">--}}
-{{--                                            <img--}}
-{{--                                                src="{{asset('/ico/cloudrefresh_icon-icons.com_54403.png')}}"--}}
-{{--                                                alt="" class="img-16 ml-2">--}}
-{{--                                            <span style="font-size: 0.675rem "> Restaurar Usuario</span>--}}
-{{--                                        </button>--}}
-{{--                                    </a>--}}
-{{--                                @endif--}}
-
-{{--                            </div>--}}
-
-{{--                            @include('Security.Users.delete')--}}
-{{--                            @include('Security.Users.restore')--}}
-{{--                        @endcan--}}
-{{--                    </div>--}}
-
-
                     <div class="row mt-4">
                         @can('securityusers.destroy')
                             <div class="col-lg-12">
