@@ -89,6 +89,10 @@
                                     <th class="text-white">Nombre del operador</th>
                                     <th class="text-white">Peso de entrada KG</th>
                                     <th class="text-white">Peso de entrada LB</th>
+                                    <th class="text-white">Peso de salida KG</th>
+                                    <th class="text-white">Peso de salida LB</th>
+                                    <th class="text-white">Peso de producto</th>
+                                    <th class="text-white">Estatus</th>
                                     <th class="text-white">Opciones</th>
                                 </tr>
                                 </thead>

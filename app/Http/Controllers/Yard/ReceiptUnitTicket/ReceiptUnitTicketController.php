@@ -18,7 +18,7 @@ class ReceiptUnitTicketController extends BaseController
 
 	public function getUnitTickets(Request $request)
 	{
-		$data = ReceiptUnitTicket::with('folio')->take(500)->orderBy('id', 'desc')->get();
+		$data = ReceiptUnitTicket::with('folio', 'status')->take(500)->orderBy('id', 'desc')->get();
 		return DataTables::of($data)
 			->addColumn('btn', 'Yards.ReceiptUnitTicket.partials.buttons')
 			->addColumn('warehousename', function ($row) {

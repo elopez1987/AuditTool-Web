@@ -2,6 +2,7 @@
 
 namespace App\Models\Yard;
 
+use App\Models\Configuration\Schemas\SystemStatus;
 use App\User;
 use Auth;
 use Carbon\Carbon;
@@ -62,6 +63,12 @@ class ReceiptUnitTicket extends Model
 	{
 		return $this->belongsTo(ReceiptUnit::class, 'folionumber', 'id');
 	}
+
+	public function status()
+	{
+		return $this->belongsTo(SystemStatus::class, 'statusid', 'statusid');
+	}
+
 
 //  -----------------------  Relaciones entre modelos  ---------------------------------------------
 
