@@ -1,6 +1,6 @@
 <div class="modal fade bs-example-modal-lg" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true"
-     style="display: none;" id="modal-restore-{{$user->uuiduser}}">
-    <form method="POST" action="{{url('restoreuser/' . $user->uuiduser)}}">
+     style="display: none;" id="modal-restore-{{$user->id}}">
+    <form method="POST" action="{{url('restoreuser/' . $user->id)}}">
         {{ method_field('PUT') }}
         @csrf
         <div class="modal-dialog modal-lg">
