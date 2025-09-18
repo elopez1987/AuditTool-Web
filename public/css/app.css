@@ -12218,6 +12218,11 @@ span.select2-container {
   border: 0;
 }
 
+.dropdown-item {
+  font-size: 0.775rem;
+  padding: 8px;
+}
+
 .mr-left {
   margin-left: 4px !important;
 }

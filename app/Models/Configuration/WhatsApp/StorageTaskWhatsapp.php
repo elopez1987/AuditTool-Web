@@ -2,6 +2,7 @@
 
 namespace App\Models\Configuration\WhatsApp;
 
+use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -37,6 +38,11 @@ class StorageTaskWhatsapp extends Model
 		'statusid' => 'E',
 		'schemaid' => 'STS',
 	];
+
+	public function certer()
+	{
+		return $this->belongsTo(SystemCenterDistribution::class, 'centerid', 'centerid');
+	}
 
 
 	protected static function boot()
