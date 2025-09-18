@@ -12097,16 +12097,6 @@ a {
   border-radius: 10px;
 }
 
-.box:hover {
-  transform: scale(1.1);
-  box-shadow: 0px 0px 30px -15px rgba(0, 0, 0, 0.5);
-  background: rgb(73, 155, 234);
-  z-index: 1;
-  border-bottom: 4px solid;
-  border-bottom-color: blue;
-  font-size: 15px !important;
-}
-
 @media (min-width: 768px) {
   #main-wrapper[data-layout=horizontal] .left-sidebar .scroll-sidebar {
     height: 50px !important;
@@ -12380,12 +12370,13 @@ span.select2-container {
 
 .btn-outline-info {
   border-color: #dedede;
-  color: white;
+  color: #0b2e13;
   border-width: 1px;
   border-style: solid;
-  background: rgb(73, 155, 234);
-  background: -webkit-gradient(left top, left bottom, color-stop(0%, rgb(73, 155, 234)), color-stop(100%, rgb(32, 124, 229)));
-  background: linear-gradient(to bottom, rgb(73, 155, 234) 0%, rgb(32, 124, 229) 100%);
+  background: rgb(255, 255, 255);
+  background: -webkit-gradient(left top, left bottom, color-stop(0%, rgb(255, 255, 255)), color-stop(47%, rgb(246, 246, 246)), color-stop(100%, rgb(237, 237, 237)));
+  background: linear-gradient(to bottom, rgb(255, 255, 255) 0%, rgb(246, 246, 246) 47%, rgb(237, 237, 237) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff", endColorstr="#ededed", GradientType=0);
 }
 
 table.dataTable thead th, table.dataTable tfoot th, table.dataTable tfoot td {
@@ -12394,10 +12385,7 @@ table.dataTable thead th, table.dataTable tfoot th, table.dataTable tfoot td {
   border-width: 1px;
   border-style: solid;
   padding: 5px;
-  background: rgb(73, 155, 234);
-  background: -webkit-gradient(left top, left bottom, color-stop(0%, rgb(73, 155, 234)), color-stop(100%, rgb(32, 124, 229)));
-  background: linear-gradient(to bottom, rgb(73, 155, 234) 0%, rgb(32, 124, 229) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#499bea", endColorstr="#207ce5", GradientType=0);
+  background: #90a4ae;
 }
 
 .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
@@ -12410,12 +12398,6 @@ table.dataTable thead th, table.dataTable tfoot th, table.dataTable tfoot td {
   background: -webkit-gradient(left top, left bottom, color-stop(0%, rgb(255, 255, 255)), color-stop(47%, rgb(246, 246, 246)), color-stop(100%, rgb(237, 237, 237)));
   background: linear-gradient(to bottom, rgb(255, 255, 255) 0%, rgb(246, 246, 246) 47%, rgb(237, 237, 237) 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff", endColorstr="#ededed", GradientType=0);
-}
-
-.btn-outline-info:hover {
-  background: #ededed !important;
-  border-color: #c1d5e0;
-  color: black;
 }
 
 .btn-info {
@@ -12768,6 +12750,21 @@ main h1, main .h1 {
   transition: all 600ms ease;
 }
 
+.box i {
+  font-size: 18px;
+  color: #283593;
+}
+
+.box:hover {
+  transform: scale(1.1);
+  box-shadow: 0px 0px 30px -15px rgba(0, 0, 0, 0.5);
+  background: rgb(73, 155, 234);
+  z-index: 1;
+  border-bottom: 4px solid;
+  border-bottom-color: blue;
+  font-size: 15px !important;
+}
+
 .img-menubar {
   font-size: 26px;
   color: #455a64;
@@ -12885,11 +12882,6 @@ tfoot input {
 .text-menu-principal {
   font-size: 25px;
   color: black !important;
-}
-
-.box i {
-  font-size: 18px;
-  color: #455a64;
 }
 
 .select2-container--default .select2-results__option--highlighted[aria-selected] {

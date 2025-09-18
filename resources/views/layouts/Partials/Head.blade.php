@@ -15,8 +15,8 @@
     <link rel="stylesheet"
           href="{{asset('/theme/assets/libs/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css')}}">
     @yield('css')
-    <link href="https://cdn.lineicons.com/3.0/lineicons.css" rel="stylesheet">
     {{--    <link href="https://cdn.lineicons.com/5.0/lineicons.css" rel="stylesheet"/>--}}
     <link rel="stylesheet" href="{{asset('/theme/dist/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('/css/app.css')}}">
+    <link href="https://cdn.lineicons.com/3.0/lineicons.css" rel="stylesheet">
 </head>

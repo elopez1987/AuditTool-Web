@@ -77,16 +77,6 @@ a {
   border-radius: 10px;
 }
 
-//hover para el  submenu principal
-.box:hover {
-  transform: scale(1.1);
-  box-shadow: 0px 0px 30px -15px rgba(0, 0, 0, 0.5);
-  background: rgba(73, 155, 234, 1);
-  z-index: 1;
-  border-bottom: 4px solid;
-  border-bottom-color: blue;
-  font-size: 15px !important;
-}
 
 @media (min-width: 768px) {
   #main-wrapper[data-layout="horizontal"] .left-sidebar .scroll-sidebar {
@@ -366,30 +356,44 @@ span.select2-container {
 
 .btn-outline-info {
   border-color: #dedede;
-  //background-color: #90caf9;
-  color: white;
-  //color: #0b2e13;
+  color: #0b2e13;
   border-width: 1px;
   border-style: solid;
-  //background: rgba(255, 255, 255, 1);
-  //background: -moz-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
-  //background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(255, 255, 255, 1)), color-stop(47%, rgba(246, 246, 246, 1)), color-stop(100%, rgba(237, 237, 237, 1)));
-  //background: -webkit-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
-  //background: -o-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
-  //background: -ms-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
-  //background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
-  //filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed', GradientType=0);
-
-  background: rgba(73, 155, 234, 1);
-  background: -moz-linear-gradient(top, rgba(73, 155, 234, 1) 0%, rgba(32, 124, 229, 1) 100%);
-  background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(73, 155, 234, 1)), color-stop(100%, rgba(32, 124, 229, 1)));
-  background: -webkit-linear-gradient(top, rgba(73, 155, 234, 1) 0%, rgba(32, 124, 229, 1) 100%);
-  background: -o-linear-gradient(top, rgba(73, 155, 234, 1) 0%, rgba(32, 124, 229, 1) 100%);
-  background: -ms-linear-gradient(top, rgba(73, 155, 234, 1) 0%, rgba(32, 124, 229, 1) 100%);
-  background: linear-gradient(to bottom, rgba(73, 155, 234, 1) 0%, rgba(32, 124, 229, 1) 100%);
-
-
+  //background-color: #ededed;
+  background: rgba(255, 255, 255, 1);
+  background: -moz-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+  background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(255, 255, 255, 1)), color-stop(47%, rgba(246, 246, 246, 1)), color-stop(100%, rgba(237, 237, 237, 1)));
+  background: -webkit-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+  background: -o-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+  background: -ms-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed', GradientType=0);
 }
+
+
+//.btn-outline-info:hover {
+//  background: #ededed !important;
+//  border-bottom: 3px solid #546e7a;
+//  color: black;
+//}
+
+//.btn-outline-info {
+//  --bs-btn-color: #0dcaf0;
+//  --bs-btn-border-color: none;
+//  --bs-btn-hover-color: #000;
+//  --bs-btn-hover-bg: #0dcaf0;
+//  --bs-btn-hover-border-color: none;
+//  --bs-btn-focus-shadow-rgb: 13, 202, 240;
+//  --bs-btn-active-color: #000;
+//  --bs-btn-active-bg: #0dcaf0;
+//  --bs-btn-active-border-color: #0dcaf0;
+//  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+//  --bs-btn-disabled-color: #0dcaf0;
+//  --bs-btn-disabled-bg: transparent;
+//  --bs-btn-disabled-border-color: #0dcaf0;
+//  --bs-gradient: none;
+//}
+
 
 table.dataTable thead th, table.dataTable tfoot th, table.dataTable tfoot td {
   border-color: #dedede;
@@ -397,15 +401,8 @@ table.dataTable thead th, table.dataTable tfoot th, table.dataTable tfoot td {
   border-width: 1px;
   border-style: solid;
   padding: 5px;
+  background: #90a4ae;
 
-  background: rgba(73, 155, 234, 1);
-  background: -moz-linear-gradient(top, rgba(73, 155, 234, 1) 0%, rgba(32, 124, 229, 1) 100%);
-  background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(73, 155, 234, 1)), color-stop(100%, rgba(32, 124, 229, 1)));
-  background: -webkit-linear-gradient(top, rgba(73, 155, 234, 1) 0%, rgba(32, 124, 229, 1) 100%);
-  background: -o-linear-gradient(top, rgba(73, 155, 234, 1) 0%, rgba(32, 124, 229, 1) 100%);
-  background: -ms-linear-gradient(top, rgba(73, 155, 234, 1) 0%, rgba(32, 124, 229, 1) 100%);
-  background: linear-gradient(to bottom, rgba(73, 155, 234, 1) 0%, rgba(32, 124, 229, 1) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#499bea', endColorstr='#207ce5', GradientType=0);
 }
 
 .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
@@ -422,12 +419,6 @@ table.dataTable thead th, table.dataTable tfoot th, table.dataTable tfoot td {
   background: -ms-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
   background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed', GradientType=0);
-}
-
-.btn-outline-info:hover {
-  background: #ededed !important;
-  border-color: #c1d5e0;
-  color: black;
 }
 
 .btn-info {
@@ -795,6 +786,23 @@ main h1 {
   transition: all 600ms ease;
 }
 
+.box i {
+  font-size: 18px;
+  color: #283593;
+}
+
+//hover para el  submenu principal
+.box:hover {
+  transform: scale(1.1);
+  box-shadow: 0px 0px 30px -15px rgba(0, 0, 0, 0.5);
+  background: rgba(73, 155, 234, 1);
+  z-index: 1;
+  border-bottom: 4px solid;
+  border-bottom-color: blue;
+  font-size: 15px !important;
+}
+
+
 .img-menubar {
   font-size: 26px;
   color: #455a64
@@ -921,10 +929,6 @@ tfoot input {
   color: black !important;
 }
 
-.box i {
-  font-size: 18px;
-  color: #455a64;
-}
 
 .select2-container--default .select2-results__option--highlighted[aria-selected] {
   background-color: #455a64;
