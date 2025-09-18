@@ -92,8 +92,6 @@ class OktaController extends BaseController
 		$datawsokta = EdiWsToken::where('servicetype', 'OKTA')->first();
 		DB::beginTransaction();
 		try {
-
-			// Enviar la solicitud DELETE con el encabezado de autorización
 			$client->delete($datawsokta->baseuri . 'api/v2/users/' . $userId, [
 				'headers' => [
 					'Authorization' => 'Bearer ' . $token['access_token'],
@@ -101,11 +99,6 @@ class OktaController extends BaseController
 					'Content-Type' => 'application/json',
 				],
 			]);
-
-//			Obtener el cuerpo de la respuesta
-//			$body = $response->getBody();
-//			$content = $body->getContents();
-
 			$user->statusid = 'D';
 			$user->auth0 = '';
 			$user->save();
