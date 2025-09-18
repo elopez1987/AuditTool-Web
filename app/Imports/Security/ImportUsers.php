@@ -81,8 +81,7 @@ class ImportUsers implements ToModel, WithHeadingRow, WithChunkReading, WithBatc
             [
                 'email' => $row['email'],
                 'name' => $row['name'],
-                'password' => bcrypt('Temporal12#'),
-                'password2' => 'Temporal12#',
+				'password' => bcrypt('Temporal12##'),
             ]);
         return $user;
     }

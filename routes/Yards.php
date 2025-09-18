@@ -49,6 +49,7 @@ use App\Http\Controllers\Yard\ReceiptUnit\Reports\ReportYardController;
 use App\Http\Controllers\Yard\ReceiptUnit\StorageSealLotoController;
 use App\Http\Controllers\Yard\ReceiptUnit\Taks\StorageTasksController;
 use App\Http\Controllers\Yard\ReceiptUnit\TraceUnit\TraceReceiptUnitController;
+use App\Http\Controllers\Yard\ReceiptUnitTicket\ReceiptUnitTicketController;
 use App\Http\Controllers\Yard\ShipmentTruck\ImportShipmentTruckController;
 use App\Http\Controllers\Yard\ShipmentTruck\ShipmentTruckController;
 use App\Http\Controllers\Yard\ShipmentTruck\ShipmentTruckToleranceController;
@@ -316,7 +317,6 @@ Route::middleware(['auth'])->group(function () {
 //    Reporte de Estadias
     Route::get('reportstays',[ReportStayController::class,'index'])->name('reportstays');
     Route::get('getDataStays',[ReportStayController::class,'getDataStays'])->name('getDataStays');
-    Route::get('getdatastayclear',[ReportStayController::class,'getdatastayclear'])->name('getdatastayclear');
 //  Monitor de cajas en patio con cálculo de tiempos
     Route::get('monitorunitsyard',[MonitorUnitsController::class,'index'])->name('monitorunitsyard');
     Route::get('getDataStockBox',[MonitorUnitsController::class,'getDataStockBox'])->name('getDataStockBox');
@@ -330,7 +330,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('vitualyard', [YardHenkelTolController::class, 'index'])->name('vitualyard');
 //  Vista de cortinas y stages
     Route::get('layoutyard',[LayOutDoorAndStageController::class,'index'])->name('layoutyard');
-
+//	Ticket de pesos de báscula
+	Route::resource('receiptunitticket', ReceiptUnitTicketController::class)->only('index');
+	Route::get('getUnitTickets', [ReceiptUnitTicketController::class, 'getUnitTickets'])->name('getUnitTickets');
 
 
 
