@@ -42,7 +42,7 @@ class StorageTaskWhatsapp extends Model
 		'schemaid' => 'STS',
 	];
 
-	public function certer()
+	public function center(): BelongsTo
 	{
 		return $this->belongsTo(SystemCenterDistribution::class, 'centerid', 'centerid');
 	}

@@ -15,7 +15,8 @@ class StorageTaskMailsController extends BaseController
 	public function taskmailslist()
 	{
 		$data = StorageTaskMail::controlAccessUser()
-			->with(['center:centerid,description', 'warehouse:warehouseid,name', 'status:statusid,name'])->get();
+			->with(['center:centerid,description', 'warehouse:warehouseid,name', 'status:statusid,name'])
+			->get();
 		return $this->showDataToView($data, 'Configuration.StorageTaskMail.partials.buttons');
 	}
 
