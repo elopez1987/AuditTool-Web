@@ -11,9 +11,9 @@ use Maatwebsite\Excel\Facades\Excel;
 class EventUserController extends BaseController
 {
 
-    public function restoreuser($uuiduser)
+	public function restoreuser($id)
     {
-        $user = User::withTrashed()->where('uuiduser', $uuiduser)->first();
+		$user = User::withTrashed()->where('id', $id)->first();
         $user->statusid = 'E';
         $user->save();
         $user->restore();

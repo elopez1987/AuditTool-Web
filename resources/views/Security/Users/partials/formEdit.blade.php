@@ -44,6 +44,16 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <label for="username">Estatus</label>
+                        <input type="text" class="form-control" readonly id="username" name="username"
+                               value="{{$user->status->name}}"
+                        >
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
