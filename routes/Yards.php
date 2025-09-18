@@ -331,7 +331,7 @@ Route::middleware(['auth'])->group(function () {
 //  Vista de cortinas y stages
     Route::get('layoutyard',[LayOutDoorAndStageController::class,'index'])->name('layoutyard');
 //	Ticket de pesos de báscula
-	Route::resource('receiptunitticket', ReceiptUnitTicketController::class)->only('index');
+	Route::resource('receiptunitticket', ReceiptUnitTicketController::class)->only('index', 'destroy');
 	Route::get('getUnitTickets', [ReceiptUnitTicketController::class, 'getUnitTickets'])->name('getUnitTickets');
 
 

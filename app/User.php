@@ -46,7 +46,6 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'name',
         'email',
         'password',
-        'password2',
         'password_changed_at',
         'avatar',
         'auxiliary01',
@@ -54,7 +53,8 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'auxiliary03',
         'auxiliary04',
         'auxiliary05',
-        'statusid'
+		'statusid',
+		'auth0'
     ];
 
 
@@ -62,7 +62,6 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'password',
         'remember_token',
         'schemaid',
-        'password2',
     ];
 
     protected $casts = [

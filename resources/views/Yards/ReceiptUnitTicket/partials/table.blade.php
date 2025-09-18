@@ -1,6 +1,7 @@
 <script>
+    let oTable;
     $(document).ready(function () {
-        let oTable = $("#table-tickets").DataTable({
+        oTable = $("#table-tickets").DataTable({
             "paging": true,
             "searching": true,
             "ordering": true,
@@ -17,8 +18,9 @@
                 data: function (d) {
                     d.warehouseid = $('select[name=warehouseid]').val();
                     d.folionumber = $('input[name=folionumber]').val();
+                    d.ticket = $('input[name=ticket]').val();
                     d.boxnumber = $('input[name=boxnumber]').val();
-                    d.statusid = $('select[name=statusid]').val();
+                    d.carrierid = $('select[name=carrierid]').val();
                 }
             },
             "columns": [
@@ -99,10 +101,16 @@
             e.preventDefault();
         });
 
-        $('#table-boxsotck').on('blur', function () {
-            $('#table-boxsotck tfoot input').val(''); // Limpia el footer
+        $('#table-tickets').on('blur', function () {
+            $('#table-tickets tfoot input').val(''); // Limpia el footer
             oTable.draw(); // Redibuja la tabla
         });
     });
+
+    function reloadtable() {
+        if (oTable) {
+            oTable.ajax.reload();
+        }
+    }
 </script>
 

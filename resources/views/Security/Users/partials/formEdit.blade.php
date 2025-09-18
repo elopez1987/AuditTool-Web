@@ -90,6 +90,13 @@
                                aria-describedby="auxiliary05" value="{{$user->auxiliary05}}">
                     </div>
                 </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <label for="auth0">Auth0 </label>
+                        <input type="text" class="form-control" id="auth0" name="auth0" maxlength="100"
+                               aria-describedby="auth0" value="{{$user->auth0}}">
+                    </div>
+                </div>
             </div>
         </div>
     </div>

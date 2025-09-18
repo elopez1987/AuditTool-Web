@@ -48,6 +48,14 @@
                             </div>
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
+                                    <label for="ticket">Número de Ticket</label>
+                                    <input type="text" class="form-control numeric" id="ticket" name="ticket"
+                                           onKeyUp=this.value=this.value.toUpperCase()
+                                    >
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-6 col-sm-12">
+                                <div class="form-group">
                                     <label for="trucknumber">Placa de caja</label>
                                     <input type="text" class="form-control" id="trucknumber" name="trucknumber"
                                            onKeyUp=this.value=this.value.toUpperCase()
@@ -113,13 +121,9 @@
 @section('script')
     @include('Yards.ReceiptUnitTicket.partials.table')
     <script>
-        function reloadtable() {
-            $('#table-tickets').DataTable().ajax.reload();
-        }
-    </script>
-    <script>
         $("#carrierid,#warehouseid").change(function () {
             reloadtable();
         });
     </script>
+
 @endsection

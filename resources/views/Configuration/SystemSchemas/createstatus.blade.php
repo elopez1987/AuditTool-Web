@@ -146,8 +146,8 @@
                                 <tbody>
                                     @foreach($statusList as $statu)
                                         <tr>
-                                            <td>{{$statu->auxiliary02}}</td>
-                                            <td>{{$statu->auxiliary03}}</td>
+                                            <td>{{$statu->auxiliary02}} {{$statu->centerid}}</td>
+                                            <td>{{$statu->auxiliary03}} {{$statu->warehouseid}}</td>
                                             <td>{{$statu->statusid}}</td>
                                             <td>{{$statu->name}}</td>
                                             <td>{{$statu->comment}}</td>

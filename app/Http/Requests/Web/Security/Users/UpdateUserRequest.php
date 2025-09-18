@@ -16,6 +16,7 @@ class UpdateUserRequest extends FormRequest
 			'auxiliary03' => 'nullable|string|max:190|regex:/^[a-zA-Z0-9\s]+$/',
 			'auxiliary04' => 'nullable|string|max:190|regex:/^[a-zA-Z0-9\s]+$/',
 			'auxiliary05' => 'nullable|string|max:190|regex:/^[a-zA-Z0-9\s]+$/',
+			'auth0' => 'nullable|string|max:190',
 
 		];
 	}
