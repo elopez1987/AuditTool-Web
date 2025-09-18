@@ -4,9 +4,11 @@
             <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i
                     class="ti-menu ti-close"></i></a>
             <a class="navbar-brand" href="{{route('home')}}">
-                <span class="logo-text font-weight-bold text-white font-20">
-                    YardTrax
-               </span>
+                {{--                <span class="logo-text font-weight-bold text-white font-20">--}}
+                {{--                    YardTrax--}}
+                {{--               </span>--}}
+                <link rel="icon" type="image/png" sizes="16x16" href=" {{asset('/img/negro.png')}}">
+                <img src="{{asset('img/negro.png')}}" alt="" style="width: 150px;height: 35px">
             </a>
             <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)"
                data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"

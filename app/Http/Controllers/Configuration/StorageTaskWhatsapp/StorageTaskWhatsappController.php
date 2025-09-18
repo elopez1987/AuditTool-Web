@@ -15,8 +15,7 @@ class StorageTaskWhatsappController extends BaseController
 
 	public function storagetaskwhatsapplist()
 	{
-		$data = StorageTaskWhatsapp::with(['center:centerid,description',
-			'warehouse:warehouseid,name', 'status:statusid,name'])->get();
+		$data = StorageTaskWhatsapp::controlAccessUser()->with(['center:centerid,description', 'warehouse:warehouseid,name', 'status:statusid,name'])->get();
 		return $this->showDataToView($data, 'Configuration.StorageTaskWhatsapp.partials.buttons');
 	}
 

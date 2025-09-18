@@ -57,7 +57,7 @@ class Kernel extends ConsoleKernel
         SendMailForDifferenceWeightCommand::class,
 
 
-    ];
+	];
 
     /**
      * Define the application's command schedule.
