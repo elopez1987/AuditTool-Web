@@ -3,9 +3,12 @@
 namespace App\Models\Configuration\WhatsApp;
 
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
+use App\Models\Configuration\Schemas\SystemStatus;
+use App\Models\Configuration\Warehouses\SystemWarehouse;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -44,6 +47,15 @@ class StorageTaskWhatsapp extends Model
 		return $this->belongsTo(SystemCenterDistribution::class, 'centerid', 'centerid');
 	}
 
+	public function warehouse(): BelongsTo
+	{
+		return $this->belongsTo(SystemWarehouse::class, 'warehouseid', 'warehouseid');
+	}
+
+	public function status(): BelongsTo
+	{
+		return $this->belongsTo(SystemStatus::class, 'statusid', 'statusid');
+	}
 
 	protected static function boot()
 	{
