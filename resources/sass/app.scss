@@ -97,6 +97,11 @@ input[type=text], input[type=password], input[type=email], input[type=tel], inpu
   border-color: #c1d5e0;
 }
 
+.input-group-prepend, .input-group-append {
+  height: 26px;
+  border-color: #c1d5e0;
+}
+
 .select2-container--classic .select2-selection--single, .select2-container--default .select2-selection--single, .select2-container--default .select2-selection--single .select2-selection__rendered, .select2-container--default .select2-selection--single .select2-selection__arrow, .select2-container--default .select2-selection--multiple {
   border-color: #c1d5e0;
   height: 26px !important;
@@ -709,14 +714,12 @@ main h1 {
   background-color: #b3b3b3;
   text-shadow: 2px 2px 3px rgba(255, 255, 255, 0.8);
   -webkit-background-clip: text;
-  -moz-background-clip: text;
   background-clip: text;
 }
 
 .container__box {
   max-width: 1300px;
-  margin: auto;
-  margin-top: 40px;
+  margin: 40px auto auto;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -725,8 +728,7 @@ main h1 {
 @media (min-width: 1920px) {
   .container__box {
     max-width: 1800px;
-    margin: auto;
-    margin-top: 40px;
+    margin: 40px auto auto;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -792,7 +794,7 @@ main h1 {
 //hover para el  submenu principal
 .box:hover {
   transform: scale(1.1);
-  box-shadow: 0px 0px 30px -15px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 30px -15px rgba(0, 0, 0, 0.5);
   background: rgba(73, 155, 234, 1);
   z-index: 1;
   border-bottom: 4px solid;
@@ -849,7 +851,7 @@ main h1 {
 
 ul.list-style-none li a {
   color: #3e5569;
-  padding: 0px 0px;
+  padding: 0 0;
   display: block;
   text-decoration: none;
 }

@@ -29,8 +29,10 @@ Route::middleware(['auth'])->group(function () {
 //    ----------------------------------------------- Modulo de usuarios---------------------------------------------------------------------
     Route::resource('securityusers',UserController::class)->except('show');
     Route::get('getDataUsers',[UserController::class,'getDataUsers'])->name('getDataUsers');
+//    Enviar correo de reset de contraseña
+	Route::post('securityusers/{uuiduser}/send-password-reset', [UserController::class, 'sendPasswordReset'])->name('securityusers.sendPasswordReset');
 //    Perfil del usuario
-    Route::get('profile/{id}',[UpdateUserControlller::class,'profile'])->name('profile');
+//    Route::get('profile/{id}',[UpdateUserControlller::class,'profile'])->name('profile');
     Route::put('updateprofile/{id}',[UpdateUserControlller::class,'updateprofile'])->name('updateprofile');
 //    ----------------------------------------------- Eventos de usuarios---------------------------------------------------------------------
 //  Restaurar usuarios eliminados

@@ -40,5 +40,6 @@
                 <span style="text-transform: capitalize;font-size: 0.675rem !important">Parametrizar usuario</span>
             </a>
         @endcan
+        
     </div>
 </div>

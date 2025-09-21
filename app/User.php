@@ -9,6 +9,8 @@ use App\Models\Security\Users\SecurityUsersSession;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -22,7 +24,7 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasPermissions;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Model implements AuthenticatableContract, AuthorizableContract
+class User extends Model implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract
 {
     use HasApiTokens;
     use Notifiable;
@@ -32,6 +34,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     use SoftDeletes;
     use Authenticatable;
     use Authorizable;
+    use CanResetPassword;
 
 
     public function getActivitylogOptions(): LogOptions

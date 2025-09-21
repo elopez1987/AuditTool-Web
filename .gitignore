@@ -24,3 +24,7 @@ _ide_helper.php
 modules_statuses.json
 respuestarcmulti.txt
 respuestarcmulti.json
+CLAUDE.md
+RESET_PASSWORD_FEATURE.md
+TESTING_RESET_PASSWORD.md
+SECURITY_IMPROVEMENTS.md
