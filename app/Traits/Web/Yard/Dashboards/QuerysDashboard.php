@@ -7,8 +7,6 @@ use DB;
 
 trait QuerysDashboard
 {
-
-
     public function getStadia($request)
     {
         return ReceiptUnit::controlAccessUser()
@@ -37,14 +35,14 @@ trait QuerysDashboard
     public function ForTotalDays($request)
     {
         return ReceiptUnit::controlAccessUser()
-            ->select(DB::raw("CONVERT(VARCHAR, receiptunits.entrydate, 3) as fecha, COUNT(CONVERT(VARCHAR, receiptunits.entrydate, 3)) as total"))
+            ->select(DB::raw('CONVERT(VARCHAR, receiptunits.entrydate, 3) as fecha, COUNT(CONVERT(VARCHAR, receiptunits.entrydate, 3)) as total'))
             ->FilterForRangeDate($request['startDate'], $request['endDate'])
             ->CarrierArray($request['carrierid'])
             ->Status($request['statusid'])
             ->RazonCode($request->get('razon'))
             ->Warehouse($request['warehouseid'])
-            ->groupBy(DB::raw("CONVERT(VARCHAR, receiptunits.entrydate, 3)"))
-            ->orderBy(DB::raw("CONVERT(VARCHAR, receiptunits.entrydate, 3)"))
+            ->groupBy(DB::raw('CONVERT(VARCHAR, receiptunits.entrydate, 3)'))
+            ->orderBy(DB::raw('CONVERT(VARCHAR, receiptunits.entrydate, 3)'))
             ->get();
     }
 

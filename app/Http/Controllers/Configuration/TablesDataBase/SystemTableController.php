@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 
 class SystemTableController extends BaseController
 {
-
     public function index()
     {
         $this->authorize('systemtables.index');
@@ -35,7 +34,6 @@ class SystemTableController extends BaseController
         return $this->infoResponse('systemtables.index');
     }
 
-
     public function uploadfiletables()
     {
         DB::table('systemtables')->delete();
@@ -47,7 +45,6 @@ class SystemTableController extends BaseController
         }
         return $this->redirectBackSuccessMessage('Tablas agregadas con exito.');
     }
-
 
     public function uploadfilecolumns($id)
     {
@@ -65,7 +62,6 @@ class SystemTableController extends BaseController
         }
         return $this->redirectBackSuccessMessage('Columnas agregadas correctamente a las tablas.');
     }
-
 
     public function addColumnToTable($id)
     {
@@ -88,8 +84,4 @@ class SystemTableController extends BaseController
         );
         return $this->redirectBackSuccess();
     }
-
-
 }
-
-

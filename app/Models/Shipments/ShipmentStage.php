@@ -8,16 +8,10 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class ShipmentStage extends Model
 {
-
     use LogsActivity;
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
+    public $timestamps = false;
 
     protected $table = 'shipmentstages';
-    public $timestamps = false;
 
     protected $fillable = [
         'orderid',
@@ -28,5 +22,8 @@ class ShipmentStage extends Model
         'value05',
     ];
 
-
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 }

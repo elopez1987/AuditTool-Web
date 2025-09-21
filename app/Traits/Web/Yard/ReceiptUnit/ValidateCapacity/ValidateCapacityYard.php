@@ -14,23 +14,23 @@ trait ValidateCapacityYard
     {
         $centerid = $this->getCenterForUserForApi();
         $parameterCenter = $this->getParametersOfCenter($centerid);
-        if (!empty($parameterCenter) && in_array('SDC-11', (array)$parameterCenter)) {
-            $totalExist = ReceiptUnit::controlAccessUser()->whereNotIn('statusid', ['TR', 'ES'])->count();
-            $totalLocations = StorageZone::controlAccessUser()
-                ->whereIn('auxiliary01', ['DROP-LOT', 'CORTINAS'])->sum('capacity');
-            if ($totalExist >= $totalLocations) {
-                if ($platform == 'WEB') {
-                    return $this->errorResponse('La capacidad de almacenamiento se encuentra llena, favor de validar.');
-                }
-                if ($platform == 'API') {
-                    return  $this->getResponseWithErrors('saveNewUnitStandard',
-                        'La capacidad de almacenamiento se encuentra llena, favor de validar.');
-                }
-            }
+
+        if (! $parameterCenter || ! in_array('SDC-11', (array) $parameterCenter)) {
+            return null;
         }
 
+        $totalExist = ReceiptUnit::controlAccessUser()->whereNotIn('statusid', ['TR', 'ES'])->count();
+        $totalLocations = StorageZone::controlAccessUser()
+            ->whereIn('auxiliary01', ['DROP-LOT', 'CORTINAS'])->sum('capacity');
+
+        if ($totalExist < $totalLocations) {
+            return null;
+        }
+
+        if ($platform === 'WEB') {
+            return $this->errorResponse('La capacidad de almacenamiento se encuentra llena, favor de validar.');
+        }
+
+        return null;
     }
-
-
-
 }

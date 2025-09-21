@@ -9,7 +9,6 @@ use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\Models\Yard\ReceiptUnit;
 use App\Models\Yard\StorageCheckListDetail;
 use App\Models\Yard\StorageLocation;
-use App\Traits\GetIdFromReasonTrait;
 use App\Traits\Web\Yard\ReceiptUnit\AuthorizeExit\AuthorizeProcessExit;
 use DB;
 
@@ -17,8 +16,7 @@ class AuthorizeExitController extends BaseController
 {
     use AuthorizeProcessExit;
 
-
-//  Vista para autorizar salida
+    //  Vista para autorizar salida
     public function index()
     {
         $this->authorize('autorizeoutput');
@@ -30,10 +28,11 @@ class AuthorizeExitController extends BaseController
         $checkAS = StorageCheckListDetail::controlAccessUser()->select('storagechecklistdetails.*')
             ->leftJoin('storagechecklists', 'storagechecklistdetails.checklistid', '=', 'storagechecklists.id')
             ->where('storagechecklists.type', 'AS')->get();
-        return view('Yards.RegisterMovementsBox.autorizeoutput',
-            compact('zones', 'locations', 'unitstatus', 'checkAS', 'parameter'));
+        return view(
+            'Yards.RegisterMovementsBox.autorizeoutput',
+            compact('zones', 'locations', 'unitstatus', 'checkAS', 'parameter')
+        );
     }
-
 
     public function registermovementbox(AutorizeExitRequest $request)
     {
@@ -43,8 +42,10 @@ class AuthorizeExitController extends BaseController
             if (empty($receiptunit)) {
                 return $this->errorResponse('El número de caja no se encuentra en patio!!');
             }
-            $resultProcess = $this->authorizeProcess($receiptunit, $request,'WEB');
-            if ($resultProcess) return $resultProcess;
+            $resultProcess = $this->authorizeProcess($receiptunit, $request, 'WEB');
+            if ($resultProcess) {
+                return $resultProcess;
+            }
             DB::commit();
             return $this->redirectBackSuccessMessage('Datos actualizados correctamente!!');
         } catch (Exception $e) {
@@ -53,13 +54,4 @@ class AuthorizeExitController extends BaseController
             return $this->errorResponse('Error al procesar la solicitud :' . $error);
         }
     }
-
-
-
-
-
-
-
-
-
 }

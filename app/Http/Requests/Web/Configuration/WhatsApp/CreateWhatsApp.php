@@ -18,5 +18,4 @@ class CreateWhatsApp extends FormRequest
     {
         return true;
     }
-
 }

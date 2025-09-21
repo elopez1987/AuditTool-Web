@@ -13,11 +13,6 @@ class EdiShipment extends Model
 {
     use LogsActivity;
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
-
     protected $table = 'edishipments';
     protected $primaryKey = 'id';
 
@@ -33,8 +28,13 @@ class EdiShipment extends Model
         'type',
         'message',
         'quantity',
-        'client'
+        'client',
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
     public static function controlAccessUser()
     {
@@ -58,7 +58,7 @@ class EdiShipment extends Model
     }
 
 //    Crea el registro de envío de plan de carga del módulo de embarques
-    static function createEDIForPlanToShipment($shipment)
+    public static function createEDIForPlanToShipment($shipment)
     {
         EdiShipment::updateOrCreate([
             'centerid' => $shipment->centerid,
@@ -71,7 +71,7 @@ class EdiShipment extends Model
     }
 
 //    Crea el registro de envío del evento del embarque (Entrada/Inicio y fin de proceso, facturacion y salida)
-    static function createEDIForEventToShipment($shipment, $event)
+    public static function createEDIForEventToShipment($shipment, $event)
     {
         EdiShipment::updateOrCreate([
             'centerid' => $shipment->centerid,
@@ -82,8 +82,4 @@ class EdiShipment extends Model
             'client' => 'RCONTROL',
         ]);
     }
-
-
-
-
 }

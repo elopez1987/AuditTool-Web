@@ -6,12 +6,10 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class CreateCenterDistributionRequest extends FormRequest
 {
-
     public function authorize(): bool
     {
         return true;
     }
-
 
     public function rules(): array
     {
@@ -32,6 +30,4 @@ class CreateCenterDistributionRequest extends FormRequest
             'passwordapi' => 'nullable|string|max:50',
         ];
     }
-
-    
 }

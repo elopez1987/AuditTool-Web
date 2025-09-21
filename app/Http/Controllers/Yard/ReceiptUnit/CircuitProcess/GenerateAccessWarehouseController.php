@@ -11,7 +11,6 @@ use Yajra\DataTables\Facades\DataTables;
 
 class GenerateAccessWarehouseController extends BaseController
 {
-
     use PrintFormat;
 
     public function index()
@@ -41,7 +40,7 @@ class GenerateAccessWarehouseController extends BaseController
                 'so.name as operador', 'so.drivernumber', 'so.phone',
                 'storageaccesswarehouse.statusid', 'sc.name as carrier', 'sl.boxnumber as caja', 'st.boxnumber as tracto', 'se.name as status',
                 'storageaccesswarehouse.datestart', 'storageaccesswarehouse.datefinish', 'storageaccesswarehouse.id', 'storageaccesswarehouse.shipmentid',
-                'storageaccesswarehouse.confirmationnumber', 'users.name as createuser', 'storageaccesswarehouse.created_at as created'
+                'storageaccesswarehouse.confirmationnumber', 'users.name as createuser', 'storageaccesswarehouse.created_at as created',
             ]);
         return DataTables::of($data)
             ->addColumn('btn', 'Yards.GenerateAccess.partials.buttons')
@@ -56,8 +55,10 @@ class GenerateAccessWarehouseController extends BaseController
         $operators = $this->getOperatorForCarriers();
         $boxes = $this->getBoxForCarrier();
         $trucks = $this->getTruckForCarrier();
-        return view('Yards.GenerateAccess.create',
-            compact('centers', 'operators', 'boxes', 'trucks', 'warehouses'));
+        return view(
+            'Yards.GenerateAccess.create',
+            compact('centers', 'operators', 'boxes', 'trucks', 'warehouses')
+        );
     }
 
     public function store(CreateAccessWarehouseQrRequest $request)
@@ -74,8 +75,12 @@ class GenerateAccessWarehouseController extends BaseController
         $operators = $this->getOperatorForCarriers();
         $boxes = $this->getBoxForCarrier();
         $trucks = $this->getTruckForCarrier();
-        return view('Yards.GenerateAccess.edit', compact('operators',
-            'boxes', 'trucks', 'generateaccesswarehouse'));
+        return view('Yards.GenerateAccess.edit', compact(
+            'operators',
+            'boxes',
+            'trucks',
+            'generateaccesswarehouse'
+        ));
     }
 
     public function update(Request $request, GenerateAccessWarehouse $generateaccesswarehouse)
@@ -95,6 +100,4 @@ class GenerateAccessWarehouseController extends BaseController
         GenerateAccessWarehouse::destroy($id);
         return $this->redirectBackSuccess();
     }
-
-
 }

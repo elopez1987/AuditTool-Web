@@ -23,9 +23,9 @@ class LayOutDoorAndStageController extends Controller
             ->select(['orderdeliveries.shipmentid', 'shipmentheader.locationid', 'orderdeliveries.id'])
             ->whereNotIn('orderdeliveries.statusid', ['EJ', 'CA', 'IF', 'DT', 'DH', 'DO'])
             ->get();
-        return view('Yards.LayOutDoorAndStages.index',
-            compact('locations', 'units', 'shipments'));
+        return view(
+            'Yards.LayOutDoorAndStages.index',
+            compact('locations', 'units', 'shipments')
+        );
     }
-
-
 }

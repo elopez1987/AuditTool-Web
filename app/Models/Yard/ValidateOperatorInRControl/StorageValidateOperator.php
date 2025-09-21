@@ -14,7 +14,7 @@ class StorageValidateOperator extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'centerid', 'orderid', 'operatorname', 'statusoperator', 'created_at'
+        'centerid', 'orderid', 'operatorname', 'statusoperator', 'created_at',
     ];
 
     protected $hidden = [
@@ -25,23 +25,20 @@ class StorageValidateOperator extends Model
         'created_at' => 'datetime:d/m/Y H:s',
     ];
 
-    protected static function boot()
-    {
-        parent::boot();
-        if (!app()->runningInConsole()) {
-            self::creating(function (StorageValidateOperator $model) {
-                $model->userid = Auth::id();
-                $model->created_at = Carbon::now();
-            });
-        }
-    }
-
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
         return StorageValidateOperator::whereIn('storagevalidateoperators.centerid', $centers);
     }
 
-
-
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (StorageValidateOperator $model) {
+                $model->userid = Auth::id();
+                $model->created_at = Carbon::now();
+            });
+        }
+    }
 }

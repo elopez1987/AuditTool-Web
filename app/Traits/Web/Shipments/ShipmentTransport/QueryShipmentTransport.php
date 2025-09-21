@@ -7,7 +7,6 @@ use App\Models\Shipments\ShipmentTransport\StorageShipmentTransport;
 
 trait QueryShipmentTransport
 {
-
     public function getShipmentInProcess($request)
     {
         $carriers = $this->getCarrierForUser();
@@ -35,7 +34,8 @@ trait QueryShipmentTransport
                 'shipmenttransport.operatorname',
                 'shipmenttransport.boxnumber',
                 'shipmenttransport.trucknumber',
-                'shipmenttransport.auxiliary02 as statustransport']);
+                'shipmenttransport.auxiliary02 as statustransport',
+            ]);
     }
 
     public function getModelTransportEdit($id)
@@ -64,8 +64,7 @@ trait QueryShipmentTransport
                 'shipmenttransport.boxnumber', 'shipmenttransport.trucknumber', 'shipmentcarriers.name as carriername',
                 'shipmentcarriers.auxiliary04 as qr',
                 'shipmentcarriers.auxiliary05 as logo',
-                'shipmenttransport.auxiliary02 as statustransport'])
-            ->first();
+                'shipmenttransport.auxiliary02 as statustransport',
+            ])->first();
     }
-
 }

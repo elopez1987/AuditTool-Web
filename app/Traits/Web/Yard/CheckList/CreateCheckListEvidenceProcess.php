@@ -6,14 +6,13 @@ use App\Models\Yard\CheckListEvidenceProcessUnit;
 
 trait CreateCheckListEvidenceProcess
 {
-
-    public function createNewCheckList($folionumber,$request)
+    public function createNewCheckList($folionumber, $request)
     {
         CheckListEvidenceProcessUnit::create([
             'centerid' => $folionumber->centerid,
             'modelid' => $folionumber->folionumber,
             'modeltype' => 'ReceiptUnits',
-            'description' => 'Caja vacía'
+            'description' => 'Caja vacía',
         ]);
 
         for ($i = 1; $i <= $request['ntiros']; $i++) {
@@ -21,27 +20,26 @@ trait CreateCheckListEvidenceProcess
                 'centerid' => $folionumber->centerid,
                 'modelid' => $folionumber->folionumber,
                 'modeltype' => 'ReceiptUnits',
-                'description' => 'Tiro_' . $i
+                'description' => 'Tiro_' . $i,
             ]);
         }
         CheckListEvidenceProcessUnit::create([
             'centerid' => $folionumber->centerid,
             'modelid' => $folionumber->folionumber,
             'modeltype' => 'ReceiptUnits',
-            'description' => 'Fin de carga'
+            'description' => 'Fin de carga',
         ]);
         CheckListEvidenceProcessUnit::create([
             'centerid' => $folionumber->centerid,
             'modelid' => $folionumber->folionumber,
             'modeltype' => 'ReceiptUnits',
-            'description' => 'Sellos'
+            'description' => 'Sellos',
         ]);
         CheckListEvidenceProcessUnit::create([
             'centerid' => $folionumber->centerid,
             'modelid' => $folionumber->folionumber,
             'modeltype' => 'ReceiptUnits',
-            'description' => 'Caja cerrada'
+            'description' => 'Caja cerrada',
         ]);
     }
-
 }

@@ -8,7 +8,6 @@ use Carbon\Carbon;
 
 trait UpdateMaximunOutPutShipment
 {
-
     public function updateMaximunOutPutShipment($orderdelivery)
     {
         $customer = OrderCustomer::whereId($orderdelivery->customerid)->select(['timetransfer', 'id'])->first();
@@ -18,7 +17,4 @@ trait UpdateMaximunOutPutShipment
             ->where('orderid', $orderdelivery->id)
             ->update(['outputdate' => $outputdatemax]);
     }
-
-
-
 }

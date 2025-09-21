@@ -14,14 +14,9 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class InventoryBox extends Model
 {
     use LogsActivity;
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
+    public $timestamps = false;
 
     protected $table = 'inventoryboxstock';
-    public $timestamps = false;
     protected $primaryKey = 'id';
 
     protected $fillable = [
@@ -38,19 +33,12 @@ class InventoryBox extends Model
     protected $attributes = [
         'schematypeid' => 'INC',
         'schemaid' => 'IBX',
-        'statusid' => 'PN'
+        'statusid' => 'PN',
     ];
 
-    protected static function boot()
+    public function getActivitylogOptions(): LogOptions
     {
-        parent::boot();
-        if (!app()->runningInConsole()) {
-            self::creating(function (InventoryBox $model) {
-                $model->createuser = Auth::id();
-                $model->createdate = Carbon::now();
-                $model->quantityboxtrue = '0';
-            });
-        }
+        return LogOptions::defaults()->logFillable();
     }
 
     public function center()
@@ -68,7 +56,6 @@ class InventoryBox extends Model
         return $this->belongsTo(SystemStatus::class, 'statusid', 'statusid');
     }
 
-
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
@@ -77,7 +64,7 @@ class InventoryBox extends Model
 
     public function scopeForStatus($query, $statusid)
     {
-        if (trim($statusid) != '') {
+        if (trim($statusid) !== '') {
             $query->where('inventoryboxstock.statusid', $statusid);
         } else {
             $query->whereNotIn('inventoryboxstock.statusid', ['TO']);
@@ -86,12 +73,12 @@ class InventoryBox extends Model
 
     public function scopeForFolio($query, $folio)
     {
-        if (trim($folio) != '') {
+        if (trim($folio) !== '') {
             $query->where('inventoryboxstock.id', $folio);
         }
     }
 
-    static function createNewInventory($request, $total)
+    public static function createNewInventory($request, $total)
     {
         return InventoryBox::create([
             'centerid' => $request['centerid'],
@@ -101,4 +88,15 @@ class InventoryBox extends Model
         ]);
     }
 
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (InventoryBox $model) {
+                $model->createuser = Auth::id();
+                $model->createdate = Carbon::now();
+                $model->quantityboxtrue = '0';
+            });
+        }
+    }
 }

@@ -15,13 +15,13 @@ use PhpOffice\PhpSpreadsheet\Style\Fill;
 
 class ExportReportOfLpnReceipt implements FromCollection, WithHeadings, WithMapping, WithEvents, ShouldAutoSize, WithColumnFormatting
 {
+
+    use Exportable;
     private $workdayin;
     private $workdayout;
     private $centerid;
 
-    use Exportable;
-
-    public function __construct($workdayin, $workdayout,$centerid)
+    public function __construct($workdayin, $workdayout, $centerid)
     {
         $this->workdayin = $workdayin;
         $this->workdayout = $workdayout;
@@ -56,22 +56,32 @@ class ExportReportOfLpnReceipt implements FromCollection, WithHeadings, WithMapp
 
     public function collection()
     {
-        $receipts = DB::table('receiptasn')
-            ->select('receiptasn.shipmentid', 'receiptasn.billoflading', 'receiptproviders.name as provider',
-                'shipmentcarriers.name as carrier', 'receiptasn.folionumber', 'receiptunits.boxnumber',
-                'receiptunits.trucknumber', 'receiptcontainers.partnumberid', 'inventorypartnumbers.lngdsc',
-                'receiptcontainers.quantity', 'receiptcontainers.lpnid', 'users.name as usuario', 'receiptcontainers.created_at as falta')
-            ->leftJoin('receiptcontainers','receiptasn.id','=','receiptcontainers.receiptid')
-            ->leftJoin('inventorypartnumbers','receiptcontainers.partnumberid','=','inventorypartnumbers.prtnum')
-            ->leftJoin('receiptproviders','receiptasn.providerid','=','receiptproviders.id')
-            ->leftJoin('receiptunits','receiptasn.folionumber','=','receiptunits.id')
-            ->leftJoin('shipmentcarriers','receiptunits.carrierid','=','shipmentcarriers.id')
-            ->leftJoin('users','receiptcontainers.createuser','=','users.username')
-            ->where('receiptasn.centerid','=',$this->centerid)
-            ->where('receiptasn.statusid','=','IG')
-            ->whereBetween('receiptasn.addasndate',[$this->workdayin,$this->workdayout])
+        return DB::table('receiptasn')
+            ->select(
+                'receiptasn.shipmentid',
+                'receiptasn.billoflading',
+                'receiptproviders.name as provider',
+                'shipmentcarriers.name as carrier',
+                'receiptasn.folionumber',
+                'receiptunits.boxnumber',
+                'receiptunits.trucknumber',
+                'receiptcontainers.partnumberid',
+                'inventorypartnumbers.lngdsc',
+                'receiptcontainers.quantity',
+                'receiptcontainers.lpnid',
+                'users.name as usuario',
+                'receiptcontainers.created_at as falta'
+            )
+            ->leftJoin('receiptcontainers', 'receiptasn.id', '=', 'receiptcontainers.receiptid')
+            ->leftJoin('inventorypartnumbers', 'receiptcontainers.partnumberid', '=', 'inventorypartnumbers.prtnum')
+            ->leftJoin('receiptproviders', 'receiptasn.providerid', '=', 'receiptproviders.id')
+            ->leftJoin('receiptunits', 'receiptasn.folionumber', '=', 'receiptunits.id')
+            ->leftJoin('shipmentcarriers', 'receiptunits.carrierid', '=', 'shipmentcarriers.id')
+            ->leftJoin('users', 'receiptcontainers.createuser', '=', 'users.username')
+            ->where('receiptasn.centerid', '=', $this->centerid)
+            ->where('receiptasn.statusid', '=', 'IG')
+            ->whereBetween('receiptasn.addasndate', [$this->workdayin,$this->workdayout])
             ->get();
-        return $receipts;
     }
 
     public function map($receipts): array
@@ -100,7 +110,8 @@ class ExportReportOfLpnReceipt implements FromCollection, WithHeadings, WithMapp
             AfterSheet::class => function (AfterSheet $event) {
                 $event->sheet->getDelegate()->getStyle('A1:M1')->getFill()
                     ->applyFromArray(['fillType' => Fill::FILL_SOLID,
-                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6']]);
+                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6'],
+                    ]);
             },
         ];
     }

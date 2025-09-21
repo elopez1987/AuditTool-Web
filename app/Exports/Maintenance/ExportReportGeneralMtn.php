@@ -14,11 +14,11 @@ use PhpOffice\PhpSpreadsheet\Style\Fill;
 
 class ExportReportGeneralMtn implements FromCollection, WithHeadings, WithMapping, WithEvents, ShouldAutoSize
 {
+
+    use Exportable;
     private $workdayin;
     private $workdayout;
     private $centerid;
-
-    use Exportable;
 
     public function __construct($workdayin, $workdayout, $centerid)
     {
@@ -28,22 +28,20 @@ class ExportReportGeneralMtn implements FromCollection, WithHeadings, WithMappin
     }
     public function collection()
     {
-        $items = CheckListLiftTrucks::select([
+        return CheckListLiftTrucks::select([
             'checklistlifttrucks.serialnumber',
             'storagelifttrucks.numbertruck',
             'checklistlifttrucks.supervisorname',
             'checklistlifttrucks.horometro',
             'users.auxiliary01 as comment',
             'users.name',
-            'users.created_at'
+            'users.created_at',
         ])
             ->leftJoin('users', 'checklistlifttrucks.createuser', '=', 'users.username')
-            ->leftJoin ('storagelifttrucks','checklistlifttrucks.serialnumber','=','storagelifttrucks.serialnumber')
+            ->leftJoin('storagelifttrucks', 'checklistlifttrucks.serialnumber', '=', 'storagelifttrucks.serialnumber')
             ->where('checklistlifttrucks.centerid', $this->centerid)
             ->whereBetween('checklistlifttrucks.created_at', [$this->workdayin, $this->workdayout])
             ->get();
-
-        return $items;
     }
 
     public function headings(): array
@@ -78,7 +76,8 @@ class ExportReportGeneralMtn implements FromCollection, WithHeadings, WithMappin
             AfterSheet::class => function (AfterSheet $event) {
                 $event->sheet->getDelegate()->getStyle('A1:G1')->getFill()
                     ->applyFromArray(['fillType' => Fill::FILL_SOLID,
-                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6']]);
+                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6'],
+                    ]);
             },
         ];
     }

@@ -22,11 +22,6 @@ class StorageTraceLoto extends Model
     use LogsActivity;
     use HasUuids;
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
-
     protected $table = 'storagetraceloto';
 
     protected $fillable = [
@@ -38,16 +33,9 @@ class StorageTraceLoto extends Model
         'userid',
     ];
 
-
-    protected static function boot()
+    public function getActivitylogOptions(): LogOptions
     {
-        parent::boot();
-        if (!app()->runningInConsole()) {
-            self::creating(function (StorageTraceLoto $model) {
-                $model->userid = Auth::user()->id;
-                $model->created_at = Carbon::now();
-            });
-        }
+        return LogOptions::defaults()->logFillable();
     }
 
     public static function controlAccessUser()
@@ -88,8 +76,7 @@ class StorageTraceLoto extends Model
         return $this->belongsTo(User::class, 'userid');
     }
 
-
-    static function createNewEventToLoto($receiptunit, $loto, $event)
+    public static function createNewEventToLoto($receiptunit, $loto, $event)
     {
         StorageTraceLoto::create([
             'centerid' => $receiptunit->centerid,
@@ -100,4 +87,14 @@ class StorageTraceLoto extends Model
         ]);
     }
 
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (StorageTraceLoto $model) {
+                $model->userid = Auth::user()->id;
+                $model->created_at = Carbon::now();
+            });
+        }
+    }
 }

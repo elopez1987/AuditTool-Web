@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class SecurityModule extends Model
 {
-    protected $table = 'securitymodules';
     public $timestamps = false;
-    protected $primaryKey = 'moduleid';
     public $incrementing = true;
+    protected $table = 'securitymodules';
+    protected $primaryKey = 'moduleid';
     protected $keyType = 'integer';
 
     protected $fillable = [
@@ -29,8 +29,8 @@ class SecurityModule extends Model
 
     public function scopeDescription($query, $description)
     {
-        if (trim($description) != '') {
-            $query->where('description', 'like', "%$description%");
+        if (trim($description) !== '') {
+            $query->where('description', 'like', "%{$description}%");
         }
     }
 
@@ -38,5 +38,4 @@ class SecurityModule extends Model
     {
         return $this->belongsTo(SecurityFunction::class, 'moduleid', 'moduleid');
     }
-
 }

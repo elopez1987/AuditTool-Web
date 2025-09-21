@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ViewLocationStatus extends Model
 {
-
-    protected $table = "viewlocationstatus";
+    protected $table = 'viewlocationstatus';
 
     public function center()
     {
@@ -21,6 +20,4 @@ class ViewLocationStatus extends Model
         $centers = SecurityAccessWarehouse::Centers();
         return ViewLocationStatus::whereIn('centerid', $centers);
     }
-
-
 }

@@ -7,10 +7,10 @@ use App\Models\Security\Modules\ModelHasRole;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\Models\Security\Users\SecurityUsersSession;
 use Illuminate\Auth\Authenticatable;
+use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
-use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -36,13 +36,6 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     use Authorizable;
     use CanResetPassword;
 
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
-
-
     protected $fillable = [
         'uuiduser',
         'username',
@@ -56,10 +49,9 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'auxiliary03',
         'auxiliary04',
         'auxiliary05',
-		'statusid',
-		'auth0'
+        'statusid',
+        'auth0',
     ];
-
 
     protected $hidden = [
         'password',
@@ -78,18 +70,13 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     protected $attributes = [
         'schemaid' => 'STS',
-        'statusid' => 'E'
+        'statusid' => 'E',
     ];
 
-    protected static function boot()
+    public function getActivitylogOptions(): LogOptions
     {
-        parent::boot();
-        static::creating(function ($user) {
-            $user->uuiduser = (string) Str::uuid();
-        });
+        return LogOptions::defaults()->logFillable();
     }
-
-
 
     public function getNameAttribute($value)
     {
@@ -128,24 +115,23 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         return $this->belongsTo(ModelHasRole::class, 'id', 'model_id');
     }
 
-
 //    Filtros de consultas
     public function scopeName($query, $name)
     {
-        if (trim($name) != "") {
-            $query->where('users.name', 'like', "%$name%");
+        if (trim($name) != '') {
+            $query->where('users.name', 'like', "%{$name}%");
         }
     }
     public function scopeEmail($query, $email)
     {
-        if (trim($email) != "") {
-            $query->where('users.email', 'like', "%$email%");
+        if (trim($email) != '') {
+            $query->where('users.email', 'like', "%{$email}%");
         }
     }
     public function scopeUserName($query, $userid)
     {
-        if (trim($userid) != "") {
-            $query->where('users.username', 'like', "%$userid%");
+        if (trim($userid) != '') {
+            $query->where('users.username', 'like', "%{$userid}%");
         }
     }
     public function ScopeRole($query, $role_id)
@@ -156,11 +142,19 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     }
     public function scopeForStatus($query, $statusid)
     {
-        if ($statusid != "") {
+        if ($statusid != '') {
             $query->where('users.statusid', '=', $statusid);
         } else {
             $query->where('users.statusid', '=', 'E');
         }
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function ($user) {
+            $user->uuiduser = (string) Str::uuid();
+        });
     }
 
 

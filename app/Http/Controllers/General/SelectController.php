@@ -13,7 +13,6 @@ use App\Traits\Web\General\Responser;
 use App\User;
 use Auth;
 
-
 class SelectController extends Controller
 {
     use Responser;
@@ -23,7 +22,7 @@ class SelectController extends Controller
         $centers = SecurityAccessWarehouse::Centers();
         $carrier = AccessCarrier::where('username', Auth::user()->username)
             ->select('carrierid')->get()->toArray();
-        if ($carrier != null) {
+        if ($carrier !== null) {
             $carriers = ShipmentCarrier::whereIn('shipmentcarriers.centerid', $centers)
                 ->whereStatusid('E')
                 ->where('shipmentcarriers.id', $carrier)
@@ -35,7 +34,6 @@ class SelectController extends Controller
         }
         return response()->json($carriers);
     }
-
 
     public function getStatusForSchemaRUS()
     {
@@ -59,10 +57,9 @@ class SelectController extends Controller
         return response()->json($rason);
     }
 
-
     public function getUserResponsible()
     {
-        $user =  User::leftJoin('securityaccesswarehouses', 'users.username', '=', 'securityaccesswarehouses.username')
+        $user = User::leftJoin('securityaccesswarehouses', 'users.username', '=', 'securityaccesswarehouses.username')
             ->select(['users.name', 'users.id'])
             ->where('securityaccesswarehouses.centerid', '=', $this->getCenterForUser())
             ->where('users.statusid', '=', 'E')
@@ -78,5 +75,4 @@ class SelectController extends Controller
             ->where('statusid', 'E')->select(['name', 'id'])->get();
         return response()->json($areas);
     }
-
 }

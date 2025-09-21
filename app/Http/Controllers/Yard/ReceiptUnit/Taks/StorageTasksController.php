@@ -17,7 +17,6 @@ use Yajra\DataTables\Facades\DataTables;
 
 class StorageTasksController extends BaseController
 {
-
     use SendMessageWhatsAppForTask;
 
     public function index()
@@ -74,7 +73,7 @@ class StorageTasksController extends BaseController
                 'storagetasks.id',
                 'storagetasks.created_at',
                 'storagetasks.statusid',
-                'l2.name as locationactual'
+                'l2.name as locationactual',
             ])
             ->whereHas('receiptunit', function ($q) use ($request) {
                 $q->Folio($request->get('folionumber'));
@@ -95,15 +94,15 @@ class StorageTasksController extends BaseController
     public function store(CreateTaksOperator $request)
     {
         $receiptunit = ReceiptUnit::searchForId($request['folionumber']);
-        if (empty($receiptunit)){
-            return  $this->errorResponse('El número de folio no existe!!');
+        if (empty($receiptunit)) {
+            return $this->errorResponse('El número de folio no existe!!');
         }
         $zone = StorageZone::whereId($request['zoneid'])->select('zoneid')->first();
         $razonstatusid = $this->getRazonStatus($zone);
         $task = $this->createNewTask($receiptunit, $razonstatusid, $request);
         StorageUnitTrace::createTraceUnit($receiptunit, '4');
         $parameter = $this->getParametersOfWarehouse($receiptunit->warehouseid);
-        if (!empty($parameter) && in_array('SWH-11', (array)$parameter)) {
+        if (! empty($parameter) && in_array('SWH-11', (array) $parameter)) {
             $this->sendMessageNewTask($task);
         }
         return $this->successResponse('storagetask.index');
@@ -111,7 +110,7 @@ class StorageTasksController extends BaseController
 
     public function update(StorageTask $storagetask)
     {
-        $storagetask->statusid = "CO";
+        $storagetask->statusid = 'CO';
         $storagetask->save();
         return $this->redirectBackInfo();
     }
@@ -120,11 +119,12 @@ class StorageTasksController extends BaseController
      * @param ReceiptUnit $receiptunit
      * @param string $razonstatusid
      * @param CreateTaksOperator $request
+     *
      * @return StorageTask
      */
     public function createNewTask(ReceiptUnit $receiptunit, string $razonstatusid, CreateTaksOperator $request): StorageTask
     {
-        $task = StorageTask::create([
+        return StorageTask::create([
             'centerid' => $receiptunit->centerid,
             'warehouseid' => $receiptunit->warehouseid,
             'receiptunitid' => $receiptunit->id,
@@ -134,21 +134,20 @@ class StorageTasksController extends BaseController
             'zoneid' => $request['zoneid'],
             'locationid' => $request['locationid'],
         ]);
-        return $task;
     }
 
     /**
      * @param StorageZone $zone
+     *
      * @return string
      */
     public function getRazonStatus(StorageZone $zone): string
     {
-        if ($zone->zoneid == 'PA') {
+        if ($zone->zoneid === 'PA') {
             $razonstatusid = '5';
-        } elseif ($zone->zoneid == 'CO') {
+        } elseif ($zone->zoneid === 'CO') {
             $razonstatusid = '4';
         }
         return $razonstatusid;
     }
-
 }

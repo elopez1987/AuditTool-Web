@@ -17,25 +17,17 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-
 //Auxiliary01 = NOmbre del cliente o proveedor
 //Auxiliary02 = Número de folio del cual fue generado en el proceso de Reautilizar folio
 //Auxiliary03 = Tipo de entrada en los modulos de registro (TR = Transporte, QR = Acceso por QR, ST = Registro Estandar)
 //Auxiliary04 =
 
-
 class ReceiptUnit extends Model
 {
 
+    use LogsActivity;
     public $timestamps = false;
     protected $table = 'receiptunits';
-
-
-    use LogsActivity;
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
 
     protected $fillable = [
         'centerid',
@@ -79,7 +71,7 @@ class ReceiptUnit extends Model
     protected $hidden = [
         'created_at',
         'updated_at',
-        'schemaid'
+        'schemaid',
     ];
 
     protected $attributes = [
@@ -89,16 +81,9 @@ class ReceiptUnit extends Model
 
     protected $casts = [
     ];
-
-    protected static function boot()
+    public function getActivitylogOptions(): LogOptions
     {
-        parent::boot();
-        if (!app()->runningInConsole()) {
-            self::creating(function (ReceiptUnit $model) {
-                $model->createuser = Auth::user()->id;
-                $model->entrydate = Carbon::now();
-            });
-        }
+        return LogOptions::defaults()->logFillable();
     }
 
     public static function controlAccessUser()
@@ -108,8 +93,6 @@ class ReceiptUnit extends Model
         return ReceiptUnit::whereIn('receiptunits.warehouseid', $warehouses)
             ->whereIn('receiptunits.centerid', $centers);
     }
-
-
 
     public function center()
     {
@@ -182,17 +165,17 @@ class ReceiptUnit extends Model
     }
     public function key()
     {
-        return $this->belongsTo(ReceiptUnitKey::class,'id','folionumber');
+        return $this->belongsTo(ReceiptUnitKey::class, 'id', 'folionumber');
     }
 
     public function tiket()
     {
-        return $this->belongsTo(ReceiptUnitTicket::class,'id','folionumber');
+        return $this->belongsTo(ReceiptUnitTicket::class, 'id', 'folionumber');
     }
 
     public function unitdata()
     {
-        return $this->belongsTo(ReceiptUnitData::class,'id','folionumber');
+        return $this->belongsTo(ReceiptUnitData::class, 'id', 'folionumber');
     }
 
     public function unittype()
@@ -202,121 +185,119 @@ class ReceiptUnit extends Model
 
     public function tracto()
     {
-        return $this->belongsTo(ReceiptTruck::class, 'foliotruck','id');
+        return $this->belongsTo(ReceiptTruck::class, 'foliotruck', 'id');
     }
 
 //    --Scopes para filtros de tabla
     public function scopeFolio($query, $folionumber)
     {
-        if (trim($folionumber) != "") {
+        if (trim($folionumber) !== '') {
             $query->where('receiptunits.id', '=', $folionumber);
         }
     }
 
     public function scopeBarcode($query, $barcode)
     {
-        if (trim($barcode) != "") {
-            $query->where('receiptunits.barcode', 'like', "%$barcode%");
+        if (trim($barcode) !== '') {
+            $query->where('receiptunits.barcode', 'like', "%{$barcode}%");
         }
     }
 
     public function scopeLocation($query, $location)
     {
-        if (trim($location) != "") {
-            $query->where('sl.name', 'like', "%$location%");
+        if (trim($location) !== '') {
+            $query->where('sl.name', 'like', "%{$location}%");
         }
     }
 
     public function scopeCarrier($query, $carrierid)
     {
-        if (trim($carrierid) != "") {
+        if (trim($carrierid) !== '') {
             $query->where('receiptunits.carrierid', '=', $carrierid);
         }
     }
 
     public function scopeCenter($query, $centerid)
     {
-        if (trim($centerid) != "") {
+        if (trim($centerid) !== '') {
             $query->where('receiptunits.centerid', '=', $centerid);
         }
     }
 
     public function scopeWarehouse($query, $warehouseid)
     {
-        if ($warehouseid != "") {
+        if ($warehouseid !== '') {
             $query->where('receiptunits.warehouseid', '=', $warehouseid);
         }
     }
 
     public function scopeRason($query, $rasonid)
     {
-        if (trim($rasonid) != "") {
+        if (trim($rasonid) !== '') {
             $query->where('receiptunits.razonstatusid', '=', $rasonid);
         }
     }
 
     public function scopeRazonCode($query, $razon)
     {
-        if (!empty($razon)) {
+        if (! empty($razon)) {
             $query->whereIn('receiptunits.razonstatusid', $razon);
         }
     }
 
-
     public function scopeBoxNumber($query, $boxnumber)
     {
-        if (trim($boxnumber) != '') {
-            $query->where('receiptunits.boxnumber', 'like', "%$boxnumber%");
+        if (trim($boxnumber) !== '') {
+            $query->where('receiptunits.boxnumber', 'like', "%{$boxnumber}%");
         }
     }
 
     public function scopeEcoNumber($query, $econumber)
     {
-        if (trim($econumber) != '') {
-            $query->where('receiptunits.econumber', 'like', "%$econumber%");
+        if (trim($econumber) !== '') {
+            $query->where('receiptunits.econumber', 'like', "%{$econumber}%");
         }
     }
 
     public function scopeTruckNumber($query, $trucknumber)
     {
-        if (trim($trucknumber) != '') {
-            $query->where('receiptunits.trucknumber', 'like', "%$trucknumber%");
+        if (trim($trucknumber) !== '') {
+            $query->where('receiptunits.trucknumber', 'like', "%{$trucknumber}%");
         }
     }
 
     public function scopeBox($query, $boxnumber)
     {
-        if (trim($boxnumber) != '') {
+        if (trim($boxnumber) !== '') {
             $query->where('receiptunits.boxnumber', '=', $boxnumber);
         }
     }
 
     public function scopeCode($query, $barcode)
     {
-        if (trim($barcode) != "") {
+        if (trim($barcode) !== '') {
             $query->where('receiptunits.barcode', '=', $barcode);
         }
     }
 
     public function scopeShipment($query, $shipmentid)
     {
-        if (trim($shipmentid) != '') {
-            $query->where('receiptunits.shipmentid', 'like', "%$shipmentid%");
+        if (trim($shipmentid) !== '') {
+            $query->where('receiptunits.shipmentid', 'like', "%{$shipmentid}%");
         }
     }
 
     public function scopeShipmentid($query, $shipmentid)
     {
-        if (trim($shipmentid) != '') {
+        if (trim($shipmentid) !== '') {
             $query->where('receiptunits.shipmentid', '=', $shipmentid);
         }
     }
 
-
     public function scopeFilterForRangeDate($query, $startDate, $endDate)
     {
-        if ($startDate != '' && $endDate != '') {
-            if ($startDate == $endDate) {
+        if ($startDate !== '' && $endDate !== '') {
+            if ($startDate === $endDate) {
                 $dataIn = Carbon::parse($startDate)->startOfDay();
                 $dateOut = Carbon::parse($endDate)->endOfDay();
                 $query->whereBetween('receiptunits.entrydate', [$dataIn, $dateOut]);
@@ -328,56 +309,56 @@ class ReceiptUnit extends Model
 
     public function scopeStatus($query, $status)
     {
-        if (!empty($status)) {
+        if (! empty($status)) {
             $query->whereIn('receiptunits.statusid', $status);
         }
     }
 
     public function scopeCarrierArray($query, $carrier)
     {
-        if (!empty($carrier)) {
+        if (! empty($carrier)) {
             $query->whereIn('receiptunits.carrierid', $carrier);
         }
     }
 
-//----------------------------------------------------- Filtros del modelo -----------------------
-    static function searchForBarcode($barcode)
+    //----------------------------------------------------- Filtros del modelo -----------------------
+    public static function searchForBarcode($barcode)
     {
         return ReceiptUnit::controlAccessUser()->whereBarcode($barcode)->whereNotIn('statusid', ['TR'])->first();
     }
 
-    static function searchUnitForArrayNotStatus($barcode, $status)
+    public static function searchUnitForArrayNotStatus($barcode, $status)
     {
         return ReceiptUnit::controlAccessUser()->whereBarcode($barcode)->whereNotIn('statusid', $status)->first();
     }
 
-    static function searchForBarcodeTruck($barcodetruck)
+    public static function searchForBarcodeTruck($barcodetruck)
     {
         return ReceiptUnit::controlAccessUser()->whereNotIn('statusid', ['TR'])->where('foliotruck', $barcodetruck)->first();
     }
 
-    static function searchForId($id)
+    public static function searchForId($id)
     {
         return ReceiptUnit::controlAccessUser()->where('receiptunits.id', $id)->whereNotIn('statusid', ['TR'])->first();
     }
 
-    static function searchForBoxNumber($boxnumber)
+    public static function searchForBoxNumber($boxnumber)
     {
         return ReceiptUnit::controlAccessUser()->where('boxnumber', $boxnumber)->whereNotIn('statusid', ['TR'])->first();
     }
 
-    static function getCountUnit($centerid)
+    public static function getCountUnit($centerid)
     {
         return ReceiptUnit::whereCenterid($centerid)->whereNotIn('statusid', ['TR'])->count();
     }
 
-    static function searchUnitForLocation($locationid)
+    public static function searchUnitForLocation($locationid)
     {
         return ReceiptUnit::controlAccessUser()->where('locationid', $locationid)->whereNotIn('statusid', ['TR'])->first();
     }
 
-//------------------------------------------------------ Funciones auxiliares ---------------------------------------------
-    static function updateUnitForRefuse($folio)
+    //------------------------------------------------------ Funciones auxiliares ---------------------------------------------
+    public static function updateUnitForRefuse($folio)
     {
         $unit = ReceiptUnit::controlAccessUser()->where('id', '=', $folio)->whereNotIn('statusid', ['TR'])->first();
         $unit->autorizaoutputdate = now();
@@ -389,15 +370,15 @@ class ReceiptUnit extends Model
         return $unit;
     }
 
-//------------------------------------------------------ Funciones auxiliares ---------------------------------------------
-    static function moveUnitToLostForInventory($receiptunit, $location)
+    //------------------------------------------------------ Funciones auxiliares ---------------------------------------------
+    public static function moveUnitToLostForInventory($receiptunit, $location)
     {
         $receiptunit->zoneid = $location->value02;
         $receiptunit->locationid = $location->value03;
         $receiptunit->save();
     }
 
-    static function updateUnitForInventory($receiptunit, $request)
+    public static function updateUnitForInventory($receiptunit, $request)
     {
         $receiptunit->zoneid = $request['zoneid'];
         $receiptunit->locationid = $request['locationid'];
@@ -405,6 +386,14 @@ class ReceiptUnit extends Model
         $receiptunit->save();
     }
 
-
-
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (ReceiptUnit $model) {
+                $model->createuser = Auth::user()->id;
+                $model->entrydate = Carbon::now();
+            });
+        }
+    }
 }

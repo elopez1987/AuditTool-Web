@@ -11,13 +11,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class ReceiptStage extends Model
 {
-
     use LogsActivity;
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
 
     protected $table = 'receiptstage';
 
@@ -44,14 +38,9 @@ class ReceiptStage extends Model
         'updated_at' => 'datetime:d/m/Y H:s',
     ];
 
-    protected static function boot()
+    public function getActivitylogOptions(): LogOptions
     {
-        parent::boot();
-        if (!app()->runningInConsole()) {
-            self::creating(function (ReceiptStage $model) {
-                $model->createuser = Auth::id();
-            });
-        }
+        return LogOptions::defaults()->logFillable();
     }
 
     public static function controlAccessUser()
@@ -67,5 +56,13 @@ class ReceiptStage extends Model
         return $this->belongsTo(StorageLocation::class, 'locationid', 'id');
     }
 
-
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (ReceiptStage $model) {
+                $model->createuser = Auth::id();
+            });
+        }
+    }
 }

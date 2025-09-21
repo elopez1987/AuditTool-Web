@@ -19,16 +19,10 @@ class StorageSafetyTourType extends Model
     use SoftDeletes;
     use LogsActivity;
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
-
     protected $table = 'storagesafetytourtypes';
 
-
     protected $fillable = [
-        'centerid', 'name', 'typeuuid', 'userid', 'statusid', 'value01', 'value02', 'value03'
+        'centerid', 'name', 'typeuuid', 'userid', 'statusid', 'value01', 'value02', 'value03',
     ];
 
     protected $attributes = [
@@ -36,16 +30,9 @@ class StorageSafetyTourType extends Model
         'schemaid' => 'TYP',
     ];
 
-
-    protected static function boot()
+    public function getActivitylogOptions(): LogOptions
     {
-        parent::boot();
-        if (!app()->runningInConsole()) {
-            self::creating(function (StorageSafetyTourType $model) {
-                $model->userid = Auth::id();
-                $model->typeuuid = (string)Str::uuid();
-            });
-        }
+        return LogOptions::defaults()->logFillable();
     }
 
     public static function controlAccessUser()
@@ -70,9 +57,19 @@ class StorageSafetyTourType extends Model
 
     public function scopeName($query, $name)
     {
-        if (trim($name) != "") {
-            return $query->where('name', 'LIKE', "%$name%");
+        if (trim($name) !== '') {
+            return $query->where('name', 'LIKE', "%{$name}%");
         }
     }
 
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (StorageSafetyTourType $model) {
+                $model->userid = Auth::id();
+                $model->typeuuid = (string) Str::uuid();
+            });
+        }
+    }
 }

@@ -16,7 +16,6 @@ class StartOrderDeliveryController extends BaseController
 {
     public function index($id, Request $request)
     {
-        $error = null;
         DB::beginTransaction();
         try {
             $this->updateOrderDelivery($id);
@@ -25,10 +24,8 @@ class StartOrderDeliveryController extends BaseController
             $this->updateShipmentSeal($id);
             $this->BloquedLocationStage($shipment, $request['locationid']);
             DB::commit();
-            $success = true;
             return $this->redirectBackSuccess();
         } catch (Exception $e) {
-            $success = false;
             $error = $e->getMessage();
             DB::rollback();
             return $this->errorResponse($error);
@@ -37,6 +34,7 @@ class StartOrderDeliveryController extends BaseController
 
     /**
      * @param $id
+     *
      * @return ShipmentDataOperation
      */
     public function updateShipmentDataOperation($id): ShipmentDataOperation
@@ -51,6 +49,7 @@ class StartOrderDeliveryController extends BaseController
     /**
      * @param $id
      * @param $locationid
+     *
      * @return void
      */
     public function updateShipmentHeader($id, $locationid): void
@@ -64,6 +63,7 @@ class StartOrderDeliveryController extends BaseController
 
     /**
      * @param $id
+     *
      * @return void
      */
     public function updateOrderDelivery($id): void
@@ -75,6 +75,7 @@ class StartOrderDeliveryController extends BaseController
 
     /**
      * @param $id
+     *
      * @return void
      */
     public function updateShipmentSeal($id): void
@@ -87,15 +88,14 @@ class StartOrderDeliveryController extends BaseController
     /**
      * @param ShipmentDataOperation $shipment
      * @param $locationid
+     *
      * @return void
      */
     public function BloquedLocationStage(ShipmentDataOperation $shipment, $locationid): void
     {
         $parameter = $this->getParametersOfWarehouse($shipment->warehouseid);
-        if (in_array('SWH-20', (array)$parameter)) {
+        if (in_array('SWH-20', (array) $parameter)) {
             StorageLocation::updateLocation($locationid, 'D', '');
         }
     }
-
-
 }

@@ -8,9 +8,7 @@ use Illuminate\Support\Facades\Config;
 
 class SendTelegram extends Model
 {
-
     use Notifiable;
-
 
     protected $table = 'telegrams';
     protected $dateFormat = 'Y-m-d H:i:s';
@@ -27,19 +25,16 @@ class SendTelegram extends Model
         'updated_at',
     ];
 
-
-    static function sendNotificationForCreationOfLocation($location): SendTelegram
+    public static function sendNotificationForCreationOfLocation($location): SendTelegram
     {
         $notice = new SendTelegram([
             'notice' => 'NUEVA UBICACION',
             'noticedes' => 'C. Distribución: ' . $location->centerid . "\n" .
                 'Nombre: ' . $location->name,
             'noticelink' => 'http://proyecto.sid/public/',
-            'telegramid' => Config::get('services.telegram_yard')
+            'telegramid' => Config::get('services.telegram_yard'),
         ]);
         $notice->save();
         return $notice;
     }
-
-
 }

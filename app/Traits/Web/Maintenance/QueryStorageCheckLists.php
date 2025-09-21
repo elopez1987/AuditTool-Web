@@ -6,7 +6,6 @@ use App\Models\Maintenance\StorageCheckListLiftTrucks;
 
 trait QueryStorageCheckLists
 {
-
     public function getAllCheckList($request)
     {
         return StorageCheckListLiftTrucks::controlAccessUser()
@@ -25,6 +24,5 @@ trait QueryStorageCheckLists
             )
             ->ForName($request->get('name'))
             ->select('storagechecklistslifttrucks.*');
-
     }
 }

@@ -12,7 +12,7 @@ class CreatePrinter extends FormRequest
             'centerid' => 'required',
             'description' => 'required|string|max:100',
             'ip' => 'required',
-            'command' => 'required'
+            'command' => 'required',
         ];
     }
 

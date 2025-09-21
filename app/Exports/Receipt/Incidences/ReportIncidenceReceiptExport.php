@@ -16,11 +16,11 @@ use PhpOffice\PhpSpreadsheet\Style\Fill;
 
 class ReportIncidenceReceiptExport implements FromCollection, WithHeadings, WithMapping, WithEvents, ShouldAutoSize, WithColumnFormatting
 {
+
+    use Exportable;
     private $workdayin;
     private $workdayout;
     private $centerid;
-
-    use Exportable;
 
     public function __construct($workdayin, $workdayout, $centerid)
     {
@@ -52,18 +52,29 @@ class ReportIncidenceReceiptExport implements FromCollection, WithHeadings, With
             'Cantidad reportada con daño',
             'Unidad de medida',
             'Categoria de daño',
-            'Sub Categoria'
+            'Sub Categoria',
         ];
     }
 
     public function collection()
     {
-        $receipts = DB::table('receiptasn')
-            ->select('receiptasn.addasndate as fecha', 'receiptasn.turnid as turno', 'receiptproviders.name as provider', 'receiptasn.centerid',
-                'receiptasn.shipmentid', 'receiptasn.billoflading', 'inventorypartnumbers.prtnum', 'inventorypartnumbers.lngdsc as description',
-                'receiptstock.quantitytrue as total_de_cajas', 'inventorypartnumbers.untpal as cajas_por_pallet',
-                'receiptincidencestock.quantity as danos', 'inventoryunitsmeasure.description as unitmeasure', 'storagecategoryincidences.description as categoria',
-                'storagecategoryincidencedetails.description as subcategoria')
+        return DB::table('receiptasn')
+            ->select(
+                'receiptasn.addasndate as fecha',
+                'receiptasn.turnid as turno',
+                'receiptproviders.name as provider',
+                'receiptasn.centerid',
+                'receiptasn.shipmentid',
+                'receiptasn.billoflading',
+                'inventorypartnumbers.prtnum',
+                'inventorypartnumbers.lngdsc as description',
+                'receiptstock.quantitytrue as total_de_cajas',
+                'inventorypartnumbers.untpal as cajas_por_pallet',
+                'receiptincidencestock.quantity as danos',
+                'inventoryunitsmeasure.description as unitmeasure',
+                'storagecategoryincidences.description as categoria',
+                'storagecategoryincidencedetails.description as subcategoria'
+            )
             ->leftJoin('receiptincidencestock', 'receiptasn.id', '=', 'receiptincidencestock.receiptid')
             ->leftJoin('inventorypartnumbers', 'receiptincidencestock.partnumberid', '=', 'inventorypartnumbers.id')
             ->leftJoin('storagecategoryincidences', 'receiptincidencestock.categoryid', '=', 'storagecategoryincidences.categoryincid')
@@ -81,7 +92,6 @@ class ReportIncidenceReceiptExport implements FromCollection, WithHeadings, With
             ->whereBetween('receiptasn.addasndate', [$this->workdayin, $this->workdayout])
             ->where('receiptasn.centerid', '=', $this->centerid)
             ->where('receiptincidencestock.quantity', '>', 0)->get();
-        return $receipts;
     }
 
     public function map($receipts): array
@@ -110,9 +120,9 @@ class ReportIncidenceReceiptExport implements FromCollection, WithHeadings, With
             AfterSheet::class => function (AfterSheet $event) {
                 $event->sheet->getDelegate()->getStyle('A1:N1')->getFill()
                     ->applyFromArray(['fillType' => Fill::FILL_SOLID,
-                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6']]);
+                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6'],
+                    ]);
             },
         ];
     }
-
 }

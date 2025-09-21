@@ -26,7 +26,7 @@ class SendDataToWmsIzel extends Command
     public function handle()
     {
         $folios = $this->getShipments();
-        if (!empty($folios)) {
+        if (! empty($folios)) {
             foreach ($folios as $folio) {
                 $receiptunit = ReceiptUnit::where('id', $folio->shipmentid)->first();
                 $parameter = $this->getParametersOfCenter($receiptunit->centerid);
@@ -43,17 +43,18 @@ class SendDataToWmsIzel extends Command
      * @param $statusService
      * @param ReceiptUnit $receiptunit
      * @param $folio
+     *
      * @return void
      */
     public function LogVersion4($parameter, $statusService, ReceiptUnit $receiptunit, $folio): void
     {
-        if (in_array('SDC-07', (array)$parameter)) {
-            if ($statusService->Code == "200") {
+        if (in_array('SDC-07', (array) $parameter)) {
+            if ($statusService->Code === '200') {
                 SystemEventWebServiceIzel::createRegisterLog($receiptunit, $statusService, $parameter);
                 EdiShipment::destroy($folio->id);
             } else {
                 SystemEventWebServiceIzel::createRegisterLogError($receiptunit, $statusService, $parameter);
-                $folio->quantity = ++$folio->quantity;
+                ++$folio->quantity;
                 $folio->message = $statusService->Description;
                 $folio->save();
                 if ($folio->quantity > 12) {
@@ -68,16 +69,17 @@ class SendDataToWmsIzel extends Command
      * @param ReceiptUnit $receiptunit
      * @param $parameter
      * @param $folio
+     *
      * @return void
      */
     public function LogVersion3($statusService, ReceiptUnit $receiptunit, $parameter, $folio): void
     {
-        if ($statusService->{'Code'} == '0') {
+        if ($statusService->{'Code'} === '0') {
             SystemEventWebServiceIzel::createRegisterLog($receiptunit, $statusService, $parameter);
             EdiShipment::destroy($folio->id);
         } else {
             SystemEventWebServiceIzel::createRegisterLog($receiptunit, $statusService, $parameter);
-            $folio->quantity = ++$folio->quantity;
+            $folio->quantity++;
             $folio->message = $statusService->{'Message'};
             $folio->save();
             if ($folio->quantity > 12) {
@@ -86,12 +88,9 @@ class SendDataToWmsIzel extends Command
         }
     }
 
-
     public function getShipments()
     {
         return EdiShipment::where('type', '=', 'IZEL')
             ->select(['centerid', 'shipmentid', 'auxiliary01 as typeMovement', 'quantity', 'message', 'id'])->get();
     }
-
-
 }

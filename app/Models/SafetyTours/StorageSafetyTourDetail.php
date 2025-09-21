@@ -33,7 +33,6 @@ class StorageSafetyTourDetail extends Model
         'schematype' => 'CTR',  // Esquema de categorias de registro
     ];
 
-
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
@@ -69,8 +68,4 @@ class StorageSafetyTourDetail extends Model
     {
         return $this->belongsTo(SystemStatus::class, 'statustype', 'statusid');
     }
-
-
-
-
 }

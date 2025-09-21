@@ -18,19 +18,13 @@ class StorageAreas extends Model
     use SoftDeletes;
     use LogsActivity;
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
-
-
     protected $table = 'storageareas';
 
     protected $hidden = [
         'created_at',
         'updated_at',
         'deleted_at',
-        'schemaid'
+        'schemaid',
     ];
 
     protected $attributes = [
@@ -47,18 +41,12 @@ class StorageAreas extends Model
         'auxiliary01',
         'auxiliary02',
         'auxiliary03',
-        'statusid'
+        'statusid',
     ];
 
-
-    protected static function boot()
+    public function getActivitylogOptions(): LogOptions
     {
-        parent::boot();
-        if (!app()->runningInConsole()) {
-            self::creating(function (StorageAreas $model) {
-                $model->slug = Uuid::uuid4();
-            });
-        }
+        return LogOptions::defaults()->logFillable();
     }
     public static function controlAccessUser()
     {
@@ -84,26 +72,33 @@ class StorageAreas extends Model
 
     public function scopeName($query, $name)
     {
-        if (trim($name) != "") {
-            $query->where('storageareas.name', 'like', "%$name%");
+        if (trim($name) !== '') {
+            $query->where('storageareas.name', 'like', "%{$name}%");
         }
     }
     public function scopeStatus($query, $status)
     {
-        if (trim($status) != "") {
+        if (trim($status) !== '') {
             $query->where('storageareas.statusid', '=', $status);
-        }else{
+        } else {
             $query->where('storageareas.statusid', '=', 'E');
         }
     }
 
     public function scopeWarehouse($query, $warehouseid)
     {
-        if (trim($warehouseid) != "") {
+        if (trim($warehouseid) !== '') {
             $query->where('storageareas.warehouseid', '=', $warehouseid);
         }
-
     }
 
-
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (StorageAreas $model) {
+                $model->slug = Uuid::uuid4();
+            });
+        }
+    }
 }

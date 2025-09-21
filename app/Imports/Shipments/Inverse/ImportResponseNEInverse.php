@@ -11,7 +11,7 @@ use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 
-class ImportResponseNEInverse implements ToCollection, WithHeadingRow,WithValidation
+class ImportResponseNEInverse implements ToCollection, WithHeadingRow, WithValidation
 {
     public function collection(Collection $rows)
     {
@@ -32,19 +32,16 @@ class ImportResponseNEInverse implements ToCollection, WithHeadingRow,WithValida
                 $operation->statusid = 'PZ';
                 $operation->save();
             }
-
         }
     }
 
-    public function rules():array
+    public function rules(): array
     {
-        return  [
+        return [
             '*.zare' => 'required|numeric|digits_between:1,20',
             '*.delivery' => 'required|numeric|digits_between:1,20',
             '*.ne' => 'required|numeric|digits_between:1,20',
             '*.adjust' => 'required|string|in:S,N',
         ];
     }
-
-    
 }

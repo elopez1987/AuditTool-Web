@@ -26,10 +26,11 @@ class AccessCustomerController extends BaseController
         $user = User::where('uuiduser', $uuiduser)->firstOrFail();
         $customers = $this->getOrderCustomerForSelect();
         $listCustomers = SecurityAccessCustomer::where('username', $user->username)->get();
-        return view('Security.Users.AccessCustomer.index',
-            compact('user', 'customers', 'listCustomers'));
+        return view(
+            'Security.Users.AccessCustomer.index',
+            compact('user', 'customers', 'listCustomers')
+        );
     }
-
 
     public function update(Request $request)
     {
@@ -43,6 +44,4 @@ class AccessCustomerController extends BaseController
         SecurityAccessCustomer::destroy($id);
         return $this->redirectBackSuccessMessage('Registro eliminado con exito.');
     }
-
-
 }

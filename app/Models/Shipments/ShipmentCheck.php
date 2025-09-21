@@ -9,9 +9,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class ShipmentCheck extends Model
 {
+    public $timestamps = false;
     protected $table = 'shipmentcheck';
     protected $primaryKey = 'recordid';
-    public $timestamps = false;
 
     protected $fillable = [
         'centerid',
@@ -38,7 +38,6 @@ class ShipmentCheck extends Model
             ->whereIn('shipmentcheck.centerid', $centers);
     }
 
-
     public function user()
     {
         return $this->belongsTo(User::class, 'createuser', 'username');
@@ -48,6 +47,4 @@ class ShipmentCheck extends Model
     {
         return $this->belongsTo(SystemStatus::class, 'statusid', 'statusid');
     }
-
-
 }

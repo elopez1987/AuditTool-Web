@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 
 class OrderCustomerController extends BaseController
 {
-
     protected string $routePath = 'ordercustomers';
     protected string $viewPath = 'Yards.OrderCustomers';
 
@@ -18,7 +17,7 @@ class OrderCustomerController extends BaseController
     {
         $this->authorize('ordercustomers.index');
         $warehouses = $this->getWarehouseForSelect();
-        return view("$this->viewPath.index",compact('warehouses'));
+        return view("{$this->viewPath}.index", compact('warehouses'));
     }
 
     public function getDataCustomers(Request $request)
@@ -29,7 +28,7 @@ class OrderCustomerController extends BaseController
             ->Shipto($request->get('shiptoid'))
             ->Warehouse($request->get('warehouseid'))
             ->select('ordercustomers.*');
-        return $this->showDataToView($data, "$this->viewPath.partials.buttons");
+        return $this->showDataToView($data, "{$this->viewPath}.partials.buttons");
     }
 
     public function create()
@@ -37,8 +36,10 @@ class OrderCustomerController extends BaseController
         $this->authorize('ordercustomers.create');
         $centers = $this->getCenterForSelect();
         $warehouses = $this->getWarehouseForSelect();
-        return view("$this->viewPath.create",
-            compact('centers', 'warehouses'));
+        return view(
+            "{$this->viewPath}.create",
+            compact('centers', 'warehouses')
+        );
     }
 
     public function store(CreateCustomerRequest $request): RedirectResponse
@@ -46,27 +47,28 @@ class OrderCustomerController extends BaseController
         $customerid = OrderCustomer::whereCenterid($request['centerid'])
             ->whereWarehouseid($request['warehouseid'])
             ->whereShiptoid($request['shiptoid'])->first();
-        if (!empty($customerid)) {
+        if (! empty($customerid)) {
             return $this->errorResponse('El cliente ya existe en el catalogo');
-        } else {
-            $customer = new OrderCustomer($request->all());
-            $customer->save();
         }
-        return $this->successResponse("$this->routePath.index");
+        $customer = new OrderCustomer($request->all());
+        $customer->save();
+
+        return $this->successResponse("{$this->routePath}.index");
     }
 
     public function edit(OrderCustomer $ordercustomer)
     {
         $this->authorize('ordercustomers.edit');
         $status = $this->getStatusSTS();
-        return view("$this->viewPath.edit",
-            compact('ordercustomer', 'status'));
+        return view(
+            "{$this->viewPath}.edit",
+            compact('ordercustomer', 'status')
+        );
     }
 
     public function update(OrderCustomer $ordercustomer, Request $request): RedirectResponse
     {
         $ordercustomer->update($request->all());
-        return $this->infoResponse("$this->routePath.index");
+        return $this->infoResponse("{$this->routePath}.index");
     }
-
 }

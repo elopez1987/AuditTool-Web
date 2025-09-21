@@ -12,7 +12,6 @@ use Illuminate\Http\Request;
 
 class SecurityFunctionsController extends BaseController
 {
-
     public function index()
     {
         $this->authorize('securityfunctions.index');
@@ -48,8 +47,10 @@ class SecurityFunctionsController extends BaseController
         $modules = SecurityModule::select(['description', 'moduleid'])->get();
         $permissions = Permission::where('functionid', $securityfunction->functionid)
             ->select(['description', 'id', 'name', 'category', 'moduleid', 'functionid', 'guard_name'])->get();
-        return view('Security.SecurtiyFunctions.edit',
-            compact('securityfunction', 'modules', 'permissions'));
+        return view(
+            'Security.SecurtiyFunctions.edit',
+            compact('securityfunction', 'modules', 'permissions')
+        );
     }
 
     public function update(Request $request, SecurityFunction $securityfunction)
@@ -90,8 +91,4 @@ class SecurityFunctionsController extends BaseController
         ];
         return $descriptions[$route] ?? '';
     }
-
-
-
-
 }

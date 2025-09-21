@@ -12,17 +12,15 @@ use Maatwebsite\Excel\Events\AfterSheet;
 
 class InventoryLocationExport implements FromCollection, WithHeadings, WithMapping, WithEvents, ShouldAutoSize
 {
-
     public function headings(): array
     {
         return [
             'Zona',
             'Ubicación',
             'Estatus',
-            'Placas de Caja'
+            'Placas de Caja',
         ];
     }
-
 
     public function collection()
     {
@@ -47,9 +45,9 @@ class InventoryLocationExport implements FromCollection, WithHeadings, WithMappi
             AfterSheet::class => function (AfterSheet $event) {
                 $event->sheet->getDelegate()->getStyle('A1:E1')->getFill()
                     ->applyFromArray(['fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
-                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6']]);
+                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6'],
+                    ]);
             },
         ];
     }
-
 }

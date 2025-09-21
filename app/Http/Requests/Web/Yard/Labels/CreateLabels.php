@@ -10,7 +10,7 @@ class CreateLabels extends FormRequest
     {
         return [
             'centerid' => 'required',
-            'description' => 'required|string'
+            'description' => 'required|string',
         ];
     }
 

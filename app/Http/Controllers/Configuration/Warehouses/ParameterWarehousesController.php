@@ -14,8 +14,10 @@ class ParameterWarehousesController extends BaseController
         $this->authorize('systemwarehouses.parameters');
         $warehouse = SystemWarehouse::findOrFail($id);
         $parameters = $this->getParameterForWarehouses();
-        return view("Configuration.SystemWarehouses.Parameters.create",
-            compact('warehouse', 'parameters'));
+        return view(
+            'Configuration.SystemWarehouses.Parameters.create',
+            compact('warehouse', 'parameters')
+        );
     }
 
     public function systemwarehouseparameters(Request $request, $id)

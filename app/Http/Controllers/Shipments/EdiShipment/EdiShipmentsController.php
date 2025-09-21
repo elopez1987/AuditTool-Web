@@ -10,10 +10,11 @@ class EdiShipmentsController extends BaseController
     public function index()
     {
         $this->authorize('edishipments.index');
-        $data = EdiShipment::controlAccessUser()->with('center','warehouse')
+        $data = EdiShipment::controlAccessUser()->with('center', 'warehouse')
             ->leftJoin('orderdeliveries', 'edishipments.shipmentid', '=', 'orderdeliveries.shipmentid')
             ->select(['edishipments.*',
-                'orderdeliveries.created_at as fecha'])
+                'orderdeliveries.created_at as fecha',
+            ])
             ->get();
         return view('Shipments.EdiShipments.index', compact('data'));
     }
@@ -24,6 +25,4 @@ class EdiShipmentsController extends BaseController
         EdiShipment::destroy($id);
         return $this->redirectBackSuccess();
     }
-
-
 }

@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
-
 class StorageLocationController extends BaseController
 {
     public function index()
@@ -59,8 +58,10 @@ class StorageLocationController extends BaseController
         $status = $this->getStatusSTS();
         $zones = $this->getActiveZonesForCenter();
         $warehouses = $this->getWarehouseForSelect();
-        return view('Yards.StorageLocations.edit',
-            compact('storagelocation', 'status', 'zones', 'warehouses'));
+        return view(
+            'Yards.StorageLocations.edit',
+            compact('storagelocation', 'status', 'zones', 'warehouses')
+        );
     }
 
     public function update(StorageLocation $storagelocation, Request $request): RedirectResponse
@@ -75,6 +76,4 @@ class StorageLocationController extends BaseController
         $location->delete();
         return $this->redirectBackSuccessMessage('Registro eliminado con exito.');
     }
-
-
 }

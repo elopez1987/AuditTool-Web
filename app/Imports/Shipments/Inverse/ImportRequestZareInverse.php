@@ -15,7 +15,6 @@ use Maatwebsite\Excel\Concerns\WithValidation;
 
 class ImportRequestZareInverse implements ToCollection, WithHeadingRow, WithValidation
 {
-
     public function collection(Collection $rows)
     {
         foreach ($rows as $row) {
@@ -43,7 +42,7 @@ class ImportRequestZareInverse implements ToCollection, WithHeadingRow, WithVali
                 ->where('delivery', trim($row['delivery']))->update([
                     'typereport' => trim($row['type']),
                     'requestzare' => Carbon::now(),
-                    'username' => \Auth::user()->username
+                    'username' => \Auth::user()->username,
                 ]);
         }
     }
@@ -56,6 +55,4 @@ class ImportRequestZareInverse implements ToCollection, WithHeadingRow, WithVali
             '*.delivery' => 'required|numeric|digits_between:1,25',
         ];
     }
-
-
 }

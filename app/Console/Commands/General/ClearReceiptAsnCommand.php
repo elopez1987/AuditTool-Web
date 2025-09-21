@@ -14,10 +14,8 @@ class ClearReceiptAsnCommand extends Command
 
     public function handle(): void
     {
-        ReceiptAsn::where('statusid' , 'PG')
+        ReceiptAsn::where('statusid', 'PG')
             ->where('addasndate', '<', Carbon::now()->subDays(10))
             ->update(['statusid' => 'CE']);
     }
-
-
 }

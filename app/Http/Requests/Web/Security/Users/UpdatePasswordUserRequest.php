@@ -22,7 +22,7 @@ class UpdatePasswordUserRequest extends FormRequest
                     ->mixedCase()
                     ->numbers()
                     ->symbols()
-                    ->uncompromised()
+                    ->uncompromised(),
             ],
             'password_confirmation' => 'required|string|same:password',
         ];
@@ -43,5 +43,4 @@ class UpdatePasswordUserRequest extends FormRequest
             'password_confirmation.same' => 'La confirmación debe coincidir con la nueva contraseña.',
         ];
     }
-
 }

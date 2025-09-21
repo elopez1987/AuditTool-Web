@@ -12,12 +12,13 @@ use Yajra\DataTables\Facades\DataTables;
 
 class ShipmentJourneysController extends BaseController
 {
-
     public function index()
     {
         $carriers = $this->getCarriersForSelect();
-        return view('Shipments.ShipmentJourneys.index',
-            compact('carriers'));
+        return view(
+            'Shipments.ShipmentJourneys.index',
+            compact('carriers')
+        );
     }
 
     public function getDataJourney(Request $request)
@@ -43,7 +44,7 @@ class ShipmentJourneysController extends BaseController
                 'shipmentjourneys.auxiliary02',
                 'shipmentjourneys.auxiliary03',
                 'shipmentjourneys.auxiliary04',
-                'orderdeliveries.loadingdate'
+                'orderdeliveries.loadingdate',
             ])
             ->Shipmentid($request->get('shipmentid'))
             ->ForCarrier($request->get('carrierid'))
@@ -58,16 +59,17 @@ class ShipmentJourneysController extends BaseController
             ->rawColumns(['btn', 'statusunit'])->toJson();
     }
 
-
     public function edit(ShipmentJourney $shipmentjourney)
     {
         $status = SystemStatus::whereSchemaid('SHJ')->select('name', 'statusid')->get();
-        $razonoutput = StorageCategoryIncidenceDetail::controlAccessUser()->where('statusid','E')
-           ->where('auxiliary01','SAL')
+        $razonoutput = StorageCategoryIncidenceDetail::controlAccessUser()->where('statusid', 'E')
+            ->where('auxiliary01', 'SAL')
             ->select(['categoryincdetailid','description'])
             ->get();
-        return view('Shipments.ShipmentJourneys.edit',
-            compact('shipmentjourney', 'status', 'razonoutput'));
+        return view(
+            'Shipments.ShipmentJourneys.edit',
+            compact('shipmentjourney', 'status', 'razonoutput')
+        );
     }
 
     public function update(Request $request, ShipmentJourney $shipmentjourney)
@@ -75,6 +77,4 @@ class ShipmentJourneysController extends BaseController
         $shipmentjourney->update($request->all());
         return $this->successResponse('shipmentjourney.index');
     }
-
-
 }

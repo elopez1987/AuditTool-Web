@@ -8,7 +8,6 @@ use Illuminate\Console\Command;
 
 class MoveReceiptToSecondTurn extends Command
 {
-
     protected $signature = 'command:MoveReceiptToSecondTurn';
 
     protected $description = 'Mueve los recibos que no se terminaron del primero al segundo';
@@ -25,6 +24,7 @@ class MoveReceiptToSecondTurn extends Command
             ->whereNotIn('statusid', ['IG', 'CE'])
             ->update([
                 'turnid' => 2,
-                'auxiliary10' => 'Y']);
+                'auxiliary10' => 'Y',
+            ]);
     }
 }

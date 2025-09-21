@@ -21,7 +21,7 @@ class EnviarMensajeOperadorPorAsignacionDeCortinaJob implements ShouldQueue
     public $orderDelivery;
     private AssingDoorToUnitFromShipment $serviceAssingDoorToUnit;
 
-    public function __construct($orderDelivery,AssingDoorToUnitFromShipment $assingDoorToUnitFromShipment)
+    public function __construct($orderDelivery, AssingDoorToUnitFromShipment $assingDoorToUnitFromShipment)
     {
         $this->orderDelivery = $orderDelivery;
         $this->serviceAssingDoorToUnit = $assingDoorToUnitFromShipment;
@@ -30,13 +30,13 @@ class EnviarMensajeOperadorPorAsignacionDeCortinaJob implements ShouldQueue
     public function handle(): void
     {
         $shipment = OrderDeliverie::where('id', '=', $this->orderDelivery->id)->first();
-        if (!empty($shipment->folionumber)) {
+        if (! empty($shipment->folionumber)) {
             $receiptunit = ReceiptUnit::controlAccessUser()->where('id', $shipment->folionumber)->first();
-            if (!empty($receiptunit)) {
-                if ($receiptunit->zone->zoneid == 'PA') {
+            if (! empty($receiptunit)) {
+                if ($receiptunit->zone->zoneid === 'PA') {
                     $locationAssingned = $this->serviceAssingDoorToUnit->addDoorToUnit($receiptunit);
-                    if (!empty($locationAssingned->zone)) {
-                        if ($locationAssingned->zone->zoneid == 'CO') {
+                    if (! empty($locationAssingned->zone)) {
+                        if ($locationAssingned->zone->zoneid === 'CO') {
                             $location = StorageLocation::controlAccessUser()->where('id', $locationAssingned->locationid)->first();
                             $this->sendMessage($location, $receiptunit);
                         }
@@ -48,9 +48,9 @@ class EnviarMensajeOperadorPorAsignacionDeCortinaJob implements ShouldQueue
 
     public function sendMessage($location, $receiptunit)
     {
-        $url = "https://api.1msg.io/HEI523482986/sendTemplate";
+        $url = 'https://api.1msg.io/HEI523482986/sendTemplate';
         $client = new Client();
-        if (!empty($receiptunit->phone)) {
+        if (! empty($receiptunit->phone)) {
             try {
                 $data = $this->getBodyDataMessageInProccess($location, $receiptunit->phone);
                 $client->request('POST', $url, ['json' => $data, 'headers' => ['Content-Type' => 'application/json']]);
@@ -62,24 +62,23 @@ class EnviarMensajeOperadorPorAsignacionDeCortinaJob implements ShouldQueue
 
     public function getBodyDataMessageInProccess($location, $contact)
     {
-        return array(
-            "token" => "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbnN0YW5jZUlkIjoiSEVJNTIzNDgyOTg2IiwidG9rZW4iOiJtaGVaTTh4cTQ2a2RadjZ0Q0NJeXZydGo4dkc3bnlOeCIsImlzcyI6IjFtc2cuaW8iLCJpYXQiOjE3NTU2MTU3NTZ9.PNJB7YjZbqerW-s-r8TOSTlPOS_6OddKHxVbwfsQ9GY",
-            "namespace" => "3686dca6_3e5f_4dc5_a838_74a7716b881c",
-            "template" => "rampaasignadaaembarque",
-            "language" => array(
-                "policy" => "deterministic",
-                "code" => "es_MX"
-            ),
-            "params" => array(
-                array(
-                    "type" => "body",
-                    "parameters" => array(
-                        array("type" => "text", "text" => $location->name),
-                    )
-                )
-            ),
-            "phone" => '1' . $contact
-        );
+        return [
+            'token' => 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbnN0YW5jZUlkIjoiSEVJNTIzNDgyOTg2IiwidG9rZW4iOiJtaGVaTTh4cTQ2a2RadjZ0Q0NJeXZydGo4dkc3bnlOeCIsImlzcyI6IjFtc2cuaW8iLCJpYXQiOjE3NTU2MTU3NTZ9.PNJB7YjZbqerW-s-r8TOSTlPOS_6OddKHxVbwfsQ9GY',
+            'namespace' => '3686dca6_3e5f_4dc5_a838_74a7716b881c',
+            'template' => 'rampaasignadaaembarque',
+            'language' => [
+                'policy' => 'deterministic',
+                'code' => 'es_MX',
+            ],
+            'params' => [
+                [
+                    'type' => 'body',
+                    'parameters' => [
+                        ['type' => 'text', 'text' => $location->name],
+                    ],
+                ],
+            ],
+            'phone' => '1' . $contact,
+        ];
     }
-
 }

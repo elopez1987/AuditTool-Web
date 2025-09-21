@@ -18,26 +18,27 @@ class PrinFormatInvoiceSchedulleController extends BaseController
                 'scheduleinversedetail.folioid',
                 'scheduleinversedetail.workday',
                 'scheduleinversedetail.quantity',
-                'systemstatus.name as bloque'
+                'systemstatus.name as bloque',
             ])->first();
         $shipments = StorageShipmentSchedule::controlAccessUser()->select([
             'vw_shipmentforschedulleinverse.shipmentid',
             'vw_shipmentforschedulleinverse.carriername',
             'vw_shipmentforschedulleinverse.customername',
-            'vw_shipmentforschedulleinverse.quantity'
+            'vw_shipmentforschedulleinverse.quantity',
         ])
-            ->leftJoin('storageshipmentsscheduledetail', function($join) {
+            ->leftJoin('storageshipmentsscheduledetail', function ($join) {
                 $join->on('storageshipmentsschedule.id', '=', 'storageshipmentsscheduledetail.shipmentschedulleid')
                     ->on('storageshipmentsschedule.centerid', '=', 'storageshipmentsscheduledetail.centerid');
             })
-            ->leftJoin('vw_shipmentforschedulleinverse', function($join) {
+            ->leftJoin('vw_shipmentforschedulleinverse', function ($join) {
                 $join->on('storageshipmentsscheduledetail.incidencejourneyid', '=', 'vw_shipmentforschedulleinverse.folioid')
                     ->on('storageshipmentsscheduledetail.centerid', '=', 'vw_shipmentforschedulleinverse.centerid');
             })
             ->where('storageshipmentsschedule.id', $id)->get();
-        $pdf = Pdf::loadView('Shipments.ReserveSchedulleInverse.partials.pdf',
-            compact('reserveschedule', 'details', 'shipments'));
+        $pdf = Pdf::loadView(
+            'Shipments.ReserveSchedulleInverse.partials.pdf',
+            compact('reserveschedule', 'details', 'shipments')
+        );
         return $pdf->download('Folio_De_Devolución-' . $reserveschedule->id . '.pdf');
     }
 }
-

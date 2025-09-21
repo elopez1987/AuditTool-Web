@@ -13,12 +13,10 @@ class SaveEvidenceFromStockWebController extends Controller
     use Responser;
     use StorageWebPhotoTrait;
 
-    public function index(Request $request,$id)
+    public function index(Request $request, $id)
     {
         $receiptunit = ReceiptUnit::controlAccessUser()->where('id', $id)->first();
-        $path = $this->saveFileToModel($request['file'], $receiptunit->centerid,'Yard','ReceiptUnit','InProcess');
-        $this->createEvidencePhoto('ReceiptUnit',$receiptunit->id,$path,'IP',$receiptunit);
+        $path = $this->saveFileToModel($request['file'], $receiptunit->centerid, 'Yard', 'ReceiptUnit', 'InProcess');
+        $this->createEvidencePhoto('ReceiptUnit', $receiptunit->id, $path, 'IP', $receiptunit);
     }
-
-
 }

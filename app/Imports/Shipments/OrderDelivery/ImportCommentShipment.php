@@ -20,7 +20,7 @@ class ImportCommentShipment implements ToModel, WithHeadingRow, WithChunkReading
         $order = OrderDeliverie::controlAccessUser()
             ->where('shipmentid', trim($row['shipmentid']))
             ->whereNotIn('statusid', ['CA', 'DH'])->first();
-        if (!empty($order)) {
+        if (! empty($order)) {
             $this->createNewImport($order, $row['comment']);
         }
     }
@@ -40,8 +40,7 @@ class ImportCommentShipment implements ToModel, WithHeadingRow, WithChunkReading
         return 400;
     }
 
-
-    static function createNewImport($order, $comment)
+    public static function createNewImport($order, $comment)
     {
         ShipmentDataOperation::updateOrCreate([
             'orderid' => $order->id,
@@ -57,5 +56,4 @@ class ImportCommentShipment implements ToModel, WithHeadingRow, WithChunkReading
             '*.comment' => 'required',
         ];
     }
-
 }

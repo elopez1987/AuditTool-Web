@@ -13,8 +13,8 @@ class SuperUserController extends BaseController
     {
         $this->authorize('superusers.index');
         $users = SuperUser::leftJoin('users', 'users.id', '=', 'securitysuperusers.userid')
-        ->select(['securitysuperusers.*', 'users.name','users.username'])->get();
-        return view('Security.SuperUsers.index',compact('users'));
+            ->select(['securitysuperusers.*', 'users.name','users.username'])->get();
+        return view('Security.SuperUsers.index', compact('users'));
     }
 
     public function create()
@@ -33,11 +33,10 @@ class SuperUserController extends BaseController
         return $this->redirectBackSuccessMessage('Usuario agregado con exito');
     }
 
-
     public function destroy($id)
     {
         $this->authorize('superusers.destroy');
-        SuperUser::where('userid',$id)->delete();
+        SuperUser::where('userid', $id)->delete();
         return $this->redirectBackSuccessMessage('Usuario eliminado con exito');
     }
 }

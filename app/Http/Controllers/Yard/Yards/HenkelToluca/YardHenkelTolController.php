@@ -8,7 +8,6 @@ use DB;
 
 class YardHenkelTolController extends BaseController
 {
-
     public function index()
     {
         $result = ReceiptUnit::controlAccessUser()->select(['storagereasons.name as razonname', 'receiptunits.razonstatusid', DB::raw('count(receiptunits.razonstatusid) as total')])
@@ -22,31 +21,32 @@ class YardHenkelTolController extends BaseController
             'receiptunits.boxnumber', 'receiptunits.trucknumber', 'receiptunits.operatorname','receiptunits.razonstatusid',
             'receiptunits.phone', 'storageunitstatus.unitstatusid', 'storagereasons.name as razonname',
             'receiptunits.entrydate','receiptunits.startdate','receiptunits.finishdate',
-            'receiptunits.locationid', 'storagelocations.name as locationname','storagelocations.id as location','systemstatus.name as status'])
+            'receiptunits.locationid', 'storagelocations.name as locationname','storagelocations.id as location','systemstatus.name as status',
+        ])
             ->leftJoin('shipmentcarriers', 'receiptunits.carrierid', '=', 'shipmentcarriers.id')
             ->leftJoin('storageunitstatus', 'receiptunits.unitstatusid', '=', 'storageunitstatus.id')
             ->leftJoin('storagereasons', 'receiptunits.razonstatusid', '=', 'storagereasons.id')
             ->leftJoin('storagelocations', 'receiptunits.locationid', '=', 'storagelocations.id')
-            ->leftJoin('systemstatus','receiptunits.statusid','=','systemstatus.statusid')
+            ->leftJoin('systemstatus', 'receiptunits.statusid', '=', 'systemstatus.statusid')
             ->whereNotIn('receiptunits.statusid', ['TR'])
             ->get();
-
 
         $unitsDummy = ReceiptUnit::select(['receiptunits.id as folionumber', 'receiptunits.barcode',
             'receiptunits.shipmentid', 'shipmentcarriers.name as carriername','receiptunits.statusid','receiptunits.ensnare',
             'receiptunits.boxnumber', 'receiptunits.trucknumber', 'receiptunits.operatorname','receiptunits.razonstatusid',
             'receiptunits.phone', 'storageunitstatus.unitstatusid', 'storagereasons.name as razonname',
             'receiptunits.entrydate','receiptunits.startdate','receiptunits.finishdate',
-            'receiptunits.locationid', 'storagelocations.name as locationname','storagelocations.id as location','systemstatus.name as status'])
+            'receiptunits.locationid', 'storagelocations.name as locationname','storagelocations.id as location','systemstatus.name as status',
+        ])
             ->leftJoin('shipmentcarriers', 'receiptunits.carrierid', '=', 'shipmentcarriers.id')
             ->leftJoin('storageunitstatus', 'receiptunits.unitstatusid', '=', 'storageunitstatus.id')
             ->leftJoin('storagereasons', 'receiptunits.razonstatusid', '=', 'storagereasons.id')
             ->leftJoin('storagelocations', 'receiptunits.locationid', '=', 'storagelocations.id')
-            ->leftJoin('systemstatus','receiptunits.statusid','=','systemstatus.statusid')
+            ->leftJoin('systemstatus', 'receiptunits.statusid', '=', 'systemstatus.statusid')
             ->where('receiptunits.centerid', '=', 'HENKELTOL01')
             ->whereNotIn('receiptunits.statusid', ['TR'])
             ->whereNotIn('receiptunits.statusid', ['OU'])
-            ->where('storagelocations.id','=','30177')
+            ->where('storagelocations.id', '=', '30177')
             ->get();
 
         $receiptUnitsOU = ReceiptUnit::controlAccessUser()->select(['receiptunits.id as folionumber', 'receiptunits.barcode',
@@ -54,13 +54,14 @@ class YardHenkelTolController extends BaseController
             'receiptunits.boxnumber', 'receiptunits.trucknumber', 'receiptunits.operatorname','receiptunits.razonstatusid',
             'receiptunits.phone', 'storageunitstatus.unitstatusid', 'storagereasons.name as razonname',
             'receiptunits.entrydate','receiptunits.startdate','receiptunits.finishdate',
-            'receiptunits.locationid', 'storagelocations.name as locationname','storagelocations.id as location','systemstatus.name as status'])
+            'receiptunits.locationid', 'storagelocations.name as locationname','storagelocations.id as location','systemstatus.name as status',
+        ])
             ->leftJoin('shipmentcarriers', 'receiptunits.carrierid', '=', 'shipmentcarriers.id')
             ->leftJoin('storageunitstatus', 'receiptunits.unitstatusid', '=', 'storageunitstatus.id')
             ->leftJoin('storagereasons', 'receiptunits.razonstatusid', '=', 'storagereasons.id')
             ->leftJoin('storagelocations', 'receiptunits.locationid', '=', 'storagelocations.id')
-            ->leftJoin('systemstatus','receiptunits.statusid','=','systemstatus.statusid')
-            ->where('receiptunits.statusid','=', 'OU')
+            ->leftJoin('systemstatus', 'receiptunits.statusid', '=', 'systemstatus.statusid')
+            ->where('receiptunits.statusid', '=', 'OU')
             ->get();
 
         $receiptUnitsRes = ReceiptUnit::controlAccessUser()->select(['receiptunits.id as folionumber', 'receiptunits.barcode',
@@ -68,21 +69,18 @@ class YardHenkelTolController extends BaseController
             'receiptunits.boxnumber', 'receiptunits.trucknumber', 'receiptunits.operatorname','receiptunits.razonstatusid',
             'receiptunits.phone', 'storageunitstatus.unitstatusid', 'storagereasons.name as razonname',
             'receiptunits.entrydate','receiptunits.startdate','receiptunits.finishdate',
-            'receiptunits.locationid', 'storagelocations.name as locationname','storagelocations.id as location','systemstatus.name as status'])
+            'receiptunits.locationid', 'storagelocations.name as locationname','storagelocations.id as location','systemstatus.name as status',
+        ])
             ->leftJoin('shipmentcarriers', 'receiptunits.carrierid', '=', 'shipmentcarriers.id')
             ->leftJoin('storageunitstatus', 'receiptunits.unitstatusid', '=', 'storageunitstatus.id')
             ->leftJoin('storagereasons', 'receiptunits.razonstatusid', '=', 'storagereasons.id')
             ->leftJoin('storagelocations', 'receiptunits.locationid', '=', 'storagelocations.id')
-            ->leftJoin('systemstatus','receiptunits.statusid','=','systemstatus.statusid')
+            ->leftJoin('systemstatus', 'receiptunits.statusid', '=', 'systemstatus.statusid')
             ->where('receiptunits.razonstatusid', '=', '3')
             ->whereNotIn('receiptunits.statusid', ['OU'])
             ->whereNotIn('receiptunits.statusid', ['TR'])
             ->get();
 
-        return view('Yards.LayOutYard.Yards.HenkelTolucaOneRoof.index', compact('result', 'receiptUnits','receiptUnitsOU','receiptUnitsRes','unitsDummy'));
+        return view('Yards.LayOutYard.Yards.HenkelTolucaOneRoof.index', compact('result', 'receiptUnits', 'receiptUnitsOU', 'receiptUnitsRes', 'unitsDummy'));
     }
-
-
-
-
 }

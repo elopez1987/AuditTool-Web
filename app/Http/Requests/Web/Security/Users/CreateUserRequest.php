@@ -7,7 +7,6 @@ use Illuminate\Validation\Rules\Password;
 
 class CreateUserRequest extends FormRequest
 {
-
     public function authorize(): bool
     {
         return true;
@@ -16,17 +15,18 @@ class CreateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-			'name' => 'required|string|max:150',
+            'name' => 'required|string|max:150',
             'email' => 'required|email|unique:users,email',
-			'password' => ['required', 'string', Password::min(10)->mixedCase()
-                ->uncompromised()->symbols()->letters()->numbers()],
+            'password' => ['required', 'string', Password::min(10)->mixedCase()
+                ->uncompromised()->symbols()->letters()->numbers(),
+            ],
             'role_id' => 'required|exists:roles,name',
-			'username' => 'required|max:8|string|unique:users,username',
-			'auxiliary01' => 'nullable|string|max:190|regex:/^[a-zA-Z0-9\s]+$/',
-			'auxiliary02' => 'nullable|string|max:190|regex:/^[a-zA-Z0-9\s]+$/',
-			'auxiliary03' => 'nullable|string|max:190|regex:/^[a-zA-Z0-9\s]+$/',
-			'auxiliary04' => 'nullable|string|max:190|regex:/^[a-zA-Z0-9\s]+$/',
-			'auxiliary05' => 'nullable|string|max:190|regex:/^[a-zA-Z0-9\s]+$/',
+            'username' => 'required|max:8|string|unique:users,username',
+            'auxiliary01' => 'nullable|string|max:190|regex:/^[a-zA-Z0-9\s]+$/',
+            'auxiliary02' => 'nullable|string|max:190|regex:/^[a-zA-Z0-9\s]+$/',
+            'auxiliary03' => 'nullable|string|max:190|regex:/^[a-zA-Z0-9\s]+$/',
+            'auxiliary04' => 'nullable|string|max:190|regex:/^[a-zA-Z0-9\s]+$/',
+            'auxiliary05' => 'nullable|string|max:190|regex:/^[a-zA-Z0-9\s]+$/',
         ];
     }
 
@@ -41,14 +41,12 @@ class CreateUserRequest extends FormRequest
             'email.email' => 'El campo correo debe ser un correo electronico.',
             'email.unique' => 'El campo correo ya se encuentra registrado.',
 
-
             'role_id.exists' => 'El campo rol no existe.',
             'role_id.required' => 'El campo rol es requerido.',
 
             'username.required' => 'El campo usuario es requerido.',
             'username.string' => 'El campo usuaario debe ser una cadena.',
             'username.unique' => 'El campo usuario ya se encuentra registrado.',
-
 
             'password.min' => 'El campo contraseña debe tener al menos 8 caracteres.',
             'password.required' => 'El campo contraseña es requerido.',
@@ -59,6 +57,4 @@ class CreateUserRequest extends FormRequest
             'password.letters' => 'El campo contraseña debe contener letras.',
         ];
     }
-
-	
 }

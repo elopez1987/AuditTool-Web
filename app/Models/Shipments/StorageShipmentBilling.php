@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class StorageShipmentBilling extends Model
 {
-    protected $table = 'storageshipmentbillings';
     public $timestamps = false;
+    protected $table = 'storageshipmentbillings';
 
     protected $fillable = [
         'centerid',
@@ -21,8 +21,7 @@ class StorageShipmentBilling extends Model
         'auxiliary05',
     ];
 
-
-    static function getBillingsForCreateNewIncidence($orderid)
+    public static function getBillingsForCreateNewIncidence($orderid)
     {
         return StorageShipmentBilling::where('orderid', $orderid)
             ->pluck('billingdocument', 'billingdocument')->toArray();
@@ -32,6 +31,4 @@ class StorageShipmentBilling extends Model
     {
         return $this->hasOne(OrderDeliverie::class, 'id', 'orderid');
     }
-
-
 }

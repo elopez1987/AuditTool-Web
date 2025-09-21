@@ -17,11 +17,6 @@ class Storagechecklocationbridg extends Model
 {
     use LogsActivity;
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
-
     public $timestamps = false;
 
     protected $table = 'storagechecklocationbridg';
@@ -56,6 +51,10 @@ class Storagechecklocationbridg extends Model
 
     ];
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
     public static function controlAccessUser()
     {
@@ -64,7 +63,6 @@ class Storagechecklocationbridg extends Model
         return Storagechecklocationbridg::whereIn('storagechecklocationbridg.warehouseid', $warehouses)
             ->whereIn('storagechecklocationbridg.centerid', $centers);
     }
-
 
     public function center(): BelongsTo
     {
@@ -83,14 +81,11 @@ class Storagechecklocationbridg extends Model
 
     public function location()
     {
-        return $this->belongsTo(StorageLocation::class, 'locationid','id');
+        return $this->belongsTo(StorageLocation::class, 'locationid', 'id');
     }
 
     public function turn()
     {
-        return $this->belongsTo(StorageTurn::class, 'turnid','id');
+        return $this->belongsTo(StorageTurn::class, 'turnid', 'id');
     }
-
-
-
 }

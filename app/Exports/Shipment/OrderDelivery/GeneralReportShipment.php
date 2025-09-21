@@ -15,10 +15,10 @@ use Maatwebsite\Excel\Events\AfterSheet;
 
 class GeneralReportShipment implements FromCollection, WithHeadings, WithMapping, WithEvents, ShouldAutoSize, WithColumnFormatting
 {
-    private $workdayin;
-    private $workdayout;
 
     use Exportable;
+    private $workdayin;
+    private $workdayout;
 
     public function __construct($workdayin, $workdayout)
     {
@@ -62,37 +62,35 @@ class GeneralReportShipment implements FromCollection, WithHeadings, WithMapping
             'Pallets facturados',
             'Cajas facturadas',
             'Estatus',
-            'Planeador'
+            'Planeador',
         ];
     }
 
-
     public function collection()
     {
-        $shipments = OrderDeliverie::controlAccessUser()
-            ->leftjoin("storageturns as s", "orderdeliveries.turnid", "=", "s.id")
-            ->leftjoin("systemstatus as s2", "orderdeliveries.statusid", "=", "s2.statusid")
-            ->leftjoin("shipmentheader as s3", "orderdeliveries.id", "=", "s3.orderid")
-            ->leftjoin("storagelocations as s4", "s3.locationid", "=", "s4.id")
-            ->leftjoin("receiptunits as r2", "orderdeliveries.folionumber", "=", "r2.id")
-            ->leftjoin("shipmentcarriers as sh", 'orderdeliveries.carrierid', '=', 'sh.id')
-            ->leftjoin("storagelocations as s5", "r2.locationid", "=", "s5.id")
-            ->leftjoin("ordercustomers as o", "orderdeliveries.customerid", "=", "o.id")
-            ->leftjoin("shipmentdataoperation as s6", "orderdeliveries.id", "=", "s6.orderid")
-            ->select(["orderdeliveries.warehouseid", "orderdeliveries.id", "orderdeliveries.auxiliary02 as planeador",
-                "workday", "s.name as turno", "orderdeliveries.shipmentid",
-                "s2.name as statusname", "s4.name as precarga", "s5.name as cortina",
-                "o.name as customer", "o.city", "orderdeliveries.loadingdate",
-                "orderdeliveries.downloaddate", "r2.entrydate", "r2.deliverdate", "r2.outputdate",
-                "orderdeliveries.auxiliary01 as dvnegocio", "orderdeliveries.auxiliary02 as planer",
-                "s6.fullpallet", "s6.fullpicking", 's2.statusid', 's6.auxiliary02 as datatransport', 'r2.operatorname',
-                "sh.name as carriername", "r2.boxnumber", "o.timetransfer", "r2.autorizaoutputdate", "s3.totalcontainers", "s3.totalpieces",
-                "s3.totalweight", "s3.totalvolume", "s3.totalcontainersfac", "s3.totalpiecesfac", 's6.auxiliary02 as avance'
+        return OrderDeliverie::controlAccessUser()
+            ->leftjoin('storageturns as s', 'orderdeliveries.turnid', '=', 's.id')
+            ->leftjoin('systemstatus as s2', 'orderdeliveries.statusid', '=', 's2.statusid')
+            ->leftjoin('shipmentheader as s3', 'orderdeliveries.id', '=', 's3.orderid')
+            ->leftjoin('storagelocations as s4', 's3.locationid', '=', 's4.id')
+            ->leftjoin('receiptunits as r2', 'orderdeliveries.folionumber', '=', 'r2.id')
+            ->leftjoin('shipmentcarriers as sh', 'orderdeliveries.carrierid', '=', 'sh.id')
+            ->leftjoin('storagelocations as s5', 'r2.locationid', '=', 's5.id')
+            ->leftjoin('ordercustomers as o', 'orderdeliveries.customerid', '=', 'o.id')
+            ->leftjoin('shipmentdataoperation as s6', 'orderdeliveries.id', '=', 's6.orderid')
+            ->select(['orderdeliveries.warehouseid', 'orderdeliveries.id', 'orderdeliveries.auxiliary02 as planeador',
+                'workday', 's.name as turno', 'orderdeliveries.shipmentid',
+                's2.name as statusname', 's4.name as precarga', 's5.name as cortina',
+                'o.name as customer', 'o.city', 'orderdeliveries.loadingdate',
+                'orderdeliveries.downloaddate', 'r2.entrydate', 'r2.deliverdate', 'r2.outputdate',
+                'orderdeliveries.auxiliary01 as dvnegocio', 'orderdeliveries.auxiliary02 as planer',
+                's6.fullpallet', 's6.fullpicking', 's2.statusid', 's6.auxiliary02 as datatransport', 'r2.operatorname',
+                'sh.name as carriername', 'r2.boxnumber', 'o.timetransfer', 'r2.autorizaoutputdate', 's3.totalcontainers', 's3.totalpieces',
+                's3.totalweight', 's3.totalvolume', 's3.totalcontainersfac', 's3.totalpiecesfac', 's6.auxiliary02 as avance',
             ])
             ->whereBetween('orderdeliveries.workday', [$this->workdayin, $this->workdayout])
-            ->addSelect(DB::raw("DATEADD(HH, - (o.timetransfer / 60), orderdeliveries.downloaddate)  as maxoutputtransport"))
+            ->addSelect(DB::raw('DATEADD(HH, - (o.timetransfer / 60), orderdeliveries.downloaddate)  as maxoutputtransport'))
             ->get();
-        return $shipments;
     }
 
     public function map($shipments): array
@@ -133,10 +131,9 @@ class GeneralReportShipment implements FromCollection, WithHeadings, WithMapping
             AfterSheet::class => function (AfterSheet $event) {
                 $event->sheet->getDelegate()->getStyle('A1:Z1')->getFill()
                     ->applyFromArray(['fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
-                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6']]);
+                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6'],
+                    ]);
             },
         ];
     }
-
-
 }

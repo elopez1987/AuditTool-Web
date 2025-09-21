@@ -23,7 +23,7 @@ class ImportResponseInventoryLogInverse implements ToCollection, WithHeadingRow
             if (empty($shipment)) {
                 continue;
             }
-            $inverse = StorageScheduleInverse::where('orderid','=', $shipment->id)->first();
+            $inverse = StorageScheduleInverse::where('orderid', '=', $shipment->id)->first();
             if (empty($inverse)) {
                 continue;
             }
@@ -40,6 +40,7 @@ class ImportResponseInventoryLogInverse implements ToCollection, WithHeadingRow
     /**
      * @param $inverse
      * @param $row
+     *
      * @return void
      */
     public function createOrUpdateNoteForInventory($inverse, $row): void
@@ -51,16 +52,18 @@ class ImportResponseInventoryLogInverse implements ToCollection, WithHeadingRow
                 'orderid' => $inverse->orderid,
                 'inverseid' => $inverse->id,
                 'delivery' => trim($row['delivery']),
-            ], [
+            ],
+            [
                 'replyadjust' => Carbon::now(),
                 'note' => trim($row['note']),
-                'statusid' => 'TD'
+                'statusid' => 'TD',
             ]
         );
     }
 
     /**
      * @param OrderDeliverie $shipment
+     *
      * @return void
      */
     public function closeInverseOperation(OrderDeliverie $shipment): void
@@ -74,6 +77,7 @@ class ImportResponseInventoryLogInverse implements ToCollection, WithHeadingRow
 
     /**
      * @param $inverse
+     *
      * @return void
      */
     public function closeInverse($inverse): void
@@ -85,6 +89,7 @@ class ImportResponseInventoryLogInverse implements ToCollection, WithHeadingRow
     /**
      * @param OrderDeliverie $shipment
      * @param $delivery
+     *
      * @return StorageScheduleInverseTraffic|Builder|Model|object|null
      */
     public function getStorageScheduleInverseTraffic(OrderDeliverie $shipment, $delivery)
@@ -93,6 +98,4 @@ class ImportResponseInventoryLogInverse implements ToCollection, WithHeadingRow
             ->where('delivery', '=', trim($delivery))
             ->where('adjust', '=', 'S')->first();
     }
-
-
 }

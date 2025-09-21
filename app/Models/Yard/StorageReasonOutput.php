@@ -11,19 +11,11 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class StorageReasonOutput extends Model
 {
-
     use LogsActivity;
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
-
+    public $timestamps = false;
 
     protected $table = 'storagereasonoutput';
-    public $timestamps = false;
     protected $primaryKey = 'id';
-
 
     protected $fillable = [
         'centerid',
@@ -41,6 +33,11 @@ class StorageReasonOutput extends Model
         'schemaid' => 'STS',
         'statusid' => 'E',
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
     public static function controlAccessUser()
     {
@@ -62,16 +59,15 @@ class StorageReasonOutput extends Model
 
     public function scopeName($query, $name)
     {
-        if (trim($name) != "") {
-            $query->where('description', 'like', "%$name%");
+        if (trim($name) !== '') {
+            $query->where('description', 'like', "%{$name}%");
         }
     }
 
-    static function getReasonOutPutsForType($type)
+    public static function getReasonOutPutsForType($type)
     {
         return StorageReasonOutput::controlAccessUser()
             ->where('type', $type)
             ->pluck('description', 'id')->toArray();
     }
-
 }

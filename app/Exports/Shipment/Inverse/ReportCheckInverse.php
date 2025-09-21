@@ -13,14 +13,13 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 
-
 class ReportCheckInverse implements FromCollection, WithHeadings, WithMapping, WithEvents, ShouldAutoSize, WithColumnFormatting
 {
+
+    use Exportable;
     private $workdayin;
     private $workdayout;
     private $centerid;
-
-    use Exportable;
 
     public function __construct($workdayin, $workdayout, $centerid)
     {
@@ -50,19 +49,27 @@ class ReportCheckInverse implements FromCollection, WithHeadings, WithMapping, W
             'Fin de verificación',
             'Verificador',
             'Fecha de registro',
-            'Ubicación'
+            'Ubicación',
         ];
     }
 
     public function collection()
     {
-        $shipments = DB::table('storageincidencejourneydetails')
-            ->select('storageincidencejourneydetails.folioid', 'orderdeliveries.shipmentid', 'storageincidencejourneydetails.delivery',
-                'storageincidencejourneydetails.partnumberid', 'inventorypartnumbers.lngdsc as description',
+        return DB::table('storageincidencejourneydetails')
+            ->select(
+                'storageincidencejourneydetails.folioid',
+                'orderdeliveries.shipmentid',
+                'storageincidencejourneydetails.delivery',
+                'storageincidencejourneydetails.partnumberid',
+                'inventorypartnumbers.lngdsc as description',
                 'storageincidencejourneydetails.quantity as reportada',
-                DB::raw("sum(storagescheduleinverseoperationdetails.quantity) as verificada"),
-                'storagescheduleinverseoperation.startdate as inicio', 'storagescheduleinverseoperation.finishdate as fin',
-                'users.name as verificador', 'storagescheduleinverseoperationdetails.created_at as registrada', 'storagescheduleinverseoperationdetails.value01 as location')
+                DB::raw('sum(storagescheduleinverseoperationdetails.quantity) as verificada'),
+                'storagescheduleinverseoperation.startdate as inicio',
+                'storagescheduleinverseoperation.finishdate as fin',
+                'users.name as verificador',
+                'storagescheduleinverseoperationdetails.created_at as registrada',
+                'storagescheduleinverseoperationdetails.value01 as location'
+            )
             ->join('orderdeliveries', 'storageincidencejourneydetails.orderid', '=', 'orderdeliveries.id')
             ->join('storagescheduleinverse', function ($join) {
                 $join->on('storageincidencejourneydetails.orderid', '=', 'storagescheduleinverse.orderid')
@@ -84,13 +91,21 @@ class ReportCheckInverse implements FromCollection, WithHeadings, WithMapping, W
             })
             ->where('storageincidencejourneydetails.centerid', '=', $this->centerid)
             ->whereBetween('storagescheduleinverse.created_at', [$this->workdayin, $this->workdayout])
-            ->groupBy('storageincidencejourneydetails.folioid', 'orderdeliveries.shipmentid', 'storageincidencejourneydetails.delivery',
-                'storageincidencejourneydetails.partnumberid', 'inventorypartnumbers.lngdsc', 'storageincidencejourneydetails.quantity',
-                'storagescheduleinverseoperation.startdate', 'storagescheduleinverseoperation.finishdate', 'users.name', 'storagescheduleinverseoperationdetails.created_at',
-                'storagescheduleinverseoperationdetails.value01')
+            ->groupBy(
+                'storageincidencejourneydetails.folioid',
+                'orderdeliveries.shipmentid',
+                'storageincidencejourneydetails.delivery',
+                'storageincidencejourneydetails.partnumberid',
+                'inventorypartnumbers.lngdsc',
+                'storageincidencejourneydetails.quantity',
+                'storagescheduleinverseoperation.startdate',
+                'storagescheduleinverseoperation.finishdate',
+                'users.name',
+                'storagescheduleinverseoperationdetails.created_at',
+                'storagescheduleinverseoperationdetails.value01'
+            )
             ->orderBy('orderdeliveries.shipmentid', 'asc')
             ->get();
-        return $shipments;
     }
 
     public function map($shipments): array
@@ -117,7 +132,8 @@ class ReportCheckInverse implements FromCollection, WithHeadings, WithMapping, W
             AfterSheet::class => function (AfterSheet $event) {
                 $event->sheet->getDelegate()->getStyle('A1:L1')->getFill()
                     ->applyFromArray(['fillType' => Fill::FILL_SOLID,
-                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6']]);
+                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6'],
+                    ]);
             },
         ];
     }

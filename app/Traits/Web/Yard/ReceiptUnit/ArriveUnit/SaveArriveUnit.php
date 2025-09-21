@@ -14,25 +14,25 @@ trait SaveArriveUnit
 
     public function saveArriveUnit($receiptunit, $platform)
     {
-        if ($platform == 'API') {
-            if ($receiptunit == null) {
+        if ($platform === 'API') {
+            if ($receiptunit === null) {
                 return $this->getResponseWithErrors('registerArrive', 'No existen registros del codigo de barra ingresado.');
             }
-            if ($receiptunit->statusid != 'QI') {
+            if ($receiptunit->statusid !== 'QI') {
                 return $this->getResponseWithErrors('registerArrive', 'La unidad se encuentra en estatus diferente ENTRADA AUTORIZADA.');
             }
-            if ($receiptunit->deliverdate != null) {
+            if ($receiptunit->deliverdate !== null) {
                 return $this->getResponseWithErrors('registerArrive', 'La unidad ya tiene registro de llegada.');
             }
         }
-        if ($platform == 'WEB') {
-            if ($receiptunit == null) {
+        if ($platform === 'WEB') {
+            if ($receiptunit === null) {
                 return $this->errorResponse('No existen registros del codigo de barra ingresado.');
             }
-            if ($receiptunit->statusid != 'QI') {
+            if ($receiptunit->statusid !== 'QI') {
                 return $this->errorResponse('La unidad se encuentra en estatus diferente ENTRADA AUTORIZADA.');
             }
-            if ($receiptunit->deliverdate != null) {
+            if ($receiptunit->deliverdate !== null) {
                 return $this->errorResponse('La unidad ya cuenta con registro de Mesa de Control');
             }
         }
@@ -40,13 +40,10 @@ trait SaveArriveUnit
         StorageUnitTrace::createTraceUnit($receiptunit, '10');
     }
 
-
     private function updateDataUnit(ReceiptUnit $receiptunit)
     {
         $receiptunit->deliverdate = now();
         $receiptunit->statusid = 'IN';
         $receiptunit->save();
     }
-
-
 }

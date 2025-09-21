@@ -11,7 +11,6 @@ use Yajra\DataTables\Facades\DataTables;
 
 class ScheduleReceiptController extends BaseController
 {
-
     public function index()
     {
         $this->authorize('schedulereceipt.index');
@@ -21,9 +20,11 @@ class ScheduleReceiptController extends BaseController
         $centers = $this->getCenterForSelect();
         $warehouses = $this->getWarehouseForSelect();
         $carriers = $this->getCarriersForSelect();
-        $reasons = StorageReason::whereIn('id',[17,18,19,20,31,32])->select(['name', 'id'])->get();
-        return view('Receipt.ScheduleReceipt.index',
-            compact('status', 'providers', 'centers', 'warehouses','carriers','reasons'));
+        $reasons = StorageReason::whereIn('id', [17,18,19,20,31,32])->select(['name', 'id'])->get();
+        return view(
+            'Receipt.ScheduleReceipt.index',
+            compact('status', 'providers', 'centers', 'warehouses', 'carriers', 'reasons')
+        );
     }
 
     public function getDataReceipt(Request $request)
@@ -48,7 +49,7 @@ class ScheduleReceiptController extends BaseController
                 'receiptunits.boxnumber', 'storagelocations.name as locationname',
                 'receiptasn.unloadstartdate', 'receiptasn.unloadfinishdate', 'receiptasn.cancellationdate',
                 'receiptasn.goodissuedate', 'receiptasn.statusid', 'receiptunits.statusid as statusunit',
-                'receiptunits.deliverdate', 'receiptunits.autorizaoutputdate', 'receiptunits.ensnare'
+                'receiptunits.deliverdate', 'receiptunits.autorizaoutputdate', 'receiptunits.ensnare',
             ]);
         return DataTables::of($data)
             ->addColumn('btn', 'Receipt.ScheduleReceipt.partials.buttons')
@@ -56,11 +57,4 @@ class ScheduleReceiptController extends BaseController
             ->addColumn('stays', 'Receipt.ScheduleReceipt.partials.stays')
             ->rawColumns(['btn', 'sap', 'stays', 'exit', 'arrive'])->toJson();
     }
-
-
-
-
-
-
-
 }

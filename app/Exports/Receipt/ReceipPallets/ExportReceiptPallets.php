@@ -14,11 +14,11 @@ use PhpOffice\PhpSpreadsheet\Style\Fill;
 
 class ExportReceiptPallets implements FromCollection, WithHeadings, WithMapping, WithEvents, ShouldAutoSize
 {
+
+    use Exportable;
     private $workdayin;
     private $workdayout;
     private $centerid;
-
-    use Exportable;
 
     public function __construct($workdayin, $workdayout, $centerid)
     {
@@ -27,14 +27,24 @@ class ExportReceiptPallets implements FromCollection, WithHeadings, WithMapping,
         $this->centerid = $centerid;
     }
 
-
     public function collection()
     {
-        $receipts = DB::table('receiptasn')
-            ->select('receiptasn.shipmentid', 'receiptasn.billoflading', 'receiptproviders.name as provider',
-                'receiptasn.addasndate as cita', 'inventorypartnumbers.lngdsc as tipo','receiptasn.billoflading','receiptasn.oc',
-                'storagereceiptpallets.quantity', 'storagereceiptpallets.damage',
-                'receiptunits.boxnumber', 'receiptunits.trucknumber','receiptunits.operatorname','receiptunits.id as folio','shipmentcarriers.name as carrier'
+        return DB::table('receiptasn')
+            ->select(
+                'receiptasn.shipmentid',
+                'receiptasn.billoflading',
+                'receiptproviders.name as provider',
+                'receiptasn.addasndate as cita',
+                'inventorypartnumbers.lngdsc as tipo',
+                'receiptasn.billoflading',
+                'receiptasn.oc',
+                'storagereceiptpallets.quantity',
+                'storagereceiptpallets.damage',
+                'receiptunits.boxnumber',
+                'receiptunits.trucknumber',
+                'receiptunits.operatorname',
+                'receiptunits.id as folio',
+                'shipmentcarriers.name as carrier'
             )
             ->leftJoin('receiptproviders', 'receiptasn.providerid', '=', 'receiptproviders.id')
             ->leftJoin('storagereceiptpallets', 'receiptasn.id', '=', 'storagereceiptpallets.receiptid')
@@ -44,8 +54,6 @@ class ExportReceiptPallets implements FromCollection, WithHeadings, WithMapping,
             ->where('receiptasn.centerid', '=', $this->centerid)
             ->whereBetween('receiptasn.addasndate', [$this->workdayin, $this->workdayout])
             ->get();
-
-        return $receipts;
     }
 
     public function headings(): array
@@ -84,7 +92,7 @@ class ExportReceiptPallets implements FromCollection, WithHeadings, WithMapping,
             $receipts->tipo,
             $receipts->quantity,
             $receipts->damage,
-            $receipts->quantity - $receipts->damage
+            $receipts->quantity - $receipts->damage,
         ];
     }
 
@@ -94,12 +102,9 @@ class ExportReceiptPallets implements FromCollection, WithHeadings, WithMapping,
             AfterSheet::class => function (AfterSheet $event) {
                 $event->sheet->getDelegate()->getStyle('A1:N1')->getFill()
                     ->applyFromArray(['fillType' => Fill::FILL_SOLID,
-                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6']]);
+                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6'],
+                    ]);
             },
         ];
     }
-
-
 }
-
-

@@ -13,17 +13,15 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 
-
 class ExportReportCircuitPlant implements FromCollection, WithHeadings, WithEvents, ShouldAutoSize, WithMapping
 {
-
+    use Exportable;
     private $centerid;
     private $entrydate;
     /**
      * @var mixed
      */
     private $finishdate;
-    use Exportable;
 
     public function __construct($centerid, $workdayin, $workdayout)
     {
@@ -50,14 +48,14 @@ class ExportReportCircuitPlant implements FromCollection, WithHeadings, WithEven
             'Enrampe',
             'Inicio de descarga',
             'Fin de descarga',
-            'Autorización de salida'
+            'Autorización de salida',
         ];
     }
 
     public function collection()
     {
 //        $units = collect(DB::select('exec getDataUnitToOneRoof "' . $this->centerid . '" , "' . $this->entrydate . '" , "' . $this->finishdate . '"   '));
-        $units = ReceiptUnit::select([
+        return ReceiptUnit::select([
             'receiptunits.id',
             'shipmentcarriers.name as linea',
             'receipttrucks.operatorname',
@@ -74,7 +72,7 @@ class ExportReportCircuitPlant implements FromCollection, WithHeadings, WithEven
             'receiptunits.ensnare',
             'receiptunits.startdate',
             'receiptunits.finishdate',
-            'receiptunits.autorizaoutputdate'
+            'receiptunits.autorizaoutputdate',
         ])
             ->leftJoin('shipmentcarriers', 'receiptunits.carrierid', '=', 'shipmentcarriers.id')
             ->leftJoin('storagereceiptunitarrive', 'receiptunits.id', '=', 'storagereceiptunitarrive.value01')
@@ -83,9 +81,8 @@ class ExportReportCircuitPlant implements FromCollection, WithHeadings, WithEven
             ->whereBetween('receiptunits.entrydate', [$this->entrydate, $this->finishdate])
             ->where([
                 ['receiptunits.razonstatusid', '=', '2'],
-                ['receiptunits.centerid', '=', $this->centerid]
+                ['receiptunits.centerid', '=', $this->centerid],
             ])->get();
-        return $units;
     }
 
     public function map($units): array
@@ -116,10 +113,9 @@ class ExportReportCircuitPlant implements FromCollection, WithHeadings, WithEven
             AfterSheet::class => function (AfterSheet $event) {
                 $event->sheet->getDelegate()->getStyle('A1:P1')->getFill()
                     ->applyFromArray(['fillType' => Fill::FILL_SOLID,
-                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6']]);
+                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6'],
+                    ]);
             },
         ];
     }
-
-
 }

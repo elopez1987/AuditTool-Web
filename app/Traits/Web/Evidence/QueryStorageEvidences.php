@@ -9,7 +9,6 @@ use DB;
 
 trait QueryStorageEvidences
 {
-
     public function getAllEvidencesShipments($request)
     {
         return StorageEvidenceProcess::controlAccessUser()
@@ -25,7 +24,7 @@ trait QueryStorageEvidences
             ->leftJoin('systemstatus', 'storageevidenceoperations.statusid', '=', 'systemstatus.statusid')
             ->leftJoin('inventorystockcategories', 'storageevidenceoperations.stockcategoryid', '=', 'inventorystockcategories.id')
             ->ForStatus($request->get('statusid'))
-            ->ForRangeDate($request['from_date'],$request['to_date'])
+            ->ForRangeDate($request['from_date'], $request['to_date'])
             ->ForShipment($request['shipmentid'])
             ->ForCustomer($request['customerid'])
             ->ForTurn($request['turnid'])
@@ -49,7 +48,7 @@ trait QueryStorageEvidences
                 'storagereasons.name as razon',
                 'users.name as user',
                 'systemstatus.name as status',
-                'inventorystockcategories.description as origen'
+                'inventorystockcategories.description as origen',
             ]);
     }
 
@@ -57,7 +56,7 @@ trait QueryStorageEvidences
     {
         return StorageLocation::controlAccessUser()
             ->join('storagezones', 'storagelocations.zoneid', '=', 'storagezones.id')
-            ->whereNotIn('storagelocations.name', ["DUMMY"])
+            ->whereNotIn('storagelocations.name', ['DUMMY'])
             ->whereIn('storagelocations.statusid', ['E'])
             ->where('storagezones.statusid', '=', 'E')
             ->where('storagezones.zoneid', '=', 'CO')
@@ -73,11 +72,11 @@ trait QueryStorageEvidences
 
     public function getVerificados($shipmentid)
     {
-        return DB::select("
+        return DB::select('
         select shipmentid,partnumberid,sum(quantity) as totalcheck
                 from storageevidencecontainers where shipmentid=?
                 group by shipmentid, partnumberid
-        ", [$shipmentid]);
+        ', [$shipmentid]);
     }
 
     public function getEvidencePhotosForShipment($shipmentid)
@@ -87,14 +86,14 @@ trait QueryStorageEvidences
             ->where('auxiliary01', '=', 'SH')->get();
     }
 
-
     public function getShipmentForDashboard($request)
     {
         return StorageEvidenceProcess::controlAccessUser()
             ->select(['storageevidenceoperations.recordid', 'storageevidenceoperations.shipmentid', 'storageevidenceoperations.workday', 'ordercustomers.name as customer',
                 DB::raw('SUM(storageevidencestock.quantity) as solicitado'),
-                DB::raw("(SELECT SUM(quantity) FROM storageevidencecontainers WHERE shipmentid = storageevidenceoperations.recordid) as verificado"),
-                DB::raw("(SELECT SUM(quantity) FROM storageevidencecontainers WHERE shipmentid = storageevidenceoperations.recordid AND scanuserload IS NOT NULL) as cargado")])
+                DB::raw('(SELECT SUM(quantity) FROM storageevidencecontainers WHERE shipmentid = storageevidenceoperations.recordid) as verificado'),
+                DB::raw('(SELECT SUM(quantity) FROM storageevidencecontainers WHERE shipmentid = storageevidenceoperations.recordid AND scanuserload IS NOT NULL) as cargado'),
+            ])
             ->leftJoin('ordercustomers', function ($join) {
                 $join->on('storageevidenceoperations.customerid', '=', 'ordercustomers.id');
                 $join->on('storageevidenceoperations.centerid', '=', 'ordercustomers.centerid');
@@ -105,13 +104,17 @@ trait QueryStorageEvidences
             })
             ->where('storageevidenceoperations.statusid', 'E')
             ->ForShipment($request->get('shipmentid'))
-            ->ForRangeDate($request['from_date'],$request['to_date'])
+            ->ForRangeDate($request['from_date'], $request['to_date'])
             ->ForTurn($request->get('turnid'))
-            ->groupBy('storageevidenceoperations.recordid', 'storageevidenceoperations.shipmentid',
-                'storageevidenceoperations.workday', 'ordercustomers.name')
-            ->get()->toArray();
+            ->groupBy(
+                'storageevidenceoperations.recordid',
+                'storageevidenceoperations.shipmentid',
+                'storageevidenceoperations.workday',
+                'ordercustomers.name'
+            )
+            ->get()
+            ->toArray();
     }
-
 
     public function getTotalVerificado($id)
     {
@@ -128,7 +131,7 @@ trait QueryStorageEvidences
                 WHERE shipmentid = storageevidenceoperations.recordid AND partnumberid = storageevidencestock.partnumberid) as verificado'),
                 DB::raw('(SELECT SUM(quantity) FROM storageevidencecontainers
                 WHERE shipmentid = storageevidenceoperations.recordid AND scanuserload IS NOT NULL
-                AND partnumberid = storageevidencestock.partnumberid) as cargado')
+                AND partnumberid = storageevidencestock.partnumberid) as cargado'),
             ])
             ->leftJoin('ordercustomers', function ($join) {
                 $join->on('storageevidenceoperations.customerid', '=', 'ordercustomers.id')
@@ -154,6 +157,4 @@ trait QueryStorageEvidences
             )
             ->get();
     }
-
-
 }

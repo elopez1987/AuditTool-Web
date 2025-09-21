@@ -9,7 +9,7 @@ class CreateStockCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'description' => 'required|string|max:30'
+            'description' => 'required|string|max:30',
         ];
     }
 

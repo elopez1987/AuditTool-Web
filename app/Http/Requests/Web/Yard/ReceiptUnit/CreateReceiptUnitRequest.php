@@ -6,12 +6,10 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class CreateReceiptUnitRequest extends FormRequest
 {
-
     public function authorize(): bool
     {
         return true;
     }
-
 
     public function rules(): array
     {
@@ -47,8 +45,7 @@ class CreateReceiptUnitRequest extends FormRequest
     {
         return [
             'barcodeoperator.min_digits' => 'Se requieren 4 digitos para el codigo de operador.',
-            'barcodeoperator.max_digits' => 'Se permite un maximo de 10 digitos para el codigo de operador.'
+            'barcodeoperator.max_digits' => 'Se permite un maximo de 10 digitos para el codigo de operador.',
         ];
     }
-
 }

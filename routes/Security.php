@@ -21,41 +21,39 @@ use App\Http\Controllers\Security\Users\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->group(function () {
-
     Route::get('menusecurity', function () {
         return view('layouts.Menu.Security.menusecurity');
     })->name('menusecurity');
 
 //    ----------------------------------------------- Modulo de usuarios---------------------------------------------------------------------
-    Route::resource('securityusers',UserController::class)->except('show');
-    Route::get('getDataUsers',[UserController::class,'getDataUsers'])->name('getDataUsers');
+    Route::resource('securityusers', UserController::class)->except('show');
+    Route::get('getDataUsers', [UserController::class,'getDataUsers'])->name('getDataUsers');
 //    Enviar correo de reset de contraseña
-	Route::post('securityusers/{uuiduser}/send-password-reset', [UserController::class, 'sendPasswordReset'])->name('securityusers.sendPasswordReset');
+    Route::post('securityusers/{uuiduser}/send-password-reset', [UserController::class, 'sendPasswordReset'])->name('securityusers.sendPasswordReset');
 //    Perfil del usuario
 //    Route::get('profile/{id}',[UpdateUserControlller::class,'profile'])->name('profile');
-    Route::put('updateprofile/{id}',[UpdateUserControlller::class,'updateprofile'])->name('updateprofile');
+    Route::put('updateprofile/{id}', [UpdateUserControlller::class,'updateprofile'])->name('updateprofile');
 //    ----------------------------------------------- Eventos de usuarios---------------------------------------------------------------------
-//  Restaurar usuarios eliminados
-    Route::put('restoreuser/{id}',[EventUserController::class,'restoreuser'])->name('restoreuser');
+    //  Restaurar usuarios eliminados
+    Route::put('restoreuser/{id}', [EventUserController::class,'restoreuser'])->name('restoreuser');
 
     ////Crear usuario OKTA
     Route::put('createOktaUser/{id}', [OktaController::class,'createOktaUser'])->name('createOktaUser');
-    Route::put('deleteuser/{id}',[OktaController::class,'deleteuser'])->name('deleteuser');
-
+    Route::put('deleteuser/{id}', [OktaController::class,'deleteuser'])->name('deleteuser');
 
 //    Importar usuarios masivos
-    Route::post('importusers',[EventUserController::class,'importusers'])->name('importusers');
+    Route::post('importusers', [EventUserController::class,'importusers'])->name('importusers');
 //    Parametrizar usuarios
-    Route::get('securityusers/{id}/parameter',[EventUserController::class,'parameter'])->name('securityuser.parameter');
-    Route::put('securityusersparameterstore/{id}',[EventUserController::class,'securityusersparameterstore'])->name('securityusersparameterstore');
+    Route::get('securityusers/{id}/parameter', [EventUserController::class,'parameter'])->name('securityuser.parameter');
+    Route::put('securityusersparameterstore/{id}', [EventUserController::class,'securityusersparameterstore'])->name('securityusersparameterstore');
 
 //    ----------------------------------------------- Accesos a bodegade de usuarios---------------------------------------------------------------------
 //    Asignacion de bodegas para acceso
-    Route::get('securityusers/{id}/securityaccesswarehouse',[LevelWarehouseController::class,'createaccess'])->name('securityusers.createaccess');
-    Route::put('storeLevelWarehouse/{id}',[LevelWarehouseController::class,'storeLevelWarehouse'])->name('storeLevelWarehouse');
+    Route::get('securityusers/{id}/securityaccesswarehouse', [LevelWarehouseController::class,'createaccess'])->name('securityusers.createaccess');
+    Route::put('storeLevelWarehouse/{id}', [LevelWarehouseController::class,'storeLevelWarehouse'])->name('storeLevelWarehouse');
 //    Acceso por líneas de transporte
-    Route::get('securityusers/{id}/securityaccesscarriers',[AccessCarrierController::class,'index'])->name('securityusers.accesscarriers');
-    Route::put('securityuseraddcarrier/{id}',[AccessCarrierController::class,'update'])->name('securityuseraddcarrier');
+    Route::get('securityusers/{id}/securityaccesscarriers', [AccessCarrierController::class,'index'])->name('securityusers.accesscarriers');
+    Route::put('securityuseraddcarrier/{id}', [AccessCarrierController::class,'update'])->name('securityuseraddcarrier');
 //    Borrar asignacion de línea de transporte
     Route::delete('deleteaccesscarrier/{id}', [AccessCarrierController::class, 'destroy'])->name('deleteaccesscarrier');
 //    Acceso para filtro por clientes
@@ -64,51 +62,47 @@ Route::middleware(['auth'])->group(function () {
 //    Borrar asignacion de clientes a usuarios
     Route::delete('deleteaccesscustomer/{id}', [AccessCustomerController::class, 'destroy'])->name('deleteaccesscustomer');
 
-
 //    ----------------------------------------------- Roles---------------------------------------------------------------------
 //    Perfiles de usuario
-    Route::resource('securityroles',RoleController::class)->except('show');
-    Route::get('getDataRoles',[RoleController::class,'getDataRoles'])->name('getDataRoles');
-    Route::put('updatePermissionToRole/{securityrole}',[RoleController::class,'updatePermissionToRole'])->name('updatePermissionToRole');
+    Route::resource('securityroles', RoleController::class)->except('show');
+    Route::get('getDataRoles', [RoleController::class,'getDataRoles'])->name('getDataRoles');
+    Route::put('updatePermissionToRole/{securityrole}', [RoleController::class,'updatePermissionToRole'])->name('updatePermissionToRole');
 //    Categorias de conceptos de ajuste de roles
-    Route::get('securityroles/{id}/conceptajust',[StorageCategoryRoleController::class,'conceptajust'])->name('securityroles.conceptajust');
-    Route::post('saveconceptajust/{id}',[StorageCategoryRoleController::class,'saveconceptajust'])->name('saveconceptajust');
-    Route::delete('destroycategoryrole/{id}',[StorageCategoryRoleController::class,'destroy'])->name('destroycategoryrole');
+    Route::get('securityroles/{id}/conceptajust', [StorageCategoryRoleController::class,'conceptajust'])->name('securityroles.conceptajust');
+    Route::post('saveconceptajust/{id}', [StorageCategoryRoleController::class,'saveconceptajust'])->name('saveconceptajust');
+    Route::delete('destroycategoryrole/{id}', [StorageCategoryRoleController::class,'destroy'])->name('destroycategoryrole');
 
 //    Crear un permiso
-    Route::put('createNewPermissionForFunction/{securityFunction}',[CreateNewPermissionController::class,'createNewPermissionForFunction'])->name('createNewPermissionForFunction');
-
+    Route::put('createNewPermissionForFunction/{securityFunction}', [CreateNewPermissionController::class,'createNewPermissionForFunction'])->name('createNewPermissionForFunction');
 });
 
 Route::group(['middleware' => ['role:ADMINISTRADOR']], function () {
 //    /    ---------------------------------------------- Modulos---------------------------------------------------------------------
-    Route::resource('securitymodules',SecurityModulesController::class)->names('securitymodules')->except('show');
-    Route::get('getDataModules',[SecurityModulesController::class,'getDataModules'])->name('getDataModules');
+    Route::resource('securitymodules', SecurityModulesController::class)->names('securitymodules')->except('show');
+    Route::get('getDataModules', [SecurityModulesController::class,'getDataModules'])->name('getDataModules');
 //    ----------------------------------------------- Funciones---------------------------------------------------------------------
-    Route::resource('securityfunctions',SecurityFunctionsController::class)->names('securityfunctions')->except('show');
-    Route::get('getDataFunctions',[SecurityFunctionsController::class,'getDataFunctions'])->name('getDataFunctions');
+    Route::resource('securityfunctions', SecurityFunctionsController::class)->names('securityfunctions')->except('show');
+    Route::get('getDataFunctions', [SecurityFunctionsController::class,'getDataFunctions'])->name('getDataFunctions');
 //    ----------------------------------------------- Permisos---------------------------------------------------------------------
-    Route::resource('securitypermissions',PermissionController::class)->names('securitypermissions');
-    Route::get('getDataPermissions',[PermissionController::class,'getDataPermissions'])->name('getDataPermission');
+    Route::resource('securitypermissions', PermissionController::class)->names('securitypermissions');
+    Route::get('getDataPermissions', [PermissionController::class,'getDataPermissions'])->name('getDataPermission');
 
 //    Estructura de menu
-    Route::resource('securitymenustructure',SecurityMenuController::class)->except('show');
-    Route::get('getmenustructure',[SecurityMenuController::class,'getmenustructure'])->name('getmenustructure');
+    Route::resource('securitymenustructure', SecurityMenuController::class)->except('show');
+    Route::get('getmenustructure', [SecurityMenuController::class,'getmenustructure'])->name('getmenustructure');
 
 //    Detalle de modulos sobre menu
-    Route::put('savedatailmenustructure/{securitymenustructure}',[SecurityDetailMenuController::class,'savedatailmenustructure'])->name('savedatailmenustructure');
-    Route::post('destroyDetailMenu',[SecurityDetailMenuController::class,'destroyDetailMenu'])->name('destroyDetailMenu');
+    Route::put('savedatailmenustructure/{securitymenustructure}', [SecurityDetailMenuController::class,'savedatailmenustructure'])->name('savedatailmenustructure');
+    Route::post('destroyDetailMenu', [SecurityDetailMenuController::class,'destroyDetailMenu'])->name('destroyDetailMenu');
 
 //    Detalle de funciones sobre menu
-    Route::put('savefunctionsformenustructure/{securitymenustructure}',[SecurityFunctionsMenuController::class,'savefunctionsformenustructure'])->name('savefunctionsformenustructure');
-    Route::post('deletefunctionformenu',[SecurityFunctionsMenuController::class,'deletefunctionformenu'])->name('deletefunctionformenu');
+    Route::put('savefunctionsformenustructure/{securitymenustructure}', [SecurityFunctionsMenuController::class,'savefunctionsformenustructure'])->name('savefunctionsformenustructure');
+    Route::post('deletefunctionformenu', [SecurityFunctionsMenuController::class,'deletefunctionformenu'])->name('deletefunctionformenu');
 
 //    Parametros de modulo de roles
-    Route::post('registercheckforchecklistverific',[ParameterRoleController::class,'registercheckforchecklistverific'])->name('registercheckforchecklistverific');
-    Route::post('deletecheckforchecklistverific',[ParameterRoleController::class,'deletecheckforchecklistverific'])->name('deletecheckforchecklistverific');
+    Route::post('registercheckforchecklistverific', [ParameterRoleController::class,'registercheckforchecklistverific'])->name('registercheckforchecklistverific');
+    Route::post('deletecheckforchecklistverific', [ParameterRoleController::class,'deletecheckforchecklistverific'])->name('deletecheckforchecklistverific');
 
 //    Super Usuarios
     Route::resource('superusers', SuperUserController::class)->except(['show', 'edit', 'update']);
-
-
 });

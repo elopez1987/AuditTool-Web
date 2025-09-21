@@ -12,7 +12,6 @@ use App\Models\Receipt\StorageCategoryIncidenceDetail;
 use App\Models\Shipments\OrderDeliverie;
 use App\Models\Shipments\StorageIncidenceJourney;
 use App\Models\Shipments\StorageIncidenceJourneyDetails;
-use App\Traits\IncidenceJourney;
 use App\Traits\Web\Shipments\QuerysIncidencesJourneys;
 use DataTables;
 use DB;
@@ -21,7 +20,6 @@ use Illuminate\Http\Request;
 
 class StorageIncidenceJourneysController extends BaseController
 {
-
     use QuerysIncidencesJourneys;
 
     public function index()
@@ -34,8 +32,8 @@ class StorageIncidenceJourneysController extends BaseController
     {
         $data = $this->getAllIncidenceJourneys();
         return DataTables::collection($data)
-            ->addColumn('btn', "Shipments.StorageIncidenceJourneys.partials.buttons")
-            ->addColumn('time', "Shipments.StorageIncidenceJourneys.partials.duration")
+            ->addColumn('btn', 'Shipments.StorageIncidenceJourneys.partials.buttons')
+            ->addColumn('time', 'Shipments.StorageIncidenceJourneys.partials.duration')
             ->rawColumns(['btn', 'time'])->toJson();
     }
 
@@ -44,8 +42,10 @@ class StorageIncidenceJourneysController extends BaseController
         $this->authorize('storageincidencesjourneys.create');
         $shipments = $this->getShipmentsForCreateNewIncidence();
         $razoncodes = $this->getCategoriesIncidencesDetail();
-        return view('Shipments.StorageIncidenceJourneys.create',
-            compact('shipments', 'razoncodes'));
+        return view(
+            'Shipments.StorageIncidenceJourneys.create',
+            compact('shipments', 'razoncodes')
+        );
     }
 
     public function store(Request $request, ServiceIncidenceJourney $serviceIncidenceJourney)
@@ -62,7 +62,7 @@ class StorageIncidenceJourneysController extends BaseController
 
             $statusSku = StorageIncidenceJourneyDetails::controlAccessUser()->where('partnumberid', $request['partnumberid'])
                 ->where('orderid', $shipment->id)->where('delivery', $request['delivery'])->first();
-            if (!empty($statusSku)) {
+            if (! empty($statusSku)) {
                 return response()->json([
                     'message' => 'Numero de Sku y factura ya se encuentran registrados.',
                 ], 422);
@@ -88,8 +88,10 @@ class StorageIncidenceJourneysController extends BaseController
             ->where('model_type', '=', 'StorageIncidenceJourney')
             ->whereIn('auxiliary01', ['ENT', 'INC'])->get();
         $comments = StorageComment::getCommentForModel($shipment->folioid, 'StorageIncidenceJourney');
-        return view('Shipments.StorageIncidenceJourneys.show',
-            compact('shipment', 'details', 'evidences', 'entregas', 'comments'));
+        return view(
+            'Shipments.StorageIncidenceJourneys.show',
+            compact('shipment', 'details', 'evidences', 'entregas', 'comments')
+        );
     }
 
     public function edit($folioid)
@@ -100,8 +102,10 @@ class StorageIncidenceJourneysController extends BaseController
             ->select(['description', 'categoryincdetailid'])->get();
         $shipment = StorageIncidenceJourney::searchIncidence($folioid);
         $details = StorageIncidenceJourneyDetails::getDetailOfIncidenceForOrder($shipment->orderid);
-        return view('Shipments.StorageIncidenceJourneys.edit',
-            compact('shipment', 'details', 'razoncodes'));
+        return view(
+            'Shipments.StorageIncidenceJourneys.edit',
+            compact('shipment', 'details', 'razoncodes')
+        );
     }
 
     public function destroy($folioid)
@@ -110,6 +114,4 @@ class StorageIncidenceJourneysController extends BaseController
         $folio->delete();
         return $this->redirectBackSuccessMessage('Registro eliminado con exito');
     }
-
-
 }

@@ -23,10 +23,10 @@ class OrderImport implements ToCollection, WithHeadingRow, WithValidation
     use CreateNewOrder;
     use Responser;
 
-    function validateDate($workday)
+    public function validateDate($workday)
     {
         $valores = explode('/', $workday);
-        if (count($valores) == 3 && checkdate($valores[0], $valores[2], $valores[1])) {
+        if (count($valores) === 3 && checkdate($valores[0], $valores[2], $valores[1])) {
             return true;
         }
         return false;
@@ -45,28 +45,27 @@ class OrderImport implements ToCollection, WithHeadingRow, WithValidation
         $centerid = $this->getCenterForUser();
         DB::table('logimports')->delete();
         foreach ($rows as $row) {
-
-            if ($row['confirmation'] == '') {
+            if ($row['confirmation'] === '') {
                 $this->createlogimportshipment('El numero de embarque no cuenta con numero de confirmación : ' . $row['confirmation']);
                 continue;
             }
             if (isset($row['weight'])) {
                 $typeWeight = is_numeric($row['weight']);
-                if (!$typeWeight) {
+                if (! $typeWeight) {
                     $this->createlogimportshipment('El peso debe de ser un valor númerico para el embarque: ' . $row['weight']);
                     continue;
                 }
             }
             if (isset($row['pallets'])) {
                 $typePallets = is_int($row['pallets']);
-                if (!$typePallets) {
+                if (! $typePallets) {
                     $this->createlogimportshipment('El valor de los pallets debe ser un entero: ' . $row['pallets']);
                     continue;
                 }
             }
             if (isset($row['picking'])) {
                 $typePicking = is_int($row['picking']);
-                if (!$typePicking) {
+                if (! $typePicking) {
                     $this->createlogimportshipment('El valor de picking debe de ser entero: ' . $row['picking']);
                     continue;
                 }
@@ -87,12 +86,12 @@ class OrderImport implements ToCollection, WithHeadingRow, WithValidation
                 continue;
             }
             $customer = OrderCustomer::where('shiptoid', '=', trim($row['customerid']))->whereCenterid($centerid)->first(['id']);
-            if ($customer == null) {
+            if ($customer === null) {
                 $this->createlogimportshipment('No existe el número de cliente :' . $row['customerid'] . ' para el embarque : ' . $row['shipmentid']);
                 continue;
             }
             $carrier = ShipmentCarrier::where('carrierid', '=', trim($row['carrierid']))->whereCenterid($centerid)->first(['id']);
-            if ($carrier == null) {
+            if ($carrier === null) {
                 $this->createlogimportshipment('No existe el número de linea de transporte:' . $row['carrierid'] . ' para el embarque : ' . $row['shipmentid']);
                 continue;
             }
@@ -137,7 +136,7 @@ class OrderImport implements ToCollection, WithHeadingRow, WithValidation
         ];
     }
 
-    static function createNewRegisterHeaderForImport($shipment, $row): void
+    public static function createNewRegisterHeaderForImport($shipment, $row): void
     {
         ShipmentHeader::updateOrCreate(
             [
@@ -158,6 +157,7 @@ class OrderImport implements ToCollection, WithHeadingRow, WithValidation
      * @param $row
      * @param ShipmentCarrier $carrier
      * @param OrderCustomer $customer
+     *
      * @return OrderDeliverie
      */
     private function createNewOrderDeliveryForPlan($row, ShipmentCarrier $carrier, OrderCustomer $customer): OrderDeliverie
@@ -182,10 +182,4 @@ class OrderImport implements ToCollection, WithHeadingRow, WithValidation
             ]
         );
     }
-
-
 }
-
-
-
-

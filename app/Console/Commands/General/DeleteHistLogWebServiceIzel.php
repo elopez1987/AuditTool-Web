@@ -8,12 +8,9 @@ use Illuminate\Console\Command;
 
 class DeleteHistLogWebServiceIzel extends Command
 {
-
     protected $signature = 'command:deletehistlogwebserviceizel';
 
-
     protected $description = 'Borra los registros de la tabla systemeventwebserviceizel mayor a 10 dias';
-
 
     public function __construct()
     {

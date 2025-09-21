@@ -11,7 +11,7 @@ class CreateContainerRequest extends FormRequest
         return [
             'quantity' => 'required',
             'partnumberid' => 'required',
-            'lpnid' => 'required'
+            'lpnid' => 'required',
         ];
     }
 

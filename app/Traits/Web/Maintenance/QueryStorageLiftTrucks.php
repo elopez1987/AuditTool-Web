@@ -42,6 +42,7 @@ trait QueryStorageLiftTrucks
     /**
      * @param $centerid
      * @param $id
+     *
      * @return array
      */
     public function getUserForAssign($centerid, $id): array
@@ -53,7 +54,6 @@ trait QueryStorageLiftTrucks
         and statusid='E'
         and username not in (select username from storageassignlifttrucks s2 where typeid=?)", [$centerid, $id]);
     }
-
 
     public function getStorageAssignLiftTrucks($id)
     {

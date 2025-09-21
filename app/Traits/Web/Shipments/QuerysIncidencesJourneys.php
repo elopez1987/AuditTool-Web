@@ -13,17 +13,15 @@ use Carbon\Carbon;
 use DB;
 use Illuminate\Support\Collection;
 
-
 trait QuerysIncidencesJourneys
 {
-
 //    Consulta para buscar embarque que pueden registrar incidencias
     public function getShipmentsForCreateNewIncidence()
     {
         $centers = SecurityAccessWarehouse::Centers();
         $carrier = $this->getCarriers();
         $days = $this->getDays($centers);
-        $shipments = OrderDeliverie::controlAccessUser()
+        return OrderDeliverie::controlAccessUser()
             ->select(['id', 'shipmentid'])
             ->CarrierIn($carrier)
             ->where('statusid', '=', 'DH')
@@ -33,9 +31,7 @@ trait QuerysIncidencesJourneys
                     ->select('orderid')
                     ->where('storageincidencejourneys.statusid', '=', 'CD');
             }))->select(['id', 'shipmentid'])->get();
-        return $shipments;
     }
-
 
     public function getAllIncidenceJourneys()
     {
@@ -62,23 +58,22 @@ trait QuerysIncidencesJourneys
                 'o.id as orderid', 'o.shipmentid',
                 'c.name as customername', 'sc.name as carriername',
                 'c.city', 'o.downloaddate', 'o.loadingdate',
-                'storageincidencejourneys.created_at'])->get();
+                'storageincidencejourneys.created_at',
+            ])->get();
     }
-
 
     /**
      * @return array
      */
     public function getCarriers(): array
     {
-        $carrier = AccessCarrier::where('username', Auth::user()->username)
+        return AccessCarrier::where('username', Auth::user()->username)
             ->select('carrierid')->get()->toArray();
-        return $carrier;
     }
-
 
     /**
      * @param array $centers
+     *
      * @return mixed|null
      */
     public function getDays(array $centers)
@@ -88,28 +83,26 @@ trait QuerysIncidencesJourneys
             ->value('value02');
     }
 
-
     public function getCategoriesIncidencesDetail()
     {
-     return   StorageCategoryIncidenceDetail::controlAccessUser()
+        return StorageCategoryIncidenceDetail::controlAccessUser()
             ->where('auxiliary01', '=', 'SHP')
             ->where('statusid', 'E')
             ->select(['description', 'categoryincdetailid'])->get();
     }
 
-
-
-
-
-
-
     public function getDetailIncidence($request)
     {
         return DB::table('storageincidencejourneydetails')
-            ->select('storageincidencejourneydetails.delivery', 'storageincidencejourneydetails.partnumberid',
-                'inventorypartnumbers.lngdsc as description', 'storageincidencejourneydetails.quantity',
-                'storageincidencejourneydetails.downloaddate', 'storageincidencejourneydetails.unitmeasure',
-                'storagecategoryincidencedetails.description as motivo')
+            ->select(
+                'storageincidencejourneydetails.delivery',
+                'storageincidencejourneydetails.partnumberid',
+                'inventorypartnumbers.lngdsc as description',
+                'storageincidencejourneydetails.quantity',
+                'storageincidencejourneydetails.downloaddate',
+                'storageincidencejourneydetails.unitmeasure',
+                'storagecategoryincidencedetails.description as motivo'
+            )
             ->leftJoin('orderdeliveries', 'orderdeliveries.id', '=', 'storageincidencejourneydetails.orderid')
             ->leftJoin('inventorypartnumbers', function ($join) {
                 $join->on('storageincidencejourneydetails.partnumberid', '=', 'inventorypartnumbers.prtnum')
@@ -124,18 +117,27 @@ trait QuerysIncidencesJourneys
             ->get();
     }
 
-
     /**
      * @param $incidence
+     *
      * @return Collection
      */
     public function getDetailsForGeneratePDF($incidence): Collection
     {
-        $details = DB::table('storageincidencejourneys')
-            ->select('storageincidencejourneys.centerid', 'storageincidencejourneys.warehouseid', 'storageincidencejourneys.folioid',
-                'storageincidencejourneydetails.delivery', 'storageincidencejourneydetails.partnumberid', 'inventorypartnumbers.lngdsc as description',
-                'storageincidencejourneydetails.quantity', 'storageincidencejourneydetails.unitmeasure', 'storagecategoryincidencedetails.description as code',
-                'storagecategoryincidencedetails.auxiliary02 as type', 'storageincidencejourneydetails.partnumberiderror')
+        return DB::table('storageincidencejourneys')
+            ->select(
+                'storageincidencejourneys.centerid',
+                'storageincidencejourneys.warehouseid',
+                'storageincidencejourneys.folioid',
+                'storageincidencejourneydetails.delivery',
+                'storageincidencejourneydetails.partnumberid',
+                'inventorypartnumbers.lngdsc as description',
+                'storageincidencejourneydetails.quantity',
+                'storageincidencejourneydetails.unitmeasure',
+                'storagecategoryincidencedetails.description as code',
+                'storagecategoryincidencedetails.auxiliary02 as type',
+                'storageincidencejourneydetails.partnumberiderror'
+            )
             ->leftJoin('storageincidencejourneydetails', function ($join) {
                 $join->on('storageincidencejourneys.orderid', '=', 'storageincidencejourneydetails.orderid')
                     ->on('storageincidencejourneys.centerid', '=', 'storageincidencejourneydetails.centerid');
@@ -150,9 +152,5 @@ trait QuerysIncidencesJourneys
             })
             ->where('storageincidencejourneys.orderid', '=', $incidence->orderid)
             ->get();
-        return $details;
     }
-
-
-
 }

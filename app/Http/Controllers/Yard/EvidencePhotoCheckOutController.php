@@ -15,11 +15,14 @@ class EvidencePhotoCheckOutController extends Controller
 {
     use EvidencePhotoTrait;
 
+    private const PHOTO_SH = 'SH';
+    private const SUCCESS_MESSAGE = 'Fotografia eliminado con exito!!';
+
     public function uploadPhotoCheckOut(UploadImageRequest $request, $id)
     {
         $receiptunit = ReceiptUnit::findOrFail($id);
         $fileName = Str::random(10) . $request->file('file')->getClientOriginalName();
-        list($pathbase, $path) = $this->generatePath($receiptunit->centerid, 'EvidenceOut', $fileName);
+        [$pathbase, $path] = $this->generatePath($receiptunit->centerid, 'EvidenceOut', $fileName);
         if ($pathbase) {
             $this->addMediaToModel($request, $pathbase);
             $this->createEvidencePhoto('ReceiptUnit', $id, $path, 'OUT', $receiptunit);
@@ -30,22 +33,12 @@ class EvidencePhotoCheckOutController extends Controller
     {
         $receiptunit = ReceiptUnit::findOrFail($id);
         $fileName = Str::random(10) . $request->file('file')->getClientOriginalName();
-        list($pathbase, $path) = $this->generatePath($receiptunit->centerid, 'EvidenceProcess', $fileName);
+        [$pathbase, $path] = $this->generatePath($receiptunit->centerid, 'EvidenceProcess', $fileName);
         if ($pathbase) {
             $this->addMediaToModel($request, $pathbase);
             $this->createEvidencePhoto('ReceiptUnit', $id, $path, 'IP', $receiptunit);
         }
     }
-
-
-
-    private function generatePath($centerId, $categoryName, $fileName)
-    {
-        $pathbase = join(DIRECTORY_SEPARATOR, [storage_path(), 'app', 'public', $centerId, $categoryName, $fileName]);
-        $path = join(DIRECTORY_SEPARATOR, ['public', $centerId, $categoryName, $fileName]);
-        return [$pathbase, $path];
-    }
-
 
     public static function addMediaToModel($request, $pathbase)
     {
@@ -54,11 +47,6 @@ class EvidencePhotoCheckOutController extends Controller
                 $constraint->aspectRatio();
             })->save($pathbase);
     }
-
-
-
-
-
 
     public function downloadPhotoCheckOut()
     {
@@ -70,7 +58,6 @@ class EvidencePhotoCheckOutController extends Controller
         return $this->destroyPhoto($id);
     }
 
-
     public function downloadPhotoTireProcess($id)
     {
         return $this->downloadPhotoTire($id);
@@ -81,7 +68,6 @@ class EvidencePhotoCheckOutController extends Controller
         return $this->destroyPhotoTire($id);
     }
 
-
     public function downloadPhotoInProcess($id)
     {
         return $this->downloadPhoto($id);
@@ -91,9 +77,6 @@ class EvidencePhotoCheckOutController extends Controller
     {
         return $this->destroyPhoto($id);
     }
-
-    const PHOTO_SH = 'SH';
-    const SUCCESS_MESSAGE = 'Fotografia eliminado con exito!!';
 
     public function destroyPhotoIncidence($id)
     {
@@ -106,10 +89,16 @@ class EvidencePhotoCheckOutController extends Controller
         return redirect()->back()->with(session()->flash('success', self::SUCCESS_MESSAGE));
     }
 
+    private function generatePath($centerId, $categoryName, $fileName)
+    {
+        $pathbase = join(DIRECTORY_SEPARATOR, [storage_path(), 'app', 'public', $centerId, $categoryName, $fileName]);
+        $path = join(DIRECTORY_SEPARATOR, ['public', $centerId, $categoryName, $fileName]);
+        return [$pathbase, $path];
+    }
+
     private function findSHPhoto($path)
     {
         return EvidencePhoto::where('auxiliary01', '=', self::PHOTO_SH)
             ->where('path', '=', $path)->first();
     }
-
 }

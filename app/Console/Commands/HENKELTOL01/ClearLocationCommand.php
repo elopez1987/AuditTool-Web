@@ -38,8 +38,7 @@ class ClearLocationCommand extends Command
         foreach ($centers as $center) {
             $centerid = $center->centerid;
             $parameter = $center->configurationflag;
-            if (!empty($parameter) && in_array('SDC-08', $parameter)) {
-
+            if (! empty($parameter) && in_array('SDC-08', $parameter)) {
                 StorageLocation::where('centerid', $centerid)->update(['statusid' => 'E', 'auxiliary01' => '']);
                 $locations = StorageLocation::where('centerid', $centerid)->select(['id', 'auxiliary01', 'statusid'])->get();
                 $units = ReceiptUnit::where('centerid', $centerid)->whereNotIn('statusid', ['TR'])->select(['locationid', 'boxnumber'])->get();
@@ -58,7 +57,7 @@ class ClearLocationCommand extends Command
                 foreach ($locations as $location) {
 //                Bloquea las cortinas
                     foreach ($units as $unit) {
-                        if ($location->id == $unit->locationid) {
+                        if ($location->id === $unit->locationid) {
                             $location->auxiliary01 = $unit->boxnumber;
                             $location->statusid = 'D';
                             $location->save();
@@ -66,7 +65,7 @@ class ClearLocationCommand extends Command
                     }
 //                Bloquea las precargas
                     foreach ($shipments as $shipment) {
-                        if ($location->id == $shipment->locationid) {
+                        if ($location->id === $shipment->locationid) {
                             $location->statusid = 'D';
                             $location->save();
                         }
@@ -74,7 +73,5 @@ class ClearLocationCommand extends Command
                 }
             }
         }
-
-
     }
 }

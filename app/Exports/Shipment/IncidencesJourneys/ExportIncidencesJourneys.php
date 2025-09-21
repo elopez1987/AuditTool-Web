@@ -15,10 +15,10 @@ use PhpOffice\PhpSpreadsheet\Style\Fill;
 
 class ExportIncidencesJourneys implements FromCollection, WithHeadings, WithMapping, WithEvents, ShouldAutoSize, WithColumnFormatting
 {
-    private $workdayin;
-    private $workdayout;
 
     use Exportable;
+    private $workdayin;
+    private $workdayout;
 
     public function __construct($workdayin, $workdayout)
     {
@@ -81,16 +81,14 @@ class ExportIncidencesJourneys implements FromCollection, WithHeadings, WithMapp
             $shipments->foto,
             $shipments->creadorpor,
             $shipments->respuestade,
-            $shipments->cargoa
+            $shipments->cargoa,
         ];
     }
 
     public function collection()
     {
-        $shipments = collect(DB::select('exec getReportIncidencesJourneys "' . $this->workdayin . '" , "' . $this->workdayout . '"    '));
-        return $shipments;
+        return collect(DB::select('exec getReportIncidencesJourneys "' . $this->workdayin . '" , "' . $this->workdayout . '"    '));
     }
-
 
     public function registerEvents(): array
     {
@@ -98,9 +96,9 @@ class ExportIncidencesJourneys implements FromCollection, WithHeadings, WithMapp
             AfterSheet::class => function (AfterSheet $event) {
                 $event->sheet->getDelegate()->getStyle('A1:T1')->getFill()
                     ->applyFromArray(['fillType' => Fill::FILL_SOLID,
-                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6']]);
+                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6'],
+                    ]);
             },
         ];
     }
-
 }

@@ -12,21 +12,13 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-
 class StorageTask extends Model
 {
 
-
-    protected $table = "storagetasks";
+    use LogsActivity;
+    protected $table = 'storagetasks';
 
     protected $dateFormat = 'Y-m-d H:i:s';
-
-    use LogsActivity;
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
 
     protected $fillable = [
         'centerid',
@@ -46,8 +38,13 @@ class StorageTask extends Model
     ];
 
     protected $casts = [
-        'created_at' => 'datetime'
+        'created_at' => 'datetime',
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
     public static function controlAccessUser()
     {
@@ -97,7 +94,7 @@ class StorageTask extends Model
         return $this->belongsTo(StorageLocation::class, 'locationid', 'id');
     }
 
-    static function searchTaskForUnit($folionumber)
+    public static function searchTaskForUnit($folionumber)
     {
         return StorageTask::controlAccessUser()->whereReceiptunitid($folionumber)
             ->whereStatusid('PD')
@@ -106,12 +103,10 @@ class StorageTask extends Model
 
     public function scopeForStatusTask($query, $statusid)
     {
-        if (trim($statusid) != '') {
+        if (trim($statusid) !== '') {
             $query->where('storagetasks.statusid', $statusid);
         } else {
             $query->where('storagetasks.statusid', 'PD');
         }
     }
-
-
 }

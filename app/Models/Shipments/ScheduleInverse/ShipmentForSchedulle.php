@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ShipmentForSchedulle extends Model
 {
     public $timestamps = false;
-    protected $table ='vw_shipmentforschedulleinverse';
-
+    protected $table = 'vw_shipmentforschedulleinverse';
 
     public static function controlAccessUser()
     {
@@ -19,14 +18,10 @@ class ShipmentForSchedulle extends Model
             ->whereIn('vw_shipmentforschedulleinverse.centerid', $centers);
     }
 
-
     public function scopeCarrierIn($query, $carrierid)
     {
-        if (!empty($carrierid)) {
+        if (! empty($carrierid)) {
             $query->whereIn('vw_shipmentforschedulleinverse.carrierid', $carrierid);
         }
     }
-
-
 }
-

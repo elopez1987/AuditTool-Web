@@ -4,9 +4,7 @@ namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Queue\SerializesModels;
-
 
 class MailForNewIncidenceInReceipt extends Mailable
 {
@@ -37,12 +35,10 @@ class MailForNewIncidenceInReceipt extends Mailable
      */
     public function build()
     {
-        $email = $this->view('emails.newIncidenceInReceipt')->subject('Incidencia en Recibo' . '-' . $this->receipt->shipmentid);
+        $email = $this->view('emails.newIncidenceInReceipt')->subject("Incidencia en Recibo-{$this->receipt->shipmentid}");
         foreach ($this->archivosadjuntos as $rutaArchivo) {
             $email->attachFromStorage($rutaArchivo->path);
         }
         return $email;
     }
-
-
 }

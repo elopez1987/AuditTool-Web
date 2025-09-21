@@ -7,16 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class   ReceiptUnitData extends Model
+class ReceiptUnitData extends Model
 {
+    use LogsActivity;
     public $timestamps = false;
     protected $table = 'receiptunitdata';
-    use LogsActivity;
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
 
     protected $fillable = [
         'centerid',
@@ -54,8 +49,13 @@ class   ReceiptUnitData extends Model
         'observationsinspec',
         'customername',
         'providername',
-        'tolerance'
+        'tolerance',
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
     public static function controlAccessUser()
     {
@@ -64,5 +64,4 @@ class   ReceiptUnitData extends Model
         return ReceiptUnitData::whereIn('receiptunitdata.warehouseid', $warehouses)
             ->whereIn('receiptunitdata.centerid', $centers);
     }
-
 }

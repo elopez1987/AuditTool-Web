@@ -23,11 +23,6 @@ class InventoryPartnumber extends Model
     protected $table = 'inventorypartnumbers';
     protected $dateFormat = 'Y-m-d H:i:s';
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
-
     protected $fillable = [
         'centerid',
         'warehouseid',
@@ -55,13 +50,13 @@ class InventoryPartnumber extends Model
         'statusid',
         'codeean',
         'codedun',
-        'configurationflag'
+        'configurationflag',
     ];
 
     protected $hidden = [
         'created_at',
         'updated_at',
-        'schemaid'
+        'schemaid',
     ];
 
     protected $attributes = [
@@ -71,9 +66,13 @@ class InventoryPartnumber extends Model
 
     protected $casts = [
         'partnumberid' => 'string',
-        'configurationflag' => 'array'
+        'configurationflag' => 'array',
     ];
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
     public static function controlAccessUser()
     {
@@ -93,26 +92,16 @@ class InventoryPartnumber extends Model
             ->pluck('prtnum', 'id')->toArray();
     }
 
-    protected static function boot()
-    {
-        parent::boot();
-        if (!app()->runningInConsole()) {
-            self::creating(function (InventoryPartnumber $model) {
-                $model->auxiliary05 = Auth::user()->username;
-            });
-        }
-    }
-
     public function scopePartNumber($query, $prtnum)
     {
-        if (trim($prtnum) != "") {
+        if (trim($prtnum) !== '') {
             $query->where('inventorypartnumbers.prtnum', '=', $prtnum);
         }
     }
 
     public function scopeBarcode($query, $barcode)
     {
-        if (trim($barcode) != "") {
+        if (trim($barcode) !== '') {
             $query->where('inventorypartnumbers.barcode', '=', $barcode);
         }
     }
@@ -156,7 +145,7 @@ class InventoryPartnumber extends Model
         return $this->belongsTo(InventoryUnitMeasure::class, 'stkuom', 'unitmeasureid');
     }
 
-    static function searchPartNumber($request)
+    public static function searchPartNumber($request)
     {
         return DB::table('inventorypartnumbers')
             ->select('*')
@@ -165,5 +154,13 @@ class InventoryPartnumber extends Model
             ->first();
     }
 
-
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (InventoryPartnumber $model) {
+                $model->auxiliary05 = Auth::user()->username;
+            });
+        }
+    }
 }

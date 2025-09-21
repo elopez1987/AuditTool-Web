@@ -6,12 +6,10 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class CreateDestinationRequest extends FormRequest
 {
-
     public function authorize(): bool
     {
         return true;
     }
-
 
     public function rules(): array
     {
@@ -19,7 +17,7 @@ class CreateDestinationRequest extends FormRequest
             'name' => 'required|string',
             'time' => 'required|numeric',
             'centerid' => 'required',
-            'warehouseid' => 'required'
+            'warehouseid' => 'required',
         ];
     }
 }

@@ -6,16 +6,14 @@ use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-
 class ActivityLog extends Model
 {
     public $timestamps = false;
     protected $table = 'activity_log';
     protected $dateFormat = 'Y-m-d H:i:s';
 
-
     protected $fillable = [
-        'causer_id'
+        'causer_id',
     ];
 
     public function user(): BelongsTo
@@ -26,44 +24,42 @@ class ActivityLog extends Model
 
     public function scopeForDescription($query, $description)
     {
-        if (trim($description) != '') {
+        if (trim($description) !== '') {
             $query->where('description', $description);
         }
     }
 
     public function scopeForModel($query, $model)
     {
-        if (trim($model) != '') {
+        if (trim($model) !== '') {
             $query->where('activity_log.subject_type', $model);
         }
     }
 
     public function scopeForUser($query, $user)
     {
-        if ($user != '') {
+        if ($user !== '') {
             $query->where('activity_log.causer_id', $user);
         }
     }
 
     public function scopeForFolio($query, $id)
     {
-        if ($id != '') {
+        if ($id !== '') {
             $query->where('activity_log.id', $id);
         }
     }
     public function scopeForSubject($query, $subject_id)
     {
-        if ($subject_id != '') {
+        if ($subject_id !== '') {
             $query->where('activity_log.subject_id', $subject_id);
         }
     }
 
     public function scopeForDate($query, $date_in, $date_out)
     {
-        if ($date_in != '' && $date_out != '') {
+        if ($date_in !== '' && $date_out !== '') {
             $query->whereBetween('created_at', [$date_in, $date_out]);
         }
     }
-
-
 }

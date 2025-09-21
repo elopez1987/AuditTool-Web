@@ -11,31 +11,20 @@ class StorageLogInverse extends Model
 {
     use LogsActivity;
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
-
     protected $table = 'storageloginverse';
 
     protected $fillable = [
         'username', 'description', 'shipment',
         'value01', 'value02', 'value03',
-        'value04', 'value05'
+        'value04', 'value05',
     ];
 
-    protected static function boot()
+    public function getActivitylogOptions(): LogOptions
     {
-        parent::boot();
-        if (!app()->runningInConsole()) {
-            self::creating(function (StorageLogInverse $model) {
-                $model->username = Auth::user()->username;
-            });
-        }
+        return LogOptions::defaults()->logFillable();
     }
 
-
-    static function createNewLog($description, $shipment)
+    public static function createNewLog($description, $shipment)
     {
         StorageLogInverse::create([
             'description' => $description,
@@ -43,4 +32,13 @@ class StorageLogInverse extends Model
         ]);
     }
 
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (StorageLogInverse $model) {
+                $model->username = Auth::user()->username;
+            });
+        }
+    }
 }

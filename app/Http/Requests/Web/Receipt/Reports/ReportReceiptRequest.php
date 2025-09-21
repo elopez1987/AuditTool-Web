@@ -12,7 +12,7 @@ class ReportReceiptRequest extends FormRequest
             'centerid' => 'required',
             'type' => 'required',
             'workdayin' => 'required',
-            'workdayout' => 'required'
+            'workdayout' => 'required',
         ];
     }
 

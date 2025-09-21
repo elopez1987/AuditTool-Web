@@ -17,14 +17,9 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class ShipmentCarrier extends Model
 {
     use LogsActivity;
+    use softDeletes;
     protected $table = 'shipmentcarriers';
     protected $dateFormat = 'Y-m-d H:i:s';
-    use softDeletes;
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
 
     protected $fillable = [
         'centerid',
@@ -35,7 +30,7 @@ class ShipmentCarrier extends Model
         'auxiliary03',
         'auxiliary04',
         'auxiliary05',
-        'statusid'
+        'statusid',
     ];
 
     protected $hidden = [
@@ -52,19 +47,21 @@ class ShipmentCarrier extends Model
         'configurationflag' => 'array',
     ];
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
     public function getNameAttribute($value)
     {
         return strtoupper($value);
     }
 
-
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
         return ShipmentCarrier::whereIn('shipmentcarriers.centerid', $centers);
     }
-
 
 //    ------------------------ Relaciones entre modelos -------------------------------
     public function status(): BelongsTo
@@ -79,36 +76,34 @@ class ShipmentCarrier extends Model
 
 //    ------------------------ Relaciones entre modelos -------------------------------
 
-
 //    ------------------------ Filtro de las consultas -------------------------------
     public function scopeName($query, $name)
     {
-        if (trim($name) != "") {
-            $query->where('shipmentcarriers.name', 'like', "%$name%");
+        if (trim($name) !== '') {
+            $query->where('shipmentcarriers.name', 'like', "%{$name}%");
         }
     }
 
     public function scopeCarrier($query, $carrierid)
     {
-        if (trim($carrierid) != "") {
+        if (trim($carrierid) !== '') {
             $query->where('shipmentcarriers.carrierid', '=', $carrierid);
         }
     }
 
     public function scopeStatus($query, $statusid)
     {
-        if (trim($statusid) != '') {
+        if (trim($statusid) !== '') {
             $query->where('shipmentcarriers.statusid', $statusid);
         }
     }
 
     public function scopeCarriers($query, $carries)
     {
-        if (!empty($carries)) {
+        if (! empty($carries)) {
             $query->whereIn('shipmentcarriers.id', $carries);
         }
     }
 
 //    ------------------------ Filtro de las consultas -------------------------------
-
 }

@@ -17,7 +17,7 @@ class OptimizeLocationsController extends BaseController
         $shipments = $this->getShipmentHeaders();
         foreach ($locations as $location) {
             foreach ($units as $unit) {
-                if ($location->id == $unit->locationid) {
+                if ($location->id === $unit->locationid) {
                     $location->auxiliary01 = $unit->boxnumber;
                     $location->statusid = 'D';
                     $location->save();
@@ -26,7 +26,7 @@ class OptimizeLocationsController extends BaseController
         }
         foreach ($shipments as $shipment) {
             foreach ($locations as $location) {
-                if ($location->id == $shipment->locationid) {
+                if ($location->id === $shipment->locationid) {
                     $location->statusid = 'D';
                     $location->save();
                 }
@@ -57,8 +57,6 @@ class OptimizeLocationsController extends BaseController
 
     public function UpdateLocationToEnabled(): void
     {
-        StorageLocation::controlAccessUser()->update(['statusid' => 'E', 'auxiliary01' => '',]);
+        StorageLocation::controlAccessUser()->update(['statusid' => 'E', 'auxiliary01' => '']);
     }
-
-
 }

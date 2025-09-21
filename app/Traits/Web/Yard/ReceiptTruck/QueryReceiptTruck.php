@@ -17,8 +17,8 @@ trait QueryReceiptTruck
 
     public function getDataAll(Request $request)
     {
-        $data = ReceiptTruck::controlAccessUser()
-            ->with('center', 'warehouse', 'carrier', 'status')
+        return ReceiptTruck::controlAccessUser()
+            ->with(['center', 'warehouse', 'carrier', 'status'])
             ->Folio($request->get('folionumber'))
             ->TruckNumber($request->get('trucknumber'))
             ->EcoNumber($request->get('econumber'))
@@ -27,9 +27,7 @@ trait QueryReceiptTruck
             ->Name($request->get('name'))
             ->Warehouse($request->get('warehouseid'))
             ->whereNotIn('receipttrucks.statusid', ['TR']);
-        return $data;
     }
-
 
     //    Crear nuevo registro
     public function createNewTruck($request)
@@ -63,20 +61,19 @@ trait QueryReceiptTruck
             'statusid' => 'TR',
             'finishdate' => Carbon::now(),
             'updateuser' => Auth::user()->id,
-            'auxiliary01' => $type
+            'auxiliary01' => $type,
         ]);
-
-
     }
-
 
     public static function createLabelFromRegisterTruck($request, $parameter, $truck): void
     {
-        if (in_array('SWH-09', (array)$parameter)) {
-            if (!empty($request['barcodetruck'])) {
+        if (in_array('SWH-09', (array) $parameter)) {
+            if (! empty($request['barcodetruck'])) {
                 $barcode = $request['barcodetruck'] ?? $truck->barcode;
                 $label = StorageLabelTruck::where('barcode', '=', $barcode)->first();
-                if (!empty($label)) $label->delete();
+                if (! empty($label)) {
+                    $label->delete();
+                }
                 StorageLabelTruck::create(
                     [
                         'centerid' => $request['centerid'] ?? $truck->centerid,
@@ -86,11 +83,10 @@ trait QueryReceiptTruck
                         'econumber' => $request['econumbertruck'] ?? $request['econumber'],
                         'carrierid' => $request['carrierid'] ?? $truck->carrierid,
                         'truckid' => $request['truckid'] ?? $truck->id,
-                        'typeid' => 'TR'
-                    ]
+                        'typeid' => 'TR',
+                    ],
                 );
             }
         }
     }
-
 }

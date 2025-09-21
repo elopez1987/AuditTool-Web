@@ -12,19 +12,18 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class ShipmentContainerMoveBox extends Model
 {
+    use LogsActivity;
     public $timestamps = false;
     protected $table = 'shipmentcontainermoveboxlog';
-    use LogsActivity;
+
+    protected $fillable = [
+        'orderid', 'containerid', 'lpnid', 'partnumberid', 'quantity', 'createuser', 'type',
+    ];
 
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()->logFillable();
     }
-
-
-    protected $fillable = [
-        'orderid', 'containerid', 'lpnid', 'partnumberid', 'quantity', 'createuser', 'type',
-    ];
 
     public function user()
     {
@@ -38,12 +37,11 @@ class ShipmentContainerMoveBox extends Model
     protected static function boot()
     {
         parent::boot();
-        if (!app()->runningInConsole()) {
+        if (! app()->runningInConsole()) {
             self::creating(function (ShipmentContainerMoveBox $model) {
                 $model->createuser = Auth::id();
                 $model->created_at = Carbon::now();
             });
         }
     }
-
 }

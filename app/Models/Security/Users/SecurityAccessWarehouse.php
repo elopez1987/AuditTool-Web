@@ -11,13 +11,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class SecurityAccessWarehouse extends Model
 {
-
     use LogsActivity;
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
 
     protected $table = 'securityaccesswarehouses';
     protected $dateFormat = 'Y-m-d H:i:s';
@@ -26,10 +20,15 @@ class SecurityAccessWarehouse extends Model
         'centerid',
         'warehouseid',
         'username',
-        'defaultlevel'
+        'defaultlevel',
     ];
 
-    static function Centers()
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
+
+    public static function Centers()
     {
         return (new SecurityAccessWarehouse())
             ->where('username', Auth::user()->username)
@@ -38,7 +37,7 @@ class SecurityAccessWarehouse extends Model
             ->toArray();
     }
 
-    static function Warehouses()
+    public static function Warehouses()
     {
         return (new SecurityAccessWarehouse())
             ->where('username', Auth::user()->username)
@@ -47,11 +46,10 @@ class SecurityAccessWarehouse extends Model
             ->toArray();
     }
 
-    static function getCenterForUser()
+    public static function getCenterForUser()
     {
         return SecurityAccessWarehouse::where('username', Auth::user()->username)->value('centerid');
     }
-
 
     public function center()
     {

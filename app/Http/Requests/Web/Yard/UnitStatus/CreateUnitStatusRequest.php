@@ -10,7 +10,7 @@ class CreateUnitStatusRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:50',
-            'unitstatusid' => 'required|string|unique:storageunitstatus,unitstatusid|max:15'
+            'unitstatusid' => 'required|string|unique:storageunitstatus,unitstatusid|max:15',
         ];
     }
 

@@ -14,10 +14,10 @@ class ShipmentTruckToleranceController extends BaseController
         $this->authorize('shipmenttrucks.tolerance');
         $shipmenttruck = ShipmentTruck::find($id);
         $details = ShipmentTruckTolerance::where('truckid', $id)->get();
-        return view('Yards.ShipmentTrucks.tolerance.index',compact('shipmenttruck','details'));
+        return view('Yards.ShipmentTrucks.tolerance.index', compact('shipmenttruck', 'details'));
     }
 
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
         $shipmenttruck = ShipmentTruck::find($id);
         ShipmentTruckTolerance::create([

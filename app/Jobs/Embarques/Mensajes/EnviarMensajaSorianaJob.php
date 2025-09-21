@@ -28,13 +28,13 @@ class EnviarMensajaSorianaJob implements ShouldQueue
 
     public function handle(): void
     {
-        $url = "https://api.1msg.io/HEI523482986/sendTemplate";
+        $url = 'https://api.1msg.io/HEI523482986/sendTemplate';
         $client = new Client();
         $order = OrderDeliverie::where('id', '=', $this->orderDelivery->id)->first();
         $customer = OrderCustomer::where('id', $order->customerid)->select(['auxiliary02'])->first();
-        if ($customer->auxiliary02 == 'S') {
+        if ($customer->auxiliary02 === 'S') {
             $contacts = $this->getPhones($order);
-            if (!empty($contacts)) {
+            if (! empty($contacts)) {
                 foreach ($contacts as $contact) {
                     try {
                         $data = $this->getBodyData($order, $contact);
@@ -51,35 +51,33 @@ class EnviarMensajaSorianaJob implements ShouldQueue
 
     public function getPhones($model)
     {
-        $contacts = SystemDetailWhatsApp::where('whatsappid', '=', 'WTH-SORIANA')
+        return SystemDetailWhatsApp::where('whatsappid', '=', 'WTH-SORIANA')
             ->where('centerid', $model->centerid)
             ->where('warehouseid', $model->warehouseid)->select(['phonenumber'])->get();
-        return $contacts;
     }
 
     public function getBodyData($order, $contact)
     {
-        return array(
-            "token" => "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbnN0YW5jZUlkIjoiSEVJNTIzNDgyOTg2IiwidG9rZW4iOiJtaGVaTTh4cTQ2a2RadjZ0Q0NJeXZydGo4dkc3bnlOeCIsImlzcyI6IjFtc2cuaW8iLCJpYXQiOjE3NTU2MTU3NTZ9.PNJB7YjZbqerW-s-r8TOSTlPOS_6OddKHxVbwfsQ9GY",
-            "namespace" => "3686dca6_3e5f_4dc5_a838_74a7716b881c",
-            "template" => "mensajedefacturacionsoriana",
-            "language" => array(
-                "policy" => "deterministic",
-                "code" => "es_MX"
-            ),
-            "params" => array(
-                array(
-                    "type" => "body",
-                    "parameters" => array(
-                        array("type" => "text", "text" => $order->shipmentid),
-                        array("type" => "text", "text" => $order->customer->name),
-                        array("type" => "text", "text" => $order->customer->city),
-                        array("type" => "text", "text" => $order->downloaddate),
-                    )
-                )
-            ),
-            "phone" => '1' . $contact->phonenumber
-        );
+        return [
+            'token' => 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbnN0YW5jZUlkIjoiSEVJNTIzNDgyOTg2IiwidG9rZW4iOiJtaGVaTTh4cTQ2a2RadjZ0Q0NJeXZydGo4dkc3bnlOeCIsImlzcyI6IjFtc2cuaW8iLCJpYXQiOjE3NTU2MTU3NTZ9.PNJB7YjZbqerW-s-r8TOSTlPOS_6OddKHxVbwfsQ9GY',
+            'namespace' => '3686dca6_3e5f_4dc5_a838_74a7716b881c',
+            'template' => 'mensajedefacturacionsoriana',
+            'language' => [
+                'policy' => 'deterministic',
+                'code' => 'es_MX',
+            ],
+            'params' => [
+                [
+                    'type' => 'body',
+                    'parameters' => [
+                        ['type' => 'text', 'text' => $order->shipmentid],
+                        ['type' => 'text', 'text' => $order->customer->name],
+                        ['type' => 'text', 'text' => $order->customer->city],
+                        ['type' => 'text', 'text' => $order->downloaddate],
+                    ],
+                ],
+            ],
+            'phone' => '1' . $contact->phonenumber,
+        ];
     }
-
 }

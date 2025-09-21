@@ -10,23 +10,22 @@ use Yajra\DataTables\Facades\DataTables;
 
 class StorageCheckListsController extends BaseController
 {
-
     public function index()
     {
         $this->authorize('storagechecklists.index');
         $warehouses = $this->getWarehouseForSelect();
-        return view('Yards.StorageCheckLists.index',compact('warehouses'));
+        return view('Yards.StorageCheckLists.index', compact('warehouses'));
     }
 
     public function getDataCheckList(Request $request)
     {
         $data = StorageCheckList::controlAccessUser()
-            ->with('center:centerid,description','status:statusid,name')
+            ->with('center:centerid,description', 'status:statusid,name')
             ->Name($request->get('name'))
             ->Warehouse($request->get('warehouseid'))
             ->get();
         return DataTables::of($data)
-            ->addColumn('btn','Yards.StorageCheckLists.partials.buttons')
+            ->addColumn('btn', 'Yards.StorageCheckLists.partials.buttons')
             ->addColumn('warehousename', function ($row) {
                 return $row->warehouse ? $row->warehouse->name : '';
             })
@@ -39,7 +38,7 @@ class StorageCheckListsController extends BaseController
         $this->authorize('storagechecklists.create');
         $centers = $this->getCenterForSelect();
         $warehouses = $this->getWarehouseForSelect();
-        return view('Yards.StorageCheckLists.create', compact('centers','warehouses'));
+        return view('Yards.StorageCheckLists.create', compact('centers', 'warehouses'));
     }
 
     public function store(CreateCheckListRequest $request)
@@ -54,7 +53,7 @@ class StorageCheckListsController extends BaseController
         $this->authorize('storagechecklists.edit');
         $status = $this->getStatusSTS();
         $warehouses = $this->getWarehouseForSelect();
-        return view('Yards.StorageCheckLists.edit', compact('storagechecklist', 'status','warehouses'));
+        return view('Yards.StorageCheckLists.edit', compact('storagechecklist', 'status', 'warehouses'));
     }
 
     public function update(Request $request, StorageCheckList $storagechecklist)
@@ -62,5 +61,4 @@ class StorageCheckListsController extends BaseController
         $storagechecklist->update($request->all());
         return $this->infoResponse('storagechecklists.index');
     }
-
 }

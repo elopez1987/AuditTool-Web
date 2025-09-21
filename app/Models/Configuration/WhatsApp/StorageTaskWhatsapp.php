@@ -14,78 +14,75 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class StorageTaskWhatsapp extends Model
 {
-	use LogsActivity;
+    use LogsActivity;
 
-	public function getActivitylogOptions(): LogOptions
-	{
-		return LogOptions::defaults()->logFillable();
-	}
+    public $timestamps = false;
+    protected $table = 'storagetaskwhatsapp';
 
-	public $timestamps = false;
-	protected $table = 'storagetaskwhatsapp';
+    protected $fillable = [
+        'centerid', 'warehouseid', 'modelid',
+        'modeltype', 'whatsappid', 'phone ', 'value01',
+        'value02', 'value03', 'value04', 'value05', 'statusid',
+    ];
 
-	protected $fillable = [
-		'centerid', 'warehouseid', 'modelid',
-		'modeltype', 'whatsappid', 'phone ', 'value01',
-		'value02', 'value03', 'value04', 'value05', 'statusid'
-	];
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'schemaid',
+    ];
 
+    protected $attributes = [
+        'statusid' => 'E',
+        'schemaid' => 'STS',
+    ];
 
-	protected $hidden = [
-		'created_at',
-		'updated_at',
-		'schemaid'
-	];
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
-	protected $attributes = [
-		'statusid' => 'E',
-		'schemaid' => 'STS',
-	];
+    public function center(): BelongsTo
+    {
+        return $this->belongsTo(SystemCenterDistribution::class, 'centerid', 'centerid');
+    }
 
-	public function center(): BelongsTo
-	{
-		return $this->belongsTo(SystemCenterDistribution::class, 'centerid', 'centerid');
-	}
+    public function warehouse(): BelongsTo
+    {
+        return $this->belongsTo(SystemWarehouse::class, 'warehouseid', 'warehouseid');
+    }
 
-	public function warehouse(): BelongsTo
-	{
-		return $this->belongsTo(SystemWarehouse::class, 'warehouseid', 'warehouseid');
-	}
+    public function status(): BelongsTo
+    {
+        return $this->belongsTo(SystemStatus::class, 'statusid', 'statusid');
+    }
 
-	public function status(): BelongsTo
-	{
-		return $this->belongsTo(SystemStatus::class, 'statusid', 'statusid');
-	}
+    public static function controlAccessUser()
+    {
+        $warehouses = SecurityAccessWarehouse::Warehouses();
+        $centers = SecurityAccessWarehouse::Centers();
+        return StorageTaskWhatsapp::whereIn('storagetaskwhatsapp.warehouseid', $warehouses)
+            ->whereIn('storagetaskwhatsapp.centerid', $centers);
+    }
 
-	protected static function boot()
-	{
-		parent::boot();
-		if (!app()->runningInConsole()) {
-			self::creating(function (StorageTaskWhatsapp $model) {
-				$model->created_at = Carbon::now();
-			});
-		}
-	}
+    public static function createNewTask($model, $key_id, $whatsapptype, $type)
+    {
+        StorageTaskWhatsapp::create([
+            'centerid' => $model->centerid,
+            'warehouseid' => $model->warehouseid,
+            'modelid' => $key_id,
+            'modeltype' => $model->getTable(),
+            'whatsappid' => $whatsapptype,
+            'value01' => $type,
+        ]);
+    }
 
-	public static function controlAccessUser()
-	{
-		$warehouses = SecurityAccessWarehouse::Warehouses();
-		$centers = SecurityAccessWarehouse::Centers();
-		return StorageTaskWhatsapp::whereIn('storagetaskwhatsapp.warehouseid', $warehouses)
-			->whereIn('storagetaskwhatsapp.centerid', $centers);
-	}
-
-	public static function createNewTask($model, $key_id, $whatsapptype, $type)
-	{
-		StorageTaskWhatsapp::create([
-			'centerid' => $model->centerid,
-			'warehouseid' => $model->warehouseid,
-			'modelid' => $key_id,
-			'modeltype' => $model->getTable(),
-			'whatsappid' => $whatsapptype,
-			'value01' => $type
-		]);
-	}
-
-
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (StorageTaskWhatsapp $model) {
+                $model->created_at = Carbon::now();
+            });
+        }
+    }
 }

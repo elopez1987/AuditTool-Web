@@ -18,7 +18,6 @@ class FinishLoadOrderDeliveryController extends BaseController
 {
     public function index($id)
     {
-        $error = null;
         DB::beginTransaction();
         try {
             $orderDelivery = OrderDeliverie::controlAccessUser()->whereId($id)->first();
@@ -43,6 +42,7 @@ class FinishLoadOrderDeliveryController extends BaseController
     /**
      * @param $folioNumber
      * @param $orderDelivery
+     *
      * @return void
      */
     public function updateFolioNumber($folioNumber, $orderDelivery): void
@@ -56,6 +56,7 @@ class FinishLoadOrderDeliveryController extends BaseController
 
     /**
      * @param $orderDelivery
+     *
      * @return void
      */
     public function updateShipmentDataOperation($orderDelivery): void
@@ -69,21 +70,17 @@ class FinishLoadOrderDeliveryController extends BaseController
 
     /**
      * @param $orderDelivery
+     *
      * @return void
      */
     public function sendEDITToRControl($orderDelivery): void
     {
         $parameter = $this->getParametersOfWarehouse($orderDelivery->warehouseid);
-        if (!empty($parameter) && in_array('SWH-21', (array)$parameter)) {
+        if (! empty($parameter) && in_array('SWH-21', (array) $parameter)) {
             EdiShipment::createEDIForEventToShipment($orderDelivery, 'END_LOAD');
         }
     }
 
-    /**
-     * @param $orderDelivery
-     * @param $shipmentheader
-     * @return void
-     */
     public function updateShipmentHeader($orderDelivery): void
     {
         $shipmentHeader = ShipmentHeader::where('orderid', $orderDelivery->id)->first();
@@ -96,6 +93,7 @@ class FinishLoadOrderDeliveryController extends BaseController
 
     /**
      * @param $orderdelivery
+     *
      * @return void
      */
     public function updateOrderDelivery($orderdelivery): void
@@ -106,6 +104,7 @@ class FinishLoadOrderDeliveryController extends BaseController
 
     /**
      * @param $orderDelivery
+     *
      * @return void
      */
     public function updateShipmentSeal($orderDelivery): void
@@ -114,6 +113,4 @@ class FinishLoadOrderDeliveryController extends BaseController
         $shipmentseal->statusorderid = 'FO';
         $shipmentseal->save();
     }
-
-
 }

@@ -18,7 +18,6 @@ class StorageUnitTrace extends Model
 {
     protected $table = 'storageunittrace';
 
-
     protected $dateFormat = 'Y-m-d H:i:s';
 
     protected $fillable = [
@@ -47,7 +46,6 @@ class StorageUnitTrace extends Model
         'created_at',
         'updated_at',
     ];
-
 
     public function center()
     {
@@ -106,35 +104,35 @@ class StorageUnitTrace extends Model
 
     public function scopeName($query, $name)
     {
-        if (trim($name) != "") {
-            $query->where('storageunittrace.name', 'like', "%$name%");
+        if (trim($name) !== '') {
+            $query->where('storageunittrace.name', 'like', "%{$name}%");
         }
     }
 
     public function scopeBoxNumber($query, $box)
     {
-        if (trim($box != '')) {
+        if (trim($box) !== '') {
             $query->where('storageunittrace.boxnumber', '=', $box);
         }
     }
 
     public function scopeShipment($query, $shipmentid)
     {
-        if (trim($shipmentid != '')) {
+        if (trim($shipmentid) !== '') {
             $query->where('storageunittrace.shipmentid', '=', $shipmentid);
         }
     }
 
     public function scopeCarrier($query, $carrierid)
     {
-        if ($carrierid != '') {
+        if ($carrierid !== '') {
             $query->where('storageunittrace.carrierid', $carrierid);
         }
     }
 
     public function scopeDate($query, $datein, $dateout)
     {
-        if ($datein != '' && $dateout != '') {
+        if ($datein !== '' && $dateout !== '') {
             $query->whereBetween('storageunittrace.created_at', [$datein, $dateout]);
         }
     }
@@ -147,8 +145,7 @@ class StorageUnitTrace extends Model
             ->whereIn('storageunittrace.centerid', $centers);
     }
 
-
-    static function createTraceUnit($receiptunit, $reason)
+    public static function createTraceUnit($receiptunit, $reason)
     {
         StorageUnitTrace::create([
             'centerid' => $receiptunit->centerid,
@@ -172,8 +169,5 @@ class StorageUnitTrace extends Model
             'operatorname' => $receiptunit->tracto ? $receiptunit->tracto->operatorname : '',
             'drivernumber' => $receiptunit->tracto ? $receiptunit->tracto->drivernumber : '',
         ]);
-
     }
-
-
 }

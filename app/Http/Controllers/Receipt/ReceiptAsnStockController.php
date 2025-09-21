@@ -11,15 +11,16 @@ use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
 
-
 class ReceiptAsnStockController extends BaseController
 {
     public function addstock($id)
     {
         $receiptasn = ReceiptAsn::controlAccessUser()->whereId($id)->first();
         $stocks = ReceiptStock::controlAccessUser()->whereReceiptid($id)->get();
-        return view('Receipt.ReceiptAsn.addStock',
-            compact('receiptasn', 'stocks'));
+        return view(
+            'Receipt.ReceiptAsn.addStock',
+            compact('receiptasn', 'stocks')
+        );
     }
 
     public function addstockstore(CreateReceiptStockRequest $request, $id)
@@ -38,15 +39,14 @@ class ReceiptAsnStockController extends BaseController
         }
         if ($success) {
             return $this->redirectBackSuccess();
-        } else {
-            return redirect::back()->withInput()->with(session()->flash('error', 'No se pudieron guardar los datos!!' . $error));
         }
+        return redirect::back()->withInput()->with(session()->flash('error', 'No se pudieron guardar los datos!!' . $error));
     }
 
     public function createReceiptStock($request, $receipt)
     {
         $sku = InventoryPartnumber::controlAccessUser()->wherePrtnum($request['prtnum'])->first();
-        if(empty($sku)){
+        if (empty($sku)) {
             return $this->errorResponse('El número de parte no existe, favor de validar.');
         }
         $dias = Carbon::parse($request['productiondate'])->addDays($sku->shelflife)->format('Y-m-d');
@@ -62,14 +62,12 @@ class ReceiptAsnStockController extends BaseController
             'expirecode' => $request['batch'],
             'expiredate' => $dias,
             'productiondate' => $request['productiondate'],
-            'quantitytrue' => $request['quantity']
+            'quantitytrue' => $request['quantity'],
         ]);
     }
 
-
     public function updateQuantityStock($id, Request $request)
     {
-
         $stock = ReceiptStock::controlAccessUser()->findOrFail($id);
         $stock->quantitytrue = $request['quantitytrue'];
         $stock->expirecode = $request['expirecode'];
@@ -77,13 +75,10 @@ class ReceiptAsnStockController extends BaseController
         return $this->redirectBackSuccess();
     }
 
-
     public function deletestock($id)
     {
         $stock = ReceiptStock::controlAccessUser()->findOrFail($id);
         $stock->delete();
         return $this->redirectBackSuccess();
     }
-
-
 }

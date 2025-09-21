@@ -39,9 +39,17 @@ class StorageShipmentTransportsController extends BaseController
     public function update(RegisterTransportRequest $request, $id)
     {
         $transport = StorageShipmentTransport::where('orderid', $id)->first();
-        $transport->update($request->only('operatorname', 'phone', 'drivernumber', 'truckid',
-                'boxnumber', 'auxiliary03', 'auxiliary04', 'trucknumber') + ['auxiliary02' => '1']);
-        if ($request['validateoperator'] == 'on') {
+        $transport->update($request->only(
+            'operatorname',
+            'phone',
+            'drivernumber',
+            'truckid',
+            'boxnumber',
+            'auxiliary03',
+            'auxiliary04',
+            'trucknumber'
+        ) + ['auxiliary02' => '1']);
+        if ($request['validateoperator'] === 'on') {
             StorageValidateOperator::create([
                 'centerid' => $transport->centerid,
                 'orderid' => $transport->orderid,
@@ -51,6 +59,4 @@ class StorageShipmentTransportsController extends BaseController
         }
         return $this->successResponse('datatransport.index');
     }
-
-
 }

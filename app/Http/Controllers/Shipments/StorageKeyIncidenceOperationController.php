@@ -14,8 +14,6 @@ use Ramsey\Uuid\Uuid;
 
 class StorageKeyIncidenceOperationController extends BaseController
 {
-
-
     public function index()
     {
         return view('Shipments.ShipmentKeyIncidences.index');
@@ -50,7 +48,7 @@ class StorageKeyIncidenceOperationController extends BaseController
             $item->save();
             $order = $item->orderid;
         }
-        if (!empty($order)) {
+        if (! empty($order)) {
             $incidence = StorageIncidenceJourney::where('orderid', $order)->first();
             $incidence->statuskeyid = 'FR';
             $incidence->auxiliary01 = Uuid::uuid4();
@@ -59,6 +57,4 @@ class StorageKeyIncidenceOperationController extends BaseController
 
         return $this->successResponse('storagekeyincidencesopetations.index');
     }
-
-
 }

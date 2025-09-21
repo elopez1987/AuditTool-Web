@@ -19,13 +19,15 @@ class StorageScheduleInverseTrafficController extends BaseController
     {
         $this->authorize('storagescheduleinverse.edit');
         $details = StorageScheduleInverse::getDataInverse($storagescheduleinverse);
-        return view('Shipments.StorageScheduleInverse.edit',
-            compact('storagescheduleinverse', 'details'));
+        return view(
+            'Shipments.StorageScheduleInverse.edit',
+            compact('storagescheduleinverse', 'details')
+        );
     }
 
     public function update(Request $request, StorageScheduleInverse $storagescheduleinverse)
     {
-        if ($request['folionumber'] != '') {
+        if ($request['folionumber'] !== '') {
             $folio = ReceiptUnit::controlAccessUser()->where('id', $request['folionumber'])->first();
             if (empty($folio)) {
                 return $this->errorResponse('No existe número de folio en sistema, favor de validar');
@@ -37,15 +39,14 @@ class StorageScheduleInverseTrafficController extends BaseController
         return $this->redirectBackSuccessMessage('Registro actualizado con exito');
     }
 
-
     public function updateDataTraffic(Request $request, StorageScheduleInverse $storagescheduleinverse)
     {
         $error = null;
         DB::beginTransaction();
         try {
             $order = $this->getDeliverie($storagescheduleinverse);
-            if ($request['delivery'] != "") {
-                $total = count($request["delivery"]) - 1;
+            if ($request['delivery'] !== '') {
+                $total = count($request['delivery']) - 1;
                 for ($i = 0; $i <= $total; $i++) {
                     $this->updateTraffic($order, $storagescheduleinverse, $request, $i);
                 }
@@ -59,9 +60,8 @@ class StorageScheduleInverseTrafficController extends BaseController
         }
         if ($success) {
             return $this->redirectBackSuccessMessage('Datos agregados correctamente');
-        } else {
-            return $this->errorResponse('No se pudieron guardar los datos' . $error);
         }
+        return $this->errorResponse('No se pudieron guardar los datos' . $error);
     }
 
     /**
@@ -69,6 +69,7 @@ class StorageScheduleInverseTrafficController extends BaseController
      * @param StorageScheduleInverse $storagescheduleinverse
      * @param Request $request
      * @param int $i
+     *
      * @return void
      */
     public function updateTraffic($order, StorageScheduleInverse $storagescheduleinverse, Request $request, int $i): void
@@ -80,7 +81,8 @@ class StorageScheduleInverseTrafficController extends BaseController
                 'orderid' => $order->id,
                 'inverseid' => $storagescheduleinverse->id,
                 'delivery' => $request['delivery'][$i],
-            ], [
+            ],
+            [
                 'typereport' => $request['type'][$i],
 
                 'requestzare' => $request['requestzare'][$i],
@@ -99,11 +101,11 @@ class StorageScheduleInverseTrafficController extends BaseController
                 'username' => Auth::user()->username,
             ]
         );
-
     }
 
     /**
      * @param StorageScheduleInverse $storagescheduleinverse
+     *
      * @return OrderDeliverie|Builder|Model|object|null
      */
     public function getDeliverie(StorageScheduleInverse $storagescheduleinverse)
@@ -111,6 +113,4 @@ class StorageScheduleInverseTrafficController extends BaseController
         return OrderDeliverie::controlAccessUser()
             ->where('id', $storagescheduleinverse->orderid)->first();
     }
-
-
 }

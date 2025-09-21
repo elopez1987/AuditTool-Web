@@ -15,7 +15,7 @@ class RegisterLabelRequest extends FormRequest
             'boxnumber' => 'required',
             'econumber' => 'required',
             'carrierid' => 'required|exists:shipmentcarriers,id',
-            'truckid' => 'required_if:typeid,BX'
+            'truckid' => 'required_if:typeid,BX',
         ];
     }
 

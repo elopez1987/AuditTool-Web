@@ -14,15 +14,9 @@ class StorageUnitType extends Model
 {
     use LogsActivity;
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
-
     protected $table = 'storageunittypes';
 
     protected $dateFormat = 'Y-m-d H:i:s';
-
 
     protected $fillable = [
         'centerid',
@@ -33,19 +27,24 @@ class StorageUnitType extends Model
         'auxiliary03',
         'auxiliary04',
         'auxiliary05',
-        'statusid'
+        'statusid',
     ];
 
     protected $hidden = [
         'created_at',
         'updated_at',
-        'schemaid'
+        'schemaid',
     ];
 
     protected $attributes = [
         'statusid' => 'E',
         'schemaid' => 'STS',
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
     public function center()
     {
@@ -65,17 +64,15 @@ class StorageUnitType extends Model
 
     public function scopeName($query, $name)
     {
-        if (trim($name) != "") {
-            $query->where('storageunittypes.description', 'like', "%$name%");
+        if (trim($name) !== '') {
+            $query->where('storageunittypes.description', 'like', "%{$name}%");
         }
     }
 
     public function scopeStatus($query, $statusid)
     {
-        if (trim($statusid) != "") {
+        if (trim($statusid) !== '') {
             $query->where('statusid', '=', $statusid);
         }
     }
-
-
 }

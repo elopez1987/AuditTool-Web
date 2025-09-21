@@ -29,7 +29,7 @@ class ScheduleInverseDetailController extends BaseController
                 'scheduleinversedetail.quantity',
                 'scheduleinversedetail.statusid',
                 'users.name as username',
-                'status_names.name as statusname'
+                'status_names.name as statusname',
             ])
             ->leftJoin('scheduleinverse', 'scheduleinversedetail.schedulleid', '=', 'scheduleinverse.id')
             ->leftJoin('systemstatus as status_blocks', 'scheduleinversedetail.secuenceid', '=', 'status_blocks.statusid')
@@ -40,13 +40,11 @@ class ScheduleInverseDetailController extends BaseController
         return $this->showDataToView($data, 'Shipments.ScheduleInverse.SchedulleDetail.buttons');
     }
 
-
-
     public function changestatusdetail(Request $request)
     {
         $this->authorize('scheduleinverse.changestatusdetail');
         $schedulle = ScheduleInverseDetail::find($request['id']);
-        if ($schedulle->statusid == 'DIS') {
+        if ($schedulle->statusid === 'DIS') {
             $schedulle->statusid = 'RES';
             $message = 'Bloque reservado con exito';
         } else {
@@ -57,9 +55,7 @@ class ScheduleInverseDetailController extends BaseController
         return response()->json([
             'ProcessDate' => Carbon::now()->format('Y-m-d H:m:s'),
             'Code' => '0',
-            'Message' => $message
+            'Message' => $message,
         ], '200');
     }
-
-
 }

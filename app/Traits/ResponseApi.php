@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Traits;
-
 
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use Auth;
@@ -11,7 +9,6 @@ use Illuminate\Http\JsonResponse;
 
 trait ResponseApi
 {
-
     public function getCenterForUserForApi()
     {
         return SecurityAccessWarehouse::where('username', Auth::user()->username)->value('centerid');
@@ -22,12 +19,12 @@ trait ResponseApi
         return SecurityAccessWarehouse::where('username', Auth::user()->username)->value('warehouseid');
     }
 
-    public function showAll($service,$collection): JsonResponse
+    public function showAll($service, $collection): JsonResponse
     {
         return $this->getResponseSuccess($service, $collection);
     }
 
-    public function showOne($service,$model,): JsonResponse
+    public function showOne($service, $model): JsonResponse
     {
         return $this->getResponseSuccess($service, $model);
     }
@@ -71,7 +68,7 @@ trait ResponseApi
             'ServiceName' => $service,
             'ProcessDate' => Carbon::now()->format('Y-m-d H:m:s'),
             'Code' => '-1',
-            'Status'=>'Error',
+            'Status' => 'Error',
             'Message' => $message,
             'Data' => [],
         ]);
@@ -89,7 +86,7 @@ trait ResponseApi
         ]);
     }
 
-    public function getResponseRegisterYard($service, $message,$code,$data): JsonResponse
+    public function getResponseRegisterYard($service, $message, $code, $data): JsonResponse
     {
         return response()->json([
             'ServiceName' => $service,
@@ -122,7 +119,4 @@ trait ResponseApi
             'Data' => $data,
         ]);
     }
-
-
-
 }

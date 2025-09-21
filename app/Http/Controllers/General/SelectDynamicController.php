@@ -69,9 +69,8 @@ class SelectDynamicController extends Controller
                 ->where('warehouseid', $warehouseid)
                 ->select(['id', 'name'])->get();
         }
-       return $zones;
+        return $zones;
     }
-
 
     public function getCarriersForCenter(Request $request, $centerid)
     {
@@ -199,7 +198,7 @@ class SelectDynamicController extends Controller
                     'receiptunits.boxnumber', 'receiptunits.containerseal', 'receiptunits.id as folio', 'receiptunits.trucknumber',
                     'receiptunits.operatorname', 'receiptunits.phone', 'receiptunits.shipmentid', 'receiptunits.auxiliary01 as barcodetruck',
                     'shipmentcarriers.name as linea', 'systemstatus.name as status', 'storagereasons.name as razonid',
-                    'receiptunits.operatorname', 'storageunitstatus.name as statusunit'
+                    'receiptunits.operatorname', 'storageunitstatus.name as statusunit',
                 ])
                 ->whereNotIn('receiptunits.statusid', ['TR'])
                 ->get()->toArray();
@@ -210,18 +209,16 @@ class SelectDynamicController extends Controller
     public function getDataInvoiceForFolio(Request $request, $folionumber)
     {
         if ($request->ajax()) {
-                $dataUnit = ReceiptUnitStock::controlAccessUser()->where('vw_storagestockunits.id', $folionumber)
+            $dataUnit = ReceiptUnitStock::controlAccessUser()->where('vw_storagestockunits.id', $folionumber)
                 ->select(['vw_storagestockunits.location as ubicacion', 'vw_storagestockunits.zone as zona', 'vw_storagestockunits.econumber',
                     'vw_storagestockunits.boxnumber', 'vw_storagestockunits.id as folio', 'vw_storagestockunits.trucknumber',
                     'vw_storagestockunits.operatorname', 'vw_storagestockunits.phone', 'vw_storagestockunits.shipmentid',
                     'vw_storagestockunits.carrier as linea', 'vw_storagestockunits.status as status', 'vw_storagestockunits.reason as razonid',
-                         'vw_storagestockunits.unitstatus as statusunit','vw_storagestockunits.barcode','vw_storagestockunits.foliotruck'
+                    'vw_storagestockunits.unitstatus as statusunit','vw_storagestockunits.barcode','vw_storagestockunits.foliotruck',
                 ])->get()->toArray();
         }
         return response()->json($dataUnit);
     }
-
-
 
     public function getDataInvoiceForBox(Request $request, $boxnumber)
     {
@@ -234,7 +231,8 @@ class SelectDynamicController extends Controller
                 ->select(['storagelocations.name as ubicacion', 'storagezones.name as zona',
                     'receiptunits.boxnumber', 'receiptunits.containerseal', 'receiptunits.id as folio',
                     'receiptunits.operatorname', 'receiptunits.phone', 'receiptunits.shipmentid', 'receiptunits.econumber',
-                    'receiptunits.barcode', 'shipmentcarriers.name as linea'])
+                    'receiptunits.barcode', 'shipmentcarriers.name as linea',
+                ])
                 ->whereNotIn('receiptunits.statusid', ['TR'])
                 ->get()->toArray();
         }
@@ -359,7 +357,6 @@ class SelectDynamicController extends Controller
         return response()->json($sku);
     }
 
-
     public function getDataShipment(Request $request, $shipmentid)
     {
         if ($request->ajax()) {
@@ -369,12 +366,12 @@ class SelectDynamicController extends Controller
                 ->join('shipmentcarriers', 'shipmenttransport.carrierid', 'shipmentcarriers.id')
                 ->join('systemwarehouses', 'systemwarehouses.warehouseid', '=', 'orderdeliveries.warehouseid')
                 ->select(['shipmenttransport.operatorname', 'shipmenttransport.auxiliary01',
-                    'shipmentcarriers.name as carriername', 'systemwarehouses.name as warehousename'])
+                    'shipmentcarriers.name as carriername', 'systemwarehouses.name as warehousename',
+                ])
                 ->get()->toArray();
         }
         return response()->json($shipment);
     }
-
 
     public function getBillForShipment(Request $request, $shipmentid)
     {
@@ -386,7 +383,6 @@ class SelectDynamicController extends Controller
         }
     }
 
-
     public function getstageforshipment($shipmentid)
     {
         $shipment01 = OrderDeliverie::whereShipmentid($shipmentid)
@@ -395,7 +391,7 @@ class SelectDynamicController extends Controller
             ->where('s1.statusid', '=', 'E')
             ->select(['s1.name as cortina', 's1.id as locationid'])
             ->first();
-        if ($shipment01 != null) {
+        if ($shipment01 !== null) {
             $value = $shipment01;
         } else {
             $shipment02 = OrderDeliverie::whereShipmentid($shipmentid)
@@ -404,7 +400,7 @@ class SelectDynamicController extends Controller
                 ->where('s1.statusid', '=', 'E')
                 ->select(['s1.name as cortina', 's1.id as locationid'])
                 ->first();
-            if ($shipment02 != null) {
+            if ($shipment02 !== null) {
                 $value = $shipment02;
             } else {
                 $shipment03 = OrderDeliverie::whereShipmentid($shipmentid)
@@ -413,10 +409,10 @@ class SelectDynamicController extends Controller
                     ->where('s1.statusid', '=', 'E')
                     ->select(['s1.name as cortina', 's1.id as locationid'])
                     ->first();
-                if ($shipment03 != null) {
+                if ($shipment03 !== null) {
                     $value = $shipment03;
                 } else {
-                    $value = ['cortina' => 'SIN ASIGNAR', "locationid" => "0"];
+                    $value = ['cortina' => 'SIN ASIGNAR', 'locationid' => '0'];
                 }
             }
         }
@@ -448,7 +444,6 @@ class SelectDynamicController extends Controller
         return response()->json($printers);
     }
 
-
     public function getDataForShipment($shipmentid)
     {
         $shipment = OrderDeliverie::controlAccessUser()
@@ -469,7 +464,6 @@ class SelectDynamicController extends Controller
         }
         return response()->json($lpns);
     }
-
 
     public function getSkuForLpn(Request $request, $lpnid)
     {
@@ -505,11 +499,11 @@ class SelectDynamicController extends Controller
         return response()->json($total);
     }
 
-
     /**
      * @param $message
      * @param $data
      * @param $code
+     *
      * @return JsonResponse
      */
     public function getJsonResponse($message, $data, $code, $codeResponse, $servicename): JsonResponse
@@ -523,10 +517,9 @@ class SelectDynamicController extends Controller
         ], $code);
     }
 
-
     public function getDataToShipment($barcodebox)
     {
-        $data = explode(";", $barcodebox);
+        $data = explode(';', $barcodebox);
         if (count($data) < 2) {
             return $this->getJsonResponse('Ingrese un codigo valido.', [], '200', 'error', 'getDataToShipment');
         }
@@ -537,28 +530,30 @@ class SelectDynamicController extends Controller
             ->whereNotIn('statusid', ['DH'])->first();
         if (empty($shipment)) {
             return $this->getJsonResponse('No existe número de embarque.', [], '200', 'error', 'getDataToShipment');
-        } else {
-            $dataTransport = StorageShipmentTransport::where('orderid', $shipment->id)->first();
-            if ($dataTransport->auxiliary01 == 1) {
-                return $this->getJsonResponse('El embarque ya cuenta con transporte,favor de validar.', [], '200', 'error', 'getDataToShipment');
-            } else {
-                if ($dataTransport->boxnumber == null || $dataTransport->operatorname == null) {
-                    return $this->getJsonResponse('El embarque no cuenta con datos,favor de validar.', [], '200', 'error', 'getDataToShipment');
-                } else {
-                    return $this->getJsonResponse('Datos encontrados :',
-                        [
-                            'operador' => $dataTransport->operatorname,
-                            'boxnumber' => $dataTransport->boxnumber,
-                            'trucknumber' => $dataTransport->trucknumber
-                        ], '200', 'success', 'getDataToShipment');
-                }
-            }
         }
+        $dataTransport = StorageShipmentTransport::where('orderid', $shipment->id)->first();
+        if ($dataTransport->auxiliary01 === 1) {
+            return $this->getJsonResponse('El embarque ya cuenta con transporte,favor de validar.', [], '200', 'error', 'getDataToShipment');
+        }
+        if ($dataTransport->boxnumber === null || $dataTransport->operatorname === null) {
+            return $this->getJsonResponse('El embarque no cuenta con datos,favor de validar.', [], '200', 'error', 'getDataToShipment');
+        }
+        return $this->getJsonResponse(
+            'Datos encontrados :',
+            [
+                'operador' => $dataTransport->operatorname,
+                'boxnumber' => $dataTransport->boxnumber,
+                'trucknumber' => $dataTransport->trucknumber,
+            ],
+            '200',
+            'success',
+            'getDataToShipment'
+        );
     }
 
     public function getDataReceiptQr($barcodebox)
     {
-        $data = explode(",", $barcodebox);
+        $data = explode(',', $barcodebox);
         if (count($data) < 4) {
             return $this->getJsonResponse('Ingrese un codigo valido', [], '200', 'error', 'getDataReceiptQr');
         }
@@ -571,16 +566,16 @@ class SelectDynamicController extends Controller
         if (empty($keyValue)) {
             return $this->getJsonResponse('No existe el código de acceso, favor de validar', [], '200', 'error', 'getDataReceiptQr');
         }
-        if ($keyValue->statusid == 'BK') {
+        if ($keyValue->statusid === 'BK') {
             return $this->getJsonResponse('El códgio de acceso ya se encuentra caduco', [], '200', 'error', 'getDataReceiptQr');
         }
 
         $boxstatus = $this->getStatusBoxForBarcode($box);
-        if (!empty($boxstatus)) {
+        if (! empty($boxstatus)) {
             return $this->getJsonResponse('La caja se encuentra en patio', [], '200', 'error', 'getDataReceiptQr');
         }
         $truckStatus = $this->getStatusTruckForBarcode($truck);
-        if (!empty($truckStatus)) {
+        if (! empty($truckStatus)) {
             return $this->getJsonResponse('El tracto se encuentra en patio', [], '200', 'error', 'getDataReceiptQr');
         }
 
@@ -588,17 +583,13 @@ class SelectDynamicController extends Controller
         $newBox = $this->getBox($box);
         $newTruck = $this->getTruck($truck);
         return $this->getJsonResponse('Datos existentes', ['operador' => $newOperador->name,
-            'boxnumber' => $newBox->boxnumber, 'trucknumber' => $newTruck->boxnumber], '200', 'success', 'getDataReceiptQr');
-
+            'boxnumber' => $newBox->boxnumber, 'trucknumber' => $newTruck->boxnumber,
+        ], '200', 'success', 'getDataReceiptQr');
     }
 
     public function getFunctionForModule($moduleid)
     {
-        $functions = SecurityFunction::where('moduleid', $moduleid)
+        return SecurityFunction::where('moduleid', $moduleid)
             ->select('description', 'functionid')->get();
-        return $functions;
     }
-
-
-
 }

@@ -10,29 +10,22 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-
 class StorageScheduleInverse extends Model
 {
     use LogsActivity;
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
-
     protected $table = 'storagescheduleinverse';
     protected $primaryKey = 'id';
 
-
     protected $fillable = [
         'centerid', 'warehouseid', 'orderid', 'adddate', 'appointment', 'requestzare',
-        'zare', 'ne', 'requestne', 'statusid', 'folionumber'
+        'zare', 'ne', 'requestne', 'statusid', 'folionumber',
     ];
 
     protected $hidden = [
         'created_at',
         'updated_at',
-        'schemaid'
+        'schemaid',
     ];
 
     protected $attributes = [
@@ -40,15 +33,9 @@ class StorageScheduleInverse extends Model
         'schemaid' => 'LIV',
     ];
 
-
-    protected static function boot()
+    public function getActivitylogOptions(): LogOptions
     {
-        parent::boot();
-        if (!app()->runningInConsole()) {
-            self::creating(function (StorageScheduleInverse $model) {
-                $model->adddate = Carbon::now();
-            });
-        }
+        return LogOptions::defaults()->logFillable();
     }
 
     public static function controlAccessUser()
@@ -74,24 +61,23 @@ class StorageScheduleInverse extends Model
         return $this->belongsTo(SystemStatus::class, 'statusid', 'statusid');
     }
 
-
     public function scopeForStatus($query, $statusid)
     {
-        if ($statusid != '') {
+        if ($statusid !== '') {
             $query->where('storagescheduleinverse.statusid', $statusid);
-        }else{
-            $query->where('storagescheduleinverse.statusid','=','AD');
+        } else {
+            $query->where('storagescheduleinverse.statusid', '=', 'AD');
         }
     }
 
     public function scopeForShipment($query, $shipmentid)
     {
-        if ($shipmentid != '') {
+        if ($shipmentid !== '') {
             $query->where('orderdeliveries.shipmentid', $shipmentid);
         }
     }
 
-    static function addNewSchedule($shipment)
+    public static function addNewSchedule($shipment)
     {
         StorageScheduleInverse::updateOrCreate([
             'centerid' => $shipment->centerid,
@@ -105,18 +91,33 @@ class StorageScheduleInverse extends Model
         );
     }
 
-    static function getDataInverse($storagescheduleinverse)
+    public static function getDataInverse($storagescheduleinverse)
     {
         return DB::table('storagescheduleinverse')
-            ->select('orderdeliveries.centerid', 'orderdeliveries.warehouseid', 'orderdeliveries.shipmentid',
-                'storageincidencejourneydetails.delivery', 'storageincidencejourneydetails.partnumberid',
-                'inventorypartnumbers.lngdsc as description', 'storageincidencejourneydetails.quantity',
-                'storageincidencejourneydetails.unitmeasure', 'storagecategoryincidencedetails.auxiliary02 as type',
-                'inventorypartnumbercategory01.description as div', 'storagescheduleinversetraffic.typereport',
-                'storagescheduleinversetraffic.requestzare', 'storagescheduleinversetraffic.zare','storagescheduleinversetraffic.responsezare','storagescheduleinversetraffic.responsene',
-                'storagescheduleinversetraffic.responsenc','storagescheduleinversetraffic.requestnc',
-                'storagescheduleinversetraffic.requestne', 'storagescheduleinversetraffic.ne',
-                'storagescheduleinversetraffic.adjust', 'storagescheduleinversetraffic.nc', 'storagescheduleinversetraffic.id as trafic')
+            ->select(
+                'orderdeliveries.centerid',
+                'orderdeliveries.warehouseid',
+                'orderdeliveries.shipmentid',
+                'storageincidencejourneydetails.delivery',
+                'storageincidencejourneydetails.partnumberid',
+                'inventorypartnumbers.lngdsc as description',
+                'storageincidencejourneydetails.quantity',
+                'storageincidencejourneydetails.unitmeasure',
+                'storagecategoryincidencedetails.auxiliary02 as type',
+                'inventorypartnumbercategory01.description as div',
+                'storagescheduleinversetraffic.typereport',
+                'storagescheduleinversetraffic.requestzare',
+                'storagescheduleinversetraffic.zare',
+                'storagescheduleinversetraffic.responsezare',
+                'storagescheduleinversetraffic.responsene',
+                'storagescheduleinversetraffic.responsenc',
+                'storagescheduleinversetraffic.requestnc',
+                'storagescheduleinversetraffic.requestne',
+                'storagescheduleinversetraffic.ne',
+                'storagescheduleinversetraffic.adjust',
+                'storagescheduleinversetraffic.nc',
+                'storagescheduleinversetraffic.id as trafic'
+            )
             ->leftJoin('orderdeliveries', 'orderdeliveries.id', '=', 'storagescheduleinverse.orderid')
             ->leftJoin('storageincidencejourneydetails', 'orderdeliveries.id', '=', 'storageincidencejourneydetails.orderid')
             ->leftJoin('inventorypartnumbers', 'storageincidencejourneydetails.partnumberid', '=', 'inventorypartnumbers.prtnum')
@@ -130,7 +131,15 @@ class StorageScheduleInverse extends Model
             })
             ->where('storagescheduleinverse.orderid', '=', $storagescheduleinverse->orderid)
             ->get();
-
     }
 
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (StorageScheduleInverse $model) {
+                $model->adddate = Carbon::now();
+            });
+        }
+    }
 }

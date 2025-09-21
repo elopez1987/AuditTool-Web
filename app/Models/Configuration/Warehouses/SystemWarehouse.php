@@ -16,11 +16,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class SystemWarehouse extends Model
 {
     public $incrementing = false;
+    public $keyType = 'string';
     protected $table = 'systemwarehouses';
     protected $primaryKey = 'warehouseid';
     protected $dateFormat = 'Y-m-d H:i:s';
-    public $keyType = 'string';
-
 
     protected $fillable = [
         'centerid',
@@ -38,18 +37,18 @@ class SystemWarehouse extends Model
         'auxiliary08',
         'auxiliary09',
         'auxiliary10',
-        'statusid'
+        'statusid',
     ];
 
     protected $hidden = [
         'created_at',
         'updated_at',
-        'schemaid'
+        'schemaid',
     ];
 
     protected $attributes = [
         'schemaid' => 'STS',
-        'statusid' => 'E'
+        'statusid' => 'E',
     ];
     protected $casts = [
         'configurationflag' => 'array',
@@ -77,12 +76,8 @@ class SystemWarehouse extends Model
 //    Scopes
     public function scopeForName($query, $name)
     {
-        if (trim($name) != '') {
-            $query->where('systemwarehouses.name', 'like', "%$name%");
+        if (trim($name) !== '') {
+            $query->where('systemwarehouses.name', 'like', "%{$name}%");
         }
     }
-
-
-
-
 }

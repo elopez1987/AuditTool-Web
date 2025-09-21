@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->group(function () {
-
     Route::get('menumaintenance', function () {
         return view('layouts.Menu.Maintenance.menu');
     })->name('menumaintenance');
@@ -33,9 +32,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('storagelifttrucksreports', 'Maintanance\DashboardController@storagelifttrucksreports')->name('storagelifttrucksreports');
     Route::get('exportreportmtn', 'Maintanance\DashboardController@exportreportmtn')->name('exportreportmtn');
 
-    Route::get('storagelifttruckscatalogs','Maintanance\StorageCatalogTruckController@index')->name('storagelifttruckscatalogs');
-    Route::post('savebrand','Maintanance\StorageCatalogTruckController@savebrand')->name('savebrand');
-    Route::post('savemodel','Maintanance\StorageCatalogTruckController@savemodel')->name('savemodel');
-    Route::post('savetype','Maintanance\StorageCatalogTruckController@savetype')->name('savetype');
-
+    Route::get('storagelifttruckscatalogs', 'Maintanance\StorageCatalogTruckController@index')->name('storagelifttruckscatalogs');
+    Route::post('savebrand', 'Maintanance\StorageCatalogTruckController@savebrand')->name('savebrand');
+    Route::post('savemodel', 'Maintanance\StorageCatalogTruckController@savemodel')->name('savemodel');
+    Route::post('savetype', 'Maintanance\StorageCatalogTruckController@savetype')->name('savetype');
 });

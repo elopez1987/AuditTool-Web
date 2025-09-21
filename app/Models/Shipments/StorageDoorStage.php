@@ -18,19 +18,8 @@ class StorageDoorStage extends Model
         'doorid',
         'stageid',
         'username',
-        'created_at'
+        'created_at',
     ];
-
-    protected static function boot()
-    {
-        parent::boot();
-        if (!app()->runningInConsole()) {
-            self::creating(function (StorageDoorStage $model) {
-                $model->username = Auth::user()->username;
-                $model->created_at = Carbon::now();
-            });
-        }
-    }
 
     public static function controlAccessUser()
     {
@@ -38,4 +27,14 @@ class StorageDoorStage extends Model
         return StorageDoorStage::whereIn('storagedoorstages.centerid', $centers);
     }
 
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (StorageDoorStage $model) {
+                $model->username = Auth::user()->username;
+                $model->created_at = Carbon::now();
+            });
+        }
+    }
 }

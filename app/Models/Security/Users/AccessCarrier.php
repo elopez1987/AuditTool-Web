@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class AccessCarrier extends Model
 {
-    protected $table = 'securityaccesscarriers';
     public $timestamps = false;
+    protected $table = 'securityaccesscarriers';
     protected $primaryKey = 'recordid';
 
     protected $fillable = [
-        'centerid', 'username', 'carrierid'
+        'centerid', 'username', 'carrierid',
     ];
 }

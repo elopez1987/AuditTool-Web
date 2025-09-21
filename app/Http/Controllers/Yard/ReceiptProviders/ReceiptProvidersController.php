@@ -10,12 +10,11 @@ use Illuminate\Http\Request;
 
 class ReceiptProvidersController extends BaseController
 {
-
     public function index()
     {
         $this->authorize('receiptproviders.index');
         $warehouses = $this->getWarehouseForSelect();
-        return view('Yards.ReceiptProviders.index',compact('warehouses'));;
+        return view('Yards.ReceiptProviders.index', compact('warehouses'));
     }
 
     public function getDataProviders(Request $request)
@@ -33,8 +32,10 @@ class ReceiptProvidersController extends BaseController
         $this->authorize('receiptproviders.create');
         $centers = $this->getCenterForSelect();
         $warehouses = $this->getWarehouseForSelect();
-        return view('Yards.ReceiptProviders.create',
-            compact('centers', 'warehouses'));
+        return view(
+            'Yards.ReceiptProviders.create',
+            compact('centers', 'warehouses')
+        );
     }
 
     public function store(ReceiptProviderCreateRequest $request)
@@ -48,14 +49,15 @@ class ReceiptProvidersController extends BaseController
     {
         $this->authorize('receiptproviders.edit');
         $status = $this->getStatusSTS();
-        return view('Yards.ReceiptProviders.edit',
-            compact('status', 'receiptprovider'));
+        return view(
+            'Yards.ReceiptProviders.edit',
+            compact('status', 'receiptprovider')
+        );
     }
 
     public function update(UpdateProvidersRequest $request, ReceiptProvider $receiptprovider)
     {
-        $receiptprovider->update($request->except('centerid','warehouseid'));
+        $receiptprovider->update($request->except('centerid', 'warehouseid'));
         return $this->infoResponse('receiptproviders.index');
     }
-
 }

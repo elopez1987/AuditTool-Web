@@ -13,13 +13,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class StorageUsageDataForkLift extends Model
 {
-
     use LogsActivity;
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
 
     protected $table = 'storageusagedataforklift';
 
@@ -35,15 +29,9 @@ class StorageUsageDataForkLift extends Model
         'value03',
     ];
 
-    protected static function boot()
+    public function getActivitylogOptions(): LogOptions
     {
-        parent::boot();
-        if (!app()->runningInConsole()) {
-            self::creating(function (StorageUsageDataForkLift $model) {
-                $model->userid = Auth::id();
-                $model->created_at = Carbon::now();
-            });
-        }
+        return LogOptions::defaults()->logFillable();
     }
 
     public static function controlAccessUser()
@@ -62,5 +50,14 @@ class StorageUsageDataForkLift extends Model
         return $this->belongsTo(StorageLiftTruck::class, 'serialnumber');
     }
 
-
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (StorageUsageDataForkLift $model) {
+                $model->userid = Auth::id();
+                $model->created_at = Carbon::now();
+            });
+        }
+    }
 }

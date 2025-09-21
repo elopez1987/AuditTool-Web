@@ -13,10 +13,8 @@ use Log;
 
 class TiempoExcedidoParaSalirDePatio extends Command
 {
-
     protected $signature = 'command:TiempoExcedidoParaSalirDePatio';
     protected $description = 'Envia mensaje de whatsapps de cajas con tiempo excedido para salir de la bodega de one roof ';
-
 
     public function __construct()
     {
@@ -26,11 +24,11 @@ class TiempoExcedidoParaSalirDePatio extends Command
     public function handle()
     {
         $client = new Client();
-        $url = "https://api.1msg.io/HEI523482986/sendTemplate";
+        $url = 'https://api.1msg.io/HEI523482986/sendTemplate';
         $parameterCenter = $this->getParameter();
-        if (!empty($parameterCenter) &&  in_array('SDC-01', (array)$parameterCenter)) {
+        if (! empty($parameterCenter) && in_array('SDC-01', (array) $parameterCenter)) {
             $contacts = $this->getContact();
-            if (!empty($contacts)) {
+            if (! empty($contacts)) {
                 $units = $this->getUnits();
                 foreach ($units as $unit) {
                     foreach ($contacts as $contact) {
@@ -46,12 +44,6 @@ class TiempoExcedidoParaSalirDePatio extends Command
                 }
             }
         }
-    }
-
-    private function getContact()
-    {
-        return SystemDetailWhatsApp::where('whatsappid', '=', "WTH-TIMEOUT")
-            ->where('centerid', 'HENKELTOL01')->select(['phonenumber'])->get();
     }
 
     public function getUnits()
@@ -83,7 +75,6 @@ class TiempoExcedidoParaSalirDePatio extends Command
                     "));
     }
 
-
     public function getParameter()
     {
         return SystemCenterDistribution::whereCenterid('HENKELTOL01')->value('configurationflag');
@@ -92,35 +83,40 @@ class TiempoExcedidoParaSalirDePatio extends Command
     /**
      * @param $unit
      * @param $contact
+     *
      * @return array
      */
     public function getBodyData($unit, $contact): array
     {
-        return array(
-            "token" => "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbnN0YW5jZUlkIjoiSEVJNTIzNDgyOTg2IiwidG9rZW4iOiJtaGVaTTh4cTQ2a2RadjZ0Q0NJeXZydGo4dkc3bnlOeCIsImlzcyI6IjFtc2cuaW8iLCJpYXQiOjE3NTU2MTU3NTZ9.PNJB7YjZbqerW-s-r8TOSTlPOS_6OddKHxVbwfsQ9GY",
-            "namespace" => "3686dca6_3e5f_4dc5_a838_74a7716b881c",
-            "template" => "cajacontiempoexcedidoparasalir",
-            "language" => array(
-                "policy" => "deterministic",
-                "code" => "es_MX"
-            ),
-            "params" => array(
-                array(
-                    "type" => "body",
-                    "parameters" => array(
-                        array("type" => "text", "text" => $unit->boxnumber),
-                        array("type" => "text", "text" => $unit->carriername),
-                        array("type" => "text", "text" => $unit->shipmentid),
-                        array("type" => "text", "text" => $unit->autorizaout),
-                        array("type" => "text", "text" => $unit->cita),
-                        array("type" => "text", "text" => $unit->customername),
-                        array("type" => "text", "text" => $unit->city)
-                    )
-                )
-            ),
-            "phone" => '1' . $contact->phonenumber
-        );
+        return [
+            'token' => 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbnN0YW5jZUlkIjoiSEVJNTIzNDgyOTg2IiwidG9rZW4iOiJtaGVaTTh4cTQ2a2RadjZ0Q0NJeXZydGo4dkc3bnlOeCIsImlzcyI6IjFtc2cuaW8iLCJpYXQiOjE3NTU2MTU3NTZ9.PNJB7YjZbqerW-s-r8TOSTlPOS_6OddKHxVbwfsQ9GY',
+            'namespace' => '3686dca6_3e5f_4dc5_a838_74a7716b881c',
+            'template' => 'cajacontiempoexcedidoparasalir',
+            'language' => [
+                'policy' => 'deterministic',
+                'code' => 'es_MX',
+            ],
+            'params' => [
+                [
+                    'type' => 'body',
+                    'parameters' => [
+                        ['type' => 'text', 'text' => $unit->boxnumber],
+                        ['type' => 'text', 'text' => $unit->carriername],
+                        ['type' => 'text', 'text' => $unit->shipmentid],
+                        ['type' => 'text', 'text' => $unit->autorizaout],
+                        ['type' => 'text', 'text' => $unit->cita],
+                        ['type' => 'text', 'text' => $unit->customername],
+                        ['type' => 'text', 'text' => $unit->city],
+                    ],
+                ],
+            ],
+            'phone' => '1' . $contact->phonenumber,
+        ];
     }
 
-
+    private function getContact()
+    {
+        return SystemDetailWhatsApp::where('whatsappid', '=', 'WTH-TIMEOUT')
+            ->where('centerid', 'HENKELTOL01')->select(['phonenumber'])->get();
+    }
 }

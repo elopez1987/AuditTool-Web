@@ -14,15 +14,13 @@ use Illuminate\Support\Facades\Auth;
 
 class StorageShipmentFolios extends Model
 {
-
     protected $table = 'storageshipmentfolios';
 
     protected $fillable = [
         'centerid', 'warehouseid', 'name', 'turnid', 'team', 'workday',
         'folioid', 'statusid', 'created_at',
-        'updated_at', 'closeuserid', 'namesupervisor', 'keysupervisor', 'schemakeyid', 'statuskeyid'
+        'updated_at', 'closeuserid', 'namesupervisor', 'keysupervisor', 'schemakeyid', 'statuskeyid',
     ];
-
 
     protected $attributes = [
         'statusid' => 'E',
@@ -30,18 +28,6 @@ class StorageShipmentFolios extends Model
         'statuskeyid' => 'FIR-01',
         'schemakeyid' => 'FIR',
     ];
-
-    protected static function boot()
-    {
-        parent::boot();
-        if (!app()->runningInConsole()) {
-            self::creating(function ($model) {
-                $model->userid = Auth::id();
-                $model->name = Auth::user()->name;
-                $model->workday = Carbon::now()->format('Y-m-d');
-            });
-        }
-    }
 
     public static function controlAccessUser()
     {
@@ -81,4 +67,15 @@ class StorageShipmentFolios extends Model
         return $this->belongsTo(User::class, 'userid', 'id');
     }
 
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function ($model) {
+                $model->userid = Auth::id();
+                $model->name = Auth::user()->name;
+                $model->workday = Carbon::now()->format('Y-m-d');
+            });
+        }
+    }
 }

@@ -18,7 +18,8 @@ class ReceiptTruckTraceController extends BaseController
     {
         $data = ReceiptTruck::controlAccessUser()
             ->select(['receipttrucks.*', 'shipmentcarriers.name as carriername', 'systemstatus.name as status',
-                'systemwarehouses.name as warehouse', 'u1.name as creador', 'u2.name as usersalida'])
+                'systemwarehouses.name as warehouse', 'u1.name as creador', 'u2.name as usersalida',
+            ])
             ->Folio($request->get('folionumber'))
             ->Truck($request->get('trucknumber'))
             ->Barcode($request->get('barcode'))
@@ -31,6 +32,4 @@ class ReceiptTruckTraceController extends BaseController
             ->get();
         return $this->showDataToView($data, '');
     }
-
-
 }

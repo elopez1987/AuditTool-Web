@@ -21,29 +21,21 @@ trait QueryUser
     public function getAllUsers($request)
     {
         $centers = $this->getCentersForUser();
-        $data = User::withTrashed()->join('systemstatus', 'users.statusid', '=', 'systemstatus.statusid')
+        return User::withTrashed()->join('systemstatus', 'users.statusid', '=', 'systemstatus.statusid')
             ->leftJoin('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
             ->leftJoin('roles', 'roles.id', '=', 'model_has_roles.role_id')
             ->leftJoin('securityaccesswarehouses', 'users.username', '=', 'securityaccesswarehouses.username')
             ->leftJoin('securityuserssessions', 'users.username', '=', 'securityuserssessions.username')
-			->select(['users.name', 'users.id', 'users.email', 'users.uuiduser',
+            ->select(['users.name', 'users.id', 'users.email', 'users.uuiduser',
                 'users.username', 'roles.description as role', 'securityuserssessions.lastsessiondate as lastlogin',
-                'systemstatus.name as status', 'users.created_at', 'users.updated_at'])
+                'systemstatus.name as status', 'users.created_at', 'users.updated_at',
+            ])
             ->Name($request->get('name'))
             ->UserName($request->get('userid'))
             ->Role($request->get('role_id'))
             ->ForStatus($request->get('statusid'))
             ->whereIn('securityaccesswarehouses.centerid', $centers)
             ->distinct();
-        return $data;
-    }
-    /**
-     * @return array
-     */
-    private function getCentersForUser(): array
-    {
-        return (new SecurityAccessWarehouse())->where('username', Auth::user()->username)
-            ->select('centerid')->get()->toArray();
     }
     public function getRoleForUser($id)
     {
@@ -61,7 +53,14 @@ trait QueryUser
     }
     public function getCenterForCustomer($customerid)
     {
-        return OrderCustomer::controlAccessUser()->where('id','=',$customerid)->value('centerid');
+        return OrderCustomer::controlAccessUser()->where('id', '=', $customerid)->value('centerid');
     }
-
+    /**
+     * @return array
+     */
+    private function getCentersForUser(): array
+    {
+        return (new SecurityAccessWarehouse())->where('username', Auth::user()->username)
+            ->select('centerid')->get()->toArray();
+    }
 }

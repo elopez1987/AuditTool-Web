@@ -10,5 +10,4 @@ class ViewSchedulleInverseController extends BaseController
     {
         return view('Shipments.ViewSchedulleInverse.index');
     }
-
 }

@@ -7,35 +7,32 @@ use App\Models\Shipments\ShipmentContainerCheck;
 use App\Models\Shipments\ShipmentContainerMoveBox;
 use App\Models\Shipments\ShipmentStock;
 use App\Traits\ResponseApi;
-use Illuminate\Support\Facades\Log;
 
 class ServicePick
 {
     use ResponseApi;
 
-    public function saveMoveBoxToLpn($request, $shipment,$lpn)
+    public function saveMoveBoxToLpn($request, $shipment, $lpn)
     {
 //      Restamos la cantidad al lpn original
-        $lpn->quantity = $lpn->quantity - $request['quantity'];
+        $lpn->quantity -= $request['quantity'];
         $lpn->save();
-        $this->saveLogMoveBox($shipment, $request,'DE',$request['lpnid']);
+        $this->saveLogMoveBox($shipment, $request, 'DE', $request['lpnid']);
 
 //      Sumamos la cantidad al lpn que recibe o lo crea si no exite el número de parte
         $lpnRec = ShipmentStock::where('orderid', $shipment->id)->where('lpnid', $request['lpnidrec'])
             ->where('partnumberid', $request['partnumberid'])->first();
-        if (empty($lpnRec)){
+        if (empty($lpnRec)) {
             $this->createNewStock($shipment, $request);
-        }else{
-            $lpnRec->quantity = $lpnRec->quantity + $request['quantity'];
+        } else {
+            $lpnRec->quantity += $request['quantity'];
             $lpnRec->save();
         }
-        $this->saveLogMoveBox($shipment, $request,'IN',$request['lpnidrec']);
+        $this->saveLogMoveBox($shipment, $request, 'IN', $request['lpnidrec']);
         $this->saveChildToLpn($shipment, $request);
         $this->deleteContainerStockClear($shipment, $request);
         $this->deleteContainer($request['lpnid']);
     }
-
-
 
     public function deleteContainer($lpn)
     {
@@ -52,8 +49,8 @@ class ServicePick
         $lpnRecMod = ShipmentStock::where('orderid', $shipment->id)
             ->where('lpnid', $request['lpnid'])
             ->where('partnumberid', $request['partnumberid'])->first();
-        if (!empty($lpnRecMod)) {
-            if ($lpnRecMod->quantity == 0) {
+        if (! empty($lpnRecMod)) {
+            if ($lpnRecMod->quantity === 0) {
                 $lpnRecMod->delete();
             }
         }
@@ -62,6 +59,7 @@ class ServicePick
     /**
      * @param $shipment
      * @param $request
+     *
      * @return void
      */
     public function createNewStock($shipment, $request): void
@@ -76,7 +74,6 @@ class ServicePick
         ]);
     }
 
-
     public function saveChildToLpn($shipment, $request)
     {
         $container = $this->getShipmentContainer($shipment, $request['lpnid']);
@@ -88,11 +85,10 @@ class ServicePick
         ]);
     }
 
-
-
     /**
      * @param $shipment
      * @param $lpnid
+     *
      * @return ShipmentContainer
      */
     public function getShipmentContainer($shipment, $lpnid): ShipmentContainer
@@ -101,8 +97,7 @@ class ServicePick
             ->where('lpnid', $lpnid)->first();
     }
 
-
-    public function saveLogMoveBox($shipment, $request,$type,$lpn)
+    public function saveLogMoveBox($shipment, $request, $type, $lpn)
     {
         $container = $this->getShipmentContainer($shipment, $lpn);
         ShipmentContainerMoveBox::create([
@@ -114,5 +109,4 @@ class ServicePick
             'type' => $type,
         ]);
     }
-
 }

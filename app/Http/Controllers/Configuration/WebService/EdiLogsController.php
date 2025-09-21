@@ -8,7 +8,6 @@ use Yajra\DataTables\Facades\DataTables;
 
 class EdiLogsController extends Controller
 {
-
     public function index()
     {
         $this->authorize('edilogs.index');
@@ -20,6 +19,4 @@ class EdiLogsController extends Controller
         $data = EdiLog::orderBy('id', 'desc')->take(250)->get();
         return DataTables::of($data)->toJson();
     }
-
-
 }

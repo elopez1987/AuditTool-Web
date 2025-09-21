@@ -16,13 +16,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class StorageShipmentCheckTotal extends Model
 {
-
     use LogsActivity;
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
 
     protected $table = 'storageshipmentchecktotal';
 
@@ -50,15 +44,9 @@ class StorageShipmentCheckTotal extends Model
         'supervisorkey',
     ];
 
-    protected static function boot()
+    public function getActivitylogOptions(): LogOptions
     {
-        parent::boot();
-        if (!app()->runningInConsole()) {
-            self::creating(function (StorageShipmentCheckTotal $model) {
-                $model->userid = \Auth::id();
-                $model->created_at = Carbon::now();
-            });
-        }
+        return LogOptions::defaults()->logFillable();
     }
 
     public static function controlAccessUser()
@@ -68,7 +56,6 @@ class StorageShipmentCheckTotal extends Model
         return StorageShipmentCheckTotal::whereIn('storageshipmentchecktotal.warehouseid', $warehouses)
             ->whereIn('storageshipmentchecktotal.centerid', $centers);
     }
-
 
     public function center(): BelongsTo
     {
@@ -92,9 +79,17 @@ class StorageShipmentCheckTotal extends Model
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'userid','id');
+        return $this->belongsTo(User::class, 'userid', 'id');
     }
 
-
-
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (StorageShipmentCheckTotal $model) {
+                $model->userid = \Auth::id();
+                $model->created_at = Carbon::now();
+            });
+        }
+    }
 }

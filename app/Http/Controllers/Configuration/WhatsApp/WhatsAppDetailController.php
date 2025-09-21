@@ -13,10 +13,12 @@ class WhatsAppDetailController extends BaseController
     {
         $centers = $this->getCenterForSelect();
         $warehouses = $this->getWarehouseForSelect();
-        $details = SystemDetailWhatsApp::controlAccessUser()->with('center','warehouse')
-            ->where('whatsappid',$systemwhatsapp->whatsappid)->get();
-        return view('Configuration.SystemWhatsApps.createdetails',
-            compact('systemwhatsapp', 'centers', 'warehouses', 'details'));
+        $details = SystemDetailWhatsApp::controlAccessUser()->with('center', 'warehouse')
+            ->where('whatsappid', $systemwhatsapp->whatsappid)->get();
+        return view(
+            'Configuration.SystemWhatsApps.createdetails',
+            compact('systemwhatsapp', 'centers', 'warehouses', 'details')
+        );
     }
     public function storenotificationdetail(CreateDetailWhatsApp $request, NotificationWhatsApp $systemwhatsapp)
     {
@@ -30,5 +32,4 @@ class WhatsAppDetailController extends BaseController
         SystemDetailWhatsApp::destroy($id);
         return $this->redirectBackInfo();
     }
-
 }

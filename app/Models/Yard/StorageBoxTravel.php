@@ -17,31 +17,29 @@ class StorageBoxTravel extends Model
 
     public function scopeShipmentid($query, $shipmentid)
     {
-        if (trim($shipmentid) != "") {
-            $query->where('vw_storageboxtravels.shipmentid', 'like', "%$shipmentid%");
+        if (trim($shipmentid) !== '') {
+            $query->where('vw_storageboxtravels.shipmentid', 'like', "%{$shipmentid}%");
         }
     }
 
     public function scopeBoxNumber($query, $boxnumber)
     {
-        if (trim($boxnumber) != '') {
-            $query->where('vw_storageboxtravels.boxnumber', 'like', "%$boxnumber%");
+        if (trim($boxnumber) !== '') {
+            $query->where('vw_storageboxtravels.boxnumber', 'like', "%{$boxnumber}%");
         }
     }
 
     public function scopeFolio($query, $folionumber)
     {
-        if (trim($folionumber) != "") {
+        if (trim($folionumber) !== '') {
             $query->where('vw_storageboxtravels.folioplant', '=', $folionumber);
         }
     }
 
     public function scopeFoliowm($query, $folionumberwm)
     {
-        if (trim($folionumberwm) != "") {
+        if (trim($folionumberwm) !== '') {
             $query->where('vw_storageboxtravels.foliowarehouse', '=', $folionumberwm);
         }
     }
-
-
 }

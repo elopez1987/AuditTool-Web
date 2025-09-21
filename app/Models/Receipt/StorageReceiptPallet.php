@@ -12,28 +12,17 @@ class StorageReceiptPallet extends Model
 {
     use LogsActivity;
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
-    
     protected $table = 'storagereceiptpallets';
     protected $primaryKey = 'id';
 
-
     protected $fillable = [
         'centerid', 'warehouseid', 'receiptid', 'partnumberid', 'quantity',
-        'damage', 'username'
+        'damage', 'username',
     ];
 
-    protected static function boot()
+    public function getActivitylogOptions(): LogOptions
     {
-        parent::boot();
-        if (!app()->runningInConsole()) {
-            self::creating(function (StorageReceiptPallet $model) {
-                $model->username = Auth::user()->username;
-            });
-        }
+        return LogOptions::defaults()->logFillable();
     }
 
     public static function controlAccessUser()
@@ -44,4 +33,13 @@ class StorageReceiptPallet extends Model
             ->whereIn('storagereceiptpallets.centerid', $centers);
     }
 
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (StorageReceiptPallet $model) {
+                $model->username = Auth::user()->username;
+            });
+        }
+    }
 }

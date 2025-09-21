@@ -10,10 +10,9 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class EventUserController extends BaseController
 {
-
-	public function restoreuser($id)
+    public function restoreuser($id)
     {
-		$user = User::withTrashed()->where('id', $id)->first();
+        $user = User::withTrashed()->where('id', $id)->first();
         $user->statusid = 'E';
         $user->save();
         $user->restore();
@@ -41,6 +40,4 @@ class EventUserController extends BaseController
         $user->save();
         return $this->redirectBackSuccess();
     }
-
-
 }

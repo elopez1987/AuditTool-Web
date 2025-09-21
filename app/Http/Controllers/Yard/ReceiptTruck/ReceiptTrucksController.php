@@ -23,14 +23,14 @@ class ReceiptTrucksController extends BaseController
         $this->authorize('receipttrucks.index');
         $carriers = $this->getCarriersForSelect();
         $warehouses = $this->getWarehouseForSelect();
-        return view('Yards.ReceiptTrucks.index', compact('carriers','warehouses'));
+        return view('Yards.ReceiptTrucks.index', compact('carriers', 'warehouses'));
     }
 
     public function getDataReceiptTrucks(Request $request)
     {
         $data = $this->getDataAll($request);
         return DataTables::of($data)
-            ->addColumn('btn', "Yards.ReceiptTrucks.partials.buttons")
+            ->addColumn('btn', 'Yards.ReceiptTrucks.partials.buttons')
             ->rawColumns(['btn'])->toJson();
     }
 
@@ -43,13 +43,12 @@ class ReceiptTrucksController extends BaseController
         return view('Yards.ReceiptTrucks.create', compact('carriers', 'centers', 'warehouses'));
     }
 
-
     public function store(CreateTruckRequest $request)
     {
         DB::beginTransaction();
         try {
             $labelTruck = ReceiptTruck::searchTruckForTruckNumber($request['trucknumber']);
-            if (!empty($labelTruck)) {
+            if (! empty($labelTruck)) {
                 return $this->errorResponse('El tracto ya se encuentra registrado');
             }
             $receiptTruck = $this->createNewTruck($request);
@@ -87,7 +86,7 @@ class ReceiptTrucksController extends BaseController
         DB::beginTransaction();
         try {
             $this->generateOutTruck($receipttruck, 'Salida de tracto');
-            ReceiptUnit::controlAccessUser()->where('foliotruck',$receipttruck->id)
+            ReceiptUnit::controlAccessUser()->where('foliotruck', $receipttruck->id)
                 ->update(['foliotruck' => null]);
             DB::commit();
             return $this->redirectBackSuccessMessage('Salida con exito de tracto!!');
@@ -97,6 +96,4 @@ class ReceiptTrucksController extends BaseController
             return $this->errorResponse('Error al procesa la solicitud : ' . $error);
         }
     }
-
-
 }

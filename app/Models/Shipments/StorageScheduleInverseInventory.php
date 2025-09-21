@@ -9,16 +9,9 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class StorageScheduleInverseInventory extends Model
 {
-
     use LogsActivity;
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
-
     protected $table = 'storagescheduleinverseinventory';
-
 
     protected $fillable = [
         'centerid', 'warehouseid', 'orderid', 'delivery', 'inverseid', 'username',
@@ -29,7 +22,7 @@ class StorageScheduleInverseInventory extends Model
     protected $hidden = [
         'created_at',
         'updated_at',
-        'schemaid'
+        'schemaid',
     ];
 
     protected $attributes = [
@@ -37,14 +30,18 @@ class StorageScheduleInverseInventory extends Model
         'schemaid' => 'LIV',
     ];
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
+
     protected static function boot()
     {
         parent::boot();
-        if (!app()->runningInConsole()) {
+        if (! app()->runningInConsole()) {
             self::creating(function (StorageScheduleInverseInventory $model) {
                 $model->username = Auth::user()->username;
             });
         }
     }
-
 }

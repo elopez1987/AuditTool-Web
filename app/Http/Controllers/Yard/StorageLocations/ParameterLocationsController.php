@@ -25,5 +25,4 @@ class ParameterLocationsController extends BaseController
         $model->save();
         return $this->redirectBackSuccess();
     }
-
 }

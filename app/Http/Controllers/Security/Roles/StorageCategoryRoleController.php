@@ -13,8 +13,10 @@ class StorageCategoryRoleController extends BaseController
     {
         $role = Role::findOrFail($id);
         $details = StorageCategoryRole::where('roleid', $id)->get();
-        return view('Security.Roles.Parameters.conceptajust',
-            compact('role', 'details'));
+        return view(
+            'Security.Roles.Parameters.conceptajust',
+            compact('role', 'details')
+        );
     }
 
     public function saveconceptajust(StorageCategoryRoleRequest $request, $id)
@@ -24,7 +26,7 @@ class StorageCategoryRoleController extends BaseController
             'centerid' => $role->centerid,
             'roleid' => $role->id,
             'categoryincid' => $request['categoryincid'],
-            'categoryincdetailid' => $request['categoryincdetailid']
+            'categoryincdetailid' => $request['categoryincdetailid'],
         ]);
         return $this->redirectBackSuccess();
     }
@@ -34,6 +36,4 @@ class StorageCategoryRoleController extends BaseController
         StorageCategoryRole::destroy($id);
         return $this->redirectBackSuccessMessage('Registro eliminado con exito.');
     }
-
-
 }

@@ -5,7 +5,6 @@ namespace App\Models\Shipments;
 use App\Models\Configuration\Schemas\SystemStatus;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
 
 class StorageShipmentsPods extends Model
 {
@@ -18,13 +17,13 @@ class StorageShipmentsPods extends Model
         'orderid',
         'pathfile',
         'createuser',
-        'statusid'
+        'statusid',
     ];
 
     protected $hidden = [
         'created_at',
         'updated_at',
-        'schemaid'
+        'schemaid',
     ];
 
     protected $attributes = [
@@ -46,7 +45,4 @@ class StorageShipmentsPods extends Model
     {
         return $this->belongsTo(SystemStatus::class, 'statusid', 'statusid');
     }
-
-
-
 }

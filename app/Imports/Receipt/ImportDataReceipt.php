@@ -16,7 +16,6 @@ class ImportDataReceipt implements ToModel, WithHeadingRow, WithBatchInserts, Wi
 {
     use Importable;
 
-
     protected $receipt;
 
     public function __construct($receipt)
@@ -27,7 +26,7 @@ class ImportDataReceipt implements ToModel, WithHeadingRow, WithBatchInserts, Wi
     public function model(array $row)
     {
         $partnumberid = InventoryPartNumber::controlAccessUser()->where('prtnum', trim($row['sku']))->first();
-        $category = InventoryStockCategory::where('stockcategoryid',$row['category'])->first();
+        $category = InventoryStockCategory::where('stockcategoryid', $row['category'])->first();
         ReceiptStock::updateOrCreate([
             'centerid' => $this->receipt->centerid,
             'warehouseid' => $this->receipt->warehouseid,
@@ -41,12 +40,11 @@ class ImportDataReceipt implements ToModel, WithHeadingRow, WithBatchInserts, Wi
             'category02id' => $partnumberid->category02id,
             'productiondate' => \Carbon\Carbon::now()->format('Y-m-d'),
             'stockcategoryid' => $category->id,
-            'expiredate' => \Carbon\Carbon::now()->addDays($partnumberid->shelflife)->format('Y-m-d')
+            'expiredate' => \Carbon\Carbon::now()->addDays($partnumberid->shelflife)->format('Y-m-d'),
         ]);
     }
 
-//shelflife
-
+    //shelflife
 
     // Si el archivo tiene encabezados, empieza a leer desde la segunda fila
     public function startRow(): int
@@ -64,26 +62,25 @@ class ImportDataReceipt implements ToModel, WithHeadingRow, WithBatchInserts, Wi
         return 200;
     }
 
-
     public function rules(): array
     {
         return [
             '*.sku' => [
 //                'string',
-                'required'
+                'required',
             ],
             '*.quantity' => [
                 'numeric',
-                'required'
+                'required',
             ],
             '*.batch' => [
 //                'string',
-                'required'
+                'required',
             ],
             '*.category' => [
 //                'string',
-                'required'
-            ]
+                'required',
+            ],
         ];
     }
 
@@ -96,5 +93,4 @@ class ImportDataReceipt implements ToModel, WithHeadingRow, WithBatchInserts, Wi
 
         ];
     }
-
 }

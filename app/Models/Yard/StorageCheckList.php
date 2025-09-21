@@ -17,15 +17,9 @@ class StorageCheckList extends Model
     use Notifiable;
     use LogsActivity;
 
-
     protected $table = 'storagechecklists';
 
     protected $dateFormat = 'Y-m-d H:i:s';
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
 
     protected $fillable = [
         'centerid',
@@ -42,13 +36,13 @@ class StorageCheckList extends Model
         'auxiliary08',
         'auxiliary09',
         'auxiliary10',
-        'statusid'
+        'statusid',
     ];
 
     protected $hidden = [
         'created_at',
         'updated_at',
-        'schemaid'
+        'schemaid',
     ];
 
     protected $attributes = [
@@ -56,13 +50,17 @@ class StorageCheckList extends Model
         'schemaid' => 'STS',
     ];
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
         $warehouses = SecurityAccessWarehouse::Warehouses();
         return StorageCheckList::whereIn('storagechecklists.centerid', $centers)
-            ->whereIn('storagechecklists.warehouseid', $warehouses);;
+            ->whereIn('storagechecklists.warehouseid', $warehouses);
     }
 
     public function center()
@@ -72,7 +70,7 @@ class StorageCheckList extends Model
 
     public function warehouse()
     {
-        return $this->belongsTo(SystemWarehouse::class, 'warehouseid','warehouseid');
+        return $this->belongsTo(SystemWarehouse::class, 'warehouseid', 'warehouseid');
     }
 
     public function status(): BelongsTo
@@ -82,17 +80,15 @@ class StorageCheckList extends Model
 
     public function scopeName($query, $name)
     {
-        if (trim($name) != "") {
-            $query->where('storagechecklists.name', 'like', "%$name%");
+        if (trim($name) !== '') {
+            $query->where('storagechecklists.name', 'like', "%{$name}%");
         }
     }
 
     public function scopeWarehouse($query, $warehouseid)
     {
-        if (trim($warehouseid) != "") {
+        if (trim($warehouseid) !== '') {
             $query->where('storagechecklists.warehouseid', '=', $warehouseid);
         }
     }
-
-
 }

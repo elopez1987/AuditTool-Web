@@ -10,14 +10,9 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class StorageFolioClient extends Model
 {
     use LogsActivity;
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
+    public $timestamps = false;
 
     protected $table = 'storagefolioclients';
-    public $timestamps = false;
     protected $primaryKey = 'id';
 
     protected $fillable = [
@@ -30,6 +25,11 @@ class StorageFolioClient extends Model
         'auxiliary04',
         'auxiliary05',
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
     public static function controlAccessUser()
     {

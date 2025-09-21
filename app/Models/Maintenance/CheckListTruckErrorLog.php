@@ -11,16 +11,9 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-
 class CheckListTruckErrorLog extends Model
 {
-
     use LogsActivity;
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
 
     public $timestamps = false;
     protected $table = 'checklistlifttruckerrorlog';
@@ -29,23 +22,16 @@ class CheckListTruckErrorLog extends Model
         'centerid',
         'serialnumber',
         'scanuser',
-        'created_at'
+        'created_at',
     ];
 
     protected $casts = [
         'created_at' => 'datetime:d/m/Y H:s',
     ];
 
-
-    protected static function boot()
+    public function getActivitylogOptions(): LogOptions
     {
-        parent::boot();
-        if (!app()->runningInConsole()) {
-            self::creating(function (CheckListTruckErrorLog $model) {
-                $model->scanuser = Auth::user()->username;
-                $model->created_at = Carbon::now();
-            });
-        }
+        return LogOptions::defaults()->logFillable();
     }
 
     public static function controlAccessUser()
@@ -64,5 +50,14 @@ class CheckListTruckErrorLog extends Model
         return $this->belongsTo(User::class, 'scanuser', 'username');
     }
 
-
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (CheckListTruckErrorLog $model) {
+                $model->scanuser = Auth::user()->username;
+                $model->created_at = Carbon::now();
+            });
+        }
+    }
 }

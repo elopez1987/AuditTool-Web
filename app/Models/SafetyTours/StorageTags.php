@@ -18,11 +18,6 @@ class StorageTags extends Model
     use softDeletes;
     use LogsActivity;
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
-
     protected $table = 'storagetags';
 
     protected $fillable = [
@@ -44,16 +39,9 @@ class StorageTags extends Model
         'schemaid' => 'TAG',
     ];
 
-
-    protected static function boot()
+    public function getActivitylogOptions(): LogOptions
     {
-        parent::boot();
-        if (!app()->runningInConsole()) {
-            self::creating(function (StorageTags $model) {
-                $model->createuser = Auth::id();
-                $model->taguuid = (string)Str::uuid();
-            });
-        }
+        return LogOptions::defaults()->logFillable();
     }
 
     public static function controlAccessUser()
@@ -79,9 +67,19 @@ class StorageTags extends Model
 
     public function scopeName($query, $name)
     {
-        if (trim($name) != "") {
-            return $query->where('tagid', 'LIKE', "%$name%");
+        if (trim($name) !== '') {
+            return $query->where('tagid', 'LIKE', "%{$name}%");
         }
     }
 
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (StorageTags $model) {
+                $model->createuser = Auth::id();
+                $model->taguuid = (string) Str::uuid();
+            });
+        }
+    }
 }

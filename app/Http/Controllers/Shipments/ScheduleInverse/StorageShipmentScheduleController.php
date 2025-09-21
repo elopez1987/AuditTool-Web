@@ -15,6 +15,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Log;
 use Ramsey\Uuid\Uuid;
 
 class StorageShipmentScheduleController extends BaseController
@@ -52,7 +53,6 @@ class StorageShipmentScheduleController extends BaseController
         return view('Shipments.ReserveSchedulleInverse.create');
     }
 
-
     public function getQuantityMax()
     {
         $center = $this->getCenterForUser();
@@ -60,7 +60,6 @@ class StorageShipmentScheduleController extends BaseController
             ->where('value01', $center)->first();
         return response()->json($quantitymax);
     }
-
 
     public function getWorkdays()
     {
@@ -76,12 +75,11 @@ class StorageShipmentScheduleController extends BaseController
         return response()->json($workdays);
     }
 
-
     public function getQuantityForDays()
     {
         $quantityForDays = ScheduleInverseDetail::controlAccessUser()->select([
             'scheduleinversedetail.workday',
-            DB::raw('SUM(scheduleinversedetail.quantity) as total')
+            DB::raw('SUM(scheduleinversedetail.quantity) as total'),
         ])
             ->leftJoin('scheduleinverse', function ($join) {
                 $join->on('scheduleinversedetail.schedulleid', '=', 'scheduleinverse.id')
@@ -102,19 +100,16 @@ class StorageShipmentScheduleController extends BaseController
         return $this->showDataToView($data, '');
     }
 
-
     public function saveSchedulleInverse(Request $request)
     {
         DB::beginTransaction();
         try {
-
             $this->authorize('reserveschedulleinverse.store');
             $folioids = $request->input('folioids');
             $fechawork = $request->input('fechawork');
             $totalQuantity = $request->input('totalQuantity');
             $carrier = $this->getCarrierForUserFirst();
             $center = $this->getCenterForUser();
-
 
             $totalReservado = ScheduleInverseDetail::controlAccessUser()
                 ->leftJoin('scheduleinverse', function ($join) {
@@ -129,7 +124,6 @@ class StorageShipmentScheduleController extends BaseController
                 return response()->json(['message' => 'La cantidad de reservada supera la cantidad de pedidos.']);
             }
 
-
             $shipmentSchedulle = StorageShipmentSchedule::create([
                 'centerid' => $this->getCenterForUser(),
                 'warehouseid' => $this->getWarehouseForUser(),
@@ -137,7 +131,6 @@ class StorageShipmentScheduleController extends BaseController
                 'appointment' => Carbon::now(),
                 'value01' => Uuid::uuid4(),
             ]);
-
 
             foreach ($folioids as $folio) {
                 $storageIncede = StorageIncidenceJourney::controlAccessUser()->where('folioid', $folio)->first();
@@ -147,10 +140,9 @@ class StorageShipmentScheduleController extends BaseController
                     'centerid' => $shipmentSchedulle->centerid,
                     'warehouseid' => $shipmentSchedulle->warehouseid,
                     'shipmentschedulleid' => $shipmentSchedulle->id,
-                    'incidencejourneyid' => $storageIncede->folioid
+                    'incidencejourneyid' => $storageIncede->folioid,
                 ]);
             }
-
 
             $detailbloques = ScheduleInverseDetail::controlAccessUser()->where('workday', $fechawork)
                 ->whereNull('folioid')
@@ -172,21 +164,17 @@ class StorageShipmentScheduleController extends BaseController
                     $bloque->assigneduser = Auth::id();
                     $bloque->save();
 
-                    $totalQuantity = $totalQuantity - $quantityBlock->auxiliary01;
+                    $totalQuantity -= $quantityBlock->auxiliary01;
                 }
             }
             DB::commit();
             return response()->json(['message' => 'Horario generado exitosamente']);
         } catch (Exception $e) {
-            $error = $e->getMessage();
-            \Log::error($error);
+            Log::error($e->getMessage());
             DB::rollback();
             return response()->json(['message' => 'Error al generar el horario.']);
         }
-
-
     }
-
 
     public function show($id)
     {
@@ -197,13 +185,14 @@ class StorageShipmentScheduleController extends BaseController
             ->select(['scheduleinversedetail.folioid',
                 'scheduleinversedetail.workday',
                 'scheduleinversedetail.quantity',
-                'systemstatus.name as bloque'])->get();
+                'systemstatus.name as bloque',
+            ])->get();
 
         $shipments = StorageShipmentSchedule::controlAccessUser()->select([
             'vw_shipmentforschedulleinverse.shipmentid',
             'vw_shipmentforschedulleinverse.carriername',
             'vw_shipmentforschedulleinverse.customername',
-            'vw_shipmentforschedulleinverse.quantity'
+            'vw_shipmentforschedulleinverse.quantity',
         ])
             ->leftJoin('storageshipmentsscheduledetail', function ($join) {
                 $join->on('storageshipmentsschedule.id', '=', 'storageshipmentsscheduledetail.shipmentschedulleid')
@@ -217,8 +206,4 @@ class StorageShipmentScheduleController extends BaseController
             ->get();
         return view('Shipments.ReserveSchedulleInverse.show', compact('reserveschedule', 'details', 'shipments'));
     }
-
-
-
-
 }

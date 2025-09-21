@@ -20,7 +20,12 @@ class InventoryUnitMeasure extends Model
         'description',
         'ediunitmeasurecode',
         'schemaid',
-        'statusid'
+        'statusid',
+    ];
+
+    protected $attributes = [
+        'statusid' => 'E',
+        'schemaid' => 'STS',
     ];
 
     public static function controlAccessUser()
@@ -28,12 +33,6 @@ class InventoryUnitMeasure extends Model
         $centers = SecurityAccessWarehouse::Centers();
         return InventoryUnitMeasure::whereIn('inventoryunitsmeasure.centerid', $centers);
     }
-
-    protected $attributes = [
-        'statusid' => 'E',
-        'schemaid' => 'STS',
-    ];
-
 
     public function status(): BelongsTo
     {
@@ -47,10 +46,8 @@ class InventoryUnitMeasure extends Model
 
     public function scopeName($query, $name)
     {
-        if (trim($name) != "") {
-            $query->where('inventoryunitsmeasure.description', 'like', "%$name%");
+        if (trim($name) !== '') {
+            $query->where('inventoryunitsmeasure.description', 'like', "%{$name}%");
         }
     }
-
-
 }

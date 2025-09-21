@@ -14,13 +14,7 @@ use Storage;
 
 class EvidencePhoto extends Model
 {
-
     use LogsActivity;
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
 
     protected $table = 'storageevidencephotos';
 
@@ -40,37 +34,29 @@ class EvidencePhoto extends Model
         'auxiliary05',
     ];
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'createuser', 'id')->withTrashed();
     }
 
 //    Funciones auxiliares
-    static function getPhotosForModel($id, $model)
+    public static function getPhotosForModel($id, $model)
     {
         return EvidencePhoto::where('model_id', $id)->where('model_type', '=', $model)->get();
     }
 
-    protected static function boot()
-    {
-        parent::boot();
-        if (!app()->runningInConsole()) {
-            self::creating(function (EvidencePhoto $model) {
-                $model->createuser = Auth::id();
-            });
-        }
-    }
-
-
-// TODO Validar las funciones y remplazarlas por la global y eliminar estas
     public static function uploadFileToServer($request, $centerid, $fileroute)
     {
         $file = $request->file('file');
         $nameFile = Str::random(10) . $request->file('file')->getClientOriginalName();
         $pathbase = Storage::disk('local')->put('public/' . $centerid . '/' . $fileroute . '/' . $nameFile, File::get($file));
         if ($pathbase) {
-            $path = 'public/' . $centerid . '/' . $fileroute . '/' . $nameFile;
-            return $path;
+            return 'public/' . $centerid . '/' . $fileroute . '/' . $nameFile;
         }
     }
 
@@ -89,5 +75,13 @@ class EvidencePhoto extends Model
         ]);
     }
 
-
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (EvidencePhoto $model) {
+                $model->createuser = Auth::id();
+            });
+        }
+    }
 }

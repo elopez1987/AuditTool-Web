@@ -9,18 +9,11 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class InventoryLabelDetail extends Model
 {
-
     use LogsActivity;
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
+    public $timestamps = false;
 
     protected $table = 'inventorylabeldetails';
     protected $keyType = 'integer';
-    public $timestamps = false;
-
 
     protected $dateFormat = 'Y-m-d H:i:s';
 
@@ -34,8 +27,12 @@ class InventoryLabelDetail extends Model
         'auxiliary05',
     ];
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
-    static function getDetailForLabel($label)
+    public static function getDetailForLabel($label)
     {
         $centers = SecurityAccessWarehouse::Centers();
         return InventoryLabelDetail::join('inventorylabels', 'inventorylabeldetails.labelid', '=', 'inventorylabels.labelid')
@@ -43,6 +40,4 @@ class InventoryLabelDetail extends Model
             ->where('inventorylabels.auxiliary01', '=', $label)
             ->select('inventorylabeldetails.description')->get();
     }
-
-
 }

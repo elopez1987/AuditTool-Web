@@ -10,23 +10,21 @@ class ClearTruckStockController extends BaseController
 {
     public function cleartruckstock()
     {
-// IDs excluidos de la consulta anidada
+        // IDs excluidos de la consulta anidada
         $excludedBarcodes = ReceiptUnit::controlAccessUser()
             ->whereNotIn('statusid', ['TR'])->pluck('foliotruck');
 
-// Consulta principal
+        // Consulta principal
         $receiptTrucks = ReceiptTruck::controlAccessUser()->whereNotIn('id', $excludedBarcodes)
             ->whereNotIn('statusid', ['TR'])
             ->select('centerid', 'warehouseid', 'id', 'statusid')
             ->get();
 
-// Imprimir resultados
+        // Imprimir resultados
         foreach ($receiptTrucks as $truck) {
             $truck->statusid = 'TR';
             $truck->save();
         }
         return $this->redirectBackSuccessMessage('Tractos limpiados con exito.');
     }
-
-
 }

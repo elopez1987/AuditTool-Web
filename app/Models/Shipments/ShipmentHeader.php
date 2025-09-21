@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-
 /**
  * @method static create(array $array)
  */
@@ -21,21 +20,14 @@ class ShipmentHeader extends Model
 {
     use LogsActivity;
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
-    
-
     protected $table = 'shipmentheader';
     protected $dateFormat = 'Y-m-d H:i:s';
-
 
     protected $fillable = [
         'centerid', 'warehouseid', 'orderid', 'delivery', 'adddate', 'startdate', 'finishdate',
         'locationid', 'totalpiecesfac', 'totalcontainersfac', 'reasonoutputid', 'cancellationdate',
         'startgoodissuedate', 'goodissuedate', 'totalweight', 'createuserid', 'totalvolume',
-        'totalpieces', 'totalcontainers', 'statusid', 'comment'
+        'totalpieces', 'totalcontainers', 'statusid', 'comment',
     ];
 
     protected $hidden = [
@@ -47,6 +39,11 @@ class ShipmentHeader extends Model
         'statusid' => 'AP',
         'schemaid' => 'KLE',
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
     public static function controlAccessUser()
     {
@@ -96,14 +93,10 @@ class ShipmentHeader extends Model
         return $this->belongsTo(User::class, 'createuserid', 'id');
     }
 
-
     public function scopeForShipment($query, $shipmentid)
     {
-        if (trim($shipmentid) != "") {
+        if (trim($shipmentid) !== '') {
             $query->where('orderdeliveries.shipmentid', '=', $shipmentid);
         }
     }
-
-
-
 }

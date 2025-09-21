@@ -10,11 +10,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class StorageliftTruckAssigned extends Model
 {
-
     protected $table = 'storagelifttruckassigned';
     protected $primaryKey = 'serialnumber';
     protected $keyType = 'string';
-
 
     protected $fillable = [
         'centerid',
@@ -33,9 +31,8 @@ class StorageliftTruckAssigned extends Model
     protected $hidden = [
         'created_at',
         'updated_at',
-        'schemaid'
+        'schemaid',
     ];
-
 
 //    MT-C = Asignado
 
@@ -44,29 +41,16 @@ class StorageliftTruckAssigned extends Model
         'schemaid' => 'STM',
     ];
 
-
     protected $casts = [
         'startdate' => 'datetime:d/m/Y H:s',
         'finishdate' => 'datetime:d/m/Y H:s',
     ];
-
-    protected static function boot()
-    {
-        parent::boot();
-        if (!app()->runningInConsole()) {
-            self::creating(function (StorageliftTruckAssigned $model) {
-                $model->startdate = Carbon::now();
-            });
-        }
-    }
-
 
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
         return StorageliftTruckAssigned::whereIn('storagelifttruckassigned.centerid', $centers);
     }
-
 
     public function center()
     {
@@ -78,5 +62,13 @@ class StorageliftTruckAssigned extends Model
         return $this->belongsTo(SystemStatus::class, 'statusid', 'statusid');
     }
 
-
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (StorageliftTruckAssigned $model) {
+                $model->startdate = Carbon::now();
+            });
+        }
+    }
 }

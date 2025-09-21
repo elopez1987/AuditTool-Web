@@ -10,7 +10,7 @@ class CreateFunction extends FormRequest
     {
         return [
             'moduleid' => 'required',
-            'description' => 'required|string|max:100'
+            'description' => 'required|string|max:100',
         ];
     }
 

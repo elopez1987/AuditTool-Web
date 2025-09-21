@@ -14,14 +14,14 @@ class AutoCompleteController extends Controller
     public function autocompletuser(Request $request)
     {
         $query = $request->get('query');
-        $filterResult = User::where('users.name', 'like', "%$query%")->select(['name'])->get();
+        $filterResult = User::where('users.name', 'like', "%{$query}%")->select(['name'])->get();
         return response()->json($filterResult);
     }
 
     public function autocompletenametable(Request $request)
     {
         $query = $request->get('query');
-        $tables = SystemTable::where('systemtables.tableid', 'like', "%$query%")->get();
+        $tables = SystemTable::where('systemtables.tableid', 'like', "%{$query}%")->get();
         return response()->json($tables);
     }
 
@@ -31,7 +31,7 @@ class AutoCompleteController extends Controller
         $units = ReceiptUnit::controlAccessUser()
             ->whereNotIn('statusid', ['TR'])
             ->whereNotNull(['boxnumber'])
-            ->where('boxnumber', 'like', "%$query%")->pluck('boxnumber');
+            ->where('boxnumber', 'like', "%{$query}%")->pluck('boxnumber');
         return response()->json($units);
     }
 
@@ -39,9 +39,7 @@ class AutoCompleteController extends Controller
     {
         $query = $request->get('query');
         $partnumber = InventoryPartnumber::controlAccessUser()
-            ->where('prtnum','like',"%$query%")->pluck('prtnum');
+            ->where('prtnum', 'like', "%{$query}%")->pluck('prtnum');
         return response()->json($partnumber);
     }
-
-
 }

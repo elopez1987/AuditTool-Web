@@ -11,10 +11,6 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class InventoryStockCategory extends Model
 {
     use LogsActivity;
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
     protected $table = 'inventorystockcategories';
 
     protected $dateFormat = 'Y-m-d H:i:s';
@@ -33,15 +29,17 @@ class InventoryStockCategory extends Model
     protected $hidden = [
         'created_at',
         'updated_at',
-        'schemaid'
+        'schemaid',
     ];
 
     protected $attributes = [
         'statusid' => 'E',
         'schemaid' => 'STS',
     ];
-
-
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
     public function status(): BelongsTo
     {
@@ -50,10 +48,8 @@ class InventoryStockCategory extends Model
 
     public function scopeName($query, $name)
     {
-        if (trim($name) != "") {
-            $query->where('description', 'like', "%$name%");
+        if (trim($name) !== '') {
+            $query->where('description', 'like', "%{$name}%");
         }
     }
-
-
 }

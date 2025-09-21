@@ -9,10 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class MonitorJourneysTransport extends Model
 {
-
-//    TODO Borrar esta vista
-    protected $table = 'vw_monitorincidencejourneys';
     public $timestamps = false;
+    protected $table = 'vw_monitorincidencejourneys';
 
     public static function controlAccessUser()
     {
@@ -22,28 +20,24 @@ class MonitorJourneysTransport extends Model
             ->whereIn('vw_monitorincidencejourneys.centerid', $centers);
     }
 
-
     public function scopeForShipment($query, $shipmentid)
     {
-        if (trim($shipmentid) != "") {
+        if (trim($shipmentid) !== '') {
             $query->where('vw_monitorincidencejourneys.shipmentid', '=', $shipmentid);
         }
     }
 
-
     public function scopeForCarriers($query)
     {
         $carriers = $this->getCarriers();
-        if (!empty($carriers)) {
+        if (! empty($carriers)) {
             $query->whereIn('carrierid', $carriers);
         }
     }
 
-
     public function getCarriers(): array
     {
-        $carrier = AccessCarrier::where('username', Auth::user()->username)
+        return AccessCarrier::where('username', Auth::user()->username)
             ->select('carrierid')->get()->toArray();
-        return $carrier;
     }
 }

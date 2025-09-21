@@ -12,14 +12,8 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class StorageCheckListActiveTruck extends Model
 {
-
     use LogsActivity;
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
-    
     public $timestamps = false;
     protected $table = 'storagechecklistactivetruck';
     protected $primaryKey = 'id';
@@ -29,15 +23,9 @@ class StorageCheckListActiveTruck extends Model
         'checklistdetailid', 'evidencepath', 'evidencekey', 'username',
     ];
 
-    protected static function boot()
+    public function getActivitylogOptions(): LogOptions
     {
-        parent::boot();
-        if (!app()->runningInConsole()) {
-            self::creating(function (StorageCheckListActiveTruck $model) {
-                $model->username = Auth::user()->username;
-                $model->created_at = Carbon::now();
-            });
-        }
+        return LogOptions::defaults()->logFillable();
     }
 
     public static function controlAccessUser()
@@ -56,4 +44,14 @@ class StorageCheckListActiveTruck extends Model
         return $this->belongsTo(User::class, 'username', 'username');
     }
 
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (StorageCheckListActiveTruck $model) {
+                $model->username = Auth::user()->username;
+                $model->created_at = Carbon::now();
+            });
+        }
+    }
 }

@@ -15,11 +15,11 @@ use PhpOffice\PhpSpreadsheet\Style\Fill;
 
 class ExportReportLpnsCheckers implements FromCollection, WithHeadings, WithMapping, WithEvents, ShouldAutoSize, WithColumnFormatting
 {
+
+    use Exportable;
     private $workdayin;
     private $workdayout;
     private $centerid;
-
-    use Exportable;
 
     public function __construct($workdayin, $workdayout, $centerid)
     {
@@ -61,10 +61,15 @@ class ExportReportLpnsCheckers implements FromCollection, WithHeadings, WithMapp
 
     public function collection()
     {
-        $shipments = DB::table('shipmentcontainers')
-            ->select('orderdeliveries.workday', 'orderdeliveries.shipmentid', 'ordercustomers.name as customername',
+        return DB::table('shipmentcontainers')
+            ->select(
+                'orderdeliveries.workday',
+                'orderdeliveries.shipmentid',
+                'ordercustomers.name as customername',
                 'shipmentcontainers.lpnid',
-                'shipmentcontainers.scandate', 'users.name as verificador')
+                'shipmentcontainers.scandate',
+                'users.name as verificador'
+            )
             ->join('orderdeliveries', function ($join) {
                 $join->on('shipmentcontainers.orderid', '=', 'orderdeliveries.id')
                     ->on('shipmentcontainers.centerid', '=', 'orderdeliveries.centerid');
@@ -76,9 +81,7 @@ class ExportReportLpnsCheckers implements FromCollection, WithHeadings, WithMapp
             ->where('orderdeliveries.centerid', $this->centerid)
             ->whereBetween('shipmentcontainers.scandate', [$this->workdayin, $this->workdayout])
             ->get();
-        return $shipments;
     }
-
 
     public function registerEvents(): array
     {
@@ -86,7 +89,8 @@ class ExportReportLpnsCheckers implements FromCollection, WithHeadings, WithMapp
             AfterSheet::class => function (AfterSheet $event) {
                 $event->sheet->getDelegate()->getStyle('A1:F1')->getFill()
                     ->applyFromArray(['fillType' => Fill::FILL_SOLID,
-                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6']]);
+                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6'],
+                    ]);
             },
         ];
     }

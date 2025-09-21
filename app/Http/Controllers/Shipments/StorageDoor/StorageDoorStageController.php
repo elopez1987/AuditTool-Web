@@ -25,15 +25,17 @@ class StorageDoorStageController extends BaseController
         $location = StorageLocation::findOrFail($id);
         $doors = $this->getAllDoorsForStage($id);
         $stagesForDoor = $this->getStagesForDoor($id);
-        return view('Shipments.StorageDoorStages.edit',
-            compact('location', 'doors', 'stagesForDoor'));
+        return view(
+            'Shipments.StorageDoorStages.edit',
+            compact('location', 'doors', 'stagesForDoor')
+        );
     }
 
     public function update(Request $request, $id)
     {
         $location = StorageLocation::findOrFail($id);
-        if ($request['doorid'] != "") {
-            $total = count($request["doorid"]) - 1;
+        if ($request['doorid'] !== '') {
+            $total = count($request['doorid']) - 1;
             for ($i = 0; $i <= $total; $i++) {
                 StorageDoorStage::create([
                     'doorid' => $request['doorid'][$i],
@@ -48,9 +50,6 @@ class StorageDoorStageController extends BaseController
     public function deletestageofdoor(Request $request)
     {
         StorageDoorStage::destroy($request['id']);
-        return $this->responseSuccessAjax('','');
+        return $this->responseSuccessAjax('', '');
     }
-
-
-
 }

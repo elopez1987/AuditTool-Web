@@ -18,13 +18,15 @@ class SystemStatusController extends BaseController
         $centers = $this->getCenterForSelect();
         $warehouses = $this->getWarehouseForSelect();
         $statusList = SystemStatus::where('schemaid', $systemschema->schemaid)->get();
-        return view('Configuration.SystemSchemas.createstatus',
-            compact('systemschema', 'status', 'centers', 'warehouses','statusList'));
+        return view(
+            'Configuration.SystemSchemas.createstatus',
+            compact('systemschema', 'status', 'centers', 'warehouses', 'statusList')
+        );
     }
 
-    public function storeStatus(CreateStatusRequest $request,$id): RedirectResponse
+    public function storeStatus(CreateStatusRequest $request, $id): RedirectResponse
     {
-        $schema = SystemSchema::where('schemaid',$id)->first();
+        $schema = SystemSchema::where('schemaid', $id)->first();
         SystemStatus::create([
             'schemaid' => $schema->schemaid,
             'statusid' => $request['statusid'],
