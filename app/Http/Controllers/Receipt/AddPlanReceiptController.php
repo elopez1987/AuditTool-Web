@@ -25,7 +25,7 @@ class AddPlanReceiptController extends BaseController
             'stockcategoryid' => '1',
             'auxiliary01' => Auth::user()->name,
             'schemaid' => 'SRE',
-            'statusid' => 'PG'
+            'statusid' => 'PG',
         ]);
         return response()->json([
             'shipmentid' => $receipt->shipmentid,

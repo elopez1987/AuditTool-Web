@@ -17,20 +17,19 @@ trait QuerySecurityRoles
             ->where('username', Auth::user()->username)
             ->select('centerid')->get()->toArray();
 
-        $roles = Role::with([
+        return Role::with([
             'center' => function ($q) {
                 $q->select('centerid', 'name', 'description');
             },
             'status' => function ($qu) {
                 $qu->select('statusid', 'name');
-            }
+            },
         ])
             ->Name($request->get('name'))
             ->Role($request->get('roleid'))
             ->ForStatus($request->get('statusid'))
             ->whereIn('roles.centerid', $centers)
             ->select('roles.*');
-        return $roles;
     }
 
     public function getPermissionForRole($id): Collection
@@ -48,23 +47,21 @@ trait QuerySecurityRoles
 
     public function getModulesForRole($securityrole)
     {
-        return DB::select("select * from securitymodules
+        return DB::select('select * from securitymodules
                         where moduleid in (select moduleid from securitydetailsmenustructure where menustrucid =?)
-                    ", [$securityrole->menustrucid]);
+                    ', [$securityrole->menustrucid]);
     }
 
     public function getFunctiondForRole($securityrole)
     {
-        return DB::select("select * from securityfunctions s
+        return DB::select('select * from securityfunctions s
                                     where functionid in (select functionid from securityfunctionsmenustructure
-                                        s2 where menustrucid=?)", [$securityrole->menustrucid]);
+                                        s2 where menustrucid=?)', [$securityrole->menustrucid]);
     }
 
     public function getStructureMenus()
     {
-        return SecurityMenu::controlAccessUser()->where('statusid','=','E')
+        return SecurityMenu::controlAccessUser()->where('statusid', '=', 'E')
             ->select(['menustrucid','description'])->get();
     }
-
-
 }

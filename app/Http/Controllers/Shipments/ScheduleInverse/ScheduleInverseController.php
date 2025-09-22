@@ -39,7 +39,6 @@ class ScheduleInverseController extends BaseController
         return $this->showDataToView($data, 'Shipments.ScheduleInverse.partials.buttons');
     }
 
-
     public function create()
     {
         $this->authorize('scheduleinverse.create');
@@ -79,14 +78,12 @@ class ScheduleInverseController extends BaseController
         }
     }
 
-
     public function activateschedulle(Request $request)
     {
         $this->authorize('scheduleinverse.activate');
 
         ScheduleInverse::controlAccessUser()->where('statusid', '=', 'ACT')
             ->update(['statusid' => 'INO']);
-
 
         $schedulle = ScheduleInverse::find($request['id']);
         $schedulle->statusid = 'ACT';
@@ -111,6 +108,4 @@ class ScheduleInverseController extends BaseController
         }
         return $fechas;
     }
-
-
 }

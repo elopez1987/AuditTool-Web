@@ -5,14 +5,12 @@ namespace App\Traits\Web\Maintenance;
 use App\Models\Maintenance\CheckListLiftTrucks;
 use DB;
 
-
 trait QueryCheckListLiftTrucks
 {
-
-
-    public function getDetailCheckListForTruck($truckChecklist,$id): array
+    public function getDetailCheckListForTruck($truckChecklist, $id): array
     {
-        return DB::select("select storagechecklistdetaillifttrucks.checklistid,storagechecklistdetaillifttrucks.id as checklistdetailid,
+        return DB::select(
+            "select storagechecklistdetaillifttrucks.checklistid,storagechecklistdetaillifttrucks.id as checklistdetailid,
             description,typeid,checklistlifttruckdetails.value01,checklistlifttruckdetails.note
             from storagechecklistdetaillifttrucks
             left join checklistlifttruckdetails on storagechecklistdetaillifttrucks.id = checklistlifttruckdetails.checklistdetailid
@@ -22,13 +20,13 @@ trait QueryCheckListLiftTrucks
                 and statusid='E'
                 and storagechecklistdetaillifttrucks.centerid = ?
                 and checklistlifttruckdetails.checklisttruckid = ?;",
-            [$truckChecklist->serialnumber, $truckChecklist->centerid, $truckChecklist->centerid, $id]);
+            [$truckChecklist->serialnumber, $truckChecklist->centerid, $truckChecklist->centerid, $id]
+        );
     }
-
 
     public function getAllCheckListTruck($request)
     {
-       return CheckListLiftTrucks::controlAccessUser()
+        return CheckListLiftTrucks::controlAccessUser()
             ->leftJoin('users', 'checklistlifttrucks.createuser', '=', 'users.username')
             ->leftJoin('storagelifttrucks', 'checklistlifttrucks.serialnumber', '=', 'storagelifttrucks.serialnumber')
             ->leftJoin('systemstatus', 'storagelifttrucks.typeid', '=', 'systemstatus.statusid')
@@ -39,11 +37,7 @@ trait QueryCheckListLiftTrucks
                 'checklistlifttrucks.id', 'checklistlifttrucks.centerid', 'checklistlifttrucks.serialnumber',
                 'storagelifttrucks.numbertruck', 'systemstatus.name as type',
                 'checklistlifttrucks.horometro','users.name as monta',
-                'checklistlifttrucks.supervisorname', 'checklistlifttrucks.created_at as created'
-            ])->orderBy('checklistlifttrucks.id','desc')->take(200)->get();
+                'checklistlifttrucks.supervisorname', 'checklistlifttrucks.created_at as created',
+            ])->orderBy('checklistlifttrucks.id', 'desc')->take(200)->get();
     }
-
-
-
-
 }

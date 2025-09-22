@@ -8,13 +8,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class WsLog extends Model
 {
-
     use LogsActivity;
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
 
     public $timestamps = false;
     protected $table = 'ediwslogs';
@@ -31,15 +25,17 @@ class WsLog extends Model
         'request' => 'json',
     ];
 
-
-    static function createLog($model, $service, $request)
+    public function getActivitylogOptions(): LogOptions
     {
-        $log = WsLog::create([
+        return LogOptions::defaults()->logFillable();
+    }
+
+    public static function createLog($model, $service, $request)
+    {
+        return WsLog::create([
             'model' => $model,
             'service' => $service,
             'request' => $request,
         ]);
-        return $log;
     }
-
 }

@@ -73,5 +73,4 @@ class StorageZoneController extends BaseController
         $zone->delete();
         return $this->responseSuccessAjax('', Carbon::now());
     }
-
 }

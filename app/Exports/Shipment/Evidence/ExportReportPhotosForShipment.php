@@ -16,10 +16,9 @@ use PhpOffice\PhpSpreadsheet\Style\Fill;
 class ExportReportPhotosForShipment implements FromCollection, WithHeadings, WithMapping, WithEvents, ShouldAutoSize, WithColumnFormatting
 {
 
+    use Exportable;
     private $workdayin;
     private $workdayout;
-
-    use Exportable;
 
     public function __construct($workdayin, $workdayout)
     {
@@ -66,11 +65,18 @@ class ExportReportPhotosForShipment implements FromCollection, WithHeadings, Wit
 
     public function collection()
     {
-        $shipments = DB::table('orderdeliveries')
-            ->select('orderdeliveries.workday', 'orderdeliveries.shipmentid', 'ordercustomers.name as customer',
-                DB::raw("count(storageevidencephotos.path) as fotos"), 'shipmentdataoperation.supervisor',
-                'shipmentdataoperation.checker', 'shipmentdataoperation.forklift',
-                'shipmentdataoperation.startload', 'shipmentdataoperation.endload')
+        return DB::table('orderdeliveries')
+            ->select(
+                'orderdeliveries.workday',
+                'orderdeliveries.shipmentid',
+                'ordercustomers.name as customer',
+                DB::raw('count(storageevidencephotos.path) as fotos'),
+                'shipmentdataoperation.supervisor',
+                'shipmentdataoperation.checker',
+                'shipmentdataoperation.forklift',
+                'shipmentdataoperation.startload',
+                'shipmentdataoperation.endload'
+            )
             ->leftJoin('ordercustomers', function ($join) {
                 $join->on('orderdeliveries.customerid', '=', 'ordercustomers.id')
                     ->on('orderdeliveries.centerid', '=', 'ordercustomers.centerid');
@@ -84,14 +90,19 @@ class ExportReportPhotosForShipment implements FromCollection, WithHeadings, Wit
                     ->on('orderdeliveries.centerid', '=', 'shipmentdataoperation.centerid');
             })
             ->whereBetween('shipmentdataoperation.startload', [$this->workdayin, $this->workdayout])
-            ->groupBy('orderdeliveries.workday', 'orderdeliveries.shipmentid', 'ordercustomers.name',
-                'shipmentdataoperation.supervisor', 'shipmentdataoperation.checker',
-                'shipmentdataoperation.forklift', 'shipmentdataoperation.startload', 'shipmentdataoperation.endload')
+            ->groupBy(
+                'orderdeliveries.workday',
+                'orderdeliveries.shipmentid',
+                'ordercustomers.name',
+                'shipmentdataoperation.supervisor',
+                'shipmentdataoperation.checker',
+                'shipmentdataoperation.forklift',
+                'shipmentdataoperation.startload',
+                'shipmentdataoperation.endload'
+            )
             ->orderBy('orderdeliveries.workday', 'asc')
             ->get();
-        return $shipments;
     }
-
 
     public function registerEvents(): array
     {
@@ -99,10 +110,9 @@ class ExportReportPhotosForShipment implements FromCollection, WithHeadings, Wit
             AfterSheet::class => function (AfterSheet $event) {
                 $event->sheet->getDelegate()->getStyle('A1:T1')->getFill()
                     ->applyFromArray(['fillType' => Fill::FILL_SOLID,
-                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6']]);
+                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6'],
+                    ]);
             },
         ];
     }
-
-
 }

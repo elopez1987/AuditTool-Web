@@ -6,10 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class SystemColumn extends Model
 {
-
+    public $timestamps = false;
     protected $table = 'systemcolumns';
     protected $primaryKey = 'id';
-    public $timestamps = false;
 
     protected $fillable = [
         'tableid',
@@ -17,6 +16,4 @@ class SystemColumn extends Model
         'shortdesc',
         'columnid',
     ];
-
-
 }

@@ -9,9 +9,9 @@ use DB;
 
 trait QueryInverseOperation
 {
-
     /**
      * @param StorageScheduleInverse $storagescheduleinverse
+     *
      * @return array
      */
     public function getDataOperation(StorageScheduleInverse $storagescheduleinverse)
@@ -27,8 +27,7 @@ trait QueryInverseOperation
                 'storageincidencejourneydetails.unitmeasure',
                 DB::raw('SUM(storagescheduleinverseoperationdetails.quantity) as verificada'),
                 'storagescheduleinverseoperationdetails.unitmeasureid',
-                'systemstatus.name as category','storagescheduleinverseoperationdetails.value02 as comment'
-                ,'storagescheduleinverseoperationdetails.value01 as location'
+                'systemstatus.name as category','storagescheduleinverseoperationdetails.value02 as comment','storagescheduleinverseoperationdetails.value01 as location',
             ])
             ->join('orderdeliveries', 'storageincidencejourneydetails.orderid', '=', 'orderdeliveries.id')
             ->join('inventorypartnumbers', function ($join) {
@@ -46,10 +45,17 @@ trait QueryInverseOperation
             })
             ->where('storageincidencejourneydetails.orderid', '=', $storagescheduleinverse->orderid)
             ->groupBy(
-                'storageincidencejourneydetails.folioid', 'orderdeliveries.shipmentid', 'storageincidencejourneydetails.delivery',
-                'storageincidencejourneydetails.partnumberid', 'inventorypartnumbers.lngdsc', 'storageincidencejourneydetails.quantity',
-                'storageincidencejourneydetails.unitmeasure', 'storagescheduleinverseoperationdetails.unitmeasureid', 'systemstatus.name',
-                'storagescheduleinverseoperationdetails.value02','storagescheduleinverseoperationdetails.value01'
+                'storageincidencejourneydetails.folioid',
+                'orderdeliveries.shipmentid',
+                'storageincidencejourneydetails.delivery',
+                'storageincidencejourneydetails.partnumberid',
+                'inventorypartnumbers.lngdsc',
+                'storageincidencejourneydetails.quantity',
+                'storageincidencejourneydetails.unitmeasure',
+                'storagescheduleinverseoperationdetails.unitmeasureid',
+                'systemstatus.name',
+                'storagescheduleinverseoperationdetails.value02',
+                'storagescheduleinverseoperationdetails.value01'
             )->get();
     }
 
@@ -59,7 +65,7 @@ trait QueryInverseOperation
             ->select([
                 'orderdeliveries.shipmentid', 'storagescheduleinverseoperationdetails.delivery',
                 'storagescheduleinverseoperationdetails.partnumberid', 'inventorypartnumbers.lngdsc as description',
-                DB::raw('SUM(storagescheduleinverseoperationdetails.quantity) as total')
+                DB::raw('SUM(storagescheduleinverseoperationdetails.quantity) as total'),
             ])
             ->join('orderdeliveries', 'storagescheduleinverseoperationdetails.orderid', '=', 'orderdeliveries.id')
             ->join('inventorypartnumbers', function ($join) {
@@ -72,9 +78,12 @@ trait QueryInverseOperation
                     ->from('storageincidencejourneydetails')
                     ->where('orderid', $orderid);
             })
-            ->groupBy('orderdeliveries.shipmentid', 'storagescheduleinverseoperationdetails.delivery',
-                'storagescheduleinverseoperationdetails.partnumberid', 'inventorypartnumbers.lngdsc')
+            ->groupBy(
+                'orderdeliveries.shipmentid',
+                'storagescheduleinverseoperationdetails.delivery',
+                'storagescheduleinverseoperationdetails.partnumberid',
+                'inventorypartnumbers.lngdsc'
+            )
             ->get();
     }
-
 }

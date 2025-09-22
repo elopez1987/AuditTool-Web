@@ -9,7 +9,6 @@ use Carbon\Carbon;
 
 class ServiceResponseIncidences
 {
-
     public function createKeyTransport($incidence)
     {
         $incidence->statuskeytrid = 'RF';
@@ -22,7 +21,7 @@ class ServiceResponseIncidences
                 'warehouseid' => $item->warehouseid,
                 'orderid' => $item->orderid,
                 'delivery' => $item->delivery,
-                'partnumberid' => $item->partnumberid
+                'partnumberid' => $item->partnumberid,
             ]);
         }
     }
@@ -34,5 +33,4 @@ class ServiceResponseIncidences
         $incidence->responsedate = Carbon::now();
         $incidence->save();
     }
-
 }

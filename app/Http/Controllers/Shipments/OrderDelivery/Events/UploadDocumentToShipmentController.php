@@ -24,17 +24,14 @@ class UploadDocumentToShipmentController extends BaseController
     private function addFileToModel(Request $request, $shipment): string
     {
         $year = Carbon::now()->year;
-        $month = Carbon::now()->month;
         $file = $request->file('file');
         $nombre = $shipment->shipmentid . '_' . Str::random(10) . '_' . $request->file('file')->getClientOriginalName();
-        $directory = 'public/' . $shipment->centerid . '/' . $year . '/' . $month . '/OrderDeliverie' . '/EvidenceShipment/';
+        $directory = "public/{$shipment->centerid}/{$year}/OrderDeliverie/EvidenceShipment/";
         $filePath = $directory . $nombre;
-        if (!Storage::exists($directory)) {
+        if (! Storage::exists($directory)) {
             Storage::makeDirectory($directory, 0755, true);
         }
         Storage::disk('local')->put($filePath, File::get($file));
-        $pathdb = $filePath;
-        return $pathdb;
+        return $filePath;
     }
-
 }

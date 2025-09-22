@@ -16,13 +16,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  */
 class OrderCustomer extends Model
 {
-
     use LogsActivity;
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
 
     protected $table = 'ordercustomers';
     protected $primaryKey = 'id';
@@ -47,18 +41,13 @@ class OrderCustomer extends Model
         'auxiliary03',
         'auxiliary04',
         'auxiliary05',
-        'statusid'
+        'statusid',
     ];
-
-    public function getCity($value)
-    {
-        return strtoupper($value);
-    }
 
     protected $hidden = [
         'created_at',
         'updated_at',
-        'schemaid'
+        'schemaid',
     ];
 
     protected $attributes = [
@@ -70,6 +59,16 @@ class OrderCustomer extends Model
         'shiptoid' => 'string',
         'configurationflag' => 'array',
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
+
+    public function getCity($value)
+    {
+        return strtoupper($value);
+    }
 
     public function getNameAttribute($value)
     {
@@ -83,7 +82,6 @@ class OrderCustomer extends Model
         return OrderCustomer::whereIn('ordercustomers.centerid', $centers)
             ->whereIn('ordercustomers.warehouseid', $warehouses);
     }
-
 
     public function status(): BelongsTo
     {
@@ -102,25 +100,22 @@ class OrderCustomer extends Model
 
     public function scopeName($query, $name)
     {
-        if (trim($name) != "") {
-            $query->where('ordercustomers.name', 'like', "%$name%");
+        if (trim($name) !== '') {
+            $query->where('ordercustomers.name', 'like', "%{$name}%");
         }
     }
 
     public function scopeShipto($query, $shiptoid)
     {
-        if (trim($shiptoid) != "") {
-            $query->where('ordercustomers.shiptoid', 'like', "%$shiptoid%");
+        if (trim($shiptoid) !== '') {
+            $query->where('ordercustomers.shiptoid', 'like', "%{$shiptoid}%");
         }
     }
 
     public function scopeWarehouse($query, $warehouseid)
     {
-        if (trim($warehouseid) != "") {
+        if (trim($warehouseid) !== '') {
             $query->where('ordercustomers.warehouseid', '=', $warehouseid);
         }
-
     }
-
-
 }

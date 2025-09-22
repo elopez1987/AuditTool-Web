@@ -16,13 +16,14 @@ class PasswordSecurityMiddleware
      *
      * @param  \Illuminate\Http\Request  $request
      * * @param  \Closure  $next
+     *
      * @return mixed
      */
     public function handle(Request $request, Closure $next)
     {
         $user = Auth::user();
-        
-        if (!$user) {
+
+        if (! $user) {
             return redirect()->route('login');
         }
 
@@ -35,9 +36,9 @@ class PasswordSecurityMiddleware
 
         // 2. Validación de contraseña actual (si se proporciona)
         if ($request->has('current_password') && $request->filled('current_password')) {
-            if (!Hash::check($request->current_password, $user->password)) {
+            if (! Hash::check($request->current_password, $user->password)) {
                 $this->logFailedAttempt($user, $request, 'Contraseña actual incorrecta');
-                
+
                 return redirect()->back()
                     ->withErrors(['current_password' => 'La contraseña actual no es correcta.'])
                     ->withInput();
@@ -48,7 +49,7 @@ class PasswordSecurityMiddleware
         if ($request->has('password') && $request->filled('password')) {
             if (Hash::check($request->password, $user->password)) {
                 $this->logFailedAttempt($user, $request, 'Intento de reutilizar contraseña actual');
-                
+
                 return redirect()->back()
                     ->withErrors(['password' => 'La nueva contraseña debe ser diferente a la actual.'])
                     ->withInput();
@@ -56,13 +57,13 @@ class PasswordSecurityMiddleware
         }
 
         // 4. Verificación de horarios permitidos (opcional)
-        if (!$this->isAllowedTime()) {
+        if (! $this->isAllowedTime()) {
             Log::warning('Intento de cambio de contraseña fuera de horario permitido', [
                 'user_id' => $user->id,
                 'ip' => $request->ip(),
-                'time' => now()
+                'time' => now(),
             ]);
-            
+
             return redirect()->back()
                 ->withErrors(['schedule' => 'Los cambios de contraseña solo están permitidos entre 6:00 AM y 10:00 PM.'])
                 ->withInput();
@@ -76,6 +77,7 @@ class PasswordSecurityMiddleware
      *
      * @param Request $request
      * @param $user
+     *
      * @return bool
      */
     private function isRateLimited(Request $request, $user): bool
@@ -89,7 +91,7 @@ class PasswordSecurityMiddleware
             Log::warning('Usuario bloqueado por rate limiting', [
                 'user_id' => $user->id,
                 'ip' => $request->ip(),
-                'attempts' => $attempts
+                'attempts' => $attempts,
             ]);
             return true;
         }
@@ -116,7 +118,7 @@ class PasswordSecurityMiddleware
             'ip' => $request->ip(),
             'user_agent' => $request->userAgent(),
             'reason' => $reason,
-            'timestamp' => now()
+            'timestamp' => now(),
         ]);
     }
 

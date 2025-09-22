@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\DB;
 
 class SendDocumentOrderDeliveryController extends BaseController
 {
-
     use GetParameters;
 
     public function index($id)
@@ -27,7 +26,7 @@ class SendDocumentOrderDeliveryController extends BaseController
             $this->updateShipmentSeal($orderDelivery);
 
             $parameter = $this->getParametersOfWarehouse($orderDelivery->warehouseid);
-            if (!empty($parameter) && in_array('SWH-16', (array)$parameter)) {
+            if (! empty($parameter) && in_array('SWH-16', (array) $parameter)) {
                 EnviarMensajeAFacturacionJob::dispatch($orderDelivery);
             }
 
@@ -41,6 +40,7 @@ class SendDocumentOrderDeliveryController extends BaseController
 
     /**
      * @param $id
+     *
      * @return OrderDeliverie
      */
     public function updateOrderDelivery($id): OrderDeliverie
@@ -53,6 +53,7 @@ class SendDocumentOrderDeliveryController extends BaseController
 
     /**
      * @param OrderDeliverie $orderDelivery
+     *
      * @return void
      */
     public function updateShipmentDataOperation(OrderDeliverie $orderDelivery): void
@@ -65,6 +66,7 @@ class SendDocumentOrderDeliveryController extends BaseController
 
     /**
      * @param OrderDeliverie $orderDelivery
+     *
      * @return void
      */
     public function updateShipmentHeader(OrderDeliverie $orderDelivery): void
@@ -76,6 +78,7 @@ class SendDocumentOrderDeliveryController extends BaseController
 
     /**
      * @param OrderDeliverie $orderDelivery
+     *
      * @return void
      */
     public function updateShipmentSeal(OrderDeliverie $orderDelivery): void
@@ -84,6 +87,4 @@ class SendDocumentOrderDeliveryController extends BaseController
         $shipmentseal->statusorderid = 'DO';
         $shipmentseal->save();
     }
-
-
 }

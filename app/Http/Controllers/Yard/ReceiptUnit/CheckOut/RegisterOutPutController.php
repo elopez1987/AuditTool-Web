@@ -21,7 +21,6 @@ class RegisterOutPutController extends BaseController
     use RegisterEdiShipment;
     use QueryReceiptTruck;
 
-
 //    Módulo de salida de cajas directa por ajuste de inventarios
     public function index()
     {
@@ -41,9 +40,9 @@ class RegisterOutPutController extends BaseController
                 return $this->errorResponse('El número de folio no existe!!');
             }
             $parameter = $this->getParametersOfWarehouse($receiptunit->warehouseid);
-            $tracto = ReceiptTruck::controlAccessUser()->where('id',$receiptunit->foliotruck)->first();
-            if (!empty($tracto)) {
-                $this->generateOutTruck($tracto,'Salida por ajuste de inventario');
+            $tracto = ReceiptTruck::controlAccessUser()->where('id', $receiptunit->foliotruck)->first();
+            if (! empty($tracto)) {
+                $this->generateOutTruck($tracto, 'Salida por ajuste de inventario');
             }
             $this->updateReceiptUnit($receiptunit);
             $this->addNewEdiForIzel($receiptunit, $parameter, 'OUT');
@@ -51,7 +50,7 @@ class RegisterOutPutController extends BaseController
 
             StorageLocation::updateLocation($receiptunit->locationid, 'E', '');
             StorageUnitTrace::createTraceUnit($receiptunit, '22');
-            StorageComment::createCommentary('ReceiptUnits',$receiptunit->id,$request);
+            StorageComment::createCommentary('ReceiptUnits', $receiptunit->id, $request);
             DB::commit();
             return $this->redirectBackSuccessMessage('Ajuste realizado correctamente');
         } catch (Exception $e) {
@@ -71,5 +70,4 @@ class RegisterOutPutController extends BaseController
             'containerseal' => '0',
         ]);
     }
-
 }

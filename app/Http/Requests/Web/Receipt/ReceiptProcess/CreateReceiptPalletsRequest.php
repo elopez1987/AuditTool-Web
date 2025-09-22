@@ -11,7 +11,7 @@ class CreateReceiptPalletsRequest extends FormRequest
         return [
             'partnumberid' => 'required',
             'quantity' => 'required|numeric|integer',
-            'damage' => 'required|numeric|integer'
+            'damage' => 'required|numeric|integer',
         ];
     }
 

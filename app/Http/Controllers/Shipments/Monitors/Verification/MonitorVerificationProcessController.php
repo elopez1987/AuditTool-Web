@@ -14,7 +14,6 @@ class MonitorVerificationProcessController extends BaseController
         return view('Shipments.MonitorShipmentCheck.index');
     }
 
-
     public function getDataStatusShipmentchek()
     {
         $data = ShipmentCheck::controlAccessUser()->whereNotNull('startdate')
@@ -30,6 +29,4 @@ class MonitorVerificationProcessController extends BaseController
             ->get()->toArray();
         return response()->json($data);
     }
-
-
 }

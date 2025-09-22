@@ -9,7 +9,6 @@ use Illuminate\Notifications\Notifiable;
 
 class LayoutCapacityZone extends Model
 {
-
     use Notifiable;
 
     protected $table = 'storagecapacityzone';

@@ -10,13 +10,8 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class StorageShipmentTransport extends Model
 {
-
     use LogsActivity;
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
+    public $timestamps = false;
 
 //    Auxiliary01 == Ingreso de unidad en el moduo de patios (1 con transporte)
 //    Auxiliary02 == Datos de transporte registrado en sistema por tráfico o registro de QR
@@ -25,7 +20,6 @@ class StorageShipmentTransport extends Model
 
     protected $table = 'shipmenttransport';
     protected $primaryKey = 'id';
-    public $timestamps = false;
 
     protected $fillable = [
         'centerid',
@@ -46,6 +40,11 @@ class StorageShipmentTransport extends Model
         'auxiliary05',
     ];
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
+
     public function carrier()
     {
         return $this->belongsTo(ShipmentCarrier::class, 'carrierid', 'id');
@@ -56,8 +55,6 @@ class StorageShipmentTransport extends Model
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
         return StorageShipmentTransport::whereIn('shipmenttransport.warehouseid', $warehouses)
-               ->whereIn('shipmenttransport.centerid', $centers);
+            ->whereIn('shipmenttransport.centerid', $centers);
     }
-
-
 }

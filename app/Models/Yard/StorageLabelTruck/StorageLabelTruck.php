@@ -14,16 +14,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-
 class StorageLabelTruck extends Model
 {
-    protected $table = 'storagelabeltrucks';
     use LogsActivity;
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
+    protected $table = 'storagelabeltrucks';
 
     protected $fillable = [
         'centerid',
@@ -34,9 +28,8 @@ class StorageLabelTruck extends Model
         'boxnumber',
         'econumber',
         'typeid',
-        'statusid'
+        'statusid',
     ];
-
 
     protected $casts = [
         'entrydate' => 'datetime:Y-m-d H:i:s',
@@ -46,7 +39,7 @@ class StorageLabelTruck extends Model
     protected $hidden = [
         'created_at',
         'updated_at',
-        'schemaid'
+        'schemaid',
     ];
 
     protected $attributes = [
@@ -54,6 +47,10 @@ class StorageLabelTruck extends Model
         'statusid' => 'E',
     ];
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
 //    Functions filter center for user to model
     public static function controlAccessUser()
@@ -61,7 +58,7 @@ class StorageLabelTruck extends Model
         $centers = SecurityAccessWarehouse::Centers();
         return StorageLabelTruck::whereIn('storagelabeltrucks.centerid', $centers);
     }
-    
+
 //    Relations with models
     public function center()
     {
@@ -93,43 +90,39 @@ class StorageLabelTruck extends Model
         return $this->belongsTo(StorageUnitType::class, 'unittypeid');
     }
 
-
 //    Filters to model
     public function scopeLabel($query, $label)
     {
-        if (trim($label) != "") {
-            $query->where('storagelabeltrucks.barcode', 'like', "%$label%");
+        if (trim($label) !== '') {
+            $query->where('storagelabeltrucks.barcode', 'like', "%{$label}%");
         }
     }
 
     public function scopeBoxNumber($query, $boxnumber)
     {
-        if (trim($boxnumber) != "") {
-            $query->where('storagelabeltrucks.boxnumber', 'like', "%$boxnumber%");
+        if (trim($boxnumber) !== '') {
+            $query->where('storagelabeltrucks.boxnumber', 'like', "%{$boxnumber}%");
         }
     }
 
     public function scopeType($query, $typeid)
     {
-        if (trim($typeid) != "") {
+        if (trim($typeid) !== '') {
             $query->where('storagelabeltrucks.typeid', $typeid);
         }
     }
 
     public function scopeCarrier($query, $carrierid)
     {
-        if ($carrierid != "") {
+        if ($carrierid !== '') {
             $query->where('storagelabeltrucks.carrierid', $carrierid);
         }
     }
 
     public function scopeForCarrierOperator($q, $carrier)
     {
-        if (!empty($carrier)) {
+        if (! empty($carrier)) {
             $q->whereIn('storagelabeltrucks.carrierid', $carrier);
         }
     }
-
-
-
 }

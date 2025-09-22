@@ -22,15 +22,10 @@ class GetEvidenceFromRControl extends Command
 
     protected $description = 'Recupera la evidencia de los pods de los embarque de one roof';
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     public function handle()
     {
         $parameterCenter = $this->getParametersOfCenter('HENKELTOL01');
-        if (!empty($parameterCenter) && in_array('SDC-06', $parameterCenter)) {
+        if (! empty($parameterCenter) && in_array('SDC-06', $parameterCenter)) {
             $endPoint = 'https://app.rcontrol.com.mx/Japi/get_full_travel_info?';
             $token = $this->getToken('HENKELTOL01');
             $url = $endPoint . 'token=' . $token;
@@ -38,19 +33,19 @@ class GetEvidenceFromRControl extends Command
             foreach ($shipments as $shipment) {
                 $shipment = OrderDeliverie::where('id', $shipment->id)->first();
                 $parameter = $this->getParameterOfCustomer($shipment->customerid);
-                if (!empty($parameter) && in_array('OCF-02', $parameter)) {
+                if (! empty($parameter) && in_array('OCF-02', $parameter)) {
                     $pod = StorageShipmentsPods::where('orderid', $shipment->id)
                         ->select(['recordid', 'orderid', 'pathfile'])->first();
                     if (empty($pod)) {
                         $contentBody = $this->createJsonFilter($shipment->shipmentid);
                         $conect = new Client();
                         $response = $conect->post($url, ['form_params' => ['parameters' => $contentBody]]);
-                        if ($response->getStatusCode() == 200) {
+                        if ($response->getStatusCode() === 200) {
                             $result = json_decode($response->getBody()->getContents());
-                            if (!empty($result)) {
+                            if (! empty($result)) {
                                 $records = $result[0]->{'destiny'}[0]->{'track'};
                                 foreach ($records as $track) {
-                                    if (!empty($track->{'evidence'})) {
+                                    if (! empty($track->{'evidence'})) {
                                         $files = $track->{'evidence'};
                                         $fortmat = 'Shipments.MonitorPods.pdf';
                                         $pdf = PDF::loadView($fortmat, compact('files', 'shipment'));
@@ -71,15 +66,15 @@ class GetEvidenceFromRControl extends Command
 
     public function createJsonFilter($shipment)
     {
-        $json = array(
-            "search_filters" => array(
-                "key" => "STOP",
-                "company_type" => "SUPPLIER",
-                "shipment" => $shipment,
-                "initial_date" => Carbon::now()->subDays(35)->toDateTimeString(),
-                "final_date" => Carbon::now()->addDays(15)->toDateTimeString(),
-            )
-        );
+        $json = [
+            'search_filters' => [
+                'key' => 'STOP',
+                'company_type' => 'SUPPLIER',
+                'shipment' => $shipment,
+                'initial_date' => Carbon::now()->subDays(35)->toDateTimeString(),
+                'final_date' => Carbon::now()->addDays(15)->toDateTimeString(),
+            ],
+        ];
         return json_encode($json);
     }
 
@@ -90,19 +85,13 @@ class GetEvidenceFromRControl extends Command
         $url = $dataapi->value02 . $endPoint . 'arg00=' . $dataapi->value03 . '&' . 'arg01=' . $dataapi->value04;
         $responseRControl = Http::post($url);
         $data = json_decode($responseRControl->getBody()->getContents());
-        $token = $data->token;
-        return $token;
-    }
-
-    private function getDataApi($centerid): SystemDetailParameter
-    {
-        return SystemDetailParameter::where('parameterid', '=', 'API-RC')
-            ->where('value01', $centerid)->first();
+        return $data->token;
     }
 
     /**
      * @param $shipment
      * @param string $path
+     *
      * @return void
      */
     public function createRegisterPOD($shipment, string $path): void
@@ -118,7 +107,7 @@ class GetEvidenceFromRControl extends Command
 
     public function getShipments()
     {
-        $shipments = DB::table('orderdeliveries')
+        return DB::table('orderdeliveries')
             ->select('id', 'shipmentid', 'workday', 'customerid', 'centerid', 'warehouseid')
             ->whereIn('customerid', (function ($query) {
                 $query->from('ordercustomers')
@@ -135,7 +124,11 @@ class GetEvidenceFromRControl extends Command
             ->where('statusid', '=', 'DH')
             ->where('centerid', '=', 'HENKELTOL01')
             ->get();
-        return $shipments;
     }
 
+    private function getDataApi($centerid): SystemDetailParameter
+    {
+        return SystemDetailParameter::where('parameterid', '=', 'API-RC')
+            ->where('value01', $centerid)->first();
+    }
 }

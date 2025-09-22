@@ -9,11 +9,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class InventoryLabel extends Model
 {
-
+    public $timestamps = false;
     protected $table = 'inventorylabels';
     protected $keyType = 'integer';
     protected $primaryKey = 'labelid';
-    public $timestamps = false;
 
     protected $dateFormat = 'Y-m-d H:i:s';
 
@@ -25,13 +24,13 @@ class InventoryLabel extends Model
         'auxiliary03',
         'auxiliary04',
         'auxiliary05',
-        'statusid'
+        'statusid',
     ];
 
     protected $hidden = [
         'created_at',
         'updated_at',
-        'schemaid'
+        'schemaid',
     ];
 
     protected $attributes = [
@@ -54,6 +53,4 @@ class InventoryLabel extends Model
     {
         return $this->belongsTo(SystemStatus::class, 'statusid');
     }
-
-
 }

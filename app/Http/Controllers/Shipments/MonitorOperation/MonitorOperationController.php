@@ -16,7 +16,6 @@ use Yajra\DataTables\Facades\DataTables;
 
 class MonitorOperationController extends BaseController
 {
-
     public function index()
     {
         $this->authorize('monitoroperation.index');
@@ -26,8 +25,10 @@ class MonitorOperationController extends BaseController
         $statusQuantitys = OrderDeliverie::controlAccessUser()->whereNotIn('orderdeliveries.statusid', ['DH', 'CA'])
             ->select(['statusid', DB::raw('COUNT(statusid) as total')])
             ->groupBy('statusid')->orderByDesc('total')->get();
-        return view('Shipments.OrderMonitor.MonitorOperation.index',
-            compact('status', 'turns', 'warehouses', 'statusQuantitys'));
+        return view(
+            'Shipments.OrderMonitor.MonitorOperation.index',
+            compact('status', 'turns', 'warehouses', 'statusQuantitys')
+        );
     }
 
     public function getdataoperationmonitor(Request $request)
@@ -38,31 +39,32 @@ class MonitorOperationController extends BaseController
             ->Workday($request->get('workday'))
             ->Turn($request->get('turnid'))
             ->Warehouse($request->get('warehouseid'))
-            ->leftjoin("storageturns as s", "orderdeliveries.turnid", "=", "s.id")
-            ->leftjoin("systemstatus as s2", "orderdeliveries.statusid", "=", "s2.statusid")
-            ->leftjoin("shipmentheader as s3", "orderdeliveries.id", "=", "s3.orderid")
-            ->leftjoin("storagelocations as s4", "s3.locationid", "=", "s4.id")
-            ->leftjoin("receiptunits as r2", "orderdeliveries.folionumber", "=", "r2.id")
-            ->leftjoin("storagelocations as s5", "r2.locationid", "=", "s5.id")
-            ->leftjoin("ordercustomers as o", "orderdeliveries.customerid", "=", "o.id")
-            ->leftjoin("shipmentdataoperation as s6", "orderdeliveries.id", "=", "s6.orderid")
+            ->leftjoin('storageturns as s', 'orderdeliveries.turnid', '=', 's.id')
+            ->leftjoin('systemstatus as s2', 'orderdeliveries.statusid', '=', 's2.statusid')
+            ->leftjoin('shipmentheader as s3', 'orderdeliveries.id', '=', 's3.orderid')
+            ->leftjoin('storagelocations as s4', 's3.locationid', '=', 's4.id')
+            ->leftjoin('receiptunits as r2', 'orderdeliveries.folionumber', '=', 'r2.id')
+            ->leftjoin('storagelocations as s5', 'r2.locationid', '=', 's5.id')
+            ->leftjoin('ordercustomers as o', 'orderdeliveries.customerid', '=', 'o.id')
+            ->leftjoin('shipmentdataoperation as s6', 'orderdeliveries.id', '=', 's6.orderid')
             ->leftjoin('shipmentcarriers as sc', 'orderdeliveries.carrierid', '=', 'sc.id')
             ->leftJoin('ordermonitor as or', 'orderdeliveries.id', '=', 'or.orderid')
             ->leftJoin('systemwarehouses as sw', 'orderdeliveries.warehouseid', '=', 'sw.warehouseid')
-            ->whereNotIn("orderdeliveries.statusid", ['CA', 'DH'])
-            ->select(["orderdeliveries.warehouseid", "orderdeliveries.id", 'sw.name as warehouse',
+            ->whereNotIn('orderdeliveries.statusid', ['CA', 'DH'])
+            ->select(['orderdeliveries.warehouseid', 'orderdeliveries.id', 'sw.name as warehouse',
                 'orderdeliveries.turnid',
-                "orderdeliveries.workday", "s.name as turno", "orderdeliveries.shipmentid",
-                "orderdeliveries.auxiliary03 as complemento",
-                "s2.name as statusname", "s4.name as precarga", "s5.name as cortina", "or.outputdate",
-                "o.name as customer", "o.city", "orderdeliveries.loadingdate",
+                'orderdeliveries.workday', 's.name as turno', 'orderdeliveries.shipmentid',
+                'orderdeliveries.auxiliary03 as complemento',
+                's2.name as statusname', 's4.name as precarga', 's5.name as cortina', 'or.outputdate',
+                'o.name as customer', 'o.city', 'orderdeliveries.loadingdate',
                 's6.comment01', 's6.comment02', 's6.comment03', 's3.locationid',
-                "orderdeliveries.downloaddate", "s6.auxiliary01 as priority",
-                "r2.entrydate", "r2.deliverdate", "s3.totalcontainers", 'r2.keydate as keys',
-                "s3.totalpieces", "s3.totalweight as peso", "s6.auxiliary02 as armado",
-                "orderdeliveries.auxiliary01 as dvnegocio", "orderdeliveries.auxiliary02 as planer",
-                "s6.fullpallet", "s6.fullpicking", 's2.statusid', 'sc.carrierid as vendor'])
-            ->addSelect(DB::raw("DATEDIFF(minute, GETDATE(),orderdeliveries.loadingdate) as minuterestantecarga"))
+                'orderdeliveries.downloaddate', 's6.auxiliary01 as priority',
+                'r2.entrydate', 'r2.deliverdate', 's3.totalcontainers', 'r2.keydate as keys',
+                's3.totalpieces', 's3.totalweight as peso', 's6.auxiliary02 as armado',
+                'orderdeliveries.auxiliary01 as dvnegocio', 'orderdeliveries.auxiliary02 as planer',
+                's6.fullpallet', 's6.fullpicking', 's2.statusid', 'sc.carrierid as vendor',
+            ])
+            ->addSelect(DB::raw('DATEDIFF(minute, GETDATE(),orderdeliveries.loadingdate) as minuterestantecarga'))
             ->addSelect(DB::raw("CONCAT(orderdeliveries.shipmentid,'|',orderdeliveries.auxiliary03) as embarque"));
         return DataTables::of($data)
             ->addColumn('btnoperation', 'Shipments.OrderMonitor.MonitorOperation.partials.btnoperation')
@@ -73,9 +75,9 @@ class MonitorOperationController extends BaseController
             ->addColumn('key', 'Shipments.OrderMonitor.MonitorOperation.partials.statuskey')
             ->addColumn('shipmentiactive', 'Shipments.OrderMonitor.AnalystTraffic.partials.shipment')
             ->rawColumns(['btnoperation', 'key', 'shtotalcontainers', 'shtotalpieces',
-                'statusshipment', 'statusunit', 'shipmentiactive'])->toJson();
+                'statusshipment', 'statusunit', 'shipmentiactive',
+            ])->toJson();
     }
-
 
     public function edit(OrderDeliverie $monitoroperation)
     {
@@ -83,38 +85,19 @@ class MonitorOperationController extends BaseController
         $locationsStages = self::getLocationsStagesForCenter();
         $locations = self::getLocations();
         $orderDelivery = $monitoroperation;
-        return view('Shipments.OrderMonitor.MonitorOperation.edit',
-            compact('orderDelivery', 'materials', 'locationsStages', 'locations'));
-    }
-
-    private function getLocations()
-    {
-        $locations = StorageLocation::controlAccessUser()
-            ->join('storagezones', 'storagelocations.zoneid', '=', 'storagezones.id')
-            ->whereNotIn('storagelocations.name', ['DUMMY'])
-            ->whereIn('storagelocations.statusid', ['E'])
-            ->where('storagezones.zoneid', '=', 'ST')
-            ->select(['storagelocations.name', 'storagelocations.id'])->get();
-        return $locations;
+        return view(
+            'Shipments.OrderMonitor.MonitorOperation.edit',
+            compact('orderDelivery', 'materials', 'locationsStages', 'locations')
+        );
     }
 
     public function getLocationsStagesForCenter()
     {
-        $locations = StorageLocation::controlAccessUser()
+        return StorageLocation::controlAccessUser()
             ->join('storagezones', 'storagelocations.zoneid', '=', 'storagezones.id')
             ->whereNotIn('storagelocations.name', ['DUMMY'])
             ->where('storagezones.zoneid', '=', 'ST')
             ->select(['storagelocations.name', 'storagelocations.id'])->get();
-        return $locations;
-    }
-
-    private function getMaterials()
-    {
-        $materials = InventoryPartnumber::controlAccessUser()
-            ->whereHas('category01', function ($q) {
-                $q->where('description', 'TARIMA');
-            })->select(['lngdsc', 'prtnum'])->get();
-        return $materials;
     }
 
     public function update(UpdateOperationRequest $request, OrderDeliverie $monitoroperation)
@@ -134,13 +117,30 @@ class MonitorOperationController extends BaseController
         }
     }
 
+    private function getLocations()
+    {
+        return StorageLocation::controlAccessUser()
+            ->join('storagezones', 'storagelocations.zoneid', '=', 'storagezones.id')
+            ->whereNotIn('storagelocations.name', ['DUMMY'])
+            ->whereIn('storagelocations.statusid', ['E'])
+            ->where('storagezones.zoneid', '=', 'ST')
+            ->select(['storagelocations.name', 'storagelocations.id'])->get();
+    }
+
+    private function getMaterials()
+    {
+        return InventoryPartnumber::controlAccessUser()
+            ->whereHas('category01', function ($q) {
+                $q->where('description', 'TARIMA');
+            })->select(['lngdsc', 'prtnum'])->get();
+    }
 
     private function addTypesPalletsToShipment($request, $orderDelivery): void
     {
         $partnumbers = $request->input('prtnum');
         $registros = count($partnumbers) - 1;
         for ($i = 0; $i <= $registros; $i++) {
-            if ($request['quantity'][$i] != '') {
+            if ($request['quantity'][$i] !== '') {
                 ShipmentPallet::create([
                     'centerid' => $orderDelivery->centerid,
                     'warehouseid' => $orderDelivery->warehouseid,
@@ -151,6 +151,4 @@ class MonitorOperationController extends BaseController
             }
         }
     }
-
-
 }

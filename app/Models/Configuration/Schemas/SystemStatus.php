@@ -12,11 +12,10 @@ use Illuminate\Database\Eloquent\Model;
 class SystemStatus extends Model
 {
     public $incrementing = false;
+    public $keyType = 'string';
     protected $table = 'systemstatus';
     protected $primaryKey = 'statusid';
-    public $keyType = 'string';
     protected $dateFormat = 'Y-m-d H:i:s';
-
 
     protected $fillable = [
         'schemaid',

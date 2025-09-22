@@ -2,8 +2,8 @@
 
 namespace App\Rules;
 
-use Illuminate\Contracts\Validation\Rule;
 use DB;
+use Illuminate\Contracts\Validation\Rule;
 
 class PartnumberOrBarcodeExists implements Rule
 {
@@ -19,5 +19,4 @@ class PartnumberOrBarcodeExists implements Rule
     {
         return 'El :attribute no existe en inventorypartnumbers (prtnum o barcode).';
     }
-
 }

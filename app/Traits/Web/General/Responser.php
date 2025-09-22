@@ -67,7 +67,7 @@ trait Responser
             'ProcessDate' => Carbon::now()->format('Y-m-d H:m:s'),
             'Code' => '0',
             'Message' => $value01,
-            'Name' => $value02
+            'Name' => $value02,
         ], '200');
     }
 
@@ -115,7 +115,7 @@ trait Responser
     {
         $centers = SecurityAccessWarehouse::Centers();
         $warehouses = SecurityAccessWarehouse::Warehouses();
-        return (new  SystemWarehouse)->whereStatusid('E')
+        return (new SystemWarehouse())->whereStatusid('E')
             ->whereIn('systemwarehouses.centerid', $centers)
             ->whereIn('systemwarehouses.warehouseid', $warehouses)
             ->select(['name', 'warehouseid'])->get();
@@ -133,7 +133,7 @@ trait Responser
     {
         $centers = SecurityAccessWarehouse::Centers();
         $warehouses = SecurityAccessWarehouse::Warehouses();
-        return (new  ReceiptProvider())->whereStatusid('E')
+        return (new ReceiptProvider())->whereStatusid('E')
             ->whereIn('centerid', $centers)
             ->whereIn('warehouseid', $warehouses)
             ->select(['name', 'id'])->get();
@@ -164,7 +164,6 @@ trait Responser
             ->whereIn('warehouseid', $warehouses)
             ->select(['description', 'id'])->get();
     }
-
 
     public function getShipmentTypeToSelect()
     {
@@ -220,8 +219,6 @@ trait Responser
             ->select('customerid')->get()->toArray();
     }
 
-
-
     public function getOperatorForCarriers()
     {
         $carriers = $this->getCarrierForUser();
@@ -262,12 +259,11 @@ trait Responser
             }))->select('boxnumber', 'id')->get();
     }
 
-
     public function getLocationActiveIN()
     {
         return StorageLocation::controlAccessUser()
             ->join('storagezones', 'storagelocations.zoneid', '=', 'storagezones.id')
-            ->whereNotIn('storagelocations.name', ["DUMMY"])
+            ->whereNotIn('storagelocations.name', ['DUMMY'])
             ->whereIn('storagelocations.statusid', ['E'])
             ->where('storagezones.statusid', '=', 'E')
             ->whereRaw("charindex('ZO-02', storagezones.configurationflag) > 0")
@@ -281,14 +277,13 @@ trait Responser
             ->select('name', 'id')->get();
     }
 
-
     public function getUnitType()
     {
         return StorageUnitType::controlAccessUser()->where('statusid', '=', 'E')
             ->select('description', 'id')->get();
     }
 
-    function getDatesInRange(string $startdate, string $finishdate): array
+    public function getDatesInRange(string $startdate, string $finishdate): array
     {
         $period = CarbonPeriod::create($startdate, $finishdate);
         $dates = [];
@@ -297,8 +292,4 @@ trait Responser
         }
         return $dates;
     }
-
-
-
-
 }

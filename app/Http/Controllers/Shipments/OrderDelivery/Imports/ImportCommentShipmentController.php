@@ -14,7 +14,7 @@ class ImportCommentShipmentController extends BaseController
     {
         ini_set('max_execution_time', 300);
         $validator = Validator::make($request->all(), [
-            'file' => 'required|mimes:csv,txt'
+            'file' => 'required|mimes:csv,txt',
         ]);
         if ($validator->fails()) {
             return $this->errorResponse('El formato de archivo no es correcto. Solo se permiten archivos CSV.');
@@ -22,6 +22,4 @@ class ImportCommentShipmentController extends BaseController
         Excel::import(new ImportCommentShipment(), $request->file('file'), '', \Maatwebsite\Excel\Excel::CSV);
         return $this->redirectBackSuccessMessage('Datos importados con exito.');
     }
-
-
 }

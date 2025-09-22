@@ -12,37 +12,27 @@ class StorageScheduleInverseOperationDetail extends Model
 {
     use LogsActivity;
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
-
     protected $table = 'storagescheduleinverseoperationdetails';
 
     protected $fillable = [
         'centerid', 'warehouseid', 'orderid', 'inverseid',
         'delivery', 'partnumberid', 'quantity', 'unitmeasureid', 'statusid','value01',
-        'value02','value03'
+        'value02','value03',
     ];
 
     protected $hidden = [
         'created_at',
         'updated_at',
-        'schemaid'
+        'schemaid',
     ];
 
     protected $attributes = [
         'schemaid' => 'DEV',
     ];
 
-    protected static function boot()
+    public function getActivitylogOptions(): LogOptions
     {
-        parent::boot();
-        if (!app()->runningInConsole()) {
-            self::creating(function (StorageScheduleInverseOperationDetail $model) {
-                $model->username = Auth::user()->username;
-            });
-        }
+        return LogOptions::defaults()->logFillable();
     }
 
     public static function controlAccessUser()
@@ -53,4 +43,13 @@ class StorageScheduleInverseOperationDetail extends Model
             ->whereIn('storagescheduleinverseoperationdetails.centerid', $centers);
     }
 
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (StorageScheduleInverseOperationDetail $model) {
+                $model->username = Auth::user()->username;
+            });
+        }
+    }
 }

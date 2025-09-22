@@ -14,14 +14,8 @@ class CheckListLiftTrucks extends Model
 {
     use LogsActivity;
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
-
     protected $table = 'checklistlifttrucks';
     protected $primaryKey = 'id';
-
 
     protected $fillable = [
         'centerid',
@@ -38,7 +32,7 @@ class CheckListLiftTrucks extends Model
     ];
 
     protected $hidden = [
-        'schemaid'
+        'schemaid',
     ];
 
     protected $attributes = [
@@ -46,21 +40,14 @@ class CheckListLiftTrucks extends Model
         'schemaid' => 'STM',
     ];
 
-
     protected $casts = [
 //        'created_at' => 'datetime:d/m/Y H:s',
 //        'updated_At' => 'datetime:d/m/Y H:s',
     ];
 
-
-    protected static function boot()
+    public function getActivitylogOptions(): LogOptions
     {
-        parent::boot();
-        if (!app()->runningInConsole()) {
-            self::creating(function (CheckListLiftTrucks $model) {
-                $model->createuser = Auth::user()->username;
-            });
-        }
+        return LogOptions::defaults()->logFillable();
     }
 
     public static function controlAccessUser()
@@ -86,28 +73,32 @@ class CheckListLiftTrucks extends Model
 
     public function scopeForSerialNumber($query, $serialnumber)
     {
-        if (trim($serialnumber) != '') {
+        if (trim($serialnumber) !== '') {
             $query->where('storagelifttrucks.serialnumber', '=', $serialnumber);
         }
     }
 
     public function scopeForNumberTruck($query, $numbertruck)
     {
-        if (trim($numbertruck) != '') {
+        if (trim($numbertruck) !== '') {
             $query->where('storagelifttrucks.numbertruck', '=', $numbertruck);
         }
     }
 
     public function scopeForWorkday($query, $workday)
     {
-        if ($workday != '') {
+        if ($workday !== '') {
             $query->whereRaw('CAST(checklistlifttrucks.created_at AS DATE) = ?', $workday);
         }
     }
 
-
-
-
-
-
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (CheckListLiftTrucks $model) {
+                $model->createuser = Auth::user()->username;
+            });
+        }
+    }
 }

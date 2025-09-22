@@ -15,10 +15,6 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class ReceiptStock extends Model
 {
     use LogsActivity;
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
 
     protected $table = 'receiptstock';
 
@@ -38,6 +34,10 @@ class ReceiptStock extends Model
         'productiondate',
         'quantitytrue',
     ];
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
     public static function controlAccessUser()
     {
@@ -72,6 +72,4 @@ class ReceiptStock extends Model
     {
         return $this->belongsTo(InventoryPartNumberCategory02::class, 'category02id', 'id');
     }
-
-
 }

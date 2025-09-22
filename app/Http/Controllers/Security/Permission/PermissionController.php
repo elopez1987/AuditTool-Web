@@ -12,7 +12,6 @@ use Illuminate\Http\Request;
 
 class PermissionController extends BaseController
 {
-
     public function index()
     {
         $this->authorize('securitypermissions.index');
@@ -48,8 +47,10 @@ class PermissionController extends BaseController
         $this->authorize('securitypermissions.edit');
         $modules = SecurityModule::select(['description', 'moduleid'])->get();
         $functions = SecurityFunction::select(['description', 'functionid'])->get();
-        return view('Security.Permissions.edit',
-            compact('securitypermission', 'functions', 'modules'));
+        return view(
+            'Security.Permissions.edit',
+            compact('securitypermission', 'functions', 'modules')
+        );
     }
 
     public function update(Request $request, Permission $securitypermission)
@@ -65,5 +66,4 @@ class PermissionController extends BaseController
         Permission::destroy($id);
         return $this->redirectBackSuccessMessage('Registro eliminado con exito!!');
     }
-
 }

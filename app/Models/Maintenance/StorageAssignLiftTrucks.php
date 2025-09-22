@@ -15,11 +15,6 @@ class StorageAssignLiftTrucks extends Model
 {
     use LogsActivity;
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
-
     protected $table = 'storageassignlifttrucks';
 
     protected $fillable = [
@@ -29,12 +24,11 @@ class StorageAssignLiftTrucks extends Model
         'auxiliary03',
         'auxiliary04',
         'auxiliary05',
-        'statusid'
+        'statusid',
     ];
 
-
     protected $hidden = [
-        'schemaid'
+        'schemaid',
     ];
 
     protected $attributes = [
@@ -43,21 +37,14 @@ class StorageAssignLiftTrucks extends Model
         'schematypeid' => 'TPM',
     ];
 
-
     protected $casts = [
         'created_at' => 'datetime:d/m/Y H:s',
         'updated_At' => 'datetime:d/m/Y H:s',
     ];
 
-
-    protected static function boot()
+    public function getActivitylogOptions(): LogOptions
     {
-        parent::boot();
-        if (!app()->runningInConsole()) {
-            self::creating(function (StorageAssignLiftTrucks $model) {
-                $model->createuser = Auth::user()->username;
-            });
-        }
+        return LogOptions::defaults()->logFillable();
     }
 
     public static function controlAccessUser()
@@ -91,5 +78,13 @@ class StorageAssignLiftTrucks extends Model
         return $this->belongsTo(User::class, 'createuser', 'username');
     }
 
-
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (StorageAssignLiftTrucks $model) {
+                $model->createuser = Auth::user()->username;
+            });
+        }
+    }
 }

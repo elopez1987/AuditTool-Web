@@ -31,6 +31,4 @@ class EventServiceProvider extends ServiceProvider
         parent::boot();
         StorageIncidenceJourney::observe(IncidenceJourneyObserver::class);
     }
-
-
 }

@@ -10,48 +10,26 @@ trait ValidateReceiptInCheckInProcess
 {
     public function validateReceiptInCheckIn($request, $receiptunit, $parameter, $platform)
     {
-        if ($request['razonstatusid'] == '2') {
-            $receipt = ReceiptAsn::searchReceiptInCheckIn($request['shipmentid']);
-            if (!empty($parameter) && in_array('SWH-02', (array)$parameter)) {
-                if (empty($receipt)) {
-                    if ($platform == 'WEB') {
-                        return $this->errorResponse('El número de recibo no se encuentra programado, favor de validar.');
-                    }
-                    if ($platform == 'API') {
-                        return $this->getResponseWithErrors('saveNewUnitStandard', ',El número de embarque no se encuentra programado, favor de validar.');
-                    }
-                }
-                if (!empty($receipt) && $receipt->providerid != $request['providerid']) {
-                    if ($platform == 'WEB') {
-                        return $this->errorResponse('El proveedor es diferente al programado, favor de validar.');
-                    }
-                    if ($platform == 'API') {
-                        return $this->getResponseWithErrors('saveNewUnitStandard', 'El proveedor es diferente al programado, favor de validar.');
-                    }
-                }
-            }
-            if (!empty($receipt)) {
-                self::updateTransportInReceiptAsn($request, $receiptunit, $receipt);
-            }
-
-            if (!empty($parameter) && in_array('SWH-07', (array)$parameter)) {
-                self::createNewReceiptAsnInCheckIn($request, $receiptunit);
-            }
-
+        if ($request['razonstatusid'] !== '2') {
+            return null;
         }
-    }
 
-    private function updateTransportInReceiptAsn(Request $request, $receiptunit, $receipt)
-    {
-//        $turnAndDate = self::getTurnAndWorkday();
-//        $receipt->turnid = $turnAndDate['turn'];
-//        $receipt->workday = $turnAndDate['workday'] ?? $receipt->workday;
-//        $receipt->providerid = $request['providerid'] ?? $receipt->providerid;
-        $receipt->arriveddate = Carbon::now();
-        $receipt->folionumber = $receiptunit->id;
-        $receipt->carrierid = $receiptunit->carrierid;
-        $receipt->statusid = 'RE';
-        $receipt->save();
+        $receipt = ReceiptAsn::searchReceiptInCheckIn($request['shipmentid']);
+
+        $validationResult = $this->validateReceiptWithParameter($receipt, $request, $parameter, $platform);
+        if ($validationResult) {
+            return $validationResult;
+        }
+
+        if (! empty($receipt)) {
+            self::updateTransportInReceiptAsn($request, $receiptunit, $receipt);
+        }
+
+        if (! empty($parameter) && in_array('SWH-07', (array) $parameter)) {
+            self::createNewReceiptAsnInCheckIn($request, $receiptunit);
+        }
+
+        return null;
     }
 
     public function createNewReceiptAsnInCheckIn($request, $receiptunit)
@@ -74,5 +52,29 @@ trait ValidateReceiptInCheckInProcess
         ]);
     }
 
+    private function validateReceiptWithParameter($receipt, $request, $parameter, $platform)
+    {
+        if (empty($parameter) || ! in_array('SWH-02', (array) $parameter)) {
+            return null;
+        }
 
+        if (empty($receipt) && $platform === 'WEB') {
+            return $this->errorResponse('El número de recibo no se encuentra programado, favor de validar.');
+        }
+
+        if (! empty($receipt) && $receipt->providerid !== $request['providerid'] && $platform === 'WEB') {
+            return $this->errorResponse('El proveedor es diferente al programado, favor de validar.');
+        }
+
+        return null;
+    }
+
+    private function updateTransportInReceiptAsn(Request $request, $receiptunit, $receipt)
+    {
+        $receipt->arriveddate = Carbon::now();
+        $receipt->folionumber = $receiptunit->id;
+        $receipt->carrierid = $receiptunit->carrierid;
+        $receipt->statusid = 'RE';
+        $receipt->save();
+    }
 }

@@ -17,10 +17,10 @@ use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
 class StorageBoxStockExport implements FromCollection, WithHeadings, WithMapping, WithEvents, ShouldAutoSize, WithColumnFormatting
 {
-    private $workdayin;
-    private $workdayout;
 
     use Exportable;
+    private $workdayin;
+    private $workdayout;
 
     public function __construct($workdayin, $workdayout)
     {
@@ -62,16 +62,15 @@ class StorageBoxStockExport implements FromCollection, WithHeadings, WithMapping
             'Ticket de peso',
             'Peso de entrada',
             'Peso de salida',
-            'Estatus'
+            'Estatus',
         ];
     }
 
     public function collection()
     {
-        $shipments = StorageBoxStock::controlAccessUser()
-            ->where('vw_storageboxstock.registro','>=',$this->workdayin)
-            ->where('vw_storageboxstock.registro','<=',$this->workdayout)->get();
-        return $shipments;
+        return StorageBoxStock::controlAccessUser()
+            ->where('vw_storageboxstock.registro', '>=', $this->workdayin)
+            ->where('vw_storageboxstock.registro', '<=', $this->workdayout)->get();
     }
 
     public function map($shipments): array
@@ -111,9 +110,9 @@ class StorageBoxStockExport implements FromCollection, WithHeadings, WithMapping
             AfterSheet::class => function (AfterSheet $event) {
                 $event->sheet->getDelegate()->getStyle('A1:Y1')->getFill()
                     ->applyFromArray(['fillType' => Fill::FILL_SOLID,
-                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6']]);
+                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6'],
+                    ]);
             },
         ];
     }
-
 }

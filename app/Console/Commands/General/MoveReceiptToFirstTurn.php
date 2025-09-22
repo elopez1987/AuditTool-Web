@@ -8,7 +8,6 @@ use Illuminate\Console\Command;
 
 class MoveReceiptToFirstTurn extends Command
 {
-
     protected $signature = 'command:MoveReceiptToFirstTurn';
 
     protected $description = 'Mueve los recibos sin terminar del tercer turno al primero';

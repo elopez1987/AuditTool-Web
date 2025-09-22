@@ -10,23 +10,22 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class SecurityUsersSession extends Model
 {
     use LogsActivity;
+    public $timestamps = false;
+
+    protected $table = 'securityuserssessions';
+
+    protected $fillable = [
+        'username', 'sessionid',
+        'lastsessiondate', 'currentsessiondate',
+    ];
 
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()->logFillable();
     }
 
-    protected $table = 'securityuserssessions';
-    public $timestamps = false;
-
-    protected $fillable = [
-        'username', 'sessionid',
-        'lastsessiondate', 'currentsessiondate'
-    ];
-
     public function user()
     {
         return $this->belongsTo(User::class, 'username', 'username');
     }
-
 }

@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Http;
 
 trait WebServiceIzel
 {
-
     use GetParameters;
 
     public function sendDataToWMSIzel($receiptunit, $typeMovement)
@@ -17,33 +16,31 @@ trait WebServiceIzel
         $dataUserCenter = $this->getSystemCenterDistribution($receiptunit->centerid);
         $parameter = $this->getParametersOfCenter($receiptunit->centerid);
         $encodeDataUserAndToken = $this->getTokenWms($parameter, $dataUserCenter);
-        if ($typeMovement == 'IN') {
+        if ($typeMovement === 'IN') {
             $dataFolioNumber = $this->getFolioNumberCheckIn($receiptunit->id);
-            $url = $dataUserCenter->url . "receiptunitadd";
-        } elseif ($typeMovement == 'OUT') {
+            $url = $dataUserCenter->url . 'receiptunitadd';
+        } elseif ($typeMovement === 'OUT') {
             $dataFolioNumber = $this->getFolioNumberCheckOut($receiptunit->id);
-            $url = $dataUserCenter->url . "receiptunitout";
+            $url = $dataUserCenter->url . 'receiptunitout';
         }
         $contentBody = json_encode($dataFolioNumber[0]);
         return Http::withHeaders(['Content-Type' => 'application/json', 'Authorization' => $encodeDataUserAndToken])
-            ->withBody($contentBody, "application/json")->post($url);
+            ->withBody($contentBody, 'application/json')->post($url);
     }
-
 
     public function getTokenWms($parameter, $dataUserCenter)
     {
         $url = $this->getUrlLogin($parameter, $dataUserCenter);
-        $credentials = ["userid" => $dataUserCenter->userapi, "password" => $dataUserCenter->passwordapi];
+        $credentials = ['userid' => $dataUserCenter->userapi, 'password' => $dataUserCenter->passwordapi];
         $contentBody = json_encode($credentials);
-        $userEncode = base64_encode("$dataUserCenter->userapi $dataUserCenter->passwordapi");
+        $userEncode = base64_encode("{$dataUserCenter->userapi} {$dataUserCenter->passwordapi}");
         $response = Http::withHeaders(['Content-Type' => 'application/json', 'Authorization' => $userEncode])->withBody($contentBody)->post($url);
-        if ($response->status() == 200) {
+        if ($response->status() === 200) {
             $data = json_decode($response->getBody()->getContents());
             $tokenWms = $this->getTokenLogin($parameter, $data);
-            return base64_encode("$dataUserCenter->userapi $dataUserCenter->passwordapi $tokenWms");
-        } else {
-            return null;
+            return base64_encode("{$dataUserCenter->userapi} {$dataUserCenter->passwordapi} {$tokenWms}");
         }
+        return null;
     }
 
     public function getSystemCenterDistribution($centerid)
@@ -54,14 +51,15 @@ trait WebServiceIzel
     /**
      * @param $parameter
      * @param $dataUserCenter
+     *
      * @return string
      */
     public function getUrlLogin($parameter, $dataUserCenter): string
     {
-        if (in_array('SDC-07', (array)$parameter)) {
-            $url = "http://172.24.90.54/gas401/ws/r/ws_izelyard/login/gettoken";
+        if (in_array('SDC-07', (array) $parameter)) {
+            $url = 'http://172.24.90.54/gas401/ws/r/ws_izelyard/login/gettoken';
         } else {
-            $url = $dataUserCenter->url . "gettoken";
+            $url = $dataUserCenter->url . 'gettoken';
         }
         return $url;
     }
@@ -69,18 +67,18 @@ trait WebServiceIzel
     /**
      * @param $parameter
      * @param $data
+     *
      * @return mixed
      */
     public function getTokenLogin($parameter, $data)
     {
-        if (in_array('SDC-07', (array)$parameter)) {
+        if (in_array('SDC-07', (array) $parameter)) {
             $tokenWms = $data->Token;
         } else {
-            $tokenWms = $data->{"Token"};
+            $tokenWms = $data->{'Token'};
         }
         return $tokenWms;
     }
-
 
     private function getFolioNumberCheckIn($folionumber)
     {
@@ -104,13 +102,11 @@ trait WebServiceIzel
 
     private function getFolioNumberCheckOut($folionumber)
     {
-        return DB::select("
+        return DB::select('
         select s7.center as centerid,s7.warehouse as warehouseid,ru.id as folionumber,outputdate
             from receiptunits ru
             join systemwarehouses s7 on ru.warehouseid = s7.warehouseid
             where ru.id=?;
-        ", [$folionumber]);
+        ', [$folionumber]);
     }
-
-
 }

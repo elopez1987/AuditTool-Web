@@ -11,29 +11,18 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class ReceiptUnitSeal extends Model
 {
-
     use LogsActivity;
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
 
     public $timestamps = true;
     protected $table = 'receiptunitseals';
 
     protected $fillable = [
-        'centerid', 'warehouseid', 'folionumber', 'seal01', 'seal02', 'seal03', 'value01', 'value02', 'value3', 'createuser'
+        'centerid', 'warehouseid', 'folionumber', 'seal01', 'seal02', 'seal03', 'value01', 'value02', 'value3', 'createuser',
     ];
 
-    protected static function boot()
+    public function getActivitylogOptions(): LogOptions
     {
-        parent::boot();
-        if (!app()->runningInConsole()) {
-            self::creating(function (ReceiptUnitSeal $model) {
-                $model->createuser = Auth::user()->id;
-            });
-        }
+        return LogOptions::defaults()->logFillable();
     }
 
     public static function controlAccessUser()
@@ -49,16 +38,24 @@ class ReceiptUnitSeal extends Model
         return $this->belongsTo(User::class, 'createuser', 'id')->withTrashed();
     }
 
-
-    static function createNewUnitSeal(ReceiptUnit $receiptunit,$type)
+    public static function createNewUnitSeal(ReceiptUnit $receiptunit, $type)
     {
         ReceiptUnitSeal::create([
             'centerid' => $receiptunit->centerid,
             'warehouseid' => $receiptunit->warehouseid,
             'folionumber' => $receiptunit->id,
             'seal01' => $receiptunit->containerseal,
-            'value01' => $type
+            'value01' => $type,
         ]);
     }
 
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (ReceiptUnitSeal $model) {
+                $model->createuser = Auth::user()->id;
+            });
+        }
+    }
 }

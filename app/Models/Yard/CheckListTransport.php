@@ -9,17 +9,11 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-
 class CheckListTransport extends Model
 {
     use Notifiable;
     use LogsActivity;
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
-    
     protected $table = 'storagechecklisttransports';
     protected $dateFormat = 'Y-m-d H:i:s';
 
@@ -37,6 +31,11 @@ class CheckListTransport extends Model
         'updated_at',
     ];
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
+
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
@@ -50,8 +49,6 @@ class CheckListTransport extends Model
 
     public function checklistdetail()
     {
-        return $this->belongsTo(StorageCheckListDetail::class, 'checklitsdetailid','id');
+        return $this->belongsTo(StorageCheckListDetail::class, 'checklitsdetailid', 'id');
     }
-
-
 }

@@ -11,15 +11,14 @@ class ShipmentSchedulleDetail extends Model
 {
     use LogsActivity;
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
-
     public $timestamps = false;
     protected $table = 'storageshipmentsscheduledetail';
     protected $fillable = ['centerid', 'warehouseid', 'incidencejourneyid','shipmentschedulleid'];
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
     public static function controlAccessUser()
     {
@@ -28,8 +27,4 @@ class ShipmentSchedulleDetail extends Model
         return ShipmentSchedulleDetail::whereIn('storageshipmentsscheduledetail.warehouseid', $warehouses)
             ->whereIn('storageshipmentsscheduledetail.centerid', $centers);
     }
-
-
-
-
 }

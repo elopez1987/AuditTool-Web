@@ -6,12 +6,10 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class CreateOrderRequest extends FormRequest
 {
-
     public function authorize(): bool
     {
         return true;
     }
-
 
     public function rules(): array
     {
@@ -26,7 +24,7 @@ class CreateOrderRequest extends FormRequest
             'customerid' => 'required|exists:ordercustomers,id',
             'shipmenttypeid' => 'required|exists:shipmenttypes,id',
             'loadingdate' => 'required',
-            'downloaddate' => 'required'
+            'downloaddate' => 'required',
         ];
     }
 }

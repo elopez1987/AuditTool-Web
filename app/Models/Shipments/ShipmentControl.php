@@ -9,9 +9,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class ShipmentControl extends Model
 {
+    public $timestamps = false;
     protected $table = 'shipmentcontrol';
     protected $primaryKey = 'recordid';
-    public $timestamps = false;
 
     protected $fillable = ['centerid', 'warehouseid', 'orderid', 'deliveryid',
         'customerid', 'partnumberid', 'category1id', 'category2id', 'unitmeasureid',
@@ -40,12 +40,4 @@ class ShipmentControl extends Model
         return ShipmentControl::whereIn('shipmentcontrol.warehouseid', $warehouses)
             ->whereIn('shipmentcontrol.centerid', $centers);
     }
-
-
-
-
-
-
-
-
 }

@@ -8,7 +8,6 @@ use NotificationChannels\Telegram\TelegramMessage;
 
 class TelegramRegister extends Notification
 {
-
     public function via()
     {
         return [TelegramChannel::class];
@@ -18,9 +17,7 @@ class TelegramRegister extends Notification
     {
         return TelegramMessage::create()
             ->to($notifiable->telegramid)
-            ->content("*" . $notifiable->notice . "*\n" . $notifiable->noticedes)
-            ->button("Ir al Sistema", $notifiable->noticelink);
+            ->content('*' . $notifiable->notice . "*\n" . $notifiable->noticedes)
+            ->button('Ir al Sistema', $notifiable->noticelink);
     }
-
-
 }

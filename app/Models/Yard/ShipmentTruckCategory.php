@@ -8,11 +8,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ShipmentTruckCategory extends Model
 {
-    protected $table = "shipmenttruckcategories";
-    protected $primaryKey = 'truckcategoryid';
     public $incrementing = false;
-    protected $keyType = 'string';
     public $timestamps = false;
+
+    public $attributes = [
+        'schemaid' => 'STS',
+        'statusid' => 'E',
+    ];
+    protected $table = 'shipmenttruckcategories';
+    protected $primaryKey = 'truckcategoryid';
+    protected $keyType = 'string';
 
     protected $fillable = [
         'truckcategoryid',
@@ -22,18 +27,13 @@ class ShipmentTruckCategory extends Model
         'auxiliary03',
         'auxiliary04',
         'auxiliary05',
-        'statusid'
-    ];
-
-    public $attributes = [
-        'schemaid' => 'STS',
-        'statusid' => 'E',
+        'statusid',
     ];
 
     protected $hidden = [
         'created_at',
         'updated_at',
-        'schemaid'
+        'schemaid',
     ];
 
     public function status(): BelongsTo
@@ -43,16 +43,15 @@ class ShipmentTruckCategory extends Model
 
     public function scopeName($query, $name)
     {
-        if (trim($name) != "") {
-            $query->where('name', 'like', "%$name%");
+        if (trim($name) !== '') {
+            $query->where('name', 'like', "%{$name}%");
         }
     }
 
     public function scopeStatus($query, $statusid)
     {
-        if (trim($statusid) != "") {
+        if (trim($statusid) !== '') {
             $query->where('statusid', '=', $statusid);
         }
     }
-
 }

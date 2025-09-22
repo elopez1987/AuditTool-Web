@@ -71,6 +71,4 @@ class DashboardYardController extends BaseController
         $data = json_encode($data);
         return response()->json($data);
     }
-
-
 }

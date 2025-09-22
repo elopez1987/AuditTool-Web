@@ -13,7 +13,7 @@ class CreateDetailWhatsApp extends FormRequest
             'phonenumber' => 'required|string|max:10',
             'phonenumber01' => 'string|max:10',
             'centerid' => 'required|exists:systemcenterdistributions,centerid',
-            'warehouseid' => 'required|exists:systemwarehouses,warehouseid'
+            'warehouseid' => 'required|exists:systemwarehouses,warehouseid',
         ];
     }
 

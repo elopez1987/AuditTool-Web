@@ -9,15 +9,10 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class StorageUnitTravel extends Model
 {
     use LogsActivity;
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
+    public $timestamps = false;
 
     protected $table = 'storageunittravels';
     protected $primaryKey = 'id';
-    public $timestamps = false;
 
     protected $fillable = [
         'centerid',
@@ -37,7 +32,7 @@ class StorageUnitTravel extends Model
     protected $hidden = [
         'created_at',
         'updated_at',
-        'schemaid'
+        'schemaid',
     ];
 
     protected $attributes = [
@@ -45,25 +40,28 @@ class StorageUnitTravel extends Model
         'schemaid' => 'STB',
     ];
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
-   static  function closeFolioOfPlant($receiptunit): void
+    public static function closeFolioOfPlant($receiptunit): void
     {
         $travelplant = StorageUnitTravel::where('folioplant', $receiptunit->id)
             ->first(['id', 'checkoutplant']);
-        if (!empty($travelplant)) {
+        if (! empty($travelplant)) {
             $travelplant->checkoutplant = now();
             $travelplant->save();
         }
     }
 
-   static function closeFolioOfWarehouse($receiptunit): void
+    public static function closeFolioOfWarehouse($receiptunit): void
     {
         $travelwarehouse = StorageUnitTravel::where('foliowarehouse', $receiptunit->id)
             ->first(['id', 'checkoutwarehouse']);
-        if (!empty($travelwarehouse)) {
+        if (! empty($travelwarehouse)) {
             $travelwarehouse->checkoutwarehouse = now();
             $travelwarehouse->save();
         }
     }
-
 }

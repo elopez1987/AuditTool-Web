@@ -7,15 +7,16 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @method static get()
+ *
  * @property mixed schemaid
  */
 class SystemSchema extends Model
 {
     public $incrementing = false;
+    public $keyType = 'string';
     protected $table = 'systemschemas';
     protected $primaryKey = 'schemaid';
     protected $dateFormat = 'Y-m-d H:i:s';
-    public $keyType = 'string';
 
     protected $fillable = [
         'schemaid',
@@ -39,17 +40,15 @@ class SystemSchema extends Model
 
     public function scopeName($query, $name)
     {
-        if (trim($name) != "") {
-            $query->where('systemschemas.name', 'like', "%$name%");
+        if (trim($name) !== '') {
+            $query->where('systemschemas.name', 'like', "%{$name}%");
         }
     }
 
     public function scopeSchema($query, $schemaid)
     {
-        if (trim($schemaid) != "") {
-            $query->where('systemschemas.schemaid', 'like', "%$schemaid%");
+        if (trim($schemaid) !== '') {
+            $query->where('systemschemas.schemaid', 'like', "%{$schemaid}%");
         }
     }
-
-
 }

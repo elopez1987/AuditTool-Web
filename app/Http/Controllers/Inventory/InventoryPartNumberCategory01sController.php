@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 
 class InventoryPartNumberCategory01sController extends BaseController
 {
-
     public function index()
     {
         $this->authorize('inventorypartnumbercategory01.index');
@@ -21,8 +20,10 @@ class InventoryPartNumberCategory01sController extends BaseController
         $data = InventoryPartNumberCategory01::controlAccessUser()
             ->with(['status', 'center', 'warehouse'])
             ->Name($request->get('name'))->get();
-        return $this->showDataToView($data,
-            'Inventory.InventoryPartNumberCategory01.partials.buttons');
+        return $this->showDataToView(
+            $data,
+            'Inventory.InventoryPartNumberCategory01.partials.buttons'
+        );
     }
 
     public function create()
@@ -37,7 +38,8 @@ class InventoryPartNumberCategory01sController extends BaseController
         $category01 = new InventoryPartNumberCategory01(
             $request->all() +
             ['centerid' => $access->centerid] +
-            ['warehouseid' => $access->warehouseid]);
+            ['warehouseid' => $access->warehouseid]
+        );
         $category01->save();
         return $this->successResponse('inventorypartnumbercategory01.index');
     }
@@ -46,8 +48,10 @@ class InventoryPartNumberCategory01sController extends BaseController
     {
         $this->authorize('inventorypartnumbercategory01.edit');
         $status = $this->getStatusForSchema('STS');
-        return view('Inventory.InventoryPartNumberCategory01.edit',
-            compact('status', 'inventorypartnumbercategory01'));
+        return view(
+            'Inventory.InventoryPartNumberCategory01.edit',
+            compact('status', 'inventorypartnumbercategory01')
+        );
     }
 
     public function update(Request $request, InventoryPartNumberCategory01 $inventorypartnumbercategory01)
@@ -55,5 +59,4 @@ class InventoryPartNumberCategory01sController extends BaseController
         $inventorypartnumbercategory01->update($request->all());
         return $this->infoResponse('inventorypartnumbercategory01.index');
     }
-
 }

@@ -25,20 +25,18 @@ class OpenVerificationProcessController extends BaseController
             $this->updateShipmentCheck($orderDelivery);
             $shipmentControl = $this->getPartNumbersInShipmentControl($orderDelivery);
 
-
-            if (!empty($shipmentControl)) {
+            if (! empty($shipmentControl)) {
                 foreach ($shipmentControl as $item) {
                     ShipmentControl::where('recordid', $item->recordid)
                         ->update([
                             'quantityfail' => $item->quantityrequested,
                             'quantitytrue' => 0,
-                            'missingconceptid' => ''
+                            'missingconceptid' => '',
                         ]);
                     ShipmentStock::where('orderid', '=', $orderDelivery->id)
                         ->where('partnumberid', '=', $item->partnumberid)->delete();
                 }
             }
-
 
             DB::commit();
             return $this->getJsonResponse('Verificación reiniciada', $shipmentControl, 200, 'success');
@@ -65,7 +63,6 @@ class OpenVerificationProcessController extends BaseController
             ->get();
     }
 
-
     public function getJsonResponse($message, $data, $code, $codeResponse): JsonResponse
     {
         return response()->json([
@@ -76,5 +73,4 @@ class OpenVerificationProcessController extends BaseController
             'Data' => $data,
         ], $code);
     }
-
 }

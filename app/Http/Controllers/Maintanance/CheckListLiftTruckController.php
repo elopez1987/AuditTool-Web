@@ -10,10 +10,8 @@ use App\Traits\Web\Maintenance\QueryCheckListLiftTrucks;
 use Illuminate\Http\Request;
 use PDF;
 
-
 class CheckListLiftTruckController extends BaseController
 {
-
     use QueryCheckListLiftTrucks;
 
     public function index()
@@ -25,8 +23,10 @@ class CheckListLiftTruckController extends BaseController
     public function getCheckListTruck(Request $request)
     {
         $data = $this->getAllCheckListTruck($request);
-        return $this->showDataToView($data,
-            'Maintenance.CheckListLiftTrucks.partials.buttons');
+        return $this->showDataToView(
+            $data,
+            'Maintenance.CheckListLiftTrucks.partials.buttons'
+        );
     }
 
     public function printFormatToCheckList($id)
@@ -41,14 +41,13 @@ class CheckListLiftTruckController extends BaseController
             'MT-05' => 'Maintenance.CheckListLiftTrucks.Formats.patinelectrico',
         ];
         $typeId = $truckChecklist->truck->typeid;
-        if (!array_key_exists($typeId, $typeIdToFormatMap)) {
+        if (! array_key_exists($typeId, $typeIdToFormatMap)) {
             return $this->errorResponse('No existe un formato definido para este tipo de check list.');
         }
         $format = $typeIdToFormatMap[$typeId];
         $pdf = PDF::loadView($format, compact('truckChecklist', 'details'));
         return $pdf->stream('Check List de equipo -' . $truckChecklist->id . '.pdf');
     }
-
 
     public function show($id)
     {
@@ -58,5 +57,4 @@ class CheckListLiftTruckController extends BaseController
             ->where('auxiliary01', '=', 'EVI')->where('model_id', $id)->get();
         return view('Maintenance.CheckListLiftTrucks.show', compact('checkList', 'errorsCheck', 'evidences'));
     }
-
 }

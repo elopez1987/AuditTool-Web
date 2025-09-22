@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace App\Auth;
 
-use App\Models\User;
-use Auth0\Laravel\{UserRepositoryAbstract, UserRepositoryContract};
+use Auth0\Laravel\UserRepositoryAbstract;
+use Auth0\Laravel\UserRepositoryContract;
+
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 final class UserRepository extends UserRepositoryAbstract implements UserRepositoryContract
 {
@@ -17,7 +16,7 @@ final class UserRepository extends UserRepositoryAbstract implements UserReposit
     {
         $identifier = $user['sub'] ?? $user['auth0'] ?? null;
 
-        if (null === $identifier) {
+        if ($identifier === null) {
             return null;
         }
         return \App\User::where('auth0', $identifier)->first();
@@ -25,7 +24,6 @@ final class UserRepository extends UserRepositoryAbstract implements UserReposit
 
     public function fromSession(array $user): ?Authenticatable
     {
-
         $identifier = $user['sub'] ?? $user['auth0'] ?? null;
         $profile = [
             'auth0' => $identifier,
@@ -33,22 +31,22 @@ final class UserRepository extends UserRepositoryAbstract implements UserReposit
 //            'email' => $user['email'] ?? '',
 //            'email_verified' => in_array($user['email_verified'], [1, true], true),
         ];
-        $cached = $this->withoutRecording(fn() => Cache::get('auth0_user_' . $identifier));
+        $cached = $this->withoutRecording(fn () => Cache::get('auth0_user_' . $identifier));
 
         if ($cached) {
             return $cached;
         }
 
         $user = null;
-        if (null !== $identifier) {
+        if ($identifier !== null) {
             $user = \App\User::where('auth0', $identifier)->first();
         }
 
-        if (null === $user && isset($user['email'])) {
+        if ($user === null && isset($user['email'])) {
             $user = \App\User::where('email', $user['email'])->first();
         }
 
-        if (null !== $user) {
+        if ($user !== null) {
             $updates = [];
 
 //            if ($user->auth0 !== $profile['auth0']) {
@@ -69,12 +67,12 @@ final class UserRepository extends UserRepositoryAbstract implements UserReposit
 //                $updates['email_verified'] = $profile['email_verified'];
 //            }
 
-            if ([] !== $updates) {
+            if ($updates !== []) {
                 $user->update($updates);
                 $user->save();
             }
 
-            if ([] === $updates && null !== $cached) {
+            if ($updates === [] && $cached !== null) {
                 return $user;
             }
         }
@@ -84,13 +82,14 @@ final class UserRepository extends UserRepositoryAbstract implements UserReposit
 //            $user = \App\User::create($profile);
 //        }
 
-        $this->withoutRecording(fn() => Cache::put('auth0_user_' . $identifier, $user, 30));
+        $this->withoutRecording(fn () => Cache::put('auth0_user_' . $identifier, $user, 30));
 
         return $user;
     }
 
     /**
      * Workaround for Laravel Telescope potentially causing an infinite loop.
+     *
      * @link https://github.com/auth0/laravel-auth0/tree/main/docs/Telescope.md
      *
      * @param callable $callback
@@ -105,6 +104,4 @@ final class UserRepository extends UserRepositoryAbstract implements UserReposit
 
         return call_user_func($callback);
     }
-
-
 }

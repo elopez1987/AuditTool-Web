@@ -24,12 +24,15 @@ class AssignStageController extends BaseController
                     ->where('receiptid', $id);
             })
             ->select(['storagelocations.id', 'storagelocations.zoneid',
-                'storagelocations.locationid', 'storagelocations.name'])
+                'storagelocations.locationid', 'storagelocations.name',
+            ])
             ->get();
 
         $stages = ReceiptStage::where('receiptid', $id)->get();
-        return view('Receipt.ScheduleReceipt.addstage',
-            compact('receiptasn', 'locations', 'stages'));
+        return view(
+            'Receipt.ScheduleReceipt.addstage',
+            compact('receiptasn', 'locations', 'stages')
+        );
     }
 
     public function receiptasnassingstage($id, Request $request)
@@ -41,7 +44,7 @@ class AssignStageController extends BaseController
                 'centerid' => $receipt->centerid,
                 'warehouseid' => $receipt->warehouseid,
                 'receiptid' => $receipt->id,
-                'locationid' => $locationstage
+                'locationid' => $locationstage,
             ]);
         }
         return $this->redirectBackSuccessMessage('Cortinas asignadas con exito.');

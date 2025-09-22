@@ -12,7 +12,7 @@ class DownLoadEvidenceForShipmentController extends Controller
     {
         $order = OrderDeliverie::findOrFail($id);
         $zip = new \ZipArchive();
-        $zip->open($order->shipmentid . ".zip", \ZipArchive::CREATE);
+        $zip->open($order->shipmentid . '.zip', \ZipArchive::CREATE);
         $files = EvidencePhoto::where('model_type', '=', 'OrderDelivery')
             ->where('auxiliary01', '=', 'SH')
             ->where('model_id', $order->id)->get();
@@ -24,8 +24,8 @@ class DownLoadEvidenceForShipmentController extends Controller
         }
 
         $zip->close();
-        header("Content-type: application/octet-stream");
-        header("Content-disposition: attachment; filename=$order->shipmentid.zip");
+        header('Content-type: application/octet-stream');
+        header("Content-disposition: attachment; filename={$order->shipmentid}.zip");
         readfile($order->shipmentid . '.zip');
         unlink($order->shipmentid . '.zip');
     }

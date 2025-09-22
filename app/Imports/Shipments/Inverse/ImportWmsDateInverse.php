@@ -33,6 +33,4 @@ class ImportWmsDateInverse implements ToCollection, WithHeadingRow
             $logInversa->save();
         }
     }
-
-
 }

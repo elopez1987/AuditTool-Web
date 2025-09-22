@@ -8,6 +8,7 @@ use App\Models\Yard\LogMessageWhatsApp;
 use App\Models\Yard\ReceiptUnit;
 use Carbon\Carbon;
 use DB;
+use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
@@ -35,37 +36,35 @@ class MensajeDeCapacidadDePatio extends Command
 
     public function handle()
     {
-        $url = "https://api.1msg.io/HEI523482986/sendTemplate";
+        $url = 'https://api.1msg.io/HEI523482986/sendTemplate';
         $client = new Client();
         $centers = SystemCenterDistribution::select(['centerid', 'configurationflag', 'capacityyard'])->get();
         foreach ($centers as $center) {
             $parameter = SystemCenterDistribution::whereCenterid($center->centerid)->value('configurationflag');
-            if (!empty($parameter) && in_array('SDC-02', (array)$parameter)) {
-
+            if (! empty($parameter) && in_array('SDC-02', (array) $parameter)) {
                 $totalUnit = $this->getTotalUnitStock($center);
                 $totalCapacidad = $this->getTotalCapacity($center);
-                $capacidadUsada = (100 / $totalCapacidad) * $totalUnit;
+                $capacidadUsada = $totalUnit / $totalCapacidad * 100;
 
                 if ($capacidadUsada > $center->capacityyard) {
                     $contacts = $this->getPhones($center->centerid);
-                    if (!empty($contacts)) {
+                    if (! empty($contacts)) {
                         foreach ($contacts as $contact) {
                             try {
                                 $data = $this->getBodyData($totalUnit, $totalCapacidad, $capacidadUsada, $contact);
                                 $response = $client->request('POST', $url, ['json' => $data, 'headers' => ['Content-Type' => 'application/json']]);
                                 $respJson = $response->getBody();
                                 $this->createLog($center, $contact, json_decode($respJson));
-                            } catch (\Exception $e) {
+                            } catch (Exception $e) {
+                                Log::error($e->getMessage());
                                 Log::error('Error al enviar mensaje de capacidad de patio.');
                             }
                         }
                     }
                 }
-
             }
         }
     }
-
 
     public function getPhones($centerid)
     {
@@ -75,33 +74,34 @@ class MensajeDeCapacidadDePatio extends Command
 
     public function getBodyData($totalUnit, $totalCapacidad, $capacidadUsada, $contact)
     {
-        return array(
-            "token" => "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbnN0YW5jZUlkIjoiSEVJNTIzNDgyOTg2IiwidG9rZW4iOiJtaGVaTTh4cTQ2a2RadjZ0Q0NJeXZydGo4dkc3bnlOeCIsImlzcyI6IjFtc2cuaW8iLCJpYXQiOjE3NTU2MTU3NTZ9.PNJB7YjZbqerW-s-r8TOSTlPOS_6OddKHxVbwfsQ9GY",
-            "namespace" => "3686dca6_3e5f_4dc5_a838_74a7716b881c",
-            "template" => "capacidadpatio",
-            "language" => array(
-                "policy" => "deterministic",
-                "code" => "es_MX"
-            ),
-            "params" => array(
-                array(
-                    "type" => "body",
-                    "parameters" => array(
-                        array("type" => "text", "text" => (string)$totalCapacidad),
-                        array("type" => "text", "text" => (string)$totalUnit),
-                        array("type" => "text", "text" => (string) number_format($capacidadUsada,2) . '%'),
-                        array("type" => "text", "text" => (string)Carbon::now()),
-                    )
-                )
-            ),
-            "phone" => '1' . $contact->phonenumber
-        );
+        return [
+            'token' => 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbnN0YW5jZUlkIjoiSEVJNTIzNDgyOTg2IiwidG9rZW4iOiJtaGVaTTh4cTQ2a2RadjZ0Q0NJeXZydGo4dkc3bnlOeCIsImlzcyI6IjFtc2cuaW8iLCJpYXQiOjE3NTU2MTU3NTZ9.PNJB7YjZbqerW-s-r8TOSTlPOS_6OddKHxVbwfsQ9GY',
+            'namespace' => '3686dca6_3e5f_4dc5_a838_74a7716b881c',
+            'template' => 'capacidadpatio',
+            'language' => [
+                'policy' => 'deterministic',
+                'code' => 'es_MX',
+            ],
+            'params' => [
+                [
+                    'type' => 'body',
+                    'parameters' => [
+                        ['type' => 'text', 'text' => (string) $totalCapacidad],
+                        ['type' => 'text', 'text' => (string) $totalUnit],
+                        ['type' => 'text', 'text' => number_format($capacidadUsada, 2) . '%'],
+                        ['type' => 'text', 'text' => (string) Carbon::now()],
+                    ],
+                ],
+            ],
+            'phone' => '1' . $contact->phonenumber,
+        ];
     }
 
     /**
      * @param $center
      * @param $contact
      * @param $resp
+     *
      * @return void
      */
     public function createLog($center, $contact, $resp): void
@@ -120,6 +120,7 @@ class MensajeDeCapacidadDePatio extends Command
 
     /**
      * @param $center
+     *
      * @return int
      */
     public function getTotalUnitStock($center): int
@@ -130,6 +131,7 @@ class MensajeDeCapacidadDePatio extends Command
 
     /**
      * @param $center
+     *
      * @return mixed|null
      */
     public function getTotalCapacity($center)
@@ -140,6 +142,4 @@ class MensajeDeCapacidadDePatio extends Command
             ->where('centerid', $center->centerid)
             ->value('totalcapacidad');
     }
-
-
 }

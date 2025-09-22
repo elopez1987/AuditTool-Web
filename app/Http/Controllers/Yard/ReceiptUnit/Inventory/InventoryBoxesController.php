@@ -14,8 +14,6 @@ use Illuminate\Support\Facades\Log;
 
 class InventoryBoxesController extends BaseController
 {
-
-
     public function index()
     {
         $this->authorize('inventorybox.index');
@@ -26,18 +24,17 @@ class InventoryBoxesController extends BaseController
 
     public function getdatainventories(Request $request)
     {
-
         $data = InventoryBox::controlAccessUser()
-            ->leftjoin("systemcenterdistributions as s", "inventoryboxstock.centerid", "=", "s.centerid")
-            ->leftjoin("systemstatus as s2", "inventoryboxstock.statusid", '=', "s2.statusid")
-            ->leftjoin("systemstatus as s3", "inventoryboxstock.statustypeid", '=', "s3.statusid")
-            ->leftjoin("users as u", "inventoryboxstock.createuser", '=', "u.id")
+            ->leftjoin('systemcenterdistributions as s', 'inventoryboxstock.centerid', '=', 's.centerid')
+            ->leftjoin('systemstatus as s2', 'inventoryboxstock.statusid', '=', 's2.statusid')
+            ->leftjoin('systemstatus as s3', 'inventoryboxstock.statustypeid', '=', 's3.statusid')
+            ->leftjoin('users as u', 'inventoryboxstock.createuser', '=', 'u.id')
             ->ForStatus($request->get('statusid'))
             ->ForFolio($request->get('folio'))
             ->select([
-                "s.name as centername", "s3.name as type", "inventoryboxstock.description",
-                "inventoryboxstock.createdate", "inventoryboxstock.quantitybox", 'inventoryboxstock.id as folioinv',
-                "inventoryboxstock.quantityboxtrue", "u.name as user", "s2.name as status", "inventoryboxstock.id", "s2.statusid"
+                's.name as centername', 's3.name as type', 'inventoryboxstock.description',
+                'inventoryboxstock.createdate', 'inventoryboxstock.quantitybox', 'inventoryboxstock.id as folioinv',
+                'inventoryboxstock.quantityboxtrue', 'u.name as user', 's2.name as status', 'inventoryboxstock.id', 's2.statusid',
             ])->get();
         return $this->showDataToView($data, 'Yards.InventoryBoxes.partials.buttons');
     }
@@ -78,8 +75,11 @@ class InventoryBoxesController extends BaseController
         $data = InventoryCountStock::controlAccessUser()->where('countid', $inventorybox->id)
             ->with(['center:centerid,name,description', 'status:statusid,name', 'locationold:locationid,name',
                 'locationnew:locationid,name', 'user:id,name', 'zoneold:zoneid,name',
-                'zonenew:zoneid,name', 'inventory', 'folio'])->get();
-        return view('Yards.InventoryBoxes.edit', compact('inventorybox', 'data')
+                'zonenew:zoneid,name', 'inventory', 'folio',
+            ])->get();
+        return view(
+            'Yards.InventoryBoxes.edit',
+            compact('inventorybox', 'data')
         );
     }
 
@@ -102,7 +102,7 @@ class InventoryBoxesController extends BaseController
         $this->authorize('inventorybox.edit');
         $inventoryboxActive = InventoryBox::controlAccessUser()
             ->where('statusid', 'AT')->first();
-        if (!empty($inventoryboxActive)) {
+        if (! empty($inventoryboxActive)) {
             $inventoryboxActive->statusid = 'TO';
             $inventoryboxActive->save();
         }
@@ -113,6 +113,4 @@ class InventoryBoxesController extends BaseController
 
         return response()->json('Registro actualizado con exito.');
     }
-
-
 }

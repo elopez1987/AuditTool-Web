@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Traits\Web\Izel;
-
 
 use App\Models\Configuration\EDI\SystemEventWebServiceIzel;
 
@@ -12,11 +10,11 @@ trait RegisterDataToIzel
 
     public function processIntefaceToIzel($receiptunit, $parameter, $type)
     {
-        if (in_array('SWH-08', (array)$parameter)) {
+        if (in_array('SWH-08', (array) $parameter)) {
             $reponse = $this->sendDataToWMSIzel($receiptunit, $type);
-            if ($reponse->status() == 200) {
+            if ($reponse->status() === 200) {
                 $statusService = json_decode($reponse->getBody()->getContents());
-                if ($statusService->{'Code'} == '0') {
+                if ($statusService->{'Code'} === '0') {
                     SystemEventWebServiceIzel::createRegisterLog($receiptunit, $statusService, $parameter);
                 } else {
                     SystemEventWebServiceIzel::createRegisterLog($receiptunit, $statusService, $parameter);
@@ -25,7 +23,4 @@ trait RegisterDataToIzel
             }
         }
     }
-
-
-
 }

@@ -12,7 +12,7 @@ class ImportCarriersController extends BaseController
     public function importcarriers(Request $request)
     {
         $file = $request->file('file');
-        Excel::import(new ImportCarriers, $file);
+        Excel::import(new ImportCarriers(), $file);
         return $this->successResponse('shipmentcarriers.index');
     }
 }

@@ -9,11 +9,9 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
-
 class ServiceShipmentContainer
 {
     use EvidencePhotoTrait;
-
 
     public function updateContainerForLoad($container)
     {
@@ -29,7 +27,7 @@ class ServiceShipmentContainer
             ->where('statusid', '=', 'SC')->get()->count();
     }
 
-    public function createNewFileEvidence($file,$shipment)
+    public function createNewFileEvidence($file, $shipment)
     {
         $image = $file;
         $image = str_replace('data:image/png;base64,', '', $image);
@@ -39,7 +37,4 @@ class ServiceShipmentContainer
         $path = 'public/' . $shipment->centerid . '/EvidenceShipment/' . $imageName;
         $this->createEvidencePhoto('OrderDelivery', $shipment->id, $path, 'SH', $shipment);
     }
-
-
-
 }

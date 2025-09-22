@@ -14,8 +14,6 @@ use Illuminate\Support\Facades\DB;
 
 class ModuleMonitorVerifyProcessController extends BaseController
 {
-
-
     public function index($id)
     {
         $this->authorize('monitoroperation.check');
@@ -32,16 +30,22 @@ class ModuleMonitorVerifyProcessController extends BaseController
         $pedidos = ShipmentControl::controlAccessUser()->where('orderid', '=', $id)->get();
         $total = $this->getTotalGeneral($id);
         $detailLpns = $this->getDetailLpns($id);
-        return view('Shipments.OrderMonitor.MonitorOperation.VerificationProcess.index',
-            compact('orderDelivery', 'checks', 'total', 'concepts', 'lpns', 'detailLpns', 'lpsFusionados', 'kardexMoveBox','pedidos'));
+        return view(
+            'Shipments.OrderMonitor.MonitorOperation.VerificationProcess.index',
+            compact('orderDelivery', 'checks', 'total', 'concepts', 'lpns', 'detailLpns', 'lpsFusionados', 'kardexMoveBox', 'pedidos')
+        );
     }
 
     public function getDetailLpns($id): Collection
     {
         return DB::table('shipmentstock')
-            ->select('inventorypartnumbers.prtnum as partnumberid', 'inventorypartnumbers.lngdsc as description',
-                DB::raw("sum(shipmentstock.quantity) as total"), 'shipmentstock.lpnid',
-                'users.name as createuser')
+            ->select(
+                'inventorypartnumbers.prtnum as partnumberid',
+                'inventorypartnumbers.lngdsc as description',
+                DB::raw('sum(shipmentstock.quantity) as total'),
+                'shipmentstock.lpnid',
+                'users.name as createuser'
+            )
             ->leftJoin('inventorypartnumbers', function ($join) {
                 $join->on('shipmentstock.partnumberid', '=', 'inventorypartnumbers.id')
                     ->on('inventorypartnumbers.centerid', '=', 'shipmentstock.centerid');
@@ -52,15 +56,21 @@ class ModuleMonitorVerifyProcessController extends BaseController
             ->get();
     }
 
-
     public function getTotalChecks($id): Collection
     {
         return DB::table('shipmentcontrol')
-            ->select('shipmentcontrol.recordid', 'orderdeliveries.shipmentid', 'inventorypartnumbers.prtnum as sku',
-                'inventorypartnumbers.lngdsc as description', 'inventoryunitsmeasure.description as unitmeasureid', 'shipmentcontrol.missingconceptid',
-                'shipmentcontrol.quantityrequested as requested', 'storagecategoryincidencedetails.description as concept',
-                DB::raw("sum(shipmentstock.quantity) as totalver"))
-            ->addSelect(DB::raw("sum(shipmentstock.quantity) - shipmentcontrol.quantityrequested as quantityfail"))
+            ->select(
+                'shipmentcontrol.recordid',
+                'orderdeliveries.shipmentid',
+                'inventorypartnumbers.prtnum as sku',
+                'inventorypartnumbers.lngdsc as description',
+                'inventoryunitsmeasure.description as unitmeasureid',
+                'shipmentcontrol.missingconceptid',
+                'shipmentcontrol.quantityrequested as requested',
+                'storagecategoryincidencedetails.description as concept',
+                DB::raw('sum(shipmentstock.quantity) as totalver')
+            )
+            ->addSelect(DB::raw('sum(shipmentstock.quantity) - shipmentcontrol.quantityrequested as quantityfail'))
             ->join('orderdeliveries', function ($join) {
                 $join->on('shipmentcontrol.orderid', '=', 'orderdeliveries.id')
                     ->on('shipmentcontrol.centerid', '=', 'orderdeliveries.centerid');
@@ -80,20 +90,25 @@ class ModuleMonitorVerifyProcessController extends BaseController
             })
             ->leftJoin('storagecategoryincidencedetails', 'shipmentcontrol.missingconceptid', '=', 'storagecategoryincidencedetails.categoryincdetailid')
             ->where('shipmentcontrol.orderid', '=', $id)
-            ->groupBy('shipmentcontrol.recordid', 'orderdeliveries.shipmentid',
-                'inventorypartnumbers.prtnum', 'inventorypartnumbers.lngdsc', 'shipmentcontrol.missingconceptid',
-                'inventoryunitsmeasure.description', 'shipmentcontrol.quantityrequested', 'storagecategoryincidencedetails.description')
+            ->groupBy(
+                'shipmentcontrol.recordid',
+                'orderdeliveries.shipmentid',
+                'inventorypartnumbers.prtnum',
+                'inventorypartnumbers.lngdsc',
+                'shipmentcontrol.missingconceptid',
+                'inventoryunitsmeasure.description',
+                'shipmentcontrol.quantityrequested',
+                'storagecategoryincidencedetails.description'
+            )
             ->get();
     }
-
 
     public function getTotalGeneral($id)
     {
         return ShipmentControl::controlAccessUser()->select([
             DB::raw('sum(shipmentcontrol.quantityrequested) as totalpedido'),
-            DB::raw('(select sum(quantity) from shipmentstock where shipmentstock.orderid = shipmentcontrol.orderid) as verificado')
+            DB::raw('(select sum(quantity) from shipmentstock where shipmentstock.orderid = shipmentcontrol.orderid) as verificado'),
         ])->where('shipmentcontrol.orderid', $id)
             ->groupBy('shipmentcontrol.orderid')->first();
     }
-
 }

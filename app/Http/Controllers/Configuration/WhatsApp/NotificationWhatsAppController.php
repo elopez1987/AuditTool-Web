@@ -8,11 +8,8 @@ use App\Models\Configuration\WhatsApp\NotificationWhatsApp;
 use App\Models\Yard\LogMessageWhatsApp;
 use Illuminate\Http\Request;
 
-
 class NotificationWhatsAppController extends BaseController
 {
-
-
     public function index()
     {
         $this->authorize('systemwhatsapps.index');
@@ -21,12 +18,11 @@ class NotificationWhatsAppController extends BaseController
 
     public function getDataNotifications(Request $request)
     {
-        $data = NotificationWhatsApp::WhatsAppId($request->get('whatsappid'))
-            ->Name($request->get('name'))->with([
-                'status' => function ($q) {
-                    $q->select('statusid', 'name');
-                },
-            ])->select('systemwhatsapps.*');;
+        $data = NotificationWhatsApp::WhatsAppId($request->get('whatsappid'))->Name($request->get('name'))->with([
+            'status' => function ($q) {
+                $q->select('statusid', 'name');
+            },
+        ])->select('systemwhatsapps.*');
         return $this->showDataToView($data, 'Configuration.SystemWhatsApps.partials.buttons');
     }
 
@@ -72,6 +68,4 @@ class NotificationWhatsAppController extends BaseController
             ->select(['logsmessagewhatsapp.*', 'systemcenterdistributions.name as centername'])->orderBy('id', 'desc')->limit(1000)->get();
         return $this->showDataToView($data, '');
     }
-
-
 }

@@ -15,8 +15,10 @@ class ShipmentSchedulleBridgestoneController extends BaseController
         $this->authorize('monitoroperation.index');
         $status = $this->getStatusForSchema('KLE');
         $warehouses = $this->getWarehouseForSelect();
-        return view('Shipments.ShipmentSchedulle.Bridgestone.index',
-            compact('status', 'warehouses'));
+        return view(
+            'Shipments.ShipmentSchedulle.Bridgestone.index',
+            compact('status', 'warehouses')
+        );
     }
 
     public function getDataSchedulleShipmentBridgestone(Request $request)
@@ -87,7 +89,7 @@ class ShipmentSchedulleBridgestoneController extends BaseController
                 'ru.id as folionumber',
                 'sl2.name as stage',
                 'ru.entrydate',
-                'orderdeliveries.statusid'
+                'orderdeliveries.statusid',
             ])
             ->whereNotIn('orderdeliveries.statusid', ['CA'])
             ->orderBy('orderdeliveries.id', 'desc')->limit(200)->get();
@@ -96,6 +98,4 @@ class ShipmentSchedulleBridgestoneController extends BaseController
             ->rawColumns(['btn'])
             ->toJson();
     }
-
-
 }

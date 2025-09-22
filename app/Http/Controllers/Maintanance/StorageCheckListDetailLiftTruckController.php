@@ -10,15 +10,16 @@ use Illuminate\Http\Request;
 
 class StorageCheckListDetailLiftTruckController extends BaseController
 {
-
     public function index($id)
     {
         $this->authorize('addchecklistdetailslifttruck');
         $checkList = StorageCheckListLiftTrucks::findOrFail($id);
         $types = $this->getStatusForSchema('TPV');
         $details = StorageCheckListDetailLiftTruck::where('checklistid', '=', $id)->get();
-        return view('Maintenance.StorageCheckListDetails.create',
-            compact('checkList', 'types', 'details'));
+        return view(
+            'Maintenance.StorageCheckListDetails.create',
+            compact('checkList', 'types', 'details')
+        );
     }
 
     public function store(CreateCheckListLiftTrucksRequest $request, $id)
@@ -37,7 +38,7 @@ class StorageCheckListDetailLiftTruckController extends BaseController
     public function updatestatusdetaillifttruck($id)
     {
         $detail = StorageCheckListDetailLiftTruck::findOrFail($id);
-        if ($detail->statusid == 'E') {
+        if ($detail->statusid === 'E') {
             $detail->statusid = 'D';
         } else {
             $detail->statusid = 'E';
@@ -62,6 +63,4 @@ class StorageCheckListDetailLiftTruckController extends BaseController
         $detail->delete();
         return $this->redirectBackSuccessMessage('Regsitro eliminado con exito.');
     }
-
-
 }

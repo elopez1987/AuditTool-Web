@@ -16,13 +16,13 @@ use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
 class ReportReceipt implements FromCollection, WithHeadings, WithMapping, WithEvents, ShouldAutoSize, WithColumnFormatting
 {
+
+    use Exportable;
     private $workdayin;
     private $workdayout;
     private $centerid;
 
-    use Exportable;
-
-    public function __construct($workdayin, $workdayout,$centerid)
+    public function __construct($workdayin, $workdayout, $centerid)
     {
         $this->workdayin = $workdayin;
         $this->workdayout = $workdayout;
@@ -61,14 +61,13 @@ class ReportReceipt implements FromCollection, WithHeadings, WithMapping, WithEv
             'F.Salida de Unidad',
             'Estadia',
             'Tipo de entrada',
-            'Estatus'
+            'Estatus',
         ];
     }
 
     public function collection()
     {
-        $receipts = collect(DB::select('exec getDataReceipts "' . $this->centerid . '" , "' . $this->workdayin . '" , "' . $this->workdayout . '"   '));
-        return $receipts;
+        return collect(DB::select('exec getDataReceipts "' . $this->centerid . '" , "' . $this->workdayin . '" , "' . $this->workdayout . '"   '));
     }
 
     public function map($receipts): array
@@ -106,7 +105,8 @@ class ReportReceipt implements FromCollection, WithHeadings, WithMapping, WithEv
             AfterSheet::class => function (AfterSheet $event) {
                 $event->sheet->getDelegate()->getStyle('A1:W1')->getFill()
                     ->applyFromArray(['fillType' => Fill::FILL_SOLID,
-                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6']]);
+                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6'],
+                    ]);
             },
         ];
     }

@@ -161,5 +161,39 @@
         $("#userid").blur(function () {
             reloadtable();
         });
+
+        // Función para enviar correo de reset de contraseña
+        {{--function sendPasswordReset(uuiduser, email) {--}}
+        {{--    event.preventDefault();--}}
+        {{--    --}}
+        {{--    Swal.fire({--}}
+        {{--        title: '¿Enviar correo de reinicio?',--}}
+        {{--        html: `Se enviará un correo de reinicio de contraseña a:<br><strong>${email}</strong>`,--}}
+        {{--        icon: 'question',--}}
+        {{--        showCancelButton: true,--}}
+        {{--        confirmButtonColor: '#3085d6',--}}
+        {{--        cancelButtonColor: '#d33',--}}
+        {{--        confirmButtonText: 'Sí, enviar',--}}
+        {{--        cancelButtonText: 'Cancelar'--}}
+        {{--    }).then((result) => {--}}
+        {{--        if (result.isConfirmed) {--}}
+        {{--            // Crear un form temporal para enviar la solicitud POST--}}
+        {{--            const form = document.createElement('form');--}}
+        {{--            form.method = 'POST';--}}
+        {{--            form.action = `/securityusers/${uuiduser}/send-password-reset`;--}}
+        {{--            --}}
+        {{--            // Agregar token CSRF--}}
+        {{--            const csrfToken = document.createElement('input');--}}
+        {{--            csrfToken.type = 'hidden';--}}
+        {{--            csrfToken.name = '_token';--}}
+        {{--            csrfToken.value = '{{ csrf_token() }}';--}}
+        {{--            form.appendChild(csrfToken);--}}
+        {{--            --}}
+        {{--            // Agregar al DOM y enviar--}}
+        {{--            document.body.appendChild(form);--}}
+        {{--            form.submit();--}}
+        {{--        }--}}
+        {{--    });--}}
+        {{--}--}}
     </script>
 @endsection

@@ -10,7 +10,6 @@ class PrintDocumentQRForTransportController extends Controller
 {
     use QueryShipmentTransport;
 
-
     public function printPDF($id)
     {
         $data = $this->getModelDeliveryForPrintFormat($id);

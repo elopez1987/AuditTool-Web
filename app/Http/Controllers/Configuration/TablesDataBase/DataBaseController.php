@@ -6,12 +6,10 @@ use App\Http\Controllers\BaseController;
 use App\Models\Configuration\TablesDataBase\SystemTable;
 use DB;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Schema;
 use Redirect;
 
 class DataBaseController extends BaseController
 {
-
     public function index()
     {
         $this->authorize('updatedatabase');
@@ -26,11 +24,11 @@ class DataBaseController extends BaseController
         DB::beginTransaction();
         try {
             $event = $request['event'];
-            if ($event == 'update') {
+            if ($event === 'update') {
                 DB::table($request['table'])
                     ->where($request['key'], '=', $request['keyValue'])
                     ->update([$request['column'] => $request['newValue']]);
-            } elseif ($event == 'delete') {
+            } elseif ($event === 'delete') {
                 DB::table($request['table'])
                     ->where($request['key'], '=', $request['keyValue'])
                     ->delete();
@@ -44,10 +42,7 @@ class DataBaseController extends BaseController
         }
         if ($success) {
             return redirect::back()->with(session()->flash('success', 'Movimiento ejecutado con exito!!'));
-        } else {
-            return redirect::back()->with(session()->flash('error', 'Movimiento no ejecutado:!!' . $error));
         }
+        return redirect::back()->with(session()->flash('error', 'Movimiento no ejecutado:!!' . $error));
     }
-
-
 }

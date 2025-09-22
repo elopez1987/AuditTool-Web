@@ -17,16 +17,14 @@ class ServiceRole
 
     public function createNewPermissionToRole($request, $securityrole): void
     {
-        if ($request['permissions'] != "") {
-            $total = count($request["permissions"]) - 1;
+        if ($request['permissions'] !== '') {
+            $total = count($request['permissions']) - 1;
             for ($i = 0; $i <= $total; $i++) {
                 DB::table('role_has_permissions')->insert([
                     'role_id' => $securityrole->id,
-                    'permission_id' => $request['permissions'][$i]
+                    'permission_id' => $request['permissions'][$i],
                 ]);
             }
         }
     }
-
-
 }

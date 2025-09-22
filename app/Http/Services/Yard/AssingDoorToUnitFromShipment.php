@@ -19,10 +19,10 @@ class AssingDoorToUnitFromShipment
     {
         $shipmentid = $receiptunit->shipmentid;
         $order = $this->getOrderDeliverie($receiptunit);
-        if (!empty($order)) {
+        if (! empty($order)) {
             $doors = $this->getDoorEnabled($shipmentid, $receiptunit->centerid);
             foreach ($doors as $door) {
-                if ($door->statusid == 'E') {
+                if ($door->statusid === 'E') {
                     $doorAssing = ShipmentStage::where('orderid', '=', $order->id)->first();
                     if (empty($doorAssing)) {
                         $unitUpdate = $this->updateUnit($receiptunit, $door);
@@ -39,6 +39,7 @@ class AssingDoorToUnitFromShipment
      * @param string $center
      * @param $door
      * @param $unitUpdate
+     *
      * @return void
      */
     public function updateLocation(string $center, $door, $unitUpdate): void
@@ -51,6 +52,7 @@ class AssingDoorToUnitFromShipment
     /**
      * @param OrderDeliverie $order
      * @param $door
+     *
      * @return void
      */
     public function createAssingDoor(OrderDeliverie $order, $door): void
@@ -64,7 +66,8 @@ class AssingDoorToUnitFromShipment
     /**
      * @param $receiptunit
      * @param $door
-     * @return ReceiptUnit|ReceiptUnit[]|_IH_ReceiptUnit_C|null
+     *
+     * @return ReceiptUnit|array<ReceiptUnit>|_IH_ReceiptUnit_C|null
      */
     public function updateUnit($receiptunit, $door)
     {
@@ -79,22 +82,24 @@ class AssingDoorToUnitFromShipment
     /**
      * @param $shipmentid
      * @param string $center
+     *
      * @return Collection
      */
     public function getDoorEnabled($shipmentid, string $center): Collection
     {
-        return collect(DB::select("
+        return collect(DB::select('
            select a.stageid,a.doorid,b.zoneid,b.statusid from storagedoorstages a
                 left join storagelocations b on a.doorid = b.id and a.centerid = b.centerid
                 where a.stageid in ( select  locationid
                 from shipmentheader  where orderid in (select id from orderdeliveries
                                                                  where shipmentid=? and centerid=?))
                 and a.centerid=?
-           ", [$shipmentid, $center, $center]));
+           ', [$shipmentid, $center, $center]));
     }
 
     /**
      * @param $shipmentid
+     *
      * @return OrderDeliverie
      */
     public function getOrderDeliverie($receiptunit)
@@ -104,5 +109,4 @@ class AssingDoorToUnitFromShipment
             ->select(['id', 'shipmentid', 'statusid'])
             ->whereIn('statusid', ['VF', 'PC'])->first();
     }
-
 }

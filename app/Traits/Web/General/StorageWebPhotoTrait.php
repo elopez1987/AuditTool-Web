@@ -11,7 +11,6 @@ use Intervention\Image\Facades\Image;
 
 trait StorageWebPhotoTrait
 {
-
 //    Esta funcion guarda la imagen y devuelve el path para guardarlo en una columna de la tabla
 //    $file = El archivo a guardar (Imagen)
 //    $centerid = Representa el centro de distribucion para guardar la imagen
@@ -25,19 +24,7 @@ trait StorageWebPhotoTrait
         $directory = $this->createDirectoryPath($centerid, $module, $submodule, $folder);
         $basePath = public_path('storage/' . $directory . $imageName);
         $this->resizeImage($file, $basePath);
-        $relativePath = $directory . $imageName;
-        return $relativePath;
-    }
-
-    private function createDirectoryPath($centerId, $module, $submodule, $folder)
-    {
-        $year = Carbon::now()->year;
-        $month = Carbon::now()->month;
-        $directory = 'public/' . $centerId . '/' . $year . '/' . $module . '/' . $submodule . '/' . $folder . '/';
-        if (!Storage::exists($directory)) {
-            \Storage::makeDirectory($directory);
-        }
-        return $directory;
+        return $directory . $imageName;
     }
 
     public function resizeImage($file, $basePath)
@@ -67,5 +54,13 @@ trait StorageWebPhotoTrait
         ]);
     }
 
-
+    private function createDirectoryPath($centerId, $module, $submodule, $folder)
+    {
+        $year = Carbon::now()->year;
+        $directory = 'public/' . $centerId . '/' . $year . '/' . $module . '/' . $submodule . '/' . $folder . '/';
+        if (! Storage::exists($directory)) {
+            \Storage::makeDirectory($directory);
+        }
+        return $directory;
+    }
 }

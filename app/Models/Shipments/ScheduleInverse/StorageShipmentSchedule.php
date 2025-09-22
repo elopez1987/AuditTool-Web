@@ -11,13 +11,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class StorageShipmentSchedule extends Model
 {
-
     use LogsActivity;
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
 
     protected $table = 'storageshipmentsschedule';
 
@@ -28,9 +22,8 @@ class StorageShipmentSchedule extends Model
         'appointment',
         'createuser',
         'statusid',
-        'token', 'value01', 'value02', 'value03'
+        'token', 'value01', 'value02', 'value03',
     ];
-
 
 //    AGD = AGENDADO
 //    ENT = ENTREGADO
@@ -39,16 +32,9 @@ class StorageShipmentSchedule extends Model
         'schemaid' => 'DEC',
     ];
 
-
-    protected static function boot()
+    public function getActivitylogOptions(): LogOptions
     {
-        parent::boot();
-        if (!app()->runningInConsole()) {
-            self::creating(function (StorageShipmentSchedule $model) {
-                $model->createuser = Auth::id();
-                $model->token = bin2hex(random_bytes(10));
-            });
-        }
+        return LogOptions::defaults()->logFillable();
     }
 
     public static function controlAccessUser()
@@ -59,7 +45,6 @@ class StorageShipmentSchedule extends Model
             ->whereIn('storageshipmentsschedule.centerid', $centers);
     }
 
-
     public function carrier()
     {
         return $this->belongsTo(ShipmentCarrier::class, 'carrierid');
@@ -67,10 +52,19 @@ class StorageShipmentSchedule extends Model
 
     public function scopeCarrierIn($query, $carrierid)
     {
-        if (!empty($carrierid)) {
+        if (! empty($carrierid)) {
             $query->whereIn('storageshipmentsschedule.carrierid', $carrierid);
         }
     }
 
-
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (StorageShipmentSchedule $model) {
+                $model->createuser = Auth::id();
+                $model->token = bin2hex(random_bytes(10));
+            });
+        }
+    }
 }

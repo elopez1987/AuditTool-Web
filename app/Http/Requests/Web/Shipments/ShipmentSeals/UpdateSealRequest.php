@@ -6,7 +6,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateSealRequest extends FormRequest
 {
-
     public function authorize(): bool
     {
         return true;
@@ -16,7 +15,7 @@ class UpdateSealRequest extends FormRequest
     {
         return [
             'receivername' => 'required|string',
-            'containerseal01' =>  'required|numeric'
+            'containerseal01' => 'required|numeric',
         ];
     }
 }

@@ -11,10 +11,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Ramsey\Uuid\Uuid;
 
-
 class StorageKeyIncidenceTransportController extends BaseController
 {
-
     public function index()
     {
         return view('Shipments.ShipmentKeyTranspors.index');
@@ -26,7 +24,6 @@ class StorageKeyIncidenceTransportController extends BaseController
         return $this->showDataToView($data, 'Shipments.ShipmentKeyTranspors.partials.buttons');
     }
 
-
     public function edit($id)
     {
         $order = OrderDeliverie::controlAccessUser()->findOrFail($id);
@@ -36,7 +33,6 @@ class StorageKeyIncidenceTransportController extends BaseController
             ->select(['description', 'categoryincdetailid'])->get();
         return view('Shipments.ShipmentKeyTranspors.edit', compact('order', 'details', 'motivos'));
     }
-
 
     public function update(Request $request)
     {
@@ -51,7 +47,7 @@ class StorageKeyIncidenceTransportController extends BaseController
             $item->save();
             $order = $item->orderid;
         }
-        if (!empty($order)) {
+        if (! empty($order)) {
             $incidence = StorageIncidenceJourney::where('orderid', $order)->first();
             $incidence->statuskeytrid = 'FR';
             $incidence->auxiliary02 = Uuid::uuid4();
@@ -60,6 +56,4 @@ class StorageKeyIncidenceTransportController extends BaseController
 
         return $this->successResponse('storagekeyincidencestransport.index');
     }
-
-
 }

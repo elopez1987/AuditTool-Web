@@ -21,8 +21,10 @@ class StorageCheckListLiftTruckController extends BaseController
     public function getDataCheckListLiftTrucks(Request $request)
     {
         $data = $this->getAllCheckList($request);
-        return $this->showDataToView($data,
-            'Maintenance.StorageCheckLists.partials.buttons');
+        return $this->showDataToView(
+            $data,
+            'Maintenance.StorageCheckLists.partials.buttons'
+        );
     }
 
     public function create()
@@ -35,7 +37,7 @@ class StorageCheckListLiftTruckController extends BaseController
     public function store(CreateCheckListLiftTrucksRequest $request)
     {
         $centerid = $this->getCenterForUser();
-        $checkList = new  StorageCheckListLiftTrucks($request->all() + ['centerid' => $centerid]);
+        $checkList = new StorageCheckListLiftTrucks($request->all() + ['centerid' => $centerid]);
         $checkList->save();
         return $this->redirectBackSuccessMessage('Registro guardado con exito.');
     }
@@ -45,8 +47,10 @@ class StorageCheckListLiftTruckController extends BaseController
         $this->authorize('storagechecklistlifttrucks.edit');
         $checkList = StorageCheckListLiftTrucks::findOrFail($id);
         $status = $this->getStatusForSchema('STS');
-        return view('Maintenance.StorageCheckLists.edit',
-            compact('status', 'checkList'));
+        return view(
+            'Maintenance.StorageCheckLists.edit',
+            compact('status', 'checkList')
+        );
     }
 
     public function update(Request $request, $id)
@@ -63,6 +67,4 @@ class StorageCheckListLiftTruckController extends BaseController
         $checkList->delete();
         return $this->redirectBackSuccessMessage('Registro eliminado con exito.');
     }
-
-
 }

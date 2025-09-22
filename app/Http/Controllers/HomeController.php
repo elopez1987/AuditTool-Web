@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Redirect;
 
 class HomeController extends BaseController
 {
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -32,7 +31,4 @@ class HomeController extends BaseController
             ->header('Pragma', 'no-cache')
             ->header('Expires', '0');
     }
-
-
-
 }

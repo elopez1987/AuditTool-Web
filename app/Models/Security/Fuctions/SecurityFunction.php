@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class SecurityFunction extends Model
 {
-    protected $table = 'securityfunctions';
     public $timestamps = false;
-    protected $primaryKey = 'functionid';
     public $incrementing = true;
+    protected $table = 'securityfunctions';
+    protected $primaryKey = 'functionid';
 
     protected $fillable = [
         'moduleid',
@@ -29,21 +29,20 @@ class SecurityFunction extends Model
 
     public function module()
     {
-        return $this->belongsTo(SecurityModule::class, 'moduleid','moduleid');
+        return $this->belongsTo(SecurityModule::class, 'moduleid', 'moduleid');
     }
 
     public function scopeDescription($query, $description)
     {
-        if (trim($description) != '') {
-            $query->where('securityfunctions.description', 'like', "%$description%");
+        if (trim($description) !== '') {
+            $query->where('securityfunctions.description', 'like', "%{$description}%");
         }
     }
 
     public function scopeModule($query, $moduleid)
     {
-        if (trim($moduleid) != '') {
+        if (trim($moduleid) !== '') {
             $query->where('securityfunctions.moduleid', '=', $moduleid);
         }
     }
-
 }

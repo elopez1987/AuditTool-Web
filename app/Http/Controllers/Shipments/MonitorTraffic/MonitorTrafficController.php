@@ -11,7 +11,6 @@ use Yajra\DataTables\Facades\DataTables;
 
 class MonitorTrafficController extends BaseController
 {
-
     use MonitorTraffic;
 
     public function index()
@@ -39,8 +38,8 @@ class MonitorTrafficController extends BaseController
     public function edit(OrderDeliverie $monitoranalistatrafico)
     {
         $orderDelivery = $monitoranalistatrafico;
-        $comments = StorageComment::where('modeltype','orderdeliveries')->where('modelid',$orderDelivery->id)->get();
-        return view("Shipments.OrderMonitor.AnalystTraffic.edit", compact('orderDelivery','comments'));
+        $comments = StorageComment::where('modeltype', 'orderdeliveries')->where('modelid', $orderDelivery->id)->get();
+        return view('Shipments.OrderMonitor.AnalystTraffic.edit', compact('orderDelivery', 'comments'));
     }
 
     public function update(Request $request, OrderDeliverie $monitoranalistatrafico)
@@ -50,12 +49,10 @@ class MonitorTrafficController extends BaseController
         $this->updateSealToShipment($orderDelivery, $request);
 
         if ($request->has('comment')) {
-            if ($request['comment'] != '') {
+            if ($request['comment'] !== '') {
                 StorageComment::createCommentary('orderdeliveries', $orderDelivery->id, $request);
             }
         }
         return $this->redirectBackInfo();
     }
-
-
 }

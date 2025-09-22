@@ -12,24 +12,24 @@ class ShipmentPod extends Model
 {
     use LogsActivity;
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
-
     public $timestamps = true;
     protected $table = 'shipmentpods';
 
     protected $fillable = [
         'centerid', 'warehouseid', 'orderid', 'value01', 'value02', 'value03', 'value04', 'value05',
         'statusid',
+        'created_at',
     ];
-
 
     protected $attributes = [
         'statusid' => 'PED',
         'schemaid' => 'POD',
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
     public static function controlAccessUser()
     {
@@ -39,7 +39,6 @@ class ShipmentPod extends Model
             ->whereIn('shipmentpods.centerid', $centers);
     }
 
-
     public function order()
     {
         return $this->belongsTo(OrderDeliverie::class, 'orderid', 'id');
@@ -47,33 +46,29 @@ class ShipmentPod extends Model
 
     public function scopeCarrierIn($query, $carrierid)
     {
-        if (!empty($carrierid)) {
+        if (! empty($carrierid)) {
             $query->whereIn('orderdeliveries.carrierid', $carrierid);
         }
     }
 
     public function scopeCustomerIn($query, $customer)
     {
-        if (!empty($customer)) {
+        if (! empty($customer)) {
             $query->whereIn('orderdeliveries.customerid', $customer);
         }
     }
 
     public function scopeShipmentid($query, $shipmentid)
     {
-        if (trim($shipmentid) != "") {
-            $query->where('orderdeliveries.shipmentid', 'like', "%$shipmentid%");
+        if (trim($shipmentid) !== '') {
+            $query->where('orderdeliveries.shipmentid', 'like', "%{$shipmentid}%");
         }
     }
-
 
     public function scopeStatus($query, $status)
     {
-        if (!empty($status)) {
-            $query->where('shipmentpods.statusid','=', $status);
+        if (! empty($status)) {
+            $query->where('shipmentpods.statusid', '=', $status);
         }
     }
-
-
-
 }

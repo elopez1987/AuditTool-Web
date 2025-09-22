@@ -13,7 +13,6 @@ use Maatwebsite\Excel\Concerns\WithValidation;
 
 class ImportUsers implements ToModel, WithHeadingRow, WithChunkReading, WithBatchInserts, WithValidation
 {
-
     use Importable;
 
     public function model(array $row)
@@ -48,47 +47,49 @@ class ImportUsers implements ToModel, WithHeadingRow, WithChunkReading, WithBatc
             ],
             '*.email' => [
                 'email',
-                'required'
+                'required',
             ],
             '*.name' => [
                 'string',
                 'required',
-                'max:100'
+                'max:100',
             ],
             '*.centerid' => [
                 'string',
                 'required',
-                'exists:systemcenterdistributions,centerid'
+                'exists:systemcenterdistributions,centerid',
             ],
             '*.warehouseid' => [
                 'string',
                 'required',
-                'exists:systemwarehouses,warehouseid'
-            ]
+                'exists:systemwarehouses,warehouseid',
+            ],
         ];
     }
 
     /**
      * @param array $row
+     *
      * @return User
      */
     public function getUpdateOrCreateUser(array $row): User
     {
-        $user = User::updateOrCreate(
+        return User::updateOrCreate(
             [
                 'username' => $row['username'],
             ],
             [
                 'email' => $row['email'],
                 'name' => $row['name'],
-				'password' => bcrypt('Temporal12##'),
-            ]);
-        return $user;
+                'password' => bcrypt('Temporal12##'),
+            ]
+        );
     }
 
     /**
      * @param array $row
      * @param User $user
+     *
      * @return void
      */
     public function createAccessWarehouse(array $row, User $user): void
@@ -99,5 +100,4 @@ class ImportUsers implements ToModel, WithHeadingRow, WithChunkReading, WithBatc
             'username' => $user->username,
         ]);
     }
-
 }

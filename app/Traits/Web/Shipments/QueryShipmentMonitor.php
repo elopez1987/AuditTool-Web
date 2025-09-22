@@ -8,13 +8,12 @@ use DB;
 
 trait QueryShipmentMonitor
 {
-
     public function shipmentpending()
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
         return DB::table('orderdeliveries')
-            ->select(DB::raw("COUNT(orderdeliveries.id) as total"))
+            ->select(DB::raw('COUNT(orderdeliveries.id) as total'))
             ->join('shipmentjourneys', function ($join) {
                 $join->on('orderdeliveries.id', '=', 'shipmentjourneys.orderid')
                     ->on('orderdeliveries.centerid', '=', 'shipmentjourneys.centerid')
@@ -30,14 +29,8 @@ trait QueryShipmentMonitor
     public function shipmenttoday()
     {
         return DB::table('orderdeliveries')
-            ->select(DB::raw("count(id) as total"))
-            ->where('downloaddate','=',Carbon::now())
+            ->select(DB::raw('count(id) as total'))
+            ->where('downloaddate', '=', Carbon::now())
             ->first();
     }
-
-
-
-
-
-
 }

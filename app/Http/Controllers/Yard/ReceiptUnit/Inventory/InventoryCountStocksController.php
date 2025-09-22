@@ -16,7 +16,6 @@ use DB;
 
 class InventoryCountStocksController extends BaseController
 {
-
     public function index()
     {
         $this->authorize('inventoryboxcount.index');
@@ -32,7 +31,6 @@ class InventoryCountStocksController extends BaseController
         $error = null;
         DB::beginTransaction();
         try {
-
             $receiptunit = ReceiptUnit::searchForId($request['folionumber']);
             if (empty($receiptunit)) {
                 return $this->errorResponse('El número de folio no existe!!');
@@ -45,9 +43,9 @@ class InventoryCountStocksController extends BaseController
             if (empty($inventoryBox)) {
                 return $this->errorResponse('No existe registro en el inventario creado');
             }
-            if ($request['locationid'] != $receiptunit->locationid) {
+            if ($request['locationid'] !== $receiptunit->locationid) {
                 $receiptunitAct = ReceiptUnit::searchUnitForLocation($request['locationid']);
-                if (!empty($receiptunitAct)) {
+                if (! empty($receiptunitAct)) {
                     $locationlost = SystemDetailParameter::getDetailParameter('UBI-LOST', $receiptunit->centerid);
                     if (empty($locationlost)) {
                         return $this->errorResponse('No existe ubicación LOST parametrizada, favor de validar el parametro UBI-LOST.!!');
@@ -71,12 +69,7 @@ class InventoryCountStocksController extends BaseController
         }
         if ($success) {
             return $this->redirectBackSuccessMessage('Caja reubicada correctamente!!');
-        } else {
-            return $this->errorResponse('Error el procesar la solicitud' . $error);
         }
+        return $this->errorResponse('Error el procesar la solicitud' . $error);
     }
-
-
-
-
 }

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Traits\Web\Yard\CheckList;
-
 
 use App\Models\Yard\CheckListTransport;
 use App\Models\Yard\ReceiptUnit;
@@ -11,7 +9,6 @@ use Illuminate\Support\Facades\DB;
 
 trait CheckListTransportTrait
 {
-
     public function clearCheckListTransport($id, $type)
     {
         DB::table('storagechecklisttransports')
@@ -22,16 +19,17 @@ trait CheckListTransportTrait
 
     public function createCheckListToUnitV2(Request $request, ReceiptUnit $receiptunit, $type): void
     {
-        if ($request['checklitsdetailid'] != "") {
+        if ($request['checklitsdetailid'] !== '') {
             $checklistids = $request->get('checklitsdetailid');
             $responses = $request->get('response');
             $checkid = $request->get('checklistid');
-            for ($i = 0; $i < count($checklistids); $i++) {
+
+            foreach ($checklistids as $i => $checklistDetailId) {
                 $checkListTransport = new CheckListTransport();
                 $checkListTransport->centerid = $receiptunit->centerid;
                 $checkListTransport->checklistid = $checkid[$i];
                 $checkListTransport->receiptunitid = $receiptunit->id;
-                $checkListTransport->checklitsdetailid = $checklistids[$i];
+                $checkListTransport->checklitsdetailid = $checklistDetailId;
                 $checkListTransport->verified = $responses[$i];
                 $checkListTransport->type = $type;
                 $checkListTransport->save();
@@ -42,13 +40,13 @@ trait CheckListTransportTrait
     public function validateCheckListCheckInTransport($receiptunit, $platform)
     {
         $parameter = $this->getParametersOfWarehouse($receiptunit->warehouseid);
-        if (in_array('SWH-04', (array)$parameter)) {
+        if (in_array('SWH-04', (array) $parameter)) {
             $difference = $this->validateCheckListV2($receiptunit, 'IN');
             if ($difference > '0') {
-                if ($platform == 'WEB') {
+                if ($platform === 'WEB') {
                     return $this->errorResponse('La unidad no cumple con el check list solicitado, favor de volver a validar. ');
                 }
-                if ($platform == 'API') {
+                if ($platform === 'API') {
                     return $this->getResponseWithErrors('saveNewUnitStandard', ',La unidad no cuemple con el checkllist de transporte, favor de validar.');
                 }
             }
@@ -64,5 +62,4 @@ trait CheckListTransportTrait
             ->where('type', $type)
             ->get()->count();
     }
-
 }

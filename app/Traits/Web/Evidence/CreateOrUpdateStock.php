@@ -9,7 +9,6 @@ use App\Models\Inventory\PartNumber\InventoryPartnumber;
 
 trait CreateOrUpdateStock
 {
-
     public function searchPartNumber($partnumber, $shipment)
     {
         $partnumberid = InventoryPartnumber::controlAccessUser()
@@ -28,7 +27,7 @@ trait CreateOrUpdateStock
         $cat01 = InventoryPartNumberCategory01::controlAccessUser()->first();
         $cat02 = InventoryPartNumberCategory02::controlAccessUser()->first();
 
-        $partnumberNew = InventoryPartnumber::updateOrCreate(
+        return InventoryPartnumber::updateOrCreate(
             [
                 'centerid' => $shipment->centerid,
                 'warehouseid' => $shipment->warehouseid,
@@ -46,12 +45,9 @@ trait CreateOrUpdateStock
                 'stkuom' => 'PZ',
             ]
         );
-
-        return $partnumberNew;
     }
 
-
-    public function createOrUpdatePartNumberStock($partnumberid,$quantity, $shipment)
+    public function createOrUpdatePartNumberStock($partnumberid, $quantity, $shipment)
     {
         $partnumberStock = StorageEvidenceStock::where('shipmentid', '=', $shipment->recordid)
             ->where('partnumberid', '=', $partnumberid->id)->first();
@@ -64,7 +60,7 @@ trait CreateOrUpdateStock
                 'quantity' => floatval($quantity),
             ]);
         } else {
-            $partnumberStock->quantity = $partnumberStock->quantity + floatval($quantity);
+            $partnumberStock->quantity += floatval($quantity);
             $partnumberStock->save();
         }
     }

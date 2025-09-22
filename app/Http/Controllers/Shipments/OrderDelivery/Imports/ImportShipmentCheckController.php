@@ -12,11 +12,10 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class ImportShipmentCheckController extends BaseController
 {
-
     public function index(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'file' => 'required|mimes:xls,xlsx'
+            'file' => 'required|mimes:xls,xlsx',
         ]);
         if ($validator->fails()) {
             return $this->errorResponse('El formato de archivo no es correcto.');
@@ -26,8 +25,6 @@ class ImportShipmentCheckController extends BaseController
         DB::table('logimports')->delete();
         Excel::import(new ShipmentCheckImport(), $file, '', \Maatwebsite\Excel\Excel::XLSX);
         $data = LogImportFile::get();
-        return view('Configuration.EdiLogs.LogImportFile.index',compact('data'));
+        return view('Configuration.EdiLogs.LogImportFile.index', compact('data'));
     }
-
-
 }

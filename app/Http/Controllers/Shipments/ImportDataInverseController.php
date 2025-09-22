@@ -16,11 +16,10 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class ImportDataInverseController extends BaseController
 {
-
     public function importrequestzare(Request $request)
     {
         $validator = \Validator::make($request->all(), [
-            'file' => 'required|mimes:xls,xlsx'
+            'file' => 'required|mimes:xls,xlsx',
         ]);
         if ($validator->fails()) {
             return $this->errorResponse('El formato de archivo no es correcto.');
@@ -32,7 +31,7 @@ class ImportDataInverseController extends BaseController
     public function importresponsezare(Request $request)
     {
         $validator = \Validator::make($request->all(), [
-            'file' => 'required|mimes:xls,xlsx'
+            'file' => 'required|mimes:xls,xlsx',
         ]);
         if ($validator->fails()) {
             return $this->errorResponse('El formato de archivo no es correcto.');
@@ -44,7 +43,7 @@ class ImportDataInverseController extends BaseController
     public function importrequestne(Request $request)
     {
         $validator = \Validator::make($request->all(), [
-            'file' => 'required|mimes:xls,xlsx'
+            'file' => 'required|mimes:xls,xlsx',
         ]);
         if ($validator->fails()) {
             return $this->errorResponse('El formato de archivo no es correcto.');
@@ -56,7 +55,7 @@ class ImportDataInverseController extends BaseController
     public function importresponsene(Request $request)
     {
         $validator = \Validator::make($request->all(), [
-            'file' => 'required|mimes:xls,xlsx'
+            'file' => 'required|mimes:xls,xlsx',
         ]);
         if ($validator->fails()) {
             return $this->errorResponse('El formato de archivo no es correcto.');
@@ -68,7 +67,7 @@ class ImportDataInverseController extends BaseController
     public function importrequestnc(Request $request)
     {
         $validator = \Validator::make($request->all(), [
-            'file' => 'required|mimes:xls,xlsx'
+            'file' => 'required|mimes:xls,xlsx',
         ]);
         if ($validator->fails()) {
             return $this->errorResponse('El formato de archivo no es correcto.');
@@ -80,7 +79,7 @@ class ImportDataInverseController extends BaseController
     public function importresponsenc(Request $request)
     {
         $validator = \Validator::make($request->all(), [
-            'file' => 'required|mimes:xls,xlsx'
+            'file' => 'required|mimes:xls,xlsx',
         ]);
         if ($validator->fails()) {
             return $this->errorResponse('El formato de archivo no es correcto.');
@@ -98,7 +97,7 @@ class ImportDataInverseController extends BaseController
     public function importresponseinventory(Request $request)
     {
         $validator = \Validator::make($request->all(), [
-            'file' => 'required|mimes:xls,xlsx'
+            'file' => 'required|mimes:xls,xlsx',
         ]);
         if ($validator->fails()) {
             return $this->errorResponse('El formato de archivo no es correcto.');
@@ -106,6 +105,4 @@ class ImportDataInverseController extends BaseController
         Excel::import(new ImportResponseInventoryLogInverse(), $request->file('file'), '', \Maatwebsite\Excel\Excel::XLSX);
         return $this->redirectBackSuccessMessage('Importación terminada con exito.');
     }
-
-
 }

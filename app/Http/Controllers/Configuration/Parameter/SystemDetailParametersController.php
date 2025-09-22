@@ -9,12 +9,13 @@ use Illuminate\Http\Request;
 
 class SystemDetailParametersController extends BaseController
 {
-
     public function adddetailparameter(SystemParameter $systemparameter)
     {
         $details = SystemDetailParameter::whereParameterid($systemparameter->parameterid)->get();
-        return view('Configuration.SystemParameters.createdetail',
-            compact('systemparameter', 'details'));
+        return view(
+            'Configuration.SystemParameters.createdetail',
+            compact('systemparameter', 'details')
+        );
     }
 
     public function savedetailparameter(Request $request, SystemParameter $systemparameter)
@@ -32,8 +33,7 @@ class SystemDetailParametersController extends BaseController
 
     public function editdetailparameter(Request $request, SystemDetailParameter $systemdetailparameter)
     {
-          $systemdetailparameter->update($request->all());
-          return $this->redirectBackSuccess();
+        $systemdetailparameter->update($request->all());
+        return $this->redirectBackSuccess();
     }
-
 }

@@ -11,7 +11,7 @@ class CreateSystemTableRequest extends FormRequest
         return [
             'tableid' => 'required|string',
             'description' => 'required|string',
-            'notes' => 'required|string'
+            'notes' => 'required|string',
         ];
     }
 

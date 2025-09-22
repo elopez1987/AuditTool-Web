@@ -15,13 +15,14 @@ class PasswordChangeThrottle
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
+     *
      * @return mixed
      */
     public function handle(Request $request, Closure $next)
     {
         $user = Auth::user();
-        
-        if (!$user) {
+
+        if (! $user) {
             return redirect()->route('login');
         }
 
@@ -38,7 +39,7 @@ class PasswordChangeThrottle
                 'user_id' => $user->id,
                 'ip' => $request->ip(),
                 'attempts' => $attempts,
-                'user_agent' => $request->userAgent()
+                'user_agent' => $request->userAgent(),
             ]);
 
             return redirect()->back()
@@ -54,8 +55,8 @@ class PasswordChangeThrottle
         $response = $next($request);
 
         // Si el cambio fue exitoso, limpiar el contador
-        if ($response->getStatusCode() === 302 && 
-            session()->has('info') && 
+        if ($response->getStatusCode() === 302 &&
+            session()->has('info') &&
             strpos(session('info'), 'actualizado') !== false) {
             Cache::forget($throttleKey);
         }

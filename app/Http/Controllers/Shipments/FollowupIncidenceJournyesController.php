@@ -21,15 +21,14 @@ class FollowupIncidenceJournyesController extends BaseController
     {
         $data = $this->getIncidence($request);
         return DataTables::collection($data)
-            ->addColumn('btn', "Shipments.FollowupIncidences.partials.buttons")
-            ->addColumn('keystatus', "Shipments.FollowupIncidences.partials.keystatus")
-            ->addColumn('keytransport', "Shipments.FollowupIncidences.partials.keytransport")
+            ->addColumn('btn', 'Shipments.FollowupIncidences.partials.buttons')
+            ->addColumn('keystatus', 'Shipments.FollowupIncidences.partials.keystatus')
+            ->addColumn('keytransport', 'Shipments.FollowupIncidences.partials.keytransport')
             ->editColumn('statuspod', function (StorageIncidenceJourney $storageIncidenceJourney) {
-                return '<i class="ti ti-' . ($storageIncidenceJourney->statuspod == 'CON' ? 'check' : 'close') . '" aria-hidden="true"></i>';
+                return '<i class="ti ti-' . ($storageIncidenceJourney->statuspod === 'CON' ? 'check' : 'close') . '" aria-hidden="true"></i>';
             })
             ->rawColumns(['btn', 'statuspod', 'keystatus', 'keytransport'])->toJson();
     }
-
 
     public function getIncidence(Request $request)
     {
@@ -55,7 +54,7 @@ class FollowupIncidenceJournyesController extends BaseController
                 'storageincidencejourneys.statuskeyid',
                 'storageincidencejourneys.statuskeytrid',
                 'storageincidencejourneys.statusdevid',
-                'statusdev.name as statusdev'
+                'statusdev.name as statusdev',
             ])
             ->leftJoin('orderdeliveries', function ($join) {
                 $join->on('storageincidencejourneys.orderid', '=', 'orderdeliveries.id')
@@ -90,6 +89,4 @@ class FollowupIncidenceJournyesController extends BaseController
             ->limit(100)
             ->get();
     }
-
-
 }

@@ -9,7 +9,7 @@ class CreateScheduleInverseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'shipmentid' => 'required'
+            'shipmentid' => 'required',
         ];
     }
 

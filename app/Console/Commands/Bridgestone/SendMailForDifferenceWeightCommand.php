@@ -22,11 +22,11 @@ class SendMailForDifferenceWeightCommand extends Command
             foreach ($taskMails as $taskMail) {
                 $receiptUnit = ReceiptUnit::where('centerid', $taskMail->centerid)
                     ->where('warehouseid', $taskMail->warehouseid)->where('id', $taskMail->modelid)->first();
-                if (!empty($receiptUnit)) {
+                if (! empty($receiptUnit)) {
                     $contacts = SystemDetailMail::where('centerid', $taskMail->centerid)
                         ->where('warehouseid', $taskMail->warehouseid)
                         ->where('mailid', 'MAIL-WEIGHT')->get()->toArray();
-                    if (!empty($contacts) && !empty($receiptUnit)) {
+                    if (! empty($contacts) && ! empty($receiptUnit)) {
                         $emails = array_column($contacts, 'email');
                         Mail::to($emails)->send(new DifferenceWeightUnitMail($receiptUnit));
                     }

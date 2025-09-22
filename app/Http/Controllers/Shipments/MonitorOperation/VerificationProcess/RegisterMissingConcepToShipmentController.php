@@ -15,6 +15,4 @@ class RegisterMissingConcepToShipmentController extends BaseController
         $control->save();
         return $this->redirectBackSuccess();
     }
-
-
 }

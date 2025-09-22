@@ -28,7 +28,7 @@ class JoinTruckToBoxController extends BaseController
     {
         $data = $this->getDataToJoin($request);
         return DataTables::of($data)
-            ->addColumn('btn', "Yards.AssignTrucks.partials.buttons")
+            ->addColumn('btn', 'Yards.AssignTrucks.partials.buttons')
             ->rawColumns(['btn'])->toJson();
     }
 
@@ -46,18 +46,19 @@ class JoinTruckToBoxController extends BaseController
         try {
             $truck = ReceiptTruck::findOrFail($request['truckid']);
             $unit = ReceiptUnit::searchForBarcodeTruck($truck->id);
-            if (!empty($unit)) self::updateUnitForAssingTruck($unit);
+            if (! empty($unit)) {
+                self::updateUnitForAssingTruck($unit);
+            }
             $newAssign = self::updateUnitForNewTruck($id, $truck);
             StorageUnitTrace::createTraceUnit($newAssign, 25);
             DB::commit();
-           return $this->redirectBackSuccess();
+            return $this->redirectBackSuccess();
         } catch (Exception $e) {
             $error = $e->getMessage();
             DB::rollback();
             return $this->errorResponse('No se pudieron guardar los datos !!' . $error);
         }
     }
-
 
     public function updateUnitForNewTruck($id, $truck)
     {
@@ -68,11 +69,10 @@ class JoinTruckToBoxController extends BaseController
         return $newAssign;
     }
 
-    static function updateUnitForAssingTruck($unit)
+    public static function updateUnitForAssingTruck($unit)
     {
         $unit->auxiliary01 = null;
         $unit->foliotruck = null;
         $unit->save();
     }
-
 }

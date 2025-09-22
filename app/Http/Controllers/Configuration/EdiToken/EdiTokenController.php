@@ -34,7 +34,6 @@ class EdiTokenController extends BaseController
         return $this->redirectBackSuccessMessage('Token registrado con exito.');
     }
 
-
     public function edit($id)
     {
         $this->authorize('editokens.edit');

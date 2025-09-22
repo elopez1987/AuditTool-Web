@@ -50,6 +50,4 @@ trait QueryStorageDoorStages
             })
             ->where('storagedoorstages.stageid', '=', $id)->get();
     }
-
-
 }

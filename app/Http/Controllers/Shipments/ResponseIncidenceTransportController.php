@@ -35,8 +35,4 @@ class ResponseIncidenceTransportController extends Controller
         $this->serviceResponseIncidences->createKeyTransport($incidence);
         return $this->responseSuccessAjax('La incidencia fue enviada a revisión por transporte.', '');
     }
-
-
-
-
 }

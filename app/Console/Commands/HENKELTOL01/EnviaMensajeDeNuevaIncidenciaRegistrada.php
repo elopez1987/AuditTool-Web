@@ -26,7 +26,7 @@ class EnviaMensajeDeNuevaIncidenciaRegistrada extends Command
 
     public function handle()
     {
-        $url = "https://api.1msg.io/HEI523482986/sendTemplate";
+        $url = 'https://api.1msg.io/HEI523482986/sendTemplate';
         $client = new Client();
         $shipments = $this->getShipments();
         if ($shipments->isEmpty()) {
@@ -34,9 +34,9 @@ class EnviaMensajeDeNuevaIncidenciaRegistrada extends Command
         }
         foreach ($shipments as $shipment) {
             $parameter = $this->getParametersOfWarehouse($shipment->warehouseid);
-            if (!empty($parameter) && in_array('SWH-28', $parameter)) {
+            if (! empty($parameter) && in_array('SWH-28', $parameter)) {
                 $contacts = $this->getPhones();
-                if (!empty($contacts)) {
+                if (! empty($contacts)) {
                     foreach ($contacts as $contact) {
                         try {
                             $data = $this->getBodyData($shipment, $contact);
@@ -56,7 +56,8 @@ class EnviaMensajeDeNuevaIncidenciaRegistrada extends Command
     public function getShipments()
     {
         return StorageTaskWhatsapp::select(['storagetaskwhatsapp.centerid', 'storagetaskwhatsapp.warehouseid', 'o.shipmentid', 's.name as carriername',
-            'storagetaskwhatsapp.created_at', 'storagetaskwhatsapp.id', 'storagetaskwhatsapp.statusid'])
+            'storagetaskwhatsapp.created_at', 'storagetaskwhatsapp.id', 'storagetaskwhatsapp.statusid',
+        ])
             ->leftJoin('orderdeliveries as o', 'storagetaskwhatsapp.modelid', '=', 'o.id')
             ->leftJoin('shipmentcarriers as s', 'o.carrierid', '=', 's.id')
             ->where([
@@ -67,7 +68,6 @@ class EnviaMensajeDeNuevaIncidenciaRegistrada extends Command
             ])->get();
     }
 
-
     public function getPhones()
     {
         return SystemDetailWhatsApp::where('whatsappid', '=', 'WTH-REGINC')
@@ -76,27 +76,25 @@ class EnviaMensajeDeNuevaIncidenciaRegistrada extends Command
 
     public function getBodyData($shipment, $contact)
     {
-        return array(
-            "token" => "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbnN0YW5jZUlkIjoiSEVJNTIzNDgyOTg2IiwidG9rZW4iOiJtaGVaTTh4cTQ2a2RadjZ0Q0NJeXZydGo4dkc3bnlOeCIsImlzcyI6IjFtc2cuaW8iLCJpYXQiOjE3NTU2MTU3NTZ9.PNJB7YjZbqerW-s-r8TOSTlPOS_6OddKHxVbwfsQ9GY",
-            "namespace" => "3686dca6_3e5f_4dc5_a838_74a7716b881c",
-            "template" => "nuevaincidenciaregistradaor",
-            "language" => array(
-                "policy" => "deterministic",
-                "code" => "es_MX"
-            ),
-            "params" => array(
-                array(
-                    "type" => "body",
-                    "parameters" => array(
-                        array("type" => "text", "text" => $shipment->shipmentid),
-                        array("type" => "text", "text" => $shipment->carriername),
-                        array("type" => "text", "text" => $shipment->created_at),
-                    )
-                )
-            ),
-            "phone" => '1' . $contact->phonenumber
-        );
+        return [
+            'token' => 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbnN0YW5jZUlkIjoiSEVJNTIzNDgyOTg2IiwidG9rZW4iOiJtaGVaTTh4cTQ2a2RadjZ0Q0NJeXZydGo4dkc3bnlOeCIsImlzcyI6IjFtc2cuaW8iLCJpYXQiOjE3NTU2MTU3NTZ9.PNJB7YjZbqerW-s-r8TOSTlPOS_6OddKHxVbwfsQ9GY',
+            'namespace' => '3686dca6_3e5f_4dc5_a838_74a7716b881c',
+            'template' => 'nuevaincidenciaregistradaor',
+            'language' => [
+                'policy' => 'deterministic',
+                'code' => 'es_MX',
+            ],
+            'params' => [
+                [
+                    'type' => 'body',
+                    'parameters' => [
+                        ['type' => 'text', 'text' => $shipment->shipmentid],
+                        ['type' => 'text', 'text' => $shipment->carriername],
+                        ['type' => 'text', 'text' => $shipment->created_at],
+                    ],
+                ],
+            ],
+            'phone' => '1' . $contact->phonenumber,
+        ];
     }
-
-
 }

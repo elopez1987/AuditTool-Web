@@ -10,35 +10,33 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-
 class StorageKeyIncidenceTransport extends Model
 {
     use LogsActivity;
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
 
     public $timestamps = false;
     protected $table = 'storageincidencekeytransport';
 
     protected $fillable = [
         'centerid', 'warehouseid', 'orderid', 'keytransport',
-        'keytransportdate', 'keytransportuser', 'partnumberid', 'delivery', 'razoncode'
+        'keytransportdate', 'keytransportuser', 'partnumberid', 'delivery', 'razoncode',
     ];
-
 
     protected $hidden = [
         'created_at',
         'updated_at',
-        'schemaid'
+        'schemaid',
     ];
 
     protected $attributes = [
         'statusid' => 'PI',
         'schemaid' => 'KEY',
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
     public static function controlAccessUser()
     {
@@ -53,16 +51,23 @@ class StorageKeyIncidenceTransport extends Model
         return $this->belongsTo(User::class, 'keytransportuser', 'username');
     }
 
-
-    static function getAllKeyTransports()
+    public static function getAllKeyTransports()
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
         return DB::table('storageincidencekeytransport')
-            ->select('storageincidencekeytransport.orderid as id', 'orderdeliveries.shipmentid', 'ordercustomers.name',
-                'ordercustomers.city', 'shipmentcarriers.name as carrier', 'orderdeliveries.downloaddate',
-                'storageincidencekeytransport.keytransport', 'storageincidencekeytransport.keytransportdate',
-                'storageincidencekeytransport.keytransportuser', 'systemstatus.name as status')
+            ->select(
+                'storageincidencekeytransport.orderid as id',
+                'orderdeliveries.shipmentid',
+                'ordercustomers.name',
+                'ordercustomers.city',
+                'shipmentcarriers.name as carrier',
+                'orderdeliveries.downloaddate',
+                'storageincidencekeytransport.keytransport',
+                'storageincidencekeytransport.keytransportdate',
+                'storageincidencekeytransport.keytransportuser',
+                'systemstatus.name as status'
+            )
 
             ->leftJoin('orderdeliveries', function ($join) {
                 $join->on('storageincidencekeytransport.orderid', '=', 'orderdeliveries.id')
@@ -88,8 +93,7 @@ class StorageKeyIncidenceTransport extends Model
             ->get();
     }
 
-
-    static public function getConcepts(): array
+    public static function getConcepts(): array
     {
         return StorageCategoryIncidenceDetail::controlAccessUser()
             ->where('auxiliary04', '=', 'F')
@@ -97,23 +101,35 @@ class StorageKeyIncidenceTransport extends Model
             ->pluck('categoryincdetailid')->toArray();
     }
 
-    static function getDetailIncidenceForKey($id)
+    public static function getDetailIncidenceForKey($id)
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
         $concepts = self::getConcepts();
         return DB::table('storageincidencejourneydetails')
-            ->select('storageincidencekeytransport.id', 'storageincidencejourneydetails.delivery', 'storageincidencejourneydetails.partnumberid',
-                'inventorypartnumbers.lngdsc as description', 'storageincidencejourneydetails.quantity',
-                'storageincidencejourneydetails.unitmeasure', 'storagecategoryincidencedetails.description as motivo',
-                'storagecategoryincidencedetails.auxiliary02 as code', 'storageincidencejourneydetails.comment',
-                'systemstatus.name as status', 'storagereasonoutput.description as responsable')
+            ->select(
+                'storageincidencekeytransport.id',
+                'storageincidencejourneydetails.delivery',
+                'storageincidencejourneydetails.partnumberid',
+                'inventorypartnumbers.lngdsc as description',
+                'storageincidencejourneydetails.quantity',
+                'storageincidencejourneydetails.unitmeasure',
+                'storagecategoryincidencedetails.description as motivo',
+                'storagecategoryincidencedetails.auxiliary02 as code',
+                'storageincidencejourneydetails.comment',
+                'systemstatus.name as status',
+                'storagereasonoutput.description as responsable'
+            )
             ->leftJoin('inventorypartnumbers', function ($join) {
                 $join->on('storageincidencejourneydetails.partnumberid', '=', 'inventorypartnumbers.prtnum')
                     ->on('storageincidencejourneydetails.centerid', '=', 'inventorypartnumbers.centerid');
             })
-            ->leftJoin('storagecategoryincidencedetails', 'storageincidencejourneydetails.razoncode',
-                '=', 'storagecategoryincidencedetails.categoryincdetailid')
+            ->leftJoin(
+                'storagecategoryincidencedetails',
+                'storageincidencejourneydetails.razoncode',
+                '=',
+                'storagecategoryincidencedetails.categoryincdetailid'
+            )
             ->leftJoin('systemstatus', function ($join) {
                 $join->on('storageincidencejourneydetails.statusiddetail', '=', 'systemstatus.statusid')
                     ->on('storageincidencejourneydetails.schemaid', '=', 'systemstatus.schemaid');
@@ -130,7 +146,4 @@ class StorageKeyIncidenceTransport extends Model
             ->where('storageincidencejourneydetails.orderid', '=', $id)
             ->get();
     }
-
-
-
 }

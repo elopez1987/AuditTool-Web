@@ -17,7 +17,6 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-
 class OrderDeliveryController extends BaseController
 {
     use CreateNewOrder;
@@ -42,7 +41,8 @@ class OrderDeliveryController extends BaseController
             ->select(['s.description as centername', 's2.name as warehousename', 'orderdeliveries.id', 'orderdeliveries.workday', 's3.name as turn', 'orderdeliveries.auxiliary05 as token',
                 DB::raw("concat(orderdeliveries.shipmentid, '|', orderdeliveries.auxiliary03) as shipmentid"), 's4.name as carriername',
                 'o2.name as customername', 'o2.city', 'orderdeliveries.downloaddate', 'orderdeliveries.confirmation', 'orderdeliveries.statusid', 'orderdeliveries.evidencefile',
-                's5.name as status'])
+                's5.name as status',
+            ])
             ->leftJoin('systemcenterdistributions as s', 'orderdeliveries.centerid', '=', 's.centerid')
             ->leftJoin('systemwarehouses as s2', 'orderdeliveries.warehouseid', '=', 's2.warehouseid')
             ->leftJoin('storageturns as s3', 'orderdeliveries.turnid', '=', 's3.id')
@@ -69,8 +69,10 @@ class OrderDeliveryController extends BaseController
         $turns = $this->getTurns();
         $customers = $this->getOrderCustomerForSelect();
         $shipmenttypes = $this->getShipmentTypeToSelect();
-        return view('Shipments.OrderDeliveries.create',
-            compact('carriers', 'turns', 'customers', 'shipmenttypes', 'centers', 'warehouses'));
+        return view(
+            'Shipments.OrderDeliveries.create',
+            compact('carriers', 'turns', 'customers', 'shipmenttypes', 'centers', 'warehouses')
+        );
     }
 
     public function store(CreateOrderRequest $request)
@@ -99,7 +101,7 @@ class OrderDeliveryController extends BaseController
         $conteos = Storagechecklocationbridg::controlAccessUser()->where('orderid', $orderdelivery->id)->get();
         $conteosVig = StoragechecklocationbridgVig::controlAccessUser()->where('orderid', $orderdelivery->id)->get();
         $comments = StorageComment::where('modeltype', 'orderdeliveries')->where('modelid', $orderdelivery->id)->get();
-        return view('Shipments.OrderDeliveries.show', compact('orderdelivery', 'evidences', 'traces', 'conteos', 'comments','conteosVig'));
+        return view('Shipments.OrderDeliveries.show', compact('orderdelivery', 'evidences', 'traces', 'conteos', 'comments', 'conteosVig'));
     }
 
     public function edit(OrderDeliverie $orderdelivery)
@@ -109,8 +111,10 @@ class OrderDeliveryController extends BaseController
         $turns = $this->getTurns();
         $customers = $this->getOrderCustomerForSelect();
         $shipmenttypes = $this->getShipmentTypeToSelect();
-        return view('Shipments.OrderDeliveries.edit',
-            compact('carriers', 'turns', 'customers', 'shipmenttypes', 'orderdelivery'));
+        return view(
+            'Shipments.OrderDeliveries.edit',
+            compact('carriers', 'turns', 'customers', 'shipmenttypes', 'orderdelivery')
+        );
     }
 
     public function update(OrderDeliverie $orderdelivery, Request $request)
@@ -146,6 +150,4 @@ class OrderDeliveryController extends BaseController
         }
         return redirect()->route('orderdeliveries.index')->with(session()->flash('success', 'Registro eliminado con exito'));
     }
-
-
 }

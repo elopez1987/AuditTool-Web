@@ -17,35 +17,37 @@ class SystemWarehouseController extends BaseController
     public function index()
     {
         $this->authorize('systemwarehouses.index');
-        return view("Configuration.SystemWarehouses.index");
+        return view('Configuration.SystemWarehouses.index');
     }
 
     public function getDataWarehouses(Request $request)
     {
         $data = $this->getAllWarehouses($request);
-        return $this->showDataToView($data, "Configuration.SystemWarehouses.partials.buttons");
+        return $this->showDataToView($data, 'Configuration.SystemWarehouses.partials.buttons');
     }
 
     public function create()
     {
         $this->authorize('systemwarehouses.create');
         $centers = $this->getCenters();
-        return view("Configuration.SystemWarehouses.create", compact('centers'));
+        return view('Configuration.SystemWarehouses.create', compact('centers'));
     }
 
     public function store(CreateWarehouseRequest $request): RedirectResponse
     {
-        $warehouse = new  SystemWarehouse($request->all());
+        $warehouse = new SystemWarehouse($request->all());
         $warehouse->save();
-        return $this->successResponse("systemwarehouses.index");
+        return $this->successResponse('systemwarehouses.index');
     }
 
     public function edit(SystemWarehouse $systemwarehouse)
     {
         $this->authorize('systemwarehouses.edit');
         $status = $this->getStatusForSchema('STS');
-        return view("Configuration.SystemWarehouses.edit",
-            compact('status', 'systemwarehouse'));
+        return view(
+            'Configuration.SystemWarehouses.edit',
+            compact('status', 'systemwarehouse')
+        );
     }
 
     public function update(Request $request, SystemWarehouse $systemwarehouse): RedirectResponse
@@ -59,7 +61,7 @@ class SystemWarehouseController extends BaseController
             $systemwarehouse->auxiliary09 = $path;
             $systemwarehouse->save();
         }
-        return $this->infoResponse("systemwarehouses.index");
+        return $this->infoResponse('systemwarehouses.index');
     }
 
     public function getAllWarehouses($request)
@@ -77,13 +79,8 @@ class SystemWarehouseController extends BaseController
                 'systemwarehouses.auxiliary03',
                 'systemwarehouses.auxiliary04',
                 'systemwarehouses.auxiliary05',
-                'systemstatus.name as status'
+                'systemstatus.name as status',
             ])
             ->ForName($request->get('name'));
     }
-
-
-
-
-
 }

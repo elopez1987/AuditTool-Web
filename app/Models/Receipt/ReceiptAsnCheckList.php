@@ -6,11 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class ReceiptAsnCheckList extends Model
 {
-
+    public $timestamps = false;
     protected $table = 'receiptasnchecklist';
     protected $primaryKey = 'recordid';
-    public $timestamps = false;
-
 
     protected $fillable = [
         'centerid',
@@ -19,10 +17,6 @@ class ReceiptAsnCheckList extends Model
         'checklistdetailid',
         'typeid',
         'createuser',
-        'created_at'
+        'created_at',
     ];
-
-
-
-
 }

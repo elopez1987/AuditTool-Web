@@ -15,19 +15,17 @@ class SecurityMenu extends Model
     protected $primaryKey = 'menustrucid';
     protected $keyType = 'string';
 
-
     protected $fillable = [
         'centerid',
         'menustrucid',
         'description',
-        'statusid'
+        'statusid',
     ];
-
 
     protected $hidden = [
         'created_at',
         'updated_at',
-        'schemaid'
+        'schemaid',
     ];
 
     protected $attributes = [
@@ -60,5 +58,4 @@ class SecurityMenu extends Model
     {
         return $this->hasMany(SecurityFunctionsMenuStructure::class, 'menustrucid', 'menustrucid');
     }
-
 }

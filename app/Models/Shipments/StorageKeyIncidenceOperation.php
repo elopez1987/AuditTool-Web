@@ -10,29 +10,22 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-
 class StorageKeyIncidenceOperation extends Model
 {
     use LogsActivity;
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
 
     public $timestamps = false;
     protected $table = 'storagesincidencekeyoperation';
 
     protected $fillable = [
         'centerid', 'warehouseid', 'orderid', 'keyoperation',
-        'keyoperationdate', 'keyoperationuser', 'partnumberid', 'delivery', 'razoncode'
+        'keyoperationdate', 'keyoperationuser', 'partnumberid', 'delivery', 'razoncode',
     ];
-
 
     protected $hidden = [
         'created_at',
         'updated_at',
-        'schemaid'
+        'schemaid',
     ];
 
     protected $attributes = [
@@ -40,6 +33,10 @@ class StorageKeyIncidenceOperation extends Model
         'schemaid' => 'KEY',
     ];
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
     public static function controlAccessUser()
     {
@@ -54,16 +51,23 @@ class StorageKeyIncidenceOperation extends Model
         return $this->belongsTo(User::class, 'keyoperationuser', 'username');
     }
 
-
-    static function getData($request)
+    public static function getData($request)
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
         return DB::table('storagesincidencekeyoperation')
-            ->select('storagesincidencekeyoperation.orderid as id', 'orderdeliveries.shipmentid', 'ordercustomers.name',
-                'ordercustomers.city', 'shipmentcarriers.name as carrier', 'orderdeliveries.downloaddate',
-                'storagesincidencekeyoperation.keyoperation', 'storagesincidencekeyoperation.keyoperationdate',
-                'storagesincidencekeyoperation.keyoperationuser', 'systemstatus.name as status')
+            ->select(
+                'storagesincidencekeyoperation.orderid as id',
+                'orderdeliveries.shipmentid',
+                'ordercustomers.name',
+                'ordercustomers.city',
+                'shipmentcarriers.name as carrier',
+                'orderdeliveries.downloaddate',
+                'storagesincidencekeyoperation.keyoperation',
+                'storagesincidencekeyoperation.keyoperationdate',
+                'storagesincidencekeyoperation.keyoperationuser',
+                'systemstatus.name as status'
+            )
             ->leftJoin('orderdeliveries', function ($join) {
                 $join->on('storagesincidencekeyoperation.orderid', '=', 'orderdeliveries.id')
                     ->on('storagesincidencekeyoperation.centerid', '=', 'orderdeliveries.centerid')
@@ -85,7 +89,7 @@ class StorageKeyIncidenceOperation extends Model
             ->whereIn('orderdeliveries.warehouseid', $warehouses)
             ->whereNull('storagesincidencekeyoperation.keyoperationuser')
             ->where(function ($query) use ($request) {
-                if ($request['shipmentid'] != '') {
+                if ($request['shipmentid'] !== '') {
                     $query->where('orderdeliveries.shipmentid', $request['shipmentid']);
                 }
             })
@@ -93,7 +97,7 @@ class StorageKeyIncidenceOperation extends Model
             ->get();
     }
 
-    static public function getConcepts(): array
+    public static function getConcepts(): array
     {
         return StorageCategoryIncidenceDetail::controlAccessUser()
             ->where('auxiliary04', '=', 'F')
@@ -101,23 +105,35 @@ class StorageKeyIncidenceOperation extends Model
             ->pluck('categoryincdetailid')->toArray();
     }
 
-    static function getDetailIncidenceForKey($id)
+    public static function getDetailIncidenceForKey($id)
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
         $concepts = self::getConcepts();
         return DB::table('storageincidencejourneydetails')
-            ->select('storagesincidencekeyoperation.id', 'storageincidencejourneydetails.delivery', 'storageincidencejourneydetails.partnumberid',
-                'inventorypartnumbers.lngdsc as description', 'storageincidencejourneydetails.quantity',
-                'storageincidencejourneydetails.unitmeasure', 'storagecategoryincidencedetails.description as motivo',
-                'storagecategoryincidencedetails.auxiliary02 as code', 'storageincidencejourneydetails.comment',
-                'systemstatus.name as status', 'storagereasonoutput.description as responsable')
+            ->select(
+                'storagesincidencekeyoperation.id',
+                'storageincidencejourneydetails.delivery',
+                'storageincidencejourneydetails.partnumberid',
+                'inventorypartnumbers.lngdsc as description',
+                'storageincidencejourneydetails.quantity',
+                'storageincidencejourneydetails.unitmeasure',
+                'storagecategoryincidencedetails.description as motivo',
+                'storagecategoryincidencedetails.auxiliary02 as code',
+                'storageincidencejourneydetails.comment',
+                'systemstatus.name as status',
+                'storagereasonoutput.description as responsable'
+            )
             ->leftJoin('inventorypartnumbers', function ($join) {
                 $join->on('storageincidencejourneydetails.partnumberid', '=', 'inventorypartnumbers.prtnum')
                     ->on('storageincidencejourneydetails.centerid', '=', 'inventorypartnumbers.centerid');
             })
-            ->leftJoin('storagecategoryincidencedetails', 'storageincidencejourneydetails.razoncode',
-                '=', 'storagecategoryincidencedetails.categoryincdetailid')
+            ->leftJoin(
+                'storagecategoryincidencedetails',
+                'storageincidencejourneydetails.razoncode',
+                '=',
+                'storagecategoryincidencedetails.categoryincdetailid'
+            )
             ->leftJoin('systemstatus', function ($join) {
                 $join->on('storageincidencejourneydetails.statusiddetail', '=', 'systemstatus.statusid')
                     ->on('storageincidencejourneydetails.schemaid', '=', 'systemstatus.schemaid');
@@ -134,5 +150,4 @@ class StorageKeyIncidenceOperation extends Model
             ->where('storageincidencejourneydetails.orderid', '=', $id)
             ->get();
     }
-
 }

@@ -8,7 +8,6 @@ use App\Http\Services\Receipt\ServiceReceiptUnit;
 use App\Models\Yard\ReceiptUnit;
 use App\Models\Yard\ReceiptUnitStock;
 use App\Models\Yard\StorageUnitTrace;
-use App\Traits\GetIdFromReasonTrait;
 use App\Traits\Web\Izel\RegisterEdiShipment;
 use App\Traits\Web\Receipt\ReceiptAsn\ValidateReceiptInCheckInProcess;
 use App\Traits\Web\Shipments\OrderDelivery\ValidateShipmentInCheckInProcess;
@@ -20,15 +19,16 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
-
 class ReceiptUnitController extends BaseController
 {
-
     use RegisterEdiShipment;
     use QueryReceiptTruck;
     use ValidateShipmentInCheckInProcess;
     use ValidateReceiptInCheckInProcess;
     use ValidateCapacityYard;
+
+    protected $routePath = 'receiptunits';
+    protected $viewPath = 'Yards.ReceiptUnits';
 
     private ServiceReceiptUnit $serviceReceiptUnit;
 
@@ -37,10 +37,6 @@ class ReceiptUnitController extends BaseController
         $this->serviceReceiptUnit = $serviceReceiptUnit;
     }
 
-
-    protected $routePath = 'receiptunits';
-    protected $viewPath = 'Yards.ReceiptUnits';
-
     public function index()
     {
         $this->authorize('receiptunits.index');
@@ -48,31 +44,14 @@ class ReceiptUnitController extends BaseController
         $warehouses = $this->getWarehouseForSelect();
         $rason = $this->typeReasonInActiveToSelect();
         $status = $this->getStatusForSchema('RUS');
-        return view("Yards.ReceiptUnits.index", compact('carriers', 'warehouses', 'rason', 'status'));
+        return view('Yards.ReceiptUnits.index', compact('carriers', 'warehouses', 'rason', 'status'));
     }
 
     public function getDataReceipts(Request $request)
     {
         $data = $this->getData($request);
         return DataTables::of($data)
-            ->addColumn('btn', "$this->viewPath.partials.buttons")->rawColumns(['btn'])->toJson();
-    }
-
-    private function getData(Request $request)
-    {
-        $data = ReceiptUnitStock::controlAccessUser()
-            ->Folio($request->get('folionumber'))
-            ->Barcode($request->get('barcode'))
-            ->Location($request->get('location'))
-            ->BoxNumber($request->get('boxnumber'))
-            ->EcoNumber($request->get('econumber'))
-            ->TruckNumber($request->get('trucknumber'))
-            ->Rason($request->get('rasonid'))
-            ->Carrier($request->get('carrierid'))
-            ->Warehouse($request->get('warehouseid'))
-            ->Shipment($request->get('shipmentid'))
-            ->ForStatus($request->get('statusid'));
-        return $data;
+            ->addColumn('btn', "{$this->viewPath}.partials.buttons")->rawColumns(['btn'])->toJson();
     }
 
     public function create()
@@ -90,9 +69,20 @@ class ReceiptUnitController extends BaseController
         $unitsstatus = $this->unitStatusActiveToSelect();
         $unittypes = $this->unitTypeActiveToSelect();
         $truckcategories = $this->getCateroriesTruckForSelects();
-        return view('Yards.ReceiptUnits.create', compact('carriers', 'movents', 'trucks',
-            'centers', 'warehouses', 'providers', 'unitsstatus', 'unittypes',
-            'zones', 'locations', 'truckcategories', 'unittypeid'));
+        return view('Yards.ReceiptUnits.create', compact(
+            'carriers',
+            'movents',
+            'trucks',
+            'centers',
+            'warehouses',
+            'providers',
+            'unitsstatus',
+            'unittypes',
+            'zones',
+            'locations',
+            'truckcategories',
+            'unittypeid'
+        ));
     }
 
     public function store(CreateReceiptUnitRequest $request)
@@ -100,29 +90,33 @@ class ReceiptUnitController extends BaseController
         DB::beginTransaction();
         try {
             $validateCapacity = $this->validateCapacityYard('WEB');
-            if ($validateCapacity) return $validateCapacity;
+            if ($validateCapacity) {
+                return $validateCapacity;
+            }
             $parameter = $this->getParametersOfWarehouse($request['warehouseid']);
             $registerBox = ReceiptUnit::searchForBoxNumber($request['boxnumber']);
-            if (!empty($registerBox)) {
+            if (! empty($registerBox)) {
                 return $this->errorResponse('La placa de la caja se encuentra en patio,favor de validar.');
             }
             $truck = $this->createNewTruck($request);
             $receiptunit = $this->serviceReceiptUnit->createNewReceiptUnit($request, $truck);
             $resultCheckShiopment = $this->validateShipmentInCheckIn($request, $receiptunit, $parameter, 'WEB');
-            if ($resultCheckShiopment) return $resultCheckShiopment;
+            if ($resultCheckShiopment) {
+                return $resultCheckShiopment;
+            }
             $resultCheckReceipt = $this->validateReceiptInCheckIn($request, $receiptunit, $parameter, 'WEB');
-            if ($resultCheckReceipt) return $resultCheckReceipt;
-
-            if ($receiptunit->statusid == 'QI') {
+            if ($resultCheckReceipt) {
+                return $resultCheckReceipt;
+            }
+            if ($receiptunit->statusid === 'QI') {
                 $this->addNewEdiForIzel($receiptunit, $parameter, 'IN');
                 $this->sendDataToRControl($receiptunit, $parameter, 'ENTRANCE');
             }
             DB::commit();
-            if (in_array('SWH-05', (array)$parameter)) {
+            if (in_array('SWH-05', (array) $parameter)) {
                 return redirect('authorizetransportentry/' . $receiptunit->id . '/edit');
-            } else {
-                return redirect()->back()->with(session()->flash('success', 'Registro agregado con exito,folio :' . $receiptunit->id));
             }
+            return redirect()->back()->with(session()->flash('success', 'Registro agregado con exito,folio :' . $receiptunit->id));
         } catch
         (Exception $e) {
             $error = $e->getMessage();
@@ -135,15 +129,29 @@ class ReceiptUnitController extends BaseController
     {
         $this->authorize('receiptunits.edit');
         $carriers = $this->getCarriersForSelect();
-        return view("$this->viewPath.edit", compact('receiptunit', 'carriers'));
+        return view("{$this->viewPath}.edit", compact('receiptunit', 'carriers'));
     }
 
     public function update(ReceiptUnit $receiptunit, Request $request): RedirectResponse
     {
         $receiptunit->update($request->all());
         StorageUnitTrace::createTraceUnit($receiptunit, '6');
-        return $this->infoResponse("$this->routePath.index");
+        return $this->infoResponse("{$this->routePath}.index");
     }
 
-
+    private function getData(Request $request)
+    {
+        return ReceiptUnitStock::controlAccessUser()
+            ->Folio($request->get('folionumber'))
+            ->Barcode($request->get('barcode'))
+            ->Location($request->get('location'))
+            ->BoxNumber($request->get('boxnumber'))
+            ->EcoNumber($request->get('econumber'))
+            ->TruckNumber($request->get('trucknumber'))
+            ->Rason($request->get('rasonid'))
+            ->Carrier($request->get('carrierid'))
+            ->Warehouse($request->get('warehouseid'))
+            ->Shipment($request->get('shipmentid'))
+            ->ForStatus($request->get('statusid'));
+    }
 }

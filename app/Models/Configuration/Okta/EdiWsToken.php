@@ -8,13 +8,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class EdiWsToken extends Model
 {
-
     use LogsActivity;
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
 
     public $timestamps = false;
     protected $table = 'ediwstokens';
@@ -25,6 +19,11 @@ class EdiWsToken extends Model
         'client_secret',
         'audience',
         'timeout',
-        'tokentype'
+        'tokentype',
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 }

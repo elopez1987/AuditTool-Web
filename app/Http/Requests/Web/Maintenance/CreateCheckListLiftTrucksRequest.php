@@ -10,7 +10,7 @@ class CreateCheckListLiftTrucksRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'typeid' => 'required|string|max:5'
+            'typeid' => 'required|string|max:5',
         ];
     }
 

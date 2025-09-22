@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 
 class SystemMailController extends BaseController
 {
-
     public function index()
     {
         $this->authorize('systemmails.index');
@@ -44,8 +43,10 @@ class SystemMailController extends BaseController
     {
         $this->authorize('systemmails.edit');
         $status = $this->getStatusForSchema('STS');
-        return view('Configuration.SystemMails.edit',
-            compact('status', 'systemmail'));
+        return view(
+            'Configuration.SystemMails.edit',
+            compact('status', 'systemmail')
+        );
     }
 
     public function update(Request $request, SystemMail $systemmail): RedirectResponse

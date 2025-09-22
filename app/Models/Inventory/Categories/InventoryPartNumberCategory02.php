@@ -13,17 +13,11 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class InventoryPartNumberCategory02 extends Model
 {
-
     use LogsActivity;
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
 
     protected $table = 'inventorypartnumbercategory02';
 
     protected $dateFormat = 'Y-m-d H:i:s';
-
 
     protected $fillable = [
         'centerid',
@@ -34,20 +28,23 @@ class InventoryPartNumberCategory02 extends Model
         'auxiliary03',
         'auxiliary04',
         'auxiliary05',
-        'statusid'
+        'statusid',
     ];
 
     protected $hidden = [
         'created_at',
         'updated_at',
-        'schemaid'
+        'schemaid',
     ];
 
     protected $attributes = [
         'statusid' => 'E',
         'schemaid' => 'STS',
     ];
-
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
     public static function controlAccessUser()
     {
@@ -69,14 +66,14 @@ class InventoryPartNumberCategory02 extends Model
 
     public function scopeName($query, $name)
     {
-        if (trim($name) != "") {
-            $query->where('description', 'like', "%$name%");
+        if (trim($name) !== '') {
+            $query->where('description', 'like', "%{$name}%");
         }
     }
 
     public function scopeStatus($query, $statusid)
     {
-        if (trim($statusid) != "") {
+        if (trim($statusid) !== '') {
             $query->where('statusid', '=', $statusid);
         }
     }

@@ -9,14 +9,9 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class OrderMonitor extends Model
 {
     use LogsActivity;
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
+    public $timestamps = false;
 
     protected $table = 'ordermonitor';
-    public $timestamps = false;
 
     protected $fillable = [
         'centerid',
@@ -48,5 +43,8 @@ class OrderMonitor extends Model
         'outputdate' => 'datetime:d/m/Y H:i',
     ];
 
-
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 }

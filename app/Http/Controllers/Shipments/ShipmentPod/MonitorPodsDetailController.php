@@ -8,6 +8,5 @@ class MonitorPodsDetailController extends Controller
 {
     public function index()
     {
-
     }
 }

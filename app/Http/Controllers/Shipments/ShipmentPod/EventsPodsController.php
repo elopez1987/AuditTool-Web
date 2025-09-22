@@ -19,7 +19,6 @@ class EventsPodsController extends BaseController
         return $this->redirectBackSuccessMessage('Estatus actualizado con exito!!');
     }
 
-
     public function deletefilepod(Request $request)
     {
         DB::beginTransaction();
@@ -45,6 +44,4 @@ class EventsPodsController extends BaseController
             ], '200');
         }
     }
-
-
 }

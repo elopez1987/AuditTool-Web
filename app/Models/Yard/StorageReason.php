@@ -6,13 +6,11 @@ use App\Models\Configuration\Schemas\SystemStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-
 /**
  * @method static whereStatusid(string $string)
  */
 class StorageReason extends Model
 {
-
     protected $table = 'storagereasons';
     protected $dateFormat = 'Y-m-d H:i:s';
 
@@ -25,13 +23,13 @@ class StorageReason extends Model
         'auxiliary03',
         'auxiliary04',
         'auxiliary05',
-        'statusid'
+        'statusid',
     ];
 
     protected $hidden = [
         'created_at',
         'updated_at',
-        'schemaid'
+        'schemaid',
     ];
 
     protected $attributes = [
@@ -46,10 +44,8 @@ class StorageReason extends Model
 
     public function scopeName($query, $name)
     {
-        if (trim($name) != "") {
-            $query->where('storagereasons.name', 'like', "%$name%");
+        if (trim($name) !== '') {
+            $query->where('storagereasons.name', 'like', "%{$name}%");
         }
     }
-
-
 }

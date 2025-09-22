@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 
 class StorageDestinationController extends BaseController
 {
-
     public function index()
     {
         $this->authorize('storagedestinations.index');
@@ -20,8 +19,10 @@ class StorageDestinationController extends BaseController
     public function getDataDestinations(Request $request)
     {
         $data = $this->getData($request);
-        return $this->showDataToView($data,
-            'Yards.StorageDestinations.partials.buttons');
+        return $this->showDataToView(
+            $data,
+            'Yards.StorageDestinations.partials.buttons'
+        );
     }
 
     public function create()
@@ -29,8 +30,10 @@ class StorageDestinationController extends BaseController
         $this->authorize('storagedestinations.create');
         $centers = $this->getCenterForSelect();
         $warehouses = $this->getWarehouseForSelect();
-        return view('Yards.StorageDestinations.create',
-            compact('centers','warehouses'));
+        return view(
+            'Yards.StorageDestinations.create',
+            compact('centers', 'warehouses')
+        );
     }
 
     public function store(CreateDestinationRequest $request): RedirectResponse
@@ -44,8 +47,10 @@ class StorageDestinationController extends BaseController
     {
         $this->authorize('storagedestinations.edit');
         $status = $this->getStatusForSchema('STS');
-        return view('Yards.StorageDestinations.edit',
-            compact('storagedestination', 'status'));
+        return view(
+            'Yards.StorageDestinations.edit',
+            compact('storagedestination', 'status')
+        );
     }
 
     public function update(StorageDestination $storagedestination, Request $request): RedirectResponse
@@ -54,13 +59,10 @@ class StorageDestinationController extends BaseController
         return $this->infoResponse('storagedestinations.index');
     }
 
-
     private function getData(Request $request)
     {
-        $data = StorageDestination::controlAccessUser()
+        return StorageDestination::controlAccessUser()
             ->with('status', 'center', 'warehouse')
             ->Name($request->get('name'))->get();
-        return $data;
     }
-
 }

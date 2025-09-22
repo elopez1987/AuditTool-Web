@@ -30,11 +30,11 @@ class ReceiptUnitEvidenceStockController extends BaseController
         if (empty($folionumberType)) {
             return $this->errorResponse('No existe folio de cliente favor de validar el concepto de entrada.');
         }
-        if ($folionumberType->auxiliary01 == 'TDIRECTO') {
+        if ($folionumberType->auxiliary01 === 'TDIRECTO') {
             $receiptComments = [
                 1 => 'SH',
                 2 => 'RE',
-                17 => 'DE'
+                17 => 'DE',
             ];
             $comment = $receiptComments[$receiptunit->razonstatusid] ?? null;
             $listCheckList = SystemStatus::select(['statusid', 'name'])
@@ -43,7 +43,7 @@ class ReceiptUnitEvidenceStockController extends BaseController
                 ->where('auxiliary02', $receiptunit->centerid)
                 ->whereNotIn('statusid', function ($query) use ($receiptunit) {
                     $query->select('auxiliary04')
-                        ->from((new EvidencePhoto)->getTable())
+                        ->from((new EvidencePhoto())->getTable())
                         ->where('model_id', $receiptunit->id)
                         ->where('model_type', 'ReceiptUnit')
                         ->where('auxiliary01', 'IP');
@@ -55,8 +55,10 @@ class ReceiptUnitEvidenceStockController extends BaseController
                 ->whereNotIn('statusid', ['D'])
                 ->get();
         }
-        return view('Yards.ReceiptUnits.EvidenceProcess.index',
-            compact('receiptunit', 'listCheckList', 'folionumberType', 'parameterCenter'));
+        return view(
+            'Yards.ReceiptUnits.EvidenceProcess.index',
+            compact('receiptunit', 'listCheckList', 'folionumberType', 'parameterCenter')
+        );
     }
 
     public function saveTypeShipmentEvidence(Request $request)
@@ -65,7 +67,7 @@ class ReceiptUnitEvidenceStockController extends BaseController
         $folionumberType = StorageFolioClient::where('folionumber', $receiptunit->id)->first();
         $folionumberType->auxiliary01 = $request['typeshipment'];
         $folionumberType->save();
-        if ($request['typeshipment'] == 'TIROS') {
+        if ($request['typeshipment'] === 'TIROS') {
             $this->createNewCheckList($receiptunit, $request);
         }
         return $this->redirectBackSuccessMessage('Registro creado con exito.');
@@ -73,32 +75,29 @@ class ReceiptUnitEvidenceStockController extends BaseController
 
     public function saveEvidenceProcessForCheckList(Request $request)
     {
-//        TODO validar la subida y guardado de fotos
         $receiptunit = ReceiptUnit::controlAccessUser()->where('id', $request['folioid'])->first();
-        $path = $this->saveFileToModel($request['file'], $receiptunit->centerid,'Yard','ReceiptUnit','InProcess');
+        $path = $this->saveFileToModel($request['file'], $receiptunit->centerid, 'Yard', 'ReceiptUnit', 'InProcess');
 
-        if ($request['typeshipment'] == 'TIROS') {
+        if ($request['typeshipment'] === 'TIROS') {
             $checklist = CheckListEvidenceProcessUnit::where('id', $request['id'])->first();
             $checklist->path = $path;
             $checklist->value01 = Auth::user()->username;
             $checklist->statusid = 'D';
             $checklist->save();
         }
-        if ($request['typeshipment'] == 'TDIRECTO') {
-            $this->createEvidencePhoto('ReceiptUnit',$receiptunit->id,$path,'IP',$receiptunit);
+        if ($request['typeshipment'] === 'TDIRECTO') {
+            $this->createEvidencePhoto('ReceiptUnit', $receiptunit->id, $path, 'IP', $receiptunit);
         }
         return $this->redirectBackSuccessMessage('Evidencia cargada con exito.');
     }
 
-
-
-    public function createNewCheckList($folionumber,$request)
+    public function createNewCheckList($folionumber, $request)
     {
         CheckListEvidenceProcessUnit::create([
             'centerid' => $folionumber->centerid,
             'modelid' => $folionumber->id,
             'modeltype' => 'ReceiptUnits',
-            'description' => 'Caja vacía'
+            'description' => 'Caja vacía',
         ]);
 
         for ($i = 1; $i <= $request['ntiros']; $i++) {
@@ -106,28 +105,26 @@ class ReceiptUnitEvidenceStockController extends BaseController
                 'centerid' => $folionumber->centerid,
                 'modelid' => $folionumber->id,
                 'modeltype' => 'ReceiptUnits',
-                'description' => 'Tiro_' . $i
+                'description' => 'Tiro_' . $i,
             ]);
         }
         CheckListEvidenceProcessUnit::create([
             'centerid' => $folionumber->centerid,
             'modelid' => $folionumber->id,
             'modeltype' => 'ReceiptUnits',
-            'description' => 'Fin de carga'
+            'description' => 'Fin de carga',
         ]);
         CheckListEvidenceProcessUnit::create([
             'centerid' => $folionumber->centerid,
             'modelid' => $folionumber->id,
             'modeltype' => 'ReceiptUnits',
-            'description' => 'Sellos'
+            'description' => 'Sellos',
         ]);
         CheckListEvidenceProcessUnit::create([
             'centerid' => $folionumber->centerid,
             'modelid' => $folionumber->id,
             'modeltype' => 'ReceiptUnits',
-            'description' => 'Caja cerrada'
+            'description' => 'Caja cerrada',
         ]);
     }
-
-
 }

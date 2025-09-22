@@ -14,15 +14,10 @@ class StorageCheckListLiftTrucks extends Model
 {
     use LogsActivity;
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
-
-    protected $primaryKey = "id";
-    protected $table = 'storagechecklistslifttrucks';
-
     use SoftDeletes;
+
+    protected $primaryKey = 'id';
+    protected $table = 'storagechecklistslifttrucks';
 
     protected $fillable = [
         'centerid',
@@ -40,35 +35,37 @@ class StorageCheckListLiftTrucks extends Model
         'auxiliary08',
         'auxiliary09',
         'auxiliary10',
-        'statusid'
+        'statusid',
     ];
-
 
     protected $hidden = [
         'created_at',
         'updated_at',
         'deleted_at',
-        'schemaid'
+        'schemaid',
     ];
 
     protected $attributes = [
         'statusid' => 'E',
         'schemaid' => 'STS',
-        'schematypeid' => 'TPM'
+        'schematypeid' => 'TPM',
     ];
-
 
     protected $casts = [
         'created_at' => 'datetime:d/m/Y H:s',
         'updated_At' => 'datetime:d/m/Y H:s',
     ];
-    
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
+
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
         return StorageCheckListLiftTrucks::whereIn('storagechecklistslifttrucks.centerid', $centers);
     }
-
 
     public function center()
     {
@@ -87,10 +84,8 @@ class StorageCheckListLiftTrucks extends Model
 
     public function scopeForName($q, $name)
     {
-        if ($name != '') {
-            $q->where('storagechecklistslifttrucks.name', 'like', "%$name%");
+        if ($name !== '') {
+            $q->where('storagechecklistslifttrucks.name', 'like', "%{$name}%");
         }
     }
-
-
 }

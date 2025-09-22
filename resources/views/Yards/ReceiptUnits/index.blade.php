@@ -120,10 +120,10 @@
                                     <th>Concepto</th>
                                     <th>F.Ingreso</th>
                                     <th>Comentario</th>
-                                    <th>Tipo de entrada</th>
                                     <th>Origen</th>
-                                    <th>Folio de bascula</th>
-                                    <th>Peso de entrada</th>
+{{--                                    <th>Tipo de entrada</th>--}}
+{{--                                    <th>Folio de bascula</th>--}}
+{{--                                    <th>Peso de entrada</th>--}}
                                 </tr>
                                 </thead>
                             </table>

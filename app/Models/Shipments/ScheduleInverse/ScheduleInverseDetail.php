@@ -25,9 +25,9 @@ class ScheduleInverseDetail extends Model
     protected $attributes = [
         'statusid' => 'DIS',
         'schemaid' => 'SKD',
-        'schemasecuenceid' => 'KLH'
+        'schemasecuenceid' => 'KLH',
     ];
-    
+
     public static function controlAccessUser()
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
@@ -35,6 +35,4 @@ class ScheduleInverseDetail extends Model
         return ScheduleInverseDetail::whereIn('scheduleinversedetail.warehouseid', $warehouses)
             ->whereIn('scheduleinversedetail.centerid', $centers);
     }
-
-
 }

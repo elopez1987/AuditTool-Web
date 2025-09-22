@@ -18,8 +18,10 @@ class ParameterCustomerController extends BaseController
         $model = OrderCustomer::findOrFail($id);
         $parameters = SystemStatus::whereSchemaid('OCF')
             ->select(['statusid', 'name'])->get();
-        return view("$this->viewPath.Parameters.create",
-            compact('model', 'parameters'));
+        return view(
+            "{$this->viewPath}.Parameters.create",
+            compact('model', 'parameters')
+        );
     }
 
     public function addparameters(Request $request, $id)
@@ -29,6 +31,4 @@ class ParameterCustomerController extends BaseController
         $carrier->save();
         return $this->redirectBackSuccess();
     }
-
-
 }

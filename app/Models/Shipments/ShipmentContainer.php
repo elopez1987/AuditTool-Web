@@ -15,23 +15,17 @@ class ShipmentContainer extends Model
 {
     use SoftDeletes;
     use LogsActivity;
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
-
-
-    protected $table = 'shipmentcontainers';
     public $timestamps = false;
 
+    protected $table = 'shipmentcontainers';
 
     protected $fillable = ['centerid', 'warehouseid', 'orderid', 'deliveryid',
         'customerid', 'lpnid', 'scanuser', 'scandate', 'scanuserload',
-        'scandateload', 'statusid', 'closedate'];
+        'scandateload', 'statusid', 'closedate',
+    ];
 
     protected $hidden = [
-        'schemaid'
+        'schemaid',
     ];
 
     protected $attributes = [
@@ -44,16 +38,9 @@ class ShipmentContainer extends Model
         'scandateload' => 'datetime:d/m/Y H:s',
     ];
 
-
-    protected static function boot()
+    public function getActivitylogOptions(): LogOptions
     {
-        parent::boot();
-        if (!app()->runningInConsole()) {
-            self::creating(function (ShipmentContainer $model) {
-                $model->scanuser = \Auth::user()->username;
-                $model->scandate = Carbon::now();
-            });
-        }
+        return LogOptions::defaults()->logFillable();
     }
 
     public static function controlAccessUser()
@@ -79,9 +66,14 @@ class ShipmentContainer extends Model
         return $this->belongsTo(User::class, 'scanuserload', 'username');
     }
 
-
-
-
-
-
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (ShipmentContainer $model) {
+                $model->scanuser = \Auth::user()->username;
+                $model->scandate = Carbon::now();
+            });
+        }
+    }
 }

@@ -33,8 +33,7 @@ class StorageSafetyToursController extends BaseController
         $this->authorize('storagesafetytours.create');
         $types = StorageSafetyTourType::controlAccessUser()
             ->where('statusid', '=', 'TYP-01')->select(['id','name'])->get();
-        return view('SafetyTours.StorageSafetyTours.create',compact('types'));
-
+        return view('SafetyTours.StorageSafetyTours.create', compact('types'));
     }
 
     public function store(CreateSafetyTourRequest $request)
@@ -44,7 +43,7 @@ class StorageSafetyToursController extends BaseController
         try {
             $tour = new StorageSafetyTours($request->validated() + ['centerid' => $this->getCenterForUser()]);
             $tour->save();
-            $tags = StorageSafetyTourTypeDetail::controlAccessUser()->where('typeid',$request->typeid)
+            $tags = StorageSafetyTourTypeDetail::controlAccessUser()->where('typeid', $request->typeid)
                 ->select(['tagid','id'])->get();
             if ($tags->isEmpty()) {
                 return $this->errorResponse('Tipo de recorrido no cuenta con tag registrados.');
@@ -57,12 +56,11 @@ class StorageSafetyToursController extends BaseController
                 ]);
             }
             DB::commit();
-            return redirect('storagesafetytours/' . $tour->touruuid );
-        } catch
-        (Exception $e) {
+            return redirect('storagesafetytours/' . $tour->touruuid);
+        } catch (Exception $e) {
             Log::error($e->getMessage());
             DB::rollback();
-            return  $this->errorResponse('Error al registrar el folio :' . $e->getMessage());
+            return $this->errorResponse('Error al registrar el folio :' . $e->getMessage());
         }
     }
 
@@ -70,18 +68,19 @@ class StorageSafetyToursController extends BaseController
     {
         $this->authorize('storagesafetytours.show');
         $tour = StorageSafetyTours::controlAccessUser()->where('touruuid', '=', $touruuid)->first();
-        $details = StorageSafetyTourDetail::controlAccessUser()->where('tourid',$tour->id)->get();
-        $locations = StorageSafetyTourDetail::controlAccessUser()->where('tourid',$tour->id)
-            ->leftJoin('systemstatus','systemstatus.statusid','=','storagesafetytourdetail.statusid')
-            ->leftJoin('storagetags','storagetags.id','=','storagesafetytourdetail.tagid')
+        $details = StorageSafetyTourDetail::controlAccessUser()->where('tourid', $tour->id)->get();
+        $locations = StorageSafetyTourDetail::controlAccessUser()->where('tourid', $tour->id)
+            ->leftJoin('systemstatus', 'systemstatus.statusid', '=', 'storagesafetytourdetail.statusid')
+            ->leftJoin('storagetags', 'storagetags.id', '=', 'storagesafetytourdetail.tagid')
             ->select(['storagetags.latitude as lat','storagetags.name as name',
-                'storagetags.longitude as lng','systemstatus.name as status'])
+                'storagetags.longitude as lng','systemstatus.name as status',
+            ])
             ->get()->map(function ($location) {
                 $location->lat = (float) $location->lat;
                 $location->lng = (float) $location->lng;
                 return $location;
             });
-        return view('SafetyTours.StorageSafetyTours.show', compact('tour','details','locations'));
+        return view('SafetyTours.StorageSafetyTours.show', compact('tour', 'details', 'locations'));
     }
 
     public function edit($touruuid)
@@ -106,6 +105,4 @@ class StorageSafetyToursController extends BaseController
         $tour->delete();
         return $this->redirectBackSuccessMessage('Registro eliminado con exito.');
     }
-
-
 }

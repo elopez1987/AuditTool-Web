@@ -25,5 +25,4 @@ class RequestLetterController extends BaseController
         $shipment->save();
         return $this->redirectBackSuccess();
     }
-
 }

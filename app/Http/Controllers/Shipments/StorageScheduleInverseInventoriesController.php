@@ -13,7 +13,6 @@ use Illuminate\Support\Collection;
 
 class StorageScheduleInverseInventoriesController extends BaseController
 {
-    
     public function updateDataInventory(StorageScheduleInverse $storagescheduleinverse)
     {
         $details = $this->getData($storagescheduleinverse);
@@ -22,15 +21,22 @@ class StorageScheduleInverseInventoriesController extends BaseController
 
     /**
      * @param StorageScheduleInverse $storagescheduleinverse
+     *
      * @return Collection
      */
     public function getData(StorageScheduleInverse $storagescheduleinverse): Collection
     {
         return DB::table('storagescheduleinverse')
-            ->select('storageincidencejourneydetails.delivery', 'storagescheduleinversetraffic.requestzare',
-                'storagescheduleinversetraffic.zare', 'storagescheduleinversetraffic.requestne',
-                'storagescheduleinversetraffic.ne', 'storagescheduleinverseinventory.requestadjust',
-                'storagescheduleinverseinventory.replyadjust', 'storagescheduleinverseinventory.note')
+            ->select(
+                'storageincidencejourneydetails.delivery',
+                'storagescheduleinversetraffic.requestzare',
+                'storagescheduleinversetraffic.zare',
+                'storagescheduleinversetraffic.requestne',
+                'storagescheduleinversetraffic.ne',
+                'storagescheduleinverseinventory.requestadjust',
+                'storagescheduleinverseinventory.replyadjust',
+                'storagescheduleinverseinventory.note'
+            )
             ->leftJoin('orderdeliveries', 'orderdeliveries.id', '=', 'storagescheduleinverse.orderid')
             ->leftJoin('storageincidencejourneydetails', 'orderdeliveries.id', '=', 'storageincidencejourneydetails.orderid')
             ->leftJoin('storagescheduleinversetraffic', function ($join) {
@@ -48,15 +54,14 @@ class StorageScheduleInverseInventoriesController extends BaseController
             ->distinct()->get();
     }
 
-
     public function update(Request $request, $id)
     {
         $error = null;
         DB::beginTransaction();
         try {
             $inverse = StorageScheduleInverse::findOrFail($id);
-            if ($request['delivery'] != "") {
-                $total = count($request["delivery"]) - 1;
+            if ($request['delivery'] !== '') {
+                $total = count($request['delivery']) - 1;
                 for ($i = 0; $i <= $total; $i++) {
                     $inventory = StorageScheduleInverseInventory::updateOrCreate(
                         [
@@ -65,12 +70,13 @@ class StorageScheduleInverseInventoriesController extends BaseController
                             'orderid' => $inverse->orderid,
                             'inverseid' => $id,
                             'delivery' => $request['delivery'][$i],
-                        ], [
+                        ],
+                        [
                             'replyadjust' => Carbon::now(),
                             'note' => $request['note'][$i],
                         ]
                     );
-                    if ($inventory->replyadjust != '') {
+                    if ($inventory->replyadjust !== '') {
                         $inventory->statusid = 'TD';
                         $inventory->save();
                     }
@@ -85,10 +91,7 @@ class StorageScheduleInverseInventoriesController extends BaseController
         }
         if ($success) {
             return $this->redirectBackSuccessMessage('Datos agregados correctamente');
-        } else {
-            return $this->errorResponse('No se pudieron guardar los datos!!' . $error);
         }
+        return $this->errorResponse('No se pudieron guardar los datos!!' . $error);
     }
-
-
 }

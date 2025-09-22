@@ -15,25 +15,18 @@ use Illuminate\Support\Facades\Auth;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-
 /**
  * @method static whereStatusid(string $string)
  */
 class StorageLocation extends Model
 {
-
     use Notifiable;
     use SoftDeletes;
 
-    protected $table = 'storagelocations';
-    protected $dateFormat = 'Y-m-d H:i:s';
-
     use LogsActivity;
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
+    protected $table = 'storagelocations';
+    protected $dateFormat = 'Y-m-d H:i:s';
 
     protected $fillable = [
         'centerid',
@@ -47,14 +40,14 @@ class StorageLocation extends Model
         'auxiliary03',
         'auxiliary04',
         'auxiliary05',
-        'statusid'
+        'statusid',
     ];
 
     protected $hidden = [
         'created_at',
         'updated_at',
         'deleted_at',
-        'schemaid'
+        'schemaid',
     ];
 
     protected $attributes = [
@@ -66,21 +59,10 @@ class StorageLocation extends Model
         'configurationflag' => 'array',
     ];
 
-
-    protected static function boot()
+    public function getActivitylogOptions(): LogOptions
     {
-        parent::boot();
-        if (!app()->runningInConsole()) {
-            self::creating(function (StorageLocation $model) {
-                $model->auxiliary05 = Auth::user()->username;
-                $model->barcode = rand(100000, 999999);
-            });
-            self::updating(function (StorageLocation $model) {
-                $model->auxiliary05 = Auth::user()->username;
-            });
-        }
+        return LogOptions::defaults()->logFillable();
     }
-
 
     public static function controlAccessUser()
     {
@@ -89,7 +71,6 @@ class StorageLocation extends Model
         return StorageLocation::whereIn('storagelocations.centerid', $centers)
             ->whereIn('storagelocations.warehouseid', $warehouses);
     }
-
 
 //    Relaciones
     public function center()
@@ -112,39 +93,37 @@ class StorageLocation extends Model
         return $this->belongsTo(StorageZone::class, 'zoneid', 'id');
     }
 
-
 //    Filtros Scopes
     public function scopeName($query, $name)
     {
-        if (trim($name) != "") {
-            $query->where('storagelocations.name', 'like', "%$name%");
+        if (trim($name) != '') {
+            $query->where('storagelocations.name', 'like', "%{$name}%");
         }
     }
 
     public function scopeZone($query, $zoneid)
     {
-        if ($zoneid != "") {
+        if ($zoneid != '') {
             $query->where('storagelocations.zoneid', $zoneid);
         }
     }
 
     public function scopeStatus($query, $statusid)
     {
-        if ($statusid != "") {
+        if ($statusid != '') {
             $query->where('storagelocations.statusid', $statusid);
         }
     }
 
     public function scopeWarehouse($query, $warehouseid)
     {
-        if ($warehouseid != "") {
+        if ($warehouseid != '') {
             $query->where('storagelocations.warehouseid', $warehouseid);
         }
     }
 
-
 //    Funciones auxiliares para otros modulos
-    static function updateLocation($locationid, $statusid, $boxnumber)
+    public static function updateLocation($locationid, $statusid, $boxnumber)
     {
         StorageLocation::controlAccessUser()
             ->where('id', $locationid)
@@ -160,5 +139,17 @@ class StorageLocation extends Model
             ->select(['name', 'id'])->get();
     }
 
-
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (StorageLocation $model) {
+                $model->auxiliary05 = Auth::user()->username;
+                $model->barcode = rand(100000, 999999);
+            });
+            self::updating(function (StorageLocation $model) {
+                $model->auxiliary05 = Auth::user()->username;
+            });
+        }
+    }
 }

@@ -15,11 +15,11 @@ use PhpOffice\PhpSpreadsheet\Style\Fill;
 
 class ExportPlanArriveReceipt implements FromCollection, WithHeadings, WithMapping, WithEvents, ShouldAutoSize, WithColumnFormatting
 {
+
+    use Exportable;
     private $workdayin;
     private $workdayout;
     private $centerid;
-
-    use Exportable;
 
     public function __construct($workdayin, $workdayout, $centerid)
     {
@@ -53,19 +53,32 @@ class ExportPlanArriveReceipt implements FromCollection, WithHeadings, WithMappi
             'Fin de descarga',
             'Autorización de salida',
             'Salida de unidad',
-            'Programador'
+            'Programador',
         ];
     }
 
     public function collection()
     {
-        $receipts = DB::table('receiptasn')
-            ->select('receiptasn.shipmentid', 'receiptasn.billoflading', 'receiptproviders.name as provider',
-                'shipmentcarriers.name as carrier', 'receiptunits.id as folio', 'receiptunits.operatorname',
-                'receiptunits.boxnumber', 'receiptunits.trucknumber', 'receiptasn.addasndate as cita',
-                'receiptunits.entrydate as entrada', 'receiptunits.deliverdate as mesa', 'receiptunits.ensnare as enrampe',
-                'receiptunits.startdate as iniciodescarga', 'receiptunits.finishdate as findescarga',
-                'receiptunits.autorizaoutputdate as autorizacion', 'receiptunits.outputdate as salida','receiptasn.auxiliary01 as programador')
+        return DB::table('receiptasn')
+            ->select(
+                'receiptasn.shipmentid',
+                'receiptasn.billoflading',
+                'receiptproviders.name as provider',
+                'shipmentcarriers.name as carrier',
+                'receiptunits.id as folio',
+                'receiptunits.operatorname',
+                'receiptunits.boxnumber',
+                'receiptunits.trucknumber',
+                'receiptasn.addasndate as cita',
+                'receiptunits.entrydate as entrada',
+                'receiptunits.deliverdate as mesa',
+                'receiptunits.ensnare as enrampe',
+                'receiptunits.startdate as iniciodescarga',
+                'receiptunits.finishdate as findescarga',
+                'receiptunits.autorizaoutputdate as autorizacion',
+                'receiptunits.outputdate as salida',
+                'receiptasn.auxiliary01 as programador'
+            )
             ->leftJoin('receiptunits', 'receiptasn.folionumber', '=', 'receiptunits.id')
             ->leftJoin('receiptproviders', 'receiptasn.providerid', '=', 'receiptproviders.id')
             ->leftJoin('shipmentcarriers', 'receiptunits.carrierid', '=', 'shipmentcarriers.id')
@@ -73,8 +86,6 @@ class ExportPlanArriveReceipt implements FromCollection, WithHeadings, WithMappi
             ->where('receiptasn.centerid', '=', $this->centerid)
             ->whereBetween('receiptasn.addasndate', [$this->workdayin, $this->workdayout])
             ->get();
-
-        return $receipts;
     }
 
     public function map($receipts): array
@@ -95,7 +106,7 @@ class ExportPlanArriveReceipt implements FromCollection, WithHeadings, WithMappi
             $receipts->findescarga,
             $receipts->autorizacion,
             $receipts->salida,
-            $receipts->programador
+            $receipts->programador,
         ];
     }
 
@@ -105,7 +116,8 @@ class ExportPlanArriveReceipt implements FromCollection, WithHeadings, WithMappi
             AfterSheet::class => function (AfterSheet $event) {
                 $event->sheet->getDelegate()->getStyle('A1:P1')->getFill()
                     ->applyFromArray(['fillType' => Fill::FILL_SOLID,
-                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6']]);
+                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6'],
+                    ]);
             },
         ];
     }

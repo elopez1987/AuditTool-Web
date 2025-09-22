@@ -14,14 +14,9 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class InventoryPartNumberCategory01 extends Model
 {
     use LogsActivity;
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
     protected $table = 'inventorypartnumbercategory01';
 
     protected $dateFormat = 'Y-m-d H:i:s';
-
 
     protected $fillable = [
         'centerid',
@@ -32,20 +27,23 @@ class InventoryPartNumberCategory01 extends Model
         'auxiliary03',
         'auxiliary04',
         'auxiliary05',
-        'statusid'
+        'statusid',
     ];
 
     protected $hidden = [
         'created_at',
         'updated_at',
-        'schemaid'
+        'schemaid',
     ];
 
     protected $attributes = [
         'statusid' => 'E',
         'schemaid' => 'STS',
     ];
-
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
     public static function controlAccessUser()
     {
@@ -67,8 +65,8 @@ class InventoryPartNumberCategory01 extends Model
 
     public function scopeName($query, $name)
     {
-        if (trim($name) != "") {
-            $query->where('description', 'like', "%$name%");
+        if (trim($name) !== '') {
+            $query->where('description', 'like', "%{$name}%");
         }
     }
 
@@ -86,6 +84,4 @@ class InventoryPartNumberCategory01 extends Model
     {
         return $this->belongsTo(SystemStatus::class, 'statusid', 'statusid');
     }
-
-
 }

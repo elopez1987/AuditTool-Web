@@ -54,6 +54,4 @@ class ShipmentTruckController extends BaseController
         $shipmenttruck->delete();
         return $this->successResponse('shipmenttrucks.index');
     }
-
-
 }

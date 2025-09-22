@@ -28,13 +28,14 @@ class ArriveUnitController extends BaseController
         DB::beginTransaction();
         try {
             $result = $this->saveArriveUnit($receiptunit, 'WEB');
-            if($result) return $result;
+            if ($result) {
+                return $result;
+            }
             DB::commit();
             return $this->redirectBackSuccessMessage('Datos actualizados correctamente!!');
-        }catch (Exception $e){
+        } catch (Exception $e) {
             DB::rollback();
-            return  $this->errorResponse('Error al procesar la solicitud :' . $e->getMessage());
+            return $this->errorResponse('Error al procesar la solicitud :' . $e->getMessage());
         }
     }
-
 }

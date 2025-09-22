@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 
 class InventoryLabelsController extends BaseController
 {
-
     public function index()
     {
         $this->authorize('inventorylabels.index');
@@ -40,8 +39,10 @@ class InventoryLabelsController extends BaseController
     {
         $this->authorize('inventorylabels.edit');
         $status = $this->getStatusForSchema('STS');
-        return view('Configuration.InventoryLabels.edit',
-            compact('inventorylabel', 'status'));
+        return view(
+            'Configuration.InventoryLabels.edit',
+            compact('inventorylabel', 'status')
+        );
     }
 
     public function update(Request $request, InventoryLabel $inventorylabel)

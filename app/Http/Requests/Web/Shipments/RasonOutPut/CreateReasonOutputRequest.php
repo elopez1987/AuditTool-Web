@@ -11,7 +11,7 @@ class CreateReasonOutputRequest extends FormRequest
         return [
             'centerid' => 'required',
             'description' => 'required|string|max:50',
-            'type' => 'required|max:3|string'
+            'type' => 'required|max:3|string',
         ];
     }
 

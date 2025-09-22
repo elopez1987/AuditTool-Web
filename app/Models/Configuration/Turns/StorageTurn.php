@@ -17,11 +17,6 @@ class StorageTurn extends Model
 {
     use LogsActivity;
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
-
     protected $table = 'storageturns';
 
     protected $dateFormat = 'Y-m-d H:i:s';
@@ -34,19 +29,24 @@ class StorageTurn extends Model
         'auxiliary03',
         'auxiliary04',
         'auxiliary05',
-        'statusid'
+        'statusid',
     ];
 
     protected $hidden = [
         'created_at',
         'updated_at',
-        'schemaid'
+        'schemaid',
     ];
 
     protected $attributes = [
         'statusid' => 'E',
         'schemaid' => 'STS',
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
     public static function controlAccessUser()
     {
@@ -72,8 +72,8 @@ class StorageTurn extends Model
 
     public function scopeName($query, $name)
     {
-        if (trim($name) != "") {
-            $query->where('name', 'like', "%$name%");
+        if (trim($name) !== '') {
+            $query->where('name', 'like', "%{$name}%");
         }
     }
 }

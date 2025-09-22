@@ -10,7 +10,6 @@ use Yajra\DataTables\Facades\DataTables;
 
 class AuthorizeOutPutController extends Controller
 {
-
     public function reportauthorizedoutputs()
     {
         $this->authorize('reportauthorizedoutputs');
@@ -28,8 +27,7 @@ class AuthorizeOutPutController extends Controller
             ->Barcode($request->get('barcode'))
             ->whereIn('statusid', ['OU'])->get();
         return DataTables::of($data)->addColumn('stays', function ($data) {
-                return Carbon::now()->diff($data->autorizaoutputdate)->format('%d d %H:%i h/m');
-            })->toJson();
+            return Carbon::now()->diff($data->autorizaoutputdate)->format('%d d %H:%i h/m');
+        })->toJson();
     }
-
 }

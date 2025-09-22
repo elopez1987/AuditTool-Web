@@ -17,25 +17,15 @@ class StorageSafetyTourTypeDetail extends Model
     use SoftDeletes;
     use LogsActivity;
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
-
     protected $table = 'storagesafetytourtypedetails';
 
     protected $fillable = [
-      'centerid', 'typeid', 'tagid', 'userid', 'value01', 'value02', 'value03',
+        'centerid', 'typeid', 'tagid', 'userid', 'value01', 'value02', 'value03',
     ];
 
-    protected static function boot()
+    public function getActivitylogOptions(): LogOptions
     {
-        parent::boot();
-        if (!app()->runningInConsole()) {
-            self::creating(function (StorageSafetyTourTypeDetail $model) {
-                $model->userid = Auth::id();
-            });
-        }
+        return LogOptions::defaults()->logFillable();
     }
 
     public static function controlAccessUser()
@@ -62,5 +52,15 @@ class StorageSafetyTourTypeDetail extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'userid');
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (StorageSafetyTourTypeDetail $model) {
+                $model->userid = Auth::id();
+            });
+        }
     }
 }

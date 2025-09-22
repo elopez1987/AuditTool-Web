@@ -11,7 +11,7 @@ class CreateOperatorYardRequest extends FormRequest
         return [
             'centerid' => 'required',
             'name' => 'required|string',
-            'numberphone' => 'required|numeric'
+            'numberphone' => 'required|numeric',
         ];
     }
 

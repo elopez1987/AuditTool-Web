@@ -15,15 +15,9 @@ class ShipmentSeal extends Model
 {
     use LogsActivity;
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
-
     protected $table = 'shipmentseals';
 
     protected $dateFormat = 'Y-m-d H:i:s';
-
 
     protected $fillable = [
         'centerid',
@@ -36,7 +30,7 @@ class ShipmentSeal extends Model
         'receivername',
         'statusid',
         'schemaorderid',
-        'statusorderid'
+        'statusorderid',
     ];
 
     protected $hidden = [
@@ -50,6 +44,11 @@ class ShipmentSeal extends Model
         'schemaorderid' => 'KLE',
         'statusorderid' => 'PA',
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
     public static function controlAccessUser()
     {
@@ -81,11 +80,8 @@ class ShipmentSeal extends Model
 
     public function scopeForShipment($query, $shipmentid)
     {
-        if (trim($shipmentid) != "") {
+        if (trim($shipmentid) !== '') {
             $query->where('shipmentid', '=', $shipmentid);
         }
     }
-
-
-
 }

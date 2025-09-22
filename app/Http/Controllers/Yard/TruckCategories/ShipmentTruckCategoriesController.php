@@ -10,7 +10,6 @@ use Yajra\DataTables\Facades\DataTables;
 
 class ShipmentTruckCategoriesController extends BaseController
 {
-
     public function index()
     {
         $this->authorize('shipmenttruckcategories.index');
@@ -35,7 +34,6 @@ class ShipmentTruckCategoriesController extends BaseController
         return view('Yards.ShipmentTruckCategories.create');
     }
 
-
     public function store(CreateTruckCategory $request)
     {
         $truckcategory = new ShipmentTruckCategory($request->validated());
@@ -43,13 +41,14 @@ class ShipmentTruckCategoriesController extends BaseController
         return $this->redirectBackInfo();
     }
 
-
     public function edit(ShipmentTruckCategory $shipmenttruckcategory)
     {
         $this->authorize('shipmenttruckcategories.edit');
         $status = $this->getStatusSTS();
-        return view('Yards.ShipmentTruckCategories.edit',
-            compact('status', 'shipmenttruckcategory'));
+        return view(
+            'Yards.ShipmentTruckCategories.edit',
+            compact('status', 'shipmenttruckcategory')
+        );
     }
 
     public function update(Request $request, ShipmentTruckCategory $shipmenttruckcategory)
@@ -57,6 +56,4 @@ class ShipmentTruckCategoriesController extends BaseController
         $shipmenttruckcategory->update($request->except('truckcategoryid'));
         return $this->redirectBackInfo();
     }
-
-
 }

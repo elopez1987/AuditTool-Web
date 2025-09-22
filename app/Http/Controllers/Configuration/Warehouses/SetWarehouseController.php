@@ -9,15 +9,15 @@ use Illuminate\Http\Request;
 
 class SetWarehouseController extends BaseController
 {
-
     public function index()
     {
         $user = Auth::user();
         $accesos = SecurityAccessWarehouse::where('username', $user->username)->get();
-        return view('Configuration.SetWarehouse.index',
+        return view(
+            'Configuration.SetWarehouse.index',
             [
                 'user' => $user,
-                'accesos' => $accesos
+                'accesos' => $accesos,
             ]
         );
     }
@@ -35,5 +35,4 @@ class SetWarehouseController extends BaseController
         $access->save();
         return $this->redirectBackSuccessMessage('Bodega fijado con exito.');
     }
-
 }

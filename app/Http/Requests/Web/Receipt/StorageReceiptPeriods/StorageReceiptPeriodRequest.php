@@ -24,5 +24,4 @@ class StorageReceiptPeriodRequest extends FormRequest
     {
         return true;
     }
-
 }

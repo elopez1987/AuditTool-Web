@@ -15,7 +15,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
-
 class CloseVerificationProcessController extends BaseController
 {
     public function index(Request $request)
@@ -64,7 +63,6 @@ class CloseVerificationProcessController extends BaseController
         }
     }
 
-
     public function getJsonResponse($message, $data, $code, $codeResponse): JsonResponse
     {
         return response()->json([
@@ -75,6 +73,4 @@ class CloseVerificationProcessController extends BaseController
             'Data' => $data,
         ], $code);
     }
-
-
 }

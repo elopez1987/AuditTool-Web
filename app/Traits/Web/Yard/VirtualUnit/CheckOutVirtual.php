@@ -12,7 +12,7 @@ trait CheckOutVirtual
     {
         $receiptunit = ReceiptUnit::controlAccessUser()
             ->where('id', $model->folionumber)->first();
-        if (!empty($receiptunit)) {
+        if (! empty($receiptunit)) {
             $receiptunit->containerseal = '0000';
             $receiptunit->shipmentid = $model->shipmentid;
             $receiptunit->outputdate = Carbon::now();

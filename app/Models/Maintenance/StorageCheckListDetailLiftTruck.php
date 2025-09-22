@@ -15,12 +15,6 @@ class StorageCheckListDetailLiftTruck extends Model
     use SoftDeletes;
     use LogsActivity;
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
-
-
     protected $table = 'storagechecklistdetaillifttrucks';
 
     protected $fillable = [
@@ -30,13 +24,13 @@ class StorageCheckListDetailLiftTruck extends Model
         'auxiliary03',
         'auxiliary04',
         'auxiliary05',
-        'statusid'
+        'statusid',
     ];
 
     protected $hidden = [
         'created_at',
         'updated_at',
-        'schemaid'
+        'schemaid',
     ];
 
     protected $attributes = [
@@ -44,18 +38,21 @@ class StorageCheckListDetailLiftTruck extends Model
         'schemaid' => 'STS',
     ];
 
-
     protected $casts = [
         'created_at' => 'datetime:d/m/Y H:s',
         'updated_At' => 'datetime:d/m/Y H:s',
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
         return StorageCheckListDetailLiftTruck::whereIn('storagechecklistdetaillifttrucks.centerid', $centers);
     }
-
 
     public function center()
     {
@@ -76,5 +73,4 @@ class StorageCheckListDetailLiftTruck extends Model
     {
         return $this->belongsTo(StorageCheckListLiftTrucks::class, 'checklistid', 'id');
     }
-
 }

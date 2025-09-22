@@ -16,7 +16,7 @@ class LogDeviceForUserController extends BaseController
 
     public function getDevicesForUser(Request $request)
     {
-        if ($request->ajax() && $request['serialnumber'] != '') {
+        if ($request->ajax() && $request['serialnumber'] !== '') {
             $data = StorageUserDevice::leftJoin('users', 'securitydeviceforuser.username', 'users.id')
                 ->select(['users.name as user', 'securitydeviceforuser.serialnumber', 'securitydeviceforuser.created_at'])
                 ->ForSerialNumber($request->get('serialnumber'))
@@ -24,6 +24,4 @@ class LogDeviceForUserController extends BaseController
             return $this->showDataToView($data, []);
         }
     }
-
-
 }

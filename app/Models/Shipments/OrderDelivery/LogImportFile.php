@@ -10,8 +10,6 @@ class LogImportFile extends Model
     protected $table = 'logimports';
 
     protected $fillable = [
-        'message', 'created_at'
+        'message', 'created_at',
     ];
-
-
 }

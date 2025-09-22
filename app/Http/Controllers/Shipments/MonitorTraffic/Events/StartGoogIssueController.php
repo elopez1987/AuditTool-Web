@@ -12,7 +12,6 @@ use Log;
 
 class StartGoogIssueController extends BaseController
 {
-
     public function index(OrderDeliverie $id)
     {
         $order = $id;
@@ -34,6 +33,7 @@ class StartGoogIssueController extends BaseController
 
     /**
      * @param OrderDeliverie $orderDelivery
+     *
      * @return void
      */
     public function updateShipmentHeader(OrderDeliverie $orderDelivery): void
@@ -46,6 +46,7 @@ class StartGoogIssueController extends BaseController
 
     /**
      * @param OrderDeliverie $orderDelivery
+     *
      * @return void
      */
     public function updateShipmentSeal(OrderDeliverie $orderDelivery): void
@@ -57,6 +58,7 @@ class StartGoogIssueController extends BaseController
 
     /**
      * @param OrderDeliverie $orderDelivery
+     *
      * @return void
      */
     public function updateOrderDelivery(OrderDeliverie $orderDelivery): void
@@ -67,17 +69,14 @@ class StartGoogIssueController extends BaseController
 
     /**
      * @param OrderDeliverie $orderDelivery
+     *
      * @return void
      */
     public function SendEdiToRControl(OrderDeliverie $orderDelivery): void
     {
         $parameter = $this->getParametersOfWarehouse($orderDelivery->warehouseid);
-        if (in_array('SWH-21', (array)$parameter)) {
+        if (in_array('SWH-21', (array) $parameter)) {
             EdiShipment::createEDIForEventToShipment($orderDelivery, 'DOCUMENT');
         }
     }
-
-
-
-
 }

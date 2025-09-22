@@ -23,7 +23,6 @@ class FinishGoodIssueController extends BaseController
 {
     use CheckOutVirtual;
 
-
     public function index(Request $request, OrderDeliverie $id)
     {
         DB::beginTransaction();
@@ -32,14 +31,12 @@ class FinishGoodIssueController extends BaseController
             $orderDelivery = OrderDeliverie::whereId($order->id)->first();
             $parameter = $this->getParametersOfCenter($orderDelivery->centerid);
 
-
-            if (!empty($orderDelivery->folionumber)) {
+            if (! empty($orderDelivery->folionumber)) {
                 $folio = ReceiptUnit::where('id', $orderDelivery->folionumber)->first();
                 if (empty($folio)) {
                     return $this->errorResponse('El número de folio relacionado al embarque no se encuentra en patio, favor de validar.');
-                } else {
-                    $this->createJourney($orderDelivery);
                 }
+                $this->createJourney($orderDelivery);
             }
 
             $this->sendMessages($parameter, $orderDelivery);
@@ -60,16 +57,6 @@ class FinishGoodIssueController extends BaseController
         }
     }
 
-    private function createJourney(OrderDeliverie $order): void
-    {
-        ShipmentJourney::create([
-            'centerid' => $order->centerid,
-            'warehouseid' => $order->warehouseid,
-            'orderid' => $order->id,
-            'createuserid' => Auth::user()->id,
-        ]);
-    }
-
     public function updateOrderDelivery($orderDelivery)
     {
         $orderDelivery->statusid = 'EJ';
@@ -79,6 +66,7 @@ class FinishGoodIssueController extends BaseController
     /**
      * @param $orderDelivery
      * @param $delivery
+     *
      * @return void
      */
     public function updateShipmentHeader($orderDelivery, $delivery): void
@@ -92,6 +80,7 @@ class FinishGoodIssueController extends BaseController
 
     /**
      * @param $orderDelivery
+     *
      * @return void
      */
     public function updateShipmentSeal($orderDelivery): void
@@ -103,6 +92,7 @@ class FinishGoodIssueController extends BaseController
 
     /**
      * @param $orderDelivery
+     *
      * @return void
      */
     public function updateOrderMonitor($orderDelivery): void
@@ -114,13 +104,14 @@ class FinishGoodIssueController extends BaseController
 
     /**
      * @param $orderDelivery
+     *
      * @return void
      */
     public function closeUnitForProcessAmazon($orderDelivery): void
     {
 //            Cierra la unidad virtual para clientes amazon
         $parameterCustomer = $this->getParameterOfCustomer($orderDelivery->customerid);
-        if (!empty($parameterCustomer) && in_array('OCF-04', (array)$parameterCustomer)) {
+        if (! empty($parameterCustomer) && in_array('OCF-04', (array) $parameterCustomer)) {
             $this->checkOutVirtual($orderDelivery);
             $orderDelivery->statusid = 'DH';
             $orderDelivery->save();
@@ -130,24 +121,25 @@ class FinishGoodIssueController extends BaseController
     /**
      * @param $parameter
      * @param $orderDelivery
+     *
      * @return void
      */
     public function sendMessages($parameter, $orderDelivery): void
     {
-        if (!empty($parameter) && in_array('SDC-09', (array)$parameter)) {
+        if (! empty($parameter) && in_array('SDC-09', (array) $parameter)) {
             EnviarMensajeAOperadorJob::dispatch($orderDelivery);
         }
-        if (!empty($parameter) && in_array('SDC-03', (array)$parameter)) {
+        if (! empty($parameter) && in_array('SDC-03', (array) $parameter)) {
             EnviarMensajaSorianaJob::dispatch($orderDelivery);
         }
-        if (!empty($parameter) && in_array('SWH-17', (array)$parameter)) {
+        if (! empty($parameter) && in_array('SWH-17', (array) $parameter)) {
             EnviarMensajeFinFacturacionJob::dispatch($orderDelivery);
         }
     }
 
-
     /**
      * @param $orderDelivery
+     *
      * @return void
      */
     public function createShipmentPod($orderDelivery): void
@@ -159,5 +151,13 @@ class FinishGoodIssueController extends BaseController
         ]);
     }
 
-
+    private function createJourney(OrderDeliverie $order): void
+    {
+        ShipmentJourney::create([
+            'centerid' => $order->centerid,
+            'warehouseid' => $order->warehouseid,
+            'orderid' => $order->id,
+            'createuserid' => Auth::user()->id,
+        ]);
+    }
 }

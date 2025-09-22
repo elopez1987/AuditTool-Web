@@ -10,14 +10,8 @@ class EdiToken extends Model
 {
     use LogsActivity;
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
-
     public $timestamps = false;
     protected $table = 'ediwstokens';
-
 
     protected $fillable = [
         'baseuri',
@@ -28,4 +22,9 @@ class EdiToken extends Model
         'tokentype',
         'servicetype',
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 }

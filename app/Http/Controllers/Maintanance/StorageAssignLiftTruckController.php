@@ -10,15 +10,16 @@ use Illuminate\Http\Request;
 
 class StorageAssignLiftTruckController extends BaseController
 {
-
     use QueryStorageLiftTrucks;
 
     public function index()
     {
         $this->authorize('storageassignlifttrucks.index');
         $types = $this->getStatusForSchema('TPM');
-        return view('Maintenance.StorageAssignLiftTrucks.index',
-            compact('types'));
+        return view(
+            'Maintenance.StorageAssignLiftTrucks.index',
+            compact('types')
+        );
     }
 
     public function edit($id)
@@ -27,16 +28,18 @@ class StorageAssignLiftTruckController extends BaseController
         $centerid = $this->getCenterForUser();
         $type = SystemStatus::findOrFail($id);
         $users = $this->getUserForAssign($centerid, $id);
-        $userAssigns =   $this->getStorageAssignLiftTrucks($id);
-        return view('Maintenance.StorageAssignLiftTrucks.edit',
-            compact('type', 'users','userAssigns'));
+        $userAssigns = $this->getStorageAssignLiftTrucks($id);
+        return view(
+            'Maintenance.StorageAssignLiftTrucks.edit',
+            compact('type', 'users', 'userAssigns')
+        );
     }
 
     public function update(Request $request, $id)
     {
         $centerid = $this->getCenterForUser();
-        if ($request['username'] != "") {
-            $total = count($request["username"]) - 1;
+        if ($request['username'] !== '') {
+            $total = count($request['username']) - 1;
             for ($i = 0; $i <= $total; $i++) {
                 StorageAssignLiftTrucks::create([
                     'centerid' => $centerid,
@@ -53,8 +56,4 @@ class StorageAssignLiftTruckController extends BaseController
         StorageAssignLiftTrucks::destroy($request['id']);
         return response()->json();
     }
-
-
-
-
 }

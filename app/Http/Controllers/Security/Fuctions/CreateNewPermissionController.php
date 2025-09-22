@@ -12,9 +12,11 @@ class CreateNewPermissionController extends BaseController
     public function createNewPermissionForFunction(SecurityFunction $securityFunction, Request $request)
     {
         $permissions = $request->input('permisionid');
-        if (!empty($permissions)) {
+        if (! empty($permissions)) {
             $resposeSave = $this->savePermissions($permissions, $request, $securityFunction);
-            if ($resposeSave) return $resposeSave;
+            if ($resposeSave) {
+                return $resposeSave;
+            }
         }
         return $this->redirectBackSuccessMessage('Permisos creados con exito!!');
     }
@@ -23,10 +25,10 @@ class CreateNewPermissionController extends BaseController
     {
         $permissionNames = $request->input('permisionname');
         foreach ($permissions as $index => $name) {
-            if (!empty($name)) {
+            if (! empty($name)) {
                 $formattedName = str_replace(' ', '', $name);
                 $exists = Permission::where('name', $formattedName)->exists();
-                if (!$exists) {
+                if (! $exists) {
                     Permission::create([
                         'moduleid' => $securityFunction->moduleid,
                         'functionid' => $securityFunction->functionid,
@@ -40,6 +42,4 @@ class CreateNewPermissionController extends BaseController
             }
         }
     }
-
-
 }

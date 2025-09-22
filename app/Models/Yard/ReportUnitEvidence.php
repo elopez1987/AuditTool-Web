@@ -14,5 +14,4 @@ class ReportUnitEvidence extends Model
         $centers = SecurityAccessWarehouse::Centers();
         return ReportUnitEvidence::whereIn('vw_storageunitevidence.centerid', $centers);
     }
-
 }

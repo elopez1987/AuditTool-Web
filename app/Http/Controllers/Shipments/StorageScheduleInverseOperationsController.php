@@ -19,7 +19,6 @@ use Illuminate\Http\Request;
 
 class StorageScheduleInverseOperationsController extends BaseController
 {
-
     use ResponseApi;
     use QueryInverseOperation;
 
@@ -33,9 +32,18 @@ class StorageScheduleInverseOperationsController extends BaseController
         $status = SystemStatus::whereSchemaid('LOV')->select(['name', 'statusid'])->get();
         $evidences = EvidencePhoto::where('model_type', '=', 'StorageScheduleInverse')
             ->where('model_id', $storagescheduleinverse->orderid)->get();
-        return view('Shipments.StorageScheduleInverse.operation.edit',
-            compact('storagescheduleinverse', 'details',
-                'operation', 'status', 'trafficDetails', 'skusVerificados', 'evidences'));
+        return view(
+            'Shipments.StorageScheduleInverse.operation.edit',
+            compact(
+                'storagescheduleinverse',
+                'details',
+                'operation',
+                'status',
+                'trafficDetails',
+                'skusVerificados',
+                'evidences'
+            )
+        );
     }
 
     public function update(Request $request, $id)
@@ -43,9 +51,9 @@ class StorageScheduleInverseOperationsController extends BaseController
         DB::beginTransaction();
         try {
             $inverse = StorageScheduleInverse::findOrFail($id);
-            if (!empty($request['folionumber'])) {
+            if (! empty($request['folionumber'])) {
                 $receiptunit = ReceiptUnit::controlAccessUser()->where('id', $request['folionumber'])->first();
-                if (!empty($receiptunit)) {
+                if (! empty($receiptunit)) {
                     $inverse->folionumber = $receiptunit->id;
                     $inverse->save();
                 } else {
@@ -63,19 +71,16 @@ class StorageScheduleInverseOperationsController extends BaseController
         }
     }
 
-
     public function openCountToReceiptInverse(Request $request)
     {
         $item = StorageIncidenceJourneyDetails::where('folioid', $request['id'])->first();
         DB::delete("
                 delete from storagescheduleinverseoperationdetails
-                where partnumberid=$item->partnumberid
-                and orderid = $item->orderid
-                and delivery = $item->delivery ");
+                where partnumberid={$item->partnumberid}
+                and orderid = {$item->orderid}
+                and delivery = {$item->delivery} ");
         return $this->responseSuccessAjax('', Carbon::now());
-
     }
-
 
     public function openCountCheck(Request $request)
     {
@@ -88,6 +93,7 @@ class StorageScheduleInverseOperationsController extends BaseController
     /**
      * @param $inverse
      * @param Request $request
+     *
      * @return void
      */
     public function createNewOperation($inverse, Request $request): void
@@ -102,7 +108,7 @@ class StorageScheduleInverseOperationsController extends BaseController
             [
                 'wmsdate' => $request['wmsdate'],
                 'warehousedate' => $request['warehousedate'],
-                'statusid' => $request['statusid']
+                'statusid' => $request['statusid'],
             ]
         );
     }
@@ -110,15 +116,14 @@ class StorageScheduleInverseOperationsController extends BaseController
     /**
      * @param $warehousedate
      * @param $inverse
+     *
      * @return void
      */
     public function updateStatusInverseToFinish($warehousedate, $inverse): void
     {
-        if ($warehousedate != '') {
+        if ($warehousedate !== '') {
             $inverse->statusid = 'TD';
             $inverse->save();
         }
     }
-
-
 }

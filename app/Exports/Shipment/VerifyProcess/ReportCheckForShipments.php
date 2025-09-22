@@ -15,11 +15,11 @@ use PhpOffice\PhpSpreadsheet\Style\Fill;
 
 class ReportCheckForShipments implements FromCollection, WithHeadings, WithMapping, WithEvents, ShouldAutoSize, WithColumnFormatting
 {
+
+    use Exportable;
     private $workdayin;
     private $workdayout;
     private $centerid;
-
-    use Exportable;
 
     public function __construct($workdayin, $workdayout, $centerid)
     {
@@ -76,11 +76,21 @@ class ReportCheckForShipments implements FromCollection, WithHeadings, WithMappi
         $startDate = $this->workdayin;
         $endDate = $this->workdayout;
 
-        $shipment = DB::table('shipmentcheck as s')
-            ->select('s.centerid', 's.warehouseid', 'o.workday', 's.orderid', 'o.shipmentid',
-                'o2.name as customername', 'o2.city', 's.createuser', 'u.name as username',
-                's2.totalcontainers as totalpallets', 's2.totalpieces as totalcajas',
-                's.startdate', 's.finishdate',
+        return DB::table('shipmentcheck as s')
+            ->select(
+                's.centerid',
+                's.warehouseid',
+                'o.workday',
+                's.orderid',
+                'o.shipmentid',
+                'o2.name as customername',
+                'o2.city',
+                's.createuser',
+                'u.name as username',
+                's2.totalcontainers as totalpallets',
+                's2.totalpieces as totalcajas',
+                's.startdate',
+                's.finishdate',
             )
             ->leftJoin('users as u', function ($join) {
                 $join->on('s.createuser', '=', 'u.username');
@@ -102,9 +112,7 @@ class ReportCheckForShipments implements FromCollection, WithHeadings, WithMappi
             ->where('s.startdate' >= $startDate)
             ->where('s.finishdate' <= $endDate)
             ->get();
-        return $shipment;
     }
-
 
     public function registerEvents(): array
     {
@@ -112,7 +120,8 @@ class ReportCheckForShipments implements FromCollection, WithHeadings, WithMappi
             AfterSheet::class => function (AfterSheet $event) {
                 $event->sheet->getDelegate()->getStyle('A1:K1')->getFill()
                     ->applyFromArray(['fillType' => Fill::FILL_SOLID,
-                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6']]);
+                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6'],
+                    ]);
             },
         ];
     }

@@ -7,25 +7,21 @@ use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\User;
 use Auth;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Activitylog\LogOptions;
-use Spatie\Activitylog\Traits\LogsActivity;
-
 
 class ReceiptContainer extends Model
 {
-
     protected $table = 'receiptcontainers';
     protected $primaryKey = 'recordid';
 
     protected $fillable = [
         'centerid', 'warehouseid', 'receiptid', 'partnumberid', 'quantity', 'lpnid',
-        'batch','productiondate','codeplant','eanbox','eanpz','photo'
+        'batch','productiondate','codeplant','eanbox','eanpz','photo',
     ];
 
     protected $hidden = [
         'created_at',
         'updated_at',
-        'schemaid'
+        'schemaid',
     ];
 
     public static function controlAccessUser()
@@ -34,17 +30,6 @@ class ReceiptContainer extends Model
         $warehouses = SecurityAccessWarehouse::Warehouses();
         return ReceiptContainer::whereIn('receiptcontainers.centerid', $centers)
             ->whereIn('receiptcontainers.warehouseid', $warehouses);
-    }
-
-
-    protected static function boot()
-    {
-        parent::boot();
-        if (!app()->runningInConsole()) {
-            self::creating(function (ReceiptContainer $model) {
-                $model->createuser = Auth::user()->username;
-            });
-        }
     }
 
     public function partnumber()
@@ -57,10 +42,19 @@ class ReceiptContainer extends Model
         return $this->belongsTo(User::class, 'createuser', 'username');
     }
 
-
-    static function getContainersForReceipt($receiptid)
+    public static function getContainersForReceipt($receiptid)
     {
         return ReceiptContainer::controlAccessUser()->with('partnumber')
             ->where('receiptid', $receiptid)->get();
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (ReceiptContainer $model) {
+                $model->createuser = Auth::user()->username;
+            });
+        }
     }
 }

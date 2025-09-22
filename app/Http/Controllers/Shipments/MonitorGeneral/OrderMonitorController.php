@@ -9,7 +9,6 @@ use Yajra\DataTables\Facades\DataTables;
 
 class OrderMonitorController extends BaseController
 {
-
 //    Monitor general
     public function index()
     {
@@ -35,6 +34,4 @@ class OrderMonitorController extends BaseController
             ->rawColumns(['autorizarsalida','iniciofact','doctufac','carga','arribo','preparacion'])
             ->toJson();
     }
-
-
 }

@@ -19,11 +19,6 @@ class StorageReceiptPeriod extends Model
     use SoftDeletes;
     use LogsActivity;
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
-
     protected $table = 'storagereceiptperiods';
 
     protected $fillable = [
@@ -44,20 +39,14 @@ class StorageReceiptPeriod extends Model
 
     ];
 
-
     protected $attributes = [
         'statusid' => 'EPR-01',
         'schemaid' => 'EPR',
     ];
 
-    protected static function boot()
+    public function getActivitylogOptions(): LogOptions
     {
-        parent::boot();
-        if (!app()->runningInConsole()) {
-            self::creating(function (StorageReceiptPeriod $model) {
-                $model->userid = \Auth::id();
-            });
-        }
+        return LogOptions::defaults()->logFillable();
     }
 
     public static function controlAccessUser()
@@ -67,7 +56,6 @@ class StorageReceiptPeriod extends Model
         return StorageReceiptPeriod::whereIn('storagereceiptperiods.warehouseid', $warehouses)
             ->whereIn('storagereceiptperiods.centerid', $centers);
     }
-
 
     public function center(): BelongsTo
     {
@@ -96,11 +84,18 @@ class StorageReceiptPeriod extends Model
 
     public function scopeName($query, $name)
     {
-        if (trim($name) != "") {
-            return $query->where('name', 'LIKE', "%$name%");
+        if (trim($name) !== '') {
+            return $query->where('name', 'LIKE', "%{$name}%");
         }
     }
 
-
-
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (StorageReceiptPeriod $model) {
+                $model->userid = \Auth::id();
+            });
+        }
+    }
 }

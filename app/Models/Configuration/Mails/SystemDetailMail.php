@@ -15,11 +15,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class SystemDetailMail extends Model
 {
+    public $keyType = 'string';
     protected static $logAttributes = ['*'];
     protected $table = 'systemdetailmails';
     protected $dateFormat = 'Y-m-d H:i:s';
-    public $keyType = 'string';
-
 
     protected $fillable = [
         'centerid',
@@ -32,18 +31,18 @@ class SystemDetailMail extends Model
         'auxiliary03',
         'auxiliary04',
         'auxiliary05',
-        'statusid'
+        'statusid',
     ];
 
     protected $hidden = [
         'created_at',
         'updated_at',
-        'schemaid'
+        'schemaid',
     ];
 
     protected $attributes = [
         'schemaid' => 'STS',
-        'statusid' => 'E'
+        'statusid' => 'E',
     ];
 
     public static function controlAccessUser()
@@ -53,7 +52,6 @@ class SystemDetailMail extends Model
         return SystemDetailMail::whereIn('systemdetailmails.warehouseid', $warehouses)
             ->whereIn('systemdetailmails.centerid', $centers);
     }
-
 
     public function center(): BelongsTo
     {
@@ -69,5 +67,4 @@ class SystemDetailMail extends Model
     {
         return $this->belongsTo(SystemStatus::class, 'statusid', 'statusid');
     }
-
 }

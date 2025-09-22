@@ -9,21 +9,24 @@ use Illuminate\Http\Request;
 
 class InventoryStockCategoriesController extends BaseController
 {
-
     public function index()
     {
         $this->authorize('inventorystockcategories.index');
         $status = $this->getStatusForSchema('STS');
-        return view('Inventory.InventoryStockCategory.index',
-            compact('status'));
+        return view(
+            'Inventory.InventoryStockCategory.index',
+            compact('status')
+        );
     }
 
     public function getDataStockCategory(Request $request)
     {
         $data = InventoryStockCategory::with(['status'])
             ->Name($request->get('name'))->get();
-        return $this->showDataToView($data,
-            'Inventory.InventoryStockCategory.partials.buttons');
+        return $this->showDataToView(
+            $data,
+            'Inventory.InventoryStockCategory.partials.buttons'
+        );
     }
 
     public function create()
@@ -34,7 +37,7 @@ class InventoryStockCategoriesController extends BaseController
 
     public function store(CreateStockCategoryRequest $request)
     {
-        $category = new  InventoryStockCategory($request->validated());
+        $category = new InventoryStockCategory($request->validated());
         $category->save();
         return $this->successResponse('inventorystockcategories.index');
     }
@@ -42,8 +45,10 @@ class InventoryStockCategoriesController extends BaseController
     public function edit(InventoryStockCategory $inventorystockcategory)
     {
         $this->authorize('inventorystockcategories.edit');
-        return view('Inventory.InventoryStockCategory.edit',
-            compact('inventorystockcategory'));
+        return view(
+            'Inventory.InventoryStockCategory.edit',
+            compact('inventorystockcategory')
+        );
     }
 
     public function update(Request $request, InventoryStockCategory $inventorystockcategory)
@@ -51,5 +56,4 @@ class InventoryStockCategoriesController extends BaseController
         $inventorystockcategory->update($request->all());
         return $this->redirectBackSuccess();
     }
-
 }

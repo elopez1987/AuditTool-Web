@@ -20,10 +20,9 @@ class InventoryUnitMeasureController extends BaseController
         $data = InventoryUnitMeasure::controlAccessUser()->with(['status','center'])
             ->Name($request->get('name'))->get();
         return DataTables::of($data)
-            ->addColumn('btn','Inventory.InventoryUnits.partials.buttons')
+            ->addColumn('btn', 'Inventory.InventoryUnits.partials.buttons')
             ->rawColumns(['btn'])->toJson();
     }
-
 
     public function create()
     {
@@ -37,7 +36,8 @@ class InventoryUnitMeasureController extends BaseController
         $category01 = new InventoryUnitMeasure(
             $request->all() +
             ['centerid' => $access->centerid] +
-            ['warehouseid' => $access->warehouseid]);
+            ['warehouseid' => $access->warehouseid]
+        );
         $category01->save();
         return $this->successResponse('inventoryunitmeasure.index');
     }
@@ -58,6 +58,4 @@ class InventoryUnitMeasureController extends BaseController
     public function destroy($id)
     {
     }
-
-
 }

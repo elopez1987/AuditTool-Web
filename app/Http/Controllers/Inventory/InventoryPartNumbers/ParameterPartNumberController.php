@@ -17,7 +17,6 @@ class ParameterPartNumberController extends BaseController
         return view('Inventory.InventoryPartnumbers.Parameters.create', compact('model', 'parameters'));
     }
 
-
     public function addparameters(Request $request, $id)
     {
         $inventorypartnumber = InventoryPartnumber::controlAccessUser()->where('id', $id)->first();
@@ -25,5 +24,4 @@ class ParameterPartNumberController extends BaseController
         $inventorypartnumber->save();
         return $this->redirectBackSuccessMessage('Parametros registrados con exito.');
     }
-
 }

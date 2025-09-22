@@ -14,7 +14,6 @@ use Yajra\DataTables\Facades\DataTables;
 
 class StorageBoxTravelsController extends BaseController
 {
-
     public function index()
     {
         $this->authorize('monitorcircuitplant');
@@ -40,7 +39,7 @@ class StorageBoxTravelsController extends BaseController
 
     public function close($id)
     {
-        $folio = StorageUnitTravel::where('folioplant', '=',$id)
+        $folio = StorageUnitTravel::where('folioplant', '=', $id)
             ->first(['statusid', 'circuitclose', 'folioplant', 'id']);
         $folio->circuitclose = now();
         $folio->statusid = 'CL';
@@ -53,18 +52,15 @@ class StorageBoxTravelsController extends BaseController
         $foliowm = ReceiptUnit::searchForId($request['foliowarehouse']);
         if (empty($foliowm)) {
             return $this->errorResponse('No existe el número de folio, favor de revisar!!');
-        } else {
-            $travel = StorageUnitTravel::where('folioplant', $id)->first();
-            $foliopl = ReceiptUnit::where('id', $travel->folioplant)->first();
-            if ($foliowm->boxnumber == $foliopl->boxnumber) {
-                $travel->foliowarehouse = $foliowm->id;
-                $travel->checkinwarehouse = $foliowm->entrydate;
-                $travel->save();
-                return $this->redirectBackSuccessMessage('Folio agregado con exito');
-            } else {
-                return $this->errorResponse('El número de placa no  corresponde');
-            }
         }
+        $travel = StorageUnitTravel::where('folioplant', $id)->first();
+        $foliopl = ReceiptUnit::where('id', $travel->folioplant)->first();
+        if ($foliowm->boxnumber === $foliopl->boxnumber) {
+            $travel->foliowarehouse = $foliowm->id;
+            $travel->checkinwarehouse = $foliowm->entrydate;
+            $travel->save();
+            return $this->redirectBackSuccessMessage('Folio agregado con exito');
+        }
+        return $this->errorResponse('El número de placa no  corresponde');
     }
-
 }

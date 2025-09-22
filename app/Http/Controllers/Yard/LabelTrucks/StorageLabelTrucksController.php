@@ -13,7 +13,6 @@ use Yajra\DataTables\Facades\DataTables;
 
 class StorageLabelTrucksController extends BaseController
 {
-
     use GenerateLabel;
 
     public function index()
@@ -27,14 +26,14 @@ class StorageLabelTrucksController extends BaseController
         $carrier = AccessCarrier::where('username', Auth::user()->username)
             ->select('carrierid')->get()->toArray();
         $data = StorageLabelTruck::controlAccessUser()
-            ->with('center','status','carrier')
+            ->with('center', 'status', 'carrier')
             ->ForCarrierOperator($carrier)
             ->Label($request->get('label'))
             ->BoxNumber($request->get('boxnumber'))
             ->Carrier($request->get('carrierid'))
-            ->Type($request->get('typeid'))->orderBy('id','desc')->limit(200)->get();
+            ->Type($request->get('typeid'))->orderBy('id', 'desc')->limit(200)->get();
         return DataTables::of($data)
-            ->addColumn('btn', "Yards.StorageLabelTrucks.partials.buttons")
+            ->addColumn('btn', 'Yards.StorageLabelTrucks.partials.buttons')
             ->rawColumns(['btn', 'type'])->toJson();
     }
 
@@ -46,15 +45,22 @@ class StorageLabelTrucksController extends BaseController
         $trucks = $this->shipmentTruckActiveToSelect();
         $unittype = $this->unitTypeActiveToSelect();
         $carriers = $this->getCarriersForTransport();
-        return view('Yards.StorageLabelTrucks.create',
-            compact('centers', 'carriers',
-                'trucks', 'unittype', 'warehouses'));
+        return view(
+            'Yards.StorageLabelTrucks.create',
+            compact(
+                'centers',
+                'carriers',
+                'trucks',
+                'unittype',
+                'warehouses'
+            )
+        );
     }
 
     public function store(RegisterLabelRequest $request)
     {
         $exist = StorageLabelTruck::controlAccessUser()->where('boxnumber', $request['boxnumber'])->first();
-        if (!empty($exist)) {
+        if (! empty($exist)) {
             return $this->errorResponse('La placa ya se encuentra registrado con el codigo : ' . $exist->barcode);
         }
         $barcode = $this->getFolioYMS($request['centerid']);
@@ -69,8 +75,10 @@ class StorageLabelTrucksController extends BaseController
         $trucks = $this->shipmentTruckActiveToSelect();
         $unittypes = $this->unitTypeActiveToSelect();
         $carriers = $this->getCarriersForSelect();
-        return view('Yards.StorageLabelTrucks.edit',
-            compact('storagelabeltruck', 'carriers', 'trucks', 'unittypes'));
+        return view(
+            'Yards.StorageLabelTrucks.edit',
+            compact('storagelabeltruck', 'carriers', 'trucks', 'unittypes')
+        );
     }
 
     public function update(Request $request, StorageLabelTruck $storagelabeltruck)
@@ -90,6 +98,4 @@ class StorageLabelTrucksController extends BaseController
     {
         return $this->generateLabelBox($storagelabeltruck);
     }
-
-
 }

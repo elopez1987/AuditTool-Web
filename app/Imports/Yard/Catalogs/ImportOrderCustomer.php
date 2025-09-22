@@ -56,5 +56,4 @@ class ImportOrderCustomer implements ToModel, WithHeadingRow, WithValidation, Wi
     {
         return 300;
     }
-
 }

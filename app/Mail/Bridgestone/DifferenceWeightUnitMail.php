@@ -52,6 +52,4 @@ class DifferenceWeightUnitMail extends Mailable
     {
         return [];
     }
-
-
 }

@@ -24,6 +24,4 @@ class DebugShipmentController extends BaseController
             return $this->errorResponse('Error al procesar la solicitud!!' . $error);
         }
     }
-
-
 }

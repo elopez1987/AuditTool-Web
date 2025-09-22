@@ -50,7 +50,4 @@ class ArriveUnitToReceipt extends Mailable
     {
         return [];
     }
-
-
-
 }

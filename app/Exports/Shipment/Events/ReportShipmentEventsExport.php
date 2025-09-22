@@ -14,17 +14,15 @@ use PhpOffice\PhpSpreadsheet\Style\Fill;
 class ReportShipmentEventsExport implements FromCollection, WithHeadings, WithMapping, WithEvents
 {
 
+    use Exportable;
     private $workdayin;
     private $workdayout;
-
-    use Exportable;
 
     public function __construct($workdayin, $workdayout)
     {
         $this->workdayin = $workdayin;
         $this->workdayout = $workdayout;
     }
-
 
     public function headings(): array
     {
@@ -63,16 +61,15 @@ class ReportShipmentEventsExport implements FromCollection, WithHeadings, WithMa
             'Tiempo de trayecto ( Horas )',
             'Horas restantes al salir',
             'Estadia en patio',
-            'Estatus'
+            'Estatus',
         ];
     }
 
     public function collection()
     {
-        $shipments = ViewShipmentEvent::controlAccessUser()
+        return ViewShipmentEvent::controlAccessUser()
             ->whereBetween('workday', [$this->workdayin, $this->workdayout])
             ->get();
-        return $shipments;
     }
 
     public function map($shipments): array
@@ -122,9 +119,9 @@ class ReportShipmentEventsExport implements FromCollection, WithHeadings, WithMa
             AfterSheet::class => function (AfterSheet $event) {
                 $event->sheet->getDelegate()->getStyle('A1:AI1')->getFill()
                     ->applyFromArray(['fillType' => Fill::FILL_SOLID,
-                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6']]);
+                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6'],
+                    ]);
             },
         ];
     }
-
 }

@@ -49,7 +49,7 @@ class MonitorOperationHenkelController extends BaseController
                 'receiptunits.entrydate',
                 'receiptunits.keydate',
                 'ordermonitor.outputdate',
-                DB::raw('DATEDIFF(minute, receiptunits.entrydate, GETDATE()) as stay')
+                DB::raw('DATEDIFF(minute, receiptunits.entrydate, GETDATE()) as stay'),
             ])
             ->leftJoin('ordercustomers', function ($join) {
                 $join->on('orderdeliveries.customerid', '=', 'ordercustomers.id')
@@ -84,6 +84,4 @@ class MonitorOperationHenkelController extends BaseController
             ->orderBy('orderdeliveries.loadingdate', 'desc')
             ->get();
     }
-
-
 }

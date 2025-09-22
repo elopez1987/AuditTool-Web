@@ -14,10 +14,10 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 
 class ReportUnitEvidences implements FromCollection, WithHeadings, WithMapping, WithEvents, ShouldAutoSize
 {
-    private $workdayin;
-    private $workdayout;
 
     use Exportable;
+    private $workdayin;
+    private $workdayout;
 
     public function __construct($workdayin, $workdayout)
     {
@@ -53,21 +53,18 @@ class ReportUnitEvidences implements FromCollection, WithHeadings, WithMapping, 
             'Concepto de entrada',
             'Tipo',
             'Estatus',
-            '¿En patio?'
+            '¿En patio?',
         ];
     }
 
     public function collection()
     {
-        $units = ReportUnitEvidence::controlAccessUser()->where('entrydate', '>', $this->workdayin)
+        return ReportUnitEvidence::controlAccessUser()->where('entrydate', '>', $this->workdayin)
             ->where('entrydate', '<', $this->workdayout)->get();
-        return $units;
     }
 
     public function map($units): array
     {
-
-
         return [
             $units->centerid,
             $units->folionumber,
@@ -104,11 +101,9 @@ class ReportUnitEvidences implements FromCollection, WithHeadings, WithMapping, 
             AfterSheet::class => function (AfterSheet $event) {
                 $event->sheet->getDelegate()->getStyle('A1:Z1')->getFill()
                     ->applyFromArray(['fillType' => Fill::FILL_SOLID,
-                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6']]);
+                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6'],
+                    ]);
             },
         ];
     }
-
-
-
 }

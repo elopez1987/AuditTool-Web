@@ -14,11 +14,9 @@ class StorageLiftTruck extends Model
 {
     use SoftDeletes;
 
-
     protected $table = 'storagelifttrucks';
     protected $primaryKey = 'serialnumber';
     protected $keyType = 'string';
-
 
     protected $fillable = [
         'centerid',
@@ -33,7 +31,7 @@ class StorageLiftTruck extends Model
         'axuiliary04',
         'axuiliary05',
         'statusid',
-        'deleted_at'
+        'deleted_at',
 
     ];
 
@@ -41,7 +39,7 @@ class StorageLiftTruck extends Model
 //        'created_at',
         'updated_at',
         'deleted_at',
-        'schemaid'
+        'schemaid',
     ];
 
     protected $attributes = [
@@ -53,30 +51,17 @@ class StorageLiftTruck extends Model
         'schemamodelid' => 'MDM',
     ];
 
-
     protected $casts = [
         'created_at' => 'datetime:d/m/Y H:s',
         'updated_at' => 'datetime:d/m/Y H:s',
         'deleted_at' => 'datetime:d/m/Y H:s',
     ];
 
-
-    protected static function boot()
-    {
-        parent::boot();
-        if (!app()->runningInConsole()) {
-            self::creating(function (StorageLiftTruck $model) {
-                $model->createuser = Auth::user()->username;
-            });
-        }
-    }
-
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
         return StorageLiftTruck::whereIn('storagelifttrucks.centerid', $centers);
     }
-
 
     public function center()
     {
@@ -108,27 +93,34 @@ class StorageLiftTruck extends Model
         return $this->belongsTo(User::class, 'createuser', 'username');
     }
 
-
     public function scopeSerialNumber($q, $serialnumber)
     {
-        if ($serialnumber != '') {
+        if ($serialnumber !== '') {
             $q->where('serialnumber', $serialnumber);
         }
     }
 
     public function scopeNumberTruck($q, $numbertruck)
     {
-        if ($numbertruck != '') {
+        if ($numbertruck !== '') {
             $q->where('numbertruck', $numbertruck);
         }
     }
 
     public function scopeStatus($q, $statusid)
     {
-        if ($statusid != '') {
+        if ($statusid !== '') {
             $q->where('storagelifttrucks.statusid', $statusid);
         }
     }
 
-
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (StorageLiftTruck $model) {
+                $model->createuser = Auth::user()->username;
+            });
+        }
+    }
 }

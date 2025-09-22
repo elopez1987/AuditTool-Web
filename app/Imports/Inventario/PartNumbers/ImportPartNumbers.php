@@ -22,7 +22,8 @@ class ImportPartNumbers implements ToModel, WithHeadingRow, WithBatchInserts, Wi
         $category01 = InventoryPartNumberCategory01::controlAccessUser()->first('id');
         $category02 = InventoryPartNumberCategory02::controlAccessUser()->first('id');
         $existingRecord = InventoryPartnumber::where(['centerid' => $centerid,
-            'warehouseid' => $warehouseid, 'prtnum' => $row['prtnum'],])->first();
+            'warehouseid' => $warehouseid, 'prtnum' => $row['prtnum'],
+        ])->first();
         $lngdsc = isset($row['lngdsc']) ? trim($row['lngdsc']) : ($existingRecord->lngdsc ?? '');
         InventoryPartnumber::updateOrCreate(
             [
@@ -32,7 +33,7 @@ class ImportPartNumbers implements ToModel, WithHeadingRow, WithBatchInserts, Wi
             ],
             [
                 'lngdsc' => $lngdsc,
-                'abccod' => isset($row['abccod'])  ? trim($row['abccod']) : 'A',
+                'abccod' => isset($row['abccod']) ? trim($row['abccod']) : 'A',
                 'shelflife' => isset($row['shelflife']) ? trim($row['shelflife']) : '0',
                 'untcas' => isset($row['untcas']) ? trim($row['untcas']) : '1',
                 'untpal' => isset($row['untpal']) ? trim($row['untpal']) : '1',
@@ -41,10 +42,9 @@ class ImportPartNumbers implements ToModel, WithHeadingRow, WithBatchInserts, Wi
                 'barcode' => isset($row['barcode']) ? $row['prtnum'] : '0',
                 'auxiliary01' => isset($row['location']) ? trim($row['location']) : '0',
                 'codeean' => isset($row['codeean']) ? trim($row['codeean']) : '0',
-                'codedun' => isset($row['codedun']) ? trim($row['codedun']) : '0'
+                'codedun' => isset($row['codedun']) ? trim($row['codedun']) : '0',
             ]
         );
-
     }
 
     public function headingRow(): int
@@ -61,6 +61,4 @@ class ImportPartNumbers implements ToModel, WithHeadingRow, WithBatchInserts, Wi
     {
         return 100;
     }
-
-
 }

@@ -23,13 +23,8 @@ class MonitorUnitsController extends Controller
     {
         $data = $this->getDataMonitorUnit($request);
         return DataTables::of($data)
-            ->addColumn('shipmentbutton', "Yards.ReceiptUnits.partials.shipment")
+            ->addColumn('shipmentbutton', 'Yards.ReceiptUnits.partials.shipment')
             ->rawColumns(['shipmentbutton'])
             ->toJson();
     }
-
-
-
-
 }
-
