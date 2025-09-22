@@ -10,18 +10,18 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class ShipmentContainerCheck extends Model
 {
+    use LogsActivity;
     public $timestamps = false;
     protected $table = 'shipmentcontainercheck';
-    use LogsActivity;
+
+    protected $fillable = [
+        'orderid','lpnid','containerid','lpnchild','createuser','created_at','orderid',
+    ];
 
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()->logFillable();
     }
-
-    protected $fillable = [
-        'orderid','lpnid','containerid','lpnchild','createuser','created_at','orderid'
-    ];
 
     public function user()
     {
@@ -31,15 +31,11 @@ class ShipmentContainerCheck extends Model
     protected static function boot()
     {
         parent::boot();
-        if (!app()->runningInConsole()) {
+        if (! app()->runningInConsole()) {
             self::creating(function (ShipmentContainerCheck $model) {
                 $model->createuser = \Auth::id();
                 $model->created_at = Carbon::now();
             });
         }
     }
-
-
-
-
 }

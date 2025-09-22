@@ -52,7 +52,7 @@ class StorageScheduleInversesController extends BaseController
                 'storagescheduleinverse.statusid',
                 'systemstatus.name as status',
                 'receiptunits.id as folio',
-                'receiptunits.entrydate'
+                'receiptunits.entrydate',
             ])
             ->orderBy('storagescheduleinverse.id', 'desc')
             ->limit(200)
@@ -74,22 +74,21 @@ class StorageScheduleInversesController extends BaseController
             $order = $this->getOrderDeliverie($request['shipmentid']);
             if (empty($order)) {
                 return $this->errorResponse('El número de embarque no  existe.');
-            } else {
-                $incidence = $this->getIncidenceJourney($order);
-                $deliveries = $this->getIncidenceJourneyDetails($incidence);
-                if (empty($incidence)) {
-                    return $this->errorResponse('El número de embarque no cuenta con incidencia registrada, favor de validar.');
-                } else {
-                    $inverse = $this->createNewInverse($incidence);
-                    if (!empty($deliveries)) {
-                        foreach ($deliveries as $delivery) {
-                            $this->createRegisterTraffic($incidence, $inverse, $delivery);
-                            $this->createRegisterInventory($incidence, $inverse, $delivery);
-                        }
-                    }
-                    $this->createRegisterOperation($incidence, $inverse);
+            }
+            $incidence = $this->getIncidenceJourney($order);
+            $deliveries = $this->getIncidenceJourneyDetails($incidence);
+            if (empty($incidence)) {
+                return $this->errorResponse('El número de embarque no cuenta con incidencia registrada, favor de validar.');
+            }
+            $inverse = $this->createNewInverse($incidence);
+            if (! empty($deliveries)) {
+                foreach ($deliveries as $delivery) {
+                    $this->createRegisterTraffic($incidence, $inverse, $delivery);
+                    $this->createRegisterInventory($incidence, $inverse, $delivery);
                 }
             }
+            $this->createRegisterOperation($incidence, $inverse);
+
             DB::commit();
             $success = true;
         } catch (Exception $e) {
@@ -99,11 +98,9 @@ class StorageScheduleInversesController extends BaseController
         }
         if ($success) {
             return $this->redirectBackSuccessMessage('Embarque agregado correctamente.');
-        } else {
-            return $this->errorResponse('No se pudieron guardar los datos,favor de validar.' . $error);
         }
+        return $this->errorResponse('No se pudieron guardar los datos,favor de validar.' . $error);
     }
-
 
     public function closeprocessinverse(Request $request)
     {
@@ -123,10 +120,10 @@ class StorageScheduleInversesController extends BaseController
         return $this->responseSuccessAjax('', Carbon::now());
     }
 
-
     /**
      * @param $incidence
      * @param $inverse
+     *
      * @return void
      */
     public function createRegisterOperation($incidence, $inverse): void
@@ -137,13 +134,15 @@ class StorageScheduleInversesController extends BaseController
                 'warehouseid' => $incidence->warehouseid,
                 'orderid' => $incidence->orderid,
                 'inverseid' => $inverse->id,
-            ]);
+            ]
+        );
     }
 
     /**
      * @param $incidence
      * @param $inverse
      * @param $delivery
+     *
      * @return void
      */
     public function createRegisterInventory($incidence, $inverse, $delivery): void
@@ -155,13 +154,15 @@ class StorageScheduleInversesController extends BaseController
                 'orderid' => $incidence->orderid,
                 'inverseid' => $inverse->id,
                 'delivery' => $delivery->delivery,
-            ]);
+            ]
+        );
     }
 
     /**
      * @param $incidence
      * @param $inverse
      * @param $delivery
+     *
      * @return void
      */
     public function createRegisterTraffic($incidence, $inverse, $delivery): void
@@ -174,17 +175,15 @@ class StorageScheduleInversesController extends BaseController
             'delivery' => $delivery->delivery,
             'partnumberid' => $delivery->partnumberid,
         ], [
-            'username' => Auth::user()->username
+            'username' => Auth::user()->username,
         ]);
     }
-
 
     public function getOrderDeliverie($shipmentid)
     {
         return OrderDeliverie::controlAccessUser()->where('shipmentid', $shipmentid)
             ->select(['id', 'shipmentid'])->first();
     }
-
 
     public function getIncidenceJourney($order)
     {
@@ -200,6 +199,7 @@ class StorageScheduleInversesController extends BaseController
 
     /**
      * @param $incidence
+     *
      * @return StorageScheduleInverse|Model
      */
     public function createNewInverse($incidence)
@@ -207,9 +207,7 @@ class StorageScheduleInversesController extends BaseController
         return StorageScheduleInverse::updateOrCreate([
             'centerid' => $incidence->centerid,
             'warehouseid' => $incidence->warehouseid,
-            'orderid' => $incidence->orderid
+            'orderid' => $incidence->orderid,
         ]);
     }
-
-
 }

@@ -12,9 +12,7 @@ use Illuminate\Http\Request;
 
 class EventReceiptUnitController extends BaseController
 {
-
     use RegisterEdiShipment;
-
 
 //    Agrega el folio para interface a izel
     public function generateinterface($id)
@@ -35,13 +33,11 @@ class EventReceiptUnitController extends BaseController
         $receiptunit->statusid = 'IN';
         $receiptunit->save();
         $tracto = ReceiptTruck::controlAccessUser()->where('id', $receiptunit->foliotruck)->first();
-        if (!empty($tracto)) {
+        if (! empty($tracto)) {
             $tracto->statusid = 'OU';
             $tracto->save();
         }
         StorageUnitTrace::createTraceUnit($receiptunit, '29');
         return response()->json(Carbon::now());
     }
-
-
 }

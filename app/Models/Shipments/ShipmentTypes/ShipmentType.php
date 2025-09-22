@@ -14,11 +14,6 @@ class ShipmentType extends Model
 {
     use LogsActivity;
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
-
     protected $table = 'shipmenttypes';
     protected $fillable = [
         'centerid',
@@ -29,15 +24,20 @@ class ShipmentType extends Model
         'auxiliary03',
         'auxiliary04',
         'auxiliary05',
-        'statusid'
+        'statusid',
     ];
 
     protected $attributes = [
         'schemaid' => 'STS',
-        'statusid' => 'E'
+        'statusid' => 'E',
     ];
 
-//***************************** Relaciones entre modelos **********************************
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
+
+    //***************************** Relaciones entre modelos **********************************
     public function status(): BelongsTo
     {
         return $this->belongsTo(SystemStatus::class, 'statusid', 'statusid');
@@ -56,9 +56,8 @@ class ShipmentType extends Model
 
     public function scopeName($query, $name)
     {
-        if (trim($name) != "") {
-            $query->where('name', 'like', "%$name%");
+        if (trim($name) !== '') {
+            $query->where('name', 'like', "%{$name}%");
         }
     }
-
 }

@@ -12,13 +12,12 @@ class EndCheckOrderDeliveryController extends BaseController
 {
     public function index($id)
     {
- 
         DB::beginTransaction();
         try {
             $this->updateShipmentDataOperation($id);
             $this->updateStatusOrderDelivery($id);
             DB::commit();
-           return  $this->redirectBackSuccess();
+            return $this->redirectBackSuccess();
         } catch (Exception $e) {
             DB::rollback();
             return $this->errorResponse($e->getMessage());
@@ -27,6 +26,7 @@ class EndCheckOrderDeliveryController extends BaseController
 
     /**
      * @param $id
+     *
      * @return void
      */
     public function updateStatusOrderDelivery($id): void
@@ -38,6 +38,7 @@ class EndCheckOrderDeliveryController extends BaseController
 
     /**
      * @param $id
+     *
      * @return void
      */
     public function updateShipmentDataOperation($id): void
@@ -47,6 +48,4 @@ class EndCheckOrderDeliveryController extends BaseController
         $shipment->lastuserid = Auth::user()->id;
         $shipment->save();
     }
-
-
 }

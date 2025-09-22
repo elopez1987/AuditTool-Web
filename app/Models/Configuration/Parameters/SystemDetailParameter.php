@@ -9,16 +9,10 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class SystemDetailParameter extends Model
 {
-
     use LogsActivity;
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
+    public $timestamps = false;
 
     protected $table = 'systemdetailparameter';
-    public $timestamps = false;
 
     protected $fillable = [
         'parameterid',
@@ -39,6 +33,11 @@ class SystemDetailParameter extends Model
         'value15',
     ];
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
+
     public static function controlAccessUser()
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
@@ -47,25 +46,22 @@ class SystemDetailParameter extends Model
             ->whereIn('systemdetailparameter.value01', $centers);
     }
 
-
-
-    static function getDetailParameter($parameterid, $centerid)
+    public static function getDetailParameter($parameterid, $centerid)
     {
         return SystemDetailParameter::where('parameterid', '=', $parameterid)
             ->where('value01', '=', $centerid)
             ->select(['value01', 'value02', 'value03'])->first();
     }
 
-    static function getDateilParameterForCenterAndWarehouse($parameterid, $model)
+    public static function getDateilParameterForCenterAndWarehouse($parameterid, $model)
     {
-        return SystemDetailParameter::where('parameterid',
-            '=', $parameterid)
+        return SystemDetailParameter::where(
+            'parameterid',
+            '=',
+            $parameterid
+        )
             ->where('value01', '=', $model->centerid)
             ->where('value02', '=', $model->warehouseid)
             ->pluck('value04')->toArray();
     }
-
-
-
-
 }

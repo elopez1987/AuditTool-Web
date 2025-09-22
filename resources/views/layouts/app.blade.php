@@ -70,7 +70,7 @@
                             <img src="{{asset('/img/Kellogg.png')}}" alt="" style="width: 280px;height: 100px">
                         @endif
                         @if(Auth::user()->access->center->centerid == 'BRIDGESTONES' || Auth::user()->access->center->centerid == 'AVBSMX' || Auth::user()->access->center->centerid == 'BRIDCUE'  )
-                            <img src="{{asset('/img/Bridgestone.png')}}" alt="" style="width: 600px;height: 50px">
+                            <img src="{{asset('/img/Bridgestone.png')}}" alt="" style="width: 500px;height: 30px">
                         @endif
                         @if(Auth::user()->access->center->centerid == 'BARRYTOL')
                             <img src="{{asset('/img/Barry.png')}}" alt="" style="width: 280px;height: 80px">

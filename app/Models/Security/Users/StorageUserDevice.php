@@ -8,13 +8,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class StorageUserDevice extends Model
 {
-
     use LogsActivity;
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
 
     public $timestamps = false;
 
@@ -24,17 +18,18 @@ class StorageUserDevice extends Model
         'id',
         'username',
         'serialnumber',
-        'created_at'
+        'created_at',
     ];
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
     public function scopeForSerialNumber($query, $serialnumber)
     {
-        if (trim($serialnumber) != '') {
+        if (trim($serialnumber) !== '') {
             $query->where('securitydeviceforuser.serialnumber', $serialnumber);
         }
     }
-
-
-
 }

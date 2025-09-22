@@ -12,7 +12,7 @@ class CreateTaksOperator extends FormRequest
             'zoneid' => 'required|exists:storagezones,id',
             'locationid' => 'required|exists:storagelocations,id',
             'typeid' => 'required',
-            'patieroid' => 'required_if:typeid,2'
+            'patieroid' => 'required_if:typeid,2',
         ];
     }
 
@@ -21,12 +21,13 @@ class CreateTaksOperator extends FormRequest
         return true;
     }
 
-    public function messages(){
+    public function messages()
+    {
         return [
             'patieroid.required_if' => 'El nombre del patiero es obligatorio.',
             'typeid.required' => 'El tipo de tarea es obligatorio.',
             'zoneid.required' => 'La zona es obligatoria.',
-            'locationid.required' => 'La ubicación es obligatoria.'
+            'locationid.required' => 'La ubicación es obligatoria.',
         ];
     }
 }

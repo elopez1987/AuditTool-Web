@@ -6,7 +6,6 @@ use Illuminate\Contracts\Validation\Rule;
 
 class Base64 implements Rule
 {
-
     public function passes($attribute, $value)
     {
         // Verifica si la cadena es válida en Base64

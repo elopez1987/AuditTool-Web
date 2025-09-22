@@ -15,7 +15,7 @@ class ImportCarriers implements ToCollection, WithHeadingRow, WithValidation
 
     public function collection(Collection $rows)
     {
-        $centerid =  $this->getCenterForUser();
+        $centerid = $this->getCenterForUser();
         foreach ($rows as $row) {
             ShipmentCarrier::updateOrCreate(
                 [
@@ -36,5 +36,4 @@ class ImportCarriers implements ToCollection, WithHeadingRow, WithValidation
             '*.name' => ['required', 'string', 'max:255'],
         ];
     }
-
 }

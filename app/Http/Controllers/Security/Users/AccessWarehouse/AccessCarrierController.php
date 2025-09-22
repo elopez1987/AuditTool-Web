@@ -24,8 +24,10 @@ class AccessCarrierController extends BaseController
         $user = User::where('uuiduser', $uuiduser)->first();
         $carriers = $this->getCarriersForSelect();
         $listcarries = $this->getCarriersForUser($user);
-        return view('Security.Users.AccessCarriers.index',
-            compact('user', 'carriers', 'listcarries'));
+        return view(
+            'Security.Users.AccessCarriers.index',
+            compact('user', 'carriers', 'listcarries')
+        );
     }
 
     public function update(Request $request)
@@ -41,6 +43,4 @@ class AccessCarrierController extends BaseController
         $row->delete();
         return $this->redirectBackSuccessMessage('Registro eliminado con exito');
     }
-
-
 }

@@ -12,12 +12,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class SystemMail extends Model
 {
-    protected static $logAttributes = ['*'];
     public $incrementing = false;
+    public $keyType = 'string';
+    protected static $logAttributes = ['*'];
     protected $table = 'systemmails';
     protected $primaryKey = 'mailid';
     protected $dateFormat = 'Y-m-d H:i:s';
-    public $keyType = 'string';
 
     protected $fillable = [
         'mailid',
@@ -27,19 +27,18 @@ class SystemMail extends Model
         'auxiliary03',
         'auxiliary04',
         'auxiliary05',
-        'statusid'
+        'statusid',
     ];
-
 
     protected $hidden = [
         'created_at',
         'updated_at',
-        'schemaid'
+        'schemaid',
     ];
 
     protected $attributes = [
         'schemaid' => 'STS',
-        'statusid' => 'E'
+        'statusid' => 'E',
     ];
 
     public function status(): BelongsTo
@@ -51,6 +50,4 @@ class SystemMail extends Model
     {
         return $this->hasMany(SystemDetailMail::class, 'mailid', 'mailid');
     }
-
-
 }

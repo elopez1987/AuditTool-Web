@@ -12,8 +12,8 @@ class SecurityFunctionsMenuController extends BaseController
 {
     public function savefunctionsformenustructure(Request $request, SecurityMenu $securitymenustructure)
     {
-        if ($request['functionid'] != "") {
-            $total = count($request["functionid"]) - 1;
+        if ($request['functionid'] !== '') {
+            $total = count($request['functionid']) - 1;
             for ($i = 0; $i <= $total; $i++) {
                 $module = SecurityFunction::findOrFail($request['functionid'][$i]);
                 SecurityFunctionsMenuStructure::create([
@@ -31,5 +31,4 @@ class SecurityFunctionsMenuController extends BaseController
         SecurityFunctionsMenuStructure::destroy($request['id']);
         return $this->responseSuccessAjax('', '');
     }
-
 }

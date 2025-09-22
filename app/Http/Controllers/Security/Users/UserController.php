@@ -11,6 +11,8 @@ use App\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Password;
 use Redirect;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -65,10 +67,9 @@ class UserController extends BaseController
             DB::rollback();
         }
         if ($success) {
-			return redirect::back()->with(session()->flash('success', 'Datos agregados correctamente!!'));
-        } else {
-			return redirect::back()->withInput()->with(session()->flash('success', 'No se pudieron guardar los datos!!' . $error));
+            return redirect::back()->with(session()->flash('success', 'Datos agregados correctamente!!'));
         }
+        return redirect::back()->withInput()->with(session()->flash('success', 'No se pudieron guardar los datos!!' . $error));
     }
 
     public function edit($uuiduser)
@@ -82,9 +83,9 @@ class UserController extends BaseController
 
     public function update(UpdateUserRequest $request, $uuiduser)
     {
-		$securityuser = User::where('uuiduser', $uuiduser)->first();
-		$securityuser->update($request->validated());
-		$securityuser->syncRoles([$request['role_id']]);
+        $securityuser = User::where('uuiduser', $uuiduser)->first();
+        $securityuser->update($request->validated());
+        $securityuser->syncRoles([$request['role_id']]);
         return $this->infoResponse('securityusers.index');
     }
 
@@ -96,5 +97,43 @@ class UserController extends BaseController
         $user->save();
         return redirect()->route('securityusers.index')->with(session()
             ->flash('success', 'Registro eliminadó con exito'));
+    }
+
+    /**
+     * Enviar correo de reinicio de contraseña
+     */
+    public function sendPasswordReset($id)
+    {
+        try {
+            $user = User::where('id', $id)->firstOrFail();
+            if (empty($user->email)) {
+                return redirect()->back()->with('error', 'El usuario no tiene un correo electrónico registrado.');
+            }
+            $status = Password::sendResetLink([
+                'email' => $user->email,
+            ]);
+
+            // Log de la acción
+            Log::info('Correo de reseteo de contraseña enviado', [
+                'user_id' => $user->id,
+                'user_email' => $user->email,
+                'requested_by' => auth()->id(),
+                'timestamp' => now(),
+            ]);
+
+            if ($status === Password::RESET_LINK_SENT) {
+                return redirect()->back()->with('success', 'Se ha enviado un correo de reinicio de contraseña a: ' . $user->email);
+            }
+            return redirect()->back()->with('error', 'No se pudo enviar el correo de reinicio. Por favor, inténtelo de nuevo.');
+        } catch (Exception $e) {
+            Log::error('Error al enviar correo de reset de contraseña', [
+                'user_uuid' => $uuiduser,
+                'name' => $user->name,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            return redirect()->back()->with('error', 'Ocurrió un error al enviar el correo de reinicio.');
+        }
     }
 }

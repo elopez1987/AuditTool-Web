@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 
 class SystemPrintersController extends BaseController
 {
-
     public function index()
     {
         $this->authorize('systemprinters.index');
@@ -27,7 +26,8 @@ class SystemPrintersController extends BaseController
                     $q->select('centerid', 'name');
                 },
             ])
-            ->select('systemprinters.*');;
+            ->select('systemprinters.*');
+
         return $this->showDataToView($data, 'Configuration.SystemPrinters.partials.buttons');
     }
 
@@ -57,6 +57,4 @@ class SystemPrintersController extends BaseController
         $systemprinter->update($request->all());
         return $this->redirectBackInfo();
     }
-
-
 }

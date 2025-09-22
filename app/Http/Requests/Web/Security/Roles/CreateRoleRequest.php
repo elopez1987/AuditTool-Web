@@ -6,7 +6,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class CreateRoleRequest extends FormRequest
 {
-
     public function authorize(): bool
     {
         return true;
@@ -28,5 +27,4 @@ class CreateRoleRequest extends FormRequest
             'name' => str_replace(' ', '', $this->name),
         ]);
     }
-
 }

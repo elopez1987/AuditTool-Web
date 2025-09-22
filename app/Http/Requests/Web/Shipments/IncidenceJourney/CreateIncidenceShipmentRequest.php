@@ -9,12 +9,12 @@ class CreateIncidenceShipmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "partnumberid" => 'required',
-            "quantity" => 'required|numeric',
-            "responsible" => 'required|string',
-            "categoryincid" => 'required',
-            "categoryincdetailid" => 'required',
-            "responsiblecorr" => 'required|string',
+            'partnumberid' => 'required',
+            'quantity' => 'required|numeric',
+            'responsible' => 'required|string',
+            'categoryincid' => 'required',
+            'categoryincdetailid' => 'required',
+            'responsiblecorr' => 'required|string',
         ];
     }
 

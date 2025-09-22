@@ -6,7 +6,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class CreateNameSystem extends FormRequest
 {
-
     public function authorize(): bool
     {
         return false;
@@ -15,7 +14,7 @@ class CreateNameSystem extends FormRequest
     public function rules(): array
     {
         return [
-            //
+
         ];
     }
 }

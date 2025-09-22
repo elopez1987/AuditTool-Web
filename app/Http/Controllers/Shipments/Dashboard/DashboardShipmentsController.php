@@ -7,14 +7,12 @@ use App\Models\Shipments\OrderDeliverie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-
 class DashboardShipmentsController extends BaseController
 {
     public function index(Request $request)
     {
         return view('Shipments.Dashboards.index');
     }
-
 
     public function getDataDashboardShipments(Request $request)
     {
@@ -42,9 +40,8 @@ class DashboardShipmentsController extends BaseController
             ->whereNotNull('folionumber')
             ->count('folionumber');
 
-
 //        Estatus de arribo
-         $statusarrive = DB::select("
+        $statusarrive = DB::select("
                 SELECT
                     status,
                     COUNT(*) AS total
@@ -68,10 +65,9 @@ class DashboardShipmentsController extends BaseController
                 GROUP BY status
             ", [$startdate, $enddate, $centerid]);
 
-
         \Log::info($statusarrive);
 //
-////        Estatus de salida de embarques
+        ////        Estatus de salida de embarques
 //        $statussalida = DB::select("
 //        SELECT
 //                status,
@@ -94,7 +90,7 @@ class DashboardShipmentsController extends BaseController
 //            ) AS subquery
 //            GROUP BY status;");
 //
-////        Estadia promedio
+        ////        Estadia promedio
 //        $estadiapromedio = DB::select("
 //        SELECT
 //                CAST(AVG(DATEDIFF(MINUTE, r2.entrydate, COALESCE(r2.outputdate, GETDATE()))) / 60 AS VARCHAR) + ' horas ' +
@@ -106,7 +102,7 @@ class DashboardShipmentsController extends BaseController
 //        ");
 //
 //
-////        BackLog
+        ////        BackLog
 //        $backlog = OrderDeliverie::controlAccessUser()
 //            ->select([
 //                    'orderdeliveries.workday',
@@ -138,7 +134,7 @@ class DashboardShipmentsController extends BaseController
 //            ->get();
 //
 //
-////        Total por cliente
+        ////        Total por cliente
 //        $totalclientes =  OrderDeliverie::controlAccessUser()
 //            ->select('o2.name as customer', DB::raw('COUNT(orderdeliveries.customerid) as total'))
 //            ->leftJoin('ordercustomers as o2', function($join) {
@@ -149,7 +145,7 @@ class DashboardShipmentsController extends BaseController
 //            ->groupBy('o2.name')
 //            ->get();
 //
-////        -- Detalle de los embarques para DOR
+        ////        -- Detalle de los embarques para DOR
 //        $detalleEmbarques = DB::table('orderdeliveries as o')
 //            ->select(
 //                'o.workday',
@@ -172,7 +168,7 @@ class DashboardShipmentsController extends BaseController
 //            ->orderBy('o.turnid')
 //            ->get();
 //
-////        -- Embarques totales
+        ////        -- Embarques totales
 //        $totalEmbarques = DB::table('orderdeliveries as o')
 //            ->select(
 //                'o.workday',
@@ -208,7 +204,6 @@ class DashboardShipmentsController extends BaseController
 //                  AND s3.name NOT IN ('GEN');
 //        ");
 
-
         return response()->json(
             [
                 'totalfolios' => $totalFolios,
@@ -226,5 +221,4 @@ class DashboardShipmentsController extends BaseController
             ]
         );
     }
-
 }

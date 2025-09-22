@@ -8,13 +8,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class LogMessageWhatsApp extends Model
 {
-
     use LogsActivity;
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
 
     protected $table = 'logsmessagewhatsapp';
     protected $primaryKey = 'id';
@@ -43,22 +37,26 @@ class LogMessageWhatsApp extends Model
 
     protected $dates = ['value01'];
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
+
     public function scopeForShipment($query, $shipmentid)
     {
-        if (trim($shipmentid) != '') {
+        if (trim($shipmentid) !== '') {
             $query->where('logsmessagewhatsapp.shipmentid', $shipmentid);
         }
     }
 
     public function scopeForNumber($query, $number)
     {
-        if (trim($number) != '') {
+        if (trim($number) !== '') {
             $query->where('chatid', $number);
         }
     }
 
-
-    static function createLog($model, $contact, $resp, $whatsappid, $message): void
+    public static function createLog($model, $contact, $resp, $whatsappid, $message): void
     {
         LogMessageWhatsApp::create([
             'centerid' => $model->centerid,
@@ -71,5 +69,4 @@ class LogMessageWhatsApp extends Model
             'value03' => $resp->id ?? '',
         ]);
     }
-
 }

@@ -5,12 +5,10 @@ namespace App\Http\Controllers\Yard\ReceiptUnit\Reports;
 use App\Http\Controllers\Controller;
 use App\Models\Yard\ReceiptUnit;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class ReportStayController extends Controller
 {
-
     public function index()
     {
         $this->authorize('reportstays');
@@ -22,7 +20,8 @@ class ReportStayController extends Controller
         $data = ReceiptUnit::controlAccessUser()
             ->with(['status:statusid,name','carrier:id,name','unitstatus:id,name',
                 'location:id,name','warehouse:warehouseid,name','reason:id,name','unittype:id,description',
-                'truckcategory:truckcategoryid,description','truck:id,name'])
+                'truckcategory:truckcategoryid,description','truck:id,name',
+            ])
             ->whereNotIn('receiptunits.statusid', ['TR'])->get();
         return DataTables::of($data)
             ->addColumn('stays', function ($data) {
@@ -33,6 +32,4 @@ class ReportStayController extends Controller
             })
             ->rawColumns(['stays','autorize'])->toJson();
     }
-
-
 }

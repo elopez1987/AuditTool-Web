@@ -7,7 +7,6 @@ use App\Http\Controllers\SafetyTours\StorageTagController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->group(function () {
-
     Route::get('tours', function () {
         return view('layouts.Menu.SafetyTours.menu');
     })->name('tours');
@@ -26,10 +25,6 @@ Route::middleware(['auth'])->group(function () {
     Route::put('restoreSafetyTour/{id}', [StorageSafetyTourTypeDetailController::class,'restore'])->name('restoreSafetyTour');
 
 //    Recorridos de seguridad
-    Route::resource('storagesafetytours',StorageSafetyToursController::class);
+    Route::resource('storagesafetytours', StorageSafetyToursController::class);
     Route::get('getDataStorageSafetyTours', [StorageSafetyToursController::class,'getDataStorageSafetyTours'])->name('getDataStorageSafetyTours');
-
-
-
-
 });

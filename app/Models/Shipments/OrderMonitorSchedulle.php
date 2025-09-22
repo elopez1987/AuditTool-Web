@@ -16,17 +16,16 @@ class OrderMonitorSchedulle extends Model
 {
     protected $table = 'viewmonitorscheduelle';
 
+    protected $casts = [
+        'outputdate' => 'datetime:d/m/Y H:m',
+    ];
+
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
         $warehouses = SecurityAccessWarehouse::Warehouses();
         return OrderMonitorSchedulle::whereIn('centerid', $centers)->whereIn('warehouseid', $warehouses);
     }
-
-    protected $casts = [
-        'outputdate' => 'datetime:d/m/Y H:m',
-    ];
-
 
     public function transport()
     {
@@ -91,17 +90,15 @@ class OrderMonitorSchedulle extends Model
 
     public function scopeShipmentid($query, $shipmentid)
     {
-        if (trim($shipmentid) != "") {
+        if (trim($shipmentid) !== '') {
             $query->where('viewmonitorscheduelle.shipmentid', '=', $shipmentid);
         }
     }
 
     public function scopeForStatus($query, $status)
     {
-        if (trim($status) != ""){
+        if (trim($status) !== '') {
             $query->where('viewmonitorscheduelle.statusid', '=', $status);
         }
     }
-
-
 }

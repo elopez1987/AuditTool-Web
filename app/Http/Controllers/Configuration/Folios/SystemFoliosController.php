@@ -8,8 +8,6 @@ use Illuminate\Http\Request;
 
 class SystemFoliosController extends BaseController
 {
-
-
     public function index()
     {
         $this->authorize('systemfolios.index');
@@ -29,7 +27,7 @@ class SystemFoliosController extends BaseController
             ])
             ->Description($request->get('description'))
             ->select([
-                'systemfolio.*'
+                'systemfolio.*',
             ]);
         return $this->showDataToView($data, 'Configuration.SystemFolios.partials.buttons');
     }
@@ -39,8 +37,10 @@ class SystemFoliosController extends BaseController
         $this->authorize('systemfolios.create');
         $status = $this->getStatusForSchema('FOL');
         $centers = $this->getCenterForSelect();
-        return view('Configuration.SystemFolios.create',
-            compact('centers', 'status'));
+        return view(
+            'Configuration.SystemFolios.create',
+            compact('centers', 'status')
+        );
     }
 
     public function store(Request $request)
@@ -61,5 +61,4 @@ class SystemFoliosController extends BaseController
         $systemfolio->update($request->all());
         return $this->redirectBackSuccess();
     }
-
 }

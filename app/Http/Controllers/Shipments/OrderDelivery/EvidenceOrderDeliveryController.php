@@ -17,13 +17,10 @@ class EvidenceOrderDeliveryController extends BaseController
         return view('Shipments.OrderDeliveries.EvidenceProcess.index', compact('orderDelivery'));
     }
 
-
     public function loadevidenceorder(Request $request, $id)
     {
         $orderDelivery = OrderDeliverie::controlAccessUser()->where('id', $id)->first();
         $path = $this->saveFileToModel($request->file('file'), $orderDelivery->centerid, 'Shipments', 'OrderDelivery', 'InProcess');
-        $this->createEvidencePhoto('OrderDelivery',$orderDelivery->id, $path,'SH',$orderDelivery);
+        $this->createEvidencePhoto('OrderDelivery', $orderDelivery->id, $path, 'SH', $orderDelivery);
     }
-
-
 }

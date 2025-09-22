@@ -9,11 +9,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class SystemPrinter extends Model
 {
-
+    public $timestamps = false;
     protected $table = 'systemprinters';
     protected $keyType = 'integer';
     protected $primaryKey = 'printerid';
-    public $timestamps = false;
 
     protected $dateFormat = 'Y-m-d H:i:s';
 
@@ -28,20 +27,19 @@ class SystemPrinter extends Model
         'auxiliary03',
         'auxiliary04',
         'auxiliary05',
-        'statusid'
+        'statusid',
     ];
 
     protected $hidden = [
         'created_at',
         'updated_at',
-        'schemaid'
+        'schemaid',
     ];
 
     protected $attributes = [
         'statusid' => 'E',
         'schemaid' => 'STS',
     ];
-
 
     public function center()
     {
@@ -52,7 +50,6 @@ class SystemPrinter extends Model
     {
         return $this->belongsTo(SystemStatus::class, 'statusid');
     }
-
 
     public static function controlAccessUser()
     {

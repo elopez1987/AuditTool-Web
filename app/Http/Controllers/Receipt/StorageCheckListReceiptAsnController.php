@@ -14,14 +14,13 @@ use Illuminate\Support\Facades\DB;
 
 class StorageCheckListReceiptAsnController extends BaseController
 {
-
     public function index($id)
     {
         $receipt = ReceiptAsn::findOrFail($id);
         $checklist = StorageCheckList::controlAccessUser()->where('type', '=', 'REC')
             ->where('statusid', '=', 'E')->first(['id', 'name']);
         if (empty($checklist)) {
-            return  $this->errorResponse('No existe check list de recibo configurado (REC).');
+            return $this->errorResponse('No existe check list de recibo configurado (REC).');
         }
         $details = StorageCheckListDetail::controlAccessUser()->whereChecklistid($checklist->id)
             ->where('auxiliary01', '=', 'AR')
@@ -30,18 +29,20 @@ class StorageCheckListReceiptAsnController extends BaseController
             ->get();
 
         $categories = SystemStatus::where('schemaid', 'CRE')
-            ->where('auxiliary02',$receipt->centerid)
-            ->where('auxiliary03',$receipt->warehouseid)
+            ->where('auxiliary02', $receipt->centerid)
+            ->where('auxiliary03', $receipt->warehouseid)
             ->select(['name', 'statusid'])->get();
-        if($categories->isEmpty()){
-            return  $this->errorResponse('No existe categoria de material en el esquema CRE.');
+        if ($categories->isEmpty()) {
+            return $this->errorResponse('No existe categoria de material en el esquema CRE.');
         }
         $actives = ReceiptAsnCheckList::where('receiptid', $id)
             ->where('typeid', 'AR')->where('checklistid', $checklist->id)
             ->select('checklistdetailid')->get();
 
-        return view('Receipt.ScheduleReceipt.partials.checklist',
-            compact('receipt', 'details', 'checklist', 'categories', 'actives'));
+        return view(
+            'Receipt.ScheduleReceipt.partials.checklist',
+            compact('receipt', 'details', 'checklist', 'categories', 'actives')
+        );
     }
 
     public function addchecklistAR($id, Request $request)
@@ -71,22 +72,19 @@ class StorageCheckListReceiptAsnController extends BaseController
     private function createCheckListReceipt(Request $request, $receipt): void
     {
         $reg = $request->input('checklistdetailid');
-        if ($reg != null) {
+        if ($reg !== null) {
             $registros = count($reg) - 1;
-            for ($i = 0; $i <= $registros; $i++)
+            for ($i = 0; $i <= $registros; $i++) {
                 ReceiptAsnCheckList::create([
-                'receiptid' => $receipt->id,
-                'centerid' => $receipt->centerid,
-                'checklistid' => $request['checklistid'],
-                'typeid' => $request['typeid'],
-                'checklistdetailid' => $request['checklistdetailid'][$i],
-                'createuser' => \Auth::user()->username,
-                'created_at' => Carbon::now(),
-            ]);
+                    'receiptid' => $receipt->id,
+                    'centerid' => $receipt->centerid,
+                    'checklistid' => $request['checklistid'],
+                    'typeid' => $request['typeid'],
+                    'checklistdetailid' => $request['checklistdetailid'][$i],
+                    'createuser' => \Auth::user()->username,
+                    'created_at' => Carbon::now(),
+                ]);
+            }
         }
     }
-
-
-
-
 }

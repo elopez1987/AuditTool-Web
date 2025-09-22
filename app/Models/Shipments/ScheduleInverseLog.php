@@ -11,22 +11,17 @@ class ScheduleInverseLog extends Model
 {
     use LogsActivity;
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
-
     protected $table = 'scheduleinverselog';
 
     protected $fillable = [
         'orderid', 'username', 'description',
-        'status'
+        'status',
     ];
 
     protected $hidden = [
         'created_at',
         'updated_at',
-        'schemaid'
+        'schemaid',
     ];
 
     protected $attributes = [
@@ -34,14 +29,17 @@ class ScheduleInverseLog extends Model
         'schemaid' => 'LIN',
     ];
 
-    static function createNewLog($shipment,$description)
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
+
+    public static function createNewLog($shipment, $description)
     {
         ScheduleInverseLog::create([
             'orderid' => $shipment->id,
             'username' => Auth::user()->username,
-            'description' => $description
+            'description' => $description,
         ]);
     }
-
-
 }

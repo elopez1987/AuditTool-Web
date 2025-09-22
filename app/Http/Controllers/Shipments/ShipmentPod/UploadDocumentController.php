@@ -22,7 +22,7 @@ class UploadDocumentController extends Controller
 
     public function index(Request $request, $id)
     {
-        $receiver = new FileReceiver("file", $request, HandlerFactory::classFromRequest($request));
+        $receiver = new FileReceiver('file', $request, HandlerFactory::classFromRequest($request));
         if ($receiver->isUploaded() === false) {
             throw new UploadMissingFileException();
         }
@@ -34,34 +34,12 @@ class UploadDocumentController extends Controller
         $handler = $save->handler();
 
         return response()->json([
-            "done" => $handler->getPercentageDone(),
-            'status' => true
+            'done' => $handler->getPercentageDone(),
+            'status' => true,
         ]);
-
     }
 
-
-    protected function saveFile($file, $id)
-    {
-        $year = Carbon::now()->year;
-        $month = Carbon::now()->month;
-        $shipment = OrderDeliverie::findOrFail($id);
-        $nameOriginal = str_replace(" ", "_", $file->getClientOriginalName());
-        $nombre = Str::random(10) . $nameOriginal;
-        $pathDirectory = 'public/' . $shipment->centerid . '/' . $year . '/' . $month . '/EvidencePod/';
-        if (!Storage::disk('local')->exists($pathDirectory)) {
-            Storage::disk('local')->makeDirectory($pathDirectory);
-        }
-        $pathbase = Storage::disk('local')->put($pathDirectory . $nombre, File::get($file));
-        if ($pathbase) {
-            $path = $pathDirectory . $nombre;
-            $this->createNewRegister($shipment, $path);
-        }
-        $this->updateShipmentPodStatus($id);
-    }
-
-
-    static function createNewRegister($shipment, $file)
+    public static function createNewRegister($shipment, $file)
     {
         StorageShipmentsPods::create([
             'centerid' => $shipment->centerid,
@@ -74,6 +52,7 @@ class UploadDocumentController extends Controller
 
     /**
      * @param $id
+     *
      * @return void
      */
     public function updateShipmentPodStatus($id): void
@@ -83,4 +62,22 @@ class UploadDocumentController extends Controller
         $shipmentpod->save();
     }
 
+    protected function saveFile($file, $id)
+    {
+        $year = Carbon::now()->year;
+        $month = Carbon::now()->month;
+        $shipment = OrderDeliverie::findOrFail($id);
+        $nameOriginal = str_replace(' ', '_', $file->getClientOriginalName());
+        $nombre = Str::random(10) . $nameOriginal;
+        $pathDirectory = 'public/' . $shipment->centerid . '/' . $year . '/' . $month . '/EvidencePod/';
+        if (! Storage::disk('local')->exists($pathDirectory)) {
+            Storage::disk('local')->makeDirectory($pathDirectory);
+        }
+        $pathbase = Storage::disk('local')->put($pathDirectory . $nombre, File::get($file));
+        if ($pathbase) {
+            $path = $pathDirectory . $nombre;
+            $this->createNewRegister($shipment, $path);
+        }
+        $this->updateShipmentPodStatus($id);
+    }
 }

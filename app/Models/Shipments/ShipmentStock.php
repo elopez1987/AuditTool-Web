@@ -9,32 +9,20 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-
 class ShipmentStock extends Model
 {
-
     use LogsActivity;
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
-    
     protected $table = 'shipmentstock';
 
     protected $fillable = [
         'centerid', 'warehouseid', 'orderid', 'deliveryid', 'partnumberid',
-        'quantity', 'lpnid', 'createuser'
+        'quantity', 'lpnid', 'createuser',
     ];
 
-    protected static function boot()
+    public function getActivitylogOptions(): LogOptions
     {
-        parent::boot();
-        if (!app()->runningInConsole()) {
-            self::creating(function (ShipmentStock $model) {
-                $model->createuser = Auth::user()->username;
-            });
-        }
+        return LogOptions::defaults()->logFillable();
     }
 
     public function partnumber()
@@ -44,9 +32,16 @@ class ShipmentStock extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class,'createuser','username');
+        return $this->belongsTo(User::class, 'createuser', 'username');
     }
 
-
-
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (ShipmentStock $model) {
+                $model->createuser = Auth::user()->username;
+            });
+        }
+    }
 }

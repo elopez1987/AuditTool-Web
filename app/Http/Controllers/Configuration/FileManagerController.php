@@ -8,6 +8,5 @@ class FileManagerController extends Controller
 {
     public function index()
     {
-
     }
 }

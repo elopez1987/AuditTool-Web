@@ -15,11 +15,11 @@ use PhpOffice\PhpSpreadsheet\Style\Fill;
 
 class ReporteEvidenciasFacturas implements FromCollection, WithHeadings, WithMapping, WithEvents, ShouldAutoSize, WithColumnFormatting
 {
+
+    use Exportable;
     private $workdayin;
     private $workdayout;
     private $centerid;
-
-    use Exportable;
 
     public function __construct($workdayin, $workdayout, $centerid)
     {
@@ -43,7 +43,7 @@ class ReporteEvidenciasFacturas implements FromCollection, WithHeadings, WithMap
             'Cliente',
             'Destino',
             'Linea de transporte',
-            'Fecha de carga'
+            'Fecha de carga',
         ];
     }
 
@@ -61,14 +61,12 @@ class ReporteEvidenciasFacturas implements FromCollection, WithHeadings, WithMap
 
     public function collection()
     {
-        $shipments = OrderDeliverie::controlAccessUser()
+        return OrderDeliverie::controlAccessUser()
             ->where('statusid', '=', 'DH')
             ->whereNull('evidencefile')
             ->whereBetween('loadingdate', [$this->workdayin, $this->workdayout])
             ->get();
-        return $shipments;
     }
-
 
     public function registerEvents(): array
     {
@@ -76,10 +74,9 @@ class ReporteEvidenciasFacturas implements FromCollection, WithHeadings, WithMap
             AfterSheet::class => function (AfterSheet $event) {
                 $event->sheet->getDelegate()->getStyle('A1:I1')->getFill()
                     ->applyFromArray(['fillType' => Fill::FILL_SOLID,
-                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6']]);
+                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6'],
+                    ]);
             },
         ];
     }
-
-
 }

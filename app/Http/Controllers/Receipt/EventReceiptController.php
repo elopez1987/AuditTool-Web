@@ -14,13 +14,14 @@ use App\Models\Receipt\StorageSchedulleReceipt;
 use App\Models\Yard\ReceiptUnit;
 use App\Models\Yard\StorageUnitTrace;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Log;
 use PDF;
 
 class EventReceiptController extends BaseController
 {
-
     public function cancellationReceipt($id)
     {
         $receipt = ReceiptAsn::findOrFail($id);
@@ -29,7 +30,7 @@ class EventReceiptController extends BaseController
         $receipt->save();
 
         $schedulleReceipt = StorageSchedulleReceipt::controlAccessUser()->where('receiptid', $id)->first();
-        if (!empty($schedulleReceipt)) {
+        if (! empty($schedulleReceipt)) {
             $schedulleReceipt->receiptid = null;
             $schedulleReceipt->save();
         }
@@ -54,7 +55,7 @@ class EventReceiptController extends BaseController
         $receipt->save();
 
         $folio = ReceiptUnit::whereId($receipt->folionumber)->first(['id', 'unitstatusid']);
-        if ($folio != null) {
+        if ($folio !== null) {
             $folio->unitstatusid = '1';
             $folio->save();
         }
@@ -77,9 +78,7 @@ class EventReceiptController extends BaseController
             ->where('receiptid', $id)->get();
         $stocks = $this->getTotalsReceipt($id);
         $containers = ReceiptContainer::getContainersForReceipt($id);
-        $pdf = PDF::loadView('Receipt.ReceiptAsn.partials.kardex',
-            compact('receipt', 'checklistAsn', 'images', 'stocks', 'incidences','containers'));;
-//        $pdf->setPaper('A4', 'landscape');
+        $pdf = PDF::loadView('Receipt.ReceiptAsn.partials.kardex', compact('receipt', 'checklistAsn', 'images', 'stocks', 'incidences', 'containers'));
         return $pdf->download('Kardex de descarga - ' . $receipt->id . '.pdf');
     }
 
@@ -112,22 +111,18 @@ class EventReceiptController extends BaseController
                 'receiptstock.expirecode',
                 'receiptstock.quantitytrue',
                 'inventorypartnumbers.untcas'
-
             )
             ->get();
     }
 
-
     public function addNewCommentToReceipt(Request $request, $id)
     {
         $receiptAsn = ReceiptAsn::findOrFail($id);
-        if ($request['comment'] != '') {
+        if ($request['comment'] !== '') {
             StorageComment::createCommentary('receiptasn', $receiptAsn->id, $request);
         }
         return $this->redirectBackSuccessMessage('Comentario agregado con exito.');
     }
-
-
 
     public function receiptasnclose($id)
     {
@@ -150,30 +145,28 @@ class EventReceiptController extends BaseController
             if (empty($receiptunit)) {
                 return $this->errorResponse('La unidad no cuenta con folio de patios.');
             }
-            if ($receiptunit->zone->zoneid != 'CO') {
+            if ($receiptunit->zone->zoneid !== 'CO') {
                 return $this->errorResponse('La unidad no se encuentra en Cortinas.');
             }
 
-            $receiptasn->statusid ='DE';
+            $receiptasn->statusid = 'DE';
             $receiptasn->unloadstartdate = Carbon::now();
             $receiptasn->save();
-
 
             $receiptunit->startdate = Carbon::now();
             $receiptunit->statusid = 'EP';
             $receiptunit->save();
 
-            StorageUnitTrace::createTraceUnit($receiptunit,'14');
+            StorageUnitTrace::createTraceUnit($receiptunit, '14');
 
             DB::commit();
             return $this->redirectBackSuccessMessage('Proceso de descarga iniciado con exito.');
-
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
             DB::rollback();
             return $this->errorResponse('No se pudo iniciar el proceso de descarga, favor de intentar nuevamente.');
         }
     }
-
 
     public function finishprocess($id)
     {
@@ -187,30 +180,26 @@ class EventReceiptController extends BaseController
             if (empty($receiptunit)) {
                 return $this->errorResponse('La unidad no cuenta con folio de patios.');
             }
-            if ($receiptunit->zone->zoneid != 'CO') {
+            if ($receiptunit->zone->zoneid !== 'CO') {
                 return $this->errorResponse('La unidad no se encuentra en Cortinas.');
             }
 
-            $receiptasn->statusid ='TE';
+            $receiptasn->statusid = 'TE';
             $receiptasn->unloadfinishdate = Carbon::now();
             $receiptasn->save();
-
 
             $receiptunit->finishdate = Carbon::now();
             $receiptunit->statusid = 'FI';
             $receiptunit->save();
 
-            StorageUnitTrace::createTraceUnit($receiptunit,'15');
+            StorageUnitTrace::createTraceUnit($receiptunit, '15');
 
             DB::commit();
             return $this->redirectBackSuccessMessage('Proceso de descarga iniciado con exito.');
-
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
             DB::rollback();
             return $this->errorResponse('No se pudo iniciar el proceso de descarga, favor de intentar nuevamente.');
         }
-
-
     }
-
 }

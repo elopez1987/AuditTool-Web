@@ -17,6 +17,4 @@ class CreateShipmentPodRequest extends FormRequest
     {
         return true;
     }
-
-
 }

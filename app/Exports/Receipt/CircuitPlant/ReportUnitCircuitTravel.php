@@ -19,9 +19,9 @@ use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
 class ReportUnitCircuitTravel implements FromCollection, WithHeadings, WithMapping, WithEvents, ShouldAutoSize, WithColumnFormatting
 {
+    use Exportable;
     private $workdayin;
     private $workdayout;
-    use Exportable;
 
     public function __construct($workdayin, $workdayout)
     {
@@ -39,51 +39,51 @@ class ReportUnitCircuitTravel implements FromCollection, WithHeadings, WithMappi
     public function headings(): array
     {
         return [
-            "Centro de distribución",
-            "Fecha",
-            "Clave de acceso",
-            "Embarque",
-            "Folio de planta",
-            "Linea de transporte",
-            "Placa de caja",
-            "Operador",
-            "Tipo",
-            "Inicio de vuelta",
-            "Registro en planta",
-            "Llegada a mesa de control",
-            "Enrampe",
-            "Inicio de proceso",
-            "Fin de proceso",
-            "Autorización de salida",
-            "Salida de planta",
-            "Estadia en planta",
-            "Folio de Cedis",
-            "Llegada a Cedis",
-            "Registro en Cedis",
-            "Llegada a mesa de control",
-            "Enrampe",
-            "Inicio de proceso",
-            "Fin de proceso",
-            "Autorización de salida",
-            "Salida de Cedis",
-            "Estadia en Cedis",
-            "Fin de vuelta",
-            "Tiempo de vuelta completa",
-            "Tiempo de ida (Min)",
-            "Tiempo de vuelta (Min)",
-            "Estatus",
+            'Centro de distribución',
+            'Fecha',
+            'Clave de acceso',
+            'Embarque',
+            'Folio de planta',
+            'Linea de transporte',
+            'Placa de caja',
+            'Operador',
+            'Tipo',
+            'Inicio de vuelta',
+            'Registro en planta',
+            'Llegada a mesa de control',
+            'Enrampe',
+            'Inicio de proceso',
+            'Fin de proceso',
+            'Autorización de salida',
+            'Salida de planta',
+            'Estadia en planta',
+            'Folio de Cedis',
+            'Llegada a Cedis',
+            'Registro en Cedis',
+            'Llegada a mesa de control',
+            'Enrampe',
+            'Inicio de proceso',
+            'Fin de proceso',
+            'Autorización de salida',
+            'Salida de Cedis',
+            'Estadia en Cedis',
+            'Fin de vuelta',
+            'Tiempo de vuelta completa',
+            'Tiempo de ida (Min)',
+            'Tiempo de vuelta (Min)',
+            'Estatus',
         ];
     }
 
     public function collection()
     {
         $center = SecurityAccessWarehouse::Centers();
-        if (!empty($center)) {
+        if (! empty($center)) {
             $centerpl = SystemCenterDistribution::where('centerid', $center)->value('auxiliary02');
         }
-        $units = StorageBoxTravel::join('systemstatus', 'vw_storageboxtravels.statusid', '=', 'systemstatus.statusid')
+        return StorageBoxTravel::join('systemstatus', 'vw_storageboxtravels.statusid', '=', 'systemstatus.statusid')
             ->join('systemcenterdistributions', 'vw_storageboxtravels.centerid', '=', 'systemcenterdistributions.centerid')
-            ->leftJoin('storagereceiptunitarrive','vw_storageboxtravels.foliowarehouse','=','storagereceiptunitarrive.value01')
+            ->leftJoin('storagereceiptunitarrive', 'vw_storageboxtravels.foliowarehouse', '=', 'storagereceiptunitarrive.value01')
             ->where('vw_storageboxtravels.starttravel', '>=', $this->workdayin)
             ->where('vw_storageboxtravels.starttravel', '<=', $this->workdayout)
             ->where('vw_storageboxtravels.centerid', $centerpl)
@@ -91,10 +91,9 @@ class ReportUnitCircuitTravel implements FromCollection, WithHeadings, WithMappi
                 'vw_storageboxtravels.*',
                 'storagereceiptunitarrive.startdate as llegada',
                 'systemstatus.name as status',
-                'systemcenterdistributions.name as center'
+                'systemcenterdistributions.name as center',
             ])
             ->get();
-        return $units;
     }
 
     public function map($units): array
@@ -142,7 +141,8 @@ class ReportUnitCircuitTravel implements FromCollection, WithHeadings, WithMappi
             AfterSheet::class => function (AfterSheet $event) {
                 $event->sheet->getDelegate()->getStyle('A1:AF1')->getFill()
                     ->applyFromArray(['fillType' => Fill::FILL_SOLID,
-                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6']]);
+                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6'],
+                    ]);
             },
         ];
     }

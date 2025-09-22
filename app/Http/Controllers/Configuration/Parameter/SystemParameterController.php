@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 
 class SystemParameterController extends BaseController
 {
-
     public function index()
     {
         $this->authorize('systemparameters.index');
@@ -48,8 +47,10 @@ class SystemParameterController extends BaseController
     public function edit(SystemParameter $systemparameter)
     {
         $this->authorize('systemparameters.edit');
-        return view('Configuration.SystemParameters.edit',
-            compact('systemparameter'));
+        return view(
+            'Configuration.SystemParameters.edit',
+            compact('systemparameter')
+        );
     }
 
     public function update(Request $request, SystemParameter $systemparameter): RedirectResponse
@@ -65,5 +66,4 @@ class SystemParameterController extends BaseController
         $systemparameter->delete();
         return $this->infoResponse('systemparameters.index');
     }
-
 }

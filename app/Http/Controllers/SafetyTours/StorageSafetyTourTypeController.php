@@ -11,12 +11,10 @@ use Illuminate\Http\Request;
 
 class StorageSafetyTourTypeController extends BaseController
 {
-
     public function index()
     {
         $this->authorize('storagesafetytourtype.index');
         return view('SafetyTours.StorageSafetyTourType.index');
-
     }
 
     public function getDataStorageSafetyTourType(Request $request)
@@ -46,13 +44,13 @@ class StorageSafetyTourTypeController extends BaseController
     {
         $this->authorize('storagesafetytourtype.show');
         $storageSafetyTourType = StorageSafetyTourType::controlAccessUser()->where('typeuuid', '=', $typeuuid)->first();
-        $details = StorageSafetyTourTypeDetail::controlAccessUser()->withTrashed()->where('typeid',$storageSafetyTourType->id)->get();
+        $details = StorageSafetyTourTypeDetail::controlAccessUser()->withTrashed()->where('typeid', $storageSafetyTourType->id)->get();
         $detailsExist = StorageSafetyTourTypeDetail::controlAccessUser()
             ->where('typeid', $storageSafetyTourType->id)
             ->pluck('tagid')->toArray();
         $storageTags = StorageTags::controlAccessUser()->where('statusid', '=', 'TAG-01')
-            ->select(['id','name'])->whereNotIn('id',$detailsExist)->get();
-        return view('SafetyTours.StorageSafetyTourType.show', compact('storageSafetyTourType','storageTags','details'));
+            ->select(['id','name'])->whereNotIn('id', $detailsExist)->get();
+        return view('SafetyTours.StorageSafetyTourType.show', compact('storageSafetyTourType', 'storageTags', 'details'));
     }
 
     public function edit(Request $request, $typeuuid)
@@ -68,7 +66,6 @@ class StorageSafetyTourTypeController extends BaseController
         $storageSafetyTourType = StorageSafetyTourType::controlAccessUser()->where('typeuuid', '=', $typeuuid)->first();
         $storageSafetyTourType->update($request->validated());
         return $this->redirectBackSuccessMessage('Registro actualizado con exito.');
-
     }
 
     public function destroy($typeuuid)
@@ -78,7 +75,4 @@ class StorageSafetyTourTypeController extends BaseController
         $storageSafetyTourType->delete();
         return $this->redirectBackSuccessMessage('Registro eliminado con exito.');
     }
-
-
-
 }

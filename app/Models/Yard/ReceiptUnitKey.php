@@ -9,13 +9,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class ReceiptUnitKey extends Model
 {
-
     use LogsActivity;
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
 
     public $timestamps = false;
     protected $table = 'receiptunitkeys';
@@ -41,13 +35,16 @@ class ReceiptUnitKey extends Model
 
     ];
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
     public static function controlAccessUser()
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
         return ReceiptUnitKey::whereIn('receiptunitkeys.warehouseid', $warehouses)
-            ->where('receiptunitkeys.centerid',$centers);
+            ->where('receiptunitkeys.centerid', $centers);
     }
-
 }

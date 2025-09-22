@@ -16,14 +16,10 @@ use Spatie\Activitylog\Traits\LogsActivity;
  */
 class ShipmentTruck extends Model
 {
-    protected $table = 'shipmenttrucks';
-    protected $dateFormat = 'Y-m-d H:i:s';
     use SoftDeletes;
     use LogsActivity;
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
+    protected $table = 'shipmenttrucks';
+    protected $dateFormat = 'Y-m-d H:i:s';
 
     protected $fillable = [
         'centerid',
@@ -34,19 +30,23 @@ class ShipmentTruck extends Model
         'auxiliary03',
         'auxiliary04',
         'auxiliary05',
-        'statusid'
+        'statusid',
     ];
 
     protected $hidden = [
         'created_at',
         'updated_at',
-        'schemaid'
+        'schemaid',
     ];
 
     protected $attributes = [
         'statusid' => 'E',
         'schemaid' => 'STS',
     ];
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
     public function status(): BelongsTo
     {
@@ -60,8 +60,8 @@ class ShipmentTruck extends Model
 
     public function scopeName($query, $name)
     {
-        if (trim($name) != "") {
-            $query->where('shipmenttrucks.name', 'like', "%$name%");
+        if (trim($name) !== '') {
+            $query->where('shipmenttrucks.name', 'like', "%{$name}%");
         }
     }
 
@@ -70,6 +70,4 @@ class ShipmentTruck extends Model
         $centers = SecurityAccessWarehouse::Centers();
         return ShipmentTruck::whereIn('centerid', $centers);
     }
-
-
 }

@@ -13,7 +13,6 @@ use PDF;
 
 class EventsIncidenceJourneysController extends BaseController
 {
-
     use QuerysIncidencesJourneys;
 
     public function openincidence($folioid)
@@ -33,9 +32,9 @@ class EventsIncidenceJourneysController extends BaseController
         }
     }
 
-    public function updatedetail($folioid, Request $request,ServiceIncidenceJourneyDetail $serviceIncidenceJourneyDetail)
+    public function updatedetail($folioid, Request $request, ServiceIncidenceJourneyDetail $serviceIncidenceJourneyDetail)
     {
-        $serviceIncidenceJourneyDetail->updateDetailForFolio($request,$folioid);
+        $serviceIncidenceJourneyDetail->updateDetailForFolio($request, $folioid);
         return $this->redirectBackSuccessMessage('Registro actualizado con exito');
     }
 
@@ -45,17 +44,16 @@ class EventsIncidenceJourneysController extends BaseController
         $details = $this->getDetailsForGeneratePDF($incidence);
         $keys = StorageKeyIncidenceOperation::with('user')
             ->where('orderid', $incidence->orderid)->first();
-        $pdf = PDF::loadView('Shipments.StorageIncidenceJourneys.partials.pdfdevolucion',
-            compact('folioid', 'incidence', 'details', 'keys'));
+        $pdf = PDF::loadView(
+            'Shipments.StorageIncidenceJourneys.partials.pdfdevolucion',
+            compact('folioid', 'incidence', 'details', 'keys')
+        );
         return $pdf->download('Folio_De_Devolución-' . $folioid . '.pdf');
     }
-
 
     public function getDetailIncidenceCreate(Request $request)
     {
         $data = $this->getDetailIncidence($request);
-        return  $this->showDataToView($data,'');
+        return $this->showDataToView($data, '');
     }
-
-
 }

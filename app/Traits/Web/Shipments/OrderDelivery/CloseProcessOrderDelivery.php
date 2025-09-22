@@ -20,10 +20,9 @@ trait CloseProcessOrderDelivery
         self::cierreDelMonitor($order);
         self::createNewJourney($order);
         $this->createNewShipmentPod($order);
-
     }
 
-    static function cierreDeLaOrden($id)
+    public static function cierreDeLaOrden($id)
     {
         $order = OrderDeliverie::findOrFail($id);
         $order->statusid = 'DH';
@@ -67,6 +66,4 @@ trait CloseProcessOrderDelivery
             'created_at' => Carbon::now(),
         ]);
     }
-
-
 }

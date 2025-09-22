@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Log;
 
-
 class DeleteLpnFromShipmentController extends Controller
 {
     use ResponseApi;
@@ -27,8 +26,8 @@ class DeleteLpnFromShipmentController extends Controller
                 $shipmentControl = ShipmentControl::controlAccessUser()
                     ->where('orderid', $lpn->orderid)
                     ->where('partnumberid', $stock->partnumberid)->first();
-                $shipmentControl->quantitytrue = $shipmentControl->quantitytrue - $stock->quantity;
-                $shipmentControl->quantityfail = $shipmentControl->quantityfail + $stock->quantity;
+                $shipmentControl->quantitytrue -= $stock->quantity;
+                $shipmentControl->quantityfail += $stock->quantity;
                 $shipmentControl->save();
             }
 
@@ -42,5 +41,4 @@ class DeleteLpnFromShipmentController extends Controller
             return $this->responseSuccessAjax('', 'Error al procesar la solicitud, favor de intentarlo de nuevo.');
         }
     }
-
 }

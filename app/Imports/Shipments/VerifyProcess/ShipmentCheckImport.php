@@ -6,7 +6,6 @@ use App\Models\Inventory\PartNumber\InventoryPartnumber;
 use App\Models\Shipments\OrderDeliverie;
 use App\Models\Shipments\OrderDelivery\LogImportFile;
 use App\Models\Shipments\ShipmentControl;
-use App\Traits\RegisterLogTransfer;
 use App\Traits\Web\General\GetParameters;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Concerns\ToModel;
@@ -15,14 +14,14 @@ use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 
-class ShipmentCheckImport implements ToModel, WithHeadingRow, WithBatchInserts, WithChunkReading,WithValidation
+class ShipmentCheckImport implements ToModel, WithHeadingRow, WithBatchInserts, WithChunkReading, WithValidation
 {
     use GetParameters;
 
     public function model(array $row)
     {
-        list($order, $sku) = $this->searchOrderAndSku($row);
-        if (!empty($sku) && !empty($order)) {
+        [$order, $sku] = $this->searchOrderAndSku($row);
+        if (! empty($sku) && ! empty($order)) {
             ShipmentControl::updateOrCreate(
                 [
                     'centerid' => $order->centerid,
@@ -37,7 +36,8 @@ class ShipmentCheckImport implements ToModel, WithHeadingRow, WithBatchInserts, 
                     'unitmeasureid' => $sku->stkuom ?? 'CS',
                     'quantityrequested' => $row['quantity'],
                     'quantityfail' => $row['quantity'],
-                ]);
+                ]
+            );
         }
     }
 
@@ -66,7 +66,8 @@ class ShipmentCheckImport implements ToModel, WithHeadingRow, WithBatchInserts, 
         ];
     }
 
-    public function messages(){
+    public function messages()
+    {
         return [
             '*.shipmentid.exists' => 'El pedido no existe en el sistema',
             '*.partnumberid.exists' => 'El Sku no existe en el sistema',
@@ -81,6 +82,7 @@ class ShipmentCheckImport implements ToModel, WithHeadingRow, WithBatchInserts, 
 
     /**
      * @param array $row
+     *
      * @return array
      */
     public function searchOrderAndSku(array $row): array
@@ -95,9 +97,9 @@ class ShipmentCheckImport implements ToModel, WithHeadingRow, WithBatchInserts, 
         if ($lastShipmentId !== $shipmentId) {
             $lastOrder = OrderDeliverie::controlAccessUser()->where('shipmentid', $shipmentId)
                 ->select(['id', 'centerid', 'warehouseid', 'customerid'])->first();
-            if (empty($lastOrder)){
+            if (empty($lastOrder)) {
                 LogImportFile::create([
-                    'message' => 'Error al importar el pedido :' . $row['shipmentid'] . ' no existe en el sistema' ,
+                    'message' => 'Error al importar el pedido :' . $row['shipmentid'] . ' no existe en el sistema',
                     'created_at' => Carbon::now(),
                 ]);
             }
@@ -108,7 +110,7 @@ class ShipmentCheckImport implements ToModel, WithHeadingRow, WithBatchInserts, 
         if ($lastPartnumberId !== $partnumberId) {
             $lastSku = InventoryPartnumber::controlAccessUser()->where('prtnum', $partnumberId)
                 ->select(['id', 'category01id', 'category02id', 'stkuom'])->first();
-            if (!$lastSku){
+            if (! $lastSku) {
                 LogImportFile::create([
                     'message' => 'Error al importar el Sku :' . $row['partnumberid'] . ' para el pedido :' . $row['shipmentid'] . ' no existe en el sistema',
                     'created_at' => Carbon::now(),
@@ -117,7 +119,6 @@ class ShipmentCheckImport implements ToModel, WithHeadingRow, WithBatchInserts, 
             $lastPartnumberId = $partnumberId;
         }
         $sku = $lastSku;
-        return array($order, $sku);
+        return [$order, $sku];
     }
-
 }

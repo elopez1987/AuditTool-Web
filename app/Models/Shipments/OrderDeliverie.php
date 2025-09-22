@@ -22,7 +22,7 @@ use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
- * @method static whereIn(string $string, string[] $array)
+ * @method static whereIn(string $string, array<string> $array)
  */
 class OrderDeliverie extends Model
 {
@@ -30,22 +30,16 @@ class OrderDeliverie extends Model
 
     protected $table = 'orderdeliveries';
 
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
-
-
     protected $fillable = ['centerid', 'warehouseid', 'shipmentid', 'workday',
         'turnid', 'carrierid', 'customerid', 'shipmenttypeid', 'folionumber',
         'loadingdate', 'downloaddate', 'auxiliary01', 'auxiliary02', 'auxiliary03',
-        'auxiliary04', 'auxiliary05', 'evidencefile', 'confirmation', 'statusid',];
+        'auxiliary04', 'auxiliary05', 'evidencefile', 'confirmation', 'statusid',
+    ];
 
     protected $hidden = [
         'created_at',
         'updated_at',
-        'schemaid'
+        'schemaid',
     ];
 
     protected $attributes = [
@@ -53,15 +47,9 @@ class OrderDeliverie extends Model
         'schemaid' => 'KLE',
     ];
 
-    protected static function boot()
+    public function getActivitylogOptions(): LogOptions
     {
-        parent::boot();
-        if (!app()->runningInConsole()) {
-            self::creating(function (OrderDeliverie $model) {
-                $model->createuser = Auth::user()->id;
-                $model->auxiliary05 = bin2hex(random_bytes(30));
-            });
-        }
+        return LogOptions::defaults()->logFillable();
     }
 
     public static function controlAccessUser()
@@ -72,7 +60,7 @@ class OrderDeliverie extends Model
             ->whereIn('orderdeliveries.centerid', $centers);
     }
 
-//   --------------------------  Relaciones -------------------------------------------
+    //   --------------------------  Relaciones -------------------------------------------
     public function status(): BelongsTo
     {
         return $this->belongsTo(SystemStatus::class, 'statusid', 'statusid');
@@ -155,109 +143,114 @@ class OrderDeliverie extends Model
 
     public function monitor()
     {
-        return $this->belongsTo(OrderMonitor::class,'id','orderid');
+        return $this->belongsTo(OrderMonitor::class, 'id', 'orderid');
     }
 
     public function billings()
     {
-        return $this->hasMany(StorageShipmentBilling::class,'orderid','id');
+        return $this->hasMany(StorageShipmentBilling::class, 'orderid', 'id');
     }
 
-
-
-
-
-//  -----------------------------  Scopes para filtros  ------------------------------------------
+    //  -----------------------------  Scopes para filtros  ------------------------------------------
     public function scopeForStatus($query, $statusid)
     {
-        if (trim($statusid) != "") {
+        if (trim($statusid) !== '') {
             $query->where('orderdeliveries.statusid', '=', $statusid);
         }
     }
 
     public function scopeWarehouse($query, $warehouseid)
     {
-        if (trim($warehouseid) != '') {
+        if (trim($warehouseid) !== '') {
             $query->where('orderdeliveries.warehouseid', $warehouseid);
         }
     }
 
     public function scopeCarrier($query, $carrierid)
     {
-        if (trim($carrierid) != '') {
+        if (trim($carrierid) !== '') {
             $query->where('orderdeliveries.carrierid', $carrierid);
         }
     }
 
     public function scopeCarrierIn($query, $carrierid)
     {
-        if (!empty($carrierid)) {
+        if (! empty($carrierid)) {
             $query->whereIn('orderdeliveries.carrierid', $carrierid);
         }
     }
 
     public function scopeCustomerIn($query, $customer)
     {
-        if (!empty($customer)) {
+        if (! empty($customer)) {
             $query->whereIn('orderdeliveries.customerid', $customer);
         }
     }
 
     public function scopeForCarrier($query, $carrierid)
     {
-        if (trim($carrierid) != '') {
+        if (trim($carrierid) !== '') {
             $query->where('orderdeliveries.carrierid', $carrierid);
         }
     }
 
     public function scopeShipmentid($query, $shipmentid)
     {
-        if (trim($shipmentid) != "") {
-            $query->where('orderdeliveries.shipmentid', 'like', "%$shipmentid%");
+        if (trim($shipmentid) !== '') {
+            $query->where('orderdeliveries.shipmentid', 'like', "%{$shipmentid}%");
         }
     }
 
     public function scopeWorkday($query, $workday)
     {
-        if (trim($workday) != "") {
+        if (trim($workday) !== '') {
             $query->where('orderdeliveries.workday', '=', $workday);
         }
     }
 
     public function scopeTurn($query, $turnid)
     {
-        if (trim($turnid) != "") {
+        if (trim($turnid) !== '') {
             $query->where('orderdeliveries.turnid', '=', $turnid);
         }
     }
 
-
-//  -------------------------  Consultas  ---------------------------------------------
-    static function validateShipmentOrder($shipmentid)
+    //  -------------------------  Consultas  ---------------------------------------------
+    public static function validateShipmentOrder($shipmentid)
     {
         return OrderDeliverie::controlAccessUser()->whereShipmentid($shipmentid)
             ->whereNotIn('statusid', ['DH', 'CA'])->first();
     }
 
-    static public function getOrderForStatus()
+    public static function getOrderForStatus()
     {
         return OrderDeliverie::controlAccessUser()->select(['statusid', DB::raw('COUNT(statusid) as total_for_status')])->groupBy('statusid')->get();
     }
 
-    static function searchForShipment($shipment)
+    public static function searchForShipment($shipment)
     {
         return OrderDeliverie::controlAccessUser()->whereShipmentid($shipment)->first();
     }
 
-    static function searchShipmentForArrayStatus($folionumber, $status)
+    public static function searchShipmentForArrayStatus($folionumber, $status)
     {
         return OrderDeliverie::controlAccessUser()->where('orderdeliveries.folionumber', $folionumber)
             ->whereNotIn('orderdeliveries.statusid', $status)->first();
     }
 
-    static function searchForUnit($folio)
+    public static function searchForUnit($folio)
     {
         return OrderDeliverie::controlAccessUser()->where('orderdeliveries.folionumber', $folio)->first();
     }
 
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (OrderDeliverie $model) {
+                $model->createuser = Auth::user()->id;
+                $model->auxiliary05 = bin2hex(random_bytes(30));
+            });
+        }
+    }
 }

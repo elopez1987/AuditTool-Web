@@ -11,11 +11,10 @@ class SecurityFunctionsMenuStructure extends Model
     protected $table = 'securityfunctionsmenustructure';
     protected $primaryKey = 'id';
 
-
     protected $fillable = [
         'menustrucid',
         'functionid',
-        'moduleid'
+        'moduleid',
     ];
 
     public function funtion()
@@ -27,5 +26,4 @@ class SecurityFunctionsMenuStructure extends Model
     {
         return $this->belongsTo(SecurityModule::class, 'moduleid', 'moduleid');
     }
-
 }

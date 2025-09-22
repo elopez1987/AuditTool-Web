@@ -15,7 +15,7 @@ class StorageAreasRequest extends FormRequest
             'auxiliary01' => ['nullable', 'max:100'],
             'auxiliary02' => ['nullable', 'max:100'],
             'auxiliary03' => ['nullable', 'max:100'],
-            'statusid' => 'exists:systemstatus,statusid'
+            'statusid' => 'exists:systemstatus,statusid',
         ];
     }
 

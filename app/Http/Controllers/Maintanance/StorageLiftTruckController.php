@@ -12,7 +12,6 @@ use Yajra\DataTables\Facades\DataTables;
 
 class StorageLiftTruckController extends BaseController
 {
-
     use QueryStorageLiftTrucks;
 
     public function index()
@@ -36,8 +35,10 @@ class StorageLiftTruckController extends BaseController
         $typesLiftTrucks = $this->getStatusForSchema('TPM');
         $modelLiftTrucks = $this->getStatusForSchema('MDM');
         $brandLiftTrucks = $this->getStatusForSchema('MCM');
-        return view('Maintenance.StorageLiftTrucks.create',
-            compact('typesLiftTrucks', 'modelLiftTrucks', 'brandLiftTrucks'));
+        return view(
+            'Maintenance.StorageLiftTrucks.create',
+            compact('typesLiftTrucks', 'modelLiftTrucks', 'brandLiftTrucks')
+        );
     }
 
     public function store(CreateStorageLiftTruckRequest $request)
@@ -62,9 +63,16 @@ class StorageLiftTruckController extends BaseController
         $modelLiftTrucks = $this->getStatusForSchema('MDM');
         $brandLiftTrucks = $this->getStatusForSchema('MCM');
         $status = $this->getStatusForSchema('STM');
-        return view('Maintenance.StorageLiftTrucks.edit',
-            compact('liftTruck', 'typesLiftTrucks', 'modelLiftTrucks',
-                'brandLiftTrucks', 'status'));
+        return view(
+            'Maintenance.StorageLiftTrucks.edit',
+            compact(
+                'liftTruck',
+                'typesLiftTrucks',
+                'modelLiftTrucks',
+                'brandLiftTrucks',
+                'status'
+            )
+        );
     }
 
     public function update($id, Request $request)
@@ -81,6 +89,4 @@ class StorageLiftTruckController extends BaseController
         $truck->delete();
         return $this->redirectBackSuccessMessage('Registro eliminado exitosamente.');
     }
-
-
 }

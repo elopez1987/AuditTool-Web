@@ -12,7 +12,6 @@ use Maatwebsite\Excel\Concerns\WithValidation;
 
 class ImportRequestNCInverse implements ToCollection, WithHeadingRow, WithValidation
 {
-
     public function collection(Collection $rows)
     {
         foreach ($rows as $row) {
@@ -29,9 +28,7 @@ class ImportRequestNCInverse implements ToCollection, WithHeadingRow, WithValida
     public function rules(): array
     {
         return [
-            '*.ne' => 'required|numeric|digits_between:1,20'
+            '*.ne' => 'required|numeric|digits_between:1,20',
         ];
     }
-
-    
 }

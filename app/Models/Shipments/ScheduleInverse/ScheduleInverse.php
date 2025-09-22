@@ -16,18 +16,12 @@ class ScheduleInverse extends Model
 {
     use LogsActivity;
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
-
     protected $table = 'scheduleinverse';
 
     protected $fillable = [
         'centerid', 'warehouseid', 'createuser',
-        'name', 'startdate', 'finishdate', 'statusid'
+        'name', 'startdate', 'finishdate', 'statusid',
     ];
-
 
     //INO = Inactivo
     //ACT = Activo
@@ -36,15 +30,9 @@ class ScheduleInverse extends Model
         'schemaid' => 'KLD',
     ];
 
-
-    protected static function boot()
+    public function getActivitylogOptions(): LogOptions
     {
-        parent::boot();
-        if (!app()->runningInConsole()) {
-            self::creating(function (ScheduleInverse $model) {
-                $model->createuser = Auth::id();
-            });
-        }
+        return LogOptions::defaults()->logFillable();
     }
 
     public static function controlAccessUser()
@@ -60,19 +48,23 @@ class ScheduleInverse extends Model
         return $this->belongsTo(SystemStatus::class, 'statusid', 'statusid');
     }
 
-
     public function warehouse(): BelongsTo
     {
         return $this->belongsTo(SystemWarehouse::class, 'warehouseid');
     }
-
 
     public function center()
     {
         return $this->belongsTo(SystemCenterDistribution::class, 'centerid');
     }
 
-
-
-
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (ScheduleInverse $model) {
+                $model->createuser = Auth::id();
+            });
+        }
+    }
 }

@@ -8,7 +8,7 @@ use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 
-class ImportCheckListDetails implements ToCollection,WithHeadingRow,WithValidation
+class ImportCheckListDetails implements ToCollection, WithHeadingRow, WithValidation
 {
     protected $checklist;
 
@@ -18,8 +18,8 @@ class ImportCheckListDetails implements ToCollection,WithHeadingRow,WithValidati
     }
 
     /**
-    * @param Collection $collection
-    */
+     * @param Collection $collection
+     */
     public function collection(Collection $rows)
     {
         foreach ($rows as $row) {
@@ -43,5 +43,4 @@ class ImportCheckListDetails implements ToCollection,WithHeadingRow,WithValidati
             '*.name' => ['required', 'string', 'max:255'],
         ];
     }
-
 }

@@ -8,22 +8,19 @@ use App\Models\Shipments\StorageIncidenceJourneyDetails;
 use App\Traits\Web\General\GetParameters;
 use Auth;
 
-
 class ServiceIncidenceJourney
 {
     use GetParameters;
 
     public function addNewIncidence($shipment)
     {
-        $incidence = StorageIncidenceJourney::updateOrCreate([
+        return StorageIncidenceJourney::updateOrCreate([
             'centerid' => $shipment->centerid,
             'warehouseid' => $shipment->warehouseid,
             'orderid' => $shipment->id,
             'carrierid' => $shipment->carrierid,
         ]);
-        return $incidence;
     }
-
 
     public function addDetailToIncidence($request, $incidence)
     {
@@ -43,13 +40,10 @@ class ServiceIncidenceJourney
         $this->createNewCommentForIncidence($incidence, $request);
     }
 
-
     public function createNewCommentForIncidence($incidence, $request)
     {
-        if (!empty($request['comment'])) {
-            StorageComment::createCommentary('StorageIncidenceJourney',$incidence->folioid,$request);
+        if (! empty($request['comment'])) {
+            StorageComment::createCommentary('StorageIncidenceJourney', $incidence->folioid, $request);
         }
     }
-
-
 }

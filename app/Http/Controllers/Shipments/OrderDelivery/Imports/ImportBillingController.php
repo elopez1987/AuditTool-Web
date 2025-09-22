@@ -10,13 +10,11 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class ImportBillingController extends BaseController
 {
-
-
     public function index(Request $request)
     {
         ini_set('max_execution_time', 300);
         $validator = Validator::make($request->all(), [
-            'file' => 'required|mimes:xls,xlsx'
+            'file' => 'required|mimes:xls,xlsx',
         ]);
         if ($validator->fails()) {
             return $this->errorResponse('El formato de archivo no es correcto.');
@@ -24,7 +22,4 @@ class ImportBillingController extends BaseController
         Excel::import(new ImportShipmentBilling(), $request->file('file'), '', \Maatwebsite\Excel\Excel::XLSX);
         return $this->redirectBackSuccessMessage('Registros procesados con exito.');
     }
-
-
-
 }

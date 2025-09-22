@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 
 class StorageCategoryIncidenceDetailController extends BaseController
 {
-
     public function adddetailcategory($id)
     {
         $category = StorageCategoryIncidence::findOrFail($id);
@@ -17,7 +16,6 @@ class StorageCategoryIncidenceDetailController extends BaseController
         $status = $this->getStatusSTS();
         return view('Shipments.CategoryIncidences.adddetail', compact('category', 'details', 'status'));
     }
-
 
     public function storedetailcategoryincidence(Request $request, $id)
     {

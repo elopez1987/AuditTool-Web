@@ -11,18 +11,11 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class SystemFolio extends Model
 {
-    
     use LogsActivity;
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
-
-
-    protected $table = 'systemfolio';
     public $incrementing = false;
     public $timestamps = false;
+
+    protected $table = 'systemfolio';
 
     protected $fillable = [
         'centerid',
@@ -32,12 +25,17 @@ class SystemFolio extends Model
         'auxiliary03',
         'auxiliary04',
         'auxiliary05',
-        'statusid'
+        'statusid',
     ];
 
     protected $attributes = [
         'schemaid' => 'FOL',
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
     public function center()
     {
@@ -57,10 +55,8 @@ class SystemFolio extends Model
 
     public function scopeDescription($query, $description)
     {
-        if (trim($description) != "") {
-            $query->where('systemstatus.name', 'like', "%$description%");
+        if (trim($description) !== '') {
+            $query->where('systemstatus.name', 'like', "%{$description}%");
         }
     }
-
-
 }

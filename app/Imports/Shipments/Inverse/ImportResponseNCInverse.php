@@ -34,7 +34,7 @@ class ImportResponseNCInverse implements ToCollection, WithHeadingRow, WithValid
             '*.delivery' => 'required|numeric|digits_between:1,20',
             '*.zare' => 'required|numeric|digits_between:1,20',
             '*.ne' => 'required|numeric|digits_between:1,20',
-            '*.nc' => 'required|numeric|digits_between:1,20'
+            '*.nc' => 'required|numeric|digits_between:1,20',
         ];
     }
 }

@@ -15,13 +15,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class StorageSchedulleReceipt extends Model
 {
-
     use LogsActivity;
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
 
     protected $table = 'storageschedullereceipt';
 
@@ -47,13 +41,9 @@ class StorageSchedulleReceipt extends Model
         'schemaid' => 'DPR',
     ];
 
-    protected static function boot()
+    public function getActivitylogOptions(): LogOptions
     {
-        parent::boot();
-        if (!app()->runningInConsole()) {
-            self::creating(function (StorageSchedulleReceipt $model) {
-            });
-        }
+        return LogOptions::defaults()->logFillable();
     }
 
     public static function controlAccessUser()
@@ -63,7 +53,6 @@ class StorageSchedulleReceipt extends Model
         return StorageSchedulleReceipt::whereIn('storageschedullereceipt.warehouseid', $warehouses)
             ->whereIn('storageschedullereceipt.centerid', $centers);
     }
-
 
     public function center(): BelongsTo
     {
@@ -98,24 +87,29 @@ class StorageSchedulleReceipt extends Model
     public function period(): BelongsTo
     {
         return $this->belongsTo(StorageReceiptPeriod::class, 'periodid');
-
     }
-
 
 //    Filtros
     public function scopeWorkday($query, $workday)
     {
-        if (trim($workday) != "") {
+        if (trim($workday) !== '') {
             return $query->where('storageschedullereceipt.workday', '=', $workday);
         }
     }
 
     public function scopeShipment($query, $shipment)
     {
-        if (trim($shipment) != "") {
+        if (trim($shipment) !== '') {
             $query->where('storageschedullereceipt.shipmentid', '=', $shipment);
         }
     }
 
-
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (StorageSchedulleReceipt $model) {
+            });
+        }
+    }
 }

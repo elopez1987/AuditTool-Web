@@ -10,15 +10,9 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class GenerateAccessWarehouse extends Model
 {
-
+    use LogsActivity;
     protected $table = 'storageaccesswarehouse';
     protected $primaryKey = 'id';
-    use LogsActivity;
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
 
     protected $fillable = [
         'centerid',
@@ -40,11 +34,10 @@ class GenerateAccessWarehouse extends Model
         'statusid',
     ];
 
-
     protected $hidden = [
         'created_at',
         'updated_at',
-        'schemaid'
+        'schemaid',
     ];
 
     protected $attributes = [
@@ -54,21 +47,12 @@ class GenerateAccessWarehouse extends Model
 
     protected $casts = [
         'datestart' => 'datetime:d/m/Y H:i',
-        'datefinish' => 'datetime:d/m/Y H:i'
+        'datefinish' => 'datetime:d/m/Y H:i',
     ];
 
-    protected static function boot()
+    public function getActivitylogOptions(): LogOptions
     {
-        parent::boot();
-        if (!app()->runningInConsole()) {
-            self::creating(function (GenerateAccessWarehouse $model) {
-                $model->createuser = Auth::id();
-                $model->updateuser = Auth::id();
-            });
-            self::updating(function (GenerateAccessWarehouse $model) {
-                $model->updateuser = Auth::id();
-            });
-        }
+        return LogOptions::defaults()->logFillable();
     }
 
     public static function controlAccessUser()
@@ -81,32 +65,43 @@ class GenerateAccessWarehouse extends Model
 
     public function scopeForName($query, $name)
     {
-        if (trim($name) != "") {
-            $query->where('so.name', 'like', "%$name%");
+        if (trim($name) !== '') {
+            $query->where('so.name', 'like', "%{$name}%");
         }
     }
 
     public function scopeForBox($query, $boxnumber)
     {
-        if (trim($boxnumber) != "") {
-            $query->where('sl.boxnumber', 'like', "%$boxnumber%");
+        if (trim($boxnumber) !== '') {
+            $query->where('sl.boxnumber', 'like', "%{$boxnumber}%");
         }
     }
 
     public function scopeForCarrierFront($query, $carrierid)
     {
-        if (trim($carrierid) != "") {
+        if (trim($carrierid) !== '') {
             $query->where('sl.carrierid', '=', $carrierid);
         }
     }
 
     public function scopeForCarriers($query, $carriers)
     {
-        if (!empty($carriers)) {
+        if (! empty($carriers)) {
             $query->whereIn('sl.carrierid', $carriers);
         }
     }
 
-
-
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (GenerateAccessWarehouse $model) {
+                $model->createuser = Auth::id();
+                $model->updateuser = Auth::id();
+            });
+            self::updating(function (GenerateAccessWarehouse $model) {
+                $model->updateuser = Auth::id();
+            });
+        }
+    }
 }

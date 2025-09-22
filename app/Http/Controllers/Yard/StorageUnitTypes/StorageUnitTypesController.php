@@ -44,5 +44,4 @@ class StorageUnitTypesController extends BaseController
         $model->update($request->except('centerid'));
         return $this->infoResponse('storageunittypes.index');
     }
-
 }

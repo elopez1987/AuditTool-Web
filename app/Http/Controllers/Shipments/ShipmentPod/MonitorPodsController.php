@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Shipments\ShipmentPod;
 
 use App\Http\Controllers\BaseController;
-use App\Http\Controllers\Shipments\AbstractHandler;
-use App\Http\Controllers\Shipments\UploadMissingFileException;
 use App\Http\Requests\Web\Shipments\ShipmentPod\CreateShipmentPodRequest;
 use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Security\Users\AccessCarrier;
@@ -18,11 +16,8 @@ use DB;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
-
 class MonitorPodsController extends BaseController
 {
-
-
     use EvidencePhotoTrait;
 
     public function index()
@@ -30,14 +25,14 @@ class MonitorPodsController extends BaseController
         $this->authorize('monitorpods.index');
         $status = SystemStatus::whereSchemaid('POD')->whereIn('statusid', ['PED', 'CON'])
             ->select(['name', 'statusid'])->get();
-        return view('Shipments.MonitorPods.index',compact('status'));
+        return view('Shipments.MonitorPods.index', compact('status'));
     }
 
     public function getDataMonitorPods(Request $request)
     {
         $data = $this->getData($request);
         return DataTables::of($data)
-            ->addColumn('btn', "Shipments.MonitorPods.partials.buttons")
+            ->addColumn('btn', 'Shipments.MonitorPods.partials.buttons')
             ->rawColumns(['btn'])->toJson();
     }
 
@@ -58,7 +53,6 @@ class MonitorPodsController extends BaseController
         return $this->redirectBackSuccessMessage('Embarque agregado con exito.');
     }
 
-
     public function show($id)
     {
         $this->authorize('monitorpods.show');
@@ -69,14 +63,13 @@ class MonitorPodsController extends BaseController
         return view('Shipments.MonitorPods.show', compact('shipment', 'files', 'status'));
     }
 
-
     public function getData(Request $request)
     {
-        list($datestart, $datefinish) = $this->getDateStartAndFinish($request);
+        [$datestart, $datefinish] = $this->getDateStartAndFinish($request);
         $customers = $this->getCustomerForUser();
         $carrier = AccessCarrier::where('username', Auth::user()->username)
             ->select('carrierid')->get()->toArray();
-        $data = ShipmentPod::controlAccessUser()
+        return ShipmentPod::controlAccessUser()
             ->leftJoin('orderdeliveries', function ($join) {
                 $join->on('shipmentpods.orderid', '=', 'orderdeliveries.id')
                     ->on('shipmentpods.centerid', '=', 'orderdeliveries.centerid');
@@ -92,17 +85,19 @@ class MonitorPodsController extends BaseController
             ->leftJoin('systemstatus as s3', 'shipmentpods.statusid', '=', 's3.statusid')
             ->where('orderdeliveries.statusid', 'DH')
             ->whereBetween('orderdeliveries.downloaddate', [$datestart, $datefinish])
-            ->select([
-                    'shipmentpods.id',
-                    'shipmentpods.statusid',
-                    'orderdeliveries.id as orderid',
-                    'orderdeliveries.shipmentid',
-                    DB::raw('UPPER(o2.name) as customername'),
-                    DB::raw('UPPER(o2.city) as city'),
-                    's2.name as carriername',
-                    'orderdeliveries.loadingdate',
-                    'orderdeliveries.downloaddate',
-                    's3.name as status']
+            ->select(
+                [
+                'shipmentpods.id',
+                'shipmentpods.statusid',
+                'orderdeliveries.id as orderid',
+                'orderdeliveries.shipmentid',
+                DB::raw('UPPER(o2.name) as customername'),
+                DB::raw('UPPER(o2.city) as city'),
+                's2.name as carriername',
+                'orderdeliveries.loadingdate',
+                'orderdeliveries.downloaddate',
+                's3.name as status',
+            ]
             )
             ->Shipmentid($request->get('shipmentid'))
             ->CarrierIn($carrier)
@@ -111,25 +106,22 @@ class MonitorPodsController extends BaseController
             ->take(500)
             ->orderBy('orderdeliveries.id', 'desc')
             ->get();
-        return $data;
     }
-
 
     /**
      * @param Request $request
+     *
      * @return array
      */
     public function getDateStartAndFinish(Request $request): array
     {
-        if ($request['datestart'] != null && $request['datefinish'] != null) {
+        if ($request['datestart'] !== null && $request['datefinish'] !== null) {
             $datestart = $request['datestart'];
             $datefinish = $request['datefinish'];
         } else {
             $datestart = Carbon::now()->subDays(20)->format('Y-m-d');
             $datefinish = Carbon::now()->addDays(10)->format('Y-m-d');
         }
-        return array($datestart, $datefinish);
+        return [$datestart, $datefinish];
     }
-
-
 }

@@ -13,6 +13,11 @@ class StorageBoxStock extends Model
 {
     protected $table = 'vw_storageboxstock';
 
+    protected $casts = [
+        'entrydate' => 'datetime:d/m/Y H:i',
+        'deliverdate' => 'datetime:d/m/Y H:i',
+    ];
+
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
@@ -20,11 +25,6 @@ class StorageBoxStock extends Model
         return StorageBoxStock::whereIn('vw_storageboxstock.centerid', $centers)
             ->whereIn('vw_storageboxstock.warehouseid', $warehouses);
     }
-
-    protected $casts = [
-        'entrydate' => 'datetime:d/m/Y H:i',
-        'deliverdate' => 'datetime:d/m/Y H:i'
-    ];
     public function getOperatorNameAttribute($value)
     {
         return ucwords($value);
@@ -42,42 +42,38 @@ class StorageBoxStock extends Model
         return $this->belongsTo(SystemStatus::class, 'statusid', 'statusid');
     }
 
-
     public function scopeFolio($query, $folionumber)
     {
-        if (trim($folionumber) != "") {
+        if (trim($folionumber) !== '') {
             $query->where('vw_storageboxstock.id', '=', $folionumber);
         }
     }
 
     public function scopeBarcode($query, $barcode)
     {
-        if (trim($barcode) != "") {
-            $query->where('vw_storageboxstock.barcode', 'like', "%$barcode%");
+        if (trim($barcode) !== '') {
+            $query->where('vw_storageboxstock.barcode', 'like', "%{$barcode}%");
         }
     }
 
     public function scopeShipment($query, $shipmentid)
     {
-        if (trim($shipmentid) != "") {
+        if (trim($shipmentid) !== '') {
             $query->where('vw_storageboxstock.shipmentid', '=', $shipmentid);
         }
     }
 
     public function scopeBoxNumber($query, $boxnumber)
     {
-        if (trim($boxnumber) != '') {
-            $query->where('vw_storageboxstock.boxnumber', 'like', "%$boxnumber%");
+        if (trim($boxnumber) !== '') {
+            $query->where('vw_storageboxstock.boxnumber', 'like', "%{$boxnumber}%");
         }
     }
 
     public function scopeReason($query, $razonstatusid)
     {
-        if (trim($razonstatusid) != '') {
+        if (trim($razonstatusid) !== '') {
             $query->where('receiptunits.razonstatusid', $razonstatusid);
         }
-
     }
-
-
 }

@@ -10,13 +10,12 @@ use Yajra\DataTables\Facades\DataTables;
 
 class ActivityLogController extends Controller
 {
-
     public function index()
     {
         $this->authorize('activitylog.index');
         $descriptions = ActivityLog::select(['description', 'description'])->distinct()->get();
         $models = ActivityLog::select(['subject_type', 'subject_type'])->distinct()->get();
-        $users = User::select(['name', 'id'])->where('statusid','=','E')->get();
+        $users = User::select(['name', 'id'])->where('statusid', '=', 'E')->get();
         return view('Configuration.ActivityLogs.index', compact('descriptions', 'models', 'users'));
     }
 
@@ -42,6 +41,4 @@ class ActivityLogController extends Controller
         $jsonObject = json_decode($register->properties);
         return view('Configuration.ActivityLogs.show', compact('register', 'jsonObject'));
     }
-
-
 }

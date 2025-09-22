@@ -38,7 +38,6 @@ class AddPartNumberToShipmentController extends BaseController
             'quantityfail' => $request['quantity'],
         ]);
         return $this->getJsonResponse('Registro agregado correctamente', [], 200, 'success');
-
     }
 
     public function getJsonResponse($message, $data, $code, $codeResponse): JsonResponse
@@ -51,7 +50,4 @@ class AddPartNumberToShipmentController extends BaseController
             'Data' => $data,
         ], $code);
     }
-
-
-
 }

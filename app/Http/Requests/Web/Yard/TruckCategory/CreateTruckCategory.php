@@ -10,7 +10,7 @@ class CreateTruckCategory extends FormRequest
     {
         return [
             'truckcategoryid' => 'required|unique:sqlsrv.shipmenttruckcategories,truckcategoryid',
-            'description' => 'required|string|max:50'
+            'description' => 'required|string|max:50',
         ];
     }
 
@@ -18,6 +18,4 @@ class CreateTruckCategory extends FormRequest
     {
         return true;
     }
-
-
 }

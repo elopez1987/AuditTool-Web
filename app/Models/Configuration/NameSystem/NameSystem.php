@@ -4,16 +4,13 @@ namespace App\Models\Configuration\NameSystem;
 
 use Illuminate\Database\Eloquent\Model;
 
-
 /**
  * @method static get()
  */
 class NameSystem extends Model
 {
-
     protected $table = 'systemname';
     protected $dateFormat = 'Y-m-d H:i:s';
-
 
     protected $fillable = [
         'name',
@@ -29,6 +26,4 @@ class NameSystem extends Model
         'created_at',
         'updated_at',
     ];
-
-
 }

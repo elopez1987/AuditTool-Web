@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 
 class ShipmentTypesController extends BaseController
 {
-
     public function index()
     {
         $this->authorize('shipmenttypes.index');
@@ -49,5 +48,4 @@ class ShipmentTypesController extends BaseController
         $shipmenttype->update($request->validated());
         return $this->redirectBackInfo();
     }
-
 }

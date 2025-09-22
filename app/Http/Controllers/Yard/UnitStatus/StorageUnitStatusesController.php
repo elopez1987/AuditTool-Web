@@ -9,13 +9,14 @@ use Illuminate\Http\Request;
 
 class StorageUnitStatusesController extends BaseController
 {
-
     public function index()
     {
         $this->authorize('storageunitstatus.index');
         $status = $this->getStatusSTS();
-        return view('Yards.StorageUnitStatus.index',
-            compact('status'));
+        return view(
+            'Yards.StorageUnitStatus.index',
+            compact('status')
+        );
     }
 
     public function getDataUnitStatus(Request $request)
@@ -44,8 +45,10 @@ class StorageUnitStatusesController extends BaseController
     {
         $this->authorize('storageunitstatus.edit');
         $status = $this->getStatusSTS();
-        return view('Yards.StorageUnitStatus.edit',
-            compact('status', 'storageunitstatus'));
+        return view(
+            'Yards.StorageUnitStatus.edit',
+            compact('status', 'storageunitstatus')
+        );
     }
 
     public function update(Request $request, StorageUnitStatus $storageunitstatus)
@@ -53,5 +56,4 @@ class StorageUnitStatusesController extends BaseController
         $storageunitstatus->update($request->all());
         return $this->infoResponse('storageunitstatus.index');
     }
-
 }

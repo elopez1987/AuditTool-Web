@@ -10,9 +10,8 @@ use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 
-class ImportRequestNEInverse implements ToCollection, WithHeadingRow,WithValidation
+class ImportRequestNEInverse implements ToCollection, WithHeadingRow, WithValidation
 {
-
     public function collection(Collection $rows)
     {
         foreach ($rows as $row) {
@@ -26,9 +25,9 @@ class ImportRequestNEInverse implements ToCollection, WithHeadingRow,WithValidat
         }
     }
 
-    public function rules():array
+    public function rules(): array
     {
-        return  [
+        return [
             '*.zare' => 'required|numeric|digits_between:1,20',
         ];
     }

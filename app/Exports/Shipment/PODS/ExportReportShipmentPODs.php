@@ -15,10 +15,10 @@ use PhpOffice\PhpSpreadsheet\Style\Fill;
 
 class ExportReportShipmentPODs implements FromCollection, WithHeadings, WithMapping, WithEvents, ShouldAutoSize
 {
-    private $workdayin;
-    private $workdayout;
 
     use Exportable;
+    private $workdayin;
+    private $workdayout;
 
     public function __construct($workdayin, $workdayout)
     {
@@ -26,10 +26,8 @@ class ExportReportShipmentPODs implements FromCollection, WithHeadings, WithMapp
         $this->workdayout = $workdayout;
     }
 
-
     public function headings(): array
     {
-
         return [
             'Centro de distribución',
             'Bodega',
@@ -48,13 +46,20 @@ class ExportReportShipmentPODs implements FromCollection, WithHeadings, WithMapp
     public function collection()
     {
         $centers = SecurityAccessWarehouse::Centers();
-        $shipments = DB::table('orderdeliveries')
-            ->select('orderdeliveries.centerid as centro', 'orderdeliveries.warehouseid as bodega',
-                'orderdeliveries.shipmentid as embarque', 'orderdeliveries.workday as fecha',
-                'shipmentcarriers.name as linea', 'ordercustomers.name as cliente',
-                'orderdeliveries.loadingdate as citacarga', 'orderdeliveries.downloaddate as fechacita',
-                'orderdeliveries.confirmation', DB::raw('count(storageshipmentspods.orderid) as totalpods'),
-                'systemstatus.name as estatus')
+        return DB::table('orderdeliveries')
+            ->select(
+                'orderdeliveries.centerid as centro',
+                'orderdeliveries.warehouseid as bodega',
+                'orderdeliveries.shipmentid as embarque',
+                'orderdeliveries.workday as fecha',
+                'shipmentcarriers.name as linea',
+                'ordercustomers.name as cliente',
+                'orderdeliveries.loadingdate as citacarga',
+                'orderdeliveries.downloaddate as fechacita',
+                'orderdeliveries.confirmation',
+                DB::raw('count(storageshipmentspods.orderid) as totalpods'),
+                'systemstatus.name as estatus'
+            )
             ->leftJoin('shipmentcarriers', 'orderdeliveries.carrierid', '=', 'shipmentcarriers.id')
             ->leftJoin('ordercustomers', 'orderdeliveries.customerid', '=', 'ordercustomers.id')
             ->leftJoin('storageshipmentspods', 'orderdeliveries.id', '=', 'storageshipmentspods.orderid')
@@ -62,12 +67,19 @@ class ExportReportShipmentPODs implements FromCollection, WithHeadings, WithMapp
             ->where('orderdeliveries.statusid', '=', 'DH')
             ->whereIn('orderdeliveries.centerid', $centers)
             ->whereBetween('orderdeliveries.workday', [$this->workdayin, $this->workdayout])
-            ->groupBy('orderdeliveries.centerid', 'orderdeliveries.warehouseid', 'orderdeliveries.shipmentid',
-                'orderdeliveries.workday', 'shipmentcarriers.name', 'ordercustomers.name',
-                'orderdeliveries.loadingdate', 'orderdeliveries.downloaddate',
-                'orderdeliveries.confirmation', 'systemstatus.name')
+            ->groupBy(
+                'orderdeliveries.centerid',
+                'orderdeliveries.warehouseid',
+                'orderdeliveries.shipmentid',
+                'orderdeliveries.workday',
+                'shipmentcarriers.name',
+                'ordercustomers.name',
+                'orderdeliveries.loadingdate',
+                'orderdeliveries.downloaddate',
+                'orderdeliveries.confirmation',
+                'systemstatus.name'
+            )
             ->get();
-        return $shipments;
     }
 
     public function map($shipments): array
@@ -99,7 +111,8 @@ class ExportReportShipmentPODs implements FromCollection, WithHeadings, WithMapp
             AfterSheet::class => function (AfterSheet $event) {
                 $event->sheet->getDelegate()->getStyle('A1:K1')->getFill()
                     ->applyFromArray(['fillType' => Fill::FILL_SOLID,
-                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6']]);
+                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6'],
+                    ]);
             },
         ];
     }

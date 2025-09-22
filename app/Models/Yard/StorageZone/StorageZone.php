@@ -12,21 +12,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-
 /**
  * @method static whereStatusid(string $string)
  */
 class StorageZone extends Model
 {
-    protected $table = 'storagezones';
-    protected $dateFormat = 'Y-m-d H:i:s';
     use LogsActivity;
     use SoftDeletes;
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
+    protected $table = 'storagezones';
+    protected $dateFormat = 'Y-m-d H:i:s';
     protected $fillable = [
         'centerid',
         'warehouseid',
@@ -38,12 +32,13 @@ class StorageZone extends Model
         'auxiliary03',
         'auxiliary04',
         'auxiliary05',
-        'statusid'];
+        'statusid',
+    ];
 
     protected $hidden = [
         'created_at',
         'updated_at',
-        'schemaid'
+        'schemaid',
     ];
     protected $attributes = [
         'statusid' => 'E',
@@ -52,6 +47,11 @@ class StorageZone extends Model
     protected $casts = [
         'configurationflag' => 'array',
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
@@ -78,16 +78,15 @@ class StorageZone extends Model
 //    --Filtros para modelos
     public function scopeName($query, $name)
     {
-        if (trim($name) != "") {
-            $query->where('storagezones.name', 'like', "%$name%");
+        if (trim($name) !== '') {
+            $query->where('storagezones.name', 'like', "%{$name}%");
         }
     }
 
     public function scopeWarehouse($query, $warehouseid)
     {
-        if (trim($warehouseid) != "") {
+        if (trim($warehouseid) !== '') {
             $query->where('storagezones.warehouseid', '=', $warehouseid);
         }
     }
-
 }

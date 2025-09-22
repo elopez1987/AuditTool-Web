@@ -17,11 +17,6 @@ class InventoryCountStock extends Model
 {
     use LogsActivity;
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
-
     protected $table = 'inventorycountstock';
     protected $primaryKey = 'id';
 
@@ -42,17 +37,20 @@ class InventoryCountStock extends Model
         'updated_at',
     ];
 
-
     protected $attributes = [
         'schemaid' => 'RUS',
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
         return InventoryCountStock::whereIn('inventorycountstock.centerid', $centers);
     }
-
 
     public function center()
     {
@@ -98,8 +96,7 @@ class InventoryCountStock extends Model
         return $this->belongsTo(InventoryBox::class, 'countid', 'id');
     }
 
-
-    static function createDetailCount($inventory, $unit)
+    public static function createDetailCount($inventory, $unit)
     {
         InventoryCountStock::create([
             'centerid' => $inventory->centerid,
@@ -114,14 +111,13 @@ class InventoryCountStock extends Model
         ]);
     }
 
-
-    static function searchForFolioNumber($id, $inventory)
+    public static function searchForFolioNumber($id, $inventory)
     {
         return InventoryCountStock::where('folionumber', '=', $id)
             ->where('countid', $inventory->id)->first();
     }
 
-    static function updateInventory($inventory,$request)
+    public static function updateInventory($inventory, $request)
     {
         $inventory->newzoneid = $request['zoneid'];
         $inventory->newlocationid = $request['locationid'];
@@ -129,5 +125,4 @@ class InventoryCountStock extends Model
         $inventory->userid = Auth::user()->id;
         $inventory->save();
     }
-
 }

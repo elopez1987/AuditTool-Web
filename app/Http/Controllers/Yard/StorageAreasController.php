@@ -14,7 +14,7 @@ class StorageAreasController extends BaseController
         $this->authorize('storageareas.index');
         $status = $this->getStatusSTS();
         $warehouses = $this->getWarehouseForSelect();
-        return view('Yards.StorageAreas.index', compact('status','warehouses'));
+        return view('Yards.StorageAreas.index', compact('status', 'warehouses'));
     }
 
     public function getDataAreas(Request $request)
@@ -44,42 +44,43 @@ class StorageAreasController extends BaseController
     public function edit($id)
     {
         $storageAreas = StorageAreas::controlAccessUser()->where('slug', $id)->first();
-        if (!$storageAreas) {
+        if (! $storageAreas) {
             return $this->errorResponse('Area de almacen no encontrada');
         }
         $centers = $this->getCenterForSelect();
         $warehouses = $this->getWarehouseForSelect();
         $status = $this->getStatusSTS();
-        return view('Yards.StorageAreas.edit',
-            compact('storageAreas', 'centers', 'warehouses','status'));
+        return view(
+            'Yards.StorageAreas.edit',
+            compact('storageAreas', 'centers', 'warehouses', 'status')
+        );
     }
 
     public function update(StorageAreasRequest $request, $id)
     {
         $storageAreas = StorageAreas::controlAccessUser()->where('slug', $id)->first();
-        if (!$storageAreas) {
+        if (! $storageAreas) {
             return $this->errorResponse('Area de almacen no encontrada');
         }
         $storageAreas->update($request->validated());
         return $this->redirectBackSuccessMessage('Area de almacen actualizada con exito');
     }
 
-    public function destroy(Request $request,$id)
+    public function destroy(Request $request, $id)
     {
         $storageAreas = StorageAreas::controlAccessUser()
             ->withTrashed()->where('slug', $id)->first();
-        if ($storageAreas->statusid == 'E') {
+        if ($storageAreas->statusid === 'E') {
             $storageAreas->statusid = 'D';
             $storageAreas->save();
             $storageAreas->delete();
             return $this->redirectBackSuccessMessage('Area de almacen eliminada con exito');
         }
-        if ($storageAreas->statusid == 'D') {
+        if ($storageAreas->statusid === 'D') {
             $storageAreas->statusid = 'E';
             $storageAreas->save();
             $storageAreas->restore();
             return $this->redirectBackSuccessMessage('Area de almacen restaurada con exito');
         }
     }
-
 }

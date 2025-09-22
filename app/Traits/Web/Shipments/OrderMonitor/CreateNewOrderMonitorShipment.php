@@ -10,8 +10,6 @@ use Illuminate\Support\Facades\Auth;
 
 trait CreateNewOrderMonitorShipment
 {
-
-
     public function createNewRegisterMonitor($shipment)
     {
         $customer = self::getCustomerOfShipment($shipment);
@@ -20,7 +18,6 @@ trait CreateNewOrderMonitorShipment
         $orderMonitor = self::registerNewShipment($shipment, $datemax);
         self::updateTimeToShipmentInMonitor($orderMonitor, $timeWarehouse);
     }
-
 
     private static function getCustomerOfShipment($shipment): OrderCustomer
     {
@@ -38,7 +35,7 @@ trait CreateNewOrderMonitorShipment
         $outputdatemax = Carbon::parse($shipment->downloaddate)->subMinutes($customer->timetransfer)->toDateTimeString();
         $parameter = OrderCustomer::whereId($customer->id)->value('configurationflag');
 //        Agregar validacion de zona roja para el sureste con maximo de salida de 12 pm
-        if (in_array('OCF-01', (array)$parameter)) {
+        if (in_array('OCF-01', (array) $parameter)) {
             $date = Carbon::parse($outputdatemax)->toDateString();
             $hour = Carbon::parse($outputdatemax)->format('H:i');
             $bloque01inicio = '12:00';
@@ -48,10 +45,10 @@ trait CreateNewOrderMonitorShipment
             $bloque03inicio = '04:01';
             $bloque03fin = '11:59';
             if (($hour >= $bloque01inicio) && ($hour <= $bloque01fin)) {
-                $newdate = $date . ' ' . '12:00';
+                $newdate = "{$date} 12:00";
             } elseif (($hour >= $bloque02inicio) && ($hour <= $bloque02fin)) {
-                $date02 = Carbon::parse($date)->subDay(1)->toDateString();
-                $newdate = $date02 . ' ' . '12:00';
+                $date02 = Carbon::parse($date)->subDay()->toDateString();
+                $newdate = "{$date02} 12:00";
             } elseif (($hour >= $bloque03inicio) && ($hour <= $bloque03fin)) {
                 $newdate = Carbon::parse($shipment->downloaddate)->subMinutes($customer->timetransfer)->toDateTimeString();
             }
@@ -65,6 +62,7 @@ trait CreateNewOrderMonitorShipment
     /**
      * @param $shipment
      * @param string $datemax
+     *
      * @return OrderMonitor
      */
     private static function registerNewShipment($shipment, string $datemax): OrderMonitor
@@ -80,11 +78,10 @@ trait CreateNewOrderMonitorShipment
                 'workday' => $shipment->workday,
                 'turnid' => $shipment->turnid,
                 'appointdate' => $shipment->downloaddate,
-                'outputdate' => $datemax
+                'outputdate' => $datemax,
             ],
         );
     }
-
 
     private static function updateTimeToShipmentInMonitor(OrderMonitor $monitor, SystemDetailParameter $timeWarehouse): void
     {
@@ -108,6 +105,4 @@ trait CreateNewOrderMonitorShipment
 //        $monitor->startbulkdate = $startbulkdate;
         $monitor->save();
     }
-
-
 }

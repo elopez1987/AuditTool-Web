@@ -8,7 +8,6 @@ use App\Models\Yard\ReceiptUnit;
 use App\Models\Yard\StorageCheckListDetail;
 use App\Models\Yard\StorageLocation;
 use App\Models\Yard\StorageUnitTrace;
-use App\Traits\GetIdFromReasonTrait;
 use App\Traits\Web\Izel\RegisterEdiShipment;
 use App\Traits\Web\Yard\CheckList\CheckListTransportTrait;
 use App\Traits\Web\Yard\ReceiptTruck\QueryReceiptTruck;
@@ -20,11 +19,9 @@ use Illuminate\Http\Request;
 
 class TransportOutPutController extends BaseController
 {
-
     use CheckListTransportTrait;
     use RegisterEdiShipment;
     use QueryReceiptTruck;
-
 
     public function edit($id)
     {
@@ -37,7 +34,7 @@ class TransportOutPutController extends BaseController
             ->select('id as checklitsdetailid', 'description', 'checklistid')
             ->get();
         $parameter = $this->getParametersOfWarehouse($receiptunit->warehouseid);
-        if (in_array('SWH-06', (array)$parameter)) {
+        if (in_array('SWH-06', (array) $parameter)) {
             $checklist = 'on';
         } else {
             $checklist = 'off';
@@ -57,10 +54,10 @@ class TransportOutPutController extends BaseController
             $parameter = $this->getParametersOfWarehouse($receiptunit->warehouseid);
             $this->updateDataOfReceiptUnitClose($tracto, $receiptunit, $request);
 //          Realiza la validacion del check list
-            if (!empty($parameter) && in_array('SWH-06', (array)$parameter)) {
+            if (! empty($parameter) && in_array('SWH-06', (array) $parameter)) {
                 $this->clearCheckListTransport($id, 'OUT');
                 $this->createCheckListToUnitV2($request, $receiptunit, 'OUT');
-                if (!empty($parameter) && in_array('SWH-10', (array)$parameter)) {
+                if (! empty($parameter) && in_array('SWH-10', (array) $parameter)) {
                     $difference = $this->validateCheckListV2($receiptunit, 'OUT');
                     if ($difference > '0') {
                         return redirect()->back()->withInput()->with(session()
@@ -90,6 +87,7 @@ class TransportOutPutController extends BaseController
      * @param ReceiptTruck $tracto
      * @param $receiptunit
      * @param Request $request
+     *
      * @return void
      */
     public function updateDataOfReceiptUnitClose(ReceiptTruck $tracto, $receiptunit, Request $request): void
@@ -106,6 +104,4 @@ class TransportOutPutController extends BaseController
         $receiptunit->statusid = 'TR';
         $receiptunit->save();
     }
-
-
 }

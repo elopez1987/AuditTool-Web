@@ -12097,16 +12097,6 @@ a {
   border-radius: 10px;
 }
 
-.box:hover {
-  transform: scale(1.1);
-  box-shadow: 0px 0px 30px -15px rgba(0, 0, 0, 0.5);
-  background: rgb(73, 155, 234);
-  z-index: 1;
-  border-bottom: 4px solid;
-  border-bottom-color: blue;
-  font-size: 15px !important;
-}
-
 @media (min-width: 768px) {
   #main-wrapper[data-layout=horizontal] .left-sidebar .scroll-sidebar {
     height: 50px !important;
@@ -12122,6 +12112,11 @@ input[type=text], input[type=password], input[type=email], input[type=tel], inpu
   height: 26px !important;
   border-radius: 3px;
   font-size: 0.675rem !important;
+  border-color: #c1d5e0;
+}
+
+.input-group-prepend, .input-group-append {
+  height: 26px;
   border-color: #c1d5e0;
 }
 
@@ -12216,6 +12211,11 @@ span.select2-container {
   white-space: nowrap;
   background-color: transparent;
   border: 0;
+}
+
+.dropdown-item {
+  font-size: 0.775rem;
+  padding: 8px;
 }
 
 .mr-left {
@@ -12375,24 +12375,21 @@ span.select2-container {
 
 .btn-outline-info {
   border-color: #dedede;
-  color: white;
+  color: #0b2e13;
   border-width: 1px;
   border-style: solid;
-  background: rgb(73, 155, 234);
-  background: -webkit-gradient(left top, left bottom, color-stop(0%, rgb(73, 155, 234)), color-stop(100%, rgb(32, 124, 229)));
-  background: linear-gradient(to bottom, rgb(73, 155, 234) 0%, rgb(32, 124, 229) 100%);
+  background: rgb(255, 255, 255);
+  background: -webkit-gradient(left top, left bottom, color-stop(0%, rgb(255, 255, 255)), color-stop(47%, rgb(246, 246, 246)), color-stop(100%, rgb(237, 237, 237)));
+  background: linear-gradient(to bottom, rgb(255, 255, 255) 0%, rgb(246, 246, 246) 47%, rgb(237, 237, 237) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff", endColorstr="#ededed", GradientType=0);
 }
 
 table.dataTable thead th, table.dataTable tfoot th, table.dataTable tfoot td {
   border-color: #dedede;
   color: white !important;
-  border-width: 1px;
-  border-style: solid;
   padding: 5px;
+  font-size: 0.695rem !important;
   background: rgb(73, 155, 234);
-  background: -webkit-gradient(left top, left bottom, color-stop(0%, rgb(73, 155, 234)), color-stop(100%, rgb(32, 124, 229)));
-  background: linear-gradient(to bottom, rgb(73, 155, 234) 0%, rgb(32, 124, 229) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#499bea", endColorstr="#207ce5", GradientType=0);
 }
 
 .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
@@ -12405,12 +12402,6 @@ table.dataTable thead th, table.dataTable tfoot th, table.dataTable tfoot td {
   background: -webkit-gradient(left top, left bottom, color-stop(0%, rgb(255, 255, 255)), color-stop(47%, rgb(246, 246, 246)), color-stop(100%, rgb(237, 237, 237)));
   background: linear-gradient(to bottom, rgb(255, 255, 255) 0%, rgb(246, 246, 246) 47%, rgb(237, 237, 237) 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff", endColorstr="#ededed", GradientType=0);
-}
-
-.btn-outline-info:hover {
-  background: #ededed !important;
-  border-color: #c1d5e0;
-  color: black;
 }
 
 .btn-info {
@@ -12690,14 +12681,12 @@ main h1, main .h1 {
   background-color: #b3b3b3;
   text-shadow: 2px 2px 3px rgba(255, 255, 255, 0.8);
   -webkit-background-clip: text;
-  -moz-background-clip: text;
   background-clip: text;
 }
 
 .container__box {
   max-width: 1300px;
-  margin: auto;
-  margin-top: 40px;
+  margin: 40px auto auto;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -12706,8 +12695,7 @@ main h1, main .h1 {
 @media (min-width: 1920px) {
   .container__box {
     max-width: 1800px;
-    margin: auto;
-    margin-top: 40px;
+    margin: 40px auto auto;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -12763,6 +12751,21 @@ main h1, main .h1 {
   transition: all 600ms ease;
 }
 
+.box i {
+  font-size: 18px;
+  color: #283593;
+}
+
+.box:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 30px -15px rgba(0, 0, 0, 0.5);
+  background: rgb(73, 155, 234);
+  z-index: 1;
+  border-bottom: 4px solid;
+  border-bottom-color: blue;
+  font-size: 15px !important;
+}
+
 .img-menubar {
   font-size: 26px;
   color: #455a64;
@@ -12811,7 +12814,7 @@ main h1, main .h1 {
 
 ul.list-style-none li a {
   color: #3e5569;
-  padding: 0px 0px;
+  padding: 0 0;
   display: block;
   text-decoration: none;
 }
@@ -12880,11 +12883,6 @@ tfoot input {
 .text-menu-principal {
   font-size: 25px;
   color: black !important;
-}
-
-.box i {
-  font-size: 18px;
-  color: #455a64;
 }
 
 .select2-container--default .select2-results__option--highlighted[aria-selected] {

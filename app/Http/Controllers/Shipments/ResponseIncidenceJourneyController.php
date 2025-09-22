@@ -17,8 +17,6 @@ use Illuminate\Http\Request;
 
 class ResponseIncidenceJourneyController extends BaseController
 {
-
-
     public function viewresponse($folioid)
     {
         $this->authorize('storageincidencesjourneys.response');
@@ -30,22 +28,32 @@ class ResponseIncidenceJourneyController extends BaseController
         $statusDetails = SystemStatus::where('schemaid', 'EIJ')
             ->whereIn('systemstatus.statusid', ['P', 'N'])
             ->select(['name', 'statusid'])->get();
-        $responsable = StorageCategoryIncidenceDetail::where('auxiliary01', 'INC')->where('statusid','E')
+        $responsable = StorageCategoryIncidenceDetail::where('auxiliary01', 'INC')->where('statusid', 'E')
             ->select(['categoryincdetailid', 'description'])->get();
         $entregas = EvidencePhoto::where('model_id', $folioid)
             ->where('model_type', '=', 'StorageIncidenceJourney')
             ->whereIn('auxiliary01', ['ENT', 'INC'])->get();
-        $comments = StorageComment::getCommentForModel($shipment->folioid,'StorageIncidenceJourney');
-        return view('Shipments.StorageIncidenceJourneys.response',
-            compact('shipment', 'details', 'status',
-                'statusDetails', 'responsable', 'entregas', 'comments'));
+        $comments = StorageComment::getCommentForModel($shipment->folioid, 'StorageIncidenceJourney');
+        return view(
+            'Shipments.StorageIncidenceJourneys.response',
+            compact(
+                'shipment',
+                'details',
+                'status',
+                'statusDetails',
+                'responsable',
+                'entregas',
+                'comments'
+            )
+        );
     }
 
     public function responsestore(
-        $folioid, Request $request,
+        $folioid,
+        Request $request,
         ServiceResponseIncidences $serviceResponseIncidences,
-        ServiceIncidenceJourneyDetail $serviceIncidenceJourneyDetail)
-    {
+        ServiceIncidenceJourneyDetail $serviceIncidenceJourneyDetail
+    ) {
         $error = null;
         DB::beginTransaction();
         try {
@@ -60,9 +68,8 @@ class ResponseIncidenceJourneyController extends BaseController
         }
         if ($success) {
             return $this->successResponse('storageincidencesjourneys.index');
-        } else {
-            return $this->errorResponse('Error al procesa la solicitud : ' . $error);
         }
+        return $this->errorResponse('Error al procesa la solicitud : ' . $error);
     }
 
     public function uploadEvidenceForIncidences(Request $request, $folioid)
@@ -73,7 +80,6 @@ class ResponseIncidenceJourneyController extends BaseController
             EvidencePhoto::registerEvidence('StorageIncidenceJourney', $folioid, $pathdb, 'INC', $shipment);
         }
     }
-
 
     public function searchPhotoInShipment($folioid)
     {

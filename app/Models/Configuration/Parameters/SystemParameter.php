@@ -9,13 +9,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class SystemParameter extends Model
 {
+    use SoftDeletes;
     public $incrementing = false;
+    public $keyType = 'string';
     protected $table = 'systemparameters';
     protected $primaryKey = 'parameterid';
     protected $dateFormat = 'Y-m-d H:i:s';
-    public $keyType = 'string';
-    use SoftDeletes;
-
 
     protected $fillable = [
         'parameterid',
@@ -36,12 +35,12 @@ class SystemParameter extends Model
     protected $hidden = [
         'created_at',
         'updated_at',
-        'schemaid'
+        'schemaid',
     ];
 
     protected $attributes = [
         'statusid' => 'E',
-        'schemaid' => 'STS'
+        'schemaid' => 'STS',
     ];
 
     public function getNameAttribute($value)
@@ -61,17 +60,15 @@ class SystemParameter extends Model
 
     public function scopeForName($query, $name)
     {
-        if (trim($name) != '') {
-            $query->where('systemparameters.name', 'like', "%$name%");
+        if (trim($name) !== '') {
+            $query->where('systemparameters.name', 'like', "%{$name}%");
         }
     }
 
     public function scopeForParameter($query, $parameterid)
     {
-        if (trim($parameterid) != '') {
-            $query->where('systemparameters.parameterid', 'like', "%$parameterid%");
+        if (trim($parameterid) !== '') {
+            $query->where('systemparameters.parameterid', 'like', "%{$parameterid}%");
         }
     }
-
-
 }

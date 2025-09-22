@@ -25,5 +25,4 @@ class CreateCheckListRequest extends FormRequest
     {
         return true;
     }
-
 }

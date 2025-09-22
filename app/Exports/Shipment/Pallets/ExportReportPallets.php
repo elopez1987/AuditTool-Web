@@ -15,11 +15,11 @@ use PhpOffice\PhpSpreadsheet\Style\Fill;
 
 class ExportReportPallets implements FromCollection, WithHeadings, WithMapping, WithEvents, ShouldAutoSize, WithColumnFormatting
 {
+
+    use Exportable;
     private $workdayin;
     private $workdayout;
     private $centerid;
-
-    use Exportable;
 
     public function __construct($workdayin, $workdayout, $centerid)
     {
@@ -41,7 +41,8 @@ class ExportReportPallets implements FromCollection, WithHeadings, WithMapping, 
             AfterSheet::class => function (AfterSheet $event) {
                 $event->sheet->getDelegate()->getStyle('A1:F1')->getFill()
                     ->applyFromArray(['fillType' => Fill::FILL_SOLID,
-                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6']]);
+                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6'],
+                    ]);
             },
         ];
     }
@@ -74,7 +75,7 @@ class ExportReportPallets implements FromCollection, WithHeadings, WithMapping, 
     {
         $startDate = $this->workdayin;
         $endDate = $this->workdayout;
-        $shipment = DB::table('orderdeliveries as o')
+        return DB::table('orderdeliveries as o')
             ->leftJoin('ordercustomers as o2', 'o.customerid', '=', 'o2.id')
             ->leftJoin('shipmentpallets as s', 'o.id', '=', 's.orderid')
             ->leftJoin('inventorypartnumbers as i', 's.prtnum', '=', 'i.prtnum')
@@ -89,9 +90,5 @@ class ExportReportPallets implements FromCollection, WithHeadings, WithMapping, 
             ->whereBetween('o.workday', [$startDate, $endDate])
             ->orderBy('o.workday', 'asc')
             ->get();
-        return $shipment;
     }
-
-
-
 }

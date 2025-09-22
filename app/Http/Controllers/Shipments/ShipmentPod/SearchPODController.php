@@ -15,20 +15,16 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use PDF;
 
-
 class SearchPODController extends BaseController
 {
-
     public function index(Request $request)
     {
         $shipment = OrderDeliverie::controlAccessUser()->where('shipmentid', $request['shipmentid'])->first();
         $parameterCenter = $this->getParametersOfCenter($shipment->centerid);
 
-
         if (in_array('SDC-06', $parameterCenter)) {
             $parameter = $this->getParameterOfCustomer($shipment->customerid);
-            if (!empty($parameter) && in_array('OCF-02', $parameter)) {
-
+            if (! empty($parameter) && in_array('OCF-02', $parameter)) {
                 $endPoint = 'https://app.rcontrol.com.mx/Japi/get_full_travel_info?';
                 $token = $this->getToken($shipment->centerid);
                 $url = $endPoint . 'token=' . $token;
@@ -36,12 +32,12 @@ class SearchPODController extends BaseController
                 $contentBody = $this->createJsonFilter($shipment->shipmentid);
                 $conect = new Client();
                 $response = $conect->post($url, ['form_params' => ['parameters' => $contentBody]]);
-                if ($response->getStatusCode() == 200) {
+                if ($response->getStatusCode() === 200) {
                     $result = json_decode($response->getBody()->getContents());
-                    if (!empty($result)) {
+                    if (! empty($result)) {
                         $records = $result[0]->{'destiny'}[0]->{'track'};
                         foreach ($records as $track) {
-                            if (!empty($track->{'evidence'})) {
+                            if (! empty($track->{'evidence'})) {
                                 $files = $track->{'evidence'};
                                 $fortmat = 'Shipments.MonitorPods.pdf';
                                 $pdf = PDF::loadView($fortmat, compact('files', 'shipment'));
@@ -49,12 +45,12 @@ class SearchPODController extends BaseController
                                 $year = Carbon::now()->year;
                                 $month = Carbon::now()->month;
                                 $directory = storage_path('app/public/' . $shipment->centerid . '/' . $year . '/' . $month . '/EvidencePod/');
-                                if (!file_exists($directory)) {
+                                if (! file_exists($directory)) {
                                     mkdir($directory, 0755, true);
                                 }
                                 $filePath = $directory . $fileName;
                                 $pdf->save($filePath);
-                                $path = 'public/' . $shipment->centerid . '/' . $year . '/' . $month . '/' . 'EvidencePod/' . $fileName;
+                                $path = "public/{$shipment->centerid}/{$year}/{$month}/EvidencePod/{$fileName}";
                                 $this->createRegisterPOD($shipment, $path);
                             }
                         }
@@ -62,32 +58,28 @@ class SearchPODController extends BaseController
                     ShipmentPod::controlAccessUser()->where('orderid', $shipment->id)
                         ->update(['statusid' => 'CON']);
                     return response()->json('Busqueda exitosa,espera un momento para generar los archivos');
-                } else {
-                    return response()->json('Error al procesar los documentos, favor de intentar mas tarde.');
                 }
-            } else {
-                return response()->json('El cliente no esta parametrizado para busqueda de POD.');
+                return response()->json('Error al procesar los documentos, favor de intentar mas tarde.');
             }
+            return response()->json('El cliente no esta parametrizado para busqueda de POD.');
         }
     }
 
-
     public function createJsonFilter($shipment)
     {
-        $json = array(
-            "search_filters" => array(
-                "key" => "STOP",
-                "company_type" => "SUPPLIER",
-                "shipment" => $shipment,
-                "initial_date" => Carbon::now()->subDays(30)->toDateTimeString(),
-                "final_date" => Carbon::now()->addDays(20)->toDateTimeString(),
-            )
-        );
+        $json = [
+            'search_filters' => [
+                'key' => 'STOP',
+                'company_type' => 'SUPPLIER',
+                'shipment' => $shipment,
+                'initial_date' => Carbon::now()->subDays(30)->toDateTimeString(),
+                'final_date' => Carbon::now()->addDays(20)->toDateTimeString(),
+            ],
+        ];
 
         $jsonString = json_encode($json, JSON_PRETTY_PRINT);
         $file_path = 'public/resultado.json';
         Storage::disk('local')->put($file_path, $jsonString);
-
 
         return json_encode($json);
     }
@@ -96,22 +88,16 @@ class SearchPODController extends BaseController
     {
         $endPoint = 'GetUserToken?';
         $dataapi = $this->getDataApi($centerid);
-        $url = $dataapi->value02 . $endPoint . 'arg00=' . $dataapi->value03 . '&' . 'arg01=' . $dataapi->value04;
+        $url = "{$dataapi->value02}{$endPoint}arg00={$dataapi->value03}&arg01={$dataapi->value04}";
         $responseRControl = Http::post($url);
         $data = json_decode($responseRControl->getBody()->getContents());
-        $token = $data->token;
-        return $token;
-    }
-
-    private function getDataApi($centerid): SystemDetailParameter
-    {
-        return SystemDetailParameter::where('parameterid', '=', 'API-RC')
-            ->where('value01', $centerid)->first();
+        return $data->token;
     }
 
     /**
      * @param $shipment
      * @param string $path
+     *
      * @return void
      */
     public function createRegisterPOD($shipment, string $path): void
@@ -125,5 +111,9 @@ class SearchPODController extends BaseController
         ]);
     }
 
-
+    private function getDataApi($centerid): SystemDetailParameter
+    {
+        return SystemDetailParameter::where('parameterid', '=', 'API-RC')
+            ->where('value01', $centerid)->first();
+    }
 }

@@ -20,12 +20,12 @@ trait CreateNewOrder
     public function createNewOrder($shipment, $request, $type)
     {
         if ($request->has('comment')) {
-            if ($request['comment'] != '') {
+            if ($request['comment'] !== '') {
                 StorageComment::createCommentary('orderdeliveries', $shipment->id, $request);
             }
         }
         $parameter = $this->getParametersOfWarehouse($shipment->warehouseid);
-        if ($type == 'Model') {
+        if ($type === 'Model') {
             self::createNewRegisterHeader($shipment, $request);
         }
         self::createNewRegisterSeal($shipment);
@@ -33,20 +33,19 @@ trait CreateNewOrder
         self::createShipmentDataOperation($shipment);
         self::createNewProcessCheck($shipment);
         self::createEDIToRControl($shipment, $parameter);
-        
-        $this->createNewRegisterMonitor($shipment);
+        if ($parameter && in_array('SWH-17', (array) $parameter)) {
+            $this->createNewRegisterMonitor($shipment);
+        }
     }
 
-
-    static function createEDIToRControl($shipment, $parameter)
+    public static function createEDIToRControl($shipment, $parameter)
     {
-        if (in_array('SWH-21', (array)$parameter)) {
+        if (in_array('SWH-21', (array) $parameter)) {
             EdiShipment::createEDIForPlanToShipment($shipment);
         }
     }
 
-
-    static function createNewRegisterHeader($shipment, $request)
+    public static function createNewRegisterHeader($shipment, $request)
     {
         ShipmentHeader::updateOrCreate(
             [
@@ -59,11 +58,11 @@ trait CreateNewOrder
                 'totalweight' => $request['totalweight'],
                 'totalcontainers' => $request['totalcontainers'],
                 'totalpieces' => $request['totalpieces'],
-            ]
+            ],
         );
     }
 
-    static function createNewRegisterSeal($shipment)
+    public static function createNewRegisterSeal($shipment)
     {
         ShipmentSeal::updateOrCreate(
             [
@@ -72,12 +71,12 @@ trait CreateNewOrder
                 'orderid' => $shipment->id,
             ],
             [
-                'assignuser' => Auth::user()->id
-            ]
+                'assignuser' => Auth::user()->id,
+            ],
         );
     }
 
-    static function createNewRegisterShipmentTransport($shipment)
+    public static function createNewRegisterShipmentTransport($shipment)
     {
         StorageShipmentTransport::updateOrCreate(
             [
@@ -90,11 +89,11 @@ trait CreateNewOrder
                 'createdate' => $shipment->created_at,
                 'auxiliary05' => Uuid::uuid4(),
                 'createuser' => Auth::user()->id,
-            ]
+            ],
         );
     }
 
-    static function createShipmentDataOperation($shipment)
+    public static function createShipmentDataOperation($shipment)
     {
         ShipmentDataOperation::updateOrCreate(
             [
@@ -106,11 +105,11 @@ trait CreateNewOrder
                 'centerid' => $shipment->centerid,
                 'warehouseid' => $shipment->warehouseid,
                 'orderid' => $shipment->id,
-            ]
+            ],
         );
     }
 
-    static function createNewProcessCheck($shipment)
+    public static function createNewProcessCheck($shipment)
     {
         ShipmentCheck::updateOrCreate([
             'centerid' => $shipment->centerid,
@@ -118,6 +117,4 @@ trait CreateNewOrder
             'orderid' => $shipment->id,
         ]);
     }
-
-
 }

@@ -15,7 +15,6 @@ use Yajra\DataTables\Facades\DataTables;
 
 class AssignShipmentController extends BaseController
 {
-
     public function index()
     {
         $this->authorize('assignshipment');
@@ -26,8 +25,8 @@ class AssignShipmentController extends BaseController
     {
         $data = $this->getData();
         return DataTables::of($data)
-            ->addColumn('shipmentbutton', "Yards.ReceiptUnits.partials.shipment")
-            ->addColumn('addresponsible', "Yards.AssignShipment.partials.responsable")
+            ->addColumn('shipmentbutton', 'Yards.ReceiptUnits.partials.shipment')
+            ->addColumn('addresponsible', 'Yards.AssignShipment.partials.responsable')
             ->rawColumns(['shipmentbutton', 'addresponsible'])->toJson();
     }
 
@@ -39,24 +38,22 @@ class AssignShipmentController extends BaseController
                 return $this->errorResponse('El número de embarque no puede estar vacio');
             }
             $parameter = $this->getParametersOfWarehouse($receiptunit->warehouseid);
-            if (in_array('SWH-26', (array)$parameter)) {
+            if (in_array('SWH-26', (array) $parameter)) {
                 $folioToshipment = OrderDeliverie::searchForUnit($receiptunit->id);
-                if (!empty($folioToshipment)) {
+                if (! empty($folioToshipment)) {
                     return $this->errorResponse('El folio ya se encuentra asignado a un embarque');
                 }
                 $shipment = OrderDeliverie::searchForShipment($request['shipmentid']);
                 if (empty($shipment)) {
                     return $this->errorResponse('El número de embarque no existe, favor de validar');
-                } else {
-                    $shipmenttransport = StorageShipmentTransport::controlAccessUser()->where('orderid', $shipment->id)->first();
-                    if (!empty($shipmenttransport) && $shipmenttransport->auxiliary01 == '1') {
-                        return $this->errorResponse('El embarque  ya cuenta con transporte, favor de validar');
-                    } else {
-                        self::updateOrderForAssingShipmentToUnit($shipment, $receiptunit);
-                        self::updateTransportForAssignShipmentToUnit($shipmenttransport, $receiptunit);
-                        self::updateUnitForAssignShipment($receiptunit, $request);
-                    }
                 }
+                $shipmenttransport = StorageShipmentTransport::controlAccessUser()->where('orderid', $shipment->id)->first();
+                if (! empty($shipmenttransport) && $shipmenttransport->auxiliary01 === '1') {
+                    return $this->errorResponse('El embarque  ya cuenta con transporte, favor de validar');
+                }
+                self::updateOrderForAssingShipmentToUnit($shipment, $receiptunit);
+                self::updateTransportForAssignShipmentToUnit($shipmenttransport, $receiptunit);
+                self::updateUnitForAssignShipment($receiptunit, $request);
             } else {
                 self::updateUnitForAssignShipment($receiptunit, $request);
             }
@@ -70,13 +67,13 @@ class AssignShipmentController extends BaseController
         }
     }
 
-    static function updateUnitForAssignShipment($receiptunit, $request)
+    public static function updateUnitForAssignShipment($receiptunit, $request)
     {
         $receiptunit->shipmentid = $request['shipmentid'];
         $receiptunit->save();
     }
 
-    static function updateTransportForAssignShipmentToUnit($shipmenttransport, $unit)
+    public static function updateTransportForAssignShipmentToUnit($shipmenttransport, $unit)
     {
         $shipmenttransport->operatorname = $unit->operatorname;
         $shipmenttransport->boxnumber = $unit->boxnumber;
@@ -85,7 +82,7 @@ class AssignShipmentController extends BaseController
         $shipmenttransport->save();
     }
 
-    static function updateOrderForAssingShipmentToUnit($shipment, $receiptunit)
+    public static function updateOrderForAssingShipmentToUnit($shipment, $receiptunit)
     {
         $shipment->folionumber = $receiptunit->id;
         $shipment->save();
@@ -112,9 +109,7 @@ class AssignShipmentController extends BaseController
                 'storageareas.name as areaname', // Puede ser NULL si no hay relación
                 'shipmentcarriers.name as carriername',
             ]);
-
     }
-
 
     public function saveresponsibletounit(Request $request, ReceiptUnit $receiptunit)
     {
@@ -128,5 +123,4 @@ class AssignShipmentController extends BaseController
         ]);
         return $this->redirectBackSuccessMessage('Responsable asignado con exito!!');
     }
-
 }

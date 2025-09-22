@@ -12,7 +12,7 @@ class FilterReportYardRequest extends FormRequest
             'centerid' => 'required|string',
             'type' => 'required|string',
             'workdayin' => 'required',
-            'workdayout' => 'required'
+            'workdayout' => 'required',
         ];
     }
 

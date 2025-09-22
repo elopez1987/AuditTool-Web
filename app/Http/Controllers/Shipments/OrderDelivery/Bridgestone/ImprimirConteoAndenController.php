@@ -11,7 +11,6 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class ImprimirConteoAndenController extends BaseController
 {
-
 //    Exporta el reporte de conteo de andenes del supervisor
     public function index($id)
     {
@@ -45,7 +44,6 @@ class ImprimirConteoAndenController extends BaseController
         return response($pdf->output(), 200)->header('Content-Type', 'application/pdf');
     }
 
-
     public function printformatcountaptbridgestone($id)
     {
         $orderDelivery = OrderDeliverie::controlAccessUser()->where('id', $id)->first();
@@ -55,11 +53,8 @@ class ImprimirConteoAndenController extends BaseController
         $controlCount = StorageShipmentCheckTotal::controlAccessUser()->where('orderid', $orderDelivery->id)->first();
         $conteos = Storagechecklocationbridg::controlAccessUser()->where('orderid', $orderDelivery->id)->get();
         $fortmat = 'Shipments.OrderDeliveries.Formats.Bridgestone.ControlConteo';
-        $pdf = Pdf::loadView($fortmat, compact('orderDelivery','controlCount','conteos'))
+        $pdf = Pdf::loadView($fortmat, compact('orderDelivery', 'controlCount', 'conteos'))
             ->setPaper('A4', 'landscape');
         return response($pdf->output(), 200)->header('Content-Type', 'application/pdf');
-
     }
-
-
 }

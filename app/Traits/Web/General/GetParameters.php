@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Traits\Web\General;
 
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
@@ -29,10 +28,8 @@ use Illuminate\Support\Facades\Auth;
 
 trait GetParameters
 {
-
-
-//  -------------------------------  Parametros  ----------------------------------------------------
-    static function getCenter()
+    //  -------------------------------  Parametros  ----------------------------------------------------
+    public static function getCenter()
     {
         return SecurityAccessWarehouse::where('username', Auth::user()->username)
             ->where('defaultlevel', 'S')->value('centerid');
@@ -47,7 +44,6 @@ trait GetParameters
     {
         return SystemCenterDistribution::where('centerid', $centerid)->value('auxiliary05');
     }
-
 
     public function getParametersOfCarrier($carrierid)
     {
@@ -64,39 +60,10 @@ trait GetParameters
         return SystemCenterDistribution::whereCenterid($centerid)->value('configurationflag');
     }
 
-
-//  ------------------------------  Consultas para filtros de los catalogos base -------------------------------------------------
-
-
-    private function getOperator($operatorid)
-    {
-        return StorageOperator::where('barcode', $operatorid)->first();
-    }
-
-    private function getBox($boxnumberid)
-    {
-        return StorageLabelTruck::whereBarcode($boxnumberid)->where('typeid', '=', 'BX')->first();
-    }
-
-    private function getTruck($trucknumberid)
-    {
-        return StorageLabelTruck::whereBarcode($trucknumberid)->where('typeid', '=', 'TR')->first();
-    }
-
     public function getLocationDummy($centerid)
     {
         return StorageLocation::where('centerid', $centerid)
             ->where('name', '=', 'DUMMY')->first(['zoneid', 'locationid', 'id']);
-    }
-
-    private function getStatusBoxForBarcode($barcode)
-    {
-        return ReceiptUnit::controlAccessUser()->where('barcode', $barcode)->whereNotIn('statusid', ['TR'])->first();
-    }
-
-    private function getStatusTruckForBarcode($barcode)
-    {
-        return ReceiptTruck::controlAccessUser()->whereBarcode($barcode)->whereNotIn('statusid', ['TR'])->first();
     }
 
     public function getCarriersForSelects()
@@ -119,7 +86,7 @@ trait GetParameters
         return StorageZone::controlAccessUser()->whereStatusid('E')->select(['name', 'id'])->get();
     }
 
-    static function getZonesForMovementInternal()
+    public static function getZonesForMovementInternal()
     {
         return StorageZone::controlAccessUser()
             ->whereRaw("charindex('ZO-03', configurationflag) > 0")
@@ -149,16 +116,13 @@ trait GetParameters
         return StorageReason::whereIn('id', $code)->select(['id', 'name'])->get();
     }
 
-
-//  ----------------------------------------  Filtros de estatus segun el esquema  -------------------------------------
+    //  ----------------------------------------  Filtros de estatus segun el esquema  -------------------------------------
     public function getStatusSTS()
     {
         return SystemStatus::whereSchemaid('STS')->whereIn('statusid', ['E', 'D'])->select(['statusid', 'name'])->get();
     }
 
-
-
-//  ------------------------------------------------  Funciones auxiliares  -----------------------------------------
+    //  ------------------------------------------------  Funciones auxiliares  -----------------------------------------
 
     public function getFolioYMS($centerid)
     {
@@ -192,7 +156,7 @@ trait GetParameters
             ->where('centerid', $centerid)
             ->where('statusid', '=', $type)
             ->first(['id', 'folionumber']);
-        if (!empty($folio)) {
+        if (! empty($folio)) {
             $value = $folio->folionumber;
             $newFolio = $value + 1;
             $folio->folionumber = $newFolio;
@@ -200,12 +164,10 @@ trait GetParameters
             StorageFolioClient::create([
                 'centerid' => $centerid,
                 'folionumber' => $folionumber,
-                'folioclient' => $newFolio
+                'folioclient' => $newFolio,
             ]);
         }
     }
-
-
 
     public function getTurn(): int
     {
@@ -221,10 +183,8 @@ trait GetParameters
         } else {
             $turnid = 3;
         }
-        $turn = $turnid;
-        return $turn;
+        return $turnid;
     }
-
 
     public static function getTurnAndWorkday(): array
     {
@@ -242,22 +202,26 @@ trait GetParameters
             $turn = 3;
         }
         // Determinación del día laboral
-        $workday = ($turn == 3) ? Carbon::now()->subDay()->format('Y-m-d') : Carbon::now()->format('Y-m-d');
+        if ($turn === 3) {
+            $workday = Carbon::now()->subDay()->format('Y-m-d');
+        } else {
+            $workday = Carbon::now()->format('Y-m-d');
+        }
         return [
             'turn' => $turn,
             'workday' => $workday,
         ];
     }
 
-    public function getStatusByParameter($centerid,$warehouseid,$parameter): string
+    public function getStatusByParameter($centerid, $warehouseid, $parameter): string
     {
         $statusIn = SystemDetailParameter::where('parameterid', 'PARAM-UNITIN')
             ->where('value01', $centerid)->where('value02', $warehouseid)->value('value03');
         if (empty($statusIn)) {
             $statusIn = 'ES';
         }
-        if (in_array('SWH-05', (array)$parameter)) {
-            $statusid = "ES";
+        if (in_array('SWH-05', (array) $parameter)) {
+            $statusid = 'ES';
         } else {
             $statusid = $statusIn;
         }
@@ -268,7 +232,7 @@ trait GetParameters
     {
         $centers = SecurityAccessWarehouse::Centers();
         $carrier = AccessCarrier::where('username', Auth::user()->username)->select('carrierid')->get()->toArray();
-        if ($carrier != null) {
+        if ($carrier !== null) {
             $carriers = ShipmentCarrier::whereIn('shipmentcarriers.centerid', $centers)
                 ->whereStatusid('E')
                 ->where('shipmentcarriers.id', $carrier)
@@ -281,6 +245,30 @@ trait GetParameters
         return $carriers;
     }
 
+    //  ------------------------------  Consultas para filtros de los catalogos base -------------------------------------------------
 
+    private function getOperator($operatorid)
+    {
+        return StorageOperator::where('barcode', $operatorid)->first();
+    }
 
+    private function getBox($boxnumberid)
+    {
+        return StorageLabelTruck::whereBarcode($boxnumberid)->where('typeid', '=', 'BX')->first();
+    }
+
+    private function getTruck($trucknumberid)
+    {
+        return StorageLabelTruck::whereBarcode($trucknumberid)->where('typeid', '=', 'TR')->first();
+    }
+
+    private function getStatusBoxForBarcode($barcode)
+    {
+        return ReceiptUnit::controlAccessUser()->where('barcode', $barcode)->whereNotIn('statusid', ['TR'])->first();
+    }
+
+    private function getStatusTruckForBarcode($barcode)
+    {
+        return ReceiptTruck::controlAccessUser()->whereBarcode($barcode)->whereNotIn('statusid', ['TR'])->first();
+    }
 }

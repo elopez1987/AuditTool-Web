@@ -20,9 +20,23 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class ReceiptAsn extends Model
 {
-
     use LogsActivity;
 
+    protected $table = 'receiptasn';
+    protected $dateFormat = 'Y-m-d H:i:s';
+    protected $fillable = [
+        'centerid', 'warehouseid', 'providerid', 'shipmentid', 'billoflading',
+        'oc', 'chep', 'downloadpriority', 'arriveddate', 'operatorname', 'addasndate',
+        'scanstartdate', 'scanfinishdate', 'cancellationdate', 'unloadstartdate', 'unloadfinishdate', 'goodissuedate',
+        'carrierid', 'razonstatusid', 'folionumber', 'containerseal', 'stockcategoryid', 'turnid', 'auxiliary01',
+        'auxiliary02', 'auxiliary03', 'auxiliary04', 'auxiliary05', 'auxiliary06', 'auxiliary07',
+        'auxiliary08', 'auxiliary09', 'auxiliary10', 'statusid', 'totalcontainers', 'workday',
+        'verifystartdate', 'verifyfinishdate','partnumberid','quantity','po','comment',
+    ];
+
+    protected $attributes = [
+        'schemaid' => 'SRE',
+    ];
 
 //    auxiliary01 = 'Planeador';
 //    auxiliary02 = 'Posteo SAP';
@@ -35,37 +49,9 @@ class ReceiptAsn extends Model
 //    auxiliary09 = 'Usuario montacarguistas';
 //    auxiliary10 = 'Usuario verificador';
 
-
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()->logFillable();
-    }
-
-    protected $table = 'receiptasn';
-    protected $dateFormat = 'Y-m-d H:i:s';
-    protected $fillable = [
-        'centerid', 'warehouseid', 'providerid', 'shipmentid', 'billoflading',
-        'oc', 'chep', 'downloadpriority', 'arriveddate', 'operatorname', 'addasndate',
-        'scanstartdate', 'scanfinishdate', 'cancellationdate', 'unloadstartdate', 'unloadfinishdate', 'goodissuedate',
-        'carrierid', 'razonstatusid', 'folionumber', 'containerseal', 'stockcategoryid', 'turnid', 'auxiliary01',
-        'auxiliary02', 'auxiliary03', 'auxiliary04', 'auxiliary05', 'auxiliary06', 'auxiliary07',
-        'auxiliary08', 'auxiliary09', 'auxiliary10', 'statusid', 'totalcontainers', 'workday',
-        'verifystartdate', 'verifyfinishdate','partnumberid','quantity','po','comment'
-    ];
-
-    protected $attributes = [
-        'schemaid' => 'SRE',
-    ];
-
-
-    protected static function boot()
-    {
-        parent::boot();
-        if (!app()->runningInConsole()) {
-            self::creating(function (ReceiptAsn $model) {
-                $model->auxiliary01 = Auth::user()->name;
-            });
-        }
     }
 
     public static function controlAccessUser()
@@ -75,7 +61,6 @@ class ReceiptAsn extends Model
         return ReceiptAsn::whereIn('receiptasn.warehouseid', $warehouses)
             ->whereIn('receiptasn.centerid', $centers);
     }
-
 
 //    ------------------------------ Relaciones ------------------------------------------
     public function center()
@@ -123,39 +108,38 @@ class ReceiptAsn extends Model
         return $this->belongsTo(StorageTurn::class, 'turnid');
     }
 
-
-//   ---------------------------------- Filtros de consulta  --------------------------------------
+    //   ---------------------------------- Filtros de consulta  --------------------------------------
     public function scopeName($query, $name)
     {
-        if (trim($name) != "") {
-            $query->where('receiptasn.name', 'like', "%$name%");
+        if (trim($name) !== '') {
+            $query->where('receiptasn.name', 'like', "%{$name}%");
         }
     }
 
     public function scopeShipment($query, $shipmentid)
     {
-        if (trim($shipmentid) != "") {
+        if (trim($shipmentid) !== '') {
             $query->where('receiptasn.shipmentid', '=', $shipmentid);
         }
     }
 
     public function scopeDelivery($query, $delivery)
     {
-        if (trim($delivery) != "") {
+        if (trim($delivery) !== '') {
             $query->where('receiptasn.billoflading', '=', $delivery);
         }
     }
 
     public function scopeFolioNumber($query, $folionumber)
     {
-        if (trim($folionumber) != "") {
+        if (trim($folionumber) !== '') {
             $query->where('receiptasn.folionumber', '=', $folionumber);
         }
     }
 
     public function scopeWorkDay($query, $workday)
     {
-        if (trim($workday) != '') {
+        if (trim($workday) !== '') {
             $query->whereDate('receiptasn.addasndate', $workday);
         } else {
             $query->whereDate('receiptasn.addasndate', Carbon::now()->format('Y-m-d'));
@@ -164,56 +148,62 @@ class ReceiptAsn extends Model
 
     public function scopeOC($query, $oc)
     {
-        if (trim($oc) != "") {
+        if (trim($oc) !== '') {
             $query->where('receiptasn.oc', '=', $oc);
         }
     }
 
     public function scopeFactura($query, $billoflading)
     {
-        if (trim($billoflading) != "") {
+        if (trim($billoflading) !== '') {
             $query->where('billoflading', '=', $billoflading);
         }
     }
 
     public function scopeStatus($query, $statusid)
     {
-        if ($statusid != "") {
+        if ($statusid !== '') {
             $query->where('receiptasn.statusid', '=', $statusid);
         }
     }
 
     public function scopeProvider($query, $provierid)
     {
-        if ($provierid != "") {
+        if ($provierid !== '') {
             $query->where('receiptasn.providerid', '=', $provierid);
         }
     }
 
-
 //    ---------------- Consultas del modelo ------------------------------------
-    static function searchReceiptForUnit($folioid)
+    public static function searchReceiptForUnit($folioid)
     {
         return ReceiptAsn::controlAccessUser()->where('folionumber', $folioid)->first();
     }
 
-    static function searchReceiptInCheckIn($shipmentid)
+    public static function searchReceiptInCheckIn($shipmentid)
     {
         return ReceiptAsn::controlAccessUser()->where('shipmentid', $shipmentid)
             ->whereIn('statusid', ['PG', 'TA'])
             ->whereNot('statusid', ['IG', 'CE'])->first();
     }
 
-//  -----------------------------------------  Funciones auxiliares -------------------------------------------------
-    static function updateStatusForZone($receiptunit)
+    //  -----------------------------------------  Funciones auxiliares -------------------------------------------------
+    public static function updateStatusForZone($receiptunit)
     {
         $receiptAsn = ReceiptAsn::controlAccessUser()->where('folionumber', '=', $receiptunit)->select(['id', 'statusid'])->first();
-        if (!empty($receiptAsn)) {
+        if (! empty($receiptAsn)) {
             $receiptAsn->statusid = 'ER';
             $receiptAsn->save();
         }
     }
 
-
-
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (ReceiptAsn $model) {
+                $model->auxiliary01 = Auth::user()->name;
+            });
+        }
+    }
 }

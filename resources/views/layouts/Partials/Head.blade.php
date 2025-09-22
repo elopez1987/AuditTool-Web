@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-{{--    <link rel="icon" type="image/png" sizes="16x16" href=" {{asset('/img/YMS.png')}}">--}}
-    <link rel="icon" type="image/png" sizes="16x16" href=" {{asset('/img/logo.png')}}">
+    <link rel="icon" type="image/png" sizes="16x16" href=" {{asset('/img/negro.png')}}">
+    {{--    <link rel="icon" type="image/png" sizes="16x16" href=" {{asset('/img/logo.png')}}">--}}
     <title class="text-white"> YardTrax </title>
     <link rel="stylesheet" href="{{asset('theme/assets/extra-libs/toastr/dist/build/toastr.min.css')}}">
     <link rel="stylesheet"
@@ -15,7 +15,8 @@
     <link rel="stylesheet"
           href="{{asset('/theme/assets/libs/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css')}}">
     @yield('css')
-    <link href="https://cdn.lineicons.com/3.0/lineicons.css" rel="stylesheet">
+    {{--    <link href="https://cdn.lineicons.com/5.0/lineicons.css" rel="stylesheet"/>--}}
     <link rel="stylesheet" href="{{asset('/theme/dist/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('/css/app.css')}}">
+    <link href="https://cdn.lineicons.com/3.0/lineicons.css" rel="stylesheet">
 </head>

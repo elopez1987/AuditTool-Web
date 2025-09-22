@@ -20,20 +20,29 @@ class ReportYardController extends BaseController
 
     public function exportreportyards(FilterReportYardRequest $request)
     {
-        if ($request['type'] == 'RTE') {
-            return Excel::download(new StorageBoxStockExport($request['workdayin'], $request['workdayout']),
-                'Reporte de tiempos de unidades.xlsx')->deleteFileAfterSend();
-        } elseif ($request['type'] == 'RCI') {
-            return Excel::download(new ReportUnitCircuitTravel($request['workdayin'], $request['workdayout']),
-                'Reporte de tiempos de circuito.xlsx')->deleteFileAfterSend();
-        } elseif ($request['type'] == 'REV') {
-            return Excel::download(new ReportUnitEvidences($request['workdayin'], $request['workdayout']),
-                'Reporte de evidencias de unidades.xlsx')->deleteFileAfterSend();
-        } elseif ($request['type'] == 'RCP') {
-            return Excel::download(new ExportReportCircuitPlant($request['centerid'], $request['workdayin'], $request['workdayout']),
-                'Reporte de entradas planta.xlsx')->deleteFileAfterSend();
+        if ($request['type'] === 'RTE') {
+            return Excel::download(
+                new StorageBoxStockExport($request['workdayin'], $request['workdayout']),
+                'Reporte de tiempos de unidades.xlsx'
+            )->deleteFileAfterSend();
+        }
+        if ($request['type'] === 'RCI') {
+            return Excel::download(
+                new ReportUnitCircuitTravel($request['workdayin'], $request['workdayout']),
+                'Reporte de tiempos de circuito.xlsx'
+            )->deleteFileAfterSend();
+        }
+        if ($request['type'] === 'REV') {
+            return Excel::download(
+                new ReportUnitEvidences($request['workdayin'], $request['workdayout']),
+                'Reporte de evidencias de unidades.xlsx'
+            )->deleteFileAfterSend();
+        }
+        if ($request['type'] === 'RCP') {
+            return Excel::download(
+                new ExportReportCircuitPlant($request['centerid'], $request['workdayin'], $request['workdayout']),
+                'Reporte de entradas planta.xlsx'
+            )->deleteFileAfterSend();
         }
     }
-
-
 }

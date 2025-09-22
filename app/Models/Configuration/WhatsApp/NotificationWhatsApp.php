@@ -3,17 +3,15 @@
 namespace App\Models\Configuration\WhatsApp;
 
 use App\Models\Configuration\Schemas\SystemStatus;
-use App\Models\Security\Users\SecurityAccessWarehouse;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class NotificationWhatsApp extends Model
 {
-    protected $table = 'systemwhatsapps';
-    protected $primaryKey = 'whatsappid';
     public $timestamps = false;
     public $incrementing = false;
-
+    protected $table = 'systemwhatsapps';
+    protected $primaryKey = 'whatsappid';
 
     protected $fillable = [
         'whatsappid',
@@ -29,7 +27,7 @@ class NotificationWhatsApp extends Model
 
     protected $attributes = [
         'schemaid' => 'STS',
-        'statusid' => 'E'
+        'statusid' => 'E',
     ];
 
     public function status(): BelongsTo
@@ -42,23 +40,17 @@ class NotificationWhatsApp extends Model
         return $this->hasMany(SystemDetailWhatsApp::class, 'whatsappid', 'whatsappid');
     }
 
-
     public function scopeWhatsAppId($query, $whatsappid)
     {
-        if (trim($whatsappid) != '') {
-            $query->where('systemwhatsapps.whatsappid', 'like', "%$whatsappid%");
+        if (trim($whatsappid) !== '') {
+            $query->where('systemwhatsapps.whatsappid', 'like', "%{$whatsappid}%");
         }
     }
 
     public function scopeName($query, $name)
     {
-        if (trim($name) != '') {
-            $query->where('systemwhatsapps.description', 'like', "%$name%");
+        if (trim($name) !== '') {
+            $query->where('systemwhatsapps.description', 'like', "%{$name}%");
         }
     }
-
-
-
-
-
 }

@@ -11,22 +11,21 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class ShipmentDataOperation extends Model
 {
 
-    protected $table = "shipmentdataoperation";
-    protected $primaryKey = 'id';
-    public $timestamps = false;
-
     use LogsActivity;
+    public $timestamps = false;
+    protected $table = 'shipmentdataoperation';
+    protected $primaryKey = 'id';
+
+    protected $fillable = ['centerid', 'warehouseid', 'orderid', 'supervisor', 'checker',
+        'forklift', 'startshipment', 'startchecker', 'endchecker', 'startload', 'endload',
+        'closematerial', 'senddocument', 'auxiliary01', 'auxiliary02', 'auxiliary03', 'auxiliary04', 'auxiliary05', 'comment01',
+        'comment02', 'comment03', 'comment04', 'comment05', 'fullpallet', 'fullpickng',
+        'createuserid', 'lastuserid', 'forload',
+    ];
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()->logFillable();
     }
-
-
-    protected $fillable = ["centerid", "warehouseid", "orderid", "supervisor", "checker",
-        "forklift", "startshipment", "startchecker", "endchecker", "startload", "endload",
-        "closematerial", "senddocument", "auxiliary01", "auxiliary02", "auxiliary03", "auxiliary04", "auxiliary05", 'comment01',
-        'comment02', 'comment03', 'comment04', 'comment05', 'fullpallet', 'fullpickng',
-        "createuserid", "lastuserid", 'forload'];
 
     public static function controlAccessUser()
     {
@@ -50,8 +49,4 @@ class ShipmentDataOperation extends Model
     {
         return $this->belongsTo(User::class, 'lastuserid', 'id');
     }
-
-
-
-
 }

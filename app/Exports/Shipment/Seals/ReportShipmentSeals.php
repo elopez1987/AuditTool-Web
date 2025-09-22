@@ -15,10 +15,10 @@ use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
 class ReportShipmentSeals implements FromCollection, WithHeadings, WithMapping, WithEvents, ShouldAutoSize, WithColumnFormatting
 {
-    private $workdayin;
-    private $workdayout;
 
     use Exportable;
+    private $workdayin;
+    private $workdayout;
 
     public function __construct($workdayin, $workdayout)
     {
@@ -50,18 +50,18 @@ class ReportShipmentSeals implements FromCollection, WithHeadings, WithMapping, 
 
     public function collection()
     {
-        $shipments = OrderDeliverie::controlAccessUser()
-            ->leftjoin("shipmentheader as sh", "orderdeliveries.id", "=", "sh.orderid")
-            ->leftjoin("ordercustomers as oc", "orderdeliveries.customerid", "=", "oc.id")
-            ->leftjoin("shipmentseals as sl", "orderdeliveries.id", "=", "sl.orderid")
+        return OrderDeliverie::controlAccessUser()
+            ->leftjoin('shipmentheader as sh', 'orderdeliveries.id', '=', 'sh.orderid')
+            ->leftjoin('ordercustomers as oc', 'orderdeliveries.customerid', '=', 'oc.id')
+            ->leftjoin('shipmentseals as sl', 'orderdeliveries.id', '=', 'sl.orderid')
             ->select(['orderdeliveries.workday', 'orderdeliveries.shipmentid',
                 'orderdeliveries.turnid',
                 'sh.delivery',
                 'oc.name as cliente',
-                'sh.totalcontainersfac as pallets', 'sl.containerseal01', 'sl.containerseal02', 'sl.containerseal03'])
+                'sh.totalcontainersfac as pallets', 'sl.containerseal01', 'sl.containerseal02', 'sl.containerseal03',
+            ])
             ->whereBetween('orderdeliveries.workday', [$this->workdayin, $this->workdayout])
             ->get();
-        return $shipments;
     }
 
     public function map($shipments): array
@@ -85,10 +85,9 @@ class ReportShipmentSeals implements FromCollection, WithHeadings, WithMapping, 
             AfterSheet::class => function (AfterSheet $event) {
                 $event->sheet->getDelegate()->getStyle('A1:I1')->getFill()
                     ->applyFromArray(['fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
-                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6']]);
+                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6'],
+                    ]);
             },
         ];
     }
-
-
 }

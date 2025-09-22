@@ -22,7 +22,6 @@ use Yajra\DataTables\Facades\DataTables;
 
 class ReceiptAsnsController extends BaseController
 {
-
     public function index()
     {
         $this->authorize('receiptasn.index');
@@ -33,7 +32,7 @@ class ReceiptAsnsController extends BaseController
     public function getDataAsns(Request $request)
     {
         $data = ReceiptAsn::controlAccessUser()
-            ->with('status','center','warehouse','carrier','provider','turn','reason','inventorystock')
+            ->with('status', 'center', 'warehouse', 'carrier', 'provider', 'turn', 'reason', 'inventorystock')
             ->Name($request->get('name'))
             ->Shipment($request->get('shipmentid'))
             ->FolioNumber($request->get('folionumber'))
@@ -56,8 +55,15 @@ class ReceiptAsnsController extends BaseController
         $carriers = $this->getCarriersForSelect();
         $categorystocks = InventoryStockCategory::select('description', 'id')->get();
         $reasons = StorageReason::whereType('RE')->select('name', 'id')->get();
-        return view('Receipt.ReceiptAsn.create', compact('centers', 'warehouses'
-            , 'providers', 'reasons', 'categorystocks', 'turns', 'carriers'));
+        return view('Receipt.ReceiptAsn.create', compact(
+            'centers',
+            'warehouses',
+            'providers',
+            'reasons',
+            'categorystocks',
+            'turns',
+            'carriers'
+        ));
     }
 
     public function store(CreateReceiptAsnRequest $request)
@@ -78,8 +84,14 @@ class ReceiptAsnsController extends BaseController
         $turns = StorageTurn::select('name', 'id')->get();
         $categorystocks = InventoryStockCategory::select('description', 'id')->get();
         $reasons = StorageReason::whereType('RE')->select('name', 'id')->get();
-        return view('Receipt.ReceiptAsn.edit', compact('receiptasn', 'providers',
-                'carriers', 'reasons', 'categorystocks', 'turns'));
+        return view('Receipt.ReceiptAsn.edit', compact(
+            'receiptasn',
+            'providers',
+            'carriers',
+            'reasons',
+            'categorystocks',
+            'turns'
+        ));
     }
 
     public function update(Request $request, ReceiptAsn $receiptasn)
@@ -96,21 +108,22 @@ class ReceiptAsnsController extends BaseController
         $incidences = ReceiptIncidenceStock::with(['partnumber','categoryincidence','subcategoryincidence'])
             ->where('receiptid', $receiptasn->id)->get();
         $totalContainers = ReceiptContainer::getContainersForReceipt($receiptasn->id);
-        return view('Receipt.ReceiptAsn.show',
-            compact('receiptasn', 'stocks', 'coments', 'evidences', 'incidences', 'totalContainers'));
+        return view(
+            'Receipt.ReceiptAsn.show',
+            compact('receiptasn', 'stocks', 'coments', 'evidences', 'incidences', 'totalContainers')
+        );
     }
 
     public function destroy(ReceiptAsn $receiptasn)
     {
         $schedulleReceipt = StorageSchedulleReceipt::controlAccessUser()->where('receiptid', $receiptasn->id)->first();
-        if (!empty($schedulleReceipt)){
+        if (! empty($schedulleReceipt)) {
             $schedulleReceipt->receiptid = null;
             $schedulleReceipt->save();
         }
         $receiptasn->delete();
         return $this->successResponse('schedulereceipt.index');
     }
-
 
     public function getTotalsReceipt($receiptid)
     {
@@ -139,7 +152,6 @@ class ReceiptAsnsController extends BaseController
                 'receiptstock.expirecode',
                 'receiptstock.quantitytrue',
                 'inventorypartnumbers.untcas'
-
             )
             ->get();
     }

@@ -15,18 +15,15 @@ class StorageShipmentBillingsController extends BaseController
         return view('Shipments.OrderDeliveries.ShipmentBillings.index', compact('orderDelivery'));
     }
 
-
-    public function store(CreateDeliveryRequest $request,$id)
+    public function store(CreateDeliveryRequest $request, $id)
     {
         $orderDelivery = OrderDeliverie::controlAccessUser()->where('id', $id)->first();
-       StorageShipmentBilling::create([
+        StorageShipmentBilling::create([
             'centerid' => $orderDelivery->centerid,
-           'warehouseid' => $orderDelivery->warehouseid,
-           'orderid' => $orderDelivery->id,
-           'billingdocument' => $request['billingdocument'],
-       ]);
-       return $this->redirectBackSuccessMessage('Registro guardado con exito.');
+            'warehouseid' => $orderDelivery->warehouseid,
+            'orderid' => $orderDelivery->id,
+            'billingdocument' => $request['billingdocument'],
+        ]);
+        return $this->redirectBackSuccessMessage('Registro guardado con exito.');
     }
-
-
 }

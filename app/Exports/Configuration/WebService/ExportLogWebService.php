@@ -14,14 +14,11 @@ use PhpOffice\PhpSpreadsheet\Style\Fill as FillAlias;
 
 class ExportLogWebService implements FromCollection, WithHeadings, WithMapping, WithEvents, ShouldAutoSize
 {
-
     use Exportable;
 
     public function __construct()
     {
-
     }
-
 
     public function headings(): array
     {
@@ -33,14 +30,13 @@ class ExportLogWebService implements FromCollection, WithHeadings, WithMapping, 
             'Servicio',
             'Código',
             'Mensaje',
-            'F.Creación'
+            'F.Creación',
         ];
     }
 
     public function collection()
     {
-        $folios = SystemEventWebServiceIzel::controlAccessUser()->get();
-        return $folios;
+        return SystemEventWebServiceIzel::controlAccessUser()->get();
     }
 
     public function map($folios): array
@@ -63,10 +59,9 @@ class ExportLogWebService implements FromCollection, WithHeadings, WithMapping, 
             AfterSheet::class => function (AfterSheet $event) {
                 $event->sheet->getDelegate()->getStyle('A1:H1')->getFill()
                     ->applyFromArray(['fillType' => FillAlias::FILL_SOLID,
-                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6']]);
+                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6'],
+                    ]);
             },
         ];
     }
-
-
 }

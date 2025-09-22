@@ -42,15 +42,15 @@ class SendMessageForReceiptEntry extends Command
     public function handle()
     {
         $client = new Client();
-        $url = "https://api.1msg.io/HEI523482986/sendTemplate";
+        $url = 'https://api.1msg.io/HEI523482986/sendTemplate';
         $warehouses = SystemWarehouse::where('statusid', '=', 'E')->get();
-        if (!empty($warehouses)) {
+        if (! empty($warehouses)) {
             foreach ($warehouses as $warehouse) {
                 $parameter = $warehouse->configurationflag;
-                if (!empty($parameter) && in_array('SWH-29', $parameter)) {
+                if (! empty($parameter) && in_array('SWH-29', $parameter)) {
                     $tasks = StorageTaskWhatsapp::where('warehouseid', $warehouse->warehouseid)->where('whatsappid', 'WTH-INGREREC')->where('statusid', 'E')->get();
                     $contacts = $this->getContacts($warehouse->warehouseid);
-                    if (!empty($tasks)) {
+                    if (! empty($tasks)) {
                         foreach ($tasks as $task) {
                             $providername = ReceiptProvider::where('centerid', $task->centerid)
                                 ->where('warehouseid', $task->warehouseid)->where('id', $task->value01)->value('name');
@@ -74,13 +74,6 @@ class SendMessageForReceiptEntry extends Command
         }
     }
 
-    private function getContacts($warehouseid)
-    {
-        return SystemDetailWhatsApp::where('whatsappid', '=', "WTH-INGREREC")
-            ->where('warehouseid', '=', $warehouseid)->select(['phonenumber'])->get();
-    }
-
-
     public function createLog($resp, $contact, $model)
     {
         LogMessageWhatsApp::create([
@@ -96,34 +89,38 @@ class SendMessageForReceiptEntry extends Command
         ]);
     }
 
-
     public function getBodyData($task, $contact, $providername)
     {
         $receiptUnit = ReceiptUnit::where('receiptunits.centerid', $task->centerid)
             ->join('shipmentcarriers', 'receiptunits.carrierid', '=', 'shipmentcarriers.id')
             ->where('receiptunits.warehouseid', $task->warehouseid)->where('receiptunits.id', $task->modelid)
             ->select(['receiptunits.boxnumber', 'receiptunits.shipmentid','shipmentcarriers.name as carriername'])->first();
-        return array(
-            "token" => "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbnN0YW5jZUlkIjoiSEVJNTIzNDgyOTg2IiwidG9rZW4iOiJtaGVaTTh4cTQ2a2RadjZ0Q0NJeXZydGo4dkc3bnlOeCIsImlzcyI6IjFtc2cuaW8iLCJpYXQiOjE3NTU2MTU3NTZ9.PNJB7YjZbqerW-s-r8TOSTlPOS_6OddKHxVbwfsQ9GY",
-            "namespace" => "3686dca6_3e5f_4dc5_a838_74a7716b881c",
-            "template" => "arribodedescargaacedis",
-            "language" => array(
-                "policy" => "deterministic",
-                "code" => "es_MX"
-            ),
-            "params" => array(
-                array(
-                    "type" => "body",
-                    "parameters" => array(
-                        array("type" => "text", "text" => $providername),
-                        array("type" => "text", "text" => $receiptUnit->boxnumber),
-                        array("type" => "text", "text" => $receiptUnit->carriername),
-                        array("type" => "text", "text" => $receiptUnit->shipmentid),
-                    )
-                )
-            ),
-            "phone" => '1' . $contact->phonenumber
-        );
+        return [
+            'token' => 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbnN0YW5jZUlkIjoiSEVJNTIzNDgyOTg2IiwidG9rZW4iOiJtaGVaTTh4cTQ2a2RadjZ0Q0NJeXZydGo4dkc3bnlOeCIsImlzcyI6IjFtc2cuaW8iLCJpYXQiOjE3NTU2MTU3NTZ9.PNJB7YjZbqerW-s-r8TOSTlPOS_6OddKHxVbwfsQ9GY',
+            'namespace' => '3686dca6_3e5f_4dc5_a838_74a7716b881c',
+            'template' => 'arribodedescargaacedis',
+            'language' => [
+                'policy' => 'deterministic',
+                'code' => 'es_MX',
+            ],
+            'params' => [
+                [
+                    'type' => 'body',
+                    'parameters' => [
+                        ['type' => 'text', 'text' => $providername],
+                        ['type' => 'text', 'text' => $receiptUnit->boxnumber],
+                        ['type' => 'text', 'text' => $receiptUnit->carriername],
+                        ['type' => 'text', 'text' => $receiptUnit->shipmentid],
+                    ],
+                ],
+            ],
+            'phone' => '1' . $contact->phonenumber,
+        ];
     }
 
+    private function getContacts($warehouseid)
+    {
+        return SystemDetailWhatsApp::where('whatsappid', '=', 'WTH-INGREREC')
+            ->where('warehouseid', '=', $warehouseid)->select(['phonenumber'])->get();
+    }
 }

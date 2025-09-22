@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 
 class SecurityModulesController extends BaseController
 {
-
     public function index()
     {
         $this->authorize('securitymodules.index');
@@ -40,9 +39,9 @@ class SecurityModulesController extends BaseController
     public function edit(SecurityModule $securitymodule)
     {
         $this->authorize('securitymodules.edit');
-        $functions = SecurityFunction::where('moduleid',$securitymodule->moduleid)
+        $functions = SecurityFunction::where('moduleid', $securitymodule->moduleid)
             ->select(['moduleid','functionid','description'])->get();
-        return view('Security.SecurtiyModules.edit', compact('securitymodule','functions'));
+        return view('Security.SecurtiyModules.edit', compact('securitymodule', 'functions'));
     }
 
     public function update(Request $request, SecurityModule $securitymodule)
@@ -55,12 +54,11 @@ class SecurityModulesController extends BaseController
     {
         $functions = SecurityFunction::where('moduleid', $id)->select(['functionid'])->get()->count();
         if ($functions > 0) {
-            return $this->errorResponse('Existen funciones relacionadas con este modulo : ' . ' '. $functions);
-        } else {
-            Permission::where('moduleid', $id)->delete();
-            SecurityModule::destroy($id);
+            return $this->errorResponse("Existen funciones relacionadas con este modulo: {$functions}");
         }
+        Permission::where('moduleid', $id)->delete();
+        SecurityModule::destroy($id);
+
         return $this->redirectBackSuccess();
     }
-
 }

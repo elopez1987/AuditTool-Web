@@ -8,13 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class StorageCategoryIncidenceDetail extends Model
 {
+    public $timestamps = false;
     protected $table = 'storagecategoryincidencedetails';
     protected $primaryKey = 'categoryincdetailid';
-    public $timestamps = false;
 
     protected $attributes = [
         'schemaid' => 'STS',
-        'statusid' => 'E'
+        'statusid' => 'E',
     ];
 
     protected $fillable = [
@@ -44,7 +44,4 @@ class StorageCategoryIncidenceDetail extends Model
     {
         return $this->belongsTo(SystemStatus::class, 'statusid');
     }
-
-
-
 }

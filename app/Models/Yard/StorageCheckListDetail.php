@@ -11,7 +11,6 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-
 class StorageCheckListDetail extends Model
 {
     use Notifiable;
@@ -19,11 +18,6 @@ class StorageCheckListDetail extends Model
 
     protected $table = 'storagechecklistdetails';
     protected $dateFormat = 'Y-m-d H:i:s';
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
 
     protected $fillable = [
         'centerid',
@@ -39,13 +33,13 @@ class StorageCheckListDetail extends Model
         'auxiliary08',
         'auxiliary09',
         'auxiliary10',
-        'statusid'
+        'statusid',
     ];
 
     protected $hidden = [
         'created_at',
         'updated_at',
-        'schemaid'
+        'schemaid',
     ];
 
     protected $attributes = [
@@ -53,6 +47,10 @@ class StorageCheckListDetail extends Model
         'schemaid' => 'STS',
     ];
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
     public static function controlAccessUser()
     {
@@ -77,9 +75,8 @@ class StorageCheckListDetail extends Model
 
     public function scopeName($query, $name)
     {
-        if (trim($name) != "") {
-            $query->where('name', 'like', "%$name%");
+        if (trim($name) !== '') {
+            $query->where('name', 'like', "%{$name}%");
         }
     }
-
 }

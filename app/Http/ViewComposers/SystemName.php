@@ -10,6 +10,6 @@ class SystemName
     public function compose(View $view)
     {
         $name = NameSystem::select(['name', 'version'])->first();
-        $view->with('systemName',$name);
+        $view->with('systemName', $name);
     }
 }

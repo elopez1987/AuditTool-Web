@@ -3,7 +3,6 @@
 namespace App\Console\Commands\General;
 
 use App\Mail\ArriveUnitToReceipt;
-use App\Mail\NewVisitCreate;
 use App\Models\Configuration\Mails\StorageTaskMail;
 use App\Models\Configuration\Mails\SystemDetailMail;
 use App\Models\Receipt\ReceiptAsn;
@@ -22,7 +21,6 @@ class SendEmailForArriveUnitToReceipt extends Command
      */
     protected $signature = 'app:send-email-for-arrive-unit-to-receipt';
     //SWH-30 => ENVIA EL CORREO DE LLEGADA DE PROVEEDOR EN EL REGISTRO DE UNIDAD
-
 
     /**
      * The console command description.
@@ -47,14 +45,14 @@ class SendEmailForArriveUnitToReceipt extends Command
         if ($taskMails->isNotEmpty()) {
             foreach ($taskMails as $taskMail) {
                 $parameter = $this->getParametersOfWarehouse($taskMail->warehouseid);
-                if (!empty($parameter) && in_array('SWH-30', $parameter)) {
+                if (! empty($parameter) && in_array('SWH-30', $parameter)) {
                     $receipt = ReceiptAsn::where('centerid', $taskMail->centerid)
                         ->where('warehouseid', $taskMail->warehouseid)
                         ->where('id', $taskMail->modelid)->first();
                     $contacts = SystemDetailMail::where('centerid', $taskMail->centerid)
                         ->where('warehouseid', $taskMail->warehouseid)
                         ->where('mailid', 'MAIL-RECYMS')->get()->toArray();
-                    if (!empty($receipt)) {
+                    if (! empty($receipt)) {
                         $emails = array_column($contacts, 'email');
                         Mail::to($emails)->send(new ArriveUnitToReceipt($receipt));
                     }
@@ -64,6 +62,4 @@ class SendEmailForArriveUnitToReceipt extends Command
             }
         }
     }
-
-
 }

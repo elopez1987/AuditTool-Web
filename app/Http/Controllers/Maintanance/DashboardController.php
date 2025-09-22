@@ -17,7 +17,6 @@ class DashboardController extends BaseController
         return view('Maintenance.Dashboard.dashboard');
     }
 
-
     public function getTruckAssigned()
     {
         $center = $this->getCenterForUser();
@@ -29,7 +28,7 @@ class DashboardController extends BaseController
                 'systemstatus1.name as typetruck',
                 'systemstatus2.comment as statustruck',
                 'users.name as userassigned',
-                'storagelifttruckassigned.startdate'
+                'storagelifttruckassigned.startdate',
             ])
             ->join('systemstatus as systemstatus1', function ($join) {
                 $join->on('storagelifttrucks.typeid', '=', 'systemstatus1.statusid')
@@ -59,14 +58,11 @@ class DashboardController extends BaseController
 
     public function exportreportmtn(Request $request)
     {
-        if ($request['type'] == 'RPG') {
+        if ($request['type'] === 'RPG') {
             return Excel::download(new ExportReportGeneralMtn($request['workdayin'], $request['workdayout'], $request['centerid']), 'Reporte de check list.xlsx')->deleteFileAfterSend();
         }
-        if ($request['type'] == 'RPL') {
+        if ($request['type'] === 'RPL') {
             return Excel::download(new ExportReportLibMtn($request['workdayin'], $request['workdayout'], $request['centerid']), 'Reporte de liberaciones.xlsx')->deleteFileAfterSend();
         }
     }
-
-
 }
-

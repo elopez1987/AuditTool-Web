@@ -22,8 +22,6 @@ class ImportDataReceiptController extends BaseController
         $file = $request->file('file');
         $receipt = ReceiptAsn::controlAccessUser()->findOrFail($id);
         Excel::import(new ImportDataReceipt($receipt), $file);
-        return  $this->redirectBackSuccessMessage('Archivo cargado con exito');
+        return $this->redirectBackSuccessMessage('Archivo cargado con exito');
     }
-
-
 }

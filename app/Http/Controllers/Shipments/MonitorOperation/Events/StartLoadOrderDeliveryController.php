@@ -18,14 +18,13 @@ class StartLoadOrderDeliveryController extends BaseController
     {
         DB::beginTransaction();
         try {
-
             $orderDelivery = OrderDeliverie::controlAccessUser()->whereId($id)->first();
-            if ($orderDelivery->folionumber == '') {
+            if ($orderDelivery->folionumber === '') {
                 return redirect()->back()->with(session()
                     ->flash('error', 'El embarque no cuenta con transporte'));
             }
             $folionumber = ReceiptUnit::whereId($orderDelivery->folionumber)->first(['zoneid', 'id']);
-            if ($folionumber->zone->zoneid != 'CO') {
+            if ($folionumber->zone->zoneid !== 'CO') {
                 return redirect()->back()->with(session()
                     ->flash('error', 'La caja no se encuentra en cortina, favor de enrampar.'));
             }
@@ -47,6 +46,7 @@ class StartLoadOrderDeliveryController extends BaseController
 
     /**
      * @param $orderDelivery
+     *
      * @return void
      */
     public function updateOrderDelivery($orderDelivery): void
@@ -57,6 +57,7 @@ class StartLoadOrderDeliveryController extends BaseController
 
     /**
      * @param $folionumber
+     *
      * @return void
      */
     public function updateFolioNumber($folionumber): void
@@ -68,6 +69,7 @@ class StartLoadOrderDeliveryController extends BaseController
 
     /**
      * @param $id
+     *
      * @return void
      */
     public function updateShipmentDataOperation($id): void
@@ -80,6 +82,7 @@ class StartLoadOrderDeliveryController extends BaseController
 
     /**
      * @param $id
+     *
      * @return void
      */
     public function updateShipmentHeader($id): void
@@ -91,6 +94,7 @@ class StartLoadOrderDeliveryController extends BaseController
 
     /**
      * @param $id
+     *
      * @return void
      */
     public function updateShipmentSeal($id): void
@@ -103,15 +107,14 @@ class StartLoadOrderDeliveryController extends BaseController
     /**
      * @param $orderDelivery
      * @param $order
+     *
      * @return void
      */
     public function sendEDIToRControl($orderDelivery): void
     {
         $parameter = $this->getParametersOfWarehouse($orderDelivery->warehouseid);
-        if (!empty($parameter) && in_array('SWH-21', (array)$parameter)) {
+        if (! empty($parameter) && in_array('SWH-21', (array) $parameter)) {
             EdiShipment::createEDIForEventToShipment($orderDelivery, 'START_LOAD');
         }
     }
-
-
 }

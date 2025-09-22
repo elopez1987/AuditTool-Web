@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Configuration\StorageReason;
 
 use App\Http\Controllers\BaseController;
 use App\Models\Yard\StorageReason;
-use App\Traits\Yard\QueryStorageReasons;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
@@ -20,7 +19,8 @@ class StorageReasonController extends BaseController
     {
         $data = StorageReason::with(['status' => function ($q) {
             $q->select('statusid', 'name');
-        },])
+        },
+        ])
             ->Name($request->get('name'))
             ->select('storagereasons.*');
         return $this->showDataToView($data, 'Configuration.StorageReasons.partials.buttons');
@@ -51,5 +51,4 @@ class StorageReasonController extends BaseController
         $storagereason->update($request->all());
         return $this->infoResponse('storagereasons.index');
     }
-
 }

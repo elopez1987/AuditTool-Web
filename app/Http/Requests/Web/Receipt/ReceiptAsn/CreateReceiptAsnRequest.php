@@ -22,7 +22,7 @@ class CreateReceiptAsnRequest extends FormRequest
             'billoflading' => 'nullable|regex:/^[a-zA-Z0-9]+$/',
             'folionumber' => 'nullable',
             'partnumberid' => 'nullable|string|max:20|regex:/^[a-zA-Z0-9]+$/',
-            'quantity' => 'required|numeric|min:1|max_digits:4'
+            'quantity' => 'required|numeric|min:1|max_digits:4',
         ];
     }
 

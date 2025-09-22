@@ -8,10 +8,8 @@ use App\Models\Configuration\Schemas\SystemSchema;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
-
 class SystemSchemaController extends BaseController
 {
-
     public function index()
     {
         $this->authorize('systemschemas.index');
@@ -20,8 +18,7 @@ class SystemSchemaController extends BaseController
 
     public function getDataSchemas(Request $request)
     {
-        $schemas = SystemSchema::Name($request->get('name'))
-            ->Schema($request->get('schemaid'));;
+        $schemas = SystemSchema::Name($request->get('name'))->Schema($request->get('schemaid'));
         return $this->showDataToView($schemas, 'Configuration.SystemSchemas.partials.buttons');
     }
 

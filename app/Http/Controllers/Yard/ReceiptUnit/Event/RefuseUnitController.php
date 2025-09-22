@@ -17,7 +17,6 @@ class RefuseUnitController extends BaseController
     use DeclineUnitForShipment;
     use DeclineUnitForReceipt;
 
-
     public function index()
     {
         $this->authorize('refuseunit');
@@ -33,10 +32,10 @@ class RefuseUnitController extends BaseController
                 return $this->errorResponse('El número de folio no existe!!');
             }
             $receiptunit = ReceiptUnit::updateUnitForRefuse($folio->id);
-            if ($receiptunit->razonstatusid == 1) {
+            if ($receiptunit->razonstatusid === 1) {
                 $this->declineUnitForShipment($receiptunit);
             }
-            if ($receiptunit->razonstatusid == 2) {
+            if ($receiptunit->razonstatusid === 2) {
                 $this->declineUnitForReceipt($receiptunit->id);
             }
             DB::commit();
@@ -47,5 +46,4 @@ class RefuseUnitController extends BaseController
             return $this->errorResponse('Error al procesar la solicitud, intente mas tarde!!' . $error);
         }
     }
-
 }

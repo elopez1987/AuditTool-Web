@@ -11,19 +11,17 @@ class ParameterRoleController extends Controller
 {
     public function registercheckforchecklistverific(Request $request)
     {
-        $role = Role::where('id',$request['id'])->first();
+        $role = Role::where('id', $request['id'])->first();
         SystemDetailParameter::updateOrCreate([
             'parameterid' => 'ROLE-TRUCK',
             'value01' => $role->centerid,
-            'value02' => $role->id
+            'value02' => $role->id,
         ]);
     }
 
     public function deletecheckforchecklistverific(Request $request)
     {
-        SystemDetailParameter::where('value02',$request['id'])
-            ->where('parameterid','ROLE-TRUCK')->delete();
+        SystemDetailParameter::where('value02', $request['id'])
+            ->where('parameterid', 'ROLE-TRUCK')->delete();
     }
-
-
 }

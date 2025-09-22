@@ -19,6 +19,4 @@ class CreateNewMenuRequest extends FormRequest
     {
         return true;
     }
-
-    
 }

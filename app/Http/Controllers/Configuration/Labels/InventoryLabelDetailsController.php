@@ -15,20 +15,22 @@ class InventoryLabelDetailsController extends BaseController
         $label = InventoryLabel::findOrFail($id);
         $labelDetail = InventoryLabelDetail::where('labelid', '=', $id)
             ->select(['id', 'labelid', 'description'])->get();
-        return view('Configuration.InventoryLabels.createdetails',
-            compact('label', 'labelDetail'));
+        return view(
+            'Configuration.InventoryLabels.createdetails',
+            compact('label', 'labelDetail')
+        );
     }
 
     public function storeLabelDetail($id, Request $request)
     {
         $this->deleteDetailLabel($id);
         $descriptions = $request->input('description');
-        if (!empty($descriptions)) {
+        if (! empty($descriptions)) {
             foreach ($descriptions as $description) {
-                if (!empty($description)) {
+                if (! empty($description)) {
                     InventoryLabelDetail::create([
                         'labelid' => $id,
-                        'description' => $description
+                        'description' => $description,
                     ]);
                 }
             }
@@ -38,6 +40,7 @@ class InventoryLabelDetailsController extends BaseController
 
     /**
      * @param $id
+     *
      * @return void
      */
     public function deleteDetailLabel($id): void

@@ -11,7 +11,7 @@ class CreateColumnTableRequest extends FormRequest
         return [
             'columnid' => 'required',
             'descriptionname' => 'required',
-            'shortdesc' => 'required'
+            'shortdesc' => 'required',
         ];
     }
 

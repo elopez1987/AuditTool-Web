@@ -13,14 +13,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class SystemCenterDistribution extends Model
 {
-
-    protected static $logAttributes = ['*'];
     public $incrementing = false;
     public $keyType = 'string';
+    protected static $logAttributes = ['*'];
     protected $table = 'systemcenterdistributions';
     protected $primaryKey = 'centerid';
     protected $dateFormat = 'Y-m-d H:i:s';
-
 
     protected $fillable = [
         'centerid',
@@ -38,18 +36,18 @@ class SystemCenterDistribution extends Model
         'auxiliary03',
         'auxiliary04',
         'auxiliary05',
-        'statusid'
+        'statusid',
     ];
 
     protected $hidden = [
         'created_at',
         'updated_at',
-        'schemaid'
+        'schemaid',
     ];
 
     protected $attributes = [
         'statusid' => 'E',
-        'schemaid' => 'STS'
+        'schemaid' => 'STS',
     ];
     protected $casts = [
         'configurationflag' => 'array',
@@ -65,15 +63,13 @@ class SystemCenterDistribution extends Model
 
     public function scopeForName($query, $name)
     {
-        if (trim($name) != "") {
-            $query->where('systemcenterdistributions.name', 'like', "%$name%");
+        if (trim($name) !== '') {
+            $query->where('systemcenterdistributions.name', 'like', "%{$name}%");
         }
     }
 
     public function status(): BelongsTo
     {
-        return $this->belongsTo(SystemStatus::class, 'statusid', "statusid");
+        return $this->belongsTo(SystemStatus::class, 'statusid', 'statusid');
     }
-
-
 }

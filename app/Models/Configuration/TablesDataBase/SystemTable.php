@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class SystemTable extends Model
 {
+    public $incrementing = false;
     protected $table = 'systemtables';
     protected $keyType = 'string';
     protected $primaryKey = 'tableid';
-    public $incrementing = false;
 
     protected $fillable = [
         'tableid',
@@ -22,12 +22,10 @@ class SystemTable extends Model
         'notes' => '0',
     ];
 
-
     public function scopeForName($query, $tableid)
     {
-        if (trim($tableid) != "") {
-            $query->where('systemtables.tableid', 'like', "%$tableid%");
+        if (trim($tableid) !== '') {
+            $query->where('systemtables.tableid', 'like', "%{$tableid}%");
         }
     }
-
 }

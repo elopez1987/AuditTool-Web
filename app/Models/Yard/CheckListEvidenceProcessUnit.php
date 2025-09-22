@@ -12,16 +12,10 @@ class CheckListEvidenceProcessUnit extends Model
 {
     use LogsActivity;
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
-
 //    Tabla para guardar las fotos de proceso de carga o descarga mediante check list
     public $timestamps = true;
     protected $table = 'storagecheckListevidenceprocessunit';
     protected $primaryKey = 'id';
-
 
     protected $fillable = [
         'centerid', 'modelid', 'modeltype', 'description', 'path', 'statusid',
@@ -31,13 +25,18 @@ class CheckListEvidenceProcessUnit extends Model
     protected $hidden = [
         'created_at',
         'updated_at',
-        'schemaid'
+        'schemaid',
     ];
 
     protected $attributes = [
         'statusid' => 'E',
         'schemaid' => 'STS',
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
     public function user()
     {
@@ -49,6 +48,4 @@ class CheckListEvidenceProcessUnit extends Model
         $centers = SecurityAccessWarehouse::Centers();
         return CheckListEvidenceProcessUnit::whereIn('storagecheckListevidenceprocessunit.centerid', $centers);
     }
-
-
 }

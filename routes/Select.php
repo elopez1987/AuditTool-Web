@@ -23,7 +23,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('getCarrierForBox/{barcodebox}', 'General\SelectDynamicController@getCarrierForBox')->name('getCarrierForBox');
     Route::get('getTruckForBox/{barcodebox}', 'General\SelectDynamicController@getTruckForBox')->name('getTruckForBox');
     Route::get('getTypeUnitForBox/{barcodebox}', 'General\SelectDynamicController@getTypeUnitForBox')->name('getTypeUnitForBox');
-//   Busqueda por placas de caja
+    //   Busqueda por placas de caja
     Route::get('getDataBoxNumber/{boxnumber}', 'General\SelectDynamicController@getDataBoxNumber')->name('getDataBoxNumber');
     Route::get('getCarrierForBoxNumber/{boxnumber}', 'General\SelectDynamicController@getCarrierForBoxNumber')->name('getCarrierForBoxNumber');
     Route::get('getTruckForBoxNumber/{boxnumber}', 'General\SelectDynamicController@getTruckForBoxNumber')->name('getTruckForBoxNumber');
@@ -48,18 +48,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('autocompletenametable', 'General\AutoCompleteController@autocompletenametable')->name('autocompletenametable');
     Route::get('autocompletesku', 'General\AutoCompleteController@autocompletesku')->name('autocompletesku');
 
-
     Route::get('getPrinters', 'General\SelectDynamicController@getPrinters')->name('getPrinters');
     Route::get('getDataForShipment/{shipmentid}', 'General\SelectDynamicController@getDataForShipment')->name('getDataForShipment');
     Route::get('getBillForShipment/{shipmentid}', 'General\SelectDynamicController@getBillForShipment')->name('getBillForShipment');
-
 
     Route::get('getDataReceiptQr/{barcodebox}', 'General\SelectDynamicController@getDataReceiptQr')->name('getDataReceiptQr');
     Route::get('getDataToShipment/{barcodebox}', 'General\SelectDynamicController@getDataToShipment')->name('getDataToShipment');
 
 //    Consulta las funciones basándonos en el módulo
     Route::get('getFunctionForModule/{moduleid}', 'General\SelectDynamicController@getFunctionForModule')->name('getFunctionForModule');
-
 
 //    Rutas para llenar selects por Ajax
     Route::get('getCarriersSelect', 'General\SelectController@getCarriersSelect')->name('getCarriersSelect');
@@ -68,13 +65,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('getWarehousesForUser', 'General\SelectController@getWarehousesForUser')->name('getWarehousesForUser');
 
 //    Consulta de usuarios que pueden ser asignados como responsables
-    Route::get('getUsersForResponsable',[SelectController::class,'getUserResponsible'])->name('getUsersForResponsable');
-    Route::get('getAreasForResponsable',[SelectController::class,'getAreasForResponsable'])->name('getAreasForResponsable');
+    Route::get('getUsersForResponsable', [SelectController::class,'getUserResponsible'])->name('getUsersForResponsable');
+    Route::get('getAreasForResponsable', [SelectController::class,'getAreasForResponsable'])->name('getAreasForResponsable');
 
 //    Consulta de detale de embarque para módulo de saca cajas de pick
-    Route::get('getLpnForShipment/{shipmentid}','General\SelectDynamicController@getLpnForShipment')->name('getLpnForShipment');
-    Route::get('getSkuForLpn/{lpnid}','General\SelectDynamicController@getSkuForLpn')->name('getSkuForLpn');
+    Route::get('getLpnForShipment/{shipmentid}', 'General\SelectDynamicController@getLpnForShipment')->name('getLpnForShipment');
+    Route::get('getSkuForLpn/{lpnid}', 'General\SelectDynamicController@getSkuForLpn')->name('getSkuForLpn');
     Route::get('getTotalForSku', 'General\SelectDynamicController@getTotalForSku')->name('getTotalForSku');
-
-
 });

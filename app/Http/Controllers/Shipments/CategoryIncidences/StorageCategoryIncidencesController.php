@@ -43,17 +43,15 @@ class StorageCategoryIncidencesController extends BaseController
     {
         $this->authorize('storagecategoryincidences.edit');
         $status = $this->getStatusForSchema('STS');
-        return view('Shipments.CategoryIncidences.edit',
-            compact('storagecategoryincidence', 'status'));
+        return view(
+            'Shipments.CategoryIncidences.edit',
+            compact('storagecategoryincidence', 'status')
+        );
     }
 
     public function update(Request $request, StorageCategoryIncidence $storagecategoryincidence)
     {
-        $storagecategoryincidence->update($request->except('centerid','warehouseid'));
+        $storagecategoryincidence->update($request->except('centerid', 'warehouseid'));
         return $this->redirectBackSuccess();
     }
-
-
-
-
 }

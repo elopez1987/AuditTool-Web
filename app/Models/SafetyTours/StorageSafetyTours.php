@@ -14,13 +14,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class StorageSafetyTours extends Model
 {
-
     use LogsActivity;
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
 
     protected $table = 'storagesafetytours';
     protected $fillable = [
@@ -41,15 +35,9 @@ class StorageSafetyTours extends Model
         'schemaid' => 'RSE',
     ];
 
-    protected static function boot()
+    public function getActivitylogOptions(): LogOptions
     {
-        parent::boot();
-        if (!app()->runningInConsole()) {
-            self::creating(function (StorageSafetyTours $model) {
-                $model->userid = Auth::id();
-                $model->touruuid = (string)Str::uuid();
-            });
-        }
+        return LogOptions::defaults()->logFillable();
     }
 
     public static function controlAccessUser()
@@ -76,9 +64,19 @@ class StorageSafetyTours extends Model
 //    Filtros de busqueda
     public function scopeName($query, $name)
     {
-        if (trim($name) != "") {
-            return $query->where('touruuid', 'LIKE', "%$name%");
+        if (trim($name) !== '') {
+            return $query->where('touruuid', 'LIKE', "%{$name}%");
         }
     }
 
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (StorageSafetyTours $model) {
+                $model->userid = Auth::id();
+                $model->touruuid = (string) Str::uuid();
+            });
+        }
+    }
 }

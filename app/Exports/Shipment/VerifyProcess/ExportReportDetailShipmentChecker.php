@@ -13,14 +13,13 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 
-
 class ExportReportDetailShipmentChecker implements FromCollection, WithHeadings, WithMapping, WithEvents, ShouldAutoSize, WithColumnFormatting
 {
+
+    use Exportable;
     private $workdayin;
     private $workdayout;
     private $centerid;
-
-    use Exportable;
 
     public function __construct($workdayin, $workdayout, $centerid)
     {
@@ -68,30 +67,35 @@ class ExportReportDetailShipmentChecker implements FromCollection, WithHeadings,
 
     public function collection()
     {
-        $shipments = DB::table('shipmentstock')
-            ->select('orderdeliveries.workday', 'orderdeliveries.shipmentid', 'ordercustomers.name as customername',
-                'inventorypartnumbers.prtnum as sku', 'inventorypartnumbers.lngdsc as description',
-                'shipmentstock.quantity', 'shipmentstock.lpnid',
-                'users.name as checker', 'shipmentstock.created_at as scandate')
-            ->join('orderdeliveries',function($join) {
-                $join->on('shipmentstock.orderid','=','orderdeliveries.id')
-                    ->on('shipmentstock.centerid','=','orderdeliveries.centerid');
+        return DB::table('shipmentstock')
+            ->select(
+                'orderdeliveries.workday',
+                'orderdeliveries.shipmentid',
+                'ordercustomers.name as customername',
+                'inventorypartnumbers.prtnum as sku',
+                'inventorypartnumbers.lngdsc as description',
+                'shipmentstock.quantity',
+                'shipmentstock.lpnid',
+                'users.name as checker',
+                'shipmentstock.created_at as scandate'
+            )
+            ->join('orderdeliveries', function ($join) {
+                $join->on('shipmentstock.orderid', '=', 'orderdeliveries.id')
+                    ->on('shipmentstock.centerid', '=', 'orderdeliveries.centerid');
             })
-            ->join('ordercustomers',function($join) {
-                $join->on('orderdeliveries.customerid','=','ordercustomers.id')
-                    ->on('orderdeliveries.centerid','=','ordercustomers.centerid');
+            ->join('ordercustomers', function ($join) {
+                $join->on('orderdeliveries.customerid', '=', 'ordercustomers.id')
+                    ->on('orderdeliveries.centerid', '=', 'ordercustomers.centerid');
             })
-            ->join('inventorypartnumbers',function($join) {
-                $join->on('shipmentstock.partnumberid','=','inventorypartnumbers.id')
-                    ->on('shipmentstock.centerid','=','inventorypartnumbers.centerid');
+            ->join('inventorypartnumbers', function ($join) {
+                $join->on('shipmentstock.partnumberid', '=', 'inventorypartnumbers.id')
+                    ->on('shipmentstock.centerid', '=', 'inventorypartnumbers.centerid');
             })
-            ->join('users','shipmentstock.createuser','=','users.username')
-            ->where('orderdeliveries.centerid',$this->centerid)
-            ->whereBetween('shipmentstock.created_at',[$this->workdayin,$this->workdayout])
+            ->join('users', 'shipmentstock.createuser', '=', 'users.username')
+            ->where('orderdeliveries.centerid', $this->centerid)
+            ->whereBetween('shipmentstock.created_at', [$this->workdayin,$this->workdayout])
             ->get();
-        return $shipments;
     }
-
 
     public function registerEvents(): array
     {
@@ -99,9 +103,9 @@ class ExportReportDetailShipmentChecker implements FromCollection, WithHeadings,
             AfterSheet::class => function (AfterSheet $event) {
                 $event->sheet->getDelegate()->getStyle('A1:I1')->getFill()
                     ->applyFromArray(['fillType' => Fill::FILL_SOLID,
-                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6']]);
+                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6'],
+                    ]);
             },
         ];
     }
-
 }

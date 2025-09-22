@@ -8,13 +8,11 @@ use Auth;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
-
 class ReceiptIncidenceStock extends Model
 {
+    public $timestamps = false;
     protected $table = 'receiptincidencestock';
     protected $primaryKey = 'recordid';
-    public $timestamps = false;
-
 
     protected $fillable = [
         'centerid',
@@ -28,17 +26,6 @@ class ReceiptIncidenceStock extends Model
         'created_at',
         'unitmeasureid',
     ];
-
-    protected static function boot()
-    {
-        parent::boot();
-        if (!app()->runningInConsole()) {
-            self::creating(function (ReceiptIncidenceStock $model) {
-                $model->createuser = Auth::user()->username;
-                $model->created_at = Carbon::now();
-            });
-        }
-    }
 
     public function partnumber()
     {
@@ -65,5 +52,14 @@ class ReceiptIncidenceStock extends Model
         return $this->belongsTo(User::class, 'createuser', 'username');
     }
 
-
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (ReceiptIncidenceStock $model) {
+                $model->createuser = Auth::user()->username;
+                $model->created_at = Carbon::now();
+            });
+        }
+    }
 }

@@ -41,7 +41,7 @@ class NameSystemController extends BaseController
 
     public function update(Request $request, NameSystem $namesystem): RedirectResponse
     {
-       $namesystem->update($request->all());
+        $namesystem->update($request->all());
         if (Storage::exists('storage/' . $namesystem->auxiliary05)) {
             Storage::delete('storage/' . $namesystem->auxiliary05);
         }
@@ -52,6 +52,4 @@ class NameSystemController extends BaseController
         }
         return $this->infoResponse('namesystem.index');
     }
-
-
 }

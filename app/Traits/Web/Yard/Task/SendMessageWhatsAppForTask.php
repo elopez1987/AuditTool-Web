@@ -15,11 +15,11 @@ trait SendMessageWhatsAppForTask
     public function sendMessageNewTask($task)
     {
         $contact = $this->getContact($task);
-        if (empty($contact->phone)) {
+        if (! $contact->phone || $contact->phone === '' || $contact->phone === null) {
             return null;
         }
         $task = $this->getStorageTask($task);
-        $url = "https://api.1msg.io/HEI523482986/sendTemplate";
+        $url = 'https://api.1msg.io/HEI523482986/sendTemplate';
         $client = new Client();
         try {
             $data = $this->getBodyData($task, $contact);
@@ -27,39 +27,40 @@ trait SendMessageWhatsAppForTask
             $respJson = $response->getBody();
             LogMessageWhatsApp::createLog($task, $contact, json_decode($respJson), 'WTH-PATIERO', 'Solicitud de tarea de enrampe.');
         } catch (Exception $e) {
-            Log::error('Error al enviar mensaje de nueva tarea de enrampe de unidad.');
+            Log::error('Error al enviar mensaje de nueva tarea de enrampe de unidad.', ['error' => $e->getMessage()]);
         }
     }
 
     public function getBodyData($task, $contact)
     {
-        return array(
-            "token" => "mheZM8xq46kdZv6tCCIyvrtj8vG7nyNx",
-            "namespace" => "3686dca6_3e5f_4dc5_a838_74a7716b881c",
-            "template" => "tareapatiero",
-            "language" => array(
-                "policy" => "deterministic",
-                "code" => "es_MX"
-            ),
-            "params" => array(
-                array(
-                    "type" => "body",
-                    "parameters" => array(
-                        array("type" => "text", "text" => $task->folionumber),
-                        array("type" => "text", "text" => $task->boxnumber),
-                        array("type" => "text", "text" => $task->econumber),
-                        array("type" => "text", "text" => $task->carriername),
-                        array("type" => "text", "text" => $task->origen),
-                        array("type" => "text", "text" => $task->destino),
-                    )
-                )
-            ),
-            "phone" => '1' . $contact->phone
-        );
+        return [
+            'token' => 'mheZM8xq46kdZv6tCCIyvrtj8vG7nyNx',
+            'namespace' => '3686dca6_3e5f_4dc5_a838_74a7716b881c',
+            'template' => 'tareapatiero',
+            'language' => [
+                'policy' => 'deterministic',
+                'code' => 'es_MX',
+            ],
+            'params' => [
+                [
+                    'type' => 'body',
+                    'parameters' => [
+                        ['type' => 'text', 'text' => $task->folionumber],
+                        ['type' => 'text', 'text' => $task->boxnumber],
+                        ['type' => 'text', 'text' => $task->econumber],
+                        ['type' => 'text', 'text' => $task->carriername],
+                        ['type' => 'text', 'text' => $task->origen],
+                        ['type' => 'text', 'text' => $task->destino],
+                    ],
+                ],
+            ],
+            'phone' => '1' . $contact->phone,
+        ];
     }
 
     /**
      * @param $task
+     *
      * @return StorageTask
      */
     public function getStorageTask($task): StorageTask
@@ -74,22 +75,22 @@ trait SendMessageWhatsAppForTask
             ->select(['receiptunits.boxnumber', 'storagetasks.receiptunitid as folionumber', 'receiptunits.econumber',
                 'storagezones.name as zone', 'storagelocations.name as destino', 'shipmentcarriers.name as carriername',
                 'storagetasks.centerid','storagetasks.warehouseid',
-                'sl.name as origen'])->first();
+                'sl.name as origen',
+            ])->first();
     }
 
     /**
      * @param $task
+     *
      * @return ReceiptUnit|User
      */
     public function getContact($task): ReceiptUnit|User
     {
-        if ($task->assignedto == 1) {
+        if ($task->assignedto === 1) {
             $contact = ReceiptUnit::controlAccessUser()->where('id', $task->receiptunitid)->select('phone')->first();
         } else {
             $contact = User::where('id', $task->operatoryard)->select('auxiliary01 as phone')->first();
         }
         return $contact;
     }
-
-
 }

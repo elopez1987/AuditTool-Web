@@ -22,7 +22,7 @@ class ServiceIncidenceJourneyDetail
         $datos = $request['comment'];
         $registros = count($datos) - 1;
         for ($i = 0; $i <= $registros; $i++) {
-            if ($request['comment'][$i] != '') {
+            if ($request['comment'][$i] !== '') {
                 $detail = $this->UpdateIncidenceDetail($request, $i);
                 $parameter = $this->getParametersOfWarehouse($detail->warehouseid);
                 if (in_array('SWH-35', $parameter)) {
@@ -46,6 +46,7 @@ class ServiceIncidenceJourneyDetail
     /**
      * @param $request
      * @param int $i
+     *
      * @return StorageIncidenceJourneyDetails|Builder|Model|object|null
      */
     public static function UpdateIncidenceDetail($request, int $i)
@@ -63,6 +64,7 @@ class ServiceIncidenceJourneyDetail
     /**
      * @param $detail
      * @param array $categories
+     *
      * @return void
      */
     public static function createNewRegisterForKeyOperation($detail, array $categories): void
@@ -73,7 +75,7 @@ class ServiceIncidenceJourneyDetail
                 'warehouseid' => $detail->warehouseid,
                 'orderid' => $detail->orderid,
                 'delivery' => $detail->delivery,
-                'partnumberid' => $detail->partnumberid
+                'partnumberid' => $detail->partnumberid,
             ]);
             $incidence = StorageIncidenceJourney::where('orderid', $detail->orderid)->first();
             $incidence->statuskeyid = 'RF';
@@ -81,7 +83,7 @@ class ServiceIncidenceJourneyDetail
         }
     }
 
-    static function updateDetailForFolio($request, $folioid)
+    public static function updateDetailForFolio($request, $folioid)
     {
         $folio = StorageIncidenceJourneyDetails::findOrFail($folioid);
         $folio->razoncode = $request['razoncode'];
@@ -93,12 +95,21 @@ class ServiceIncidenceJourneyDetail
     public function getDetailResponseIncidence($orderid)
     {
         return DB::table('storageincidencejourneydetails')
-            ->select('storagesincidencekeyoperation.id', 'orderdeliveries.shipmentid', 'storageincidencejourneydetails.delivery',
-                'storageincidencejourneydetails.partnumberid', 'inventorypartnumbers.lngdsc as description',
-                'storageincidencejourneydetails.quantity', 'storageincidencejourneydetails.unitmeasure',
-                'storagecategoryincidencedetails.description as concepto', 'storagecategoryincidencedetails.auxiliary02 as code',
-                'storageincidencejourneydetails.comment', 'systemstatus.name as status', 's2.description as responsable',
-                'sc.description as keyresponse', 'users.name as createuser',
+            ->select(
+                'storagesincidencekeyoperation.id',
+                'orderdeliveries.shipmentid',
+                'storageincidencejourneydetails.delivery',
+                'storageincidencejourneydetails.partnumberid',
+                'inventorypartnumbers.lngdsc as description',
+                'storageincidencejourneydetails.quantity',
+                'storageincidencejourneydetails.unitmeasure',
+                'storagecategoryincidencedetails.description as concepto',
+                'storagecategoryincidencedetails.auxiliary02 as code',
+                'storageincidencejourneydetails.comment',
+                'systemstatus.name as status',
+                's2.description as responsable',
+                'sc.description as keyresponse',
+                'users.name as createuser',
                 'storagesincidencekeyoperation.keyoperationdate as responsedate',
                 'storageincidencekeytransport.razoncode as codetr',
                 'storageincidencekeytransport.keytransportuser',
@@ -130,12 +141,15 @@ class ServiceIncidenceJourneyDetail
                     ->on('storageincidencejourneydetails.delivery', '=', 'storageincidencekeytransport.delivery')
                     ->on('storageincidencejourneydetails.partnumberid', '=', 'storageincidencekeytransport.partnumberid');
             })
-            ->leftJoin('storagecategoryincidencedetails as sc',
-                'storagesincidencekeyoperation.razoncode', '=', 'sc.categoryincdetailid')
+            ->leftJoin(
+                'storagecategoryincidencedetails as sc',
+                'storagesincidencekeyoperation.razoncode',
+                '=',
+                'sc.categoryincdetailid'
+            )
             ->leftJoin('users', 'storagesincidencekeyoperation.keyoperationuser', '=', 'users.username')
             ->leftJoin('users as u', 'storageincidencekeytransport.keytransportuser', '=', 'u.username')
             ->where('storageincidencejourneydetails.orderid', '=', $orderid)
             ->get();
     }
-
 }

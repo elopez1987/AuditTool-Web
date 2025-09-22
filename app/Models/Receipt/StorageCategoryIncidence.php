@@ -9,11 +9,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class StorageCategoryIncidence extends Model
 {
-
+    public $timestamps = false;
     protected $table = 'storagecategoryincidences';
     protected $primaryKey = 'categoryincid';
-    public $timestamps = false;
-
 
     protected $fillable = [
         'centerid',
@@ -23,12 +21,12 @@ class StorageCategoryIncidence extends Model
         'auxiliary03',
         'auxiliary04',
         'auxiliary05',
-        'statusid'
+        'statusid',
     ];
 
     protected $attributes = [
         'schemaid' => 'STS',
-        'statusid' => 'E'
+        'statusid' => 'E',
     ];
 
     public static function controlAccessUser()
@@ -47,12 +45,10 @@ class StorageCategoryIncidence extends Model
         return $this->belongsTo(SystemStatus::class, 'statusid');
     }
 
-
     public function scopeForDescription($query, $description)
     {
-        if (trim($description) != "") {
-            $query->where('storagecategoryincidences.description', 'like', "%$description%");
+        if (trim($description) !== '') {
+            $query->where('storagecategoryincidences.description', 'like', "%{$description}%");
         }
     }
-
 }

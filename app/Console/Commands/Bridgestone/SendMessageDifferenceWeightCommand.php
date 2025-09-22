@@ -20,13 +20,13 @@ class SendMessageDifferenceWeightCommand extends Command
     public function handle(): void
     {
         $client = new Client();
-        $url = "https://api.1msg.io/HEI523482986/sendTemplate";
+        $url = 'https://api.1msg.io/HEI523482986/sendTemplate';
         $warehouses = SystemWarehouse::where('statusid', '=', 'E')->get();
-        if (!empty($warehouses)) {
+        if (! empty($warehouses)) {
             foreach ($warehouses as $warehouse) {
                 $tasks = StorageTaskWhatsapp::where('warehouseid', $warehouse->warehouseid)->where('whatsappid', 'WTH-WEIGHT')->where('statusid', 'E')->get();
                 $contacts = $this->getContacts($warehouse->warehouseid);
-                if (!empty($tasks)) {
+                if (! empty($tasks)) {
                     foreach ($tasks as $task) {
                         foreach ($contacts as $contact) {
                             try {
@@ -45,12 +45,6 @@ class SendMessageDifferenceWeightCommand extends Command
                 }
             }
         }
-    }
-
-    private function getContacts($warehouseid)
-    {
-        return SystemDetailWhatsApp::where('whatsappid', '=', "WTH-WEIGHT")
-            ->where('warehouseid', '=', $warehouseid)->select(['phonenumber'])->get();
     }
 
     public function createLog($resp, $contact, $model)
@@ -72,25 +66,30 @@ class SendMessageDifferenceWeightCommand extends Command
     {
         $receiptUnit = ReceiptUnit::where('receiptunits.centerid', $task->centerid)
             ->where('receiptunits.warehouseid', $task->warehouseid)->where('id', $task->modelid)->first();
-        return array(
-            "token" => "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbnN0YW5jZUlkIjoiSEVJNTIzNDgyOTg2IiwidG9rZW4iOiJtaGVaTTh4cTQ2a2RadjZ0Q0NJeXZydGo4dkc3bnlOeCIsImlzcyI6IjFtc2cuaW8iLCJpYXQiOjE3NTU2MTU3NTZ9.PNJB7YjZbqerW-s-r8TOSTlPOS_6OddKHxVbwfsQ9GY",
-            "namespace" => "3686dca6_3e5f_4dc5_a838_74a7716b881c",
-            "template" => "discrepanciaenpeso",
-            "language" => array(
-                "policy" => "deterministic",
-                "code" => "es_MX"
-            ),
-            "params" => array(
-                array(
-                    "type" => "body",
-                    "parameters" => array(
-                        array("type" => "text", "text" => $receiptUnit->id),
-                        array("type" => "text", "text" => $receiptUnit->shipmentid),
-                    )
-                )
-            ),
-            "phone" => '1' . $contact->phonenumber
-        );
+        return [
+            'token' => 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbnN0YW5jZUlkIjoiSEVJNTIzNDgyOTg2IiwidG9rZW4iOiJtaGVaTTh4cTQ2a2RadjZ0Q0NJeXZydGo4dkc3bnlOeCIsImlzcyI6IjFtc2cuaW8iLCJpYXQiOjE3NTU2MTU3NTZ9.PNJB7YjZbqerW-s-r8TOSTlPOS_6OddKHxVbwfsQ9GY',
+            'namespace' => '3686dca6_3e5f_4dc5_a838_74a7716b881c',
+            'template' => 'discrepanciaenpeso',
+            'language' => [
+                'policy' => 'deterministic',
+                'code' => 'es_MX',
+            ],
+            'params' => [
+                [
+                    'type' => 'body',
+                    'parameters' => [
+                        ['type' => 'text', 'text' => $receiptUnit->id],
+                        ['type' => 'text', 'text' => $receiptUnit->shipmentid],
+                    ],
+                ],
+            ],
+            'phone' => '1' . $contact->phonenumber,
+        ];
     }
 
+    private function getContacts($warehouseid)
+    {
+        return SystemDetailWhatsApp::where('whatsappid', '=', 'WTH-WEIGHT')
+            ->where('warehouseid', '=', $warehouseid)->select(['phonenumber'])->get();
+    }
 }

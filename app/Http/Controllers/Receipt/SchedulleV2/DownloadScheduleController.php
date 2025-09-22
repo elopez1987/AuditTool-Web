@@ -56,7 +56,7 @@ class DownloadScheduleController extends BaseController
                 'ra.downloadpriority',
                 'ra.goodissuedate as goodissuedate',
                 'ra.statusid',
-                'ra.po as grsap'
+                'ra.po as grsap',
             ])
             ->leftJoin('receiptasn as ra', function ($join) {
                 $join->on('storageschedullereceipt.receiptid', '=', 'ra.id')
@@ -72,10 +72,10 @@ class DownloadScheduleController extends BaseController
                 $join->on('ra.carrierid', '=', 's3.id')
                     ->on('ra.centerid', '=', 's3.centerid');
             })
-            ->leftJoin('receiptunits as ru', function ($join){
-                $join->on('ra.folionumber','=','ru.id')
-                    ->on('ra.centerid','=','ru.centerid')
-                    ->on('ra.warehouseid','=','ru.warehouseid');
+            ->leftJoin('receiptunits as ru', function ($join) {
+                $join->on('ra.folionumber', '=', 'ru.id')
+                    ->on('ra.centerid', '=', 'ru.centerid')
+                    ->on('ra.warehouseid', '=', 'ru.warehouseid');
             })->leftJoin('storagelocations as sl1', function ($join) {
                 $join->on('ru.locationid', '=', 'sl1.id')
                     ->on('ru.centerid', '=', 'sl1.centerid');
@@ -94,7 +94,6 @@ class DownloadScheduleController extends BaseController
             ->rawColumns(['btn','prioridad','po'])
             ->toJson();
     }
-    
 
     public function addShipmentToSchedule($id)
     {
@@ -107,9 +106,10 @@ class DownloadScheduleController extends BaseController
         $carriers = $this->getCarriersForSelect();
         $categorystocks = InventoryStockCategory::select('description', 'id')->get();
         $reasons = StorageReason::whereType('RE')->select('name', 'id')->get();
-        return view('Receipt.SchedulleV2.edit',
-            compact('schedulleReceipt', 'carriers', 'providers', 'reasons', 'categorystocks', 'turns', 'centers', 'warehouses'));
-
+        return view(
+            'Receipt.SchedulleV2.edit',
+            compact('schedulleReceipt', 'carriers', 'providers', 'reasons', 'categorystocks', 'turns', 'centers', 'warehouses')
+        );
     }
 
     public function addShipmentToScheduleedit(CreateReceiptAsnRequest $request, $id)
@@ -140,6 +140,4 @@ class DownloadScheduleController extends BaseController
             return $this->errorResponse($e->getMessage());
         }
     }
-
-
 }

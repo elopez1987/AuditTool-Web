@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Artisan;
 
 class CommandController extends Controller
 {
-
     public function commandmenu()
     {
         return view('Configuration.Commands.index');
@@ -15,71 +14,71 @@ class CommandController extends Controller
 
     public function clearcachesystem()
     {
-        Artisan::call("config:clear");
-        Artisan::call("config:cache");
-        Artisan::call("cache:clear");
-        Artisan::call("optimize:clear");
+        Artisan::call('config:clear');
+        Artisan::call('config:cache');
+        Artisan::call('cache:clear');
+        Artisan::call('optimize:clear');
         return redirect()->back()->with(session()->flash('success', 'Proceso terminado con exito'));
     }
 
     public function senddatatorcontrol()
     {
-        Artisan::call("rc:SendPlanForShipmentCommand");
-        Artisan::call("rc:SendEventForShipmentCommand");
+        Artisan::call('rc:SendPlanForShipmentCommand');
+        Artisan::call('rc:SendEventForShipmentCommand');
         return redirect()->back()->with(session()->flash('success', 'Proceso terminado con exito'));
     }
 
     public function senddatatoizel()
     {
-        Artisan::call("command:SendDataToWmsIzel");
+        Artisan::call('command:SendDataToWmsIzel');
         return redirect()->back()->with(session()->flash('success', 'Proceso terminado con exito'));
     }
 
     public function cleartablelogwebservice()
     {
-        Artisan::call("command:deletehistlogwebserviceizel");
+        Artisan::call('command:deletehistlogwebserviceizel');
         return redirect()->back()->with(session()->flash('success', 'Proceso terminado con exito'));
     }
 
     public function newincidencejourneys()
     {
-        Artisan::call("command:EnviaMensajeDeNuevaIncidenciaRegistrada");
+        Artisan::call('command:EnviaMensajeDeNuevaIncidenciaRegistrada');
         return redirect()->back()->with(session()->flash('success', 'Proceso terminado con exito'));
     }
 
     public function sendmessagenotarriveunittoshipment()
     {
-        Artisan::call("command:UnidadesSinLLegarEmbarques");
+        Artisan::call('command:UnidadesSinLLegarEmbarques');
         return redirect()->back()->with(session()->flash('success', 'Proceso terminado con exito'));
     }
 
     public function getevidencesfromrcontrol()
     {
-        Artisan::call("rc:getevidencefromrcontrol");
+        Artisan::call('rc:getevidencefromrcontrol');
         return redirect()->back()->with(session()->flash('success', 'Proceso terminado con exito'));
     }
 
     public function sendMessageExitUnitTime()
     {
-        Artisan::call("command:TiempoExcedidoParaSalirDePatio");
+        Artisan::call('command:TiempoExcedidoParaSalirDePatio');
         return redirect()->back()->with(session()->flash('success', 'Proceso terminado con exito'));
     }
 
     public function getETAForShipment()
     {
-        Artisan::call("rc:ObtenerETAdeRecursoConfiable");
+        Artisan::call('rc:ObtenerETAdeRecursoConfiable');
         return redirect()->back()->with(session()->flash('success', 'Proceso terminado con exito'));
     }
 
     public function deletelogwhatsapp()
     {
-        Artisan::call("whatsapp:deletelog");
+        Artisan::call('whatsapp:deletelog');
         return redirect()->back()->with(session()->flash('success', 'Proceso terminado con exito'));
     }
 
     public function deleteusers()
     {
-        Artisan::call("system:deleteuser");
+        Artisan::call('system:deleteuser');
         return redirect()->back()->with(session()->flash('success', 'Proceso terminado con exito'));
     }
 
@@ -93,31 +92,29 @@ class CommandController extends Controller
     {
         Artisan::call('app:send-message-for-receipt-entry');
         return redirect()->back()->with(session()->flash('success', 'Proceso terminado con exito'));
-	}
+    }
 
-	public function sendmailfornewarrivereceipt()
-	{
-		Artisan::call('app:send-email-for-arrive-unit-to-receipt');
-		return redirect()->back()->with(session()->flash('success', 'Proceso terminado con exito'));
-	}
+    public function sendmailfornewarrivereceipt()
+    {
+        Artisan::call('app:send-email-for-arrive-unit-to-receipt');
+        return redirect()->back()->with(session()->flash('success', 'Proceso terminado con exito'));
+    }
 
-	public function sendmaiilfordifferenceweight()
-	{
-		Artisan::call('send:mail-for-difference-weight');
-		return redirect()->back()->with(session()->flash('success', 'Proceso terminado con exito'));
-	}
+    public function sendmaiilfordifferenceweight()
+    {
+        Artisan::call('send:mail-for-difference-weight');
+        return redirect()->back()->with(session()->flash('success', 'Proceso terminado con exito'));
+    }
 
-	public function sendmessagefordifferenceweight()
-	{
-		Artisan::call('send:message-difference-weight');
-		return redirect()->back()->with(session()->flash('success', 'Proceso terminado con exito'));
-	}
+    public function sendmessagefordifferenceweight()
+    {
+        Artisan::call('send:message-difference-weight');
+        return redirect()->back()->with(session()->flash('success', 'Proceso terminado con exito'));
+    }
 
-	public function createuuidtouser()
-	{
-		Artisan::call('create:uuid-to-user');
-		return redirect()->back()->with(session()->flash('success', 'Proceso terminado con exito'));
-	}
-
-
+    public function createuuidtouser()
+    {
+        Artisan::call('create:uuid-to-user');
+        return redirect()->back()->with(session()->flash('success', 'Proceso terminado con exito'));
+    }
 }

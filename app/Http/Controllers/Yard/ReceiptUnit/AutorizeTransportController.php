@@ -10,7 +10,6 @@ use App\Models\Yard\ReceiptUnit;
 use App\Models\Yard\ReceiptUnitTicket;
 use App\Models\Yard\StorageCheckListDetail;
 use App\Models\Yard\StorageUnitTrace;
-use App\Traits\GenerateOutPutTo;
 use App\Traits\Web\General\GetParameters;
 use App\Traits\Web\General\Responser;
 use App\Traits\Web\Izel\RegisterEdiShipment;
@@ -20,7 +19,6 @@ use Illuminate\Support\Facades\Auth;
 
 class AutorizeTransportController extends Controller
 {
-
     use RegisterEdiShipment;
     use Responser;
     use GetParameters;
@@ -38,7 +36,7 @@ class AutorizeTransportController extends Controller
     {
         $receiptunit = ReceiptUnit::searchForId($request['folionumber']);
         if (empty($receiptunit)) {
-            return $this->responseSuccessAjax('El número de folio no existe!!','autoizetransportstore');
+            return $this->responseSuccessAjax('El número de folio no existe!!', 'autoizetransportstore');
         }
         $parameter = $this->getParametersOfWarehouse($receiptunit->warehouseid);
         $receiptunit = $this->generateOutPutBox($receiptunit, '22');
@@ -49,6 +47,31 @@ class AutorizeTransportController extends Controller
         ReceiptUnitTicket::closeTicket($receiptunit->id, $request);
         StorageUnitTrace::createTraceUnit($receiptunitNew, '1');
         return response()->json($receiptunitNew);
+    }
+
+    public function generateOutPutBox($receiptunit, $razonstatusid)
+    {
+        $receiptunit->outputdate = Carbon::now();
+        $receiptunit->updateuser = Auth::user()->id;
+        $receiptunit->statusid = 'TR';
+        $receiptunit->save();
+        StorageUnitTrace::createTraceUnit($receiptunit, $razonstatusid);
+        return $receiptunit;
+    }
+
+    public function getListDetails(ReceiptUnit $receiptunitNew)
+    {
+        return StorageCheckListDetail::whereCenterid($receiptunitNew->centerid)
+            ->whereHas('checklist', function ($q) {
+                $q->where('type', 'IN');
+                $q->where('statusid', 'E');
+            })->get();
+    }
+
+    public function getVerified(ReceiptUnit $receiptunitNew)
+    {
+        return CheckListTransport::whereReceiptunitid($receiptunitNew->id)
+            ->select('checklitsdetailid')->get();
     }
 
     private function getReceiptunitNew(Request $request, $receiptunit)
@@ -76,7 +99,7 @@ class AutorizeTransportController extends Controller
             'truckcategoryid' => $receiptunit->truckcategoryid,
             'createuser' => Auth::user()->id,
             'statusid' => 'QI',
-            'auxiliary02' => 'Folio generado de' . " " . $receiptunit->id,
+            'auxiliary02' => 'Folio generado de' . ' ' . $receiptunit->id,
             'auxiliary03' => 'ST',
             'auxiliary01' => $receiptunit->auxiliary01,
             'foliotruck' => $receiptunit->foliotruck,
@@ -87,38 +110,9 @@ class AutorizeTransportController extends Controller
             'modeltype' => 'ReceiptUnits',
             'modelid' => $receiptunitNew->id,
             'createuser' => Auth::user()->id,
-            'comment' => 'Folio generado automaticamente de' . " " . $receiptunit->id,
+            'comment' => 'Folio generado automaticamente de' . ' ' . $receiptunit->id,
 
         ]);
         return $receiptunitNew;
     }
-
-    public function generateOutPutBox($receiptunit, $razonstatusid)
-    {
-        $receiptunit->outputdate = Carbon::now();
-        $receiptunit->updateuser = Auth::user()->id;
-        $receiptunit->statusid = 'TR';
-        $receiptunit->save();
-        StorageUnitTrace::createTraceUnit($receiptunit, $razonstatusid);
-        return $receiptunit;
-    }
-
-    public function getListDetails(ReceiptUnit $receiptunitNew)
-    {
-        $checklistdetails = StorageCheckListDetail::whereCenterid($receiptunitNew->centerid)
-            ->whereHas('checklist', function ($q) {
-                $q->where('type', 'IN');
-                $q->where('statusid', 'E');
-            })->get();
-        return $checklistdetails;
-    }
-
-    public function getVerified(ReceiptUnit $receiptunitNew)
-    {
-        $verified = CheckListTransport::whereReceiptunitid($receiptunitNew->id)
-            ->select('checklitsdetailid')->get();
-        return $verified;
-    }
-
-
 }

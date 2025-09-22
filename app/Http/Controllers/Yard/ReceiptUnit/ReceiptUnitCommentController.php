@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 
 class ReceiptUnitCommentController extends BaseController
 {
-
 //    --Agregar comentarios al folio desde la existencia
     public function addcomments($id)
     {
@@ -23,5 +22,4 @@ class ReceiptUnitCommentController extends BaseController
         StorageComment::createCommentary('ReceiptUnits', $id, $request);
         return $this->redirectBackSuccessMessage('Registro agregado con exito.');
     }
-
 }

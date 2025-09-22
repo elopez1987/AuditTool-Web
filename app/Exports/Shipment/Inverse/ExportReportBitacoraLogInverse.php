@@ -15,11 +15,11 @@ use PhpOffice\PhpSpreadsheet\Style\Fill;
 
 class ExportReportBitacoraLogInverse implements FromCollection, WithHeadings, WithMapping, WithEvents, ShouldAutoSize, WithColumnFormatting
 {
+
+    use Exportable;
     private $workdayin;
     private $workdayout;
     private $centerid;
-
-    use Exportable;
 
     public function __construct($workdayin, $workdayout, $centerid)
     {
@@ -84,8 +84,7 @@ class ExportReportBitacoraLogInverse implements FromCollection, WithHeadings, Wi
 
     public function collection()
     {
-        $shipments = collect(DB::select('exec getDataScheduleInverse "' . $this->centerid . '" ,   "' . $this->workdayin . '" , "' . $this->workdayout . '"  '));
-        return $shipments;
+        return collect(DB::select('exec getDataScheduleInverse "' . $this->centerid . '" ,   "' . $this->workdayin . '" , "' . $this->workdayout . '"  '));
     }
 
     public function map($shipments): array
@@ -141,7 +140,8 @@ class ExportReportBitacoraLogInverse implements FromCollection, WithHeadings, Wi
             AfterSheet::class => function (AfterSheet $event) {
                 $event->sheet->getDelegate()->getStyle('A1:AO1')->getFill()
                     ->applyFromArray(['fillType' => Fill::FILL_SOLID,
-                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6']]);
+                        'rotation' => 0, 'startColor' => ['rgb' => '64b5f6'],
+                    ]);
             },
         ];
     }

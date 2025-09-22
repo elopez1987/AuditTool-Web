@@ -11,13 +11,13 @@ use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 
-class ImportShipmentBilling implements ToModel, WithHeadingRow, WithChunkReading, WithBatchInserts,WithValidation
+class ImportShipmentBilling implements ToModel, WithHeadingRow, WithChunkReading, WithBatchInserts, WithValidation
 {
     use Importable;
     public function model(array $row)
     {
         $order = OrderDeliverie::controlAccessUser()->where('shipmentid', trim($row['shipmentid']))->first();
-        if (!empty($order)) {
+        if (! empty($order)) {
             $this->createNewImport($order, $row['billingdocument']);
         }
     }
@@ -59,8 +59,7 @@ class ImportShipmentBilling implements ToModel, WithHeadingRow, WithChunkReading
         ];
     }
 
-
-    static function createNewImport($order, $billingdocument)
+    public static function createNewImport($order, $billingdocument)
     {
         StorageShipmentBilling::updateOrCreate([
             'centerid' => $order->centerid,

@@ -11,7 +11,6 @@ use App\Models\Yard\StorageZone\StorageZone;
 use DB;
 use Maatwebsite\Excel\Facades\Excel;
 
-
 class CapacityYardController extends BaseController
 {
     //    Ocupacion de patio
@@ -25,9 +24,11 @@ class CapacityYardController extends BaseController
             ->select(['centerid', 'name', 'description', 'capacityyard'])->get();
         $locationfill = ReceiptUnit::controlAccessUser()
             ->whereNotIn('statusid', ['TR'])
-            ->select(['zoneid', DB::raw("COUNT(zoneid) as ocupado")])->groupBy('zoneid')->get();
-        return view('Yards.CapacityYard.index',
-            compact('centers', 'totalLocations', 'locationsBusy', 'zones', 'locationfill'));
+            ->select(['zoneid', DB::raw('COUNT(zoneid) as ocupado')])->groupBy('zoneid')->get();
+        return view(
+            'Yards.CapacityYard.index',
+            compact('centers', 'totalLocations', 'locationsBusy', 'zones', 'locationfill')
+        );
     }
 
 //    Detalle de ocupacion del patio por la placa de la unidad
@@ -50,5 +51,4 @@ class CapacityYardController extends BaseController
             ->whereIn('statusid', ['E', 'D'])
             ->get();
     }
-
 }

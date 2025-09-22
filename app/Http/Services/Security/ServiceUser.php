@@ -9,36 +9,32 @@ use App\User;
 
 class ServiceUser
 {
+    public function createNewUser($request)
+    {
+        $user = User::create($request->validated() + ['password' => bcrypt($request['password'])]);
+        SecurityAccessWarehouse::create([
+            'centerid' => $request['centerid'],
+            'warehouseid' => $request['warehouseid'],
+            'username' => $user->username,
+        ]);
+        return $user;
+    }
 
-	public function createNewUser($request)
-	{
-		$user = User::create($request->validated() + ['password' => bcrypt($request['password'])]);
-		SecurityAccessWarehouse::create([
-			'centerid' => $request['centerid'],
-			'warehouseid' => $request['warehouseid'],
-			'username' => $user->username,
-		]);
-		return $user;
-	}
+    public function assignCarrierToUser($request, $centerid)
+    {
+        AccessCarrier::create([
+            'carrierid' => $request['carrierid'],
+            'username' => $request['username'],
+            'centerid' => $centerid,
+        ]);
+    }
 
-
-	public function assignCarrierToUser($request, $centerid)
-	{
-		AccessCarrier::create([
-			'carrierid' => $request['carrierid'],
-			'username' => $request['username'],
-			'centerid' => $centerid
-		]);
-	}
-
-
-	public function assignCustomerToUser($request, $centerid)
-	{
-		SecurityAccessCustomer::create([
-			'centerid' => $centerid,
-			'username' => $request['username'],
-			'customerid' => $request['customerid']
-		]);
-	}
-
+    public function assignCustomerToUser($request, $centerid)
+    {
+        SecurityAccessCustomer::create([
+            'centerid' => $centerid,
+            'username' => $request['username'],
+            'customerid' => $request['customerid'],
+        ]);
+    }
 }

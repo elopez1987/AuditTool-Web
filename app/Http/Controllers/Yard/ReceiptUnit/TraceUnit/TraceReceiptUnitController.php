@@ -19,7 +19,6 @@ use PDF;
 
 class TraceReceiptUnitController extends BaseController
 {
-
     public function index()
     {
         $this->authorize('tracereceiptunit.index');
@@ -56,9 +55,20 @@ class TraceReceiptUnitController extends BaseController
         $seals = ReceiptUnitSeal::controlAccessUser()->where('folionumber', '=', $id)->get();
         $pesos = ReceiptUnitTicket::where('folionumber', '=', $id)->get();
         $lotos = StorageTraceLoto::controlAccessUser()->where('folionumber', '=', $id)->get();
-        return view('Yards.KardexReceiptUnit.KardexForFolio.show',
-            compact('traces', 'evidences', 'comments',
-                'checklisttransports', 'receiptunit', 'evidencesTiros', 'seals','pesos','lotos'));
+        return view(
+            'Yards.KardexReceiptUnit.KardexForFolio.show',
+            compact(
+                'traces',
+                'evidences',
+                'comments',
+                'checklisttransports',
+                'receiptunit',
+                'evidencesTiros',
+                'seals',
+                'pesos',
+                'lotos'
+            )
+        );
     }
 
     public function getChecklistTransports($receiptunit)
@@ -82,8 +92,13 @@ class TraceReceiptUnitController extends BaseController
             ->where('modelid', $id)->get();
         $traces = StorageUnitTrace::controlAccessUser()->where('receiptunitid', '=', $id)->get();
         $fortmat = 'Yards.KardexReceiptUnit.Formats.Kardex';
-        $pdf = PDF::loadView($fortmat, compact('receiptunit',
-            'evidences', 'traces', 'evidencesTiros', 'comments'));
+        $pdf = PDF::loadView($fortmat, compact(
+            'receiptunit',
+            'evidences',
+            'traces',
+            'evidencesTiros',
+            'comments'
+        ));
         return $pdf->download('Kardex de unidad -' . $id . '.pdf');
     }
 
@@ -93,8 +108,17 @@ class TraceReceiptUnitController extends BaseController
         $tracto = ReceiptTruck::controlAccessUser()->where('id', $receiptunit->foliotruck)->first();
 
         $verified = DB::table('storagechecklisttransports as s')
-            ->select('s.id', 's.centerid', 's.checklistid', 's.receiptunitid',
-                's.checklitsdetailid', 's.verified', 's.type', 'ch.auxiliary01 as idcheck', 'ch.description',)
+            ->select(
+                's.id',
+                's.centerid',
+                's.checklistid',
+                's.receiptunitid',
+                's.checklitsdetailid',
+                's.verified',
+                's.type',
+                'ch.auxiliary01 as idcheck',
+                'ch.description',
+            )
             ->leftJoin('storagechecklistdetails as ch', function ($join) {
                 $join->on('s.checklistid', '=', 'ch.checklistid')->on('s.checklitsdetailid', '=', 'ch.id');
             })
@@ -103,26 +127,43 @@ class TraceReceiptUnitController extends BaseController
             ->get();
 
         $verifiedOut = DB::table('storagechecklisttransports as s')
-            ->select('s.id', 's.centerid', 's.checklistid', 's.receiptunitid',
-                's.checklitsdetailid', 's.verified', 's.type', 'ch.auxiliary01 as idcheckOut', 'ch.description',)
+            ->select(
+                's.id',
+                's.centerid',
+                's.checklistid',
+                's.receiptunitid',
+                's.checklitsdetailid',
+                's.verified',
+                's.type',
+                'ch.auxiliary01 as idcheckOut',
+                'ch.description',
+            )
             ->leftJoin('storagechecklistdetails as ch', function ($join) {
                 $join->on('s.checklistid', '=', 'ch.checklistid')->on('s.checklitsdetailid', '=', 'ch.id');
             })
             ->where('s.receiptunitid', $receiptunit->id)
             ->whereIn('s.type', ['OUT'])->get();
         $fortmat = 'Yards.ReceiptUnits.InvoiceFormats.InvoiceBridgestonePT';
-        $pdf = PDF::loadView($fortmat, compact('receiptunit', 'verified', 'tracto','verifiedOut'));
+        $pdf = PDF::loadView($fortmat, compact('receiptunit', 'verified', 'tracto', 'verifiedOut'));
         return $pdf->download('Folio_De_Entrada-' . $receiptunit->id . '.pdf');
     }
-
 
     public function printqualitybridge($id)
     {
         $receiptunit = ReceiptUnit::controlAccessUser()->where('id', $id)->first();
         $comments = StorageComment::where('modeltype', 'ReceiptUnits')->where('modelid', $id)->get();
         $verified = DB::table('storagechecklisttransports as s')
-            ->select('s.id', 's.centerid', 's.checklistid', 's.receiptunitid',
-                's.checklitsdetailid', 's.verified', 's.type', 'ch.auxiliary01 as idcheck', 'ch.description',)
+            ->select(
+                's.id',
+                's.centerid',
+                's.checklistid',
+                's.receiptunitid',
+                's.checklitsdetailid',
+                's.verified',
+                's.type',
+                'ch.auxiliary01 as idcheck',
+                'ch.description',
+            )
             ->leftJoin('storagechecklistdetails as ch', function ($join) {
                 $join->on('s.checklistid', '=', 'ch.checklistid')->on('s.checklitsdetailid', '=', 'ch.id');
             })
@@ -140,7 +181,7 @@ class TraceReceiptUnitController extends BaseController
     {
         $receiptunit = ReceiptUnit::controlAccessUser()->findOrFail($id);
         $zip = new \ZipArchive();
-        $zip->open($receiptunit->id . ".zip", \ZipArchive::CREATE);
+        $zip->open($receiptunit->id . '.zip', \ZipArchive::CREATE);
         $files = EvidencePhoto::where('model_type', '=', 'ReceiptUnit')
             ->where('model_id', $receiptunit->id)->get();
         foreach ($files as $file) {
@@ -151,20 +192,18 @@ class TraceReceiptUnitController extends BaseController
         }
 
         $zip->close();
-        header("Content-type: application/octet-stream");
-        header("Content-disposition: attachment; filename=$receiptunit->id.zip");
+        header('Content-type: application/octet-stream');
+        header("Content-disposition: attachment; filename={$receiptunit->id}.zip");
         readfile($receiptunit->id . '.zip');
         unlink($receiptunit->id . '.zip');
     }
-
 
     public function downloadticket($id)
     {
         $receiptunit = ReceiptUnit::controlAccessUser()->findOrFail($id);
         $trace = StorageUnitTrace::controlAccessUser()->where('receiptunitid', $id)->first();
         $fortmat = 'Yards.ReceiptUnits.InvoiceFormats.Bridgestone.ticket';
-        $pdf = PDF::loadView($fortmat, compact('receiptunit','trace'));
+        $pdf = PDF::loadView($fortmat, compact('receiptunit', 'trace'));
         return $pdf->download('Ticket de peso -' . $receiptunit->id . '.pdf');
     }
-
 }

@@ -11,13 +11,10 @@ class EvidenceCheckInProcessController extends BaseController
 {
     use StorageWebPhotoTrait;
 
-//    TODO Validar si la foto se guarda en la tabla
     public function uploadphotocheckin(UploadImageRequest $request, $id)
     {
         $receiptunit = ReceiptUnit::findOrFail($id);
         $path = $this->saveFileToModel($request['file'], $receiptunit->centerid, 'Yard', 'ReceiptUnit', 'CheckIn');
         $this->createEvidencePhoto('ReceiptUnit', $receiptunit->id, $path, 'IN', $receiptunit);
     }
-
-
 }

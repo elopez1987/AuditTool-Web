@@ -10,8 +10,6 @@ use Illuminate\Http\Request;
 
 class InventoryPartnumbersController extends BaseController
 {
-
-
     public function index()
     {
         $this->authorize('inventorypartnumbers.index');
@@ -20,11 +18,10 @@ class InventoryPartnumbersController extends BaseController
 
     public function getDataInventoryNumbers(Request $request)
     {
-        $data = InventoryPartnumber::controlAccessUser()
-            ->with(['status', 'center', 'warehouse', 'category01', 'category02'])
+        $data = InventoryPartnumber::controlAccessUser()->with(['status', 'center', 'warehouse', 'category01', 'category02'])
             ->PartNumber($request->get('prtnum'))
             ->Status($request->get('statusid'))
-            ->select(['inventorypartnumbers.*',]);;
+            ->select(['inventorypartnumbers.*']);
         return $this->showDataToView($data, 'Inventory.InventoryPartnumbers.partials.buttons');
     }
 
@@ -33,9 +30,11 @@ class InventoryPartnumbersController extends BaseController
         $this->authorize('inventorypartnumbers.create');
         $category01 = $this->getCategoryInv01();
         $category02 = $this->getCategoryInv02();
-        $units = InventoryUnitMeasure::controlAccessUser()->where('statusid','E')->get();
-         return view('Inventory.InventoryPartnumbers.create',
-            compact('category01', 'category02','units'));
+        $units = InventoryUnitMeasure::controlAccessUser()->where('statusid', 'E')->get();
+        return view(
+            'Inventory.InventoryPartnumbers.create',
+            compact('category01', 'category02', 'units')
+        );
     }
 
     public function store(CreatePartNumberRequest $request)
@@ -43,7 +42,7 @@ class InventoryPartnumbersController extends BaseController
         $access = $this->getAccessForUser();
         $sku = InventoryPartnumber::controlAccessUser()
             ->where('prtnum', $request['prtnum'])->first();
-        if (!empty($sku)) {
+        if (! empty($sku)) {
             return $this->errorResponse('El número de parte ya existe.');
         }
 
@@ -60,9 +59,11 @@ class InventoryPartnumbersController extends BaseController
         $category01 = $this->getCategoryInv01();
         $category02 = $this->getCategoryInv02();
         $status = $this->getStatusForSchema('STS');
-        $units = InventoryUnitMeasure::controlAccessUser()->where('statusid','E')->get();
-        return view('Inventory.InventoryPartnumbers.edit',
-            compact('inventorypartnumber', 'status', 'category02', 'category01','units'));
+        $units = InventoryUnitMeasure::controlAccessUser()->where('statusid', 'E')->get();
+        return view(
+            'Inventory.InventoryPartnumbers.edit',
+            compact('inventorypartnumber', 'status', 'category02', 'category01', 'units')
+        );
     }
 
     public function update(Request $request, InventoryPartnumber $inventorypartnumber)
@@ -70,7 +71,4 @@ class InventoryPartnumbersController extends BaseController
         $inventorypartnumber->update($request->all());
         return $this->redirectBackSuccess();
     }
-
-
-
 }

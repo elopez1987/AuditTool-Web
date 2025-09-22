@@ -11,22 +11,21 @@ class SecurityAccessCustomer extends Model
 {
     use LogsActivity;
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
-
     public $timestamps = false;
 
     protected $table = 'securityaccesscustomer';
 
     protected $fillable = [
-        'centerid', 'customerid', 'username'
+        'centerid', 'customerid', 'username',
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
     public function customer()
     {
         return $this->belongsTo(OrderCustomer::class, 'customerid', 'id');
     }
-
 }

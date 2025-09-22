@@ -15,7 +15,6 @@ class CancelOrderDeliveryController extends BaseController
 {
     public function index($id)
     {
-
         DB::beginTransaction();
         try {
             $orderDelivery = self::cancelOrderDelivery($id);
@@ -31,7 +30,7 @@ class CancelOrderDeliveryController extends BaseController
         }
     }
 
-    static function cancelOrderDelivery($id)
+    public static function cancelOrderDelivery($id)
     {
         $orderDelivery = OrderDeliverie::controlAccessUser()->where('id', $id)
             ->select(['id', 'statusid', 'auxiliary05'])
@@ -42,7 +41,7 @@ class CancelOrderDeliveryController extends BaseController
         return $orderDelivery;
     }
 
-    static function canceHeader($orderDelivery)
+    public static function canceHeader($orderDelivery)
     {
         $header = ShipmentHeader::controlAccessUser()->where('orderid', $orderDelivery->id)->first();
         $header->statusid = 'CA';
@@ -50,18 +49,17 @@ class CancelOrderDeliveryController extends BaseController
         $header->save();
     }
 
-    static function canceShipmentSeal($orderDelivery)
+    public static function canceShipmentSeal($orderDelivery)
     {
         $shipmentseal = ShipmentSeal::whereOrderid($orderDelivery->id)->first();
         $shipmentseal->statusorderid = 'CA';
         $shipmentseal->save();
     }
 
-    static function cancelOrdeMonitor($orderDelivery)
+    public static function cancelOrdeMonitor($orderDelivery)
     {
         $ordermonitor = OrderMonitor::where('orderid', $orderDelivery->id)->first();
         $ordermonitor->statusid = 'CN';
         $ordermonitor->save();
     }
-
 }

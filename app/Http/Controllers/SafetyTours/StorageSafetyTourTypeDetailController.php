@@ -41,5 +41,4 @@ class StorageSafetyTourTypeDetailController extends BaseController
         $detail->restore();
         return $this->redirectBackSuccessMessage('Registro restaurado con exito.');
     }
-
 }

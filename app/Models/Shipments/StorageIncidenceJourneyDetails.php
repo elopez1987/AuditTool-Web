@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class StorageIncidenceJourneyDetails extends Model
 {
-
     protected $table = 'storageincidencejourneydetails';
     protected $primaryKey = 'folioid';
 
@@ -31,17 +30,15 @@ class StorageIncidenceJourneyDetails extends Model
         'auxiliary04',
         'auxiliary05',
         'statusiddetail',
-        'partnumberiderror'
+        'partnumberiderror',
     ];
 
     protected $hidden = [
         'created_at',
         'updated_at',
-        'schemaid'
+        'schemaid',
     ];
 
-
-//  TODO Revisar el estatus SN y cambiarlo por AB y borrar el registro de la base de datos despues de actualizar todos los registros en la tabla
     protected $attributes = [
         'statusiddetail' => 'SN',
         'schemaid' => 'EIJ',
@@ -54,7 +51,6 @@ class StorageIncidenceJourneyDetails extends Model
         return StorageIncidenceJourneyDetails::whereIn('storageincidencejourneydetails.warehouseid', $warehouses)
             ->whereIn('storageincidencejourneydetails.centerid', $centers);
     }
-
 
     public function status()
     {
@@ -71,10 +67,8 @@ class StorageIncidenceJourneyDetails extends Model
         return $this->belongsTo(InventoryPartnumber::class, 'partnumberid', 'prtnum');
     }
 
-    static function getDetailOfIncidenceForOrder($orderid)
+    public static function getDetailOfIncidenceForOrder($orderid)
     {
         return StorageIncidenceJourneyDetails::where('orderid', $orderid)->get();
     }
-
-
 }

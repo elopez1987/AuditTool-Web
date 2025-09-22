@@ -6,17 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class EdiLog extends Model
 {
-
-    protected $table = 'logimports';
     public $timestamps = false;
     public $incrementing = true;
-    protected $keyType= 'integer';
-
+    protected $table = 'logimports';
+    protected $keyType = 'integer';
 
     protected $fillable = [
-        "message",
-        "created_at",
+        'message',
+        'created_at',
     ];
-
-
 }

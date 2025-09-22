@@ -9,16 +9,10 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class CheckListDetailLiftTruck extends Model
 {
     use LogsActivity;
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
+    public $timestamps = false;
 
     protected $table = 'checklistlifttruckdetails';
     protected $primaryKey = 'id';
-    public $timestamps = false;
-
 
     protected $fillable = [
         'centerid',
@@ -32,12 +26,15 @@ class CheckListDetailLiftTruck extends Model
         'value03',
         'value04',
         'value05',
-        'created_at'
+        'created_at',
     ];
 
     protected $hidden = [
-        'schemaid'
+        'schemaid',
     ];
 
-
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 }

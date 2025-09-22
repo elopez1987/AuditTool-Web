@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 
 trait QueryReceiptUnits
 {
-
     public function getDataToJoin(Request $request)
     {
         return ReceiptUnit::controlAccessUser()
@@ -24,7 +23,7 @@ trait QueryReceiptUnits
                 'receiptunits.warehouseid', 'receiptunits.id', 'receiptunits.barcode', 'receiptunits.auxiliary01',
                 'receiptunits.trucknumber', 'receiptunits.operatorname', 'receiptunits.phone', 'receiptunits.drivernumber',
                 'receiptunits.boxnumber', 'receiptunits.carrierid', 'receiptunits.statusid', 'shipmentcarriers.name as carriername',
-                'systemwarehouses.name as warehouse'
+                'systemwarehouses.name as warehouse',
             ]);
     }
 
@@ -38,6 +37,4 @@ trait QueryReceiptUnits
             ->Reason($request->get('razonstatusid'))
             ->whereNotIn('vw_storageboxstock.statusid', ['TR'])->get();
     }
-
-
 }

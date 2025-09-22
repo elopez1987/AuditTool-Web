@@ -13,7 +13,6 @@ use App\Traits\Web\Security\QuerySecurityRoles;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
-
 class RoleController extends BaseController
 {
     use QuerySecurityRoles;
@@ -64,9 +63,18 @@ class RoleController extends BaseController
         $access = $this->getPermissionForRole($securityrole->id);
         $status = $this->getStatusForSchema('STS');
         $menus = $this->getStructureMenus();
-        $checkMtn = SystemDetailParameter::where('value02',$securityrole->id)->where('parameterid','ROLE-TRUCK')->count();
-        return view('Security.Roles.edit',  compact('securityrole', 'permissions',
-                'access', 'modules', 'functions', 'assings', 'status', 'menus','checkMtn'));
+        $checkMtn = SystemDetailParameter::where('value02', $securityrole->id)->where('parameterid', 'ROLE-TRUCK')->count();
+        return view('Security.Roles.edit', compact(
+            'securityrole',
+            'permissions',
+            'access',
+            'modules',
+            'functions',
+            'assings',
+            'status',
+            'menus',
+            'checkMtn'
+        ));
     }
 
     public function update(Request $request, Role $securityrole): RedirectResponse
@@ -86,8 +94,7 @@ class RoleController extends BaseController
     {
         $this->serviceRole->destroyPermissionsToRole($securityrole);
         $this->serviceRole->createNewPermissionToRole($request, $securityrole);
-        \Artisan::call("optimize:clear");
+        \Artisan::call('optimize:clear');
         return $this->redirectBackSuccess();
     }
-
 }

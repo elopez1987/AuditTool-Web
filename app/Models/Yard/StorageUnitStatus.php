@@ -12,17 +12,10 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class StorageUnitStatus extends Model
 {
     use LogsActivity;
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
-
+    use SoftDeletes;
 
     protected $table = 'storageunitstatus';
     protected $dateFormat = 'Y-m-d H:i:s';
-    use SoftDeletes;
-
 
     protected $fillable = [
         'name',
@@ -32,13 +25,13 @@ class StorageUnitStatus extends Model
         'auxiliary03',
         'auxiliary04',
         'auxiliary05',
-        'statusid'
+        'statusid',
     ];
 
     protected $hidden = [
         'created_at',
         'updated_at',
-        'schemaid'
+        'schemaid',
     ];
 
     protected $attributes = [
@@ -46,6 +39,10 @@ class StorageUnitStatus extends Model
         'schemaid' => 'STS',
     ];
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
     public function status(): BelongsTo
     {
@@ -54,16 +51,15 @@ class StorageUnitStatus extends Model
 
     public function scopeName($query, $name)
     {
-        if (trim($name) != "") {
-            $query->where('storageunitstatus.name', 'like', "%$name%");
+        if (trim($name) !== '') {
+            $query->where('storageunitstatus.name', 'like', "%{$name}%");
         }
     }
 
     public function scopeStatus($query, $statusid)
     {
-        if (trim($statusid) != "") {
+        if (trim($statusid) !== '') {
             $query->where('storageunitstatus.statusid', '=', $statusid);
         }
     }
-
 }

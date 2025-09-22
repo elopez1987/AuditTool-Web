@@ -52,10 +52,8 @@ class Kernel extends ConsoleKernel
         GetEvidenceFromRControl::class,
         ClearLocationCommand::class,
 
-
         SendMessageDifferenceWeightCommand::class,
         SendMailForDifferenceWeightCommand::class,
-
 
     ];
 
@@ -63,11 +61,11 @@ class Kernel extends ConsoleKernel
      * Define the application's command schedule.
      *
      * @param Schedule $schedule
+     *
      * @return void
      */
     protected function schedule(Schedule $schedule)
     {
-
 //      Comandos generales
         $schedule->command('command:deletehistlogwebserviceizel')->weekly();
         $schedule->command('command:CloseValidateQRReceipt')->everyTenMinutes();
@@ -75,7 +73,6 @@ class Kernel extends ConsoleKernel
         $schedule->command('clear:receiptasn')->dailyAt('01:00');
         $schedule->command('app:send-message-for-receipt-entry')->everyFiveMinutes();
         $schedule->command('app:send-email-for-arrive-unit-to-receipt')->everyFiveMinutes();
-
 
 //        Comandos para la cuenta de Bridgestone
 //        Envio del correo de discrepancia en peso de salida de la unidad
@@ -104,7 +101,6 @@ class Kernel extends ConsoleKernel
         $schedule->command('rc:getevidencefromrcontrol')->dailyAt('10:00');
 //        Limpiar ubicaciones de cortinas y stages
         $schedule->command('system:clearlocation')->everyThirtyMinutes();
-
     }
 
     /**
@@ -118,6 +114,4 @@ class Kernel extends ConsoleKernel
 
         require base_path('routes/console.php');
     }
-
-
 }

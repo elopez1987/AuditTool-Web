@@ -6,7 +6,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class CreateSchemaRequest extends FormRequest
 {
-
     public function authorize(): bool
     {
         return true;
@@ -16,7 +15,7 @@ class CreateSchemaRequest extends FormRequest
     {
         return [
             'schemaid' => 'required|string|max:3',
-            'name' => 'required|string|max:150'
+            'name' => 'required|string|max:150',
         ];
     }
 }

@@ -11,19 +11,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-
 class StorageOperator extends Model
 {
-
+    use LogsActivity;
     protected $table = 'storageoperators';
     protected $primaryKey = 'id';
     protected $keyType = 'integer';
-    use LogsActivity;
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
 
     protected $dateFormat = 'Y-m-d H:i:s';
 
@@ -39,13 +32,13 @@ class StorageOperator extends Model
         'auxiliary03',
         'auxiliary04',
         'auxiliary05',
-        'statusid'
+        'statusid',
     ];
 
     protected $hidden = [
         'created_at',
         'updated_at',
-        'schemaid'
+        'schemaid',
     ];
 
     protected $attributes = [
@@ -54,9 +47,13 @@ class StorageOperator extends Model
     ];
 
     protected $casts = [
-        'barcode' => 'string'
+        'barcode' => 'string',
     ];
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
 //    Relations with models
     public function center()
@@ -74,36 +71,31 @@ class StorageOperator extends Model
         return $this->belongsTo(ShipmentCarrier::class, 'carrierid', 'id');
     }
 
-
 //    Filters Scope to model
     public function scopeName($query, $name)
     {
-        if (trim($name) != "") {
-            $query->where('storageoperators.name', 'like', "%$name%");
+        if (trim($name) !== '') {
+            $query->where('storageoperators.name', 'like', "%{$name}%");
         }
     }
 
     public function scopeBarcode($query, $barcode)
     {
-        if (trim($barcode) != "") {
+        if (trim($barcode) !== '') {
             $query->where('storageoperators.barcode', '=', $barcode);
         }
     }
 
     public function scopeForCarrierOperator($q, $carrier)
     {
-        if (!empty($carrier)) {
+        if (! empty($carrier)) {
             $q->whereIn('storageoperators.carrierid', $carrier);
         }
     }
-
 
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
         return StorageOperator::whereIn('storageoperators.centerid', $centers);
     }
-
-
-
 }

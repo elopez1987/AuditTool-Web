@@ -12,7 +12,6 @@ use Illuminate\Http\Request;
 
 class ReceiptContainersController extends BaseController
 {
-
 //    Registro de tarimas blancas en recibo
     public function addpallets($id)
     {
@@ -48,7 +47,7 @@ class ReceiptContainersController extends BaseController
                 'receiptid' => $receipt->id,
                 'partnumberid' => $request['partnumberid'],
                 'quantity' => $request['quantity'],
-                'damage' => $request['damage']
+                'damage' => $request['damage'],
             ]
         );
         return $this->redirectBackSuccessMessage('Datos guardados con exito!!');
@@ -67,19 +66,12 @@ class ReceiptContainersController extends BaseController
         return $this->redirectBackSuccessMessage('Datos actualizados con exito!!');
     }
 
-
     public function deletepallets(Request $request, $id)
     {
         $data = StorageReceiptPallet::controlAccessUser()->findOrFail($id);
         $data->delete();
         return $this->redirectBackSuccessMessage('Datos eliminados con exito!!');
     }
-
-
-
-
-
-
 
 //    --------------------------------------------------------------------------------------------------------------------
 
@@ -92,13 +84,11 @@ class ReceiptContainersController extends BaseController
     }
 
 //    Actualizar cantidad del contenedor
-    public function updateQuantityContainer(Request $request,$id)
+    public function updateQuantityContainer(Request $request, $id)
     {
-        $container = ReceiptContainer::controlAccessUser()->where('recordid', '=',$id)->first();
+        $container = ReceiptContainer::controlAccessUser()->where('recordid', '=', $id)->first();
         $container->quantity = $request['quantity'];
         $container->save();
         return $this->redirectBackSuccessMessage('Datos actualizados con exito!!');
     }
-
-
 }

@@ -15,8 +15,10 @@ class ParameterCarrierController extends BaseController
         $model = ShipmentCarrier::findOrFail($id);
         $parameters = SystemStatus::whereSchemaid('SCR')
             ->select(['statusid', 'name'])->get();
-        return view('Yards.ShipmentCarriers.Parameters.create',
-            compact('model', 'parameters'));
+        return view(
+            'Yards.ShipmentCarriers.Parameters.create',
+            compact('model', 'parameters')
+        );
     }
 
     public function addparameterscarrier(Request $request, $id)

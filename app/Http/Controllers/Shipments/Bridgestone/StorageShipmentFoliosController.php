@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 
 class StorageShipmentFoliosController extends BaseController
 {
-
     public function index()
     {
         return view('Shipments.Bridgestone.ShipmentFolios.index');
@@ -20,16 +19,18 @@ class StorageShipmentFoliosController extends BaseController
     {
         $data = StorageShipmentFolios::controlAccessUser()
             ->with(['center:centerid,name,description', 'warehouse:warehouseid,name',
-                'user:id,name', 'statuskey:statusid,name', 'status:statusid,name'])->get();
+                'user:id,name', 'statuskey:statusid,name', 'status:statusid,name',
+            ])->get();
         return $this->showDataToView($data, 'Shipments.Bridgestone.ShipmentFolios.partials.buttons');
     }
 
-	public function storageshipmentfoliospdf(string $id)
+    public function storageshipmentfoliospdf(string $id)
     {
         $folio = StorageShipmentFolios::controlAccessUser()
             ->with(['center:centerid,name,description', 'warehouse:warehouseid,name',
                 'user:id,name', 'statuskey:statusid,name', 'status:statusid,name',
-                'turn:id,name'])
+                'turn:id,name',
+            ])
             ->where('id', $id)->first();
         if (empty($folio)) {
             return $this->errorResponse('No existe folio de envio en sistema, favor de validar');
@@ -42,6 +43,4 @@ class StorageShipmentFoliosController extends BaseController
         $pdf = Pdf::loadView($fortmat, compact('folio', 'detalleFolio'))->setPaper('A4', 'landscape');
         return response($pdf->output(), 200)->header('Content-Type', 'application/pdf');
     }
-
-
 }

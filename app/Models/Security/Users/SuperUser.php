@@ -11,31 +11,27 @@ class SuperUser extends Model
 {
     use LogsActivity;
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
-
-
     public $timestamps = false;
     protected $table = 'securitysuperusers';
     protected $primaryKey = 'id';
 
     protected $fillable = [
         'userid',
-        'created_at'
+        'created_at',
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
     protected static function boot()
     {
         parent::boot();
-        if (!app()->runningInConsole()) {
+        if (! app()->runningInConsole()) {
             self::creating(function (SuperUser $model) {
                 $model->created_at = Carbon::now();
             });
         }
     }
-
-
-
 }

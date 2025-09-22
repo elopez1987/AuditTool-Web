@@ -12,31 +12,19 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class ShipmentPallet extends Model
 {
-
     use LogsActivity;
+    public $timestamps = false;
+
+    protected $table = 'shipmentpallets';
+    protected $primaryKey = 'id';
+
+    protected $fillable = ['centerid', 'warehouseid', 'orderid',
+        'prtnum', 'quantity', 'adddate', 'update', 'adduserid', 'lastuserid',
+    ];
 
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()->logFillable();
-    }
-
-    protected $table = 'shipmentpallets';
-    protected $primaryKey = 'id';
-    public $timestamps = false;
-
-    protected $fillable = ["centerid", "warehouseid", "orderid",
-        "prtnum", "quantity", "adddate", "update", "adduserid", "lastuserid",
-    ];
-
-    protected static function boot()
-    {
-        parent::boot();
-        if (!app()->runningInConsole()) {
-            self::creating(function (ShipmentPallet $model) {
-                $model->adddate = Carbon::now();
-                $model->adduserid = Auth::user()->id;
-            });
-        }
     }
 
     public static function controlAccessUser()
@@ -52,5 +40,14 @@ class ShipmentPallet extends Model
         return $this->belongsTo(InventoryPartnumber::class, 'prtnum', 'prtnum');
     }
 
-
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (ShipmentPallet $model) {
+                $model->adddate = Carbon::now();
+                $model->adduserid = Auth::user()->id;
+            });
+        }
+    }
 }

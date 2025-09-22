@@ -23,7 +23,7 @@ class MonitorShipmentStatusController extends BaseController
             ->leftJoin('shipmentcarriers', 'orderdeliveries.carrierid', 'shipmentcarriers.id')
             ->leftJoin('ordercustomers', 'orderdeliveries.customerid', 'ordercustomers.id')
             ->leftJoin('systemstatus', 'orderdeliveries.statusid', 'systemstatus.statusid')
-            ->leftJoin('receiptunits','orderdeliveries.folionumber','receiptunits.id')
+            ->leftJoin('receiptunits', 'orderdeliveries.folionumber', 'receiptunits.id')
             ->Shipmentid($request->get('shipmentid'))
             ->CarrierIn($carrier)
             ->select([
@@ -42,11 +42,4 @@ class MonitorShipmentStatusController extends BaseController
         $data = json_encode($data);
         return response()->json($data);
     }
-
-
-
-
-
-
-
 }

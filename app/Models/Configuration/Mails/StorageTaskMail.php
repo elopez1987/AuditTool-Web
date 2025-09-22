@@ -18,11 +18,6 @@ class StorageTaskMail extends Model
 {
     use LogsActivity;
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
-
     protected $table = 'storagetaskmails';
 
     protected $fillable = [
@@ -45,15 +40,9 @@ class StorageTaskMail extends Model
         'schemaid' => 'STS',
     ];
 
-
-    protected static function boot()
+    public function getActivitylogOptions(): LogOptions
     {
-        parent::boot();
-        if (!app()->runningInConsole()) {
-            self::creating(function (StorageTaskMail $model) {
-                $model->created_at = Carbon::now();
-            });
-        }
+        return LogOptions::defaults()->logFillable();
     }
 
     public static function controlAccessUser()
@@ -84,11 +73,11 @@ class StorageTaskMail extends Model
         return $this->belongsTo(SystemStatus::class, 'statusid', 'statusid');
     }
 
-    static function createNewTaskMailReceipt($receiptunit)
+    public static function createNewTaskMailReceipt($receiptunit)
     {
         $model = ReceiptAsn::controlAccessUser()->where('shipmentid', $receiptunit->shipmentid)
             ->whereNot('statusid', ['IG'])->first();
-        if (!empty($model)) {
+        if (! empty($model)) {
             self::create([
                 'centerid' => $receiptunit->centerid,
                 'warehouseid' => $receiptunit->warehouseid,
@@ -99,5 +88,13 @@ class StorageTaskMail extends Model
         }
     }
 
-
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (StorageTaskMail $model) {
+                $model->created_at = Carbon::now();
+            });
+        }
+    }
 }

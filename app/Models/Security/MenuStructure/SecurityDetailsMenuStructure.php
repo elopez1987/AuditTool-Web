@@ -13,13 +13,11 @@ class SecurityDetailsMenuStructure extends Model
 
     protected $fillable = [
         'menustrucid',
-        'moduleid'
+        'moduleid',
     ];
 
     public function module()
     {
         return $this->belongsTo(SecurityModule::class, 'moduleid', 'moduleid');
     }
-
-
 }

@@ -12,33 +12,21 @@ class StorageScheduleInverseOperation extends Model
 {
     use LogsActivity;
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
-
     protected $table = 'storagescheduleinverseoperation';
 
     protected $fillable = [
         'centerid', 'warehouseid', 'orderid', 'inverseid', 'startdate', 'finishdate',
-        'wmsdate', 'warehousedate', 'statusid'
+        'wmsdate', 'warehousedate', 'statusid',
     ];
-
 
     protected $attributes = [
         'statusid' => 'PT',
         'schemaid' => 'LOV',
     ];
 
-
-    protected static function boot()
+    public function getActivitylogOptions(): LogOptions
     {
-        parent::boot();
-        if (!app()->runningInConsole()) {
-            self::creating(function (StorageScheduleInverseOperation $model) {
-                $model->username = Auth::user()->username;
-            });
-        }
+        return LogOptions::defaults()->logFillable();
     }
 
     public static function controlAccessUser()
@@ -49,7 +37,7 @@ class StorageScheduleInverseOperation extends Model
             ->whereIn('storagescheduleinverseoperation.centerid', $centers);
     }
 
-    static function searchForOrder($orderid)
+    public static function searchForOrder($orderid)
     {
         return StorageScheduleInverseOperation::controlAccessUser()
             ->whereOrderid($orderid)->first();
@@ -60,4 +48,13 @@ class StorageScheduleInverseOperation extends Model
         return $this->belongsTo(StorageScheduleInverseTraffic::class, 'orderid', 'orderid');
     }
 
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (StorageScheduleInverseOperation $model) {
+                $model->username = Auth::user()->username;
+            });
+        }
+    }
 }

@@ -34,7 +34,7 @@ class MonitorShipmentController extends BaseController
                     END
                 ELSE 'En tiempo'
             END as status
-        ")
+        "),
             ])
             ->leftJoin('ordercustomers as b', function ($join) {
                 $join->on('orderdeliveries.customerid', '=', 'b.id')
@@ -50,6 +50,4 @@ class MonitorShipmentController extends BaseController
             ->get();
         return DataTables::of($data)->toJson();
     }
-
-
 }

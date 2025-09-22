@@ -10,11 +10,11 @@ use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Log;
 
 class OktaController extends BaseController
 {
-
 //    Obtener el token de conexion a okta
 	public function obtener_token()
 	{
@@ -32,12 +32,11 @@ class OktaController extends BaseController
 					'grant_type' => 'client_credentials',
 				],
 				'headers' => [
-					'Content-Type' => 'application/json'
-				]
+					'Content-Type' => 'application/json',
+				],
 			]);
 			$body = $response->getBody()->getContents();
-			$data = json_decode($body, true);
-			return $data;
+			return json_decode($body, true);
 		} catch (RequestException $e) {
 			echo "HTTP Request failed:\n";
 			echo $e->getRequest();
@@ -47,7 +46,7 @@ class OktaController extends BaseController
 		}
 	}
 
-	function createOktaUser($id)
+	public function createOktaUser($id)
 	{
 		$token = $this->obtener_token();
 		$datawsokta = EdiWsToken::where('servicetype', 'OKTA')->first();
@@ -71,16 +70,20 @@ class OktaController extends BaseController
 		]);
 		try {
 			$response = $client->request('POST', $url, ['headers' => $headers, 'body' => $body]);
-			$data = json_decode((string)$response->getBody(), true);
-			$user->auth0 = $data['user_id'];
-			$user->save();
-			return $this->redirectBackSuccessMessage('Usuario creado con exito.');
+			Log::info($response->getStatusCode());
+			if ($response->getStatusCode() == 201) {
+				$data = json_decode((string)$response->getBody(), true);
+				$user->auth0 = $data['user_id'];
+				$user->save();
+				return $this->redirectBackSuccessMessage('Usuario creado con exito.');
+			} else {
+				return $this->errorResponse('Error al crear el usuario, intente mas tarde.');
+			}
 		} catch (ClientException $e) {
 			Log::error($e->getMessage());
 			return response()->json(['status' => 'Error de envio.']);
 		}
 	}
-
 
 //    Borrar un usuaroi
 	public function deleteuser($id)
@@ -109,8 +112,5 @@ class OktaController extends BaseController
 			Log::error($e->getMessage());
 			return $this->errorResponse('Error al eliminar el usuario, intente mas tarde.');
 		}
-
 	}
-
-
 }

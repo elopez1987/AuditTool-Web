@@ -14,12 +14,7 @@ class SystemEventWebServiceIzel extends Model
 {
     use LogsActivity;
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
-
-    protected $table = "systemeventwebserviceizel";
+    protected $table = 'systemeventwebserviceizel';
 
     protected $fillable = [
         'centerid',
@@ -40,12 +35,20 @@ class SystemEventWebServiceIzel extends Model
         'type',
     ];
 
+    protected $casts = [
+        'messagejson' => 'json',
+        'messagejsonresponse' => 'json',
+    ];
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
     public function center()
     {
         return $this->belongsTo(SystemCenterDistribution::class, 'centerid')
-            ->select('name', 'centerid','description');
+            ->select('name', 'centerid', 'description');
     }
 
     public function warehouse()
@@ -53,14 +56,6 @@ class SystemEventWebServiceIzel extends Model
         return $this->belongsTo(SystemWarehouse::class, 'warehouseid')
             ->select('name', 'warehouseid');
     }
-
-    protected $casts = [
-        'messagejson' => 'json',
-        'messagejsonresponse' => 'json',
-    ];
-
-
-
 
     public static function controlAccessUser()
     {
@@ -70,9 +65,9 @@ class SystemEventWebServiceIzel extends Model
             ->whereIn('systemeventwebserviceizel.warehouseid', $warehouses);
     }
 
-    static function createRegisterLog($receiptunit, $statusService, $parameter)
+    public static function createRegisterLog($receiptunit, $statusService, $parameter)
     {
-        if (in_array('SDC-07', (array)$parameter)) {
+        if (in_array('SDC-07', (array) $parameter)) {
 //            Version 4
             $servicename = $statusService->Service_Name;
             $processdate = $statusService->ProcessDate;
@@ -99,9 +94,9 @@ class SystemEventWebServiceIzel extends Model
         ]);
     }
 
-    static function createRegisterLogError($receiptunit, $statusService, $parameter)
+    public static function createRegisterLogError($receiptunit, $statusService, $parameter)
     {
-        if (in_array('SDC-07', (array)$parameter)) {
+        if (in_array('SDC-07', (array) $parameter)) {
 //            Version 4
             $servicename = '';
             $processdate = Carbon::now();
@@ -128,20 +123,17 @@ class SystemEventWebServiceIzel extends Model
         ]);
     }
 
-
     public function scopeFolioNumber($query, $folionumber)
     {
-        if (trim($folionumber) != "") {
-            $query->where('systemeventwebserviceizel.folionumber', 'like', "%$folionumber%");
+        if (trim($folionumber) !== '') {
+            $query->where('systemeventwebserviceizel.folionumber', 'like', "%{$folionumber}%");
         }
     }
 
     public function scopeBoxNumber($query, $boxnumber)
     {
-        if ($boxnumber != "") {
-            $query->where('systemeventwebserviceizel.boxnumber', 'like', "%$boxnumber%");
+        if ($boxnumber !== '') {
+            $query->where('systemeventwebserviceizel.boxnumber', 'like', "%{$boxnumber}%");
         }
     }
-
-
 }

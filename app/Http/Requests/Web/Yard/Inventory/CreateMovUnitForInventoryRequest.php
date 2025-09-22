@@ -12,7 +12,7 @@ class CreateMovUnitForInventoryRequest extends FormRequest
             'zoneid' => 'required',
             'locationid' => 'required',
             'unitstatusid' => 'required',
-            'folionumber' => 'required'
+            'folionumber' => 'required',
         ];
     }
 
