@@ -12387,10 +12387,9 @@ span.select2-container {
 table.dataTable thead th, table.dataTable tfoot th, table.dataTable tfoot td {
   border-color: #dedede;
   color: white !important;
-  border-width: 1px;
-  border-style: solid;
   padding: 5px;
-  background: #90a4ae;
+  font-size: 0.695rem !important;
+  background: rgb(73, 155, 234);
 }
 
 .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {

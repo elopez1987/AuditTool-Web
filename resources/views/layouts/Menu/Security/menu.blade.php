@@ -178,7 +178,7 @@
                 @can('storagetaskwhatsapp')
                     <a href="{{route('storagetaskwhatsapp.index')}}">
                         <div class="box">
-                            <i class="lni lni-message-3-text"></i>
+                            <i class="lni lni-whatsapp"></i>
                             <h5>Mensajes pendientes</h5>
                             <h4>Mensajes pendientes</h4>
                         </div>
@@ -187,7 +187,7 @@
                 @can('storagetaskmail')
                     <a href="{{route('storagetaskmail.index')}}">
                         <div class="box">
-                            <i class="lni lni-bell-1"></i>
+                            <i class="lni lni-mailchimp"></i>
                             <h5>Correos pendientes</h5>
                             <h4>Correos pendientes</h4>
                         </div>

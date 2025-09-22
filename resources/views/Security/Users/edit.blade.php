@@ -126,7 +126,7 @@
                                     </div>
                                     <hr class="mt-2">
                                     <div class="row">
-                                        <div class="col-lg-3 col-md-6 col-sm-12">
+                                        <div class="col-lg-2 col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label for="password">Nueva contraseña</label>
                                                 <div class="input-group">
@@ -145,7 +145,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-3 col-md-6 col-sm-12">
+                                        <div class="col-lg-2 col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label for="password_confirmation">Confirmar contraseña </label>
                                                 <div class="input-group">

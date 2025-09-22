@@ -401,10 +401,15 @@ span.select2-container {
 table.dataTable thead th, table.dataTable tfoot th, table.dataTable tfoot td {
   border-color: #dedede;
   color: white !important;
-  border-width: 1px;
-  border-style: solid;
   padding: 5px;
-  background: #90a4ae;
+  font-size: 0.695rem !important;
+  background: rgba(73, 155, 234, 1);
+  //background: -moz-linear-gradient(left, rgba(73, 155, 234, 1) 0%, rgba(63, 81, 181, 1) 100%);
+  //background: -webkit-gradient(left top, right top, color-stop(0%, rgba(73, 155, 234, 1)), color-stop(100%, rgba(63, 81, 181, 1)));
+  //background: -webkit-linear-gradient(left, rgba(73, 155, 234, 1) 0%, rgba(63, 81, 181, 1) 100%);
+  //background: -o-linear-gradient(left, rgba(73, 155, 234, 1) 0%, rgba(63, 81, 181, 1) 100%);
+  //background: -ms-linear-gradient(left, rgba(73, 155, 234, 1) 0%, rgba(63, 81, 181, 1) 100%);
+  //background: linear-gradient(to right, rgba(73, 155, 234, 1) 0%, rgba(63, 81, 181, 1) 100%);
 
 }
 

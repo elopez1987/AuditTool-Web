@@ -38,7 +38,7 @@ trait PrintFormat
         $logo = SystemWarehouse::where('warehouseid', $receiptunit->warehouseid)->select('auxiliary09')->first();
         $firma = ReceiptUnitKey::controlAccessUser()->where('folionumber', $receiptunit->id)->first();
 
-//        Henkel One Roof
+		// Henkel One Roof
         if ($receiptunit->centerid === 'HENKELTOL01') {
             $folio = StorageFolioClient::where('folionumber', $receiptunit->id)->value('folioclient');
             if ($receiptunit->razonstatusid === '1') {
@@ -50,13 +50,14 @@ trait PrintFormat
             return $this->printFormat($type, $receiptunit, $pdf);
         }
 
-//        Planta Henkel
+		//  Planta Henkel
         if ($receiptunit->centerid === 'PLANHENKTOL') {
             $fortmat = 'Yards.ReceiptUnits.InvoiceFormats.Henkel.InvoicePlantHenkel';
             $pdf = PDF::loadView($fortmat, compact('receiptunit', 'verified'));
             return $this->printFormat($type, $receiptunit, $pdf);
         }
 
+		//	Kraft
         if ($receiptunit->centerid === 'AVIOR-INT') {
             if ($receiptunit->unittype->auxiliary01 === 'NAC') {
                 $fortmat = 'Yards.ReceiptUnits.InvoiceFormats.Kraft.Nacional';
@@ -68,7 +69,15 @@ trait PrintFormat
             return $this->printFormat($type, $receiptunit, $pdf);
         }
 
-//        Impresiones Estandar
+		// Barry
+		if ($receiptunit->centerid == 'BARRYTOL') {
+			$fortmat = 'Yards.ReceiptUnits.InvoiceFormats.Barry.InvoiceBarry';
+			$pdf = PDF::loadView($fortmat, compact('receiptunit', 'verified','comment'));
+			return $this->printFormat($type, $receiptunit, $pdf);
+
+		}
+
+		//  Impresiones Estandar
         if ($receiptunit->center->formatinvoice === 'Estandar') {
             $fortmat = 'Yards.ReceiptUnits.InvoiceFormats.General.Estandar';
             $pdf = PDF::loadView($fortmat, compact('receiptunit', 'verified', 'logo', 'comment', 'firma'));
