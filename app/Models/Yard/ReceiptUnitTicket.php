@@ -57,35 +57,35 @@ class ReceiptUnitTicket extends Model
 
     public function scopeTicket($query, $ticket)
     {
-        if (trim($ticket) !== '') {
+        if (trim($ticket) != '') {
             $query->where('storagereceiptunitticket.ticket', 'like', "%{$ticket}%");
         }
     }
 
     public function scopeBoxNumber($query, $boxnumber)
     {
-        if (trim($boxnumber) !== '') {
+        if (trim($boxnumber) != '') {
             $query->where('storagereceiptunitticket.boxnumber', 'like', "%{$boxnumber}%");
         }
     }
 
     public function scopeFolioNumber($query, $folionumber)
     {
-        if (trim($folionumber) !== '') {
+        if (trim($folionumber) != '') {
             $query->where('storagereceiptunitticket.folionumber', 'like', "%{$folionumber}%");
         }
     }
 
     public function scopeCarrier()
     {
-        if (trim($carrier) !== '') {
+        if (trim($carrier) != '') {
             $query->where('storagereceiptunitticket.carrierid', '=', $carrier);
         }
     }
 
     public function scopeWarehose()
     {
-        if (trim($warehouse) !== '') {
+        if (trim($warehouse) != '') {
             $query->where('storagereceiptunitticket.warehouseid', '=', $warehouse);
         }
     }
