@@ -29,3 +29,6 @@ RESET_PASSWORD_FEATURE.md
 TESTING_RESET_PASSWORD.md
 SECURITY_IMPROVEMENTS.md
 fix_style_issues.sh
+.idea/material_theme_project_new.xml
+
+.idea/php.xml
