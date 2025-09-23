@@ -32,3 +32,5 @@ fix_style_issues.sh
 .idea/material_theme_project_new.xml
 
 .idea/php.xml
+
+.idea/panel.iml
