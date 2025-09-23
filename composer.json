@@ -15,17 +15,17 @@
         "barryvdh/laravel-dompdf": "^3.0",
         "guzzlehttp/guzzle": "^7.8",
         "intervention/image": "^2.7",
-        "laravel/framework": "^11.0",
-        "laravel/passport": "^12.0",
+        "laravel/framework": "^12.0",
+        "laravel/passport": "^13.0",
         "laravel/tinker": "^v2.9",
         "laravel/ui": "^4.4",
         "maatwebsite/excel": "^3.1",
-        "milon/barcode": "^11.0",
+        "milon/barcode": "^12.0",
         "pion/laravel-chunk-upload": "^1.5",
         "rap2hpoutre/laravel-log-viewer": "^2.0",
         "spatie/laravel-activitylog": "^4.8",
         "spatie/laravel-permission": "^6.2.0",
-        "yajra/laravel-datatables-oracle": "^11.0"
+        "yajra/laravel-datatables-oracle": "^12.0"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^3.0",
