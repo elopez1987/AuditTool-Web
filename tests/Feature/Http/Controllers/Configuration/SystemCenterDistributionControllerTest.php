@@ -1,16 +1,7 @@
 <?php
 
-namespace Tests\Feature\Http\Controllers\Configuration;
-
-use Tests\TestCase;
-
-class SystemCenterDistributionControllerTest extends TestCase
-{
-    /** @test */
-    public function show_view_index()
-    {
-        $this->get('systemcenterdistributions')->assertStatus(302);
-    }
-
-
-}
+it('redirects when accessing system center distributions without authentication', function () {
+    $response = $this->get('systemcenterdistributions');
+    
+    $response->assertStatus(302);
+});
