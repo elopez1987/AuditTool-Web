@@ -88,48 +88,48 @@
                             <ul class="nav nav-tabs customtab" role="tablist">
                                 <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#view01"
                                                         role="tab"><span class="hidden-sm-up"><i
-                                                class="ti-home"></i></span> <span class="hidden-xs-down">Detalle de movimientos</span></a>
+                                                    class="ti-home"></i></span> <span class="hidden-xs-down">Detalle de movimientos</span></a>
                                 </li>
                                 <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view02"
                                                         role="tab"><span class="hidden-sm-up"><i
-                                                class="ti-list"></i></span> <span class="hidden-xs-down">Check list y Evidencia de Entrada</span></a>
+                                                    class="ti-list"></i></span> <span class="hidden-xs-down">Check list y Evidencia de Entrada</span></a>
                                 </li>
                                 <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view03"
                                                         role="tab"><span class="hidden-sm-up"><i
-                                                class="ti-list"></i></span> <span class="hidden-xs-down">Evidencia de Proceso</span></a>
+                                                    class="ti-list"></i></span> <span class="hidden-xs-down">Evidencia de Proceso</span></a>
                                 </li>
                                 <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view04"
                                                         role="tab"><span class="hidden-sm-up"><i
-                                                class="ti-list"></i></span> <span class="hidden-xs-down">Check list y Evidencia de Calidad</span></a>
+                                                    class="ti-list"></i></span> <span class="hidden-xs-down">Check list y Evidencia de Calidad</span></a>
                                 </li>
                                 <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view05"
                                                         role="tab"><span class="hidden-sm-up"><i
-                                                class="ti-list"></i></span> <span class="hidden-xs-down">Check list y Evidencia de Salida</span></a>
+                                                    class="ti-list"></i></span> <span class="hidden-xs-down">Check list y Evidencia de Salida</span></a>
                                 </li>
                                 <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view07"
                                                         role="tab"><span class="hidden-sm-up"><i
-                                                class="ti-list"></i></span> <span
-                                            class="hidden-xs-down">Sellos</span></a>
+                                                    class="ti-list"></i></span> <span
+                                                class="hidden-xs-down">Sellos</span></a>
                                 </li>
                                 <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view08"
                                                         role="tab"><span class="hidden-sm-up"><i
-                                                class="ti-list"></i></span> <span
-                                            class="hidden-xs-down">Pesos de unidad</span></a>
+                                                    class="ti-list"></i></span> <span
+                                                class="hidden-xs-down">Pesos de unidad</span></a>
                                 </li>
                                 <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view09"
                                                         role="tab"><span class="hidden-sm-up"><i
-                                                class="ti-list"></i></span> <span
-                                            class="hidden-xs-down">Sellos LOTO</span></a>
+                                                    class="ti-list"></i></span> <span
+                                                class="hidden-xs-down">Sellos LOTO</span></a>
                                 </li>
                                 <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view06"
                                                         role="tab"><span class="hidden-sm-up"><i
-                                                class="ti-list"></i></span> <span
-                                            class="hidden-xs-down">Comentarios</span></a>
+                                                    class="ti-list"></i></span> <span
+                                                class="hidden-xs-down">Comentarios</span></a>
                                 </li>
                                 <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view10"
                                                         role="tab"><span class="hidden-sm-up"><i
-                                                class="ti-list"></i></span> <span
-                                            class="hidden-xs-down">Firmas</span></a>
+                                                    class="ti-list"></i></span> <span
+                                                class="hidden-xs-down">Firmas</span></a>
                                 </li>
                             </ul>
                             <!-- Tab panes -->
@@ -142,7 +142,8 @@
                                 <div class="tab-pane" id="view02" role="tabpanel">
                                     <div class="row mt-3">
                                         <div class="col-lg-6">
-                                            <table width="100%" class="table table-condensed table-bordered table-striped">
+                                            <table width="100%"
+                                                   class="table table-condensed table-bordered table-striped">
                                                 <thead>
                                                 <tr>
                                                     <th>Concepto</th>
@@ -172,11 +173,11 @@
                                                                         <div class="card">
                                                                             <div class="el-card-item">
                                                                                 <div
-                                                                                    class="el-card-avatar el-overlay-1">
+                                                                                        class="el-card-avatar el-overlay-1">
                                                                                     <img
-                                                                                        src="{{asset('storage/' . $photo->path)}}"
-                                                                                        alt="user"
-                                                                                        style="height: 300px;max-height: 400px"/>
+                                                                                            src="{{asset('storage/' . $photo->path)}}"
+                                                                                            alt="user"
+                                                                                            style="height: 300px;max-height: 400px"/>
                                                                                     <div class="el-overlay">
                                                                                         <ul class="list-style-none el-info">
                                                                                             <li class="el-item">
@@ -201,7 +202,7 @@
                                                                                 <div class="el-card-content">
                                                                                     <h4 class="m-b-0 font-10 font-weight-light"> {{$photo->user->name}} </h4>
                                                                                     <span
-                                                                                        class="text-muted">{{$photo->created_at}}</span>
+                                                                                            class="text-muted">{{$photo->created_at}}</span>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -232,11 +233,11 @@
                                                                             </div>
                                                                             <div class="el-card-item">
                                                                                 <div
-                                                                                    class="el-card-avatar el-overlay-1">
+                                                                                        class="el-card-avatar el-overlay-1">
                                                                                     <img
-                                                                                        src="{{asset('storage/' . $photo->path)}}"
-                                                                                        alt="user"
-                                                                                        style="height: 300px;max-height: 400px"/>
+                                                                                            src="{{asset('storage/' . $photo->path)}}"
+                                                                                            alt="user"
+                                                                                            style="height: 300px;max-height: 400px"/>
                                                                                     <div class="el-overlay">
                                                                                         <ul class="list-style-none el-info">
                                                                                             <li class="el-item">
@@ -261,7 +262,7 @@
                                                                                 <div class="el-card-content">
                                                                                     <h4 class="m-b-0 font-10 font-weight-light"> {{$photo->user->name}} </h4>
                                                                                     <span
-                                                                                        class="text-muted">{{$photo->created_at}}</span>
+                                                                                            class="text-muted">{{$photo->created_at}}</span>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -280,11 +281,11 @@
                                                                         </div>
                                                                         <div class="el-card-item">
                                                                             <div
-                                                                                class="el-card-avatar el-overlay-1">
+                                                                                    class="el-card-avatar el-overlay-1">
                                                                                 <img
-                                                                                    src="{{asset('storage/' . $photo->path)}}"
-                                                                                    alt="user"
-                                                                                    style="height: 300px;max-height: 400px"/>
+                                                                                        src="{{asset('storage/' . $photo->path)}}"
+                                                                                        alt="user"
+                                                                                        style="height: 300px;max-height: 400px"/>
                                                                                 <div class="el-overlay">
                                                                                     <ul class="list-style-none el-info">
                                                                                         <li class="el-item">
@@ -309,7 +310,7 @@
                                                                             <div class="el-card-content">
                                                                                 <h4 class="m-b-0 font-10 font-weight-light"> {{$photo->user ? $photo->user->name : ''}} </h4>
                                                                                 <span
-                                                                                    class="text-muted">{{$photo->updated_at}}</span>
+                                                                                        class="text-muted">{{$photo->updated_at}}</span>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -325,24 +326,25 @@
                                 <div class="tab-pane p-20" id="view04" role="tabpanel">
                                     <div class="row mt-3">
                                         <div class="col-lg-6">
-                                                <table width="100%" class="table table-condensed table-bordered table-striped">
-                                                    <thead>
-                                                    <tr>
-                                                        <th>Concepto</th>
-                                                        <th>Estatus</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    @foreach($checklisttransports as $check)
-                                                        @if($check->type == 'QI')
-                                                            <tr>
-                                                                <td>{{$check->checklistdetail ? $check->checklistdetail->description : ''}}</td>
-                                                                <td class="bg-{{$check->verified == 'NO' ? 'red text-white' : ''}}">{{$check->verified}}</td>
-                                                            </tr>
-                                                        @endif
-                                                    @endforeach
-                                                    </tbody>
-                                                </table>
+                                            <table width="100%"
+                                                   class="table table-condensed table-bordered table-striped">
+                                                <thead>
+                                                <tr>
+                                                    <th>Concepto</th>
+                                                    <th>Estatus</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                @foreach($checklisttransports as $check)
+                                                    @if($check->type == 'QI')
+                                                        <tr>
+                                                            <td>{{$check->checklistdetail ? $check->checklistdetail->description : ''}}</td>
+                                                            <td class="bg-{{$check->verified == 'NO' ? 'red text-white' : ''}}">{{$check->verified}}</td>
+                                                        </tr>
+                                                    @endif
+                                                @endforeach
+                                                </tbody>
+                                            </table>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="card">
@@ -359,11 +361,11 @@
                                                                             </div>
                                                                             <div class="el-card-item">
                                                                                 <div
-                                                                                    class="el-card-avatar el-overlay-1">
+                                                                                        class="el-card-avatar el-overlay-1">
                                                                                     <img
-                                                                                        src="{{asset('storage/' . $photo->path)}}"
-                                                                                        alt="user"
-                                                                                        style="height: 300px;max-height: 400px"/>
+                                                                                            src="{{asset('storage/' . $photo->path)}}"
+                                                                                            alt="user"
+                                                                                            style="height: 300px;max-height: 400px"/>
                                                                                     <div class="el-overlay">
                                                                                         <ul class="list-style-none el-info">
                                                                                             <li class="el-item">
@@ -388,7 +390,7 @@
                                                                                 <div class="el-card-content">
                                                                                     <h4 class="m-b-0 font-10 font-weight-light"> {{$photo->user->name}} </h4>
                                                                                     <span
-                                                                                        class="text-muted">{{$photo->created_at}}</span>
+                                                                                            class="text-muted">{{$photo->created_at}}</span>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -405,7 +407,8 @@
                                 <div class="tab-pane" id="view05" role="tabpanel">
                                     <div class="row mt-3">
                                         <div class="col-lg-6">
-                                            <table width="100%" class="table table-condensed table-bordered table-striped">
+                                            <table width="100%"
+                                                   class="table table-condensed table-bordered table-striped">
                                                 <thead>
                                                 <tr>
                                                     <th>Concepto</th>
@@ -436,11 +439,11 @@
                                                                         <div class="card">
                                                                             <div class="el-card-item">
                                                                                 <div
-                                                                                    class="el-card-avatar el-overlay-1">
+                                                                                        class="el-card-avatar el-overlay-1">
                                                                                     <img
-                                                                                        src="{{asset('storage/' . $photo->path)}}"
-                                                                                        alt="user"
-                                                                                        style="height: 300px;max-height: 400px"/>
+                                                                                            src="{{asset('storage/' . $photo->path)}}"
+                                                                                            alt="user"
+                                                                                            style="height: 300px;max-height: 400px"/>
                                                                                     <div class="el-overlay">
                                                                                         <ul class="list-style-none el-info">
                                                                                             <li class="el-item">
@@ -465,7 +468,7 @@
                                                                                 <div class="el-card-content">
                                                                                     <h4 class="m-b-0 font-10 font-weight-light"> {{$photo->user->name}} </h4>
                                                                                     <span
-                                                                                        class="text-muted">{{$photo->created_at}}</span>
+                                                                                            class="text-muted">{{$photo->created_at}}</span>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -491,19 +494,19 @@
                                                         <div class="row">
                                                             <div class="col-lg-12">
                                                                 <div class="p-2"><img
-                                                                        src="{{asset('/ico/edilogs.png')}}"
-                                                                        alt="user" width="50"
-                                                                        class="rounded-circle">{{$comment->user->name}}
+                                                                            src="{{asset('/ico/edilogs.png')}}"
+                                                                            alt="user" width="50"
+                                                                            class="rounded-circle">{{$comment->user->name}}
                                                                 </div>
                                                                 <div class="comment-text active w-100">
                                                                     <h6 class="font-medium"></h6>
                                                                     <span
-                                                                        class="m-b-15 d-block">{{$comment->comment}} </span>
+                                                                            class="m-b-15 d-block">{{$comment->comment}} </span>
                                                                     <div class="comment-footer ">
                                                                 <span
-                                                                    class="text-muted float-right">{{$comment->created_at}}</span>
+                                                                        class="text-muted float-right">{{$comment->created_at}}</span>
                                                                         <span
-                                                                            class="label label-success label-rounded">Approved</span>
+                                                                                class="label label-success label-rounded">Approved</span>
                                                                         <span class="action-icons active">
                                                                      </span>
                                                                     </div>
@@ -524,7 +527,8 @@
                                                 <div class="col-lg-12">
                                                     <div class="card">
                                                         <div class="card-body">
-                                                            <table width="100%" class="table table-condensed table-bordered table-striped table-hover">
+                                                            <table width="100%"
+                                                                   class="table table-condensed table-bordered table-striped table-hover">
                                                                 <thead>
                                                                 <tr>
                                                                     <th>Tipo</th>
@@ -566,11 +570,11 @@
                                                                             </div>
                                                                             <div class="el-card-item">
                                                                                 <div
-                                                                                    class="el-card-avatar el-overlay-1">
+                                                                                        class="el-card-avatar el-overlay-1">
                                                                                     <img
-                                                                                        src="{{asset('storage/' . $photo->path)}}"
-                                                                                        alt="user"
-                                                                                        style="height: 300px;max-height: 400px"/>
+                                                                                            src="{{asset('storage/' . $photo->path)}}"
+                                                                                            alt="user"
+                                                                                            style="height: 300px;max-height: 400px"/>
                                                                                     <div class="el-overlay">
                                                                                         <ul class="list-style-none el-info">
                                                                                             <li class="el-item">
@@ -595,7 +599,7 @@
                                                                                 <div class="el-card-content">
                                                                                     <h4 class="m-b-0 font-10 font-weight-light"> {{$photo->user->name}} </h4>
                                                                                     <span
-                                                                                        class="text-muted">{{$photo->created_at}}</span>
+                                                                                            class="text-muted">{{$photo->created_at}}</span>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -614,7 +618,8 @@
                                         <div class="col-lg-12">
                                             <div class="card">
                                                 <div class="card-body">
-                                                    <table width="100%" class="table table-condensed table-bordered  table-hover">
+                                                    <table width="100%"
+                                                           class="table table-condensed table-bordered  table-hover">
                                                         <thead>
                                                         <tr>
                                                             <th>Folio</th>
@@ -634,33 +639,37 @@
                                                         </tr>
                                                         </thead>
                                                         <tbody>
-                                                                @foreach($pesos as $peso)
-                                                                    <tr>
-                                                                        <td>{{$peso->folionumber}}</td>
-                                                                        <td>{{$peso->ticket}}</td>
-                                                                        <td>{{$peso->weightin}} Kg</td>
-                                                                        <td>{{ round($peso->weightin * 2.20462) }} lbs </td>
-                                                                        <td>{{$peso->usercreate ? $peso->usercreate->name : ''}}</td>
-                                                                        <td>{{$peso->createddate}}</td>
-                                                                        <td>{{$peso->weightout}} Kg</td>
-                                                                        <td>{{ round($peso->weightout * 2.20462)}} lbs</td>
-                                                                        <td>{{$peso->weightout - $peso->weightin}}  Kg</td>
-                                                                        <td>{{ round( ($peso->weightout - $peso->weightin) * 2.20462)}}  lbs</td>
-                                                                        <td>{{$peso->weightoutsap}} lbs</td>  {{-- Peso de SAP libras--}}
-                                                                        <td>{{$peso->userupdate ? $peso->userupdate->name : ''}}</td>
-                                                                        <td>{{$peso->updateddate}}</td>
-                                                                        <td>
-                                                                            @php
-                                                                                $pesoCalculado = round(($peso->weightout - $peso->weightin) * 2.20462,2);
-                                                                                $pesoSap = $peso->weightoutsap;
-                                                                                $porcentaje = $pesoSap != 0 ? round( (100 / $pesoCalculado ) * $pesoSap, 2) / 10: 0;
-                                                                            @endphp
-                                                                            <span class="{{ $porcentaje > 0 ? 'text-success' : ($porcentaje < 0 ? 'text-danger' : 'text-muted') }}">
+                                                        @foreach($pesos as $peso)
+                                                            <tr>
+                                                                <td>{{$peso->folionumber}}</td>
+                                                                <td>{{$peso->ticket}}</td>
+                                                                <td>{{$peso->weightin}} Kg</td>
+                                                                <td>{{ round($peso->weightin * 2.20462) }} lbs</td>
+                                                                <td>{{$peso->usercreate ? $peso->usercreate->name : ''}}</td>
+                                                                <td>{{$peso->createddate}}</td>
+                                                                <td>{{$peso->weightout}} Kg</td>
+                                                                <td>{{ round($peso->weightout * 2.20462)}} lbs</td>
+                                                                <td>{{$peso->weightout - $peso->weightin}} Kg</td>
+                                                                <td>{{ round( ($peso->weightout - $peso->weightin) * 2.20462)}}
+                                                                    lbs
+                                                                </td>
+                                                                <td>{{$peso->weightoutsap}}lbs
+                                                                </td> {{-- Peso de SAP libras--}}
+                                                                <td>{{$peso->userupdate ? $peso->userupdate->name : ''}}</td>
+                                                                <td>{{$peso->updateddate}}</td>
+                                                                <td>
+                                                                    @php
+
+                                                                        $pesoCalculado = round(($peso->weightout - $peso->weightin) * 2.20462,2);
+                                                                        $pesoSap = $peso->weightoutsap;
+                                                                        $porcentaje = (float) $pesoSap != 0 ? round( (100 / $pesoCalculado ) *  (float) $pesoSap, 2) / 10: 0;
+                                                                    @endphp
+                                                                    <span class="{{ $porcentaje > 0 ? 'text-success' : ($porcentaje < 0 ? 'text-danger' : 'text-muted') }}">
                                                                                 {{ $porcentaje > 0 ? '+' : '' }}{{ number_format($porcentaje, 2) }} %
                                                                             </span>
-                                                                        </td>
-                                                                    </tr>
-                                                                @endforeach
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -673,7 +682,8 @@
                                         <div class="col-lg-6">
                                             <div class="card">
                                                 <div class="card-body">
-                                                    <table width="100%" class="table table-condensed table-bordered table-striped table-hover">
+                                                    <table width="100%"
+                                                           class="table table-condensed table-bordered table-striped table-hover">
                                                         <thead>
                                                         <tr>
                                                             <th>Folio</th>
@@ -705,7 +715,8 @@
                                         <div class="col-lg-6">
                                             <div class="card">
                                                 <div class="card-body">
-                                                    <table width="100%" class="table table-condensed table-bordered table-hover">
+                                                    <table width="100%"
+                                                           class="table table-condensed table-bordered table-hover">
                                                         <thead>
                                                         <tr>
                                                             <th>Firma de vigilante de entrada</th>
@@ -719,27 +730,27 @@
                                                             @if($receiptunit->key)
                                                                 <td style="height: 150px">
                                                                     <img
-                                                                        src="{{asset('storage/' . $receiptunit->key->keyguard01)}}"
-                                                                        alt="Firma"
-                                                                        style="height: 100px;max-height: 200px"/>
+                                                                            src="{{asset('storage/' . $receiptunit->key->keyguard01)}}"
+                                                                            alt="Firma"
+                                                                            style="height: 100px;max-height: 200px"/>
                                                                 </td>
                                                                 <td>
                                                                     <img
-                                                                        src="{{asset('storage/' . $receiptunit->key->keyoperator01 )}}"
-                                                                        alt="Firma"
-                                                                        style="height: 100px;max-height: 200px"/>
+                                                                            src="{{asset('storage/' . $receiptunit->key->keyoperator01 )}}"
+                                                                            alt="Firma"
+                                                                            style="height: 100px;max-height: 200px"/>
                                                                 </td>
                                                                 <td>
                                                                     <img
-                                                                        src="{{asset('storage/' . $receiptunit->key->keyguard03 )}}"
-                                                                        alt="Firma"
-                                                                        style="height: 100px;max-height: 200px"/>
+                                                                            src="{{asset('storage/' . $receiptunit->key->keyguard03 )}}"
+                                                                            alt="Firma"
+                                                                            style="height: 100px;max-height: 200px"/>
                                                                 </td>
                                                                 <td>
                                                                     <img
-                                                                        src="{{asset('storage/' . $receiptunit->key->keyoperator03)}}"
-                                                                        alt="Firma"
-                                                                        style="height: 100px;max-height: 200px"/>
+                                                                            src="{{asset('storage/' . $receiptunit->key->keyoperator03)}}"
+                                                                            alt="Firma"
+                                                                            style="height: 100px;max-height: 200px"/>
                                                                 </td>
                                                             @endif
                                                         </tr>
@@ -771,77 +782,77 @@
 
 @section('script')
     <script src="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.all.min.js')}}"></script>
-{{--    <script>--}}
-{{--        let oTable = $("#table-detailkardex").DataTable({--}}
-{{--            bDestroy: true,--}}
-{{--            "paging": true,--}}
-{{--            "searching": true,--}}
-{{--            "ordering": true,--}}
-{{--            "sScrollY": "350px",--}}
-{{--            "sScrollX": true,--}}
-{{--            "processing": true,--}}
-{{--            "responsive": true,--}}
-{{--            "colReorder": true,--}}
-{{--            "stateSave": true,--}}
-{{--            "stateDuration": 0,--}}
-{{--            "columnDefs": [--}}
-{{--                {"width": "100px", "targets": 0},--}}
-{{--                {"width": "280px", "targets": 1},--}}
-{{--                {"width": "120px", "targets": 2},--}}
-{{--                {"width": "150px", "targets": 3},--}}
-{{--                {"width": "150px", "targets": 4},--}}
-{{--                {"width": "150px", "targets": 5},--}}
-{{--                {"width": "250px", "targets": 6},--}}
-{{--                {"width": "100px", "targets": 7},--}}
-{{--                {"width": "100px", "targets": 8},--}}
-{{--                {"width": "120px", "targets": 9},--}}
-{{--                {"width": "120px", "targets": 10},--}}
-{{--                {"width": "280px", "targets": 11},--}}
-{{--                {"width": "120px", "targets": 12},--}}
-{{--                {"width": "280px", "targets": 13},--}}
-{{--            ],--}}
-{{--            "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',--}}
-{{--            "lengthMenu": [[1, 5, 10, 30, 50, 100, 150, 200, 250, -1], [1, 5, 10, 30, 50, 100, 150, 200, 250, "Todos"]],--}}
-{{--            buttons: [--}}
-{{--                {--}}
-{{--                    "extend": "colvis",--}}
-{{--                    "text": "<img src=\"{{asset('/pics/adbuscar.png')}}\"  alt=''><span  style='font-size: 11px;'> Mostar/Ocultar</span>",--}}
-{{--                    "className": "btn btn-outline-info btn-md  btn-bold",--}}
-{{--                    columns: ':not(:first):not(:last)'--}}
-{{--                },--}}
-{{--                {--}}
-{{--                    "extend": "csv",--}}
-{{--                    "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16'><span  style='font-size: 11px;'> Csv</span>",--}}
-{{--                    "className": "btn btn-outline-info btn-md  btn-bold",--}}
-{{--                },--}}
-{{--                {--}}
-{{--                    "extend": "excel",--}}
-{{--                    "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt=''><span  style='font-size: 11px;'> Excel</span>",--}}
-{{--                    "className": "btn btn-outline-info btn-md  btn-bold",--}}
-{{--                }--}}
-{{--            ],--}}
-{{--            language: {--}}
-{{--                "decimal": "",--}}
-{{--                "emptyTable": "No hay información",--}}
-{{--                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",--}}
-{{--                "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",--}}
-{{--                "infoFiltered": "(Filtrado de _MAX_ total entradas)",--}}
-{{--                "infoPostFix": "",--}}
-{{--                "thousands": ",",--}}
-{{--                "lengthMenu": "Mostrar _MENU_ Entradas",--}}
-{{--                "loadingRecords": "Cargando...",--}}
-{{--                "processing": '<i class="fa fa-spinner fa-spin fa-4x fa-fw text-info"></i><span class="sr-only">Loading...</span> ',--}}
-{{--                "search": "Buscar:",--}}
-{{--                "zeroRecords": "Sin resultados encontrados",--}}
-{{--                "paginate": {--}}
-{{--                    "first": "Primero",--}}
-{{--                    "last": "Ultimo",--}}
-{{--                    "next": "Siguiente",--}}
-{{--                    "previous": "Anterior"--}}
-{{--                }--}}
-{{--            },--}}
-{{--        });--}}
-{{--    </script>--}}
+    {{--    <script>--}}
+    {{--        let oTable = $("#table-detailkardex").DataTable({--}}
+    {{--            bDestroy: true,--}}
+    {{--            "paging": true,--}}
+    {{--            "searching": true,--}}
+    {{--            "ordering": true,--}}
+    {{--            "sScrollY": "350px",--}}
+    {{--            "sScrollX": true,--}}
+    {{--            "processing": true,--}}
+    {{--            "responsive": true,--}}
+    {{--            "colReorder": true,--}}
+    {{--            "stateSave": true,--}}
+    {{--            "stateDuration": 0,--}}
+    {{--            "columnDefs": [--}}
+    {{--                {"width": "100px", "targets": 0},--}}
+    {{--                {"width": "280px", "targets": 1},--}}
+    {{--                {"width": "120px", "targets": 2},--}}
+    {{--                {"width": "150px", "targets": 3},--}}
+    {{--                {"width": "150px", "targets": 4},--}}
+    {{--                {"width": "150px", "targets": 5},--}}
+    {{--                {"width": "250px", "targets": 6},--}}
+    {{--                {"width": "100px", "targets": 7},--}}
+    {{--                {"width": "100px", "targets": 8},--}}
+    {{--                {"width": "120px", "targets": 9},--}}
+    {{--                {"width": "120px", "targets": 10},--}}
+    {{--                {"width": "280px", "targets": 11},--}}
+    {{--                {"width": "120px", "targets": 12},--}}
+    {{--                {"width": "280px", "targets": 13},--}}
+    {{--            ],--}}
+    {{--            "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',--}}
+    {{--            "lengthMenu": [[1, 5, 10, 30, 50, 100, 150, 200, 250, -1], [1, 5, 10, 30, 50, 100, 150, 200, 250, "Todos"]],--}}
+    {{--            buttons: [--}}
+    {{--                {--}}
+    {{--                    "extend": "colvis",--}}
+    {{--                    "text": "<img src=\"{{asset('/pics/adbuscar.png')}}\"  alt=''><span  style='font-size: 11px;'> Mostar/Ocultar</span>",--}}
+    {{--                    "className": "btn btn-outline-info btn-md  btn-bold",--}}
+    {{--                    columns: ':not(:first):not(:last)'--}}
+    {{--                },--}}
+    {{--                {--}}
+    {{--                    "extend": "csv",--}}
+    {{--                    "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16'><span  style='font-size: 11px;'> Csv</span>",--}}
+    {{--                    "className": "btn btn-outline-info btn-md  btn-bold",--}}
+    {{--                },--}}
+    {{--                {--}}
+    {{--                    "extend": "excel",--}}
+    {{--                    "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt=''><span  style='font-size: 11px;'> Excel</span>",--}}
+    {{--                    "className": "btn btn-outline-info btn-md  btn-bold",--}}
+    {{--                }--}}
+    {{--            ],--}}
+    {{--            language: {--}}
+    {{--                "decimal": "",--}}
+    {{--                "emptyTable": "No hay información",--}}
+    {{--                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",--}}
+    {{--                "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",--}}
+    {{--                "infoFiltered": "(Filtrado de _MAX_ total entradas)",--}}
+    {{--                "infoPostFix": "",--}}
+    {{--                "thousands": ",",--}}
+    {{--                "lengthMenu": "Mostrar _MENU_ Entradas",--}}
+    {{--                "loadingRecords": "Cargando...",--}}
+    {{--                "processing": '<i class="fa fa-spinner fa-spin fa-4x fa-fw text-info"></i><span class="sr-only">Loading...</span> ',--}}
+    {{--                "search": "Buscar:",--}}
+    {{--                "zeroRecords": "Sin resultados encontrados",--}}
+    {{--                "paginate": {--}}
+    {{--                    "first": "Primero",--}}
+    {{--                    "last": "Ultimo",--}}
+    {{--                    "next": "Siguiente",--}}
+    {{--                    "previous": "Anterior"--}}
+    {{--                }--}}
+    {{--            },--}}
+    {{--        });--}}
+    {{--    </script>--}}
 
     <script>
         $(document).ready(function () {
