@@ -14,6 +14,47 @@ use Illuminate\Support\Str;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+/**
+ * @property string $centerid
+ * @property int $id
+ * @property string|null $typeuuid
+ * @property string $name
+ * @property string|null $value01
+ * @property string|null $value02
+ * @property string|null $value03
+ * @property int $userid
+ * @property string $schemaid
+ * @property string|null $statusid
+ * @property \Illuminate\Support\Carbon $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @property-read SystemCenterDistribution $center
+ * @property-read SystemStatus|null $status
+ * @property-read User $user
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourType name($name)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourType newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourType newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourType onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourType query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourType whereCenterid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourType whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourType whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourType whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourType whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourType whereSchemaid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourType whereStatusid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourType whereTypeuuid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourType whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourType whereUserid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourType whereValue01($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourType whereValue02($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourType whereValue03($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourType withTrashed(bool $withTrashed = true)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourType withoutTrashed()
+ * @mixin \Eloquent
+ */
 class StorageSafetyTourType extends Model
 {
     use SoftDeletes;

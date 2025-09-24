@@ -12,6 +12,49 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+/**
+ * @property int $id
+ * @property string $centerid
+ * @property string $warehouseid
+ * @property int $receiptid
+ * @property string $shipmentid
+ * @property string $partnumberid
+ * @property int $category01id
+ * @property int $category02id
+ * @property int $stockcategoryid
+ * @property string|null $expirecode
+ * @property string|null $expiredate
+ * @property string|null $productiondate
+ * @property float|null $quantitytrue
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @property-read InventoryPartNumberCategory01|null $category01
+ * @property-read InventoryPartNumberCategory02|null $category02
+ * @property-read SystemCenterDistribution $center
+ * @property-read InventoryPartnumber|null $partnumber
+ * @property-read SystemWarehouse $warehouse
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptStock newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptStock newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptStock query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptStock whereCategory01id($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptStock whereCategory02id($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptStock whereCenterid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptStock whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptStock whereExpirecode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptStock whereExpiredate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptStock whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptStock wherePartnumberid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptStock whereProductiondate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptStock whereQuantitytrue($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptStock whereReceiptid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptStock whereShipmentid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptStock whereStockcategoryid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptStock whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptStock whereWarehouseid($value)
+ * @mixin \Eloquent
+ */
 class ReceiptStock extends Model
 {
     use LogsActivity;

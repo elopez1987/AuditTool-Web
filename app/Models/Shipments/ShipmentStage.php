@@ -6,6 +6,28 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+/**
+ * @property int $id
+ * @property int $orderid
+ * @property int $value01
+ * @property int|null $value02
+ * @property int|null $value03
+ * @property int|null $value04
+ * @property string|null $value05
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentStage newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentStage newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentStage query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentStage whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentStage whereOrderid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentStage whereValue01($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentStage whereValue02($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentStage whereValue03($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentStage whereValue04($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentStage whereValue05($value)
+ * @mixin \Eloquent
+ */
 class ShipmentStage extends Model
 {
     use LogsActivity;

@@ -12,16 +12,13 @@ use Spatie\Activitylog\Models\Activity;
  * App\Models\Security\Permission
  *
  * @method static create(array<string> $array)
- *
  * @property int $id
  * @property string $name
  * @property string $guard_name
  * @property string|null $created_at
  * @property string|null $updated_at
- *
  * @property-read Collection|array<Activity> $activities
  * @property-read int|null $activities_count
- *
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Security\Permission newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Security\Permission newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Security\Permission query()
@@ -30,7 +27,20 @@ use Spatie\Activitylog\Models\Activity;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Security\Permission whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Security\Permission whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Security\Permission whereUpdatedAt($value)
- *
+ * @property int|null $moduleid
+ * @property int|null $functionid
+ * @property string|null $category
+ * @property string|null $description
+ * @property-read SecurityFunction|null $function
+ * @property-read SecurityModule|null $module
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Permission description($description)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Permission forFunction($functionid)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Permission forModule($moduleid)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Permission name($name)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Permission whereCategory($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Permission whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Permission whereFunctionid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Permission whereModuleid($value)
  * @mixin \Eloquent
  */
 class Permission extends Model

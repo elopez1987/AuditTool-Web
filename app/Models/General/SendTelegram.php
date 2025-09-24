@@ -6,6 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Config;
 
+/**
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
+ * @property-read int|null $notifications_count
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SendTelegram newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SendTelegram newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SendTelegram query()
+ * @mixin \Eloquent
+ */
 class SendTelegram extends Model
 {
     use Notifiable;

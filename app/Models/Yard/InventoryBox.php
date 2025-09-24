@@ -11,6 +11,41 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+/**
+ * @property int $id
+ * @property string $centerid
+ * @property string $schematypeid
+ * @property string $statustypeid
+ * @property string $description
+ * @property string $createdate
+ * @property int|null $createuser
+ * @property int|null $quantitybox
+ * @property int|null $quantityboxtrue
+ * @property string|null $schemaid
+ * @property string|null $statusid
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @property-read SystemCenterDistribution $center
+ * @property-read SystemStatus|null $status
+ * @property-read SystemStatus|null $type
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryBox forFolio($folio)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryBox forStatus($statusid)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryBox newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryBox newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryBox query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryBox whereCenterid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryBox whereCreatedate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryBox whereCreateuser($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryBox whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryBox whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryBox whereQuantitybox($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryBox whereQuantityboxtrue($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryBox whereSchemaid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryBox whereSchematypeid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryBox whereStatusid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryBox whereStatustypeid($value)
+ * @mixin \Eloquent
+ */
 class InventoryBox extends Model
 {
     use LogsActivity;

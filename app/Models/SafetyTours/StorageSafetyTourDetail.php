@@ -8,6 +8,50 @@ use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property int $id
+ * @property int $tourid
+ * @property string $centerid
+ * @property int|null $tagid
+ * @property int|null $sequence
+ * @property float|null $latitude
+ * @property float|null $longitude
+ * @property string $schematype
+ * @property string|null $statustype
+ * @property string|null $comment
+ * @property string|null $evidencefile
+ * @property int|null $userid
+ * @property string $schemaid
+ * @property string $statusid
+ * @property \Illuminate\Support\Carbon $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read SystemStatus|null $categorytype
+ * @property-read SystemCenterDistribution $center
+ * @property-read SystemStatus|null $status
+ * @property-read \App\Models\SafetyTours\StorageTags|null $tag
+ * @property-read \App\Models\SafetyTours\StorageSafetyTours $tour
+ * @property-read User|null $user
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourDetail newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourDetail newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourDetail query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourDetail whereCenterid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourDetail whereComment($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourDetail whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourDetail whereEvidencefile($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourDetail whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourDetail whereLatitude($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourDetail whereLongitude($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourDetail whereSchemaid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourDetail whereSchematype($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourDetail whereSequence($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourDetail whereStatusid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourDetail whereStatustype($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourDetail whereTagid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourDetail whereTourid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourDetail whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourDetail whereUserid($value)
+ * @mixin \Eloquent
+ */
 class StorageSafetyTourDetail extends Model
 {
     protected $table = 'storagesafetytourdetail';

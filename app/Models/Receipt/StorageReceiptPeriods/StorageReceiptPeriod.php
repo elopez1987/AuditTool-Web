@@ -14,6 +14,53 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+/**
+ * @property int $id
+ * @property string $centerid
+ * @property string $warehouseid
+ * @property string $name
+ * @property string $startdate
+ * @property string $finishdate
+ * @property string|null $auxiliary01
+ * @property string|null $auxiliary02
+ * @property string|null $auxiliary03
+ * @property int $userid
+ * @property string $schemaid
+ * @property string $statusid
+ * @property \Illuminate\Support\Carbon $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @property-read SystemCenterDistribution $center
+ * @property-read SystemSchema $schema
+ * @property-read SystemStatus $status
+ * @property-read User|null $user
+ * @property-read SystemWarehouse $warehouse
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReceiptPeriod name($name)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReceiptPeriod newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReceiptPeriod newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReceiptPeriod onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReceiptPeriod query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReceiptPeriod whereAuxiliary01($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReceiptPeriod whereAuxiliary02($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReceiptPeriod whereAuxiliary03($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReceiptPeriod whereCenterid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReceiptPeriod whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReceiptPeriod whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReceiptPeriod whereFinishdate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReceiptPeriod whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReceiptPeriod whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReceiptPeriod whereSchemaid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReceiptPeriod whereStartdate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReceiptPeriod whereStatusid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReceiptPeriod whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReceiptPeriod whereUserid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReceiptPeriod whereWarehouseid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReceiptPeriod withTrashed(bool $withTrashed = true)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReceiptPeriod withoutTrashed()
+ * @mixin \Eloquent
+ */
 class StorageReceiptPeriod extends Model
 {
     use SoftDeletes;

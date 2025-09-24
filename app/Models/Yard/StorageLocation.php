@@ -17,6 +17,60 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * @method static whereStatusid(string $string)
+ * @property int $id
+ * @property string $centerid
+ * @property string|null $warehouseid
+ * @property int $zoneid
+ * @property string|null $locationid
+ * @property string $name
+ * @property string|null $barcode
+ * @property array<array-key, mixed>|null $configurationflag
+ * @property string|null $auxiliary01
+ * @property string|null $auxiliary02
+ * @property string|null $auxiliary03
+ * @property string|null $auxiliary04
+ * @property string|null $auxiliary05
+ * @property string $schemaid
+ * @property string $statusid
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @property-read SystemCenterDistribution $center
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
+ * @property-read int|null $notifications_count
+ * @property-read SystemStatus $status
+ * @property-read SystemWarehouse|null $warehouse
+ * @property-read StorageZone $zone
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLocation name($name)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLocation newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLocation newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLocation onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLocation query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLocation status($statusid)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLocation warehouse($warehouseid)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLocation whereAuxiliary01($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLocation whereAuxiliary02($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLocation whereAuxiliary03($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLocation whereAuxiliary04($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLocation whereAuxiliary05($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLocation whereBarcode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLocation whereCenterid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLocation whereConfigurationflag($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLocation whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLocation whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLocation whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLocation whereLocationid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLocation whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLocation whereSchemaid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLocation whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLocation whereWarehouseid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLocation whereZoneid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLocation withTrashed(bool $withTrashed = true)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLocation withoutTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLocation zone($zoneid)
+ * @mixin \Eloquent
  */
 class StorageLocation extends Model
 {

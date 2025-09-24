@@ -14,6 +14,77 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+/**
+ * @property int $id
+ * @property string $centerid
+ * @property string $warehouseid
+ * @property string|null $barcode
+ * @property string $trucknumber
+ * @property string|null $econumber
+ * @property int $carrierid
+ * @property string $operatorname
+ * @property string|null $phone
+ * @property string|null $drivernumber
+ * @property string|null $brand
+ * @property string|null $typeoflicense
+ * @property string|null $validity
+ * @property \Illuminate\Support\Carbon $entrydate
+ * @property string|null $finishdate
+ * @property string|null $type
+ * @property string|null $auxiliary01
+ * @property string|null $auxiliary02
+ * @property string|null $auxiliary03
+ * @property string|null $auxiliary04
+ * @property string|null $auxiliary05
+ * @property int $createuser
+ * @property int|null $updateuser
+ * @property string $schemaid
+ * @property string $statusid
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @property-read ShipmentCarrier|null $carrier
+ * @property-read SystemCenterDistribution $center
+ * @property-read SystemStatus $status
+ * @property-read SystemWarehouse $warehouse
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptTruck barcode($barcode)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptTruck carrier($carrierid)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptTruck ecoNumber($econumber)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptTruck filterForRangeDate($startDate, $endDate)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptTruck folio($folionumber)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptTruck name($name)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptTruck newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptTruck newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptTruck query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptTruck truck($trucknumber)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptTruck truckNumber($trucknumber)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptTruck warehouse($warehouseid)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptTruck whereAuxiliary01($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptTruck whereAuxiliary02($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptTruck whereAuxiliary03($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptTruck whereAuxiliary04($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptTruck whereAuxiliary05($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptTruck whereBarcode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptTruck whereBrand($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptTruck whereCarrierid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptTruck whereCenterid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptTruck whereCreateuser($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptTruck whereDrivernumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptTruck whereEconumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptTruck whereEntrydate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptTruck whereFinishdate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptTruck whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptTruck whereOperatorname($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptTruck wherePhone($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptTruck whereSchemaid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptTruck whereStatusid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptTruck whereTrucknumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptTruck whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptTruck whereTypeoflicense($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptTruck whereUpdateuser($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptTruck whereValidity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptTruck whereWarehouseid($value)
+ * @mixin \Eloquent
+ */
 class ReceiptTruck extends Model
 {
     use LogsActivity;

@@ -6,6 +6,52 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+/**
+ * @property int $id
+ * @property string|null $centerid
+ * @property string|null $shipmentid
+ * @property string|null $folionumber
+ * @property string|null $message
+ * @property string|null $chatid
+ * @property string|null $value01
+ * @property string|null $value02
+ * @property string|null $value03
+ * @property string|null $value04
+ * @property string|null $value05
+ * @property string|null $value06
+ * @property string|null $value07
+ * @property string|null $value08
+ * @property string|null $value09
+ * @property string|null $value10
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|LogMessageWhatsApp forNumber($number)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|LogMessageWhatsApp forShipment($shipmentid)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|LogMessageWhatsApp newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|LogMessageWhatsApp newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|LogMessageWhatsApp query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|LogMessageWhatsApp whereCenterid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|LogMessageWhatsApp whereChatid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|LogMessageWhatsApp whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|LogMessageWhatsApp whereFolionumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|LogMessageWhatsApp whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|LogMessageWhatsApp whereMessage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|LogMessageWhatsApp whereShipmentid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|LogMessageWhatsApp whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|LogMessageWhatsApp whereValue01($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|LogMessageWhatsApp whereValue02($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|LogMessageWhatsApp whereValue03($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|LogMessageWhatsApp whereValue04($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|LogMessageWhatsApp whereValue05($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|LogMessageWhatsApp whereValue06($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|LogMessageWhatsApp whereValue07($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|LogMessageWhatsApp whereValue08($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|LogMessageWhatsApp whereValue09($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|LogMessageWhatsApp whereValue10($value)
+ * @mixin \Eloquent
+ */
 class LogMessageWhatsApp extends Model
 {
     use LogsActivity;

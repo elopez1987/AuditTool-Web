@@ -14,6 +14,72 @@ use Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property int $id
+ * @property string $centerid
+ * @property string $warehouseid
+ * @property int $receiptunitid
+ * @property string|null $barcode
+ * @property string|null $shipmentid
+ * @property int $carrierid
+ * @property int $truckid
+ * @property string|null $containerseal
+ * @property string $operatorname
+ * @property string $trucknumber
+ * @property string $boxnumber
+ * @property string|null $phone
+ * @property string|null $drivernumber
+ * @property int $zoneid
+ * @property int|null $locationid
+ * @property int $unitstatusid
+ * @property int $razonstatusid
+ * @property int $createuser
+ * @property string|null $statusid
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read ShipmentCarrier|null $carrier
+ * @property-read SystemCenterDistribution $center
+ * @property-read \App\Models\Yard\StorageReason $event
+ * @property-read \App\Models\Yard\StorageLocation|null $location
+ * @property-read SystemStatus|null $status
+ * @property-read ShipmentTruck|null $truck
+ * @property-read \App\Models\Yard\ReceiptUnit $unit
+ * @property-read \App\Models\Yard\StorageUnitStatus $unitstatus
+ * @property-read User|null $user
+ * @property-read SystemWarehouse $warehouse
+ * @property-read StorageZone|null $zone
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTrace boxNumber($box)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTrace carrier($carrierid)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTrace date($datein, $dateout)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTrace name($name)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTrace newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTrace newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTrace query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTrace shipment($shipmentid)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTrace whereBarcode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTrace whereBoxnumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTrace whereCarrierid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTrace whereCenterid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTrace whereContainerseal($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTrace whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTrace whereCreateuser($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTrace whereDrivernumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTrace whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTrace whereLocationid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTrace whereOperatorname($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTrace wherePhone($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTrace whereRazonstatusid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTrace whereReceiptunitid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTrace whereShipmentid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTrace whereStatusid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTrace whereTruckid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTrace whereTrucknumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTrace whereUnitstatusid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTrace whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTrace whereWarehouseid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTrace whereZoneid($value)
+ * @mixin \Eloquent
+ */
 class StorageUnitTrace extends Model
 {
     protected $table = 'storageunittrace';

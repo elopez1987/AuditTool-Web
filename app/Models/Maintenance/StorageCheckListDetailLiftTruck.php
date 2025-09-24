@@ -10,6 +10,51 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+/**
+ * @property int $id
+ * @property string $centerid
+ * @property int $checklistid
+ * @property string $description
+ * @property string $typeid
+ * @property string|null $auxiliary01
+ * @property string|null $auxiliary02
+ * @property string|null $auxiliary03
+ * @property string|null $auxiliary04
+ * @property string|null $auxiliary05
+ * @property string $schemaid
+ * @property string $statusid
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @property-read SystemCenterDistribution $center
+ * @property-read \App\Models\Maintenance\StorageCheckListLiftTrucks $checklist
+ * @property-read SystemStatus $status
+ * @property-read SystemStatus|null $type
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCheckListDetailLiftTruck newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCheckListDetailLiftTruck newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCheckListDetailLiftTruck onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCheckListDetailLiftTruck query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCheckListDetailLiftTruck whereAuxiliary01($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCheckListDetailLiftTruck whereAuxiliary02($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCheckListDetailLiftTruck whereAuxiliary03($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCheckListDetailLiftTruck whereAuxiliary04($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCheckListDetailLiftTruck whereAuxiliary05($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCheckListDetailLiftTruck whereCenterid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCheckListDetailLiftTruck whereChecklistid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCheckListDetailLiftTruck whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCheckListDetailLiftTruck whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCheckListDetailLiftTruck whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCheckListDetailLiftTruck whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCheckListDetailLiftTruck whereSchemaid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCheckListDetailLiftTruck whereStatusid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCheckListDetailLiftTruck whereTypeid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCheckListDetailLiftTruck whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCheckListDetailLiftTruck withTrashed(bool $withTrashed = true)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCheckListDetailLiftTruck withoutTrashed()
+ * @mixin \Eloquent
+ */
 class StorageCheckListDetailLiftTruck extends Model
 {
     use SoftDeletes;

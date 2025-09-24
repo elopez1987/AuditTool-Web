@@ -12,6 +12,40 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * @method static whereStatusid(string $string)
+ * @property int $id
+ * @property string $name
+ * @property string|null $turnid
+ * @property string|null $configurationflag
+ * @property string|null $auxiliary01
+ * @property string|null $auxiliary02
+ * @property string|null $auxiliary03
+ * @property string|null $auxiliary04
+ * @property string|null $auxiliary05
+ * @property string $schemaid
+ * @property string $statusid
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @property-read SystemCenterDistribution|null $center
+ * @property-read SystemStatus $status
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTurn name($name)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTurn newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTurn newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTurn query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTurn whereAuxiliary01($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTurn whereAuxiliary02($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTurn whereAuxiliary03($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTurn whereAuxiliary04($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTurn whereAuxiliary05($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTurn whereConfigurationflag($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTurn whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTurn whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTurn whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTurn whereSchemaid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTurn whereTurnid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTurn whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class StorageTurn extends Model
 {

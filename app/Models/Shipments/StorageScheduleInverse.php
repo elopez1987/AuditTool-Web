@@ -10,6 +10,41 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+/**
+ * @property int $id
+ * @property string $centerid
+ * @property string $warehouseid
+ * @property int $orderid
+ * @property int|null $folionumber
+ * @property string $adddate
+ * @property string|null $appointment
+ * @property string $statusid
+ * @property string $schemaid
+ * @property \Illuminate\Support\Carbon $created_at
+ * @property \Illuminate\Support\Carbon $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @property-read \App\Models\Shipments\StorageScheduleInverseInventory $inventory
+ * @property-read \App\Models\Shipments\OrderDeliverie $order
+ * @property-read SystemStatus $status
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageScheduleInverse forShipment($shipmentid)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageScheduleInverse forStatus($statusid)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageScheduleInverse newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageScheduleInverse newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageScheduleInverse query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageScheduleInverse whereAdddate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageScheduleInverse whereAppointment($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageScheduleInverse whereCenterid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageScheduleInverse whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageScheduleInverse whereFolionumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageScheduleInverse whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageScheduleInverse whereOrderid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageScheduleInverse whereSchemaid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageScheduleInverse whereStatusid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageScheduleInverse whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageScheduleInverse whereWarehouseid($value)
+ * @mixin \Eloquent
+ */
 class StorageScheduleInverse extends Model
 {
     use LogsActivity;

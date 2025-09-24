@@ -9,6 +9,39 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+/**
+ * @property string|null $centerid
+ * @property int $id
+ * @property string $description
+ * @property string $type
+ * @property string|null $auxiliary01
+ * @property string|null $auxiliary02
+ * @property string|null $auxiliary03
+ * @property string|null $auxiliary04
+ * @property string|null $auxiliary05
+ * @property string|null $schemaid
+ * @property string|null $statusid
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @property-read SystemCenterDistribution|null $center
+ * @property-read SystemStatus|null $status
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReasonOutput name($name)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReasonOutput newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReasonOutput newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReasonOutput query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReasonOutput whereAuxiliary01($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReasonOutput whereAuxiliary02($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReasonOutput whereAuxiliary03($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReasonOutput whereAuxiliary04($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReasonOutput whereAuxiliary05($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReasonOutput whereCenterid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReasonOutput whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReasonOutput whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReasonOutput whereSchemaid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReasonOutput whereStatusid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReasonOutput whereType($value)
+ * @mixin \Eloquent
+ */
 class StorageReasonOutput extends Model
 {
     use LogsActivity;

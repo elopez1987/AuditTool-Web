@@ -13,6 +13,52 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * @method static whereStatusid(string $string)
+ * @property int $id
+ * @property string $centerid
+ * @property string $name
+ * @property string|null $carrierid
+ * @property array<array-key, mixed>|null $configurationflag
+ * @property string|null $rfc
+ * @property string|null $auxiliary01
+ * @property string|null $auxiliary02
+ * @property string|null $auxiliary03
+ * @property string|null $auxiliary04
+ * @property string|null $auxiliary05
+ * @property string $schemaid
+ * @property string $statusid
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @property-read SystemCenterDistribution $center
+ * @property-read SystemStatus $status
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentCarrier carrier($carrierid)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentCarrier carriers($carries)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentCarrier name($name)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentCarrier newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentCarrier newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentCarrier onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentCarrier query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentCarrier status($statusid)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentCarrier whereAuxiliary01($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentCarrier whereAuxiliary02($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentCarrier whereAuxiliary03($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentCarrier whereAuxiliary04($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentCarrier whereAuxiliary05($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentCarrier whereCarrierid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentCarrier whereCenterid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentCarrier whereConfigurationflag($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentCarrier whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentCarrier whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentCarrier whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentCarrier whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentCarrier whereRfc($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentCarrier whereSchemaid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentCarrier whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentCarrier withTrashed(bool $withTrashed = true)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentCarrier withoutTrashed()
+ * @mixin \Eloquent
  */
 class ShipmentCarrier extends Model
 {

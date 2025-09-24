@@ -10,6 +10,64 @@ use Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @property string $centerid
+ * @property string $serialnumber
+ * @property string $numbertruck
+ * @property string $schematypeid
+ * @property string $typeid
+ * @property string $schemabrandid
+ * @property string $brandid
+ * @property string $schemamodelid
+ * @property string $modelid
+ * @property string $createuser
+ * @property string|null $auxiliary01
+ * @property string|null $auxiliary02
+ * @property string|null $auxiliary03
+ * @property string|null $auxiliary04
+ * @property string|null $auxiliary05
+ * @property string $schemaid
+ * @property string $statusid
+ * @property \Illuminate\Support\Carbon $created_at
+ * @property \Illuminate\Support\Carbon $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read SystemStatus|null $brand
+ * @property-read SystemCenterDistribution $center
+ * @property-read SystemStatus|null $model
+ * @property-read SystemStatus $status
+ * @property-read SystemStatus|null $type
+ * @property-read User|null $user
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLiftTruck newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLiftTruck newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLiftTruck numberTruck($numbertruck)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLiftTruck onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLiftTruck query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLiftTruck serialNumber($serialnumber)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLiftTruck status($statusid)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLiftTruck whereAuxiliary01($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLiftTruck whereAuxiliary02($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLiftTruck whereAuxiliary03($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLiftTruck whereAuxiliary04($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLiftTruck whereAuxiliary05($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLiftTruck whereBrandid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLiftTruck whereCenterid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLiftTruck whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLiftTruck whereCreateuser($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLiftTruck whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLiftTruck whereModelid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLiftTruck whereNumbertruck($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLiftTruck whereSchemabrandid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLiftTruck whereSchemaid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLiftTruck whereSchemamodelid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLiftTruck whereSchematypeid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLiftTruck whereSerialnumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLiftTruck whereStatusid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLiftTruck whereTypeid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLiftTruck whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLiftTruck withTrashed(bool $withTrashed = true)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLiftTruck withoutTrashed()
+ * @mixin \Eloquent
+ */
 class StorageLiftTruck extends Model
 {
     use SoftDeletes;

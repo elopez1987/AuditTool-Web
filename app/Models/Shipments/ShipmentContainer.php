@@ -11,6 +11,52 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+/**
+ * @property int $id
+ * @property string $centerid
+ * @property string $warehouseid
+ * @property int $orderid
+ * @property string|null $deliveryid
+ * @property int $customerid
+ * @property string $lpnid
+ * @property string $scanuser
+ * @property \Illuminate\Support\Carbon $scandate
+ * @property string|null $scanuserload
+ * @property \Illuminate\Support\Carbon|null $scandateload
+ * @property string|null $pathfile
+ * @property string $schemaid
+ * @property string $statusid
+ * @property string|null $closedate
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @property-read SystemStatus $status
+ * @property-read User|null $user
+ * @property-read User|null $userload
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentContainer newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentContainer newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentContainer onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentContainer query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentContainer whereCenterid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentContainer whereClosedate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentContainer whereCustomerid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentContainer whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentContainer whereDeliveryid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentContainer whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentContainer whereLpnid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentContainer whereOrderid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentContainer wherePathfile($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentContainer whereScandate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentContainer whereScandateload($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentContainer whereScanuser($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentContainer whereScanuserload($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentContainer whereSchemaid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentContainer whereStatusid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentContainer whereWarehouseid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentContainer withTrashed(bool $withTrashed = true)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentContainer withoutTrashed()
+ * @mixin \Eloquent
+ */
 class ShipmentContainer extends Model
 {
     use SoftDeletes;

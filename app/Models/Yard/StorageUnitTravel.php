@@ -6,6 +6,42 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+/**
+ * @property int $id
+ * @property string $centerid
+ * @property string $warehouseid
+ * @property int $barcodekey
+ * @property int $folioplant
+ * @property string $circuitopen
+ * @property string $checkinplant
+ * @property string|null $checkoutplant
+ * @property int|null $foliowarehouse
+ * @property string|null $checkinwarehouse
+ * @property string|null $checkoutwarehouse
+ * @property string|null $circuitclose
+ * @property string $schemaid
+ * @property string $statusid
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTravel newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTravel newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTravel query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTravel whereBarcodekey($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTravel whereCenterid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTravel whereCheckinplant($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTravel whereCheckinwarehouse($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTravel whereCheckoutplant($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTravel whereCheckoutwarehouse($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTravel whereCircuitclose($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTravel whereCircuitopen($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTravel whereFolioplant($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTravel whereFoliowarehouse($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTravel whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTravel whereSchemaid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTravel whereStatusid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTravel whereWarehouseid($value)
+ * @mixin \Eloquent
+ */
 class StorageUnitTravel extends Model
 {
     use LogsActivity;

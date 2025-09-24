@@ -6,6 +6,43 @@ use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property int $id
+ * @property string|null $log_name
+ * @property string $description
+ * @property string|null $subject_type
+ * @property int|null $subject_id
+ * @property string|null $causer_type
+ * @property int|null $causer_id
+ * @property string|null $properties
+ * @property string|null $created_at
+ * @property string|null $updated_at
+ * @property string|null $event
+ * @property string|null $batch_uuid
+ * @property-read User|null $user
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ActivityLog forDate($date_in, $date_out)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ActivityLog forDescription($description)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ActivityLog forFolio($id)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ActivityLog forModel($model)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ActivityLog forSubject($subject_id)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ActivityLog forUser($user)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ActivityLog newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ActivityLog newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ActivityLog query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ActivityLog whereBatchUuid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ActivityLog whereCauserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ActivityLog whereCauserType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ActivityLog whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ActivityLog whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ActivityLog whereEvent($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ActivityLog whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ActivityLog whereLogName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ActivityLog whereProperties($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ActivityLog whereSubjectId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ActivityLog whereSubjectType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ActivityLog whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class ActivityLog extends Model
 {
     public $timestamps = false;

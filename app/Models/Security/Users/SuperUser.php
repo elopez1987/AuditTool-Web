@@ -7,6 +7,22 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+/**
+ * @property int $id
+ * @property int $userid
+ * @property string|null $created_at
+ * @property string|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SuperUser newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SuperUser newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SuperUser query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SuperUser whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SuperUser whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SuperUser whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SuperUser whereUserid($value)
+ * @mixin \Eloquent
+ */
 class SuperUser extends Model
 {
     use LogsActivity;

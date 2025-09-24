@@ -7,6 +7,30 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+/**
+ * @property int $id
+ * @property int $labelid
+ * @property string $description
+ * @property string|null $auxiliary01
+ * @property string|null $auxiliary02
+ * @property string|null $auxiliary03
+ * @property string|null $auxiliary04
+ * @property string|null $auxiliary05
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryLabelDetail newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryLabelDetail newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryLabelDetail query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryLabelDetail whereAuxiliary01($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryLabelDetail whereAuxiliary02($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryLabelDetail whereAuxiliary03($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryLabelDetail whereAuxiliary04($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryLabelDetail whereAuxiliary05($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryLabelDetail whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryLabelDetail whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryLabelDetail whereLabelid($value)
+ * @mixin \Eloquent
+ */
 class InventoryLabelDetail extends Model
 {
     use LogsActivity;

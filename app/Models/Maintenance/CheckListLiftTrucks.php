@@ -10,6 +10,50 @@ use Illuminate\Support\Facades\Auth;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+/**
+ * @property int $id
+ * @property string $centerid
+ * @property string $serialnumber
+ * @property string $supervisorname
+ * @property string $horometro
+ * @property string|null $auxiliary01
+ * @property string|null $auxiliary02
+ * @property string|null $auxiliary03
+ * @property string|null $auxiliary04
+ * @property string|null $auxiliary05
+ * @property string $createuser
+ * @property string $schemaid
+ * @property string $statusid
+ * @property \Illuminate\Support\Carbon $created_at
+ * @property \Illuminate\Support\Carbon $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @property-read SystemCenterDistribution $center
+ * @property-read \App\Models\Maintenance\StorageLiftTruck $truck
+ * @property-read User|null $user
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListLiftTrucks forNumberTruck($numbertruck)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListLiftTrucks forSerialNumber($serialnumber)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListLiftTrucks forWorkday($workday)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListLiftTrucks newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListLiftTrucks newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListLiftTrucks query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListLiftTrucks whereAuxiliary01($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListLiftTrucks whereAuxiliary02($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListLiftTrucks whereAuxiliary03($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListLiftTrucks whereAuxiliary04($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListLiftTrucks whereAuxiliary05($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListLiftTrucks whereCenterid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListLiftTrucks whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListLiftTrucks whereCreateuser($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListLiftTrucks whereHorometro($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListLiftTrucks whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListLiftTrucks whereSchemaid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListLiftTrucks whereSerialnumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListLiftTrucks whereStatusid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListLiftTrucks whereSupervisorname($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListLiftTrucks whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class CheckListLiftTrucks extends Model
 {
     use LogsActivity;

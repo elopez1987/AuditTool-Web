@@ -12,6 +12,50 @@ use Illuminate\Support\Str;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+/**
+ * @property int $id
+ * @property string|null $touruuid
+ * @property string $centerid
+ * @property string $name
+ * @property string $datetours
+ * @property int $sequence
+ * @property int $userid
+ * @property string|null $startdate
+ * @property string|null $finishdate
+ * @property string|null $value01
+ * @property string|null $value02
+ * @property string|null $value03
+ * @property string $schemaid
+ * @property string $statusid
+ * @property \Illuminate\Support\Carbon $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @property-read SystemCenterDistribution $center
+ * @property-read SystemStatus $status
+ * @property-read User $user
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTours name($name)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTours newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTours newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTours query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTours whereCenterid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTours whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTours whereDatetours($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTours whereFinishdate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTours whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTours whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTours whereSchemaid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTours whereSequence($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTours whereStartdate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTours whereStatusid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTours whereTouruuid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTours whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTours whereUserid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTours whereValue01($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTours whereValue02($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTours whereValue03($value)
+ * @mixin \Eloquent
+ */
 class StorageSafetyTours extends Model
 {
     use LogsActivity;

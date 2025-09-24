@@ -11,6 +11,35 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * @method static where(string $string, mixed $id)
+ * @property int $id
+ * @property string $modeltype
+ * @property int $modelid
+ * @property string|null $comment
+ * @property int $createuser
+ * @property string|null $auxiliary01
+ * @property string|null $auxiliary02
+ * @property string|null $auxiliary03
+ * @property string|null $auxiliary04
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @property-read User|null $user
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageComment newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageComment newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageComment query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageComment whereAuxiliary01($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageComment whereAuxiliary02($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageComment whereAuxiliary03($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageComment whereAuxiliary04($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageComment whereComment($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageComment whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageComment whereCreateuser($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageComment whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageComment whereModelid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageComment whereModeltype($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageComment whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class StorageComment extends Model
 {

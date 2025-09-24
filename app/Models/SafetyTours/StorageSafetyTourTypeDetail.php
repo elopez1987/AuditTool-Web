@@ -12,6 +12,37 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+/**
+ * @property string $centerid
+ * @property int $id
+ * @property int $typeid
+ * @property int $tagid
+ * @property int $userid
+ * @property \Illuminate\Support\Carbon $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @property-read SystemCenterDistribution $center
+ * @property-read \App\Models\SafetyTours\StorageTags $tag
+ * @property-read \App\Models\SafetyTours\StorageSafetyTourType $type
+ * @property-read User $user
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourTypeDetail newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourTypeDetail newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourTypeDetail onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourTypeDetail query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourTypeDetail whereCenterid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourTypeDetail whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourTypeDetail whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourTypeDetail whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourTypeDetail whereTagid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourTypeDetail whereTypeid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourTypeDetail whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourTypeDetail whereUserid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourTypeDetail withTrashed(bool $withTrashed = true)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourTypeDetail withoutTrashed()
+ * @mixin \Eloquent
+ */
 class StorageSafetyTourTypeDetail extends Model
 {
     use SoftDeletes;
