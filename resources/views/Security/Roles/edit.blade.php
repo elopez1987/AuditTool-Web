@@ -43,12 +43,11 @@
                         </div>
                         <hr class="mt-4">
                         <div class="row">
-                            <div class="col-lg-10" style="height: 500px;width: 200px;overflow-y: scroll;">
+                            <div class="col-lg-10" style="height: 900px;width: 80%;overflow-y: scroll;margin-left: 30px">
                                 <ul id="myUL">
                                     @foreach($modules as $module)
                                         <li>
-                                        <span class="caret"
-                                              style="font-weight: 600;color: #0e2259;font-size: 12px;">{{$module->description}}</span>
+                                        <span class="caret" style="font-weight: 600;color:black;font-size: 14px;font-weight: 700">{{$module->description}}</span>
                                             <ul class="nested">
                                                 @foreach($functions as $function)
                                                     @if ($module->moduleid == $function->moduleid)
