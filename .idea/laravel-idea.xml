@@ -89,6 +89,7 @@
     <option name="frameworkFound" value="true" />
     <option name="translation">
       <LaravelTranslation>
+        <option name="defaultLanguageFromConfig" value="es" />
         <option name="includeVendorTranslations" value="true" />
       </LaravelTranslation>
     </option>
