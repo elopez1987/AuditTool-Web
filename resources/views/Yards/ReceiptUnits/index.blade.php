@@ -17,17 +17,8 @@
                                         @include('buttons.add')
                                     </a>
                                 @endcan
-                                @can('receiptuniteasy')
-                                    <a href="{{route('receiptuniteasy')}}">
-                                        <button type="button"
-                                                class="btn waves-effect waves-light btn-outline-info btn-md">
-                                            <img src="{{asset('/ico/adagregar1.png')}}" alt="" class="img-16">
-                                            <span style="font-size: 0.675rem "> Agregar</span>
-                                        </button>
-                                    </a>
-                                @endcan
                                 <a>
-                                   @include('buttons.search')
+                                    @include('buttons.search')
                                 </a>
                                 <a>
                                     @include('buttons.reloadajax')
@@ -97,7 +88,8 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-12">
-                            <table id="table-boxsotck" class="table table-bordered table-striped table-condensed table-hover table-uppercase">
+                            <table id="table-boxsotck"
+                                   class="table table-bordered table-striped table-condensed table-hover table-uppercase">
                                 <thead>
                                 <tr>
                                     <th>Opciones</th>
@@ -121,9 +113,9 @@
                                     <th>F.Ingreso</th>
                                     <th>Comentario</th>
                                     <th>Origen</th>
-{{--                                    <th>Tipo de entrada</th>--}}
-{{--                                    <th>Folio de bascula</th>--}}
-{{--                                    <th>Peso de entrada</th>--}}
+                                    {{--                                    <th>Tipo de entrada</th>--}}
+                                    {{--                                    <th>Folio de bascula</th>--}}
+                                    {{--                                    <th>Peso de entrada</th>--}}
                                 </tr>
                                 </thead>
                             </table>

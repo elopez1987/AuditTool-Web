@@ -115,12 +115,12 @@
     </div>
     <div class="col-lg-2 col-md-6 col-sm-12">
         <div class="form-group">
-            <label for="econumber">Eco. De tracto<span style="color: red">*</span></label>
-            <input type="text" class="form-control" maxlength="19" id="econumber" name="econumber"
+            <label for="ecotruck">Eco. De tracto<span style="color: red">*</span></label>
+            <input type="text" class="form-control" maxlength="19" id="ecotruck" name="ecotruck"
                    onKeyUp=this.value=this.value.toUpperCase()
-                   value="{{ old('econumber') }}"
+                   value="{{ old('ecotruck') }}"
             >
-            @error('econumber')
+            @error('ecotruck')
             <div class="invalid-feedback">{{ $message }}</div>
             @enderror
         </div>

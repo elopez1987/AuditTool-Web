@@ -105,9 +105,8 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-12">
-                            <table id="table-trucks"
-                                   class="table table-bordered table-striped table-condensed table-hover table-uppercase">
+                        <div class="col-lg-12">
+                            <table id="table-trucks" class="table table-bordered table-striped table-condensed table-hover table-uppercase">
                                 <thead>
                                 <tr>
                                     <th class="text-white">Bodega</th>

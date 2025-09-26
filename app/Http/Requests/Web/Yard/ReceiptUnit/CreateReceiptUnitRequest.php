@@ -36,7 +36,7 @@ class CreateReceiptUnitRequest extends FormRequest
             'truckid' => 'required|exists:shipmenttrucks,id',
             'barcodetruck' => 'required|string|min:4|max:10',
             'trucknumber' => 'required',
-            'econumber' => 'required',
+            'ecotruck' => 'required',
             'comment' => 'nullable',
         ];
     }

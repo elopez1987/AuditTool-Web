@@ -74,10 +74,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('menuyard', function () {
         return view('layouts.Menu.Yard.menuyard');
     })->name('menuyard');
-
-    //    Registro corto de unidad y tracto corta
-    Route::get('receiptuniteasy', [ReceiptUnitEasyController::class, 'index'])->name('receiptuniteasy');
-    Route::post('receiptuniteasystore', [ReceiptUnitEasyController::class, 'receiptuniteasystore'])->name('receiptuniteasystore');
+	
     //   Registro de folios metodo estandar con lectura de QR de operador, caja y tracto
     Route::resource('receiptunits', ReceiptUnitController::class);
     Route::get('getDataReceipts', [ReceiptUnitController::class, 'getDataReceipts'])->name('getDataReceipts');
@@ -322,4 +319,5 @@ Route::middleware(['auth'])->group(function () {
     //  Ticket de pesos de báscula
     Route::resource('receiptunitticket', ReceiptUnitTicketController::class)->only('index', 'destroy');
     Route::get('getUnitTickets', [ReceiptUnitTicketController::class, 'getUnitTickets'])->name('getUnitTickets');
+	Route::put('receiptunitticket/{id}', [ReceiptUnitTicketController::class, 'updatestatus'])->name('receiptunitticket.update');
 });

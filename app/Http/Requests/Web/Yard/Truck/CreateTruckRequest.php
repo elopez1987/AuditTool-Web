@@ -18,7 +18,7 @@ class CreateTruckRequest extends FormRequest
             'barcodeoperator' => 'required|numeric|min_digits:4|max_digits:20',
             'drivernumber' => 'required|max:50',
             'phone' => 'required|max_digits:10',
-            'econumber' => 'required|max:20',
+            'ecotruck' => 'required|max:20',
         ];
     }
 

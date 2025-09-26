@@ -12,9 +12,6 @@
                         {{csrf_field()}}
                         <div class="row">
                             <div class="col-md-12">
-                                <a href="">
-                                    @include('buttons.search')
-                                </a>
                                 <a>
                                     @include('buttons.reloadajax')
                                 </a>
@@ -24,56 +21,6 @@
                             </div>
                         </div>
                         <hr class="m-t-1">
-                        <div class="row">
-                            <div class="col-lg-2 col-md-6 col-sm-12">
-                                <div class="form-group">
-                                    <label for="warehouseid">Bodega</label>
-                                    <select name="warehouseid" id='warehouseid' class="form-control select2">
-                                        <option value="" selected>Seleccione una opción</option>
-                                        @foreach($warehouses as $model)
-                                            <option value="{{$model->warehouseid}}"> {{$model->name}} </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-2 col-md-6 col-sm-12">
-                                <div class="form-group">
-                                    <label for="folionumber">Número de folio</label>
-                                    <input type="text" class="form-control numeric" id="folionumber" name="folionumber"
-                                           onKeyUp=this.value=this.value.toUpperCase()
-                                    >
-                                </div>
-                            </div>
-                            <div class="col-lg-2 col-md-6 col-sm-12">
-                                <div class="form-group">
-                                    <label for="ticket">Número de Ticket</label>
-                                    <input type="text" class="form-control numeric" id="ticket" name="ticket"
-                                           onKeyUp=this.value=this.value.toUpperCase()
-                                    >
-                                </div>
-                            </div>
-                            <div class="col-lg-2 col-md-6 col-sm-12">
-                                <div class="form-group">
-                                    <label for="trucknumber">Placa de caja</label>
-                                    <input type="text" class="form-control" id="trucknumber" name="trucknumber"
-                                           onKeyUp=this.value=this.value.toUpperCase()
-                                    >
-                                </div>
-                            </div>
-                            <div class="col-lg-2 col-md-6 col-sm-12">
-                                <div class="form-group">
-                                    <label for="carrierid">Linea de transporte<span style="color: red">*</span></label>
-                                    <select name="carrierid" id="carrierid" class="form-control select2">
-                                        <option value="" selected>Seleccione una opción</option>
-                                        @foreach($carriers as $model)
-                                            <option value="{{$model->id}}"> {{$model->name}} </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
                     </form>
                 </div>
             </div>

@@ -77,7 +77,6 @@ class ReceiptTrucksController extends BaseController
     public function generateinvoicetransporttruck(ReceiptTruck $receipttruck)
     {
         $pdf = PDF::loadView('Yards.ReceiptTrucks.InvoiceFormats.Invoice', compact('receipttruck'));
-        $pdf->setPaper('A4', 'landscape');
         return $pdf->download('Folio_De_Entrada_Tracto-' . $receipttruck->id . '.pdf');
     }
 

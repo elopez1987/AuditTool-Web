@@ -13,202 +13,100 @@
 
     <div class="row">
         <table cellpadding="20">
-            <th style="height: 60px;width: 33.3%">
-                <img src="{{asset('/img/logo.png')}}" alt="" class="logo">
-            </th>
-            <th style="vertical-align: center;width: 33.3%">
-                <h3 class='formato'>FOLIO DE ENTRADA</h3>
-            </th>
-            <th style="width: 33.3%">
-                <p style="text-align: center;margin: auto">
-                    <?php
-                    $folio = strval($receipttruck->id);
-                    echo DNS1D::getBarcodeHTML($folio, 'C128', 2, 50, 'black');
-                    ?>
-                    Folio : {{$receipttruck->id}}
-            </th>
+            <tr>
+                <th style="vertical-align: center; text-align: center;">
+                    <h3 class='formato'>FOLIO DE ENTRADA DE TRACTO</h3>
+                </th>
+            </tr>
         </table>
     </div>
     <br>
     <table>
-        <td class="centro">DISTRIBUCIÓN Y ALMACENAJE AVIOR SA DE CV</td>
+        <tr>
+            <td class="centro">{{$receipttruck->center ? $receipttruck->center->description : ''}}</td>
+        </tr>
     </table>
+    <br>
     <table>
         <tr>
-            <td class="border-none" style="width: 50%;">
-                <table align="center" border=0 cellspacing=0 cellpadding=0>
+            <td class="border-none">
+                <table  border=0 cellspacing=0 cellpadding=0>
                     <tr>
-                        <td class="datos w20"> Folio</td>
-                        <td><?php echo str_pad($receipttruck->id, 10, '0', STR_PAD_LEFT) ?></td>
+                        <td class="datos w30" style="text-align: left"> Folio:</td>
+                        <td style="text-align: left"><?php echo str_pad($receipttruck->id, 10, '0', STR_PAD_LEFT) ?></td>
                     </tr>
                     <tr>
-                        <td class="datos w20"> Etiqueta</td>
-                        <td>
-                            {{$receipttruck->barcode}}
-                        </td>
+                        <td class="datos w30"> Etiqueta:</td>
+                        <td style="text-align: left">{{$receipttruck->barcode}}</td>
                     </tr>
                 </table>
             </td>
-            <td class="border-none" style="width: 50%">
-                <table align="center" border=0 cellspacing=0 cellpadding=0>
-                    <tr>
-                        <td class="datos w20"> Destino</td>
-
-                    </tr>
-                    <tr>
-                        <td class="datos w20"> Evento</td>
-                        <td>
-
-                        </td>
-                    </tr>
-                </table>
-            </td>
-
         </tr>
     </table>
     <br>
     <table align="center" border=0 cellspacing=0 cellpadding=0 class="border-none">
         <tr>
-            <td class="border-none" style="width: 50%;">
+            <td class="border-none">
                 <table align="center" border=0 cellspacing=0 cellpadding=0>
                     <tr>
-                        <td class="datos w30"> Licencia</td>
-                        <td class="pleft"> {{$receipttruck->drivernumber ? $receipttruck->drivernumber : ''}} </td>
-                    </tr>
-                    <tr>
-                        <td class="datos w30">N. Operador</td>
+                        <td class="datos w30">N. Operador:</td>
                         <td class="pleft"> {{$receipttruck->operatorname ? $receipttruck->operatorname : ''}} </td>
                     </tr>
                     <tr>
-                        <td class="datos w30">Teléfono</td>
+                        <td class="datos w30">Teléfono:</td>
                         <td class="pleft"> {{$receipttruck->phone}}</td>
                     </tr>
                     <tr>
-                        <td class="datos w30">Linea</td>
+                        <td class="datos w30"> Licencia:</td>
+                        <td class="pleft"> {{$receipttruck->drivernumber ? $receipttruck->drivernumber : ''}} </td>
+                    </tr>
+                    <tr>
+                        <td class="datos w30">Línea:</td>
                         <td class="pleft"> {{$receipttruck->carrier->name}}</td>
                     </tr>
                     <tr>
-                        <td class="datos w30">Fecha/Hora</td>
+                        <td class="datos w30">Fecha/Hora:</td>
                         <td class="pleft"> {{$receipttruck->entrydate}}</td>
                     </tr>
                     <tr>
-                        <td class="datos w30">N.Caja</td>
-                        <td class="pleft">{{$receipttruck->econumber}}</td>
+                        <td class="datos w30">Placa de Tracto:</td>
+                        <td class="pleft">{{$receipttruck->trucknumber}}</td>
                     </tr>
                     <tr>
-                        <td class="datos w30">N.Tracto</td>
-                        <td class="pleft"> {{ $receipttruck->trucknumber }}</td>
-                    </tr>
-                    <tr>
-                        <td class="datos w30">Longitud</td>
-                        <td class="pleft"></td>
-                    </tr>
-                    <tr>
-                        <td class="datos w30">Estatus</td>
-                        <td class="pleft"></td>
-                    </tr>
-                    <tr>
-                        <td class="datos w30">Embarque</td>
-                        <td class="pleft"></td>
-                    </tr>
-                    <tr>
-                        <td class="datos w30">Sellos</td>
-                        <td class="pleft"></td>
-                    </tr>
-                </table>
-            </td>
-            <td class="border-none" style="width: 50%;">
-                <table align="center" border=0 cellspacing=0 cellpadding=0>
-                    <tr>
-                        <td class="datos w30">Licencia</td>
-                        <td class="pleft"></td>
-                    </tr>
-                    <tr>
-                        <td class="datos w30">N. Operador</td>
-                        <td class="pleft"></td>
-                    </tr>
-                    <tr>
-                        <td class="datos w30">Teléfono</td>
-                        <td class="pleft"></td>
-                    </tr>
-                    <tr>
-                        <td class="datos w30">Fecha/Hora</td>
-                        <td class="pleft"></td>
-                    </tr>
-                    <tr>
-                        <td class="datos w30">N.Tracto</td>
-                        <td class="pleft"></td>
-                    </tr>
-                    <tr>
-                        <td class="datos w30">Estatus</td>
-                        <td class="pleft"></td>
-                    </tr>
-                    <tr>
-                        <td class="datos w30">Embarque</td>
-                        <td class="pleft"></td>
-                    </tr>
-                    <tr>
-                        <td class="datos w30">Sellos</td>
-                        <td class="pleft"></td>
-                    </tr>
-                    <tr>
-                        <td class="datos w30">Comentario 01</td>
-                        <td class="pleft"></td>
-                    </tr>
-                    <tr>
-                        <td class="datos w30">Comentario 02</td>
-                        <td class="pleft"></td>
-                    </tr>
-                    <tr>
-                        <td class="datos w30">Comentario 03</td>
-                        <td class="pleft"></td>
+                        <td class="datos w30">Eco.de Tracto:</td>
+                        <td class="pleft"> {{ $receipttruck->econumber }}</td>
                     </tr>
                 </table>
             </td>
         </tr>
     </table>
-    <br><br><br>
+    <br><br>
 
     <table>
-        <td class="border-none">
-            Etiqueta : {{$receipttruck->barcode}}
-            <?php
-            echo DNS1D::getBarcodeHTML($receipttruck->barcode, 'C128', 2, 50, 'black');
-            ?>
-        </td>
+        <tr>
+            <td class="border-none" style="text-align: left;">
+                <p>Etiqueta : {{$receipttruck->barcode}}</p>
+				{!! DNS2D::getBarcodeHTML($receipttruck->barcode, 'QRCODE',3,3) !!}
+            </td>
+        </tr>
     </table>
 
-
-    <br><br><br>
-    <table>
-        <td class="border-none" style="text-align: center;">
-            <hr>
-            Firma Vigilancia
-        </td>
-        <td class="border-none" style="text-align: center;">
-            <hr>
-            Firma Operador
-        </td>
-        <td class="border-none" style="text-align: center;">
-            <hr>
-            Firma Analista
-        </td>
-        <td class="border-none" style="text-align: center;">
-            <hr>
-            Firma Vigilancia
-        </td>
-        <td class="border-none" style="text-align: center;">
-            <hr>
-            Firma Operador
-        </td>
-        <td class="border-none" style="text-align: center;">
-            <hr>
-            Firma Analista
-        </td>
+    <br><br>
+    <table style="width: 100%;">
+        <tr>
+            <td class="border-none" style="text-align: center; width: 50%;">
+                <hr>
+                Firma Vigilancia
+            </td>
+            <td class="border-none" style="text-align: center; width: 50%;">
+                <hr>
+                Firma Operador
+            </td>
+        </tr>
     </table>
     <br>
 
-    <h5 class='nota'>Este documento le sera solicitado al momento de su salida, de no contar con el la salida le sera
+    <h5 class='nota'>Este documento le será solicitado al momento de su salida, de no contar con él la salida le será
         negada</h5>
 
 </div>
