@@ -3,10 +3,14 @@
         "paging": true,
         "searching": true,
         "ordering": true,
-        "sScrollY": "500px",
+        "sScrollY": "450px",
+        // "sScrollX": true,
         "processing": true,
         "serverSide": true,
         "responsive": true,
+        "colReorder": true,
+        "stateSave": true,
+        "stateDuration": 0,
         "ajax": {
             url: 'getDataReceiptTrucks',
             data: function (d) {

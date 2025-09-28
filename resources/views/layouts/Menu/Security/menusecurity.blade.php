@@ -6,7 +6,6 @@
 
 @section('content')
     <main>
-{{--                <h1 class="name-menu">Seguridad</h1>--}}
         <div class="container__box">
             @can('securityusers.index')
                 <a href="{{route('securityusers.index')}}">
@@ -17,15 +16,15 @@
                     </div>
                 </a>
             @endcan
-                @can('superusers.index')
-                    <a href="{{route('superusers.index')}}">
-                        <div class="box">
-                            <i class="lni lni-lock"></i>
-                            <h5>Administradores</h5>
-                            <h4>Administradores</h4>
-                        </div>
-                    </a>
-                @endcan
+            @can('superusers.index')
+                <a href="{{route('superusers.index')}}">
+                    <div class="box">
+                        <i class="lni lni-lock"></i>
+                        <h5>Administradores</h5>
+                        <h4>Administradores</h4>
+                    </div>
+                </a>
+            @endcan
             @can('securityroles.index')
                 <a href="{{route('securityroles.index')}}">
                     <div class="box">
@@ -35,15 +34,15 @@
                     </div>
                 </a>
             @endcan
-                @can('securitypermissions.index')
-                    <a href="{{route('securitypermissions.index')}}">
-                        <div class="box">
-                            <i class="lni lni-unlock"></i>
-                            <h5>Permisos</h5>
-                            <h4>Permisos</h4>
-                        </div>
-                    </a>
-                @endcan
+            @can('securitypermissions.index')
+                <a href="{{route('securitypermissions.index')}}">
+                    <div class="box">
+                        <i class="lni lni-unlock"></i>
+                        <h5>Permisos</h5>
+                        <h4>Permisos</h4>
+                    </div>
+                </a>
+            @endcan
             @can('securitymenustructure.index')
                 <a href="{{route('securitymenustructure.index')}}">
                     <div class="box">
@@ -72,6 +71,28 @@
                 </a>
             @endcan
         </div>
+
+        <div class="container__box">
+            @can('log.authentication')
+                <a href="{{route('logauthentication')}}">
+                    <div class="box">
+                        <i class="lni lni-list"></i>
+                        <h5>Log de inicios de sesión</h5>
+                        <h4>Log de inicios de sesión</h4>
+                    </div>
+                </a>
+            @endcan
+            @can('log.suspicious')
+                <a href="{{route('logsuspicious')}}">
+                    <div class="box">
+                        <i class="lni lni-list"></i>
+                        <h5>Logs de sospechosos</h5>
+                        <h4>Logs de sospechosos</h4>
+                    </div>
+                </a>
+            @endcan
+        </div>
+
     </main>
 @endsection
 
