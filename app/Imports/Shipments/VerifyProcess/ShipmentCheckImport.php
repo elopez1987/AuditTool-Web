@@ -34,8 +34,8 @@ class ShipmentCheckImport implements ToModel, WithHeadingRow, WithBatchInserts, 
                     'category1id' => $sku->category01id,
                     'category2id' => $sku->category02id,
                     'unitmeasureid' => $sku->stkuom ?? 'CS',
-                    'quantityrequested' => $row['quantity'],
-                    'quantityfail' => $row['quantity'],
+                    'quantityrequested' => (int) $row['quantity'],
+                    'quantityfail' => (int) $row['quantity'],
                 ]
             );
         }
