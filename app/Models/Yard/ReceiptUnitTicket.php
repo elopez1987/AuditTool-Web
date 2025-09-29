@@ -19,12 +19,15 @@ class ReceiptUnitTicket extends Model
     protected $table = 'storagereceiptunitticket';
 
     protected $fillable = [
-        'folionumber', 'ticket', 'weightin',
-        'weightout', 'createuser', 'updateuser',
-        'responsibleid', 'areaid', 'contentid',
-        'value01', 'value02', 'value03', 'weightoutsap', 'updateddate',
-        'weightoutlb', 'weightinlb', 'weightdifferencelb',
-        'boxnumber', 'centerid', 'statusid',
+		'folionumber', 'ticket', 'weightin',
+		'weightout', 'createuser', 'updateuser',
+		'responsibleid', 'areaid', 'contentid',
+		'value01', 'value02', 'value03', 'weightoutsap', 'updateddate',
+		'weightoutlb',
+		'weightinlb',
+		'weightdifferencelb',
+		'boxnumber',
+		'statusid'
     ];
 
     public function getActivitylogOptions(): LogOptions
@@ -32,7 +35,12 @@ class ReceiptUnitTicket extends Model
         return LogOptions::defaults()->logFillable();
     }
 
-    //  -----------------------  Relaciones entre modelos  ---------------------------------------------
+	protected $attributes = [
+		'statusid' => 'E',
+	];
+
+
+	//  -----------------------  Relaciones entre modelos  ---------------------------------------------
     public function usercreate()
     {
         return $this->belongsTo(User::class, 'createuser', 'id')->withTrashed();

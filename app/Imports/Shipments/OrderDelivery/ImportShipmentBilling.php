@@ -65,7 +65,7 @@ class ImportShipmentBilling implements ToModel, WithHeadingRow, WithChunkReading
             'centerid' => $order->centerid,
             'warehouseid' => $order->warehouseid,
             'orderid' => $order->id,
-            'billingdocument' => trim($billingdocument),
+            'billingdocument' => trim((string) $billingdocument),
         ]);
     }
 }

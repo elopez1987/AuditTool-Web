@@ -97,7 +97,7 @@ class ImportUsers implements ToModel, WithHeadingRow, WithChunkReading, WithBatc
         SecurityAccessWarehouse::create([
             'centerid' => $row['centerid'],
             'warehouseid' => $row['warehouseid'],
-            'username' => $user->username,
+            'username' => (string) $user->username,
         ]);
     }
 }
