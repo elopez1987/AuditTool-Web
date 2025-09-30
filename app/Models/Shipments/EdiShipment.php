@@ -98,7 +98,7 @@ class EdiShipment extends Model
         return $this->belongsTo(OrderDeliverie::class, 'shipmentid', 'shipmentid');
     }
 
-//    Crea el registro de envío de plan de carga del módulo de embarques
+    //    Crea el registro de envío de plan de carga del módulo de embarques
     public static function createEDIForPlanToShipment($shipment)
     {
         EdiShipment::updateOrCreate([
@@ -111,7 +111,7 @@ class EdiShipment extends Model
         ]);
     }
 
-//    Crea el registro de envío del evento del embarque (Entrada/Inicio y fin de proceso, facturacion y salida)
+    //    Crea el registro de envío del evento del embarque (Entrada/Inicio y fin de proceso, facturacion y salida)
     public static function createEDIForEventToShipment($shipment, $event)
     {
         EdiShipment::updateOrCreate([

@@ -109,7 +109,7 @@ class ShipmentCarrier extends Model
         return ShipmentCarrier::whereIn('shipmentcarriers.centerid', $centers);
     }
 
-//    ------------------------ Relaciones entre modelos -------------------------------
+    //    ------------------------ Relaciones entre modelos -------------------------------
     public function status(): BelongsTo
     {
         return $this->belongsTo(SystemStatus::class, 'statusid', 'statusid');
@@ -120,9 +120,9 @@ class ShipmentCarrier extends Model
         return $this->belongsTo(SystemCenterDistribution::class, 'centerid');
     }
 
-//    ------------------------ Relaciones entre modelos -------------------------------
+    //    ------------------------ Relaciones entre modelos -------------------------------
 
-//    ------------------------ Filtro de las consultas -------------------------------
+    //    ------------------------ Filtro de las consultas -------------------------------
     public function scopeName($query, $name)
     {
         if (trim($name) !== '') {
@@ -151,5 +151,5 @@ class ShipmentCarrier extends Model
         }
     }
 
-//    ------------------------ Filtro de las consultas -------------------------------
+    //    ------------------------ Filtro de las consultas -------------------------------
 }

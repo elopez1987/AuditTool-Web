@@ -11,17 +11,17 @@ class ServiceUser
 {
     public function createNewUser($request)
     {
-		$user = User::create([
-			'name' => $request['name'],
-			'email' => $request['email'],
-			'password' => bcrypt($request['password']),
-			'username' => $request['username'],
-			'auxiliary01' => $request['auxiliary01'],
-			'auxiliary02' => $request['auxiliary02'],
-			'auxiliary03' => $request['auxiliary03'],
-			'auxiliary04' => $request['auxiliary04'],
-			'auxiliary05' => $request['auxiliary05'],
-		]);
+        $user = User::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => bcrypt($request['password']),
+            'username' => $request['username'],
+            'auxiliary01' => $request['auxiliary01'],
+            'auxiliary02' => $request['auxiliary02'],
+            'auxiliary03' => $request['auxiliary03'],
+            'auxiliary04' => $request['auxiliary04'],
+            'auxiliary05' => $request['auxiliary05'],
+        ]);
 
         SecurityAccessWarehouse::create([
             'centerid' => $request['centerid'],

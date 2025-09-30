@@ -70,7 +70,7 @@ class StorageliftTruckAssigned extends Model
         'schemaid',
     ];
 
-//    MT-C = Asignado
+    //    MT-C = Asignado
 
     protected $attributes = [
         'statusid' => 'MT-C',

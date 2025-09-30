@@ -13,7 +13,6 @@ use PhpOffice\PhpSpreadsheet\Style\Fill;
 
 class ReportShipmentEventsExport implements FromCollection, WithHeadings, WithMapping, WithEvents
 {
-
     use Exportable;
     private $workdayin;
     private $workdayout;

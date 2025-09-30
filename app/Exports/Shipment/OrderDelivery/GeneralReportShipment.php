@@ -15,7 +15,6 @@ use Maatwebsite\Excel\Events\AfterSheet;
 
 class GeneralReportShipment implements FromCollection, WithHeadings, WithMapping, WithEvents, ShouldAutoSize, WithColumnFormatting
 {
-
     use Exportable;
     private $workdayin;
     private $workdayout;

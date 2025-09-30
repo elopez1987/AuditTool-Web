@@ -150,16 +150,16 @@ class ReceiptAsn extends Model
         'schemaid' => 'SRE',
     ];
 
-//    auxiliary01 = 'Planeador';
-//    auxiliary02 = 'Posteo SAP';
-//    auxiliary03 = 'Categoria de material';
-//    auxiliary04 =
-//    auxiliary05 = '';
-//    auxiliary06 = 'Numero de folio de planta para el monitor de transitos planta';
-//    auxiliary07 = '';
-//    auxiliary08 = 'Usuario analista de recibo';
-//    auxiliary09 = 'Usuario montacarguistas';
-//    auxiliary10 = 'Usuario verificador';
+    //    auxiliary01 = 'Planeador';
+    //    auxiliary02 = 'Posteo SAP';
+    //    auxiliary03 = 'Categoria de material';
+    //    auxiliary04 =
+    //    auxiliary05 = '';
+    //    auxiliary06 = 'Numero de folio de planta para el monitor de transitos planta';
+    //    auxiliary07 = '';
+    //    auxiliary08 = 'Usuario analista de recibo';
+    //    auxiliary09 = 'Usuario montacarguistas';
+    //    auxiliary10 = 'Usuario verificador';
 
     public function getActivitylogOptions(): LogOptions
     {
@@ -174,7 +174,7 @@ class ReceiptAsn extends Model
             ->whereIn('receiptasn.centerid', $centers);
     }
 
-//    ------------------------------ Relaciones ------------------------------------------
+    //    ------------------------------ Relaciones ------------------------------------------
     public function center()
     {
         return $this->belongsTo(SystemCenterDistribution::class, 'centerid');
@@ -286,7 +286,7 @@ class ReceiptAsn extends Model
         }
     }
 
-//    ---------------- Consultas del modelo ------------------------------------
+    //    ---------------- Consultas del modelo ------------------------------------
     public static function searchReceiptForUnit($folioid)
     {
         return ReceiptAsn::controlAccessUser()->where('folionumber', $folioid)->first();

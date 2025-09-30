@@ -56,10 +56,10 @@ class StorageShipmentTransport extends Model
     use LogsActivity;
     public $timestamps = false;
 
-//    Auxiliary01 == Ingreso de unidad en el moduo de patios (1 con transporte)
-//    Auxiliary02 == Datos de transporte registrado en sistema por tráfico o registro de QR
-//    Auxiliary03 == Número de economico de caja
-//    Auxiliary04 == Número de economico de tracto
+    //    Auxiliary01 == Ingreso de unidad en el moduo de patios (1 con transporte)
+    //    Auxiliary02 == Datos de transporte registrado en sistema por tráfico o registro de QR
+    //    Auxiliary03 == Número de economico de caja
+    //    Auxiliary04 == Número de economico de tracto
 
     protected $table = 'shipmenttransport';
     protected $primaryKey = 'id';

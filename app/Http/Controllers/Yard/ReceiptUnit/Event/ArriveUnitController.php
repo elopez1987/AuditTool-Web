@@ -12,7 +12,7 @@ class ArriveUnitController extends BaseController
 {
     use SaveArriveUnit;
 
-//    Registro de llegada a mesa de control
+    //    Registro de llegada a mesa de control
     public function index()
     {
         $this->authorize('viewmovementsofbox');

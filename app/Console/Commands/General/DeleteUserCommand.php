@@ -13,7 +13,7 @@ class DeleteUserCommand extends Command
 
     public function handle(): void
     {
-//        Elimina los usuarios que no tengan registros de inicio de sesion en 45 días
+        //        Elimina los usuarios que no tengan registros de inicio de sesion en 45 días
         $users = \App\User::with('sessions')
             ->select(
                 'users.id as id',
@@ -42,7 +42,7 @@ class DeleteUserCommand extends Command
             }
         }
 
-//        Elimina el usuario que no iniciaron sesion en 10 días después de la creacion del usuario
+        //        Elimina el usuario que no iniciaron sesion en 10 días después de la creacion del usuario
         $users = \App\User::with('sessions')
             ->select(
                 'users.id as id',

@@ -16,7 +16,7 @@ class IncidenceJourneyObserver
         if (in_array('SWH-28', $parameter)) {
             StorageTaskWhatsapp::create([
                 'centerid' => $storageIncidenceJourney->centerid,
-                'warehouseid' =>$storageIncidenceJourney->warehouseid,
+                'warehouseid' => $storageIncidenceJourney->warehouseid,
                 'modelid' => $storageIncidenceJourney->orderid,
                 'modeltype' => 'StorageIncidenceJourney',
                 'whatsappid' => 'WTH-REGINC',

@@ -20,7 +20,7 @@ trait RegisterEdiShipment
         }
     }
 
-//    Crea el registro de envío del evento del embarque (Entrada/Inicio y fin de proceso, facturacion y salida)
+    //    Crea el registro de envío del evento del embarque (Entrada/Inicio y fin de proceso, facturacion y salida)
     public static function createEDIForEventToShipmentForRControl($model, $event)
     {
         EdiShipment::updateOrCreate([
@@ -46,7 +46,7 @@ trait RegisterEdiShipment
         ]);
     }
 
-//    -----------Recurso confiable -----------------------------
+    //    -----------Recurso confiable -----------------------------
     private function sendDataToRControl($receiptunit, $parameter, $typeEvent): void
     {
         if ($receiptunit->razonstatusid === 1) {

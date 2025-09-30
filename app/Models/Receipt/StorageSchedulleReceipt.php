@@ -140,7 +140,7 @@ class StorageSchedulleReceipt extends Model
         return $this->belongsTo(StorageReceiptPeriod::class, 'periodid');
     }
 
-//    Filtros
+    //    Filtros
     public function scopeWorkday($query, $workday)
     {
         if (trim($workday) !== '') {

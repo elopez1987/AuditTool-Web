@@ -80,7 +80,6 @@ use Spatie\Activitylog\Traits\LogsActivity;
  */
 class ShipmentDataOperation extends Model
 {
-
     use LogsActivity;
     public $timestamps = false;
     protected $table = 'shipmentdataoperation';

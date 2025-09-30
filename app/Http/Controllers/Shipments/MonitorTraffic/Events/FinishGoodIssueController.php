@@ -109,7 +109,7 @@ class FinishGoodIssueController extends BaseController
      */
     public function closeUnitForProcessAmazon($orderDelivery): void
     {
-//            Cierra la unidad virtual para clientes amazon
+        //            Cierra la unidad virtual para clientes amazon
         $parameterCustomer = $this->getParameterOfCustomer($orderDelivery->customerid);
         if (! empty($parameterCustomer) && in_array('OCF-04', (array) $parameterCustomer)) {
             $this->checkOutVirtual($orderDelivery);

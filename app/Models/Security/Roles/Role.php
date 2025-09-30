@@ -112,7 +112,7 @@ class Role extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
-        return Role:: whereIn('roles.centerid', $centers);
+        return Role::whereIn('roles.centerid', $centers);
     }
 
     protected static function boot()

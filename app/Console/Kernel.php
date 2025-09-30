@@ -66,7 +66,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-//      Comandos generales
+        //      Comandos generales
         $schedule->command('command:deletehistlogwebserviceizel')->weekly();
         $schedule->command('command:CloseValidateQRReceipt')->everyTenMinutes();
         $schedule->command('whatsapp:deletelog')->daily();
@@ -74,32 +74,32 @@ class Kernel extends ConsoleKernel
         $schedule->command('app:send-message-for-receipt-entry')->everyFiveMinutes();
         $schedule->command('app:send-email-for-arrive-unit-to-receipt')->everyFiveMinutes();
 
-//        Comandos para la cuenta de Bridgestone
-//        Envio del correo de discrepancia en peso de salida de la unidad
+        //        Comandos para la cuenta de Bridgestone
+        //        Envio del correo de discrepancia en peso de salida de la unidad
         $schedule->command('send:mail-for-difference-weight')->everyFiveMinutes();
-//        Envío de mensaje de discrepancia en peso de salida de la unidad
+        //        Envío de mensaje de discrepancia en peso de salida de la unidad
         $schedule->command('send:message-difference-weight')->everyFiveMinutes();
 
-//      Comandos para Kellogg Toluca
+        //      Comandos para Kellogg Toluca
         $schedule->command('command:SendDataToWmsIzel')->everyTenMinutes();
 
-//      Comandos para Henkel One Roof HENKELTOL01
+        //      Comandos para Henkel One Roof HENKELTOL01
         $schedule->command('command:TiempoExcedidoParaSalirDePatio')->everyTenMinutes();
-//        Envia mensajes de aunidades sin arrivar para embarques
+        //        Envia mensajes de aunidades sin arrivar para embarques
         $schedule->command('command:UnidadesSinLLegarEmbarques')->everyThirtyMinutes();
-//        Envío de mensajes de nuevas incidencias en embarques
+        //        Envío de mensajes de nuevas incidencias en embarques
         $schedule->command('command:EnviaMensajeDeNuevaIncidenciaRegistrada')->everyFiveMinutes();
-//        Envia mensaje de capacidad de patio superada al parametro maximo
+        //        Envia mensaje de capacidad de patio superada al parametro maximo
         $schedule->command('whatsapp:patiolleno')->everyTwoHours();
-//        Envia el plan de carga a recurso confiable
+        //        Envia el plan de carga a recurso confiable
         $schedule->command('rc:SendPlanForShipmentCommand')->everyTwoHours();
-//        Enviar los eventos logisticos de la unidad a recurso confiable
+        //        Enviar los eventos logisticos de la unidad a recurso confiable
         $schedule->command('rc:SendEventForShipmentCommand')->everyTenMinutes();
         //        Obtiene la ETA del embarque conectado a RC.
         $schedule->command('rc:ObtenerETAdeRecursoConfiable')->everyThirtyMinutes();
-//        Recolectar evidencia de POD de recurso confiable
+        //        Recolectar evidencia de POD de recurso confiable
         $schedule->command('rc:getevidencefromrcontrol')->dailyAt('10:00');
-//        Limpiar ubicaciones de cortinas y stages
+        //        Limpiar ubicaciones de cortinas y stages
         $schedule->command('system:clearlocation')->everyThirtyMinutes();
     }
 

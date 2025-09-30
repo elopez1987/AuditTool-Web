@@ -21,7 +21,7 @@ class RegisterOutPutController extends BaseController
     use RegisterEdiShipment;
     use QueryReceiptTruck;
 
-//    Módulo de salida de cajas directa por ajuste de inventarios
+    //    Módulo de salida de cajas directa por ajuste de inventarios
     public function index()
     {
         $this->authorize('adjustmentbox');

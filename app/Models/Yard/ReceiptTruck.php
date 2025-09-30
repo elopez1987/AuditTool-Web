@@ -148,7 +148,7 @@ class ReceiptTruck extends Model
             ->whereIn('receipttrucks.centerid', $centers);
     }
 
-//    Relaciones
+    //    Relaciones
     public function center()
     {
         return $this->belongsTo(SystemCenterDistribution::class, 'centerid');
@@ -233,7 +233,7 @@ class ReceiptTruck extends Model
         }
     }
 
-//    Filtros de busqueda
+    //    Filtros de busqueda
     public static function searchTrucksForCarrier($carrierid)
     {
         return ReceiptTruck::controlAccessUser()->where('receipttrucks.carrierid', $carrierid)

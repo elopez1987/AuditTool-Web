@@ -118,13 +118,13 @@ class SystemEventWebServiceIzel extends Model
     public static function createRegisterLog($receiptunit, $statusService, $parameter)
     {
         if (in_array('SDC-07', (array) $parameter)) {
-//            Version 4
+            //            Version 4
             $servicename = $statusService->Service_Name;
             $processdate = $statusService->ProcessDate;
             $code = $statusService->Code;
             $message = $statusService->Message;
         } else {
-//            Version 3
+            //            Version 3
             $servicename = $statusService->{'Service_Name'};
             $processdate = $statusService->{'ProcessDate'};
             $code = $statusService->{'Code'};
@@ -147,13 +147,13 @@ class SystemEventWebServiceIzel extends Model
     public static function createRegisterLogError($receiptunit, $statusService, $parameter)
     {
         if (in_array('SDC-07', (array) $parameter)) {
-//            Version 4
+            //            Version 4
             $servicename = '';
             $processdate = Carbon::now();
             $code = $statusService->Code;
             $message = $statusService->Description;
         } else {
-//            Version 3
+            //            Version 3
             $servicename = $statusService->{'Service_Name'};
             $processdate = $statusService->{'ProcessDate'};
             $code = $statusService->{'Code'};

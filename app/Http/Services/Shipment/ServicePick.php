@@ -14,12 +14,12 @@ class ServicePick
 
     public function saveMoveBoxToLpn($request, $shipment, $lpn)
     {
-//      Restamos la cantidad al lpn original
+        //      Restamos la cantidad al lpn original
         $lpn->quantity -= $request['quantity'];
         $lpn->save();
         $this->saveLogMoveBox($shipment, $request, 'DE', $request['lpnid']);
 
-//      Sumamos la cantidad al lpn que recibe o lo crea si no exite el número de parte
+        //      Sumamos la cantidad al lpn que recibe o lo crea si no exite el número de parte
         $lpnRec = ShipmentStock::where('orderid', $shipment->id)->where('lpnid', $request['lpnidrec'])
             ->where('partnumberid', $request['partnumberid'])->first();
         if (empty($lpnRec)) {

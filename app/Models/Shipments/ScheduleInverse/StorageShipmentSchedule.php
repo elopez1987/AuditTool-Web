@@ -63,8 +63,8 @@ class StorageShipmentSchedule extends Model
         'token', 'value01', 'value02', 'value03',
     ];
 
-//    AGD = AGENDADO
-//    ENT = ENTREGADO
+    //    AGD = AGENDADO
+    //    ENT = ENTREGADO
     protected $attributes = [
         'statusid' => 'AP',
         'schemaid' => 'DEC',

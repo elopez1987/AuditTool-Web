@@ -14,7 +14,6 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 
 class ReportUnitEvidences implements FromCollection, WithHeadings, WithMapping, WithEvents, ShouldAutoSize
 {
-
     use Exportable;
     private $workdayin;
     private $workdayout;

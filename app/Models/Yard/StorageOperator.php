@@ -103,7 +103,7 @@ class StorageOperator extends Model
         return LogOptions::defaults()->logFillable();
     }
 
-//    Relations with models
+    //    Relations with models
     public function center()
     {
         return $this->belongsTo(SystemCenterDistribution::class, 'centerid');
@@ -119,7 +119,7 @@ class StorageOperator extends Model
         return $this->belongsTo(ShipmentCarrier::class, 'carrierid', 'id');
     }
 
-//    Filters Scope to model
+    //    Filters Scope to model
     public function scopeName($query, $name)
     {
         if (trim($name) !== '') {

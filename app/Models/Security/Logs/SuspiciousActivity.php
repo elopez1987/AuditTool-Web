@@ -8,30 +8,30 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class SuspiciousActivity extends Model
 {
-	protected $fillable = [
-		'user_id',
-		'activity_type',
-		'details',
-		'severity',
-		'reviewed',
-		'reviewed_at',
-		'reviewed_by',
-	];
+    protected $fillable = [
+        'user_id',
+        'activity_type',
+        'details',
+        'severity',
+        'reviewed',
+        'reviewed_at',
+        'reviewed_by',
+    ];
 
-	public function user(): BelongsTo
-	{
-		return $this->belongsTo(User::class);
-	}
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 
-	public function reviewedBy(): BelongsTo
-	{
-		return $this->belongsTo(User::class, 'reviewed_by');
-	}
+    public function reviewedBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'reviewed_by');
+    }
 
-	protected function casts(): array
-	{
-		return [
-			'reviewed' => 'boolean',
-		];
-	}
+    protected function casts(): array
+    {
+        return [
+            'reviewed' => 'boolean',
+        ];
+    }
 }

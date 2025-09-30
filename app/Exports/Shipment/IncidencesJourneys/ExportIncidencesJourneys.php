@@ -15,7 +15,6 @@ use PhpOffice\PhpSpreadsheet\Style\Fill;
 
 class ExportIncidencesJourneys implements FromCollection, WithHeadings, WithMapping, WithEvents, ShouldAutoSize, WithColumnFormatting
 {
-
     use Exportable;
     private $workdayin;
     private $workdayout;

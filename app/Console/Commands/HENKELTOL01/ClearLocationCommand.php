@@ -55,7 +55,7 @@ class ClearLocationCommand extends Command
                     ->whereNotIn('o.statusid', ['DH', 'CA'])
                     ->select(['shipmentheader.id', 'shipmentheader.locationid'])->get();
                 foreach ($locations as $location) {
-//                Bloquea las cortinas
+                    //                Bloquea las cortinas
                     foreach ($units as $unit) {
                         if ($location->id === $unit->locationid) {
                             $location->auxiliary01 = $unit->boxnumber;
@@ -63,7 +63,7 @@ class ClearLocationCommand extends Command
                             $location->save();
                         }
                     }
-//                Bloquea las precargas
+                    //                Bloquea las precargas
                     foreach ($shipments as $shipment) {
                         if ($location->id === $shipment->locationid) {
                             $location->statusid = 'D';

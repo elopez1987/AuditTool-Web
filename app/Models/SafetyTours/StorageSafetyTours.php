@@ -105,7 +105,7 @@ class StorageSafetyTours extends Model
         return $this->belongsTo(User::class, 'userid', 'id');
     }
 
-//    Filtros de busqueda
+    //    Filtros de busqueda
     public function scopeName($query, $name)
     {
         if (trim($name) !== '') {

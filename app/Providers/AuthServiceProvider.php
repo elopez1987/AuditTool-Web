@@ -29,9 +29,9 @@ class AuthServiceProvider extends ServiceProvider
             return $user->hasRole('ADMINISTRADOR') ? true : null;
         });
 
-//        Passport::routes();
-//        Passport::tokensExpireIn(Carbon::now()->addSeconds(10));
-//        Passport::refreshTokensExpireIn(Carbon::now()->addDays(30));
-//        Passport::personalAccessTokensExpireIn(now()->addMonths(6));
+        //        Passport::routes();
+        //        Passport::tokensExpireIn(Carbon::now()->addSeconds(10));
+        //        Passport::refreshTokensExpireIn(Carbon::now()->addDays(30));
+        //        Passport::personalAccessTokensExpireIn(now()->addMonths(6));
     }
 }

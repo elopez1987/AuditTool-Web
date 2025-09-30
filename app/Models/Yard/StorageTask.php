@@ -57,7 +57,6 @@ use Spatie\Activitylog\Traits\LogsActivity;
  */
 class StorageTask extends Model
 {
-
     use LogsActivity;
     protected $table = 'storagetasks';
 

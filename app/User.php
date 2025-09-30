@@ -179,7 +179,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         $this->attributes['username'] = strtolower($value);
     }
 
-//    Relaciones entre modelos
+    //    Relaciones entre modelos
     public function sessions()
     {
         return $this->hasOne(SecurityUsersSession::class, 'username', 'username');
@@ -201,7 +201,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         return $this->belongsTo(ModelHasRole::class, 'id', 'model_id');
     }
 
-//    Filtros de consultas
+    //    Filtros de consultas
     public function scopeName($query, $name)
     {
         if (trim($name) != '') {

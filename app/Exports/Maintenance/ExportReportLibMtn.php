@@ -14,7 +14,6 @@ use PhpOffice\PhpSpreadsheet\Style\Fill;
 
 class ExportReportLibMtn implements FromCollection, WithHeadings, WithMapping, WithEvents, ShouldAutoSize
 {
-
     use Exportable;
     private $workdayin;
     private $workdayout;

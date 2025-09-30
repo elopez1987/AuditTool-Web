@@ -81,7 +81,7 @@ class EvidencePhoto extends Model
         return $this->belongsTo(User::class, 'createuser', 'id')->withTrashed();
     }
 
-//    Funciones auxiliares
+    //    Funciones auxiliares
     public static function getPhotosForModel($id, $model)
     {
         return EvidencePhoto::where('model_id', $id)->where('model_type', '=', $model)->get();

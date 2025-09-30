@@ -51,7 +51,7 @@ class CheckListEvidenceProcessUnit extends Model
 {
     use LogsActivity;
 
-//    Tabla para guardar las fotos de proceso de carga o descarga mediante check list
+    //    Tabla para guardar las fotos de proceso de carga o descarga mediante check list
     public $timestamps = true;
     protected $table = 'storagecheckListevidenceprocessunit';
     protected $primaryKey = 'id';

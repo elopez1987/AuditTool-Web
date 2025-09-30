@@ -16,12 +16,12 @@ class ReceiptUnitEvidenceStockController extends BaseController
 {
     use StorageWebPhotoTrait;
 
-//    --Módulo de subida de evidencia de proceso de carga o desdecarga desde la existencia de caja, puede ser parametrizado para usar
-//     un check list de fotos que son requeridas, si el parametro APP-02 se encuentra activo entonces funcionará
-//    con el check list parametrizado.
-//    IP --Evidencia en proceso
+    //    --Módulo de subida de evidencia de proceso de carga o desdecarga desde la existencia de caja, puede ser parametrizado para usar
+    //     un check list de fotos que son requeridas, si el parametro APP-02 se encuentra activo entonces funcionará
+    //    con el check list parametrizado.
+    //    IP --Evidencia en proceso
 
-//    Subida de evidencia en proceso de carga o desdecarga desde la version web en existencia
+    //    Subida de evidencia en proceso de carga o desdecarga desde la version web en existencia
     public function index($id)
     {
         $receiptunit = ReceiptUnit::searchForId($id);

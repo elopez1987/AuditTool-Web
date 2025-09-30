@@ -153,7 +153,6 @@ use Spatie\Activitylog\Traits\LogsActivity;
  */
 class ReceiptUnit extends Model
 {
-
     use LogsActivity;
     public $timestamps = false;
     protected $table = 'receiptunits';
@@ -317,7 +316,7 @@ class ReceiptUnit extends Model
         return $this->belongsTo(ReceiptTruck::class, 'foliotruck', 'id');
     }
 
-//    --Scopes para filtros de tabla
+    //    --Scopes para filtros de tabla
     public function scopeFolio($query, $folionumber)
     {
         if (trim($folionumber) !== '') {

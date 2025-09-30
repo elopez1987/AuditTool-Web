@@ -107,7 +107,7 @@ class StorageZone extends Model
             ->whereIn('storagezones.warehouseid', $warehouses);
     }
 
-//    --Relaciones entre modelos
+    //    --Relaciones entre modelos
     public function center()
     {
         return $this->belongsTo(SystemCenterDistribution::class, 'centerid');
@@ -122,7 +122,7 @@ class StorageZone extends Model
         return $this->belongsTo(SystemWarehouse::class, 'warehouseid', 'warehouseid');
     }
 
-//    --Filtros para modelos
+    //    --Filtros para modelos
     public function scopeName($query, $name)
     {
         if (trim($name) !== '') {

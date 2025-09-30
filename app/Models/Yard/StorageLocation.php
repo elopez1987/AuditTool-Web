@@ -81,140 +81,140 @@ use Spatie\Activitylog\Traits\LogsActivity;
  */
 class StorageLocation extends Model
 {
-	use Notifiable;
-	use SoftDeletes;
+    use Notifiable;
+    use SoftDeletes;
 
-	use LogsActivity;
+    use LogsActivity;
 
-	protected $table = 'storagelocations';
-	protected $dateFormat = 'Y-m-d H:i:s';
+    protected $table = 'storagelocations';
+    protected $dateFormat = 'Y-m-d H:i:s';
 
-	protected $fillable = [
-		'centerid',
-		'warehouseid',
-		'zoneid',
-		'name',
-		'locationid',
-		'barcode',
-		'auxiliary01',
-		'auxiliary02',
-		'auxiliary03',
-		'auxiliary04',
-		'auxiliary05',
-		'statusid',
-	];
+    protected $fillable = [
+        'centerid',
+        'warehouseid',
+        'zoneid',
+        'name',
+        'locationid',
+        'barcode',
+        'auxiliary01',
+        'auxiliary02',
+        'auxiliary03',
+        'auxiliary04',
+        'auxiliary05',
+        'statusid',
+    ];
 
-	protected $hidden = [
-		'created_at',
-		'updated_at',
-		'deleted_at',
-		'schemaid',
-	];
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
+        'schemaid',
+    ];
 
-	protected $attributes = [
-		'statusid' => 'E',
-		'schemaid' => 'STS',
-	];
+    protected $attributes = [
+        'statusid' => 'E',
+        'schemaid' => 'STS',
+    ];
 
-	protected $casts = [
-		'configurationflag' => 'array',
-	];
+    protected $casts = [
+        'configurationflag' => 'array',
+    ];
 
-	public function getActivitylogOptions(): LogOptions
-	{
-		return LogOptions::defaults()->logFillable();
-	}
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
-	protected static function boot()
-	{
-		parent::boot();
-		if (!app()->runningInConsole()) {
-			self::creating(function (StorageLocation $model) {
-				$model->auxiliary05 = Auth::user()->username;
-				$model->barcode = rand(100000, 999999);
-			});
-			self::updating(function (StorageLocation $model) {
-				$model->auxiliary05 = Auth::user()->username;
-			});
-		}
-	}
+    protected static function boot()
+    {
+        parent::boot();
+        if (!app()->runningInConsole()) {
+            self::creating(function (StorageLocation $model) {
+                $model->auxiliary05 = Auth::user()->username;
+                $model->barcode = rand(100000, 999999);
+            });
+            self::updating(function (StorageLocation $model) {
+                $model->auxiliary05 = Auth::user()->username;
+            });
+        }
+    }
 
-	public static function controlAccessUser()
-	{
-		$centers = SecurityAccessWarehouse::Centers();
-		$warehouses = SecurityAccessWarehouse::Warehouses();
-		return StorageLocation::whereIn('storagelocations.centerid', $centers)
-			->whereIn('storagelocations.warehouseid', $warehouses);
-	}
+    public static function controlAccessUser()
+    {
+        $centers = SecurityAccessWarehouse::Centers();
+        $warehouses = SecurityAccessWarehouse::Warehouses();
+        return StorageLocation::whereIn('storagelocations.centerid', $centers)
+            ->whereIn('storagelocations.warehouseid', $warehouses);
+    }
 
-//    Relaciones
-	public function center()
-	{
-		return $this->belongsTo(SystemCenterDistribution::class, 'centerid');
-	}
+    //    Relaciones
+    public function center()
+    {
+        return $this->belongsTo(SystemCenterDistribution::class, 'centerid');
+    }
 
-	public function warehouse()
-	{
-		return $this->belongsTo(SystemWarehouse::class, 'warehouseid', 'warehouseid');
-	}
+    public function warehouse()
+    {
+        return $this->belongsTo(SystemWarehouse::class, 'warehouseid', 'warehouseid');
+    }
 
-	public function status(): BelongsTo
-	{
-		return $this->belongsTo(SystemStatus::class, 'statusid', 'statusid');
-	}
+    public function status(): BelongsTo
+    {
+        return $this->belongsTo(SystemStatus::class, 'statusid', 'statusid');
+    }
 
-	public function zone(): BelongsTo
-	{
-		return $this->belongsTo(StorageZone::class, 'zoneid', 'id');
-	}
+    public function zone(): BelongsTo
+    {
+        return $this->belongsTo(StorageZone::class, 'zoneid', 'id');
+    }
 
-//    Filtros Scopes
-	public function scopeName($query, $name)
-	{
-		if (trim($name) != '') {
-			$query->where('storagelocations.name', 'like', "%$name%");
-		}
-	}
+    //    Filtros Scopes
+    public function scopeName($query, $name)
+    {
+        if (trim($name) != '') {
+            $query->where('storagelocations.name', 'like', "%$name%");
+        }
+    }
 
-	public function scopeZone($query, $zoneid)
-	{
-		if ($zoneid != '') {
-			$query->where('storagelocations.zoneid', $zoneid);
-		}
-	}
+    public function scopeZone($query, $zoneid)
+    {
+        if ($zoneid != '') {
+            $query->where('storagelocations.zoneid', $zoneid);
+        }
+    }
 
-	public function scopeStatus($query, $statusid)
-	{
-		if ($statusid != '') {
-			$query->where('storagelocations.statusid', $statusid);
-		}
-	}
+    public function scopeStatus($query, $statusid)
+    {
+        if ($statusid != '') {
+            $query->where('storagelocations.statusid', $statusid);
+        }
+    }
 
-	public function scopeWarehouse($query, $warehouseid)
-	{
-		if ($warehouseid != '') {
-			$query->where('storagelocations.warehouseid', $warehouseid);
-		}
-	}
+    public function scopeWarehouse($query, $warehouseid)
+    {
+        if ($warehouseid != '') {
+            $query->where('storagelocations.warehouseid', $warehouseid);
+        }
+    }
 
-//    Funciones auxiliares para otros modulos
-	public static function updateLocation($locationid, $statusid, $boxnumber)
-	{
-		StorageLocation::controlAccessUser()
-			->where('id', $locationid)
-			->update(['statusid' => $statusid, 'auxiliary01' => $boxnumber]);
-	}
+    //    Funciones auxiliares para otros modulos
+    public static function updateLocation($locationid, $statusid, $boxnumber)
+    {
+        StorageLocation::controlAccessUser()
+            ->where('id', $locationid)
+            ->update(['statusid' => $statusid, 'auxiliary01' => $boxnumber]);
+    }
 
-	public static function activeLocationForZone()
-	{
-		$centers = SecurityAccessWarehouse::Centers();
-		$warehouses = SecurityAccessWarehouse::Warehouses();
-		return StorageLocation::whereStatusid('E')
-			->whereIn('storagelocations.centerid', $centers)
-			->whereIn('storagelocations.warehouseid', $warehouses)
-			->whereNotIn('storagelocations.name', ['DUMMY'])
-			->select(['name', 'id'])->get();
-	}
+    public static function activeLocationForZone()
+    {
+        $centers = SecurityAccessWarehouse::Centers();
+        $warehouses = SecurityAccessWarehouse::Warehouses();
+        return StorageLocation::whereStatusid('E')
+            ->whereIn('storagelocations.centerid', $centers)
+            ->whereIn('storagelocations.warehouseid', $warehouses)
+            ->whereNotIn('storagelocations.name', ['DUMMY'])
+            ->select(['name', 'id'])->get();
+    }
 
 
 }

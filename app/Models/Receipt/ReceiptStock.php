@@ -90,7 +90,7 @@ class ReceiptStock extends Model
             ->whereIn('receiptstock.centerid', $centers);
     }
 
-//    Relaciones entre modelos
+    //    Relaciones entre modelos
     public function center()
     {
         return $this->belongsTo(SystemCenterDistribution::class, 'centerid');

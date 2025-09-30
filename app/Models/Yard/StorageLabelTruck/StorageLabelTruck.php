@@ -103,14 +103,14 @@ class StorageLabelTruck extends Model
         return LogOptions::defaults()->logFillable();
     }
 
-//    Functions filter center for user to model
+    //    Functions filter center for user to model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
         return StorageLabelTruck::whereIn('storagelabeltrucks.centerid', $centers);
     }
 
-//    Relations with models
+    //    Relations with models
     public function center()
     {
         return $this->belongsTo(SystemCenterDistribution::class, 'centerid');
@@ -141,7 +141,7 @@ class StorageLabelTruck extends Model
         return $this->belongsTo(StorageUnitType::class, 'unittypeid');
     }
 
-//    Filters to model
+    //    Filters to model
     public function scopeLabel($query, $label)
     {
         if (trim($label) !== '') {

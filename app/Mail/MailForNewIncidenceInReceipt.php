@@ -8,7 +8,8 @@ use Illuminate\Queue\SerializesModels;
 
 class MailForNewIncidenceInReceipt extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     public $incidenceStock;
     public $contact;

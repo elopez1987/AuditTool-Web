@@ -108,7 +108,7 @@ class SystemWarehouse extends Model
             ->where('systemwarehouses.statusid', 'E');
     }
 
-//    Relaciones
+    //    Relaciones
     public function status(): BelongsTo
     {
         return $this->belongsTo(SystemStatus::class, 'statusid', 'statusid');
@@ -119,7 +119,7 @@ class SystemWarehouse extends Model
         return $this->belongsTo(SystemCenterDistribution::class, 'centerid', 'centerid');
     }
 
-//    Scopes
+    //    Scopes
     public function scopeForName($query, $name)
     {
         if (trim($name) !== '') {

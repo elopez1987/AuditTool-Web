@@ -34,3 +34,7 @@ fix_style_issues.sh
 .idea/php.xml
 
 .idea/panel.iml
+
+.php-cs-fixer.cache
+
+.php-cs-fixer.dist.php

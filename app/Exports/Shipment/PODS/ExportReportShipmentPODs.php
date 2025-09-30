@@ -15,7 +15,6 @@ use PhpOffice\PhpSpreadsheet\Style\Fill;
 
 class ExportReportShipmentPODs implements FromCollection, WithHeadings, WithMapping, WithEvents, ShouldAutoSize
 {
-
     use Exportable;
     private $workdayin;
     private $workdayout;

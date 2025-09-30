@@ -6,7 +6,6 @@ namespace App\Auth;
 
 use Auth0\Laravel\UserRepositoryAbstract;
 use Auth0\Laravel\UserRepositoryContract;
-
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Facades\Cache;
 
@@ -49,23 +48,23 @@ final class UserRepository extends UserRepositoryAbstract implements UserReposit
         if ($user !== null) {
             $updates = [];
 
-//            if ($user->auth0 !== $profile['auth0']) {
-//                $updates['auth0'] = $profile['auth0'];
-//            }
-//
-//            if ($user->name !== $profile['name']) {
-//                $updates['name'] = $profile['name'];
-//            }
-//
-//            if ($user->email !== $profile['email']) {
-//                $updates['email'] = $profile['email'];
-//            }
+            //            if ($user->auth0 !== $profile['auth0']) {
+            //                $updates['auth0'] = $profile['auth0'];
+            //            }
+            //
+            //            if ($user->name !== $profile['name']) {
+            //                $updates['name'] = $profile['name'];
+            //            }
+            //
+            //            if ($user->email !== $profile['email']) {
+            //                $updates['email'] = $profile['email'];
+            //            }
 
-//            $emailVerified = in_array($user->email_verified, [1, true], true);
+            //            $emailVerified = in_array($user->email_verified, [1, true], true);
 
-//            if ($emailVerified !== $profile['email_verified']) {
-//                $updates['email_verified'] = $profile['email_verified'];
-//            }
+            //            if ($emailVerified !== $profile['email_verified']) {
+            //                $updates['email_verified'] = $profile['email_verified'];
+            //            }
 
             if ($updates !== []) {
                 $user->update($updates);
@@ -77,10 +76,10 @@ final class UserRepository extends UserRepositoryAbstract implements UserReposit
             }
         }
 
-//        if (null === $user) {
-//            $profile['password'] = Hash::make(Str::random(32));
-//            $user = \App\User::create($profile);
-//        }
+        //        if (null === $user) {
+        //            $profile['password'] = Hash::make(Str::random(32));
+        //            $user = \App\User::create($profile);
+        //        }
 
         $this->withoutRecording(fn () => Cache::put('auth0_user_' . $identifier, $user, 30));
 

@@ -54,7 +54,7 @@ class ExportReportCircuitPlant implements FromCollection, WithHeadings, WithEven
 
     public function collection()
     {
-//        $units = collect(DB::select('exec getDataUnitToOneRoof "' . $this->centerid . '" , "' . $this->entrydate . '" , "' . $this->finishdate . '"   '));
+        //        $units = collect(DB::select('exec getDataUnitToOneRoof "' . $this->centerid . '" , "' . $this->entrydate . '" , "' . $this->finishdate . '"   '));
         return ReceiptUnit::select([
             'receiptunits.id',
             'shipmentcarriers.name as linea',
