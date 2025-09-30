@@ -86,6 +86,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitStock whereZone($value)
  * @mixin \Eloquent
  */
+
+
 class ReceiptUnitStock extends Model
 {
     public $timestamps = false;
