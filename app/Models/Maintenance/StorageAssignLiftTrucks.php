@@ -11,6 +11,49 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+/**
+ * @property int $id
+ * @property string $centerid
+ * @property string $username
+ * @property string $schematypeid
+ * @property string $typeid
+ * @property string|null $auxiliary01
+ * @property string|null $auxiliary02
+ * @property string|null $auxiliary03
+ * @property string|null $auxiliary04
+ * @property string|null $auxiliary05
+ * @property string $createuser
+ * @property string $schemaid
+ * @property string $statusid
+ * @property \Illuminate\Support\Carbon $created_at
+ * @property \Illuminate\Support\Carbon $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @property-read User|null $assigntruck
+ * @property-read SystemCenterDistribution $center
+ * @property-read SystemStatus $status
+ * @property-read SystemStatus|null $type
+ * @property-read User|null $usertruck
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageAssignLiftTrucks newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageAssignLiftTrucks newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageAssignLiftTrucks query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageAssignLiftTrucks whereAuxiliary01($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageAssignLiftTrucks whereAuxiliary02($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageAssignLiftTrucks whereAuxiliary03($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageAssignLiftTrucks whereAuxiliary04($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageAssignLiftTrucks whereAuxiliary05($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageAssignLiftTrucks whereCenterid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageAssignLiftTrucks whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageAssignLiftTrucks whereCreateuser($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageAssignLiftTrucks whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageAssignLiftTrucks whereSchemaid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageAssignLiftTrucks whereSchematypeid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageAssignLiftTrucks whereStatusid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageAssignLiftTrucks whereTypeid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageAssignLiftTrucks whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageAssignLiftTrucks whereUsername($value)
+ * @mixin \Eloquent
+ */
 class StorageAssignLiftTrucks extends Model
 {
     use LogsActivity;

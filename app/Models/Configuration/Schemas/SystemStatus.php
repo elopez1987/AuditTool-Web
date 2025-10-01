@@ -8,6 +8,35 @@ use Illuminate\Database\Eloquent\Model;
  * @method static where(string $string, mixed $schemaid)
  * @method static create(array $array)
  * @method static whereSchemaid(string $string)
+ * @property string|null $centerid
+ * @property string|null $warehouseid
+ * @property string $schemaid
+ * @property string $statusid
+ * @property string $name
+ * @property string|null $comment
+ * @property string|null $auxiliary01
+ * @property string|null $auxiliary02
+ * @property string|null $auxiliary03
+ * @property string|null $auxiliary04
+ * @property string|null $auxiliary05
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemStatus newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemStatus newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemStatus query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemStatus whereAuxiliary01($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemStatus whereAuxiliary02($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemStatus whereAuxiliary03($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemStatus whereAuxiliary04($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemStatus whereAuxiliary05($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemStatus whereCenterid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemStatus whereComment($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemStatus whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemStatus whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemStatus whereStatusid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemStatus whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemStatus whereWarehouseid($value)
+ * @mixin \Eloquent
  */
 class SystemStatus extends Model
 {

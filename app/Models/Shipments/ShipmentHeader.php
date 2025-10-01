@@ -15,6 +15,71 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * @method static create(array $array)
+ * @property int $id
+ * @property string $centerid
+ * @property string $warehouseid
+ * @property int $orderid
+ * @property string|null $delivery
+ * @property string $adddate
+ * @property string|null $startdate
+ * @property string|null $finishdate
+ * @property string|null $startgoodissuedate
+ * @property string|null $goodissuedate
+ * @property string|null $cancellationdate
+ * @property float|null $totalweight
+ * @property float|null $totalvolume
+ * @property int|null $totalpieces
+ * @property int|null $totalcontainers
+ * @property int|null $totalpiecesfac
+ * @property int|null $totalcontainersfac
+ * @property string|null $locationid
+ * @property string|null $comment
+ * @property int|null $reasonoutputid
+ * @property int|null $createuserid
+ * @property string $schemaid
+ * @property string $statusid
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @property-read SystemCenterDistribution $center
+ * @property-read StorageLocation|null $location
+ * @property-read \App\Models\Shipments\ShipmentDataOperation $operation
+ * @property-read \App\Models\Shipments\ShipmentSeal $seal
+ * @property-read \App\Models\Shipments\OrderDeliverie $shipment
+ * @property-read SystemStatus $status
+ * @property-read User|null $user
+ * @property-read SystemWarehouse $warehouse
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentHeader forShipment($shipmentid)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentHeader newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentHeader newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentHeader query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentHeader whereAdddate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentHeader whereCancellationdate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentHeader whereCenterid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentHeader whereComment($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentHeader whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentHeader whereCreateuserid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentHeader whereDelivery($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentHeader whereFinishdate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentHeader whereGoodissuedate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentHeader whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentHeader whereLocationid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentHeader whereOrderid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentHeader whereReasonoutputid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentHeader whereSchemaid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentHeader whereStartdate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentHeader whereStartgoodissuedate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentHeader whereStatusid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentHeader whereTotalcontainers($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentHeader whereTotalcontainersfac($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentHeader whereTotalpieces($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentHeader whereTotalpiecesfac($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentHeader whereTotalvolume($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentHeader whereTotalweight($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentHeader whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentHeader whereWarehouseid($value)
+ * @mixin \Eloquent
  */
 class ShipmentHeader extends Model
 {

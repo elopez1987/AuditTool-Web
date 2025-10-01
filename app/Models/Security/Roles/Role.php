@@ -16,10 +16,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $guard_name
  * @property string|null $created_at
  * @property string|null $updated_at
- *
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
- *
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Security\Role newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Security\Role newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Security\Role query()
@@ -28,7 +26,26 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Security\Role whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Security\Role whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Security\Role whereUpdatedAt($value)
- *
+ * @property string|null $centerid
+ * @property string|null $menustrucid
+ * @property string|null $description
+ * @property string|null $statusid
+ * @property string|null $schemaid
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read SystemCenterDistribution|null $center
+ * @property-read SystemStatus|null $status
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Role forStatus($statusid)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Role name($name)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Role onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Role role($roleid)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Role whereCenterid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Role whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Role whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Role whereMenustrucid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Role whereSchemaid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Role whereStatusid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Role withTrashed(bool $withTrashed = true)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Role withoutTrashed()
  * @mixin \Eloquent
  */
 class Role extends Model
@@ -95,7 +112,7 @@ class Role extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
-        return Role:: whereIn('roles.centerid', $centers);
+        return Role::whereIn('roles.centerid', $centers);
     }
 
     protected static function boot()

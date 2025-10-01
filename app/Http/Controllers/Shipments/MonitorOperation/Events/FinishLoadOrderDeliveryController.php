@@ -87,7 +87,7 @@ class FinishLoadOrderDeliveryController extends BaseController
         $shipmentHeader->statusid = 'FO';
         $shipmentHeader->finishdate = now();
         $shipmentHeader->save();
-//      Libera el stage para el siguiente embarque
+        //      Libera el stage para el siguiente embarque
         StorageLocation::updateLocation($shipmentHeader->locationid, 'E', '');
     }
 

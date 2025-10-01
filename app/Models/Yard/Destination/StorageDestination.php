@@ -14,6 +14,44 @@ use Spatie\Activitylog\Traits\LogsActivity;
 /**
  * @method static whereStatusid(string $string)
  * @method static whereId(mixed $destinationid)
+ * @property int $id
+ * @property string $centerid
+ * @property string $warehouseid
+ * @property string $name
+ * @property int $time
+ * @property string|null $configurationflag
+ * @property string|null $auxiliary01
+ * @property string|null $auxiliary02
+ * @property string|null $auxiliary03
+ * @property string|null $auxiliary04
+ * @property string|null $auxiliary05
+ * @property string $schemaid
+ * @property string $statusid
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @property-read SystemCenterDistribution $center
+ * @property-read SystemStatus $status
+ * @property-read SystemWarehouse $warehouse
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageDestination name($name)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageDestination newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageDestination newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageDestination query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageDestination whereAuxiliary01($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageDestination whereAuxiliary02($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageDestination whereAuxiliary03($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageDestination whereAuxiliary04($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageDestination whereAuxiliary05($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageDestination whereCenterid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageDestination whereConfigurationflag($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageDestination whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageDestination whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageDestination whereSchemaid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageDestination whereTime($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageDestination whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageDestination whereWarehouseid($value)
+ * @mixin \Eloquent
  */
 class StorageDestination extends Model
 {

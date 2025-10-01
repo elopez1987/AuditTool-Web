@@ -16,7 +16,7 @@ class JoinTruckToBoxController extends BaseController
 {
     use QueryReceiptUnits;
 
-//    TODO eliminar la actualizacion de datos del operador en la tabla de cajas en patio
+    //    TODO eliminar la actualizacion de datos del operador en la tabla de cajas en patio
     public function index()
     {
         $this->authorize('storagejointrucktobox.index');

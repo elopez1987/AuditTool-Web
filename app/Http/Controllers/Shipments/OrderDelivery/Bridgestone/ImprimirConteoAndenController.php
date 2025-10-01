@@ -11,7 +11,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class ImprimirConteoAndenController extends BaseController
 {
-//    Exporta el reporte de conteo de andenes del supervisor
+    //    Exporta el reporte de conteo de andenes del supervisor
     public function index($id)
     {
         $orderDelivery = OrderDeliverie::controlAccessUser()->where('id', $id)->first();
@@ -27,7 +27,7 @@ class ImprimirConteoAndenController extends BaseController
         return response($pdf->output(), 200)->header('Content-Type', 'application/pdf');
     }
 
-//    Exporta el conteo de andenes del vigilante
+    //    Exporta el conteo de andenes del vigilante
 
     public function printformatcountbridgestonevig($id)
     {

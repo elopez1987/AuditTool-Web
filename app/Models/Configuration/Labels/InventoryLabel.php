@@ -7,6 +7,34 @@ use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property string $centerid
+ * @property int $labelid
+ * @property string $description
+ * @property string|null $auxiliary01
+ * @property string|null $auxiliary02
+ * @property string|null $auxiliary03
+ * @property string|null $auxiliary04
+ * @property string|null $auxiliary05
+ * @property string|null $schemaid
+ * @property string|null $statusid
+ * @property-read SystemCenterDistribution $center
+ * @property-read SystemStatus|null $status
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryLabel newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryLabel newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryLabel query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryLabel whereAuxiliary01($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryLabel whereAuxiliary02($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryLabel whereAuxiliary03($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryLabel whereAuxiliary04($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryLabel whereAuxiliary05($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryLabel whereCenterid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryLabel whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryLabel whereLabelid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryLabel whereSchemaid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryLabel whereStatusid($value)
+ * @mixin \Eloquent
+ */
 class InventoryLabel extends Model
 {
     public $timestamps = false;

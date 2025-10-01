@@ -639,37 +639,43 @@
                                                         </tr>
                                                         </thead>
                                                         <tbody>
-                                                        @foreach($pesos as $peso)
-                                                            <tr>
-                                                                <td>{{$peso->folionumber}}</td>
-                                                                <td>{{$peso->ticket}}</td>
-                                                                <td>{{$peso->weightin}} Kg</td>
-                                                                <td>{{ round($peso->weightin * 2.20462) }} lbs</td>
-                                                                <td>{{$peso->usercreate ? $peso->usercreate->name : ''}}</td>
-                                                                <td>{{$peso->createddate}}</td>
-                                                                <td>{{$peso->weightout}} Kg</td>
-                                                                <td>{{ round($peso->weightout * 2.20462)}} lbs</td>
-                                                                <td>{{$peso->weightout - $peso->weightin}} Kg</td>
-                                                                <td>{{ round( ($peso->weightout - $peso->weightin) * 2.20462)}}
-                                                                    lbs
-                                                                </td>
-                                                                <td>{{$peso->weightoutsap}}lbs
-                                                                </td> {{-- Peso de SAP libras--}}
-                                                                <td>{{$peso->userupdate ? $peso->userupdate->name : ''}}</td>
-                                                                <td>{{$peso->updateddate}}</td>
-                                                                <td>
-                                                                    @php
+                                                        @if(!empty($pesos))
+                                                            @foreach($pesos as $peso)
+                                                                <tr>
+                                                                    <td>{{$peso->folionumber}}</td>
+                                                                    <td>{{$peso->ticket}}</td>
+                                                                    <td>{{$peso->weightin}} Kg</td>
+                                                                    <td>{{ round($peso->weightin * 2.20462) }} lbs</td>
+                                                                    <td>{{$peso->usercreate ? $peso->usercreate->name : ''}}</td>
+                                                                    <td>{{$peso->createddate}}</td>
+                                                                    <td>{{$peso->weightout}} Kg</td>
+                                                                    <td>{{ round($peso->weightout * 2.20462)}} lbs</td>
+                                                                    <td>{{$peso->weightout - $peso->weightin}} Kg</td>
+                                                                    <td>{{ round( ($peso->weightout - $peso->weightin) * 2.20462)}}
+                                                                        lbs
+                                                                    </td>
+                                                                    <td>{{$peso->weightoutsap}}lbs
+                                                                    </td> {{-- Peso de SAP libras--}}
+                                                                    <td>{{$peso->userupdate ? $peso->userupdate->name : ''}}</td>
+                                                                    <td>{{$peso->updateddate}}</td>
+                                                                    <td>
+                                                                        @php
 
-                                                                        $pesoCalculado = round(($peso->weightout - $peso->weightin) * 2.20462,2);
-                                                                        $pesoSap = $peso->weightoutsap;
-                                                                        $porcentaje = (float) $pesoSap != 0 ? round( (100 / $pesoCalculado ) *  (float) $pesoSap, 2) / 10: 0;
-                                                                    @endphp
-                                                                    <span class="{{ $porcentaje > 0 ? 'text-success' : ($porcentaje < 0 ? 'text-danger' : 'text-muted') }}">
+                                                                            $pesoCalculado = round(($peso->weightout - $peso->weightin) * 2.20462,2);
+                                                                            $pesoSap = $peso->weightoutsap;
+																			if ($pesoCalculado != 0){
+                                                                            $porcentaje = (float) $pesoSap != 0 ? round( (100 / $pesoCalculado ) *  (float) $pesoSap, 2) / 10: 0;
+																			}else{
+																				$porcentaje = 0;
+																			}
+                                                                        @endphp
+                                                                        <span class="{{ $porcentaje > 0 ? 'text-success' : ($porcentaje < 0 ? 'text-danger' : 'text-muted') }}">
                                                                                 {{ $porcentaje > 0 ? '+' : '' }}{{ number_format($porcentaje, 2) }} %
                                                                             </span>
-                                                                </td>
-                                                            </tr>
-                                                        @endforeach
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+                                                        @endif
                                                         </tbody>
                                                     </table>
                                                 </div>

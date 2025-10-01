@@ -31,7 +31,7 @@ class CapacityYardController extends BaseController
         );
     }
 
-//    Detalle de ocupacion del patio por la placa de la unidad
+    //    Detalle de ocupacion del patio por la placa de la unidad
     public function layoutinventoryforzone()
     {
         $zones = StorageZone::controlAccessUser()->whereStatusid('E')->whereRaw("charindex('ZO-01', configurationflag) > 0")->get();

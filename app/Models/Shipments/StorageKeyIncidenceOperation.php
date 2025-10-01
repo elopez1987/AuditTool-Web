@@ -10,6 +10,39 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+/**
+ * @property int $id
+ * @property string $centerid
+ * @property string $warehouseid
+ * @property int $orderid
+ * @property string $delivery
+ * @property string $partnumberid
+ * @property int|null $razoncode
+ * @property string|null $keyoperation
+ * @property string|null $keyoperationdate
+ * @property string|null $keyoperationuser
+ * @property string $schemaid
+ * @property string $statusid
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @property-read User|null $user
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageKeyIncidenceOperation newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageKeyIncidenceOperation newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageKeyIncidenceOperation query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageKeyIncidenceOperation whereCenterid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageKeyIncidenceOperation whereDelivery($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageKeyIncidenceOperation whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageKeyIncidenceOperation whereKeyoperation($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageKeyIncidenceOperation whereKeyoperationdate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageKeyIncidenceOperation whereKeyoperationuser($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageKeyIncidenceOperation whereOrderid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageKeyIncidenceOperation wherePartnumberid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageKeyIncidenceOperation whereRazoncode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageKeyIncidenceOperation whereSchemaid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageKeyIncidenceOperation whereStatusid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageKeyIncidenceOperation whereWarehouseid($value)
+ * @mixin \Eloquent
+ */
 class StorageKeyIncidenceOperation extends Model
 {
     use LogsActivity;

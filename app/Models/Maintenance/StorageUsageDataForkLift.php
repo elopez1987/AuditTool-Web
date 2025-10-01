@@ -11,6 +11,39 @@ use Illuminate\Support\Facades\Auth;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+/**
+ * @property int $id
+ * @property string $centerid
+ * @property \App\Models\Maintenance\StorageLiftTruck $serialnumber
+ * @property string $horometro
+ * @property string $distance
+ * @property string $stationary
+ * @property int $userid
+ * @property string|null $value01
+ * @property string|null $value02
+ * @property string|null $value03
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @property-read SystemCenterDistribution $center
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUsageDataForkLift newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUsageDataForkLift newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUsageDataForkLift query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUsageDataForkLift whereCenterid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUsageDataForkLift whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUsageDataForkLift whereDistance($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUsageDataForkLift whereHorometro($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUsageDataForkLift whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUsageDataForkLift whereSerialnumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUsageDataForkLift whereStationary($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUsageDataForkLift whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUsageDataForkLift whereUserid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUsageDataForkLift whereValue01($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUsageDataForkLift whereValue02($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUsageDataForkLift whereValue03($value)
+ * @mixin \Eloquent
+ */
 class StorageUsageDataForkLift extends Model
 {
     use LogsActivity;

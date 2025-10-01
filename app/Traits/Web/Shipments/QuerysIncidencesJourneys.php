@@ -15,7 +15,7 @@ use Illuminate\Support\Collection;
 
 trait QuerysIncidencesJourneys
 {
-//    Consulta para buscar embarque que pueden registrar incidencias
+    //    Consulta para buscar embarque que pueden registrar incidencias
     public function getShipmentsForCreateNewIncidence()
     {
         $centers = SecurityAccessWarehouse::Centers();

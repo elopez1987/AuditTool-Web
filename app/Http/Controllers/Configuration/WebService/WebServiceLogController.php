@@ -33,7 +33,7 @@ class WebServiceLogController extends BaseController
             ->rawColumns(['btn'])->toJson();
     }
 
-//    Reprocesa la interface desde la vista de logs
+    //    Reprocesa la interface desde la vista de logs
     public function reprocessizel($id)
     {
         $log = SystemEventWebServiceIzel::findOrFail($id);
@@ -44,7 +44,7 @@ class WebServiceLogController extends BaseController
         return redirect('/webservicelogs')->with(session()->flash('info', 'Registro agregado con exito'));
     }
 
-//    Reprocesar la interface de Recurso confiable
+    //    Reprocesar la interface de Recurso confiable
     public function reporcesswebservicercontrol($id)
     {
         $register = SystemEventWebServiceIzel::findOrFail($id);

@@ -57,7 +57,7 @@ class PermissionController extends BaseController
     {
         $securitypermission->update($request->all());
         return $this->redirectBackSuccess();
-//        return redirect('securityfunctions/' . $securitypermission->functionid . '/edit');
+        //        return redirect('securityfunctions/' . $securitypermission->functionid . '/edit');
     }
 
     public function destroy($id)

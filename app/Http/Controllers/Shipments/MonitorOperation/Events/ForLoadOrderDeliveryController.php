@@ -32,7 +32,7 @@ class ForLoadOrderDeliveryController extends BaseController
             $this->createUnitVirtualForCustomer($parameterCustomer, $orderDelivery);
             $this->sendMessageToOperator($parameterWarehouse, $orderDelivery);
 
-//          Validamos el cierre del proceso de verificación
+            //          Validamos el cierre del proceso de verificación
             if (! empty($parameterWarehouse) && in_array('SWH-34', (array) $parameterWarehouse)) {
                 $shipmentCheck = ShipmentCheck::where('orderid', '=', $orderDelivery->id)->first();
                 if ($shipmentCheck->statusid !== 'VY') {
@@ -106,7 +106,7 @@ class ForLoadOrderDeliveryController extends BaseController
      */
     public function createUnitVirtualForCustomer($parameterCustomer, OrderDeliverie $orderDelivery): void
     {
-//      Creamos la unidad virtual si el cliente tiene activo el parametro OCF-04
+        //      Creamos la unidad virtual si el cliente tiene activo el parametro OCF-04
         if (! empty($parameterCustomer) && in_array('OCF-04', (array) $parameterCustomer)) {
             $receiptunit = $this->newUnitVirtual($orderDelivery);
             $orderDelivery->folionumber = $receiptunit->id;
@@ -122,7 +122,7 @@ class ForLoadOrderDeliveryController extends BaseController
      */
     public function sendMessageToOperator($parameterWarehouse, OrderDeliverie $orderDelivery): void
     {
-//     Proceso para enviar mensaje a operador que está en patio para enrampar
+        //     Proceso para enviar mensaje a operador que está en patio para enrampar
         if (! empty($parameterWarehouse) && in_array('SWH-43', (array) $parameterWarehouse)) {
             EnviarMensajeOperadorPorAsignacionDeCortinaJob::dispatch($orderDelivery);
         }

@@ -15,7 +15,6 @@ use PhpOffice\PhpSpreadsheet\Style\Fill;
 
 class ExportReportPhotosForShipment implements FromCollection, WithHeadings, WithMapping, WithEvents, ShouldAutoSize, WithColumnFormatting
 {
-
     use Exportable;
     private $workdayin;
     private $workdayout;

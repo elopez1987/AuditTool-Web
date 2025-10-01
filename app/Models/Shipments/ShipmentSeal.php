@@ -11,6 +11,49 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+/**
+ * @property int $id
+ * @property string $centerid
+ * @property string $warehouseid
+ * @property int $orderid
+ * @property string|null $containerseal01
+ * @property string|null $containerseal02
+ * @property string|null $containerseal03
+ * @property int|null $assignuser
+ * @property string|null $receivername
+ * @property string $schemaorderid
+ * @property string $statusorderid
+ * @property string $schemaid
+ * @property string $statusid
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @property-read SystemCenterDistribution $center
+ * @property-read \App\Models\Shipments\OrderDeliverie $shipment
+ * @property-read User|null $user
+ * @property-read SystemWarehouse $warehouse
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentSeal forShipment($shipmentid)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentSeal newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentSeal newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentSeal query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentSeal whereAssignuser($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentSeal whereCenterid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentSeal whereContainerseal01($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentSeal whereContainerseal02($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentSeal whereContainerseal03($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentSeal whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentSeal whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentSeal whereOrderid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentSeal whereReceivername($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentSeal whereSchemaid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentSeal whereSchemaorderid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentSeal whereStatusid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentSeal whereStatusorderid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentSeal whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentSeal whereWarehouseid($value)
+ * @mixin \Eloquent
+ */
 class ShipmentSeal extends Model
 {
     use LogsActivity;

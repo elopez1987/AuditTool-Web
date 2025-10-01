@@ -9,6 +9,47 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+/**
+ * @property int $id
+ * @property string $centerid
+ * @property string $warehouseid
+ * @property string $shipmentid
+ * @property string|null $client
+ * @property string|null $type
+ * @property string|null $message
+ * @property int|null $quantity
+ * @property string|null $auxiliary01
+ * @property string|null $auxiliary02
+ * @property string|null $auxiliary03
+ * @property string|null $auxiliary04
+ * @property string|null $auxiliary05
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @property-read SystemCenterDistribution $center
+ * @property-read \App\Models\Shipments\OrderDeliverie|null $shipment
+ * @property-read SystemWarehouse $warehouse
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|EdiShipment newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|EdiShipment newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|EdiShipment query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|EdiShipment whereAuxiliary01($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|EdiShipment whereAuxiliary02($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|EdiShipment whereAuxiliary03($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|EdiShipment whereAuxiliary04($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|EdiShipment whereAuxiliary05($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|EdiShipment whereCenterid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|EdiShipment whereClient($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|EdiShipment whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|EdiShipment whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|EdiShipment whereMessage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|EdiShipment whereQuantity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|EdiShipment whereShipmentid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|EdiShipment whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|EdiShipment whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|EdiShipment whereWarehouseid($value)
+ * @mixin \Eloquent
+ */
 class EdiShipment extends Model
 {
     use LogsActivity;
@@ -57,7 +98,7 @@ class EdiShipment extends Model
         return $this->belongsTo(OrderDeliverie::class, 'shipmentid', 'shipmentid');
     }
 
-//    Crea el registro de envío de plan de carga del módulo de embarques
+    //    Crea el registro de envío de plan de carga del módulo de embarques
     public static function createEDIForPlanToShipment($shipment)
     {
         EdiShipment::updateOrCreate([
@@ -70,7 +111,7 @@ class EdiShipment extends Model
         ]);
     }
 
-//    Crea el registro de envío del evento del embarque (Entrada/Inicio y fin de proceso, facturacion y salida)
+    //    Crea el registro de envío del evento del embarque (Entrada/Inicio y fin de proceso, facturacion y salida)
     public static function createEDIForEventToShipment($shipment, $event)
     {
         EdiShipment::updateOrCreate([

@@ -14,7 +14,7 @@ class EventReceiptUnitController extends BaseController
 {
     use RegisterEdiShipment;
 
-//    Agrega el folio para interface a izel
+    //    Agrega el folio para interface a izel
     public function generateinterface($id)
     {
         $this->authorize('generateinterface');
@@ -24,7 +24,7 @@ class EventReceiptUnitController extends BaseController
         return $this->redirectBackSuccessMessage('Registro agregado al monitor de interface.');
     }
 
-//    Rivive unidad desde el kardex
+    //    Rivive unidad desde el kardex
     public function reloadunit(Request $request)
     {
         $this->authorize('receiptunits.realodunit');

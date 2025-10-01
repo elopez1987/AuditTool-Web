@@ -4,6 +4,29 @@ namespace App\Models\Configuration\TablesDataBase;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property string $tableid
+ * @property string $description
+ * @property string $notes
+ * @property string|null $value01
+ * @property string|null $value02
+ * @property string|null $value03
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemTable forName($tableid)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemTable newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemTable newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemTable query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemTable whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemTable whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemTable whereNotes($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemTable whereTableid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemTable whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemTable whereValue01($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemTable whereValue02($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemTable whereValue03($value)
+ * @mixin \Eloquent
+ */
 class SystemTable extends Model
 {
     public $incrementing = false;

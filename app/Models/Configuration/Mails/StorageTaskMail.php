@@ -14,6 +14,48 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+/**
+ * @property int $id
+ * @property string $centerid
+ * @property string $warehouseid
+ * @property string $modeltype
+ * @property string $modelid
+ * @property string $mailid
+ * @property string|null $value01
+ * @property string|null $value02
+ * @property string|null $value03
+ * @property string|null $value04
+ * @property string|null $value05
+ * @property string $schemaid
+ * @property string|null $statusid
+ * @property \Illuminate\Support\Carbon $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @property-read SystemCenterDistribution $center
+ * @property-read SystemSchema $schema
+ * @property-read SystemStatus|null $status
+ * @property-read SystemWarehouse $warehouse
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTaskMail newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTaskMail newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTaskMail query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTaskMail whereCenterid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTaskMail whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTaskMail whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTaskMail whereMailid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTaskMail whereModelid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTaskMail whereModeltype($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTaskMail whereSchemaid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTaskMail whereStatusid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTaskMail whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTaskMail whereValue01($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTaskMail whereValue02($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTaskMail whereValue03($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTaskMail whereValue04($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTaskMail whereValue05($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTaskMail whereWarehouseid($value)
+ * @mixin \Eloquent
+ */
 class StorageTaskMail extends Model
 {
     use LogsActivity;

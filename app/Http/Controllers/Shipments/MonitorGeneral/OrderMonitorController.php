@@ -9,7 +9,7 @@ use Yajra\DataTables\Facades\DataTables;
 
 class OrderMonitorController extends BaseController
 {
-//    Monitor general
+    //    Monitor general
     public function index()
     {
         $this->authorize('ordermonitor.index');

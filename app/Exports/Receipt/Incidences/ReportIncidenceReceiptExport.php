@@ -16,7 +16,6 @@ use PhpOffice\PhpSpreadsheet\Style\Fill;
 
 class ReportIncidenceReceiptExport implements FromCollection, WithHeadings, WithMapping, WithEvents, ShouldAutoSize, WithColumnFormatting
 {
-
     use Exportable;
     private $workdayin;
     private $workdayout;

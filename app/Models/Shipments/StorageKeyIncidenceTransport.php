@@ -10,6 +10,39 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+/**
+ * @property int $id
+ * @property string $centerid
+ * @property string $warehouseid
+ * @property int $orderid
+ * @property string $delivery
+ * @property string $partnumberid
+ * @property int|null $razoncode
+ * @property string|null $keytransport
+ * @property string|null $keytransportdate
+ * @property string|null $keytransportuser
+ * @property string $schemaid
+ * @property string $statusid
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @property-read User|null $user
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageKeyIncidenceTransport newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageKeyIncidenceTransport newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageKeyIncidenceTransport query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageKeyIncidenceTransport whereCenterid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageKeyIncidenceTransport whereDelivery($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageKeyIncidenceTransport whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageKeyIncidenceTransport whereKeytransport($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageKeyIncidenceTransport whereKeytransportdate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageKeyIncidenceTransport whereKeytransportuser($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageKeyIncidenceTransport whereOrderid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageKeyIncidenceTransport wherePartnumberid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageKeyIncidenceTransport whereRazoncode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageKeyIncidenceTransport whereSchemaid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageKeyIncidenceTransport whereStatusid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageKeyIncidenceTransport whereWarehouseid($value)
+ * @mixin \Eloquent
+ */
 class StorageKeyIncidenceTransport extends Model
 {
     use LogsActivity;

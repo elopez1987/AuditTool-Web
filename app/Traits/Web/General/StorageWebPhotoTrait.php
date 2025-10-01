@@ -11,12 +11,12 @@ use Intervention\Image\Facades\Image;
 
 trait StorageWebPhotoTrait
 {
-//    Esta funcion guarda la imagen y devuelve el path para guardarlo en una columna de la tabla
-//    $file = El archivo a guardar (Imagen)
-//    $centerid = Representa el centro de distribucion para guardar la imagen
-//    $module = Representa el módulo principal del sistema
-//    $submodule = Representa a la funcion correspondiente al módulo
-//    $folder = Es el directorio final donde se guardara la imagen
+    //    Esta funcion guarda la imagen y devuelve el path para guardarlo en una columna de la tabla
+    //    $file = El archivo a guardar (Imagen)
+    //    $centerid = Representa el centro de distribucion para guardar la imagen
+    //    $module = Representa el módulo principal del sistema
+    //    $submodule = Representa a la funcion correspondiente al módulo
+    //    $folder = Es el directorio final donde se guardara la imagen
 
     public function saveFileToModel($file, $centerid, $module, $submodule, $folder)
     {
@@ -35,11 +35,11 @@ trait StorageWebPhotoTrait
             })->save($basePath);
     }
 
-//    $modeltype = Representa el tipo de modelo
-//    $id = Representa él, id del modelo
-//    $path = Representa el path de la imagen
-//    $type = Representa el tipo de imagen
-//    $model = Representa la instancia del modelo que se está procesando
+    //    $modeltype = Representa el tipo de modelo
+    //    $id = Representa él, id del modelo
+    //    $path = Representa el path de la imagen
+    //    $type = Representa el tipo de imagen
+    //    $model = Representa la instancia del modelo que se está procesando
 
     public function createEvidencePhoto($modeltype, $id, $path, $type, $model)
     {

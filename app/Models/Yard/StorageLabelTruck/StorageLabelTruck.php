@@ -14,6 +14,57 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+/**
+ * @property int $id
+ * @property string|null $centerid
+ * @property string|null $warehouseid
+ * @property string $barcode
+ * @property int $carrierid
+ * @property int|null $truckid
+ * @property string $boxnumber
+ * @property string|null $econumber
+ * @property string $typeid
+ * @property string|null $auxiliary01
+ * @property string|null $auxiliary02
+ * @property string|null $auxiliary03
+ * @property string $schemaid
+ * @property string $statusid
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @property-read ShipmentCarrier $carrier
+ * @property-read SystemCenterDistribution|null $center
+ * @property-read SystemStatus $status
+ * @property-read ShipmentTruck|null $truck
+ * @property-read StorageUnitType|null $unittype
+ * @property-read SystemWarehouse|null $warehouse
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLabelTruck boxNumber($boxnumber)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLabelTruck carrier($carrierid)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLabelTruck forCarrierOperator($carrier)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLabelTruck label($label)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLabelTruck newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLabelTruck newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLabelTruck query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLabelTruck type($typeid)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLabelTruck whereAuxiliary01($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLabelTruck whereAuxiliary02($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLabelTruck whereAuxiliary03($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLabelTruck whereBarcode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLabelTruck whereBoxnumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLabelTruck whereCarrierid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLabelTruck whereCenterid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLabelTruck whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLabelTruck whereEconumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLabelTruck whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLabelTruck whereSchemaid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLabelTruck whereStatusid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLabelTruck whereTruckid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLabelTruck whereTypeid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLabelTruck whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLabelTruck whereWarehouseid($value)
+ * @mixin \Eloquent
+ */
 class StorageLabelTruck extends Model
 {
     use LogsActivity;
@@ -52,14 +103,14 @@ class StorageLabelTruck extends Model
         return LogOptions::defaults()->logFillable();
     }
 
-//    Functions filter center for user to model
+    //    Functions filter center for user to model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
         return StorageLabelTruck::whereIn('storagelabeltrucks.centerid', $centers);
     }
 
-//    Relations with models
+    //    Relations with models
     public function center()
     {
         return $this->belongsTo(SystemCenterDistribution::class, 'centerid');
@@ -90,7 +141,7 @@ class StorageLabelTruck extends Model
         return $this->belongsTo(StorageUnitType::class, 'unittypeid');
     }
 
-//    Filters to model
+    //    Filters to model
     public function scopeLabel($query, $label)
     {
         if (trim($label) !== '') {

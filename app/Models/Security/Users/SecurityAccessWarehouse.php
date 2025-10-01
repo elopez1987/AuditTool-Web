@@ -9,6 +9,30 @@ use Illuminate\Support\Facades\Auth;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+/**
+ * @property int $id
+ * @property string $centerid
+ * @property string $warehouseid
+ * @property string $username
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $defaultlevel
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @property-read SystemCenterDistribution $center
+ * @property-read SystemWarehouse $warehouse
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SecurityAccessWarehouse newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SecurityAccessWarehouse newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SecurityAccessWarehouse query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SecurityAccessWarehouse whereCenterid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SecurityAccessWarehouse whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SecurityAccessWarehouse whereDefaultlevel($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SecurityAccessWarehouse whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SecurityAccessWarehouse whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SecurityAccessWarehouse whereUsername($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SecurityAccessWarehouse whereWarehouseid($value)
+ * @mixin \Eloquent
+ */
 class SecurityAccessWarehouse extends Model
 {
     use LogsActivity;

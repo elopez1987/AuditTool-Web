@@ -7,6 +7,32 @@ use App\Models\Configuration\Warehouses\SystemWarehouse;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property int $recordid
+ * @property string $whatsappid
+ * @property string $centerid
+ * @property string $warehouseid
+ * @property string $namecontact
+ * @property string $phonenumber
+ * @property string|null $phonenumber01
+ * @property string|null $phonenumber02
+ * @property string|null $phonenumber03
+ * @property-read SystemCenterDistribution $center
+ * @property-read SystemWarehouse $warehouse
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailWhatsApp newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailWhatsApp newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailWhatsApp query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailWhatsApp whereCenterid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailWhatsApp whereNamecontact($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailWhatsApp wherePhonenumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailWhatsApp wherePhonenumber01($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailWhatsApp wherePhonenumber02($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailWhatsApp wherePhonenumber03($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailWhatsApp whereRecordid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailWhatsApp whereWarehouseid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailWhatsApp whereWhatsappid($value)
+ * @mixin \Eloquent
+ */
 class SystemDetailWhatsApp extends Model
 {
     public $timestamps = false;

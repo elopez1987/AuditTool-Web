@@ -15,6 +15,53 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+/**
+ * @property int $id
+ * @property string $centerid
+ * @property string $warehouseid
+ * @property int|null $folioid
+ * @property int $orderid
+ * @property int $locationid
+ * @property int $quantity
+ * @property string|null $name
+ * @property string|null $keyoperator
+ * @property int $userid
+ * @property string|null $keyguard
+ * @property string|null $keysupervisor
+ * @property string|null $value01
+ * @property string|null $value02
+ * @property string|null $value03
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @property-read SystemCenterDistribution $center
+ * @property-read StorageLocation $location
+ * @property-read OrderDeliverie $order
+ * @property-read User|null $user
+ * @property-read SystemWarehouse $warehouse
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentCheckTotal newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentCheckTotal newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentCheckTotal query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentCheckTotal whereCenterid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentCheckTotal whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentCheckTotal whereFolioid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentCheckTotal whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentCheckTotal whereKeyguard($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentCheckTotal whereKeyoperator($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentCheckTotal whereKeysupervisor($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentCheckTotal whereLocationid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentCheckTotal whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentCheckTotal whereOrderid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentCheckTotal whereQuantity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentCheckTotal whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentCheckTotal whereUserid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentCheckTotal whereValue01($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentCheckTotal whereValue02($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentCheckTotal whereValue03($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentCheckTotal whereWarehouseid($value)
+ * @mixin \Eloquent
+ */
 class StorageShipmentCheckTotal extends Model
 {
     use LogsActivity;

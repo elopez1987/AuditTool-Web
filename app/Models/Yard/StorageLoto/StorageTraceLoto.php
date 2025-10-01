@@ -17,6 +17,37 @@ use Illuminate\Support\Facades\Auth;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+/**
+ * @property int $id
+ * @property string $centerid
+ * @property string $warehouseid
+ * @property ReceiptUnit $folionumber
+ * @property int $lotoid
+ * @property int $eventid
+ * @property int $userid
+ * @property \Illuminate\Support\Carbon $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @property-read SystemCenterDistribution $center
+ * @property-read StorageReason $event
+ * @property-read StorageSealLoto $loto
+ * @property-read User $user
+ * @property-read SystemWarehouse $warehouse
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTraceLoto newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTraceLoto newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTraceLoto query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTraceLoto whereCenterid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTraceLoto whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTraceLoto whereEventid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTraceLoto whereFolionumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTraceLoto whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTraceLoto whereLotoid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTraceLoto whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTraceLoto whereUserid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTraceLoto whereWarehouseid($value)
+ * @mixin \Eloquent
+ */
 class StorageTraceLoto extends Model
 {
     use LogsActivity;

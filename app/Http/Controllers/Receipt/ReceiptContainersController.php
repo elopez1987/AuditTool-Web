@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 
 class ReceiptContainersController extends BaseController
 {
-//    Registro de tarimas blancas en recibo
+    //    Registro de tarimas blancas en recibo
     public function addpallets($id)
     {
         $receipt = ReceiptAsn::findOrFail($id);
@@ -73,9 +73,9 @@ class ReceiptContainersController extends BaseController
         return $this->redirectBackSuccessMessage('Datos eliminados con exito!!');
     }
 
-//    --------------------------------------------------------------------------------------------------------------------
+    //    --------------------------------------------------------------------------------------------------------------------
 
-//    Borrar contenedores de recibo
+    //    Borrar contenedores de recibo
     public function deleteLpnOfReceipt(Request $request)
     {
         $container = ReceiptContainer::where('recordid', '=', $request['id'])->first();
@@ -83,7 +83,7 @@ class ReceiptContainersController extends BaseController
         return response()->json();
     }
 
-//    Actualizar cantidad del contenedor
+    //    Actualizar cantidad del contenedor
     public function updateQuantityContainer(Request $request, $id)
     {
         $container = ReceiptContainer::controlAccessUser()->where('recordid', '=', $id)->first();

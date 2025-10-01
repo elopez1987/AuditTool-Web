@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class ReceiptUnitCommentController extends BaseController
 {
-//    --Agregar comentarios al folio desde la existencia
+    //    --Agregar comentarios al folio desde la existencia
     public function addcomments($id)
     {
         $receiptunit = ReceiptUnit::searchForId($id);

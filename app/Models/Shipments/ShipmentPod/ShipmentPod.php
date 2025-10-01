@@ -8,6 +8,43 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+/**
+ * @property int $id
+ * @property string $centerid
+ * @property string $warehouseid
+ * @property int $orderid
+ * @property string|null $value01
+ * @property string|null $value02
+ * @property string|null $value03
+ * @property string|null $value04
+ * @property string $schemaid
+ * @property string|null $statusid
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @property-read OrderDeliverie $order
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentPod carrierIn($carrierid)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentPod customerIn($customer)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentPod newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentPod newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentPod query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentPod shipmentid($shipmentid)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentPod status($status)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentPod whereCenterid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentPod whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentPod whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentPod whereOrderid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentPod whereSchemaid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentPod whereStatusid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentPod whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentPod whereValue01($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentPod whereValue02($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentPod whereValue03($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentPod whereValue04($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentPod whereWarehouseid($value)
+ * @mixin \Eloquent
+ */
 class ShipmentPod extends Model
 {
     use LogsActivity;

@@ -53,7 +53,7 @@ class TransportOutPutController extends BaseController
             }
             $parameter = $this->getParametersOfWarehouse($receiptunit->warehouseid);
             $this->updateDataOfReceiptUnitClose($tracto, $receiptunit, $request);
-//          Realiza la validacion del check list
+            //          Realiza la validacion del check list
             if (! empty($parameter) && in_array('SWH-06', (array) $parameter)) {
                 $this->clearCheckListTransport($id, 'OUT');
                 $this->createCheckListToUnitV2($request, $receiptunit, 'OUT');
@@ -65,13 +65,13 @@ class TransportOutPutController extends BaseController
                     }
                 }
             }
-//          Creamos el registro en el kardex
+            //          Creamos el registro en el kardex
             StorageUnitTrace::createTraceUnit($receiptunit, '8');
-//          Actualizamos la ubicacion a disponible
+            //          Actualizamos la ubicacion a disponible
             StorageLocation::updateLocation($receiptunit->locationid, 'E', '');
-//          Generamos la salida del tracto
+            //          Generamos la salida del tracto
             $this->generateOutTruck($tracto, 'Salida de unidad desde Web');
-//          Enviamos los datos a WMS Izel
+            //          Enviamos los datos a WMS Izel
             $this->addNewEdiForIzel($receiptunit, $parameter, 'OUT');
 
             DB::commit();

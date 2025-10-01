@@ -13,6 +13,57 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+/**
+ * @property int $id
+ * @property string $centerid
+ * @property string $warehouseid
+ * @property int|null $periodid
+ * @property string $workday
+ * @property int|null $turnid
+ * @property string|null $secuence
+ * @property int|null $receiptid
+ * @property string|null $value01
+ * @property string|null $value02
+ * @property string|null $value03
+ * @property string|null $value04
+ * @property string|null $value05
+ * @property string $schemaid
+ * @property string $statusid
+ * @property \Illuminate\Support\Carbon $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @property-read SystemCenterDistribution $center
+ * @property-read StorageReceiptPeriod|null $period
+ * @property-read \App\Models\Receipt\ReceiptAsn|null $receipt
+ * @property-read SystemStatus|null $status
+ * @property-read SystemStatus|null $statussecuence
+ * @property-read StorageTurn|null $turn
+ * @property-read SystemWarehouse $warehouse
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSchedulleReceipt newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSchedulleReceipt newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSchedulleReceipt query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSchedulleReceipt shipment($shipment)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSchedulleReceipt whereCenterid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSchedulleReceipt whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSchedulleReceipt whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSchedulleReceipt wherePeriodid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSchedulleReceipt whereReceiptid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSchedulleReceipt whereSchemaid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSchedulleReceipt whereSecuence($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSchedulleReceipt whereStatusid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSchedulleReceipt whereTurnid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSchedulleReceipt whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSchedulleReceipt whereValue01($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSchedulleReceipt whereValue02($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSchedulleReceipt whereValue03($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSchedulleReceipt whereValue04($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSchedulleReceipt whereValue05($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSchedulleReceipt whereWarehouseid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSchedulleReceipt whereWorkday($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSchedulleReceipt workday($workday)
+ * @mixin \Eloquent
+ */
 class StorageSchedulleReceipt extends Model
 {
     use LogsActivity;
@@ -89,7 +140,7 @@ class StorageSchedulleReceipt extends Model
         return $this->belongsTo(StorageReceiptPeriod::class, 'periodid');
     }
 
-//    Filtros
+    //    Filtros
     public function scopeWorkday($query, $workday)
     {
         if (trim($workday) !== '') {

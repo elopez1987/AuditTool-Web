@@ -11,6 +11,65 @@ use Illuminate\Http\Request;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+/**
+ * @property int $id
+ * @property int $folionumber
+ * @property string|null $ticket
+ * @property string|null $boxnumber
+ * @property float|null $weightin
+ * @property float|null $weightinlb
+ * @property float|null $weightout
+ * @property float|null $weightoutlb
+ * @property float|null $weightoutsap
+ * @property string|null $weightdifferencelb
+ * @property int $createuser
+ * @property int|null $updateuser
+ * @property int|null $responsibleid
+ * @property int|null $areaid
+ * @property int|null $contentid
+ * @property string|null $value01
+ * @property string|null $value02
+ * @property string|null $value03
+ * @property string|null $createddate
+ * @property string|null $updateddate
+ * @property string|null $statusid
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @property-read \App\Models\Yard\ReceiptUnit $folio
+ * @property-read SystemStatus|null $status
+ * @property-read User $usercreate
+ * @property-read User|null $userupdate
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitTicket boxNumber($boxnumber)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitTicket carrier()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitTicket folioNumber($folionumber)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitTicket newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitTicket newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitTicket query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitTicket ticket($ticket)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitTicket warehose()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitTicket whereAreaid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitTicket whereBoxnumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitTicket whereContentid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitTicket whereCreateddate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitTicket whereCreateuser($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitTicket whereFolionumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitTicket whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitTicket whereResponsibleid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitTicket whereStatusid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitTicket whereTicket($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitTicket whereUpdateddate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitTicket whereUpdateuser($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitTicket whereValue01($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitTicket whereValue02($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitTicket whereValue03($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitTicket whereWeightdifferencelb($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitTicket whereWeightin($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitTicket whereWeightinlb($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitTicket whereWeightout($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitTicket whereWeightoutlb($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitTicket whereWeightoutsap($value)
+ * @mixin \Eloquent
+ */
 class ReceiptUnitTicket extends Model
 {
     use LogsActivity;
@@ -19,15 +78,15 @@ class ReceiptUnitTicket extends Model
     protected $table = 'storagereceiptunitticket';
 
     protected $fillable = [
-		'folionumber', 'ticket', 'weightin',
-		'weightout', 'createuser', 'updateuser',
-		'responsibleid', 'areaid', 'contentid',
-		'value01', 'value02', 'value03', 'weightoutsap', 'updateddate',
-		'weightoutlb',
-		'weightinlb',
-		'weightdifferencelb',
-		'boxnumber',
-		'statusid'
+        'folionumber', 'ticket', 'weightin',
+        'weightout', 'createuser', 'updateuser',
+        'responsibleid', 'areaid', 'contentid',
+        'value01', 'value02', 'value03', 'weightoutsap', 'updateddate',
+        'weightoutlb',
+        'weightinlb',
+        'weightdifferencelb',
+        'boxnumber',
+        'statusid'
     ];
 
     public function getActivitylogOptions(): LogOptions
@@ -35,12 +94,12 @@ class ReceiptUnitTicket extends Model
         return LogOptions::defaults()->logFillable();
     }
 
-	protected $attributes = [
-		'statusid' => 'E',
-	];
+    protected $attributes = [
+        'statusid' => 'E',
+    ];
 
 
-	//  -----------------------  Relaciones entre modelos  ---------------------------------------------
+    //  -----------------------  Relaciones entre modelos  ---------------------------------------------
     public function usercreate()
     {
         return $this->belongsTo(User::class, 'createuser', 'id')->withTrashed();

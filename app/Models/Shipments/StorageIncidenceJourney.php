@@ -8,6 +8,64 @@ use Auth;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property int $folioid
+ * @property string $centerid
+ * @property string $warehouseid
+ * @property int $orderid
+ * @property int $carrierid
+ * @property int $createuser
+ * @property string|null $statuskeyid
+ * @property string|null $schemakeyid
+ * @property string|null $statuskeytrid
+ * @property string|null $schemakeytrid
+ * @property string|null $statusdevid
+ * @property string|null $schemadevid
+ * @property string|null $responsedate
+ * @property string|null $auxiliary01
+ * @property string|null $auxiliary02
+ * @property string|null $auxiliary03
+ * @property string|null $auxiliary04
+ * @property string|null $auxiliary05
+ * @property string $schemaid
+ * @property string $statusid
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Shipments\StorageKeyIncidenceOperation $key
+ * @property-read \App\Models\Shipments\StorageKeyIncidenceTransport $keytransport
+ * @property-read \App\Models\Shipments\OrderDeliverie $order
+ * @property-read SystemStatus $status
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageIncidenceJourney carrier($carrierid)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageIncidenceJourney forDate($datein, $dateout)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageIncidenceJourney forShipment($shipmentid)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageIncidenceJourney newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageIncidenceJourney newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageIncidenceJourney query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageIncidenceJourney statusIncidence($statusid)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageIncidenceJourney whereAuxiliary01($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageIncidenceJourney whereAuxiliary02($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageIncidenceJourney whereAuxiliary03($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageIncidenceJourney whereAuxiliary04($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageIncidenceJourney whereAuxiliary05($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageIncidenceJourney whereCarrierid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageIncidenceJourney whereCenterid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageIncidenceJourney whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageIncidenceJourney whereCreateuser($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageIncidenceJourney whereFolioid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageIncidenceJourney whereOrderid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageIncidenceJourney whereResponsedate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageIncidenceJourney whereSchemadevid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageIncidenceJourney whereSchemaid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageIncidenceJourney whereSchemakeyid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageIncidenceJourney whereSchemakeytrid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageIncidenceJourney whereStatusdevid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageIncidenceJourney whereStatusid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageIncidenceJourney whereStatuskeyid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageIncidenceJourney whereStatuskeytrid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageIncidenceJourney whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageIncidenceJourney whereWarehouseid($value)
+ * @mixin \Eloquent
+ */
 class StorageIncidenceJourney extends Model
 {
     protected $table = 'storageincidencejourneys';

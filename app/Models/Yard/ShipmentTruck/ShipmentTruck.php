@@ -13,6 +13,49 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * @method static whereStatusid(string $string)
+ * @property int $id
+ * @property string $centerid
+ * @property string $name
+ * @property string|null $truckid
+ * @property string|null $volume
+ * @property string|null $configurationflag
+ * @property string|null $auxiliary01
+ * @property string|null $auxiliary02
+ * @property string|null $auxiliary03
+ * @property string|null $auxiliary04
+ * @property string|null $auxiliary05
+ * @property string $schemaid
+ * @property string $statusid
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @property-read SystemCenterDistribution $center
+ * @property-read SystemStatus $status
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentTruck name($name)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentTruck newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentTruck newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentTruck onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentTruck query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentTruck whereAuxiliary01($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentTruck whereAuxiliary02($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentTruck whereAuxiliary03($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentTruck whereAuxiliary04($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentTruck whereAuxiliary05($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentTruck whereCenterid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentTruck whereConfigurationflag($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentTruck whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentTruck whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentTruck whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentTruck whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentTruck whereSchemaid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentTruck whereTruckid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentTruck whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentTruck whereVolume($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentTruck withTrashed(bool $withTrashed = true)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentTruck withoutTrashed()
+ * @mixin \Eloquent
  */
 class ShipmentTruck extends Model
 {

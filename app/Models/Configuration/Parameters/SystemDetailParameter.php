@@ -7,6 +7,48 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+/**
+ * @property string $parameterid
+ * @property int $id
+ * @property string|null $value01
+ * @property string|null $value02
+ * @property string|null $value03
+ * @property string|null $value04
+ * @property string|null $value05
+ * @property string|null $value06
+ * @property string|null $value07
+ * @property string|null $value08
+ * @property string|null $value09
+ * @property string|null $value10
+ * @property string|null $value11
+ * @property string|null $value12
+ * @property string|null $value13
+ * @property string|null $value14
+ * @property string|null $value15
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailParameter newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailParameter newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailParameter query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailParameter whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailParameter whereParameterid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailParameter whereValue01($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailParameter whereValue02($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailParameter whereValue03($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailParameter whereValue04($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailParameter whereValue05($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailParameter whereValue06($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailParameter whereValue07($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailParameter whereValue08($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailParameter whereValue09($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailParameter whereValue10($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailParameter whereValue11($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailParameter whereValue12($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailParameter whereValue13($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailParameter whereValue14($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailParameter whereValue15($value)
+ * @mixin \Eloquent
+ */
 class SystemDetailParameter extends Model
 {
     use LogsActivity;
