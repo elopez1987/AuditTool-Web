@@ -20,6 +20,7 @@ use App\Http\Controllers\Security\Users\Eventos\EventUserController;
 use App\Http\Controllers\Security\Users\SuperUserController;
 use App\Http\Controllers\Security\Users\UpdateUserControlller;
 use App\Http\Controllers\Security\Users\UserController;
+use App\Http\Controllers\Security\Users\UsersForTRansportController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->group(function () {
@@ -116,5 +117,9 @@ Route::group(['middleware' => ['role:ADMINISTRADOR']], function () {
 	Route::get('logsuspicious', [LogSuspiciousController::class, 'logsuspicious'])->name('logsuspicious');
 	Route::get('getLogsuspicious', [LogSuspiciousController::class, 'getLogsuspicious'])->name('getLogsuspicious');
 
+
+//	Usuarios por linea de transporte
+	Route::get('usersfortransports', [UsersForTRansportController::class, 'index'])->name('usersfortransports');
+	Route::get('usersfortransportdata', [UsersForTRansportController::class, 'usersfortransportdata'])->name('usersfortransportdata');
 
 });

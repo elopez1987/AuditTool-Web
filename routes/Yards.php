@@ -317,7 +317,7 @@ Route::middleware(['auth'])->group(function () {
     //  Vista de cortinas y stages
     Route::get('layoutyard', [LayOutDoorAndStageController::class,'index'])->name('layoutyard');
     //  Ticket de pesos de báscula
-    Route::resource('receiptunitticket', ReceiptUnitTicketController::class)->only('index', 'destroy');
+    Route::resource('receiptunitticket', ReceiptUnitTicketController::class);
     Route::get('getUnitTickets', [ReceiptUnitTicketController::class, 'getUnitTickets'])->name('getUnitTickets');
 	Route::put('receiptunitticket/{id}', [ReceiptUnitTicketController::class, 'updatestatus'])->name('receiptunitticket.update');
 });

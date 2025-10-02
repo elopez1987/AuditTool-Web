@@ -12,6 +12,11 @@
                         {{csrf_field()}}
                         <div class="row">
                             <div class="col-md-12">
+                                @can('receiptunitticket.create')
+                                    <a href="{{route('receiptunitticket.create')}}">
+                                        @include('buttons.add')
+                                    </a>
+                                @endcan
                                 <a>
                                     @include('buttons.reloadajax')
                                 </a>
