@@ -73,6 +73,15 @@
         </div>
 
         <div class="container__box">
+            @can('usersfortransports')
+                <a href="{{route('usersfortransports')}}">
+                    <div class="box">
+                        <i class="lni lni-list"></i>
+                        <h5>Usuarios por línea</h5>
+                        <h4>Usuarios por línea</h4>
+                    </div>
+                </a>
+            @endcan
             @can('log.authentication')
                 <a href="{{route('logauthentication')}}">
                     <div class="box">
