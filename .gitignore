@@ -1,0 +1,83 @@
+# ==========================================
+# 🎯 LARAVEL .GITIGNORE OPTIMIZADO PARA PRODUCCIÓN
+# ==========================================
+
+# === Archivos de entorno ===
+.env
+.env.*
+!.env.example
+
+# === Dependencias y builds locales ===
+/node_modules/
+/vendor/
+
+# === Cache, logs y archivos temporales ===
+/storage/*.key
+/storage/app/public
+/storage/debugbar/
+/storage/framework/cache/data
+/storage/framework/sessions
+/storage/framework/views
+/storage/logs
+/storage/fonts/
+*.log
+
+# === Archivos de desarrollo y pruebas ===
+/tests/
+/phpunit.xml
+/.phpunit.result.cache
+
+# === Configuración de IDEs o editores ===
+/.idea/
+/.junie/
+/.vscode/
+/nbproject/
+
+# === Archivos del sistema operativo ===
+.DS_Store
+Thumbs.db
+
+
+
+# === Archivos de compilación front-end ===
+/public/hot
+/public/storage
+/public/build
+/public/js/*.map
+/public/css/*.map
+
+# === Archivos de CI/CD o locales ===
+/.env.local
+/.env.testing
+/.env.backup
+/.fleet/
+Homestead.yaml
+Homestead.json
+npm-debug.log
+yarn-error.log
+package-lock.json
+pnpm-lock.yaml
+
+# === Carpetas opcionales ===
+/database/migrations/     # Solo si no usas migraciones
+/database/factories/      # Solo si no usas factories
+/database/seeders/        # Solo si no usas seeders
+
+# === Git y despliegue ===
+/.git
+/.gitattributes
+
+
+# === Otros ===
+/bootstrap/cache/*.php    # Laravel generará nuevos
+
+/.php-cs-fixer.cache
+/.phpstorm.meta.php
+/.php-cs-fixer.dist.php
+/CLAUDE.md
+/fix_style_issues.sh
+/_ide_helper
+/_ide_helper.php
+/modules_statuses.json
+/.styleci.yml
+
