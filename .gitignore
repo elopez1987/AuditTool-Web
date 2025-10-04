@@ -59,9 +59,8 @@ package-lock.json
 pnpm-lock.yaml
 
 # === Carpetas opcionales ===
-/database/migrations/     # Solo si no usas migraciones
-/database/factories/      # Solo si no usas factories
-/database/seeders/        # Solo si no usas seeders
+/database/
+
 
 # === Git y despliegue ===
 /.git
