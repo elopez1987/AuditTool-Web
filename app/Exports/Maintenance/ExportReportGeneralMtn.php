@@ -49,7 +49,7 @@ class ExportReportGeneralMtn implements FromCollection, WithHeadings, WithMappin
             'Número de serie',
             'Número de equipo',
             'Supervisor en turno',
-            'Horometro',
+            'Hornmetro',
             'Comentario',
             'Creador',
             'Fecha de creación',
