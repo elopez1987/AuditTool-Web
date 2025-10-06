@@ -59,7 +59,12 @@ package-lock.json
 pnpm-lock.yaml
 
 # === Carpetas opcionales ===
-/database/
+/database/factories/*
+!/database/factories/.gitkeep
+/database/seeds/*
+!/database/seeds/.gitkeep
+/database/migrations/*
+!/database/migrations/.gitkeep
 
 
 # === Git y despliegue ===
@@ -79,4 +84,4 @@ pnpm-lock.yaml
 /_ide_helper.php
 /modules_statuses.json
 /.styleci.yml
-
+/pint.json
