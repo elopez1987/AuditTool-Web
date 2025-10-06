@@ -84,4 +84,4 @@ pnpm-lock.yaml
 /_ide_helper.php
 /modules_statuses.json
 /.styleci.yml
-
+/pint.json
