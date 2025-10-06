@@ -28,6 +28,7 @@ class ServiceUser
             'warehouseid' => $request['warehouseid'],
             'username' => $user->username,
         ]);
+
         return $user;
     }
 

@@ -17,6 +17,7 @@ class PrinterLabelStockController extends BaseController
         $this->authorize('printerlabel');
         $centers = $this->getCenterForSelect();
         $printers = SystemStatus::whereSchemaid('PRT')->select('name', 'statusid')->get();
+
         return view('Yards.PrintLabelStock.index', compact('centers', 'printers'));
     }
 
@@ -62,6 +63,7 @@ class PrinterLabelStockController extends BaseController
         }
         $folio->save();
         fclose($file);
+
         return response()->download($nameFile)->deleteFileAfterSend();
     }
 
@@ -105,6 +107,7 @@ class PrinterLabelStockController extends BaseController
         }
         $folio->save();
         fclose($file);
+
         return response()->download($nameFile)->deleteFileAfterSend();
     }
 }

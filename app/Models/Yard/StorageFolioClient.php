@@ -20,6 +20,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property string|null $auxiliary05
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageFolioClient newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageFolioClient newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageFolioClient query()
@@ -33,14 +34,17 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageFolioClient whereFolionumber($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageFolioClient whereFoliotruck($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageFolioClient whereId($value)
+ *
  * @mixin \Eloquent
  */
 class StorageFolioClient extends Model
 {
     use LogsActivity;
+
     public $timestamps = false;
 
     protected $table = 'storagefolioclients';
+
     protected $primaryKey = 'id';
 
     protected $fillable = [
@@ -62,6 +66,7 @@ class StorageFolioClient extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return StorageFolioClient::whereIn('storagefolioclients.centerid', $centers);
     }
 }

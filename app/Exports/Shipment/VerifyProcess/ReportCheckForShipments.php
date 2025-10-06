@@ -13,11 +13,14 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 
-class ReportCheckForShipments implements FromCollection, WithHeadings, WithMapping, WithEvents, ShouldAutoSize, WithColumnFormatting
+class ReportCheckForShipments implements FromCollection, ShouldAutoSize, WithColumnFormatting, WithEvents, WithHeadings, WithMapping
 {
     use Exportable;
+
     private $workdayin;
+
     private $workdayout;
+
     private $centerid;
 
     public function __construct($workdayin, $workdayout, $centerid)
@@ -30,7 +33,7 @@ class ReportCheckForShipments implements FromCollection, WithHeadings, WithMappi
     public function columnFormats(): array
     {
         return [
-//            'A' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+            //            'A' => NumberFormat::FORMAT_DATE_DDMMYYYY,
         ];
     }
 
@@ -48,7 +51,7 @@ class ReportCheckForShipments implements FromCollection, WithHeadings, WithMappi
             'Total de cajas',
             'Fecha de inicio',
             'Fecha final',
-//            'Tiempo total',
+            //            'Tiempo total',
         ];
     }
 
@@ -66,7 +69,7 @@ class ReportCheckForShipments implements FromCollection, WithHeadings, WithMappi
             $shipment->totalcajas,
             $shipment->startdate,
             $shipment->finishdate,
-//            $shipment->diffTime,
+            //            $shipment->diffTime,
         ];
     }
 
@@ -108,8 +111,8 @@ class ReportCheckForShipments implements FromCollection, WithHeadings, WithMappi
             })
             ->whereNotNull('s.startdate')
             ->whereNotNull('s.finishdate')
-            ->where('s.startdate' >= $startDate)
-            ->where('s.finishdate' <= $endDate)
+            ->where($startDate <= 's.startdate')
+            ->where($endDate >= 's.finishdate')
             ->get();
     }
 

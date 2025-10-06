@@ -13,6 +13,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * @method static whereStatusid(string $string)
+ *
  * @property int $id
  * @property string $centerid
  * @property string $name
@@ -33,6 +34,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read int|null $activities_count
  * @property-read SystemCenterDistribution $center
  * @property-read SystemStatus $status
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentTruck name($name)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentTruck newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentTruck newQuery()
@@ -55,13 +57,16 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentTruck whereVolume($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentTruck withTrashed(bool $withTrashed = true)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentTruck withoutTrashed()
+ *
  * @mixin \Eloquent
  */
 class ShipmentTruck extends Model
 {
-    use SoftDeletes;
     use LogsActivity;
+    use SoftDeletes;
+
     protected $table = 'shipmenttrucks';
+
     protected $dateFormat = 'Y-m-d H:i:s';
 
     protected $fillable = [
@@ -86,6 +91,7 @@ class ShipmentTruck extends Model
         'statusid' => 'E',
         'schemaid' => 'STS',
     ];
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()->logFillable();
@@ -111,6 +117,7 @@ class ShipmentTruck extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return ShipmentTruck::whereIn('centerid', $centers);
     }
 }

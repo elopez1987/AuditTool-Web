@@ -31,31 +31,24 @@ class SendDocumentOrderDeliveryController extends BaseController
             }
 
             DB::commit();
+
             return $this->redirectBackSuccess();
         } catch (Exception $e) {
             DB::rollback();
+
             return $this->errorResponse($e->getMessage());
         }
     }
 
-    /**
-     * @param $id
-     *
-     * @return OrderDeliverie
-     */
     public function updateOrderDelivery($id): OrderDeliverie
     {
         $orderDelivery = OrderDeliverie::controlAccessUser()->where('id', $id)->first();
         $orderDelivery->statusid = 'DO';
         $orderDelivery->save();
+
         return $orderDelivery;
     }
 
-    /**
-     * @param OrderDeliverie $orderDelivery
-     *
-     * @return void
-     */
     public function updateShipmentDataOperation(OrderDeliverie $orderDelivery): void
     {
         $shipment = ShipmentDataOperation::controlAccessUser()->where('orderid', $orderDelivery->id)->first();
@@ -64,11 +57,6 @@ class SendDocumentOrderDeliveryController extends BaseController
         $shipment->save();
     }
 
-    /**
-     * @param OrderDeliverie $orderDelivery
-     *
-     * @return void
-     */
     public function updateShipmentHeader(OrderDeliverie $orderDelivery): void
     {
         $shipmentheader = ShipmentHeader::whereOrderid($orderDelivery->id)->first();
@@ -76,11 +64,6 @@ class SendDocumentOrderDeliveryController extends BaseController
         $shipmentheader->save();
     }
 
-    /**
-     * @param OrderDeliverie $orderDelivery
-     *
-     * @return void
-     */
     public function updateShipmentSeal(OrderDeliverie $orderDelivery): void
     {
         $shipmentseal = ShipmentSeal::controlAccessUser()->whereOrderid($orderDelivery->id)->first();

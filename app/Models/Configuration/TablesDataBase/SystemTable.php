@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $value03
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemTable forName($tableid)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemTable newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemTable newQuery()
@@ -25,13 +26,17 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemTable whereValue01($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemTable whereValue02($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemTable whereValue03($value)
+ *
  * @mixin \Eloquent
  */
 class SystemTable extends Model
 {
     public $incrementing = false;
+
     protected $table = 'systemtables';
+
     protected $keyType = 'string';
+
     protected $primaryKey = 'tableid';
 
     protected $fillable = [

@@ -16,6 +16,7 @@ class ArriveUnitController extends BaseController
     public function index()
     {
         $this->authorize('viewmovementsofbox');
+
         return view('Yards.RegisterMovementsBox.index');
     }
 
@@ -32,9 +33,11 @@ class ArriveUnitController extends BaseController
                 return $result;
             }
             DB::commit();
+
             return $this->redirectBackSuccessMessage('Datos actualizados correctamente!!');
         } catch (Exception $e) {
             DB::rollback();
+
             return $this->errorResponse('Error al procesar la solicitud :' . $e->getMessage());
         }
     }

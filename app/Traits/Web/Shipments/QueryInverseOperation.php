@@ -10,8 +10,6 @@ use DB;
 trait QueryInverseOperation
 {
     /**
-     * @param StorageScheduleInverse $storagescheduleinverse
-     *
      * @return array
      */
     public function getDataOperation(StorageScheduleInverse $storagescheduleinverse)
@@ -27,7 +25,7 @@ trait QueryInverseOperation
                 'storageincidencejourneydetails.unitmeasure',
                 DB::raw('SUM(storagescheduleinverseoperationdetails.quantity) as verificada'),
                 'storagescheduleinverseoperationdetails.unitmeasureid',
-                'systemstatus.name as category','storagescheduleinverseoperationdetails.value02 as comment','storagescheduleinverseoperationdetails.value01 as location',
+                'systemstatus.name as category', 'storagescheduleinverseoperationdetails.value02 as comment', 'storagescheduleinverseoperationdetails.value01 as location',
             ])
             ->join('orderdeliveries', 'storageincidencejourneydetails.orderid', '=', 'orderdeliveries.id')
             ->join('inventorypartnumbers', function ($join) {

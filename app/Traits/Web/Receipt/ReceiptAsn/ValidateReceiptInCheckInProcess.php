@@ -13,10 +13,8 @@ trait ValidateReceiptInCheckInProcess
             return $this->errorResponse('El número de recibo no se encuentra programado, favor de validar.');
         }
 
-        if (!empty($receipt) && $receipt->providerid !== $request['providerid']) {
+        if (! empty($receipt) && $receipt->providerid !== $request['providerid']) {
             return $this->errorResponse('El proveedor es diferente al programado, favor de validar.');
         }
     }
-
-
 }

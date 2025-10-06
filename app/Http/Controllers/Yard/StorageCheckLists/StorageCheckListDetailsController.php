@@ -13,6 +13,7 @@ class StorageCheckListDetailsController extends BaseController
     {
         $details = StorageCheckListDetail::whereChecklistid($storagechecklist->id)->get();
         $status = $this->getStatusSTS();
+
         return view('Yards.StorageCheckListDetails.create', compact('storagechecklist', 'details', 'status'));
     }
 
@@ -28,6 +29,7 @@ class StorageCheckListDetailsController extends BaseController
             'auxiliary04' => $request['auxiliary04'],
             'auxiliary05' => $request['auxiliary05'],
         ]);
+
         return $this->redirectBackSuccess();
     }
 
@@ -42,6 +44,7 @@ class StorageCheckListDetailsController extends BaseController
         $detail->auxiliary04 = $request['auxiliary04'];
         $detail->auxiliary05 = $request['auxiliary05'];
         $detail->save();
+
         return $this->redirectBackSuccess();
     }
 }

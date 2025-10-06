@@ -40,6 +40,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read SystemStatus|null $statussecuence
  * @property-read StorageTurn|null $turn
  * @property-read SystemWarehouse $warehouse
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSchedulleReceipt newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSchedulleReceipt newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSchedulleReceipt query()
@@ -62,6 +63,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSchedulleReceipt whereWarehouseid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSchedulleReceipt whereWorkday($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSchedulleReceipt workday($workday)
+ *
  * @mixin \Eloquent
  */
 class StorageSchedulleReceipt extends Model
@@ -101,6 +103,7 @@ class StorageSchedulleReceipt extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return StorageSchedulleReceipt::whereIn('storageschedullereceipt.warehouseid', $warehouses)
             ->whereIn('storageschedullereceipt.centerid', $centers);
     }
@@ -159,8 +162,7 @@ class StorageSchedulleReceipt extends Model
     {
         parent::boot();
         if (! app()->runningInConsole()) {
-            self::creating(function (StorageSchedulleReceipt $model) {
-            });
+            self::creating(function (StorageSchedulleReceipt $model) {});
         }
     }
 }

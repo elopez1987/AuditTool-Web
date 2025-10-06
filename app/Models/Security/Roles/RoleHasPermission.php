@@ -10,11 +10,13 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $role_id
  * @property-read Permission $permission
  * @property-read \App\Models\Security\Roles\Role $role
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RoleHasPermission newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RoleHasPermission newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RoleHasPermission query()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RoleHasPermission wherePermissionId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RoleHasPermission whereRoleId($value)
+ *
  * @mixin \Eloquent
  */
 class RoleHasPermission extends Model

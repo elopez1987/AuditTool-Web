@@ -25,6 +25,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \App\Models\Shipments\OrderDeliverie $order
  * @property-read SystemStatus|null $status
  * @property-read User|null $user
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentsPods newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentsPods newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentsPods query()
@@ -43,11 +44,13 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentsPods whereStatusid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentsPods whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentsPods whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class StorageShipmentsPods extends Model
 {
     protected $table = 'storageshipmentspods';
+
     protected $primaryKey = 'recordid';
 
     protected $fillable = [

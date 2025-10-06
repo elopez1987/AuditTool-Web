@@ -25,6 +25,7 @@ class StorageScheduleInversesController extends BaseController
     {
         $this->authorize('storagescheduleinverse.index');
         $status = SystemStatus::where('schemaid', 'LIV')->select('name', 'statusid')->get();
+
         return view('Shipments.StorageScheduleInverse.index', compact('status'));
     }
 
@@ -57,12 +58,14 @@ class StorageScheduleInversesController extends BaseController
             ->orderBy('storagescheduleinverse.id', 'desc')
             ->limit(200)
             ->get();
+
         return $this->showDataToView($data, 'Shipments.StorageScheduleInverse.partials.buttons');
     }
 
     public function create()
     {
         $this->authorize('storagescheduleinverse.create');
+
         return view('Shipments.StorageScheduleInverse.create');
     }
 
@@ -99,6 +102,7 @@ class StorageScheduleInversesController extends BaseController
         if ($success) {
             return $this->redirectBackSuccessMessage('Embarque agregado correctamente.');
         }
+
         return $this->errorResponse('No se pudieron guardar los datos,favor de validar.' . $error);
     }
 
@@ -120,12 +124,6 @@ class StorageScheduleInversesController extends BaseController
         return $this->responseSuccessAjax('', Carbon::now());
     }
 
-    /**
-     * @param $incidence
-     * @param $inverse
-     *
-     * @return void
-     */
     public function createRegisterOperation($incidence, $inverse): void
     {
         StorageScheduleInverseOperation::updateOrCreate(
@@ -138,13 +136,6 @@ class StorageScheduleInversesController extends BaseController
         );
     }
 
-    /**
-     * @param $incidence
-     * @param $inverse
-     * @param $delivery
-     *
-     * @return void
-     */
     public function createRegisterInventory($incidence, $inverse, $delivery): void
     {
         StorageScheduleInverseInventory::updateOrCreate(
@@ -158,13 +149,6 @@ class StorageScheduleInversesController extends BaseController
         );
     }
 
-    /**
-     * @param $incidence
-     * @param $inverse
-     * @param $delivery
-     *
-     * @return void
-     */
     public function createRegisterTraffic($incidence, $inverse, $delivery): void
     {
         StorageScheduleInverseTraffic::updateOrCreate([
@@ -198,8 +182,6 @@ class StorageScheduleInversesController extends BaseController
     }
 
     /**
-     * @param $incidence
-     *
      * @return StorageScheduleInverse|Model
      */
     public function createNewInverse($incidence)

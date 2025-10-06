@@ -12,14 +12,14 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('storagechecklistlifttrucks', 'Maintanance\StorageCheckListLiftTruckController');
     Route::get('getDataCheckListLiftTrucks', 'Maintanance\StorageCheckListLiftTruckController@getDataCheckListLiftTrucks')->name('getDataCheckListLiftTrucks');
-//    Detalle del check list
+    //    Detalle del check list
     Route::get('addchecklistdetailslifttruck/{id}', 'Maintanance\StorageCheckListDetailLiftTruckController@index')->name('addchecklistdetailslifttruck');
     Route::put('storedetailslifttruck/{id}', 'Maintanance\StorageCheckListDetailLiftTruckController@store')->name('storedetailslifttruck.store');
     Route::put('updatestatusdetaillifttruck/{id}', 'Maintanance\StorageCheckListDetailLiftTruckController@updatestatusdetaillifttruck')->name('updatestatusdetaillifttruck');
 
-//    Borrar detalle de check list de montacargas
+    //    Borrar detalle de check list de montacargas
     Route::post('deletedetailchecklistlifttrucks/{id}', 'Maintanance\StorageCheckListDetailLiftTruckController@deletedetailchecklistlifttrucks')->name('deletedetailchecklistlifttrucks');
-//    Actualizar detalle de check list de montacargas
+    //    Actualizar detalle de check list de montacargas
     Route::put('updatestatusdetaillifttruckedit/{id}', 'Maintanance\StorageCheckListDetailLiftTruckController@updatestatusdetaillifttruckedit')->name('updatestatusdetaillifttruckedit');
     Route::resource('storageassignlifttrucks', 'Maintanance\StorageAssignLiftTruckController');
     Route::post('deleteUserAssingTruck', 'Maintanance\StorageAssignLiftTruckController@deleteUserAssingTruck')->name('deleteUserAssingTruck');

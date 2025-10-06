@@ -16,6 +16,7 @@ class StorageDoorStageController extends BaseController
     {
         $this->authorize('storagedoorstage.index');
         $stages = $this->getAllStagesForCenter();
+
         return view('Shipments.StorageDoorStages.index', compact('stages'));
     }
 
@@ -25,6 +26,7 @@ class StorageDoorStageController extends BaseController
         $location = StorageLocation::findOrFail($id);
         $doors = $this->getAllDoorsForStage($id);
         $stagesForDoor = $this->getStagesForDoor($id);
+
         return view(
             'Shipments.StorageDoorStages.edit',
             compact('location', 'doors', 'stagesForDoor')
@@ -44,12 +46,14 @@ class StorageDoorStageController extends BaseController
                 ]);
             }
         }
+
         return $this->redirectBackSuccessMessage('Modulos agregados con exito.');
     }
 
     public function deletestageofdoor(Request $request)
     {
         StorageDoorStage::destroy($request['id']);
+
         return $this->responseSuccessAjax('', '');
     }
 }

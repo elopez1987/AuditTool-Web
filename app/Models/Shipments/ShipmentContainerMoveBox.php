@@ -27,6 +27,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read int|null $activities_count
  * @property-read InventoryPartnumber $sku
  * @property-read User $user
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentContainerMoveBox newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentContainerMoveBox newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentContainerMoveBox query()
@@ -42,12 +43,15 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentContainerMoveBox whereValue01($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentContainerMoveBox whereValue02($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentContainerMoveBox whereValue03($value)
+ *
  * @mixin \Eloquent
  */
 class ShipmentContainerMoveBox extends Model
 {
     use LogsActivity;
+
     public $timestamps = false;
+
     protected $table = 'shipmentcontainermoveboxlog';
 
     protected $fillable = [
@@ -63,6 +67,7 @@ class ShipmentContainerMoveBox extends Model
     {
         return $this->belongsTo(User::class, 'createuser', 'id');
     }
+
     public function sku()
     {
         return $this->belongsTo(InventoryPartnumber::class, 'partnumberid', 'id');

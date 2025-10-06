@@ -43,7 +43,7 @@ class ReceiptUnitEvidenceStockController extends BaseController
                 ->where('auxiliary02', $receiptunit->centerid)
                 ->whereNotIn('statusid', function ($query) use ($receiptunit) {
                     $query->select('auxiliary04')
-                        ->from((new EvidencePhoto())->getTable())
+                        ->from((new EvidencePhoto)->getTable())
                         ->where('model_id', $receiptunit->id)
                         ->where('model_type', 'ReceiptUnit')
                         ->where('auxiliary01', 'IP');
@@ -55,6 +55,7 @@ class ReceiptUnitEvidenceStockController extends BaseController
                 ->whereNotIn('statusid', ['D'])
                 ->get();
         }
+
         return view(
             'Yards.ReceiptUnits.EvidenceProcess.index',
             compact('receiptunit', 'listCheckList', 'folionumberType', 'parameterCenter')
@@ -70,6 +71,7 @@ class ReceiptUnitEvidenceStockController extends BaseController
         if ($request['typeshipment'] === 'TIROS') {
             $this->createNewCheckList($receiptunit, $request);
         }
+
         return $this->redirectBackSuccessMessage('Registro creado con exito.');
     }
 
@@ -88,6 +90,7 @@ class ReceiptUnitEvidenceStockController extends BaseController
         if ($request['typeshipment'] === 'TDIRECTO') {
             $this->createEvidencePhoto('ReceiptUnit', $receiptunit->id, $path, 'IP', $receiptunit);
         }
+
         return $this->redirectBackSuccessMessage('Evidencia cargada con exito.');
     }
 

@@ -34,6 +34,7 @@ class EventReceiptController extends BaseController
             $schedulleReceipt->receiptid = null;
             $schedulleReceipt->save();
         }
+
         return $this->successResponse('receiptasn.index');
     }
 
@@ -42,6 +43,7 @@ class EventReceiptController extends BaseController
         $receipt = ReceiptAsn::findOrFail($id);
         $receipt->downloadpriority = 'S';
         $receipt->save();
+
         return $this->redirectBackInfo();
     }
 
@@ -59,6 +61,7 @@ class EventReceiptController extends BaseController
             $folio->unitstatusid = '1';
             $folio->save();
         }
+
         return $this->redirectBackInfo();
     }
 
@@ -74,11 +77,12 @@ class EventReceiptController extends BaseController
         $checklistAsn = ReceiptAsnCheckList::where('receiptid', $id)->get();
         $images = EvidencePhoto::where('model_type', '=', 'ReceiptAsn')
             ->where('model_id', $id)->get();
-        $incidences = ReceiptIncidenceStock::with(['partnumber','categoryincidence','subcategoryincidence'])
+        $incidences = ReceiptIncidenceStock::with(['partnumber', 'categoryincidence', 'subcategoryincidence'])
             ->where('receiptid', $id)->get();
         $stocks = $this->getTotalsReceipt($id);
         $containers = ReceiptContainer::getContainersForReceipt($id);
         $pdf = PDF::loadView('Receipt.ReceiptAsn.partials.kardex', compact('receipt', 'checklistAsn', 'images', 'stocks', 'incidences', 'containers'));
+
         return $pdf->download('Kardex de descarga - ' . $receipt->id . '.pdf');
     }
 
@@ -121,6 +125,7 @@ class EventReceiptController extends BaseController
         if ($request['comment'] !== '') {
             StorageComment::createCommentary('receiptasn', $receiptAsn->id, $request);
         }
+
         return $this->redirectBackSuccessMessage('Comentario agregado con exito.');
     }
 
@@ -130,6 +135,7 @@ class EventReceiptController extends BaseController
         $receiptasn->statusid = 'IG';
         $receiptasn->goodissuedate = Carbon::now();
         $receiptasn->save();
+
         return $this->redirectBackSuccessMessage('Descarga finalizada con exito.');
     }
 
@@ -160,10 +166,12 @@ class EventReceiptController extends BaseController
             StorageUnitTrace::createTraceUnit($receiptunit, '14');
 
             DB::commit();
+
             return $this->redirectBackSuccessMessage('Proceso de descarga iniciado con exito.');
         } catch (Exception $e) {
             Log::error($e->getMessage());
             DB::rollback();
+
             return $this->errorResponse('No se pudo iniciar el proceso de descarga, favor de intentar nuevamente.');
         }
     }
@@ -195,10 +203,12 @@ class EventReceiptController extends BaseController
             StorageUnitTrace::createTraceUnit($receiptunit, '15');
 
             DB::commit();
+
             return $this->redirectBackSuccessMessage('Proceso de descarga iniciado con exito.');
         } catch (Exception $e) {
             Log::error($e->getMessage());
             DB::rollback();
+
             return $this->errorResponse('No se pudo iniciar el proceso de descarga, favor de intentar nuevamente.');
         }
     }

@@ -15,17 +15,19 @@ class AuthorizeOutPutController extends Controller
         $this->authorize('reportauthorizedoutputs');
         $data = ReceiptUnit::controlAccessUser()
             ->whereStatusid('OU')->get();
+
         return view('Yards.ReceiptUnits.OutPuts.index', compact('data'));
     }
 
     public function getDataAuthorized(Request $request)
     {
         $data = ReceiptUnit::controlAccessUser()
-            ->with(['carrier', 'zone', 'location', 'warehouse','event'])
+            ->with(['carrier', 'zone', 'location', 'warehouse', 'event'])
             ->Folio($request->get('folionumber'))
             ->Shipment($request->get('shipmentid'))
             ->Barcode($request->get('barcode'))
             ->whereIn('statusid', ['OU'])->get();
+
         return DataTables::of($data)->addColumn('stays', function ($data) {
             return Carbon::now()->diff($data->autorizaoutputdate)->format('%d d %H:%i h/m');
         })->toJson();

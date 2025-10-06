@@ -25,6 +25,7 @@ class ClearTruckStockController extends BaseController
             $truck->statusid = 'TR';
             $truck->save();
         }
+
         return $this->redirectBackSuccessMessage('Tractos limpiados con exito.');
     }
 }

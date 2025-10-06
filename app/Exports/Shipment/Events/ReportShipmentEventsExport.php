@@ -11,10 +11,12 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 
-class ReportShipmentEventsExport implements FromCollection, WithHeadings, WithMapping, WithEvents
+class ReportShipmentEventsExport implements FromCollection, WithEvents, WithHeadings, WithMapping
 {
     use Exportable;
+
     private $workdayin;
+
     private $workdayout;
 
     public function __construct($workdayin, $workdayout)

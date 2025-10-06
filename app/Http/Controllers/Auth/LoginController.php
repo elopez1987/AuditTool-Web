@@ -30,6 +30,7 @@ class LoginController extends Controller
     {
         $login = $request->input($this->username());
         $field = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+
         return [
             $field => $login,
             'password' => $request->input('password'),
@@ -47,6 +48,7 @@ class LoginController extends Controller
                     ['username' => $user->username],
                     ['lastsessiondate' => Carbon::now()]
                 );
+
                 return $this->guard()->attempt($this->credentials($request), $request->filled('remember'));
             }
             throw ValidationException::withMessages([$this->username() => [trans('auth.user')]]);

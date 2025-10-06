@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $auxiliary04
  * @property string|null $auxiliary05
  * @property-read \App\Models\Shipments\OrderDeliverie|null $order
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentBilling newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentBilling newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentBilling query()
@@ -27,11 +28,13 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentBilling whereCenterid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentBilling whereOrderid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentBilling whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class StorageShipmentBilling extends Model
 {
     public $timestamps = false;
+
     protected $table = 'storageshipmentbillings';
 
     protected $fillable = [

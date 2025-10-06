@@ -27,6 +27,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read \App\Models\SafetyTours\StorageTags $tag
  * @property-read \App\Models\SafetyTours\StorageSafetyTourType $type
  * @property-read User $user
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourTypeDetail newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourTypeDetail newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourTypeDetail onlyTrashed()
@@ -41,12 +42,13 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourTypeDetail whereUserid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourTypeDetail withTrashed(bool $withTrashed = true)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourTypeDetail withoutTrashed()
+ *
  * @mixin \Eloquent
  */
 class StorageSafetyTourTypeDetail extends Model
 {
-    use SoftDeletes;
     use LogsActivity;
+    use SoftDeletes;
 
     protected $table = 'storagesafetytourtypedetails';
 
@@ -62,6 +64,7 @@ class StorageSafetyTourTypeDetail extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return StorageSafetyTourTypeDetail::whereIn('storagesafetytourtypedetails.centerid', $centers);
     }
 

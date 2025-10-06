@@ -16,6 +16,7 @@ class DeleteLogWhatsApp extends Command
     {
         parent::__construct();
     }
+
     public function handle()
     {
         $ninetyDaysAgo = Carbon::now()->subDays(30);

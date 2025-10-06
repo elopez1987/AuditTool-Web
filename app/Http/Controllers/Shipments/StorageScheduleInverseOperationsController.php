@@ -19,8 +19,8 @@ use Illuminate\Http\Request;
 
 class StorageScheduleInverseOperationsController extends BaseController
 {
-    use ResponseApi;
     use QueryInverseOperation;
+    use ResponseApi;
 
     public function updateDataOperation(StorageScheduleInverse $storagescheduleinverse)
     {
@@ -32,6 +32,7 @@ class StorageScheduleInverseOperationsController extends BaseController
         $status = SystemStatus::whereSchemaid('LOV')->select(['name', 'statusid'])->get();
         $evidences = EvidencePhoto::where('model_type', '=', 'StorageScheduleInverse')
             ->where('model_id', $storagescheduleinverse->orderid)->get();
+
         return view(
             'Shipments.StorageScheduleInverse.operation.edit',
             compact(
@@ -63,10 +64,12 @@ class StorageScheduleInverseOperationsController extends BaseController
             $this->createNewOperation($inverse, $request);
             $this->updateStatusInverseToFinish($request['warehousedate'], $inverse);
             DB::commit();
+
             return $this->redirectBackSuccessMessage('Registro agregado con exito');
         } catch (Exception $e) {
             $error = $e->getMessage();
             DB::rollback();
+
             return $this->errorResponse('No se pudieron guardar los datos, favor de validar ' . $error);
         }
     }
@@ -79,6 +82,7 @@ class StorageScheduleInverseOperationsController extends BaseController
                 where partnumberid={$item->partnumberid}
                 and orderid = {$item->orderid}
                 and delivery = {$item->delivery} ");
+
         return $this->responseSuccessAjax('', Carbon::now());
     }
 
@@ -87,15 +91,10 @@ class StorageScheduleInverseOperationsController extends BaseController
         $shipment = StorageScheduleInverseOperation::where('orderid', $request['orderid'])->first();
         $shipment->finishdate = null;
         $shipment->save();
+
         return $this->responseSuccessAjax('', Carbon::now());
     }
 
-    /**
-     * @param $inverse
-     * @param Request $request
-     *
-     * @return void
-     */
     public function createNewOperation($inverse, Request $request): void
     {
         StorageScheduleInverseOperation::updateOrCreate(
@@ -113,12 +112,6 @@ class StorageScheduleInverseOperationsController extends BaseController
         );
     }
 
-    /**
-     * @param $warehousedate
-     * @param $inverse
-     *
-     * @return void
-     */
     public function updateStatusInverseToFinish($warehousedate, $inverse): void
     {
         if ($warehousedate !== '') {

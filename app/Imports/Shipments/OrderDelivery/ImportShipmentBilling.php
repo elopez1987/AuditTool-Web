@@ -11,9 +11,10 @@ use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 
-class ImportShipmentBilling implements ToModel, WithHeadingRow, WithChunkReading, WithBatchInserts, WithValidation
+class ImportShipmentBilling implements ToModel, WithBatchInserts, WithChunkReading, WithHeadingRow, WithValidation
 {
     use Importable;
+
     public function model(array $row)
     {
         $order = OrderDeliverie::controlAccessUser()->where('shipmentid', trim($row['shipmentid']))->first();

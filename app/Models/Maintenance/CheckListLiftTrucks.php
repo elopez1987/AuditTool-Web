@@ -31,6 +31,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read SystemCenterDistribution $center
  * @property-read \App\Models\Maintenance\StorageLiftTruck $truck
  * @property-read User|null $user
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListLiftTrucks forNumberTruck($numbertruck)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListLiftTrucks forSerialNumber($serialnumber)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListLiftTrucks forWorkday($workday)
@@ -52,6 +53,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListLiftTrucks whereStatusid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListLiftTrucks whereSupervisorname($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListLiftTrucks whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class CheckListLiftTrucks extends Model
@@ -59,6 +61,7 @@ class CheckListLiftTrucks extends Model
     use LogsActivity;
 
     protected $table = 'checklistlifttrucks';
+
     protected $primaryKey = 'id';
 
     protected $fillable = [
@@ -85,8 +88,8 @@ class CheckListLiftTrucks extends Model
     ];
 
     protected $casts = [
-//        'created_at' => 'datetime:d/m/Y H:s',
-//        'updated_At' => 'datetime:d/m/Y H:s',
+        //        'created_at' => 'datetime:d/m/Y H:s',
+        //        'updated_At' => 'datetime:d/m/Y H:s',
     ];
 
     public function getActivitylogOptions(): LogOptions
@@ -97,6 +100,7 @@ class CheckListLiftTrucks extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return CheckListLiftTrucks::whereIn('checklistlifttrucks.centerid', $centers);
     }
 

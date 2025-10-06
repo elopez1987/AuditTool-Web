@@ -70,6 +70,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read SystemStatus $status
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Passport\Token> $tokens
  * @property-read int|null $tokens_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User email($email)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User forStatus($statusid)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User name($name)
@@ -108,19 +109,20 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutPermission($permissions)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutRole($roles, $guard = null)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutTrashed()
+ *
  * @mixin \Eloquent
  */
 class User extends Model implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract
 {
-    use HasApiTokens;
-    use Notifiable;
-    use LogsActivity;
-    use HasPermissions;
-    use HasRoles;
-    use SoftDeletes;
     use Authenticatable;
     use Authorizable;
     use CanResetPassword;
+    use HasApiTokens;
+    use HasPermissions;
+    use HasRoles;
+    use LogsActivity;
+    use Notifiable;
+    use SoftDeletes;
 
     protected $fillable = [
         'uuiduser',
@@ -184,18 +186,22 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     {
         return $this->hasOne(SecurityUsersSession::class, 'username', 'username');
     }
+
     public function access()
     {
         return $this->belongsTo(SecurityAccessWarehouse::class, 'username', 'username');
     }
+
     public function status(): BelongsTo
     {
         return $this->belongsTo(SystemStatus::class, 'statusid', 'statusid');
     }
+
     public function role()
     {
         return $this->belongsTo(Role::class);
     }
+
     public function roleuser()
     {
         return $this->belongsTo(ModelHasRole::class, 'id', 'model_id');
@@ -208,24 +214,28 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
             $query->where('users.name', 'like', "%{$name}%");
         }
     }
+
     public function scopeEmail($query, $email)
     {
         if (trim($email) != '') {
             $query->where('users.email', 'like', "%{$email}%");
         }
     }
+
     public function scopeUserName($query, $userid)
     {
         if (trim($userid) != '') {
             $query->where('users.username', 'like', "%{$userid}%");
         }
     }
+
     public function ScopeRole($query, $role_id)
     {
         if (trim($role_id) != '') {
             $query->where('roles.id', $role_id);
         }
     }
+
     public function scopeForStatus($query, $statusid)
     {
         if ($statusid != '') {
@@ -242,6 +252,4 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
             $user->uuiduser = (string) Str::uuid();
         });
     }
-
-
 }

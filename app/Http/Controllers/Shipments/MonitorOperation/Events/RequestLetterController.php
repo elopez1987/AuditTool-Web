@@ -14,6 +14,7 @@ class RequestLetterController extends BaseController
         $shipment = ShipmentDataOperation::controlAccessUser()->where('orderid', $orderDelivery->id)->first();
         $shipment->requestletter = now();
         $shipment->save();
+
         return $this->redirectBackSuccess();
     }
 
@@ -23,6 +24,7 @@ class RequestLetterController extends BaseController
         $shipment = ShipmentDataOperation::controlAccessUser()->where('orderid', $orderDelivery->id)->first();
         $shipment->responseletter = now();
         $shipment->save();
+
         return $this->redirectBackSuccess();
     }
 }

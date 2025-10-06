@@ -16,11 +16,13 @@ trait QueryUser
     public function getRoles()
     {
         return Role::controlAccessUser()->where('statusid', '=', 'E')
-            ->select(['description','name', 'id'])->get();
+            ->select(['description', 'name', 'id'])->get();
     }
+
     public function getAllUsers($request)
     {
         $centers = $this->getCentersForUser();
+
         return User::withTrashed()->join('systemstatus', 'users.statusid', '=', 'systemstatus.statusid')
             ->leftJoin('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
             ->leftJoin('roles', 'roles.id', '=', 'model_has_roles.role_id')
@@ -37,30 +39,32 @@ trait QueryUser
             ->whereIn('securityaccesswarehouses.centerid', $centers)
             ->distinct();
     }
+
     public function getRoleForUser($id)
     {
         return DB::table('model_has_roles')->where('model_id', '=', $id)->select('role_id')->first();
     }
+
     public function getCarriersForUser($user)
     {
         return AccessCarrier::where('username', $user->username)
             ->leftJoin('shipmentcarriers', 'securityaccesscarriers.carrierid', 'shipmentcarriers.id')
             ->select(['securityaccesscarriers.recordid', 'shipmentcarriers.name as carrier'])->get();
     }
+
     public function getCenterForCarrier($request)
     {
         return ShipmentCarrier::where('id', '=', $request['carrierid'])->value('centerid');
     }
+
     public function getCenterForCustomer($customerid)
     {
         return OrderCustomer::controlAccessUser()->where('id', '=', $customerid)->value('centerid');
     }
-    /**
-     * @return array
-     */
+
     private function getCentersForUser(): array
     {
-        return (new SecurityAccessWarehouse())->where('username', Auth::user()->username)
+        return (new SecurityAccessWarehouse)->where('username', Auth::user()->username)
             ->select('centerid')->get()->toArray();
     }
 }

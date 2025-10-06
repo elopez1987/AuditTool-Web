@@ -30,7 +30,7 @@ class SearchPODController extends BaseController
                 $url = $endPoint . 'token=' . $token;
 
                 $contentBody = $this->createJsonFilter($shipment->shipmentid);
-                $conect = new Client();
+                $conect = new Client;
                 $response = $conect->post($url, ['form_params' => ['parameters' => $contentBody]]);
                 if ($response->getStatusCode() === 200) {
                     $result = json_decode($response->getBody()->getContents());
@@ -57,10 +57,13 @@ class SearchPODController extends BaseController
                     }
                     ShipmentPod::controlAccessUser()->where('orderid', $shipment->id)
                         ->update(['statusid' => 'CON']);
+
                     return response()->json('Busqueda exitosa,espera un momento para generar los archivos');
                 }
+
                 return response()->json('Error al procesar los documentos, favor de intentar mas tarde.');
             }
+
             return response()->json('El cliente no esta parametrizado para busqueda de POD.');
         }
     }
@@ -91,15 +94,10 @@ class SearchPODController extends BaseController
         $url = "{$dataapi->value02}{$endPoint}arg00={$dataapi->value03}&arg01={$dataapi->value04}";
         $responseRControl = Http::post($url);
         $data = json_decode($responseRControl->getBody()->getContents());
+
         return $data->token;
     }
 
-    /**
-     * @param $shipment
-     * @param string $path
-     *
-     * @return void
-     */
     public function createRegisterPOD($shipment, string $path): void
     {
         StorageShipmentsPods::create([

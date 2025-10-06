@@ -20,7 +20,8 @@ class ScheduleReceiptController extends BaseController
         $centers = $this->getCenterForSelect();
         $warehouses = $this->getWarehouseForSelect();
         $carriers = $this->getCarriersForSelect();
-        $reasons = StorageReason::whereIn('id', [17,18,19,20,31,32])->select(['name', 'id'])->get();
+        $reasons = StorageReason::whereIn('id', [17, 18, 19, 20, 31, 32])->select(['name', 'id'])->get();
+
         return view(
             'Receipt.ScheduleReceipt.index',
             compact('status', 'providers', 'centers', 'warehouses', 'carriers', 'reasons')
@@ -45,12 +46,13 @@ class ScheduleReceiptController extends BaseController
                 'receiptasn.id', 'receiptasn.workday', 'receiptasn.shipmentid', 'receiptasn.addasndate',
                 'receiptasn.billoflading', 'receiptproviders.name as providername', 'receiptunits.containerseal',
                 'inventorystockcategories.description as type', 'receiptunits.id as folionumber',
-                'receiptunits.entrydate', 'shipmentcarriers.name as carriername','receiptasn.statusid',
+                'receiptunits.entrydate', 'shipmentcarriers.name as carriername', 'receiptasn.statusid',
                 'receiptunits.boxnumber', 'storagelocations.name as locationname',
                 'receiptasn.unloadstartdate', 'receiptasn.unloadfinishdate', 'receiptasn.cancellationdate',
                 'receiptasn.goodissuedate', 'receiptasn.statusid', 'receiptunits.statusid as statusunit',
                 'receiptunits.deliverdate', 'receiptunits.autorizaoutputdate', 'receiptunits.ensnare',
             ]);
+
         return DataTables::of($data)
             ->addColumn('btn', 'Receipt.ScheduleReceipt.partials.buttons')
             ->addColumn('sap', 'Receipt.ScheduleReceipt.partials.goodissuedate')

@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $statusid
  * @property-read SystemStatus|null $status
  * @property-read User|null $user
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentCheck newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentCheck newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentCheck query()
@@ -31,12 +32,15 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentCheck whereStartdate($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentCheck whereStatusid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentCheck whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class ShipmentCheck extends Model
 {
     public $timestamps = false;
+
     protected $table = 'shipmentcheck';
+
     protected $primaryKey = 'recordid';
 
     protected $fillable = [
@@ -60,6 +64,7 @@ class ShipmentCheck extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return ShipmentCheck::whereIn('shipmentcheck.warehouseid', $warehouses)
             ->whereIn('shipmentcheck.centerid', $centers);
     }

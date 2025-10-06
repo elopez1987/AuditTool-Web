@@ -16,6 +16,7 @@ class EdiShipmentsController extends BaseController
                 'orderdeliveries.created_at as fecha',
             ])
             ->get();
+
         return view('Shipments.EdiShipments.index', compact('data'));
     }
 
@@ -23,6 +24,7 @@ class EdiShipmentsController extends BaseController
     {
         $this->authorize('edishipments.delete');
         EdiShipment::destroy($id);
+
         return $this->redirectBackSuccess();
     }
 }

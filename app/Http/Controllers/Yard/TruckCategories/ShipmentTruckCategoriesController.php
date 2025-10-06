@@ -14,6 +14,7 @@ class ShipmentTruckCategoriesController extends BaseController
     {
         $this->authorize('shipmenttruckcategories.index');
         $status = $this->getStatusSTS();
+
         return view('Yards.ShipmentTruckCategories.index', compact('status'));
     }
 
@@ -22,6 +23,7 @@ class ShipmentTruckCategoriesController extends BaseController
         $data = ShipmentTruckCategory::with('status')
             ->Name($request->get('name'))
             ->Status($request->get('statusid'))->get();
+
         return DataTables::of($data)
             ->addColumn('btn', 'Yards.ShipmentTruckCategories.partials.buttons')
             ->rawColumns(['btn'])
@@ -31,6 +33,7 @@ class ShipmentTruckCategoriesController extends BaseController
     public function create()
     {
         $this->authorize('shipmenttruckcategories.create');
+
         return view('Yards.ShipmentTruckCategories.create');
     }
 
@@ -38,6 +41,7 @@ class ShipmentTruckCategoriesController extends BaseController
     {
         $truckcategory = new ShipmentTruckCategory($request->validated());
         $truckcategory->save();
+
         return $this->redirectBackInfo();
     }
 
@@ -45,6 +49,7 @@ class ShipmentTruckCategoriesController extends BaseController
     {
         $this->authorize('shipmenttruckcategories.edit');
         $status = $this->getStatusSTS();
+
         return view(
             'Yards.ShipmentTruckCategories.edit',
             compact('status', 'shipmenttruckcategory')
@@ -54,6 +59,7 @@ class ShipmentTruckCategoriesController extends BaseController
     public function update(Request $request, ShipmentTruckCategory $shipmenttruckcategory)
     {
         $shipmenttruckcategory->update($request->except('truckcategoryid'));
+
         return $this->redirectBackInfo();
     }
 }

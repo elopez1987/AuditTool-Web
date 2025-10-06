@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @method static get()
+ *
  * @property mixed schemaid
  * @property string $schemaid
  * @property string $name
@@ -20,6 +21,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Configuration\Schemas\SystemStatus> $status
  * @property-read int|null $status_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemSchema name($name)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemSchema newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemSchema newQuery()
@@ -35,14 +37,19 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemSchema whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemSchema whereSchemaid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemSchema whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class SystemSchema extends Model
 {
     public $incrementing = false;
+
     public $keyType = 'string';
+
     protected $table = 'systemschemas';
+
     protected $primaryKey = 'schemaid';
+
     protected $dateFormat = 'Y-m-d H:i:s';
 
     protected $fillable = [

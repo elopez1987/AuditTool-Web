@@ -17,6 +17,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property string|null $servicetype
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|EdiToken newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|EdiToken newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|EdiToken query()
@@ -28,6 +29,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|EdiToken whereServicetype($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|EdiToken whereTimeout($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|EdiToken whereTokentype($value)
+ *
  * @mixin \Eloquent
  */
 class EdiToken extends Model
@@ -35,6 +37,7 @@ class EdiToken extends Model
     use LogsActivity;
 
     public $timestamps = false;
+
     protected $table = 'ediwstokens';
 
     protected $fillable = [

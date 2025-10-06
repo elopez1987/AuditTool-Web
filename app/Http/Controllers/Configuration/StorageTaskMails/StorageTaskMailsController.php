@@ -17,12 +17,14 @@ class StorageTaskMailsController extends BaseController
         $data = StorageTaskMail::controlAccessUser()
             ->with(['center:centerid,description', 'warehouse:warehouseid,name', 'status:statusid,name'])
             ->get();
+
         return $this->showDataToView($data, 'Configuration.StorageTaskMail.partials.buttons');
     }
 
     public function destroy($id)
     {
         StorageTaskMail::destroy($id);
+
         return $this->redirectBackSuccessMessage('Registro eliminado con exito.');
     }
 }

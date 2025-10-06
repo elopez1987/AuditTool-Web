@@ -18,6 +18,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property string|null $value05
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentTruckTolerance newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentTruckTolerance newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentTruckTolerance query()
@@ -30,6 +31,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentTruckTolerance whereValue03($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentTruckTolerance whereValue04($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentTruckTolerance whereValue05($value)
+ *
  * @mixin \Eloquent
  */
 class ShipmentTruckTolerance extends Model
@@ -37,11 +39,12 @@ class ShipmentTruckTolerance extends Model
     use LogsActivity;
 
     public $timestamps = false;
+
     protected $table = 'shipmenttrucktolerance';
 
     protected $fillable = [
-        'centerid','truckid','description',
-        'value01','value02','value03','value04','value05','value06','value07',
+        'centerid', 'truckid', 'description',
+        'value01', 'value02', 'value03', 'value04', 'value05', 'value06', 'value07',
     ];
 
     public function getActivitylogOptions(): LogOptions

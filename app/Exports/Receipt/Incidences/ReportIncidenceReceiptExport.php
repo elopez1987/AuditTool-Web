@@ -14,11 +14,14 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 
-class ReportIncidenceReceiptExport implements FromCollection, WithHeadings, WithMapping, WithEvents, ShouldAutoSize, WithColumnFormatting
+class ReportIncidenceReceiptExport implements FromCollection, ShouldAutoSize, WithColumnFormatting, WithEvents, WithHeadings, WithMapping
 {
     use Exportable;
+
     private $workdayin;
+
     private $workdayout;
+
     private $centerid;
 
     public function __construct($workdayin, $workdayout, $centerid)
@@ -31,7 +34,7 @@ class ReportIncidenceReceiptExport implements FromCollection, WithHeadings, With
     public function columnFormats(): array
     {
         return [
-//            'A' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+            //            'A' => NumberFormat::FORMAT_DATE_DDMMYYYY,
         ];
     }
 

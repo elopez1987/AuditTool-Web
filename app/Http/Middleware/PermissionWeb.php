@@ -16,6 +16,7 @@ class PermissionWeb
         if (! $request->user()->can($permission)) {
             abort(403);
         }
+
         return $next($request);
     }
 }

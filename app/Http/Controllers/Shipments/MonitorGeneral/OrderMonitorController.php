@@ -15,6 +15,7 @@ class OrderMonitorController extends BaseController
         $this->authorize('ordermonitor.index');
         $status = $this->getStatusForSchema('KLE');
         $turns = $this->getTurns();
+
         return view('Shipments.OrderMonitor.MonitorGeneral.index', compact('status', 'turns'));
     }
 
@@ -24,6 +25,7 @@ class OrderMonitorController extends BaseController
             ->Shipmentid($request->get('shipmentid'))
             ->ForStatus($request->get('statusid'))
             ->get();
+
         return DataTables::of($data)
             ->addColumn('autorizarsalida', 'Shipments.OrderMonitor.MonitorGeneral.time.autorizarsalida')
             ->addColumn('iniciofact', 'Shipments.OrderMonitor.MonitorGeneral.time.iniciofact')
@@ -31,7 +33,7 @@ class OrderMonitorController extends BaseController
             ->addColumn('carga', 'Shipments.OrderMonitor.MonitorGeneral.time.carga')
             ->addColumn('arribo', 'Shipments.OrderMonitor.MonitorGeneral.time.carga')
             ->addColumn('preparacion', 'Shipments.OrderMonitor.MonitorGeneral.time.preparacion')
-            ->rawColumns(['autorizarsalida','iniciofact','doctufac','carga','arribo','preparacion'])
+            ->rawColumns(['autorizarsalida', 'iniciofact', 'doctufac', 'carga', 'arribo', 'preparacion'])
             ->toJson();
     }
 }

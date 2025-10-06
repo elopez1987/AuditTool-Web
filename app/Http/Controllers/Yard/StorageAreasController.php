@@ -14,6 +14,7 @@ class StorageAreasController extends BaseController
         $this->authorize('storageareas.index');
         $status = $this->getStatusSTS();
         $warehouses = $this->getWarehouseForSelect();
+
         return view('Yards.StorageAreas.index', compact('status', 'warehouses'));
     }
 
@@ -25,6 +26,7 @@ class StorageAreasController extends BaseController
             ->Status($request->get('statusid'))
             ->Warehouse($request->get('warehouseid'))
             ->get();
+
         return $this->showDataToView($data, 'Yards.StorageAreas.partials.buttons');
     }
 
@@ -32,12 +34,14 @@ class StorageAreasController extends BaseController
     {
         $centers = $this->getCenterForSelect();
         $warehouses = $this->getWarehouseForSelect();
+
         return view('Yards.StorageAreas.create', compact('centers', 'warehouses'));
     }
 
     public function store(StorageAreasRequest $request)
     {
         StorageAreas::create($request->validated());
+
         return $this->redirectBackSuccessMessage('Area de almacen creada con exito');
     }
 
@@ -50,6 +54,7 @@ class StorageAreasController extends BaseController
         $centers = $this->getCenterForSelect();
         $warehouses = $this->getWarehouseForSelect();
         $status = $this->getStatusSTS();
+
         return view(
             'Yards.StorageAreas.edit',
             compact('storageAreas', 'centers', 'warehouses', 'status')
@@ -63,6 +68,7 @@ class StorageAreasController extends BaseController
             return $this->errorResponse('Area de almacen no encontrada');
         }
         $storageAreas->update($request->validated());
+
         return $this->redirectBackSuccessMessage('Area de almacen actualizada con exito');
     }
 
@@ -74,12 +80,14 @@ class StorageAreasController extends BaseController
             $storageAreas->statusid = 'D';
             $storageAreas->save();
             $storageAreas->delete();
+
             return $this->redirectBackSuccessMessage('Area de almacen eliminada con exito');
         }
         if ($storageAreas->statusid === 'D') {
             $storageAreas->statusid = 'E';
             $storageAreas->save();
             $storageAreas->restore();
+
             return $this->redirectBackSuccessMessage('Area de almacen restaurada con exito');
         }
     }

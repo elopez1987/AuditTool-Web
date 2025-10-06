@@ -19,6 +19,7 @@ class InventoryBoxesController extends BaseController
         $this->authorize('inventorybox.index');
         $status = SystemStatus::whereSchemaid('IBX')
             ->select(['statusid', 'name'])->get();
+
         return view('Yards.InventoryBoxes.index', compact('status'));
     }
 
@@ -36,6 +37,7 @@ class InventoryBoxesController extends BaseController
                 'inventoryboxstock.createdate', 'inventoryboxstock.quantitybox', 'inventoryboxstock.id as folioinv',
                 'inventoryboxstock.quantityboxtrue', 'u.name as user', 's2.name as status', 'inventoryboxstock.id', 's2.statusid',
             ])->get();
+
         return $this->showDataToView($data, 'Yards.InventoryBoxes.partials.buttons');
     }
 
@@ -44,6 +46,7 @@ class InventoryBoxesController extends BaseController
         $this->authorize('inventorybox.create');
         $centers = $this->getCenterForSelect();
         $types = SystemStatus::whereSchemaid('INC')->select('name', 'statusid')->get();
+
         return view('Yards.InventoryBoxes.create', compact('centers', 'types'));
     }
 
@@ -61,10 +64,12 @@ class InventoryBoxesController extends BaseController
                 InventoryCountStock::createDetailCount($inventory, $unit);
             }
             DB::commit();
+
             return redirect('inventorybox/' . $inventory->id . '/edit');
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             DB::rollBack();
+
             return redirect()->back()->withInput()->with(session()->flash('error', 'Error al procesar la solicitud'));
         }
     }
@@ -78,6 +83,7 @@ class InventoryBoxesController extends BaseController
                 'zonenew:zoneid,name', 'inventory', 'folio',
             ])
             ->get();
+
         return view('Yards.InventoryBoxes.edit', compact('inventorybox', 'data'));
     }
 
@@ -85,6 +91,7 @@ class InventoryBoxesController extends BaseController
     {
         $inventorybox->statusid = 'TO';
         $inventorybox->save();
+
         return $this->redirectBackSuccess();
     }
 
@@ -92,6 +99,7 @@ class InventoryBoxesController extends BaseController
     {
         $this->authorize('inventorybox.destroy');
         $inventorybox->delete();
+
         return $this->successResponse('inventorybox.index');
     }
 
@@ -100,7 +108,7 @@ class InventoryBoxesController extends BaseController
         $this->authorize('inventorybox.edit');
         $inventoryboxActive = InventoryBox::controlAccessUser()
             ->where('statusid', 'AT')->first();
-        if (!empty($inventoryboxActive)) {
+        if (! empty($inventoryboxActive)) {
             $inventoryboxActive->statusid = 'TO';
             $inventoryboxActive->save();
         }

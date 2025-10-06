@@ -12,6 +12,7 @@ class StorageShipmentBillingsController extends BaseController
     public function index($id)
     {
         $orderDelivery = OrderDeliverie::controlAccessUser()->with('billings')->where('auxiliary05', $id)->first();
+
         return view('Shipments.OrderDeliveries.ShipmentBillings.index', compact('orderDelivery'));
     }
 
@@ -24,6 +25,7 @@ class StorageShipmentBillingsController extends BaseController
             'orderid' => $orderDelivery->id,
             'billingdocument' => $request['billingdocument'],
         ]);
+
         return $this->redirectBackSuccessMessage('Registro guardado con exito.');
     }
 }

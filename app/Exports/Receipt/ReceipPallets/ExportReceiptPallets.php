@@ -12,11 +12,14 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 
-class ExportReceiptPallets implements FromCollection, WithHeadings, WithMapping, WithEvents, ShouldAutoSize
+class ExportReceiptPallets implements FromCollection, ShouldAutoSize, WithEvents, WithHeadings, WithMapping
 {
     use Exportable;
+
     private $workdayin;
+
     private $workdayout;
+
     private $centerid;
 
     public function __construct($workdayin, $workdayout, $centerid)

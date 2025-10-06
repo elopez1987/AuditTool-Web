@@ -27,6 +27,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
  * @property-read SystemCenterDistribution $center
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUsageDataForkLift newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUsageDataForkLift newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUsageDataForkLift query()
@@ -42,6 +43,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUsageDataForkLift whereValue01($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUsageDataForkLift whereValue02($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUsageDataForkLift whereValue03($value)
+ *
  * @mixin \Eloquent
  */
 class StorageUsageDataForkLift extends Model
@@ -70,6 +72,7 @@ class StorageUsageDataForkLift extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return StorageUsageDataForkLift::whereIn('storageusagedataforklift.centerid', $centers);
     }
 

@@ -35,6 +35,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read SystemCenterDistribution $center
  * @property-read SystemStatus $status
  * @property-read User $user
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTags name($name)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTags newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTags newQuery()
@@ -58,12 +59,13 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTags whereValue03($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTags withTrashed(bool $withTrashed = true)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTags withoutTrashed()
+ *
  * @mixin \Eloquent
  */
 class StorageTags extends Model
 {
-    use softDeletes;
     use LogsActivity;
+    use softDeletes;
 
     protected $table = 'storagetags';
 
@@ -94,6 +96,7 @@ class StorageTags extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return StorageTags::whereIn('storagetags.centerid', $centers);
     }
 

@@ -41,6 +41,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read OrderDeliverie $order
  * @property-read StorageTurn|null $turn
  * @property-read SystemWarehouse $warehouse
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StoragechecklocationbridgVig newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StoragechecklocationbridgVig newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StoragechecklocationbridgVig query()
@@ -64,6 +65,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StoragechecklocationbridgVig whereValue03($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StoragechecklocationbridgVig whereWarehouseid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StoragechecklocationbridgVig whereWorkday($value)
+ *
  * @mixin \Eloquent
  */
 class StoragechecklocationbridgVig extends Model
@@ -112,6 +114,7 @@ class StoragechecklocationbridgVig extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return StoragechecklocationbridgVig::whereIn('storagechecklocationbridgvig.warehouseid', $warehouses)
             ->whereIn('storagechecklocationbridgvig.centerid', $centers);
     }

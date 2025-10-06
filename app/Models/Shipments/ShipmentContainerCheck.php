@@ -24,6 +24,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
  * @property-read User $user
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentContainerCheck newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentContainerCheck newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentContainerCheck query()
@@ -39,16 +40,19 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentContainerCheck whereValue03($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentContainerCheck whereValue04($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentContainerCheck whereValue05($value)
+ *
  * @mixin \Eloquent
  */
 class ShipmentContainerCheck extends Model
 {
     use LogsActivity;
+
     public $timestamps = false;
+
     protected $table = 'shipmentcontainercheck';
 
     protected $fillable = [
-        'orderid','lpnid','containerid','lpnchild','createuser','created_at','orderid',
+        'orderid', 'lpnid', 'containerid', 'lpnchild', 'createuser', 'created_at', 'orderid',
     ];
 
     public function getActivitylogOptions(): LogOptions

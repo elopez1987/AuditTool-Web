@@ -32,6 +32,7 @@ class SelectController extends Controller
                 ->whereIn('shipmentcarriers.centerid', $centers)
                 ->select(['name', 'id'])->get();
         }
+
         return response()->json($carriers);
     }
 
@@ -39,6 +40,7 @@ class SelectController extends Controller
     {
         $status = SystemStatus::whereSchemaid('RUS')
             ->select('statusid', 'name')->get();
+
         return response()->json($status);
     }
 
@@ -47,6 +49,7 @@ class SelectController extends Controller
         $warehouses = SecurityAccessWarehouse::where('username', Auth::user()->username)
             ->leftJoin('systemwarehouses', 'systemwarehouses.warehouseid', '=', 'securityaccesswarehouses.warehouseid')
             ->select('systemwarehouses.warehouseid', 'systemwarehouses.name')->get();
+
         return response()->json($warehouses);
     }
 
@@ -54,6 +57,7 @@ class SelectController extends Controller
     {
         $rason = StorageReason::whereIn('id', [1, 2, 3, 17])
             ->select(['id', 'name'])->get();
+
         return response()->json($rason);
     }
 
@@ -66,6 +70,7 @@ class SelectController extends Controller
             ->whereNotNull('configurationflag')
             ->whereRaw("charindex('USR-03', configurationflag) > 0")
             ->get();
+
         return response()->json($user);
     }
 
@@ -73,6 +78,7 @@ class SelectController extends Controller
     {
         $areas = StorageAreas::controlAccessUser()
             ->where('statusid', 'E')->select(['name', 'id'])->get();
+
         return response()->json($areas);
     }
 }

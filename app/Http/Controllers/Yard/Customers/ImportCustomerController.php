@@ -12,7 +12,8 @@ class ImportCustomerController extends BaseController
     public function importcustomer(Request $request)
     {
         $file = $request->file('file');
-        Excel::import(new ImportOrderCustomer(), $file);
+        Excel::import(new ImportOrderCustomer, $file);
+
         return $this->successResponse('ordercustomers.index');
     }
 }

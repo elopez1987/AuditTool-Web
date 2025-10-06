@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Security\MenuStructure\SecurityDetailsMenuStructure> $moduleDetails
  * @property-read int|null $module_details_count
  * @property-read SystemStatus $status
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SecurityMenu newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SecurityMenu newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SecurityMenu query()
@@ -28,13 +29,17 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SecurityMenu whereMenustrucid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SecurityMenu whereSchemaid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SecurityMenu whereStatusid($value)
+ *
  * @mixin \Eloquent
  */
 class SecurityMenu extends Model
 {
     public $timestamps = false;
+
     protected $table = 'securitymenustructure';
+
     protected $primaryKey = 'menustrucid';
+
     protected $keyType = 'string';
 
     protected $fillable = [
@@ -58,6 +63,7 @@ class SecurityMenu extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return SecurityMenu::whereIn('securitymenustructure.centerid', $centers);
     }
 

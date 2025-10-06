@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $schemaid
  * @property string $statusid
  * @property-read SystemStatus $status
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentTruckCategory name($name)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentTruckCategory newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentTruckCategory newQuery()
@@ -31,19 +32,24 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentTruckCategory whereSchemaid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentTruckCategory whereStatusid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentTruckCategory whereTruckcategoryid($value)
+ *
  * @mixin \Eloquent
  */
 class ShipmentTruckCategory extends Model
 {
     public $incrementing = false;
+
     public $timestamps = false;
 
     public $attributes = [
         'schemaid' => 'STS',
         'statusid' => 'E',
     ];
+
     protected $table = 'shipmenttruckcategories';
+
     protected $primaryKey = 'truckcategoryid';
+
     protected $keyType = 'string';
 
     protected $fillable = [

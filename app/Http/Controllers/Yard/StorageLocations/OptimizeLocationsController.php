@@ -32,6 +32,7 @@ class OptimizeLocationsController extends BaseController
                 }
             }
         }
+
         return $this->redirectBackSuccess();
     }
 

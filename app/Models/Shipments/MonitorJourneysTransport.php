@@ -25,6 +25,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $statuskeytrid
  * @property string|null $statusdevid
  * @property string|null $statusdev
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|MonitorJourneysTransport forCarriers()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|MonitorJourneysTransport forShipment($shipmentid)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|MonitorJourneysTransport newModelQuery()
@@ -47,17 +48,20 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|MonitorJourneysTransport whereStatuskeytrid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|MonitorJourneysTransport whereStatuspod($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|MonitorJourneysTransport whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class MonitorJourneysTransport extends Model
 {
     public $timestamps = false;
+
     protected $table = 'vw_monitorincidencejourneys';
 
     public static function controlAccessUser()
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return MonitorJourneysTransport::whereIn('vw_monitorincidencejourneys.warehouseid', $warehouses)
             ->whereIn('vw_monitorincidencejourneys.centerid', $centers);
     }

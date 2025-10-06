@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $auxiliary09
  * @property string|null $auxiliary10
  * @property-read SecurityModule|null $module
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SecurityFunction description($description)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SecurityFunction module($moduleid)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SecurityFunction newModelQuery()
@@ -38,13 +39,17 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SecurityFunction whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SecurityFunction whereFunctionid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SecurityFunction whereModuleid($value)
+ *
  * @mixin \Eloquent
  */
 class SecurityFunction extends Model
 {
     public $timestamps = false;
+
     public $incrementing = true;
+
     protected $table = 'securityfunctions';
+
     protected $primaryKey = 'functionid';
 
     protected $fillable = [

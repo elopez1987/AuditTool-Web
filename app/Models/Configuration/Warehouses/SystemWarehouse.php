@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method whereStatusid(string $string)
  * @method static select(string $string, string $string1, string $string2)
  * @method static whereIn(string $string, $warehouses)
+ *
  * @property string $centerid
  * @property string $warehouseid
  * @property string $name
@@ -34,6 +35,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read SystemCenterDistribution $centerdistribution
  * @property-read SystemStatus $status
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemWarehouse forName($name)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemWarehouse newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemWarehouse newQuery()
@@ -57,14 +59,19 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemWarehouse whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemWarehouse whereWarehouse($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemWarehouse whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class SystemWarehouse extends Model
 {
     public $incrementing = false;
+
     public $keyType = 'string';
+
     protected $table = 'systemwarehouses';
+
     protected $primaryKey = 'warehouseid';
+
     protected $dateFormat = 'Y-m-d H:i:s';
 
     protected $fillable = [
@@ -96,6 +103,7 @@ class SystemWarehouse extends Model
         'schemaid' => 'STS',
         'statusid' => 'E',
     ];
+
     protected $casts = [
         'configurationflag' => 'array',
         'center' => 'string',
@@ -104,6 +112,7 @@ class SystemWarehouse extends Model
     public static function controlAccessUser()
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
+
         return SystemWarehouse::whereIn('systemwarehouses.warehouseid', $warehouses)
             ->where('systemwarehouses.statusid', 'E');
     }

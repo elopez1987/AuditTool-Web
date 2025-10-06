@@ -14,6 +14,7 @@ class ReceiptProvidersController extends BaseController
     {
         $this->authorize('receiptproviders.index');
         $warehouses = $this->getWarehouseForSelect();
+
         return view('Yards.ReceiptProviders.index', compact('warehouses'));
     }
 
@@ -24,6 +25,7 @@ class ReceiptProvidersController extends BaseController
             ->Name($request->get('name'))
             ->Warehouse($request->get('warehouseid'))
             ->get();
+
         return $this->showDataToView($data, 'Yards.ReceiptProviders.partials.buttons');
     }
 
@@ -32,6 +34,7 @@ class ReceiptProvidersController extends BaseController
         $this->authorize('receiptproviders.create');
         $centers = $this->getCenterForSelect();
         $warehouses = $this->getWarehouseForSelect();
+
         return view(
             'Yards.ReceiptProviders.create',
             compact('centers', 'warehouses')
@@ -42,6 +45,7 @@ class ReceiptProvidersController extends BaseController
     {
         $provider = new ReceiptProvider($request->validated());
         $provider->save();
+
         return $this->successResponse('receiptproviders.index');
     }
 
@@ -49,6 +53,7 @@ class ReceiptProvidersController extends BaseController
     {
         $this->authorize('receiptproviders.edit');
         $status = $this->getStatusSTS();
+
         return view(
             'Yards.ReceiptProviders.edit',
             compact('status', 'receiptprovider')
@@ -58,6 +63,7 @@ class ReceiptProvidersController extends BaseController
     public function update(UpdateProvidersRequest $request, ReceiptProvider $receiptprovider)
     {
         $receiptprovider->update($request->except('centerid', 'warehouseid'));
+
         return $this->infoResponse('receiptproviders.index');
     }
 }

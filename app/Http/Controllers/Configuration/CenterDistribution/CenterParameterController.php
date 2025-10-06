@@ -12,6 +12,7 @@ class CenterParameterController extends BaseController
     {
         $center = SystemCenterDistribution::findOrFail($id);
         $parameters = $this->getStatusForSchema('SDC');
+
         return view('Configuration.SystemCenterDistributions.Parameters.create', compact('center', 'parameters'));
     }
 
@@ -20,6 +21,7 @@ class CenterParameterController extends BaseController
         $center = SystemCenterDistribution::findOrFail($id);
         $center->configurationflag = $request['parameter'];
         $center->save();
+
         return $this->redirectBackSuccess();
     }
 
@@ -27,6 +29,7 @@ class CenterParameterController extends BaseController
     {
         $center = SystemCenterDistribution::findOrFail($id);
         $parameters = $this->getStatusForSchema('APP');
+
         return view('Configuration.SystemCenterDistributions.Parameters.createApp', compact('center', 'parameters'));
     }
 
@@ -35,6 +38,7 @@ class CenterParameterController extends BaseController
         $center = SystemCenterDistribution::findOrFail($id);
         $center->auxiliary05 = $request['parameter'];
         $center->save();
+
         return $this->redirectBackSuccess();
     }
 }

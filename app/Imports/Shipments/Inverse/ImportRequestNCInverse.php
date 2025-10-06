@@ -18,6 +18,7 @@ class ImportRequestNCInverse implements ToCollection, WithHeadingRow, WithValida
             $item = StorageScheduleInverseTraffic::where('ne', trim($row['ne']))->first();
             if (empty($item)) {
                 StorageLogInverse::createNewLog('No existen registros con la Nota de Entrega ingresada', $row['ne']);
+
                 continue;
             }
             $item->requestnc = Carbon::now();

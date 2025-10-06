@@ -13,11 +13,14 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 
-class ReporteEvidenciasFacturas implements FromCollection, WithHeadings, WithMapping, WithEvents, ShouldAutoSize, WithColumnFormatting
+class ReporteEvidenciasFacturas implements FromCollection, ShouldAutoSize, WithColumnFormatting, WithEvents, WithHeadings, WithMapping
 {
     use Exportable;
+
     private $workdayin;
+
     private $workdayout;
+
     private $centerid;
 
     public function __construct($workdayin, $workdayout, $centerid)
@@ -30,7 +33,7 @@ class ReporteEvidenciasFacturas implements FromCollection, WithHeadings, WithMap
     public function columnFormats(): array
     {
         return [
-//            'A' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+            //            'A' => NumberFormat::FORMAT_DATE_DDMMYYYY,
         ];
     }
 

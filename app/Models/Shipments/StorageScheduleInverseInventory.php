@@ -29,6 +29,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageScheduleInverseInventory newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageScheduleInverseInventory newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageScheduleInverseInventory query()
@@ -51,6 +52,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageScheduleInverseInventory whereValue04($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageScheduleInverseInventory whereValue05($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageScheduleInverseInventory whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class StorageScheduleInverseInventory extends Model

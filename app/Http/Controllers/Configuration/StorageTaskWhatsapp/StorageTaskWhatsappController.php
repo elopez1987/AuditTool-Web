@@ -15,12 +15,14 @@ class StorageTaskWhatsappController extends BaseController
     public function storagetaskwhatsapplist()
     {
         $data = StorageTaskWhatsapp::controlAccessUser()->with(['center:centerid,description', 'warehouse:warehouseid,name', 'status:statusid,name'])->get();
+
         return $this->showDataToView($data, 'Configuration.StorageTaskWhatsapp.partials.buttons');
     }
 
     public function destroy($id)
     {
         StorageTaskWhatsapp::destroy($id);
+
         return $this->redirectBackSuccessMessage('Registro eliminado con exito.');
     }
 }

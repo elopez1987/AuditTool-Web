@@ -14,17 +14,18 @@ trait NewUnitVirtual
     {
         $barcodebox = $this->getFolioYMS($model->centerid);
         $location = $this->getLocationDummy($model->centerid);
+
         return ReceiptUnit::create([
             'centerid' => $model->centerid,
             'warehouseid' => $model->warehouseid,
             'barcode' => $barcodebox->folionumber,
             'shipmentid' => $model->shipmentid,
             'carrierid' => $model->carrierid,
-            'truckid' => '13', //Parametrizar
+            'truckid' => '13', // Parametrizar
             'containerseal' => '0',
             'operatorname' => 'Operador Virtual',
             'entrydate' => now(),
-            'zoneid' => '10006',  //Parametrizar
+            'zoneid' => '10006',  // Parametrizar
             'locationid' => $location->id,
             'unittypeid' => '2',
             'trucknumber' => 'AmazonTruck',
@@ -35,7 +36,7 @@ trait NewUnitVirtual
             'drivernumber' => '0',
             'truckcategoryid' => 'CS',
             'createuser' => Auth::user()->id,
-            'statusid' => 'EN', //Parametrizar
+            'statusid' => 'EN', // Parametrizar
             'auxiliary01' => '0',
             'auxiliary03' => 'VR',
             'econumber' => '0',

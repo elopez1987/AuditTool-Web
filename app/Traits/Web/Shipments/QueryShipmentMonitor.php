@@ -12,6 +12,7 @@ trait QueryShipmentMonitor
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return DB::table('orderdeliveries')
             ->select(DB::raw('COUNT(orderdeliveries.id) as total'))
             ->join('shipmentjourneys', function ($join) {

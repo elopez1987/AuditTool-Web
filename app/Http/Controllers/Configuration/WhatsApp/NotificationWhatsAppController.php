@@ -13,6 +13,7 @@ class NotificationWhatsAppController extends BaseController
     public function index()
     {
         $this->authorize('systemwhatsapps.index');
+
         return view('Configuration.SystemWhatsApps.index');
     }
 
@@ -23,12 +24,14 @@ class NotificationWhatsAppController extends BaseController
                 $q->select('statusid', 'name');
             },
         ])->select('systemwhatsapps.*');
+
         return $this->showDataToView($data, 'Configuration.SystemWhatsApps.partials.buttons');
     }
 
     public function create()
     {
         $this->authorize('systemwhatsapps.create');
+
         return view('Configuration.SystemWhatsApps.create');
     }
 
@@ -36,6 +39,7 @@ class NotificationWhatsAppController extends BaseController
     {
         $notification = new NotificationWhatsApp($request->all());
         $notification->save();
+
         return $this->redirectBackSuccess();
     }
 
@@ -43,18 +47,21 @@ class NotificationWhatsAppController extends BaseController
     {
         $this->authorize('systemwhatsapps.edit');
         $status = $this->getStatusForSchema('STS');
+
         return view('Configuration.SystemWhatsApps.edit', compact('systemwhatsapp', 'status'));
     }
 
     public function update(Request $request, NotificationWhatsApp $systemwhatsapp)
     {
         $systemwhatsapp->update($request->all());
+
         return $this->redirectBackInfo();
     }
 
     public function show(NotificationWhatsApp $systemwhatsapp)
     {
         $this->authorize('systemwhatsapps.show');
+
         return view('Configuration.SystemWhatsApps.show', compact('systemwhatsapp'));
     }
 
@@ -66,6 +73,7 @@ class NotificationWhatsAppController extends BaseController
             ->ForNumber($request->get('folionumber'))
             ->leftJoin('systemcenterdistributions', 'logsmessagewhatsapp.centerid', '=', 'systemcenterdistributions.centerid')
             ->select(['logsmessagewhatsapp.*', 'systemcenterdistributions.name as centername'])->orderBy('id', 'desc')->limit(1000)->get();
+
         return $this->showDataToView($data, '');
     }
 }

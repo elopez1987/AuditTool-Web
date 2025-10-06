@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @method static get()
+ *
  * @property int $id
  * @property string $name
  * @property string|null $version
@@ -16,6 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $auxiliary05
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|NameSystem newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|NameSystem newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|NameSystem query()
@@ -29,11 +31,13 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|NameSystem whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|NameSystem whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|NameSystem whereVersion($value)
+ *
  * @mixin \Eloquent
  */
 class NameSystem extends Model
 {
     protected $table = 'systemname';
+
     protected $dateFormat = 'Y-m-d H:i:s';
 
     protected $fillable = [

@@ -26,6 +26,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
  * @property-read \App\Models\Shipments\StorageScheduleInverseTraffic $traffic
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageScheduleInverseOperation newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageScheduleInverseOperation newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageScheduleInverseOperation query()
@@ -43,6 +44,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageScheduleInverseOperation whereWarehousedate($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageScheduleInverseOperation whereWarehouseid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageScheduleInverseOperation whereWmsdate($value)
+ *
  * @mixin \Eloquent
  */
 class StorageScheduleInverseOperation extends Model
@@ -70,6 +72,7 @@ class StorageScheduleInverseOperation extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return StorageScheduleInverseOperation::whereIn('storagescheduleinverseoperation.warehouseid', $warehouses)
             ->whereIn('storagescheduleinverseoperation.centerid', $centers);
     }

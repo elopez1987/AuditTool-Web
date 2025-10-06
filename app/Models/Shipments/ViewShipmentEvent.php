@@ -42,6 +42,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null $horasrestante
  * @property int|null $horastrayecto
  * @property int|null $horasenpatio
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ViewShipmentEvent newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ViewShipmentEvent newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ViewShipmentEvent query()
@@ -81,6 +82,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ViewShipmentEvent whereTrucknumber($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ViewShipmentEvent whereTurno($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ViewShipmentEvent whereWorkday($value)
+ *
  * @mixin \Eloquent
  */
 class ViewShipmentEvent extends Model
@@ -90,6 +92,7 @@ class ViewShipmentEvent extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return ViewShipmentEvent::whereIn('vw_monitorshipments.centerid', $centers);
     }
 }

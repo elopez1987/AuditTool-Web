@@ -17,12 +17,14 @@ class StorageSealLotoController extends BaseController
     public function index()
     {
         $this->authorize('storagesealloto.index');
+
         return view('Yards.StorageSealLoto.index');
     }
 
     public function getSealLotos(Request $request)
     {
-        $data = StorageSealLoto::controlAccessUser()->with(['center','status'])->Name($request->get('name'))->get();
+        $data = StorageSealLoto::controlAccessUser()->with(['center', 'status'])->Name($request->get('name'))->get();
+
         return DataTables::of($data)
             ->addColumn('btn', 'Yards.StorageSealLoto.partials.buttons')
             ->rawColumns(['btn'])->toJson();
@@ -32,6 +34,7 @@ class StorageSealLotoController extends BaseController
     {
         $this->authorize('storagesealloto.create');
         $centers = $this->getCenterForSelect();
+
         return view('Yards.StorageSealLoto.create', compact('centers'));
     }
 
@@ -46,19 +49,22 @@ class StorageSealLotoController extends BaseController
                 'description' => $request->get('description') . '-' . $total,
             ]);
         }
+
         return $this->redirectBackSuccessMessage('Sellos agregados correctamente');
     }
 
     public function edit(StorageSealLoto $storagesealloto)
     {
         $this->authorize('storagesealloto.edit');
-        $status = SystemStatus::whereSchemaid('STS')->whereIn('statusid', ['E','D'])->select(['statusid', 'name'])->get();
+        $status = SystemStatus::whereSchemaid('STS')->whereIn('statusid', ['E', 'D'])->select(['statusid', 'name'])->get();
+
         return view('Yards.StorageSealLoto.edit', compact('storagesealloto', 'status'));
     }
 
     public function update(StorageSealLoto $storagesealloto, Request $request)
     {
         $storagesealloto->update($request->all());
+
         return $this->redirectBackSuccessMessage('Registro actualizado correctamente');
     }
 }

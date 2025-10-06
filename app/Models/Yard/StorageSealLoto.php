@@ -29,6 +29,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read int|null $activities_count
  * @property-read SystemCenterDistribution $center
  * @property-read SystemStatus $status
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSealLoto name($description)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSealLoto newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSealLoto newQuery()
@@ -48,6 +49,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSealLoto whereValue03($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSealLoto whereValue04($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSealLoto whereValue05($value)
+ *
  * @mixin \Eloquent
  */
 class StorageSealLoto extends Model
@@ -55,6 +57,7 @@ class StorageSealLoto extends Model
     use LogsActivity;
 
     public $timestamps = true;
+
     protected $table = 'storagesealloto';
 
     protected $fillable = [
@@ -86,6 +89,7 @@ class StorageSealLoto extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return StorageSealLoto::whereIn('storagesealloto.centerid', $centers);
     }
 

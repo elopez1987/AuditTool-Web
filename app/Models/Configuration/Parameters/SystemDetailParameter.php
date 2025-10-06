@@ -27,6 +27,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property string|null $value15
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailParameter newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailParameter newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailParameter query()
@@ -47,11 +48,13 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailParameter whereValue13($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailParameter whereValue14($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailParameter whereValue15($value)
+ *
  * @mixin \Eloquent
  */
 class SystemDetailParameter extends Model
 {
     use LogsActivity;
+
     public $timestamps = false;
 
     protected $table = 'systemdetailparameter';
@@ -84,6 +87,7 @@ class SystemDetailParameter extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return SystemDetailParameter::whereIn('systemdetailparameter.value02', $warehouses)
             ->whereIn('systemdetailparameter.value01', $centers);
     }

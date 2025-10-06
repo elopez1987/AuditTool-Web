@@ -34,6 +34,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read StorageSealLoto $loto
  * @property-read User $user
  * @property-read SystemWarehouse $warehouse
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTraceLoto newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTraceLoto newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTraceLoto query()
@@ -46,12 +47,13 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTraceLoto whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTraceLoto whereUserid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTraceLoto whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class StorageTraceLoto extends Model
 {
-    use LogsActivity;
     use HasUuids;
+    use LogsActivity;
 
     protected $table = 'storagetraceloto';
 
@@ -73,6 +75,7 @@ class StorageTraceLoto extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return StorageTraceLoto::whereIn('storagetraceloto.warehouseid', $warehouses)
             ->whereIn('storagetraceloto.centerid', $centers);
     }

@@ -14,18 +14,21 @@ class SecurityModulesController extends BaseController
     public function index()
     {
         $this->authorize('securitymodules.index');
+
         return view('Security.SecurtiyModules.index');
     }
 
     public function getDataModules(Request $request)
     {
         $data = SecurityModule::Description($request->get('description'));
+
         return $this->showDataToView($data, 'Security.SecurtiyModules.partials.buttons');
     }
 
     public function create()
     {
         $this->authorize('securitymodules.create');
+
         return view('Security.SecurtiyModules.create');
     }
 
@@ -33,6 +36,7 @@ class SecurityModulesController extends BaseController
     {
         $module = new SecurityModule($request->validated());
         $module->save();
+
         return $this->redirectBackSuccess();
     }
 
@@ -40,13 +44,15 @@ class SecurityModulesController extends BaseController
     {
         $this->authorize('securitymodules.edit');
         $functions = SecurityFunction::where('moduleid', $securitymodule->moduleid)
-            ->select(['moduleid','functionid','description'])->get();
+            ->select(['moduleid', 'functionid', 'description'])->get();
+
         return view('Security.SecurtiyModules.edit', compact('securitymodule', 'functions'));
     }
 
     public function update(Request $request, SecurityModule $securitymodule)
     {
         $securitymodule->update($request->all());
+
         return $this->redirectBackSuccess();
     }
 

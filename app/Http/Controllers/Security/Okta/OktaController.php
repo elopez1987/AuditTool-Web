@@ -35,6 +35,7 @@ class OktaController extends BaseController
                 ],
             ]);
             $body = $response->getBody()->getContents();
+
             return json_decode($body, true);
         } catch (RequestException $e) {
             echo "HTTP Request failed:\n";
@@ -49,7 +50,7 @@ class OktaController extends BaseController
     {
         $token = $this->obtener_token();
         $datawsokta = EdiWsToken::where('servicetype', 'OKTA')->first();
-        $client = new Client();
+        $client = new Client;
         $url = $datawsokta->baseuri . 'api/v2/users';
         $headers = [
             'Content-Type' => 'application/json',
@@ -71,15 +72,17 @@ class OktaController extends BaseController
             $response = $client->request('POST', $url, ['headers' => $headers, 'body' => $body]);
             Log::info($response->getStatusCode());
             if ($response->getStatusCode() == 201) {
-                $data = json_decode((string)$response->getBody(), true);
+                $data = json_decode((string) $response->getBody(), true);
                 $user->auth0 = $data['user_id'];
                 $user->save();
+
                 return $this->redirectBackSuccessMessage('Usuario creado con exito.');
             } else {
                 return $this->errorResponse('Error al crear el usuario, intente mas tarde.');
             }
         } catch (ClientException $e) {
             Log::error($e->getMessage());
+
             return response()->json(['status' => 'Error de envio.']);
         }
     }
@@ -87,7 +90,7 @@ class OktaController extends BaseController
     //    Borrar un usuaroi
     public function deleteuser($id)
     {
-        $client = new Client();
+        $client = new Client;
         $user = User::where('id', $id)->first();
         $userId = $user->auth0;
         $token = $this->obtener_token();
@@ -105,10 +108,12 @@ class OktaController extends BaseController
             $user->auth0 = '';
             $user->save();
             DB::commit();
+
             return $this->redirectBackSuccessMessage('Usuario eliminado con exito.');
         } catch (Exception $e) {
             DB::rollback();
             Log::error($e->getMessage());
+
             return $this->errorResponse('Error al eliminar el usuario, intente mas tarde.');
         }
     }

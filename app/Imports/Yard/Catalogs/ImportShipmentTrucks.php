@@ -12,6 +12,7 @@ use Maatwebsite\Excel\Concerns\WithValidation;
 class ImportShipmentTrucks implements ToCollection, WithHeadingRow, WithValidation
 {
     use Responser;
+
     public function collection(Collection $rows)
     {
         $centerid = $this->getCenterForUser();

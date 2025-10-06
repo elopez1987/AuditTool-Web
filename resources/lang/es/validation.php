@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Edgar Prisciliano L
@@ -105,7 +106,7 @@ return [
     | of "email". This simply helps us make messages a little cleaner.
     |
     */
-    'attributes' => array(
+    'attributes' => [
         'name' => 'Nombre',
         'auxiliary01' => 'Auxiliar 01',
         'auxiliary02' => 'Auxiliar 02',
@@ -200,8 +201,7 @@ return [
         'econumbertruck' => 'Número de tracto',
         'type' => 'Tipo',
         'workdayin' => 'Fecha de inicio',
-        'workdayout' => 'Fecha final'
+        'workdayout' => 'Fecha final',
 
-
-    ),
+    ],
 ];

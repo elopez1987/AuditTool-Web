@@ -32,6 +32,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read SystemCenterDistribution $center
  * @property-read SystemStatus $status
  * @property-read SystemWarehouse $warehouse
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptProvider name($name)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptProvider newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptProvider newQuery()
@@ -52,12 +53,15 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptProvider whereStatusid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptProvider whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptProvider whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class ReceiptProvider extends Model
 {
     use LogsActivity;
+
     protected $table = 'receiptproviders';
+
     protected $dateFormat = 'Y-m-d H:i:s';
 
     protected $fillable = ['centerid', 'warehouseid', 'providerid',
@@ -76,6 +80,7 @@ class ReceiptProvider extends Model
         'statusid' => 'E',
         'schemaid' => 'STS',
     ];
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()->logFillable();
@@ -85,9 +90,11 @@ class ReceiptProvider extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return ReceiptProvider::whereIn('warehouseid', $warehouses)
             ->whereIn('centerid', $centers);
     }
+
     public function center()
     {
         return $this->belongsTo(SystemCenterDistribution::class, 'centerid');

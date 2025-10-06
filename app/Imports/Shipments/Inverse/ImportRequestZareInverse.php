@@ -22,17 +22,20 @@ class ImportRequestZareInverse implements ToCollection, WithHeadingRow, WithVali
                 ->where('shipmentid', trim($row['shipmentid']))->first();
             if (empty($order)) {
                 StorageLogInverse::createNewLog('No existe número de embarque ingresado', $row['shipmentid']);
+
                 continue;
             }
             $incidence = StorageIncidenceJourney::controlAccessUser()->where('orderid', $order->id)
                 ->select(['centerid', 'warehouseid', 'orderid', 'folioid'])->first();
             if (empty($incidence)) {
                 StorageLogInverse::createNewLog('No existe incidencia para elnúmero de embarque ingresado', $row['shipmentid']);
+
                 continue;
             }
             $inverse = StorageScheduleInverse::where('orderid', $order->id)->first();
             if (empty($inverse)) {
                 StorageLogInverse::createNewLog('No número de embarque no existe en la bitacora de devoluciones', $row['shipmentid']);
+
                 continue;
             }
             StorageScheduleInverseTraffic::where('centerid', $incidence->centerid)

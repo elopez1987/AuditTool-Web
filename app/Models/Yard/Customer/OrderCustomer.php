@@ -13,6 +13,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * @method static whereStatusid(string $string)
+ *
  * @property int $id
  * @property string $centerid
  * @property string $warehouseid
@@ -41,6 +42,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read SystemCenterDistribution $center
  * @property-read SystemStatus $status
  * @property-read SystemWarehouse $warehouse
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|OrderCustomer name($name)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|OrderCustomer newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|OrderCustomer newQuery()
@@ -69,6 +71,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|OrderCustomer whereTimetransfer($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|OrderCustomer whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|OrderCustomer whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class OrderCustomer extends Model
@@ -76,6 +79,7 @@ class OrderCustomer extends Model
     use LogsActivity;
 
     protected $table = 'ordercustomers';
+
     protected $primaryKey = 'id';
 
     protected $dateFormat = 'Y-m-d H:i:s';
@@ -136,6 +140,7 @@ class OrderCustomer extends Model
     {
         $centers = SecurityAccessWarehouse::Centers();
         $warehouses = SecurityAccessWarehouse::Warehouses();
+
         return OrderCustomer::whereIn('ordercustomers.centerid', $centers)
             ->whereIn('ordercustomers.warehouseid', $warehouses);
     }

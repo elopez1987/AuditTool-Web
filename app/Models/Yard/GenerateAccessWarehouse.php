@@ -30,6 +30,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|GenerateAccessWarehouse forBox($boxnumber)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|GenerateAccessWarehouse forCarrierFront($carrierid)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|GenerateAccessWarehouse forCarriers($carriers)
@@ -56,12 +57,15 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|GenerateAccessWarehouse whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|GenerateAccessWarehouse whereUpdateuser($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|GenerateAccessWarehouse whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class GenerateAccessWarehouse extends Model
 {
     use LogsActivity;
+
     protected $table = 'storageaccesswarehouse';
+
     protected $primaryKey = 'id';
 
     protected $fillable = [
@@ -109,6 +113,7 @@ class GenerateAccessWarehouse extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return GenerateAccessWarehouse::whereIn('storageaccesswarehouse.warehouseid', $warehouses)
             ->whereIn('storageaccesswarehouse.centerid', $centers);
     }

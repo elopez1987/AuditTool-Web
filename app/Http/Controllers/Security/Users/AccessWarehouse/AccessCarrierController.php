@@ -12,7 +12,9 @@ use Illuminate\Http\Request;
 class AccessCarrierController extends BaseController
 {
     use QueryUser;
+
     private ServiceUser $serviceUser;
+
     public function __construct(ServiceUser $serviceUser)
     {
         $this->serviceUser = $serviceUser;
@@ -24,6 +26,7 @@ class AccessCarrierController extends BaseController
         $user = User::where('uuiduser', $uuiduser)->first();
         $carriers = $this->getCarriersForSelect();
         $listcarries = $this->getCarriersForUser($user);
+
         return view(
             'Security.Users.AccessCarriers.index',
             compact('user', 'carriers', 'listcarries')
@@ -34,6 +37,7 @@ class AccessCarrierController extends BaseController
     {
         $centerid = $this->getCenterForCarrier($request);
         $this->serviceUser->assignCarrierToUser($request, $centerid);
+
         return $this->redirectBackSuccessMessage('Linea asignada con exito!!');
     }
 
@@ -41,6 +45,7 @@ class AccessCarrierController extends BaseController
     {
         $row = AccessCarrier::where('recordid', $id)->first();
         $row->delete();
+
         return $this->redirectBackSuccessMessage('Registro eliminado con exito');
     }
 }

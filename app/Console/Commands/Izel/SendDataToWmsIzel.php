@@ -11,8 +11,8 @@ use Illuminate\Console\Command;
 
 class SendDataToWmsIzel extends Command
 {
-    use WebServiceIzel;
     use GetParameters;
+    use WebServiceIzel;
 
     protected $signature = 'command:SendDataToWmsIzel';
 
@@ -38,14 +38,6 @@ class SendDataToWmsIzel extends Command
         }
     }
 
-    /**
-     * @param $parameter
-     * @param $statusService
-     * @param ReceiptUnit $receiptunit
-     * @param $folio
-     *
-     * @return void
-     */
     public function LogVersion4($parameter, $statusService, ReceiptUnit $receiptunit, $folio): void
     {
         if (in_array('SDC-07', (array) $parameter)) {
@@ -54,7 +46,7 @@ class SendDataToWmsIzel extends Command
                 EdiShipment::destroy($folio->id);
             } else {
                 SystemEventWebServiceIzel::createRegisterLogError($receiptunit, $statusService, $parameter);
-                ++$folio->quantity;
+                $folio->quantity++;
                 $folio->message = $statusService->Description;
                 $folio->save();
                 if ($folio->quantity > 12) {
@@ -64,14 +56,6 @@ class SendDataToWmsIzel extends Command
         }
     }
 
-    /**
-     * @param $statusService
-     * @param ReceiptUnit $receiptunit
-     * @param $parameter
-     * @param $folio
-     *
-     * @return void
-     */
     public function LogVersion3($statusService, ReceiptUnit $receiptunit, $parameter, $folio): void
     {
         if ($statusService->{'Code'} === '0') {

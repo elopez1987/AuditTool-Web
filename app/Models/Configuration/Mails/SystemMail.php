@@ -24,6 +24,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Configuration\Mails\SystemDetailMail> $maildetails
  * @property-read int|null $maildetails_count
  * @property-read SystemStatus $status
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemMail newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemMail newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemMail query()
@@ -39,15 +40,21 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemMail whereSchemaid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemMail whereStatusid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemMail whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class SystemMail extends Model
 {
     public $incrementing = false;
+
     public $keyType = 'string';
+
     protected static $logAttributes = ['*'];
+
     protected $table = 'systemmails';
+
     protected $primaryKey = 'mailid';
+
     protected $dateFormat = 'Y-m-d H:i:s';
 
     protected $fillable = [

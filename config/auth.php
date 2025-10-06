@@ -83,7 +83,7 @@ return [
 
         'auth0-provider' => [
             'driver' => 'auth0.provider',
-            'repository' => App\Auth\UserRepository::class
+            'repository' => App\Auth\UserRepository::class,
         ],
 
     ],

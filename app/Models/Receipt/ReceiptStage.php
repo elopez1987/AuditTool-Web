@@ -26,6 +26,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
  * @property-read StorageLocation $location
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptStage newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptStage newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptStage query()
@@ -42,6 +43,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptStage whereValue04($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptStage whereValue05($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptStage whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class ReceiptStage extends Model
@@ -82,6 +84,7 @@ class ReceiptStage extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return ReceiptStage::whereIn('receiptstage.warehouseid', $warehouses)
             ->whereIn('receiptstage.centerid', $centers);
     }

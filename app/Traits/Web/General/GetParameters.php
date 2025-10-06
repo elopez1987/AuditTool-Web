@@ -113,6 +113,7 @@ trait GetParameters
         $centerid = SecurityAccessWarehouse::where('username', Auth::user()->username)->value('centerid');
         $code = SystemDetailParameter::where('parameterid', '=', 'PARAM-CONCEPT')
             ->where('value01', '=', $centerid)->select('value02')->get()->toArray();
+
         return StorageReason::whereIn('id', $code)->select(['id', 'name'])->get();
     }
 
@@ -134,6 +135,7 @@ trait GetParameters
         $barcodetruck = $valor + 1;
         $barcode->folionumber = $barcodetruck;
         $barcode->update();
+
         return $barcode;
     }
 
@@ -147,6 +149,7 @@ trait GetParameters
         $receiptnumber = $valor + 1;
         $folio->folionumber = $receiptnumber;
         $folio->update();
+
         return $receiptnumber;
     }
 
@@ -183,6 +186,7 @@ trait GetParameters
         } else {
             $turnid = 3;
         }
+
         return $turnid;
     }
 
@@ -207,6 +211,7 @@ trait GetParameters
         } else {
             $workday = Carbon::now()->format('Y-m-d');
         }
+
         return [
             'turn' => $turn,
             'workday' => $workday,
@@ -225,6 +230,7 @@ trait GetParameters
         } else {
             $statusid = $statusIn;
         }
+
         return $statusid;
     }
 
@@ -242,6 +248,7 @@ trait GetParameters
                 ->whereIn('shipmentcarriers.centerid', $centers)
                 ->select(['name', 'id'])->get();
         }
+
         return $carriers;
     }
 

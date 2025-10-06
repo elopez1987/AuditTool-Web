@@ -15,6 +15,6 @@ return [
 
     'failed' => 'These credentials do not match our records.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
-    'user' => 'El usuario se encuentra deshabilitado o no existe en la base de datos'
+    'user' => 'El usuario se encuentra deshabilitado o no existe en la base de datos',
 
 ];

@@ -11,6 +11,7 @@ class MonitorVerificationProcessController extends BaseController
     public function statusshipmentchek()
     {
         $this->authorize('statusshipmentchek');
+
         return view('Shipments.MonitorShipmentCheck.index');
     }
 
@@ -23,10 +24,11 @@ class MonitorVerificationProcessController extends BaseController
             ->join('shipmentcontrol', 'orderdeliveries.id', '=', 'shipmentcontrol.orderid')
             ->join('users', 'shipmentcheck.createuser', 'users.username')
             ->whereNotIn('orderdeliveries.statusid', ['DH', 'CA'])
-            ->select(['orderdeliveries.shipmentid', 'ordercustomers.name as customername',DB::raw('UPPER(users.name) as username'),'orderdeliveries.id'])
+            ->select(['orderdeliveries.shipmentid', 'ordercustomers.name as customername', DB::raw('UPPER(users.name) as username'), 'orderdeliveries.id'])
             ->selectRaw(' sum(shipmentcontrol.quantityrequested) as totalpedido, sum(shipmentcontrol.quantitytrue) as verificado')
-            ->groupBy(['orderdeliveries.shipmentid', 'ordercustomers.name', 'users.name','orderdeliveries.id'])
+            ->groupBy(['orderdeliveries.shipmentid', 'ordercustomers.name', 'users.name', 'orderdeliveries.id'])
             ->get()->toArray();
+
         return response()->json($data);
     }
 }

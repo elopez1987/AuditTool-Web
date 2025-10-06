@@ -39,12 +39,6 @@ trait QueryStorageLiftTrucks
             ->select('storagelifttrucks.*');
     }
 
-    /**
-     * @param $centerid
-     * @param $id
-     *
-     * @return array
-     */
     public function getUserForAssign($centerid, $id): array
     {
         return DB::select("select id,username,name from users

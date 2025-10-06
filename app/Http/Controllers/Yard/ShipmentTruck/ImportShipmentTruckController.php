@@ -12,7 +12,8 @@ class ImportShipmentTruckController extends BaseController
     public function importshipmenttrucks(Request $request)
     {
         $archivo = $request->file('file');
-        Excel::import(new ImportShipmentTrucks(), $archivo, \Maatwebsite\Excel\Excel::XLSX);
+        Excel::import(new ImportShipmentTrucks, $archivo, \Maatwebsite\Excel\Excel::XLSX);
+
         return $this->successResponse('shipmenttrucks.index');
     }
 }

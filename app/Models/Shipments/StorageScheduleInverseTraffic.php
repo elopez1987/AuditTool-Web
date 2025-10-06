@@ -31,6 +31,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
  * @property-read \App\Models\Shipments\OrderDeliverie $order
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageScheduleInverseTraffic newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageScheduleInverseTraffic newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageScheduleInverseTraffic query()
@@ -55,6 +56,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageScheduleInverseTraffic whereUsername($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageScheduleInverseTraffic whereWarehouseid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageScheduleInverseTraffic whereZare($value)
+ *
  * @mixin \Eloquent
  */
 class StorageScheduleInverseTraffic extends Model

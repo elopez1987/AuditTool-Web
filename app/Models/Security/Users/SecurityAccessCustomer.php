@@ -20,6 +20,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
  * @property-read OrderCustomer $customer
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SecurityAccessCustomer newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SecurityAccessCustomer newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SecurityAccessCustomer query()
@@ -32,6 +33,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SecurityAccessCustomer whereCustomerid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SecurityAccessCustomer whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SecurityAccessCustomer whereUsername($value)
+ *
  * @mixin \Eloquent
  */
 class SecurityAccessCustomer extends Model

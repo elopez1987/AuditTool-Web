@@ -17,12 +17,14 @@ class CheckListLiftTruckController extends BaseController
     public function index()
     {
         $this->authorize('checklistlifttrucks.index');
+
         return view('Maintenance.CheckListLiftTrucks.index');
     }
 
     public function getCheckListTruck(Request $request)
     {
         $data = $this->getAllCheckListTruck($request);
+
         return $this->showDataToView(
             $data,
             'Maintenance.CheckListLiftTrucks.partials.buttons'
@@ -46,6 +48,7 @@ class CheckListLiftTruckController extends BaseController
         }
         $format = $typeIdToFormatMap[$typeId];
         $pdf = PDF::loadView($format, compact('truckChecklist', 'details'));
+
         return $pdf->stream('Check List de equipo -' . $truckChecklist->id . '.pdf');
     }
 
@@ -55,6 +58,7 @@ class CheckListLiftTruckController extends BaseController
         $errorsCheck = StorageCheckListActiveTruck::controlAccessUser()->where('checklisttruckid', $id)->get();
         $evidences = EvidencePhoto::where('model_type', '=', 'StorageLiftTruck')
             ->where('auxiliary01', '=', 'EVI')->where('model_id', $id)->get();
+
         return view('Maintenance.CheckListLiftTrucks.show', compact('checkList', 'errorsCheck', 'evidences'));
     }
 }

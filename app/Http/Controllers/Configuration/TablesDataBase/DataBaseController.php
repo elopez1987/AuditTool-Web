@@ -15,6 +15,7 @@ class DataBaseController extends BaseController
         $this->authorize('updatedatabase');
         $tables = SystemTable::select(['tableid', 'tableid'])->get();
         $columns = [];
+
         return view('Configuration.MtnDataBase.index', compact('tables', 'columns'));
     }
 
@@ -43,6 +44,7 @@ class DataBaseController extends BaseController
         if ($success) {
             return redirect::back()->with(session()->flash('success', 'Movimiento ejecutado con exito!!'));
         }
+
         return redirect::back()->with(session()->flash('error', 'Movimiento no ejecutado:!!' . $error));
     }
 }

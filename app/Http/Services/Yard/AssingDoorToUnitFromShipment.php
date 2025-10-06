@@ -28,6 +28,7 @@ class AssingDoorToUnitFromShipment
                         $unitUpdate = $this->updateUnit($receiptunit, $door);
                         $this->createAssingDoor($order, $door);
                         $this->updateLocation($receiptunit->centerid, $door, $unitUpdate);
+
                         return $unitUpdate;
                     }
                 }
@@ -35,13 +36,6 @@ class AssingDoorToUnitFromShipment
         }
     }
 
-    /**
-     * @param string $center
-     * @param $door
-     * @param $unitUpdate
-     *
-     * @return void
-     */
     public function updateLocation(string $center, $door, $unitUpdate): void
     {
         StorageLocation::where('centerid', '=', $center)
@@ -49,12 +43,6 @@ class AssingDoorToUnitFromShipment
             ->update(['statusid' => 'A', 'auxiliary01' => $unitUpdate->boxnumber]);
     }
 
-    /**
-     * @param OrderDeliverie $order
-     * @param $door
-     *
-     * @return void
-     */
     public function createAssingDoor(OrderDeliverie $order, $door): void
     {
         ShipmentStage::create([
@@ -64,9 +52,6 @@ class AssingDoorToUnitFromShipment
     }
 
     /**
-     * @param $receiptunit
-     * @param $door
-     *
      * @return ReceiptUnit|array<ReceiptUnit>|_IH_ReceiptUnit_C|null
      */
     public function updateUnit($receiptunit, $door)
@@ -76,15 +61,10 @@ class AssingDoorToUnitFromShipment
         $unitUpdate->locationid = $door->doorid;
         $unitUpdate->statusid = 'RS';
         $unitUpdate->save();
+
         return $unitUpdate;
     }
 
-    /**
-     * @param $shipmentid
-     * @param string $center
-     *
-     * @return Collection
-     */
     public function getDoorEnabled($shipmentid, string $center): Collection
     {
         return collect(DB::select('
@@ -98,8 +78,7 @@ class AssingDoorToUnitFromShipment
     }
 
     /**
-     * @param $shipmentid
-     *
+     * @param  $shipmentid
      * @return OrderDeliverie
      */
     public function getOrderDeliverie($receiptunit)

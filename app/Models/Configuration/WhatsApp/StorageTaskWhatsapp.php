@@ -33,6 +33,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read SystemCenterDistribution $center
  * @property-read SystemStatus|null $status
  * @property-read SystemWarehouse|null $warehouse
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTaskWhatsapp newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTaskWhatsapp newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTaskWhatsapp query()
@@ -51,6 +52,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTaskWhatsapp whereValue05($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTaskWhatsapp whereWarehouseid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTaskWhatsapp whereWhatsappid($value)
+ *
  * @mixin \Eloquent
  */
 class StorageTaskWhatsapp extends Model
@@ -58,6 +60,7 @@ class StorageTaskWhatsapp extends Model
     use LogsActivity;
 
     public $timestamps = false;
+
     protected $table = 'storagetaskwhatsapp';
 
     protected $fillable = [
@@ -101,6 +104,7 @@ class StorageTaskWhatsapp extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return StorageTaskWhatsapp::whereIn('storagetaskwhatsapp.warehouseid', $warehouses)
             ->whereIn('storagetaskwhatsapp.centerid', $centers);
     }

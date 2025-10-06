@@ -24,6 +24,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $statusid
  * @property-read SystemCenterDistribution|null $center
  * @property-read SystemStatus|null $status
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemPrinter newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemPrinter newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemPrinter query()
@@ -41,13 +42,17 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemPrinter whereSchemaid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemPrinter whereStatusid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemPrinter whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class SystemPrinter extends Model
 {
     public $timestamps = false;
+
     protected $table = 'systemprinters';
+
     protected $keyType = 'integer';
+
     protected $primaryKey = 'printerid';
 
     protected $dateFormat = 'Y-m-d H:i:s';
@@ -90,6 +95,7 @@ class SystemPrinter extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return SystemPrinter::whereIn('systemprinters.centerid', $centers);
     }
 }

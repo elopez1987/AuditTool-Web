@@ -19,9 +19,9 @@ use Illuminate\Support\Facades\Auth;
 
 class AutorizeTransportController extends Controller
 {
+    use GetParameters;
     use RegisterEdiShipment;
     use Responser;
-    use GetParameters;
 
     public function autorizetransport()
     {
@@ -29,6 +29,7 @@ class AutorizeTransportController extends Controller
         $centers = $this->getCenterForSelect();
         $warehouses = $this->getWarehouseForSelect();
         $rason = $this->getRasonForCodes([1, 3]);
+
         return view('Yards.AutorizeTransport.index', compact('centers', 'warehouses', 'rason'));
     }
 
@@ -46,6 +47,7 @@ class AutorizeTransportController extends Controller
         $this->getFolioClient($receiptunitNew->centerid, $receiptunitNew->id, 'SHT');
         ReceiptUnitTicket::closeTicket($receiptunit->id, $request);
         StorageUnitTrace::createTraceUnit($receiptunitNew, '1');
+
         return response()->json($receiptunitNew);
     }
 
@@ -56,6 +58,7 @@ class AutorizeTransportController extends Controller
         $receiptunit->statusid = 'TR';
         $receiptunit->save();
         StorageUnitTrace::createTraceUnit($receiptunit, $razonstatusid);
+
         return $receiptunit;
     }
 
@@ -113,6 +116,7 @@ class AutorizeTransportController extends Controller
             'comment' => 'Folio generado automaticamente de' . ' ' . $receiptunit->id,
 
         ]);
+
         return $receiptunitNew;
     }
 }

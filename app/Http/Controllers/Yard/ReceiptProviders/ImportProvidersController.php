@@ -12,7 +12,8 @@ class ImportProvidersController extends BaseController
     public function index(Request $request)
     {
         $archivo = $request->file('file');
-        Excel::import(new ImportProviders(), $archivo);
+        Excel::import(new ImportProviders, $archivo);
+
         return $this->successResponse('receiptproviders.index');
     }
 }

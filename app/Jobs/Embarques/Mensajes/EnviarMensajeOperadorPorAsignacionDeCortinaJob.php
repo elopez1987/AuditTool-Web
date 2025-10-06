@@ -22,6 +22,7 @@ class EnviarMensajeOperadorPorAsignacionDeCortinaJob implements ShouldQueue
     use SerializesModels;
 
     public $orderDelivery;
+
     private AssingDoorToUnitFromShipment $serviceAssingDoorToUnit;
 
     public function __construct($orderDelivery, AssingDoorToUnitFromShipment $assingDoorToUnitFromShipment)
@@ -52,7 +53,7 @@ class EnviarMensajeOperadorPorAsignacionDeCortinaJob implements ShouldQueue
     public function sendMessage($location, $receiptunit)
     {
         $url = 'https://api.1msg.io/HEI523482986/sendTemplate';
-        $client = new Client();
+        $client = new Client;
         if (! empty($receiptunit->phone)) {
             try {
                 $data = $this->getBodyDataMessageInProccess($location, $receiptunit->phone);

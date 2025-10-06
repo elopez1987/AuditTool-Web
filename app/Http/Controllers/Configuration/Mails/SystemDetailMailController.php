@@ -16,6 +16,7 @@ class SystemDetailMailController extends BaseController
         $centers = $this->getCenterForSelect();
         $warehouses = $this->getWarehouseForSelect();
         $details = SystemDetailMail::controlAccessUser()->where('mailid', $systemmail->mailid)->get();
+
         return view(
             'Configuration.SystemMails.createdetails',
             compact('systemmail', 'centers', 'warehouses', 'details')
@@ -27,12 +28,14 @@ class SystemDetailMailController extends BaseController
         $systemmail = SystemMail::where('mailid', $id)->first();
         $detailMail = new SystemDetailMail($request->all() + ['mailid' => $systemmail->mailid]);
         $detailMail->save();
+
         return $this->redirectBackSuccess();
     }
 
     public function destroy($id): RedirectResponse
     {
         SystemDetailMail::destroy($id);
+
         return $this->redirectBackInfo();
     }
 }

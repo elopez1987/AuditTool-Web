@@ -17,6 +17,7 @@ class StorageZoneController extends BaseController
     {
         $this->authorize('storagezones.index');
         $warehouses = $this->getWarehouseForSelect();
+
         return view('Yards.StorageZones.index', compact('warehouses'));
     }
 
@@ -27,6 +28,7 @@ class StorageZoneController extends BaseController
             ->Name($request->get('name'))
             ->Warehouse($request->get('warehouseid'))
             ->get();
+
         return DataTables::of($data)
             ->addColumn('btn', 'Yards.StorageZones.partials.buttons')
             ->addColumn('warehousename', function ($row) {
@@ -39,6 +41,7 @@ class StorageZoneController extends BaseController
         $this->authorize('storagezones.create');
         $centers = $this->getCenterForSelect();
         $warehouses = $this->getWarehouseForSelect();
+
         return view('Yards.StorageZones.create', compact('centers', 'warehouses'));
     }
 
@@ -46,6 +49,7 @@ class StorageZoneController extends BaseController
     {
         $zone = new StorageZone($request->all());
         $zone->save();
+
         return $this->successResponse('storagezones.index');
     }
 
@@ -54,12 +58,14 @@ class StorageZoneController extends BaseController
         $this->authorize('storagezones.edit');
         $status = $this->getStatusSTS();
         $warehouses = $this->getWarehouseForSelect();
+
         return view('Yards.StorageZones.edit', compact('status', 'storagezone', 'warehouses'));
     }
 
     public function update(StorageZone $storagezone, Request $request): RedirectResponse
     {
         $storagezone->update($request->all());
+
         return $this->infoResponse('storagezones.index');
     }
 
@@ -71,6 +77,7 @@ class StorageZoneController extends BaseController
         $zone->save();
         StorageLocation::controlAccessUser()->where('zoneid', $zone->id)->delete();
         $zone->delete();
+
         return $this->responseSuccessAjax('', Carbon::now());
     }
 }

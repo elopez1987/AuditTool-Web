@@ -22,6 +22,7 @@ class TraceReceiptUnitController extends BaseController
     public function index()
     {
         $this->authorize('tracereceiptunit.index');
+
         return view('Yards.KardexReceiptUnit.KardexForFolio.index');
     }
 
@@ -36,6 +37,7 @@ class TraceReceiptUnitController extends BaseController
             ->Code($request->get('barcode'))
             ->FilterForRangeDate($request->get('startDate'), $request->get('endDate'))
             ->get();
+
         return $this->showDataToView($data, 'Yards.KardexReceiptUnit.KardexForFolio.buttons');
     }
 
@@ -55,6 +57,7 @@ class TraceReceiptUnitController extends BaseController
         $seals = ReceiptUnitSeal::controlAccessUser()->where('folionumber', '=', $id)->get();
         $pesos = ReceiptUnitTicket::where('folionumber', '=', $id)->get();
         $lotos = StorageTraceLoto::controlAccessUser()->where('folionumber', '=', $id)->get();
+
         return view(
             'Yards.KardexReceiptUnit.KardexForFolio.show',
             compact(
@@ -99,6 +102,7 @@ class TraceReceiptUnitController extends BaseController
             'evidencesTiros',
             'comments'
         ));
+
         return $pdf->download('Kardex de unidad -' . $id . '.pdf');
     }
 
@@ -145,6 +149,7 @@ class TraceReceiptUnitController extends BaseController
             ->whereIn('s.type', ['OUT'])->get();
         $fortmat = 'Yards.ReceiptUnits.InvoiceFormats.InvoiceBridgestonePT';
         $pdf = PDF::loadView($fortmat, compact('receiptunit', 'verified', 'tracto', 'verifiedOut'));
+
         return $pdf->download('Folio_De_Entrada-' . $receiptunit->id . '.pdf');
     }
 
@@ -168,19 +173,20 @@ class TraceReceiptUnitController extends BaseController
                 $join->on('s.checklistid', '=', 'ch.checklistid')->on('s.checklitsdetailid', '=', 'ch.id');
             })
             ->where('s.receiptunitid', $receiptunit->id)
-            ->whereIn('s.type', ['QI','AS'])
+            ->whereIn('s.type', ['QI', 'AS'])
             ->get();
         $photos = EvidencePhoto::where('model_id', $id)
             ->where('model_type', 'ReceiptUnit')->where('auxiliary01', 'QI')->get();
         $fortmat = 'Yards.KardexReceiptUnit.Formats.CalidaBridgestone';
         $pdf = PDF::loadView($fortmat, compact('receiptunit', 'comments', 'verified', 'photos'));
+
         return $pdf->download('Folio_De_Calidad-' . $receiptunit->id . '.pdf');
     }
 
     public function downloadfiles($id)
     {
         $receiptunit = ReceiptUnit::controlAccessUser()->findOrFail($id);
-        $zip = new \ZipArchive();
+        $zip = new \ZipArchive;
         $zip->open($receiptunit->id . '.zip', \ZipArchive::CREATE);
         $files = EvidencePhoto::where('model_type', '=', 'ReceiptUnit')
             ->where('model_id', $receiptunit->id)->get();
@@ -204,6 +210,7 @@ class TraceReceiptUnitController extends BaseController
         $trace = StorageUnitTrace::controlAccessUser()->where('receiptunitid', $id)->first();
         $fortmat = 'Yards.ReceiptUnits.InvoiceFormats.Bridgestone.ticket';
         $pdf = PDF::loadView($fortmat, compact('receiptunit', 'trace'));
+
         return $pdf->download('Ticket de peso -' . $receiptunit->id . '.pdf');
     }
 }

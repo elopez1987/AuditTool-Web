@@ -19,7 +19,8 @@ class ImportBillingController extends BaseController
         if ($validator->fails()) {
             return $this->errorResponse('El formato de archivo no es correcto.');
         }
-        Excel::import(new ImportShipmentBilling(), $request->file('file'), '', \Maatwebsite\Excel\Excel::XLSX);
+        Excel::import(new ImportShipmentBilling, $request->file('file'), '', \Maatwebsite\Excel\Excel::XLSX);
+
         return $this->redirectBackSuccessMessage('Registros procesados con exito.');
     }
 }

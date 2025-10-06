@@ -12,11 +12,14 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 
-class ExportReportGeneralMtn implements FromCollection, WithHeadings, WithMapping, WithEvents, ShouldAutoSize
+class ExportReportGeneralMtn implements FromCollection, ShouldAutoSize, WithEvents, WithHeadings, WithMapping
 {
     use Exportable;
+
     private $workdayin;
+
     private $workdayout;
+
     private $centerid;
 
     public function __construct($workdayin, $workdayout, $centerid)
@@ -25,6 +28,7 @@ class ExportReportGeneralMtn implements FromCollection, WithHeadings, WithMappin
         $this->workdayout = $workdayout;
         $this->centerid = $centerid;
     }
+
     public function collection()
     {
         return CheckListLiftTrucks::select([

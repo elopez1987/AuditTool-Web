@@ -37,6 +37,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read SystemStatus $status
  * @property-read SystemStatus|null $type
  * @property-read User|null $user
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLiftTruck newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLiftTruck newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLiftTruck numberTruck($numbertruck)
@@ -66,6 +67,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLiftTruck whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLiftTruck withTrashed(bool $withTrashed = true)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLiftTruck withoutTrashed()
+ *
  * @mixin \Eloquent
  */
 class StorageLiftTruck extends Model
@@ -73,7 +75,9 @@ class StorageLiftTruck extends Model
     use SoftDeletes;
 
     protected $table = 'storagelifttrucks';
+
     protected $primaryKey = 'serialnumber';
+
     protected $keyType = 'string';
 
     protected $fillable = [
@@ -94,7 +98,7 @@ class StorageLiftTruck extends Model
     ];
 
     protected $hidden = [
-//        'created_at',
+        //        'created_at',
         'updated_at',
         'deleted_at',
         'schemaid',
@@ -118,6 +122,7 @@ class StorageLiftTruck extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return StorageLiftTruck::whereIn('storagelifttrucks.centerid', $centers);
     }
 

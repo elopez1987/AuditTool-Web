@@ -12,6 +12,7 @@ class StorageCategoryIncidencesController extends BaseController
     public function index()
     {
         $this->authorize('storagecategoryincidences.index');
+
         return view('Shipments.CategoryIncidences.index');
     }
 
@@ -22,6 +23,7 @@ class StorageCategoryIncidencesController extends BaseController
             ->leftJoin('systemstatus as se', 'storagecategoryincidences.statusid', '=', 'se.statusid')
             ->leftJoin('systemcenterdistributions as cd', 'storagecategoryincidences.centerid', '=', 'cd.centerid')
             ->select(['se.name as status', 'cd.description as center', 'storagecategoryincidences.*'])->get();
+
         return $this->showDataToView($data, 'Shipments.CategoryIncidences.partials.buttons');
     }
 
@@ -29,6 +31,7 @@ class StorageCategoryIncidencesController extends BaseController
     {
         $this->authorize('storagecategoryincidences.create');
         $centers = $this->getCenterForSelect();
+
         return view('Shipments.CategoryIncidences.create', compact('centers'));
     }
 
@@ -36,6 +39,7 @@ class StorageCategoryIncidencesController extends BaseController
     {
         $category = new StorageCategoryIncidence($request->all());
         $category->save();
+
         return redirect('storagecategoryincidences/' . $category->categoryincid . '/adddetail');
     }
 
@@ -43,6 +47,7 @@ class StorageCategoryIncidencesController extends BaseController
     {
         $this->authorize('storagecategoryincidences.edit');
         $status = $this->getStatusForSchema('STS');
+
         return view(
             'Shipments.CategoryIncidences.edit',
             compact('storagecategoryincidence', 'status')
@@ -52,6 +57,7 @@ class StorageCategoryIncidencesController extends BaseController
     public function update(Request $request, StorageCategoryIncidence $storagecategoryincidence)
     {
         $storagecategoryincidence->update($request->except('centerid', 'warehouseid'));
+
         return $this->redirectBackSuccess();
     }
 }

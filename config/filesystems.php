@@ -66,7 +66,7 @@ return [
         'Logs' => [
             'driver' => 'local',
             'root' => storage_path('logs'),
-            'url' => env('APP_URL') . '/storage'
+            'url' => env('APP_URL') . '/storage',
         ],
 
         's3' => [

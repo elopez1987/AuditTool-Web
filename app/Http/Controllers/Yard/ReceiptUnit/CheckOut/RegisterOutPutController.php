@@ -18,13 +18,14 @@ use Illuminate\Support\Facades\Auth;
 
 class RegisterOutPutController extends BaseController
 {
-    use RegisterEdiShipment;
     use QueryReceiptTruck;
+    use RegisterEdiShipment;
 
     //    Módulo de salida de cajas directa por ajuste de inventarios
     public function index()
     {
         $this->authorize('adjustmentbox');
+
         return view('Yards.AdjustmentBox.index');
     }
 
@@ -52,10 +53,12 @@ class RegisterOutPutController extends BaseController
             StorageUnitTrace::createTraceUnit($receiptunit, '22');
             StorageComment::createCommentary('ReceiptUnits', $receiptunit->id, $request);
             DB::commit();
+
             return $this->redirectBackSuccessMessage('Ajuste realizado correctamente');
         } catch (Exception $e) {
             $error = $e->getMessage();
             DB::rollback();
+
             return $this->errorResponse($error);
         }
     }

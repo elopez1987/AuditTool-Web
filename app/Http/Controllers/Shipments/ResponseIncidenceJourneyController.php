@@ -34,6 +34,7 @@ class ResponseIncidenceJourneyController extends BaseController
             ->where('model_type', '=', 'StorageIncidenceJourney')
             ->whereIn('auxiliary01', ['ENT', 'INC'])->get();
         $comments = StorageComment::getCommentForModel($shipment->folioid, 'StorageIncidenceJourney');
+
         return view(
             'Shipments.StorageIncidenceJourneys.response',
             compact(
@@ -69,6 +70,7 @@ class ResponseIncidenceJourneyController extends BaseController
         if ($success) {
             return $this->successResponse('storageincidencesjourneys.index');
         }
+
         return $this->errorResponse('Error al procesa la solicitud : ' . $error);
     }
 
@@ -104,6 +106,7 @@ class ResponseIncidenceJourneyController extends BaseController
                 'auxiliary03' => $order->warehouseid,
             ]);
         }
+
         return $this->redirectBackSuccessMessage('Evidencias vinculas con exito.');
     }
 }

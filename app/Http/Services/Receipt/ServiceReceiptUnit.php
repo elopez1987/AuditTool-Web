@@ -27,8 +27,8 @@ use Illuminate\Http\Request;
 class ServiceReceiptUnit
 {
     use GetParameters;
-    use Responser;
     use InsertSchedulleInverse;
+    use Responser;
 
     public function createNewReceiptUnit(Request $request, $truck)
     {
@@ -74,7 +74,7 @@ class ServiceReceiptUnit
 
         ]);
 
-        if (!empty($parameter) && in_array('SWH-41', (array)$parameter)) {
+        if (! empty($parameter) && in_array('SWH-41', (array) $parameter)) {
             ReceiptUnitData::create([
                 'centerid' => $receiptunit->centerid,
                 'warehouseid' => $receiptunit->warehouseid,
@@ -82,7 +82,7 @@ class ServiceReceiptUnit
             ]);
         }
 
-        if (!empty($parameterApp) && in_array('APP-15', (array)$parameterApp)) {
+        if (! empty($parameterApp) && in_array('APP-15', (array) $parameterApp)) {
             ReceiptUnitTicket::createNewTicketUnit($request, $receiptunit);
         }
 
@@ -91,16 +91,16 @@ class ServiceReceiptUnit
         StorageUnitTrace::createTraceUnit($receiptunit, $request['razonstatusid']);
         $this->createFolioCliente($request['razonstatusid'], $receiptunit);
 
-        if (!empty($request['comment'])) {
+        if (! empty($request['comment'])) {
             StorageComment::createCommentary('ReceiptUnits', $receiptunit->id, $request);
         }
 
         if ($request['razonstatusid'] === '1') {
             $orderDelivery = OrderDeliverie::controlAccessUser()->where('shipmentid', $request['shipmentid'])
                 ->whereNotIn('statusid', ['DH', 'CA'])->first();
-            if (!empty($orderDelivery)) {
+            if (! empty($orderDelivery)) {
                 $transport = StorageShipmentTransport::controlAccessUser()->where('orderid', $orderDelivery->id)->first();
-                if (!empty($transport)) {
+                if (! empty($transport)) {
                     $transport->auxiliary01 = '1';
                     $transport->save();
                 }
@@ -112,31 +112,32 @@ class ServiceReceiptUnit
         if ($request['razonstatusid'] === '2') {
 
             $receipt = ReceiptAsn::searchReceiptInCheckIn($request['shipmentid']);
-            if (!empty($receipt)) {
+            if (! empty($receipt)) {
                 self::updateTransportInReceiptAsn($receiptunit, $receipt);
             }
 
-            if (!empty($parameter) && in_array('SWH-07', (array)$parameter)) {
+            if (! empty($parameter) && in_array('SWH-07', (array) $parameter)) {
                 self::createNewReceiptAsnInCheckIn($request, $receiptunit);
             }
 
-            if (!empty($parameter) && in_array('SWH-29', (array)$parameter)) {
+            if (! empty($parameter) && in_array('SWH-29', (array) $parameter)) {
                 StorageTaskWhatsapp::createNewTask($receiptunit, $receiptunit->id, 'WTH-INGREREC', $request['providerid']);
             }
-            if (!empty($parameter) && in_array('SWH-30', (array)$parameter)) {
+            if (! empty($parameter) && in_array('SWH-30', (array) $parameter)) {
                 StorageTaskMail::createNewTaskMailReceipt($receiptunit);
             }
         }
 
         if ($request['razonstatusid'] === '17') {
             $parameterCenter = $this->getParametersOfCenter($receiptunit->centerid);
-            if (!empty($parameterCenter) && in_array('SDC-10', (array)$parameterCenter)) {
+            if (! empty($parameterCenter) && in_array('SDC-10', (array) $parameterCenter)) {
                 $this->insertSchedulleInverse($request, $receiptunit);
             }
         }
 
         self::createNewOperatorForCarrier($receiptunit, $request, $parameter);
         self::createLabelFromRegisterBox($receiptunit, $parameter);
+
         return $receiptunit;
     }
 
@@ -149,6 +150,7 @@ class ServiceReceiptUnit
         } else {
             $unitstatus = '1';
         }
+
         return $unitstatus;
     }
 
@@ -199,41 +201,40 @@ class ServiceReceiptUnit
         ]);
     }
 
-
     public function createNewOperatorForCarrier($receiptunit, $request, $parameter): void
     {
-        if (in_array('SWH-03', (array)$parameter)) {
+        if (in_array('SWH-03', (array) $parameter)) {
             StorageOperator::updateOrCreate(
                 [
                     'barcode' => $request['barcodeoperator'],
                 ],
                 [
-                'centerid' => $receiptunit->centerid,
-                'name' => $receiptunit->operatorname,
-                'drivernumber' => $receiptunit->drivernumber,
-                'phone' => $receiptunit->phone,
-                'carrierid' => $receiptunit->carrierid,
-            ],
+                    'centerid' => $receiptunit->centerid,
+                    'name' => $receiptunit->operatorname,
+                    'drivernumber' => $receiptunit->drivernumber,
+                    'phone' => $receiptunit->phone,
+                    'carrierid' => $receiptunit->carrierid,
+                ],
             );
         }
     }
 
     public static function createLabelFromRegisterBox($receiptunit, $parameter): void
     {
-        if (in_array('SWH-09', (array)$parameter)) {
+        if (in_array('SWH-09', (array) $parameter)) {
             StorageLabelTruck::updateOrCreate(
                 [
                     'barcode' => $barcode,
                 ],
                 [
-                'centerid' => $receiptunit->centerid,
-                'warehouseid' => $receiptunit->warehouseid,
-                'boxnumber' => $receiptunit->boxnumber,
-                'econumber' => $receiptunit->econumber,
-                'carrierid' => $receiptunit->carrierid,
-                'truckid' => $receiptunit->truckid,
-                'typeid' => 'BX',
-            ]
+                    'centerid' => $receiptunit->centerid,
+                    'warehouseid' => $receiptunit->warehouseid,
+                    'boxnumber' => $receiptunit->boxnumber,
+                    'econumber' => $receiptunit->econumber,
+                    'carrierid' => $receiptunit->carrierid,
+                    'truckid' => $receiptunit->truckid,
+                    'typeid' => 'BX',
+                ]
             );
         }
     }

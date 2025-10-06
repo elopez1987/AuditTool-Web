@@ -35,6 +35,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read SystemCenterDistribution $center
  * @property-read InventoryPartnumber|null $partnumber
  * @property-read SystemWarehouse $warehouse
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptStock newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptStock newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptStock query()
@@ -53,6 +54,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptStock whereStockcategoryid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptStock whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptStock whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class ReceiptStock extends Model
@@ -77,6 +79,7 @@ class ReceiptStock extends Model
         'productiondate',
         'quantitytrue',
     ];
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()->logFillable();
@@ -86,6 +89,7 @@ class ReceiptStock extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return ReceiptStock::whereIn('receiptstock.warehouseid', $warehouses)
             ->whereIn('receiptstock.centerid', $centers);
     }

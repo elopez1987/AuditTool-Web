@@ -27,6 +27,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
  * @property-read SystemStatus $status
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitStatus name($name)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitStatus newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitStatus newQuery()
@@ -49,6 +50,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitStatus whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitStatus withTrashed(bool $withTrashed = true)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitStatus withoutTrashed()
+ *
  * @mixin \Eloquent
  */
 class StorageUnitStatus extends Model
@@ -57,6 +59,7 @@ class StorageUnitStatus extends Model
     use SoftDeletes;
 
     protected $table = 'storageunitstatus';
+
     protected $dateFormat = 'Y-m-d H:i:s';
 
     protected $fillable = [

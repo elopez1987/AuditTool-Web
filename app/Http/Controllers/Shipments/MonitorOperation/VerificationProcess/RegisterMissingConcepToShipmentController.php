@@ -13,6 +13,7 @@ class RegisterMissingConcepToShipmentController extends BaseController
         $control = ShipmentControl::where('recordid', $id)->first();
         $control->missingconceptid = $request['missingconceptid'];
         $control->save();
+
         return $this->redirectBackSuccess();
     }
 }

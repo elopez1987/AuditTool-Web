@@ -16,6 +16,7 @@ class StorageAssignLiftTruckController extends BaseController
     {
         $this->authorize('storageassignlifttrucks.index');
         $types = $this->getStatusForSchema('TPM');
+
         return view(
             'Maintenance.StorageAssignLiftTrucks.index',
             compact('types')
@@ -29,6 +30,7 @@ class StorageAssignLiftTruckController extends BaseController
         $type = SystemStatus::findOrFail($id);
         $users = $this->getUserForAssign($centerid, $id);
         $userAssigns = $this->getStorageAssignLiftTrucks($id);
+
         return view(
             'Maintenance.StorageAssignLiftTrucks.edit',
             compact('type', 'users', 'userAssigns')
@@ -48,12 +50,14 @@ class StorageAssignLiftTruckController extends BaseController
                 ]);
             }
         }
+
         return $this->redirectBackSuccessMessage('Usuario agregados con exito.');
     }
 
     public function deleteUserAssingTruck(Request $request)
     {
         StorageAssignLiftTrucks::destroy($request['id']);
+
         return response()->json();
     }
 }

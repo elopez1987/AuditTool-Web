@@ -34,6 +34,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read SystemCenterDistribution $center
  * @property-read SystemStatus $status
  * @property-read User $user
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTours name($name)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTours newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTours newQuery()
@@ -54,6 +55,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTours whereValue01($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTours whereValue02($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTours whereValue03($value)
+ *
  * @mixin \Eloquent
  */
 class StorageSafetyTours extends Model
@@ -61,6 +63,7 @@ class StorageSafetyTours extends Model
     use LogsActivity;
 
     protected $table = 'storagesafetytours';
+
     protected $fillable = [
         'centerid',
         'touruuid',
@@ -87,6 +90,7 @@ class StorageSafetyTours extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return StorageSafetyTours::whereIn('storagesafetytours.centerid', $centers);
     }
 

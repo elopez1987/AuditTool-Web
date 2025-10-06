@@ -14,8 +14,6 @@ class PasswordSecurityMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * * @param  \Closure  $next
      *
      * @return mixed
      */
@@ -74,11 +72,6 @@ class PasswordSecurityMiddleware
 
     /**
      * Verificar si el usuario está limitado por rate limiting
-     *
-     * @param Request $request
-     * @param $user
-     *
-     * @return bool
      */
     private function isRateLimited(Request $request, $user): bool
     {
@@ -93,6 +86,7 @@ class PasswordSecurityMiddleware
                 'ip' => $request->ip(),
                 'attempts' => $attempts,
             ]);
+
             return true;
         }
 
@@ -106,10 +100,6 @@ class PasswordSecurityMiddleware
 
     /**
      * Registrar intento fallido
-     *
-     * @param $user
-     * @param Request $request
-     * @param string $reason
      */
     private function logFailedAttempt($user, Request $request, string $reason): void
     {
@@ -124,12 +114,11 @@ class PasswordSecurityMiddleware
 
     /**
      * Verificar si está en horario permitido para cambios
-     *
-     * @return bool
      */
     private function isAllowedTime(): bool
     {
         $currentHour = now()->hour;
+
         return $currentHour >= 6 && $currentHour < 22; // 6 AM a 10 PM
     }
 }

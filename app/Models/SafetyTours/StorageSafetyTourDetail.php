@@ -31,6 +31,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \App\Models\SafetyTours\StorageTags|null $tag
  * @property-read \App\Models\SafetyTours\StorageSafetyTours $tour
  * @property-read User|null $user
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourDetail newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourDetail newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourDetail query()
@@ -50,6 +51,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourDetail whereTourid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourDetail whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourDetail whereUserid($value)
+ *
  * @mixin \Eloquent
  */
 class StorageSafetyTourDetail extends Model
@@ -80,6 +82,7 @@ class StorageSafetyTourDetail extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return StorageSafetyTourDetail::whereIn('storagesafetytourdetail.centerid', $centers);
     }
 

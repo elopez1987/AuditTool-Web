@@ -25,12 +25,14 @@ class StorageIncidenceJourneysController extends BaseController
     public function index()
     {
         $this->authorize('storageincidencesjourneys.index');
+
         return view('Shipments.StorageIncidenceJourneys.index');
     }
 
     public function getDataIncidenceShipments()
     {
         $data = $this->getAllIncidenceJourneys();
+
         return DataTables::collection($data)
             ->addColumn('btn', 'Shipments.StorageIncidenceJourneys.partials.buttons')
             ->addColumn('time', 'Shipments.StorageIncidenceJourneys.partials.duration')
@@ -42,6 +44,7 @@ class StorageIncidenceJourneysController extends BaseController
         $this->authorize('storageincidencesjourneys.create');
         $shipments = $this->getShipmentsForCreateNewIncidence();
         $razoncodes = $this->getCategoriesIncidencesDetail();
+
         return view(
             'Shipments.StorageIncidenceJourneys.create',
             compact('shipments', 'razoncodes')
@@ -71,9 +74,11 @@ class StorageIncidenceJourneysController extends BaseController
             $incidence = $serviceIncidenceJourney->addNewIncidence($shipment);
             $serviceIncidenceJourney->addDetailToIncidence($request, $incidence);
             DB::commit();
+
             return response()->json(['message' => 'Incidencia registrado con exito', 200]);
         } catch (Exception) {
             DB::rollback();
+
             return response()->json(['message' => 'Error al registrar la incidencia,favor de verificar los datos', 422]);
         }
     }
@@ -88,6 +93,7 @@ class StorageIncidenceJourneysController extends BaseController
             ->where('model_type', '=', 'StorageIncidenceJourney')
             ->whereIn('auxiliary01', ['ENT', 'INC'])->get();
         $comments = StorageComment::getCommentForModel($shipment->folioid, 'StorageIncidenceJourney');
+
         return view(
             'Shipments.StorageIncidenceJourneys.show',
             compact('shipment', 'details', 'evidences', 'entregas', 'comments')
@@ -102,6 +108,7 @@ class StorageIncidenceJourneysController extends BaseController
             ->select(['description', 'categoryincdetailid'])->get();
         $shipment = StorageIncidenceJourney::searchIncidence($folioid);
         $details = StorageIncidenceJourneyDetails::getDetailOfIncidenceForOrder($shipment->orderid);
+
         return view(
             'Shipments.StorageIncidenceJourneys.edit',
             compact('shipment', 'details', 'razoncodes')
@@ -112,6 +119,7 @@ class StorageIncidenceJourneysController extends BaseController
     {
         $folio = StorageIncidenceJourneyDetails::findOrFail($folioid);
         $folio->delete();
+
         return $this->redirectBackSuccessMessage('Registro eliminado con exito');
     }
 }

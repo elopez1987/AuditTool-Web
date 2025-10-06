@@ -11,6 +11,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * @method static where(string $string, mixed $id)
+ *
  * @property int $id
  * @property string $modeltype
  * @property int $modelid
@@ -25,6 +26,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
  * @property-read User|null $user
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageComment newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageComment newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageComment query()
@@ -39,6 +41,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageComment whereModelid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageComment whereModeltype($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageComment whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class StorageComment extends Model
@@ -46,6 +49,7 @@ class StorageComment extends Model
     use LogsActivity;
 
     protected $table = 'storagecomments';
+
     protected $fillable = [
         'modeltype', 'modelid', 'comment', 'createuser',
         'auxiliary01', 'auxiliary02', 'auxiliary03', 'auxiliary04',

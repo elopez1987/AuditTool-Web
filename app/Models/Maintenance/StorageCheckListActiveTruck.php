@@ -31,6 +31,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read int|null $activities_count
  * @property-read \App\Models\Maintenance\StorageCheckListDetailLiftTruck|null $checklistdetail
  * @property-read User|null $user
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCheckListActiveTruck newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCheckListActiveTruck newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCheckListActiveTruck query()
@@ -50,6 +51,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCheckListActiveTruck whereValue03($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCheckListActiveTruck whereValue04($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCheckListActiveTruck whereValue05($value)
+ *
  * @mixin \Eloquent
  */
 class StorageCheckListActiveTruck extends Model
@@ -57,7 +59,9 @@ class StorageCheckListActiveTruck extends Model
     use LogsActivity;
 
     public $timestamps = false;
+
     protected $table = 'storagechecklistactivetruck';
+
     protected $primaryKey = 'id';
 
     protected $fillable = [
@@ -73,6 +77,7 @@ class StorageCheckListActiveTruck extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return StorageCheckListActiveTruck::whereIn('storagechecklistactivetruck.centerid', $centers);
     }
 

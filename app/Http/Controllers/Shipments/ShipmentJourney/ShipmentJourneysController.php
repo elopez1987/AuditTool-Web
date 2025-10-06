@@ -15,6 +15,7 @@ class ShipmentJourneysController extends BaseController
     public function index()
     {
         $carriers = $this->getCarriersForSelect();
+
         return view(
             'Shipments.ShipmentJourneys.index',
             compact('carriers')
@@ -53,6 +54,7 @@ class ShipmentJourneysController extends BaseController
             ->latest('orderdeliveries.shipmentid')
             ->take(100)
             ->get();
+
         return DataTables::of($data)
             ->addColumn('btn', 'Shipments.ShipmentJourneys.partials.buttons')
             ->addColumn('statusunit', 'Shipments.ShipmentJourneys.partials.statusunit')
@@ -64,8 +66,9 @@ class ShipmentJourneysController extends BaseController
         $status = SystemStatus::whereSchemaid('SHJ')->select('name', 'statusid')->get();
         $razonoutput = StorageCategoryIncidenceDetail::controlAccessUser()->where('statusid', 'E')
             ->where('auxiliary01', 'SAL')
-            ->select(['categoryincdetailid','description'])
+            ->select(['categoryincdetailid', 'description'])
             ->get();
+
         return view(
             'Shipments.ShipmentJourneys.edit',
             compact('shipmentjourney', 'status', 'razonoutput')
@@ -75,6 +78,7 @@ class ShipmentJourneysController extends BaseController
     public function update(Request $request, ShipmentJourney $shipmentjourney)
     {
         $shipmentjourney->update($request->all());
+
         return $this->successResponse('shipmentjourney.index');
     }
 }

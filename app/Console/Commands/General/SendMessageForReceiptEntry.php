@@ -41,7 +41,7 @@ class SendMessageForReceiptEntry extends Command
 
     public function handle()
     {
-        $client = new Client();
+        $client = new Client;
         $url = 'https://api.1msg.io/HEI523482986/sendTemplate';
         $warehouses = SystemWarehouse::where('statusid', '=', 'E')->get();
         if (! empty($warehouses)) {
@@ -94,7 +94,8 @@ class SendMessageForReceiptEntry extends Command
         $receiptUnit = ReceiptUnit::where('receiptunits.centerid', $task->centerid)
             ->join('shipmentcarriers', 'receiptunits.carrierid', '=', 'shipmentcarriers.id')
             ->where('receiptunits.warehouseid', $task->warehouseid)->where('receiptunits.id', $task->modelid)
-            ->select(['receiptunits.boxnumber', 'receiptunits.shipmentid','shipmentcarriers.name as carriername'])->first();
+            ->select(['receiptunits.boxnumber', 'receiptunits.shipmentid', 'shipmentcarriers.name as carriername'])->first();
+
         return [
             'token' => 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbnN0YW5jZUlkIjoiSEVJNTIzNDgyOTg2IiwidG9rZW4iOiJtaGVaTTh4cTQ2a2RadjZ0Q0NJeXZydGo4dkc3bnlOeCIsImlzcyI6IjFtc2cuaW8iLCJpYXQiOjE3NTU2MTU3NTZ9.PNJB7YjZbqerW-s-r8TOSTlPOS_6OddKHxVbwfsQ9GY',
             'namespace' => '3686dca6_3e5f_4dc5_a838_74a7716b881c',

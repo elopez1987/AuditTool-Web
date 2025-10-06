@@ -47,6 +47,7 @@ class SelectDynamicController extends Controller
                 ->whereStatusid('E')
                 ->select(['warehouseid', 'name'])->get();
         }
+
         return response()->json($warehouses);
     }
 
@@ -58,6 +59,7 @@ class SelectDynamicController extends Controller
                 ->where('centerid', $centerid)
                 ->select(['id', 'name'])->get();
         }
+
         return response()->json($zones);
     }
 
@@ -69,6 +71,7 @@ class SelectDynamicController extends Controller
                 ->where('warehouseid', $warehouseid)
                 ->select(['id', 'name'])->get();
         }
+
         return $zones;
     }
 
@@ -80,6 +83,7 @@ class SelectDynamicController extends Controller
                 ->where('centerid', $centerid)
                 ->select(['id', 'name'])->get();
         }
+
         return response()->json($carriers);
     }
 
@@ -90,6 +94,7 @@ class SelectDynamicController extends Controller
                 ->whereStatusid('E')
                 ->select(['id', 'name'])->get();
         }
+
         return response()->json($statusunit);
     }
 
@@ -99,6 +104,7 @@ class SelectDynamicController extends Controller
             $statusunit = StorageUnitStatus::select(['id', 'name'])
                 ->whereStatusid('E')->get();
         }
+
         return response()->json($statusunit);
     }
 
@@ -110,6 +116,7 @@ class SelectDynamicController extends Controller
                 ->where('centerid', $centerid)
                 ->select(['id', 'name'])->get();
         }
+
         return response()->json($trucks);
     }
 
@@ -119,6 +126,7 @@ class SelectDynamicController extends Controller
             $rasons = StorageReason::whereType('IN')
                 ->select(['id', 'name'])->get();
         }
+
         return response()->json($rasons);
     }
 
@@ -128,6 +136,7 @@ class SelectDynamicController extends Controller
             $unitsstatus = StorageUnitStatus::select(['id', 'name'])
                 ->whereStatusid('E')->get();
         }
+
         return response()->json($unitsstatus);
     }
 
@@ -135,6 +144,7 @@ class SelectDynamicController extends Controller
     {
         $truck = ShipmentTruck::controlAccessUser()->where('id', $truckid)
             ->select(['id', 'name', 'auxiliary01'])->first();
+
         return response()->json($truck);
     }
 
@@ -147,6 +157,7 @@ class SelectDynamicController extends Controller
                 ->whereNotIn('name', ['DUMMY'])
                 ->select(['id', 'name'])->get();
         }
+
         return response()->json($locations);
     }
 
@@ -159,6 +170,7 @@ class SelectDynamicController extends Controller
                 ->whereNotIn('name', ['DUMMY'])
                 ->select(['id', 'name'])->get();
         }
+
         return response()->json($locations);
     }
 
@@ -169,6 +181,7 @@ class SelectDynamicController extends Controller
                 ->whereStatusid('E')
                 ->select(['name', 'drivernumber', 'phone'])->get();
         }
+
         return response()->json($data);
     }
 
@@ -180,6 +193,7 @@ class SelectDynamicController extends Controller
                 ->whereStatusid('E')
                 ->select(['id', 'name'])->get();
         }
+
         return response()->json($data);
     }
 
@@ -203,6 +217,7 @@ class SelectDynamicController extends Controller
                 ->whereNotIn('receiptunits.statusid', ['TR'])
                 ->get()->toArray();
         }
+
         return response()->json($dataUnit);
     }
 
@@ -214,9 +229,10 @@ class SelectDynamicController extends Controller
                     'vw_storagestockunits.boxnumber', 'vw_storagestockunits.id as folio', 'vw_storagestockunits.trucknumber',
                     'vw_storagestockunits.operatorname', 'vw_storagestockunits.phone', 'vw_storagestockunits.shipmentid',
                     'vw_storagestockunits.carrier as linea', 'vw_storagestockunits.status as status', 'vw_storagestockunits.reason as razonid',
-                    'vw_storagestockunits.unitstatus as statusunit','vw_storagestockunits.barcode','vw_storagestockunits.foliotruck',
+                    'vw_storagestockunits.unitstatus as statusunit', 'vw_storagestockunits.barcode', 'vw_storagestockunits.foliotruck',
                 ])->get()->toArray();
         }
+
         return response()->json($dataUnit);
     }
 
@@ -236,6 +252,7 @@ class SelectDynamicController extends Controller
                 ->whereNotIn('receiptunits.statusid', ['TR'])
                 ->get()->toArray();
         }
+
         return response()->json($dataUnitBox);
     }
 
@@ -247,6 +264,7 @@ class SelectDynamicController extends Controller
                 ->whereTypeid('BX')
                 ->get()->toArray();
         }
+
         return response()->json($dataBox);
     }
 
@@ -258,6 +276,7 @@ class SelectDynamicController extends Controller
                 ->whereTypeid('BX')
                 ->get()->toArray();
         }
+
         return response()->json($dataBox);
     }
 
@@ -269,6 +288,7 @@ class SelectDynamicController extends Controller
                 ->whereTypeid('TR')
                 ->get()->toArray();
         }
+
         return response()->json($dataTruck);
     }
 
@@ -280,6 +300,7 @@ class SelectDynamicController extends Controller
                 ->whereTypeid('TR')
                 ->get()->toArray();
         }
+
         return response()->json($dataTruck);
     }
 
@@ -291,6 +312,7 @@ class SelectDynamicController extends Controller
                 ->select(['shipmentcarriers.id', 'shipmentcarriers.name'])
                 ->get()->toArray();
         }
+
         return response()->json($carrierForBox);
     }
 
@@ -302,6 +324,7 @@ class SelectDynamicController extends Controller
                 ->select(['shipmentcarriers.id', 'shipmentcarriers.name'])
                 ->get()->toArray();
         }
+
         return response()->json($carrierForBox);
     }
 
@@ -313,6 +336,7 @@ class SelectDynamicController extends Controller
                 ->select(['shipmenttrucks.id', 'shipmenttrucks.name'])
                 ->get()->toArray();
         }
+
         return response()->json($truckForBox);
     }
 
@@ -324,6 +348,7 @@ class SelectDynamicController extends Controller
                 ->select(['shipmenttrucks.id', 'shipmenttrucks.name'])
                 ->get()->toArray();
         }
+
         return response()->json($truckForBox);
     }
 
@@ -335,6 +360,7 @@ class SelectDynamicController extends Controller
                 ->select(['storageunittypes.id', 'storageunittypes.description'])
                 ->get()->toArray();
         }
+
         return response()->json($typeUnitForBox);
     }
 
@@ -346,6 +372,7 @@ class SelectDynamicController extends Controller
                 ->select(['storageunittypes.id', 'storageunittypes.description'])
                 ->get()->toArray();
         }
+
         return response()->json($typeUnitForBox);
     }
 
@@ -354,6 +381,7 @@ class SelectDynamicController extends Controller
         $sku = InventoryPartnumber::wherePrtnum($prtnum)
             ->select(['lngdsc', 'untpal', 'prtnum'])
             ->get()->toArray();
+
         return response()->json($sku);
     }
 
@@ -370,6 +398,7 @@ class SelectDynamicController extends Controller
                 ])
                 ->get()->toArray();
         }
+
         return response()->json($shipment);
     }
 
@@ -379,6 +408,7 @@ class SelectDynamicController extends Controller
             $bills = StorageShipmentBilling::where('orderid', $shipmentid)
                 ->select(['billingdocument', 'billingdocument'])->get()->toArray();
             array_unshift($bills, ['billingdocument' => '', 'billingdocument' => ' ']);
+
             return response()->json($bills);
         }
     }
@@ -416,6 +446,7 @@ class SelectDynamicController extends Controller
                 }
             }
         }
+
         return response()->json($value);
     }
 
@@ -427,6 +458,7 @@ class SelectDynamicController extends Controller
                 ->select(['categoryincdetailid as id', 'description as name'])->get()->toArray();
             array_unshift($details, ['id' => '', 'name' => 'Seleccione una opción']);
         }
+
         return response()->json($details);
     }
 
@@ -434,6 +466,7 @@ class SelectDynamicController extends Controller
     {
         $columns = SystemColumn::where('tableid', $table)->select(['columnid'])->get()->toArray();
         array_unshift($columns, ['columnid' => '', 'columnid' => 'Seleccione una opción']);
+
         return response()->json($columns);
     }
 
@@ -441,6 +474,7 @@ class SelectDynamicController extends Controller
     {
         $printers = SystemStatus::whereSchemaid('PRT')
             ->select(['statusid', 'name'])->get();
+
         return response()->json($printers);
     }
 
@@ -451,6 +485,7 @@ class SelectDynamicController extends Controller
             ->where('orderdeliveries.id', $shipmentid)
             ->select(['orderdeliveries.downloaddate', 'ordercustomers.city', 'ordercustomers.name'])
             ->get()->toArray();
+
         return response()->json($shipment);
     }
 
@@ -462,6 +497,7 @@ class SelectDynamicController extends Controller
                 ->select(['lpnid'])->distinct()->get()->toArray();
             array_unshift($lpns, ['id' => '', 'lpnid' => 'Seleccione un lpn.']);
         }
+
         return response()->json($lpns);
     }
 
@@ -478,6 +514,7 @@ class SelectDynamicController extends Controller
                 ->get()->toArray();
             array_unshift($partnumbers, ['partnumberid' => '', 'description' => 'Seleccione un Sku.']);
         }
+
         return response()->json($partnumbers);
     }
 
@@ -496,16 +533,10 @@ class SelectDynamicController extends Controller
                 ->groupBy('lpnid', 'i.prtnum', 'i.lngdsc', 'shipmentstock.partnumberid')
                 ->get()->toArray();
         }
+
         return response()->json($total);
     }
 
-    /**
-     * @param $message
-     * @param $data
-     * @param $code
-     *
-     * @return JsonResponse
-     */
     public function getJsonResponse($message, $data, $code, $codeResponse, $servicename): JsonResponse
     {
         return response()->json([
@@ -538,6 +569,7 @@ class SelectDynamicController extends Controller
         if ($dataTransport->boxnumber === null || $dataTransport->operatorname === null) {
             return $this->getJsonResponse('El embarque no cuenta con datos,favor de validar.', [], '200', 'error', 'getDataToShipment');
         }
+
         return $this->getJsonResponse(
             'Datos encontrados :',
             [
@@ -582,6 +614,7 @@ class SelectDynamicController extends Controller
         $newOperador = $this->getOperator($operator);
         $newBox = $this->getBox($box);
         $newTruck = $this->getTruck($truck);
+
         return $this->getJsonResponse('Datos existentes', ['operador' => $newOperador->name,
             'boxnumber' => $newBox->boxnumber, 'trucknumber' => $newTruck->boxnumber,
         ], '200', 'success', 'getDataReceiptQr');

@@ -18,6 +18,7 @@ class StorageLabelTrucksController extends BaseController
     public function index()
     {
         $this->authorize('storagelabeltrucks.index');
+
         return view('Yards.StorageLabelTrucks.index');
     }
 
@@ -32,6 +33,7 @@ class StorageLabelTrucksController extends BaseController
             ->BoxNumber($request->get('boxnumber'))
             ->Carrier($request->get('carrierid'))
             ->Type($request->get('typeid'))->orderBy('id', 'desc')->limit(200)->get();
+
         return DataTables::of($data)
             ->addColumn('btn', 'Yards.StorageLabelTrucks.partials.buttons')
             ->rawColumns(['btn', 'type'])->toJson();
@@ -45,6 +47,7 @@ class StorageLabelTrucksController extends BaseController
         $trucks = $this->shipmentTruckActiveToSelect();
         $unittype = $this->unitTypeActiveToSelect();
         $carriers = $this->getCarriersForTransport();
+
         return view(
             'Yards.StorageLabelTrucks.create',
             compact(
@@ -66,6 +69,7 @@ class StorageLabelTrucksController extends BaseController
         $barcode = $this->getFolioYMS($request['centerid']);
         $label = new StorageLabelTruck($request->validated() + ['barcode' => $barcode->folionumber]);
         $label->save();
+
         return $this->redirectBackSuccess();
     }
 
@@ -75,6 +79,7 @@ class StorageLabelTrucksController extends BaseController
         $trucks = $this->shipmentTruckActiveToSelect();
         $unittypes = $this->unitTypeActiveToSelect();
         $carriers = $this->getCarriersForSelect();
+
         return view(
             'Yards.StorageLabelTrucks.edit',
             compact('storagelabeltruck', 'carriers', 'trucks', 'unittypes')
@@ -84,6 +89,7 @@ class StorageLabelTrucksController extends BaseController
     public function update(Request $request, StorageLabelTruck $storagelabeltruck)
     {
         $storagelabeltruck->update($request->except('centerid', 'warehouseid'));
+
         return $this->redirectBackInfo();
     }
 
@@ -91,6 +97,7 @@ class StorageLabelTrucksController extends BaseController
     {
         $this->authorize('storagelabeltrucks.destroy');
         $storagelabeltruck->delete();
+
         return $this->redirectBackSuccess();
     }
 

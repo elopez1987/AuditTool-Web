@@ -18,12 +18,14 @@ class MonitorTrafficController extends BaseController
         $this->authorize('monitoranalistatrafico.index');
         $status = $this->getStatusForSchema('KLE');
         $turns = $this->getTurns();
+
         return view('Shipments.OrderMonitor.AnalystTraffic.index', compact('status', 'turns'));
     }
 
     public function getdatamonitortraffic(Request $request)
     {
         $data = $this->getDataMonitor($request);
+
         return DataTables::of($data)
             ->addColumn('statusunit', 'Shipments.OrderMonitor.AnalystTraffic.partials.statusunit')
             ->addColumn('btn', 'Shipments.OrderMonitor.AnalystTraffic.partials.btn')
@@ -31,7 +33,7 @@ class MonitorTrafficController extends BaseController
             ->editColumn('statustransport', 'Shipments.OrderMonitor.AnalystTraffic.partials.statustransport')
             ->addColumn('statusshipment', 'Shipments.OrderMonitor.MonitorOperation.partials.statusshipment')
             ->addColumn('key', 'Shipments.OrderMonitor.MonitorOperation.partials.statuskey')
-            ->rawColumns(['statusunit', 'btn', 'statustransport', 'statusshipment', 'shipmentiactive','key'])
+            ->rawColumns(['statusunit', 'btn', 'statustransport', 'statusshipment', 'shipmentiactive', 'key'])
             ->toJson();
     }
 
@@ -39,6 +41,7 @@ class MonitorTrafficController extends BaseController
     {
         $orderDelivery = $monitoranalistatrafico;
         $comments = StorageComment::where('modeltype', 'orderdeliveries')->where('modelid', $orderDelivery->id)->get();
+
         return view('Shipments.OrderMonitor.AnalystTraffic.edit', compact('orderDelivery', 'comments'));
     }
 
@@ -53,6 +56,7 @@ class MonitorTrafficController extends BaseController
                 StorageComment::createCommentary('orderdeliveries', $orderDelivery->id, $request);
             }
         }
+
         return $this->redirectBackInfo();
     }
 }

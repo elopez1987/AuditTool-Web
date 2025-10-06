@@ -21,17 +21,19 @@ class StorageLocationController extends BaseController
             ->select(['zoneid', DB::raw('COUNT(id) as total_locations')])
             ->groupBy('zoneid')->get();
         $warehouses = $this->getWarehouseForSelect();
+
         return view('Yards.StorageLocations.index', compact('status', 'locations', 'warehouses'));
     }
 
     public function getDataLocations(Request $request)
     {
         $data = StorageLocation::controlAccessUser()
-            ->with(['zone:id,name,zoneid', 'center:centerid,name,description', 'status:statusid,name,auxiliary01','warehouse:warehouseid,name'])
+            ->with(['zone:id,name,zoneid', 'center:centerid,name,description', 'status:statusid,name,auxiliary01', 'warehouse:warehouseid,name'])
             ->Name($request->get('name'))
             ->Zone($request->get('zoneid'))
             ->Warehouse($request->get('warehouseid'))
             ->Status($request->get('statusid'));
+
         return DataTables::of($data)
             ->addColumn('btn', 'Yards.StorageLocations.partials.buttons')
             ->rawColumns(['btn'])->toJson();
@@ -42,6 +44,7 @@ class StorageLocationController extends BaseController
         $this->authorize('storagelocations.create');
         $centers = $this->getCenterForSelect();
         $warehouses = $this->getWarehouseForSelect();
+
         return view('Yards.StorageLocations.create', compact('centers', 'warehouses'));
     }
 
@@ -49,6 +52,7 @@ class StorageLocationController extends BaseController
     {
         $location = new StorageLocation($request->all());
         $location->save();
+
         return $this->successResponse('storagelocations.index');
     }
 
@@ -58,6 +62,7 @@ class StorageLocationController extends BaseController
         $status = $this->getStatusSTS();
         $zones = $this->getActiveZonesForCenter();
         $warehouses = $this->getWarehouseForSelect();
+
         return view(
             'Yards.StorageLocations.edit',
             compact('storagelocation', 'status', 'zones', 'warehouses')
@@ -67,6 +72,7 @@ class StorageLocationController extends BaseController
     public function update(StorageLocation $storagelocation, Request $request): RedirectResponse
     {
         $storagelocation->update($request->all());
+
         return $this->infoResponse('storagelocations.index');
     }
 
@@ -74,6 +80,7 @@ class StorageLocationController extends BaseController
     {
         $location = StorageLocation::findOrFail($id);
         $location->delete();
+
         return $this->redirectBackSuccessMessage('Registro eliminado con exito.');
     }
 }

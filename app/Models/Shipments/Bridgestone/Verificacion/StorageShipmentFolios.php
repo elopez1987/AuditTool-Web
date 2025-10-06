@@ -40,6 +40,7 @@ use Illuminate\Support\Facades\Auth;
  * @property-read StorageTurn $turn
  * @property-read User|null $user
  * @property-read SystemWarehouse $warehouse
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentFolios newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentFolios newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentFolios query()
@@ -64,6 +65,7 @@ use Illuminate\Support\Facades\Auth;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentFolios whereValue03($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentFolios whereWarehouseid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentFolios whereWorkday($value)
+ *
  * @mixin \Eloquent
  */
 class StorageShipmentFolios extends Model
@@ -87,6 +89,7 @@ class StorageShipmentFolios extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return StorageShipmentFolios::whereIn('storageshipmentfolios.warehouseid', $warehouses)
             ->whereIn('storageshipmentfolios.centerid', $centers);
     }

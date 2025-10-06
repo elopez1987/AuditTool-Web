@@ -14,7 +14,7 @@ use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 
-class ShipmentCheckImport implements ToModel, WithHeadingRow, WithBatchInserts, WithChunkReading, WithValidation
+class ShipmentCheckImport implements ToModel, WithBatchInserts, WithChunkReading, WithHeadingRow, WithValidation
 {
     use GetParameters;
 
@@ -59,8 +59,8 @@ class ShipmentCheckImport implements ToModel, WithHeadingRow, WithBatchInserts, 
     public function rules(): array
     {
         return [
-            '*.shipmentid' => ['required','regex:/^[A-Za-z0-9]{1,20}$/'],
-//            '*.partnumberid' => ['required','regex:/^[A-Za-z0-9]{1,20}$/'],
+            '*.shipmentid' => ['required', 'regex:/^[A-Za-z0-9]{1,20}$/'],
+            //            '*.partnumberid' => ['required','regex:/^[A-Za-z0-9]{1,20}$/'],
             '*.partnumberid' => ['required'],
             '*.quantity' => ['required', 'integer'],
         ];
@@ -80,11 +80,6 @@ class ShipmentCheckImport implements ToModel, WithHeadingRow, WithBatchInserts, 
         ];
     }
 
-    /**
-     * @param array $row
-     *
-     * @return array
-     */
     public function searchOrderAndSku(array $row): array
     {
         static $lastShipmentId = null;
@@ -119,6 +114,7 @@ class ShipmentCheckImport implements ToModel, WithHeadingRow, WithBatchInserts, 
             $lastPartnumberId = $partnumberId;
         }
         $sku = $lastSku;
+
         return [$order, $sku];
     }
 }

@@ -18,12 +18,14 @@ class StorageLiftTruckController extends BaseController
     {
         $this->authorize('storagelifttrucks.index');
         $status = $this->getStatusForSchema('STM');
+
         return view('Maintenance.StorageLiftTrucks.index', compact('status'));
     }
 
     public function getStorageLiftTrucks(Request $request)
     {
         $data = $this->getInformationLiftTrucks($request);
+
         return DataTables::of($data)
             ->addColumn('btn', 'Maintenance.StorageLiftTrucks.partials.buttons')
             ->rawColumns(['btn', 'statusname'])->toJson();
@@ -35,6 +37,7 @@ class StorageLiftTruckController extends BaseController
         $typesLiftTrucks = $this->getStatusForSchema('TPM');
         $modelLiftTrucks = $this->getStatusForSchema('MDM');
         $brandLiftTrucks = $this->getStatusForSchema('MCM');
+
         return view(
             'Maintenance.StorageLiftTrucks.create',
             compact('typesLiftTrucks', 'modelLiftTrucks', 'brandLiftTrucks')
@@ -46,12 +49,14 @@ class StorageLiftTruckController extends BaseController
         $centerid = $this->getCenterForUser();
         $ligtTruck = new StorageLiftTruck($request->all() + ['centerid' => $centerid]);
         $ligtTruck->save();
+
         return $this->redirectBackSuccessMessage('Registro agregado exitosamente.');
     }
 
     public function show($id)
     {
         $errorLogs = CheckListTruckErrorLog::where('serialnumber', '=', $id)->get();
+
         return view('Maintenance.StorageLiftTrucks.show', compact('errorLogs'));
     }
 
@@ -63,6 +68,7 @@ class StorageLiftTruckController extends BaseController
         $modelLiftTrucks = $this->getStatusForSchema('MDM');
         $brandLiftTrucks = $this->getStatusForSchema('MCM');
         $status = $this->getStatusForSchema('STM');
+
         return view(
             'Maintenance.StorageLiftTrucks.edit',
             compact(
@@ -79,6 +85,7 @@ class StorageLiftTruckController extends BaseController
     {
         $liftTruck = StorageLiftTruck::findOrFail($id);
         $liftTruck->update($request->all());
+
         return $this->redirectBackSuccessMessage('Registro actualizado con exito.');
     }
 
@@ -87,6 +94,7 @@ class StorageLiftTruckController extends BaseController
         $this->authorize('storagelifttrucks.destroy');
         $truck = StorageLiftTruck::where('serialnumber', $id)->first();
         $truck->delete();
+
         return $this->redirectBackSuccessMessage('Registro eliminado exitosamente.');
     }
 }

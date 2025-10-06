@@ -26,6 +26,7 @@ class ReceiptAsnsController extends BaseController
     {
         $this->authorize('receiptasn.index');
         $status = $this->getStatusForSchema('SRE');
+
         return view('Receipt.ReceiptAsn.index', compact('status'));
     }
 
@@ -39,6 +40,7 @@ class ReceiptAsnsController extends BaseController
             ->OC($request->get('oc'))
             ->Status($request->get('statusid'))
             ->select('receiptasn.*');
+
         return DataTables::of($data)
             ->addColumn('btn', 'Receipt.ReceiptAsn.partials.buttons')
             ->rawColumns(['btn'])
@@ -55,6 +57,7 @@ class ReceiptAsnsController extends BaseController
         $carriers = $this->getCarriersForSelect();
         $categorystocks = InventoryStockCategory::select('description', 'id')->get();
         $reasons = StorageReason::whereType('RE')->select('name', 'id')->get();
+
         return view('Receipt.ReceiptAsn.create', compact(
             'centers',
             'warehouses',
@@ -73,6 +76,7 @@ class ReceiptAsnsController extends BaseController
         $receipt->workday = Carbon::parse($request['addasndate'])->format('Y-m-d');
         $receipt->auxiliary01 = Auth::user()->name;
         $receipt->save();
+
         return $this->successResponse('receiptasn.index');
     }
 
@@ -84,6 +88,7 @@ class ReceiptAsnsController extends BaseController
         $turns = StorageTurn::select('name', 'id')->get();
         $categorystocks = InventoryStockCategory::select('description', 'id')->get();
         $reasons = StorageReason::whereType('RE')->select('name', 'id')->get();
+
         return view('Receipt.ReceiptAsn.edit', compact(
             'receiptasn',
             'providers',
@@ -97,6 +102,7 @@ class ReceiptAsnsController extends BaseController
     public function update(Request $request, ReceiptAsn $receiptasn)
     {
         $receiptasn->update($request->all());
+
         return $this->infoResponse('schedulereceipt.index');
     }
 
@@ -105,9 +111,10 @@ class ReceiptAsnsController extends BaseController
         $stocks = $this->getTotalsReceipt($receiptasn->id);
         $coments = StorageComment::getCommentForModel($receiptasn->id, 'ReceiptAsn');
         $evidences = EvidencePhoto::getPhotosForModel($receiptasn->id, 'ReceiptAsn');
-        $incidences = ReceiptIncidenceStock::with(['partnumber','categoryincidence','subcategoryincidence'])
+        $incidences = ReceiptIncidenceStock::with(['partnumber', 'categoryincidence', 'subcategoryincidence'])
             ->where('receiptid', $receiptasn->id)->get();
         $totalContainers = ReceiptContainer::getContainersForReceipt($receiptasn->id);
+
         return view(
             'Receipt.ReceiptAsn.show',
             compact('receiptasn', 'stocks', 'coments', 'evidences', 'incidences', 'totalContainers')
@@ -122,6 +129,7 @@ class ReceiptAsnsController extends BaseController
             $schedulleReceipt->save();
         }
         $receiptasn->delete();
+
         return $this->successResponse('schedulereceipt.index');
     }
 

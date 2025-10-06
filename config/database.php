@@ -65,7 +65,6 @@ return [
             'trust_server_certificate' => true,
         ],
 
-
     ],
 
     /*

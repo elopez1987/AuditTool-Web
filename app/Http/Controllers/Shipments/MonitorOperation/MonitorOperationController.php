@@ -25,6 +25,7 @@ class MonitorOperationController extends BaseController
         $statusQuantitys = OrderDeliverie::controlAccessUser()->whereNotIn('orderdeliveries.statusid', ['DH', 'CA'])
             ->select(['statusid', DB::raw('COUNT(statusid) as total')])
             ->groupBy('statusid')->orderByDesc('total')->get();
+
         return view(
             'Shipments.OrderMonitor.MonitorOperation.index',
             compact('status', 'turns', 'warehouses', 'statusQuantitys')
@@ -66,6 +67,7 @@ class MonitorOperationController extends BaseController
             ])
             ->addSelect(DB::raw('DATEDIFF(minute, GETDATE(),orderdeliveries.loadingdate) as minuterestantecarga'))
             ->addSelect(DB::raw("CONCAT(orderdeliveries.shipmentid,'|',orderdeliveries.auxiliary03) as embarque"));
+
         return DataTables::of($data)
             ->addColumn('btnoperation', 'Shipments.OrderMonitor.MonitorOperation.partials.btnoperation')
             ->editColumn('shtotalcontainers', 'Shipments.OrderMonitor.MonitorOperation.partials.statuspallets')
@@ -85,6 +87,7 @@ class MonitorOperationController extends BaseController
         $locationsStages = self::getLocationsStagesForCenter();
         $locations = self::getLocations();
         $orderDelivery = $monitoroperation;
+
         return view(
             'Shipments.OrderMonitor.MonitorOperation.edit',
             compact('orderDelivery', 'materials', 'locationsStages', 'locations')
@@ -106,6 +109,7 @@ class MonitorOperationController extends BaseController
         $shipment->update($request->validated() + ['createuserid' => Auth::user()->id]);
         $this->updateBooleanAttributesFromRequest($request, $shipment, ['fullpallet', 'fullpicking']);
         self::addTypesPalletsToShipment($request, $shipment);
+
         return $this->redirectBackSuccess();
     }
 

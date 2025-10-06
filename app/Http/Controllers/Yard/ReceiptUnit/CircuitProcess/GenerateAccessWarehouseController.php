@@ -17,6 +17,7 @@ class GenerateAccessWarehouseController extends BaseController
     {
         $this->authorize('generateaccesswarehouse.index');
         $carriers = $this->getCarriersForSelect();
+
         return view('Yards.GenerateAccess.index', compact('carriers'));
     }
 
@@ -42,6 +43,7 @@ class GenerateAccessWarehouseController extends BaseController
                 'storageaccesswarehouse.datestart', 'storageaccesswarehouse.datefinish', 'storageaccesswarehouse.id', 'storageaccesswarehouse.shipmentid',
                 'storageaccesswarehouse.confirmationnumber', 'users.name as createuser', 'storageaccesswarehouse.created_at as created',
             ]);
+
         return DataTables::of($data)
             ->addColumn('btn', 'Yards.GenerateAccess.partials.buttons')
             ->rawColumns(['btn'])->toJson();
@@ -55,6 +57,7 @@ class GenerateAccessWarehouseController extends BaseController
         $operators = $this->getOperatorForCarriers();
         $boxes = $this->getBoxForCarrier();
         $trucks = $this->getTruckForCarrier();
+
         return view(
             'Yards.GenerateAccess.create',
             compact('centers', 'operators', 'boxes', 'trucks', 'warehouses')
@@ -66,6 +69,7 @@ class GenerateAccessWarehouseController extends BaseController
         $access = new GenerateAccessWarehouse($request->validated());
         $access->auxiliary01 = bin2hex(random_bytes(30));
         $access->save();
+
         return $this->redirectBackSuccess();
     }
 
@@ -75,6 +79,7 @@ class GenerateAccessWarehouseController extends BaseController
         $operators = $this->getOperatorForCarriers();
         $boxes = $this->getBoxForCarrier();
         $trucks = $this->getTruckForCarrier();
+
         return view('Yards.GenerateAccess.edit', compact(
             'operators',
             'boxes',
@@ -86,6 +91,7 @@ class GenerateAccessWarehouseController extends BaseController
     public function update(Request $request, GenerateAccessWarehouse $generateaccesswarehouse)
     {
         $generateaccesswarehouse->update($request->all());
+
         return $this->redirectBackSuccess();
     }
 
@@ -98,6 +104,7 @@ class GenerateAccessWarehouseController extends BaseController
     {
         $this->authorize('generateaccesswarehouse.destroy');
         GenerateAccessWarehouse::destroy($id);
+
         return $this->redirectBackSuccess();
     }
 }

@@ -25,6 +25,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read int|null $activities_count
  * @property-read SystemCenterDistribution|null $center
  * @property-read SystemStatus|null $status
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReasonOutput name($name)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReasonOutput newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReasonOutput newQuery()
@@ -40,14 +41,17 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReasonOutput whereSchemaid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReasonOutput whereStatusid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReasonOutput whereType($value)
+ *
  * @mixin \Eloquent
  */
 class StorageReasonOutput extends Model
 {
     use LogsActivity;
+
     public $timestamps = false;
 
     protected $table = 'storagereasonoutput';
+
     protected $primaryKey = 'id';
 
     protected $fillable = [
@@ -75,6 +79,7 @@ class StorageReasonOutput extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return StorageReasonOutput::whereIn('centerid', $centers);
     }
 

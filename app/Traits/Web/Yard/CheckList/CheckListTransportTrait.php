@@ -25,7 +25,7 @@ trait CheckListTransportTrait
             $checkid = $request->get('checklistid');
 
             foreach ($checklistids as $i => $checklistDetailId) {
-                $checkListTransport = new CheckListTransport();
+                $checkListTransport = new CheckListTransport;
                 $checkListTransport->centerid = $receiptunit->centerid;
                 $checkListTransport->checklistid = $checkid[$i];
                 $checkListTransport->receiptunitid = $receiptunit->id;

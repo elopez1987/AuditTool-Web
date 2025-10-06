@@ -11,7 +11,7 @@ use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class ImportPartNumbers implements ToModel, WithHeadingRow, WithBatchInserts, WithChunkReading
+class ImportPartNumbers implements ToModel, WithBatchInserts, WithChunkReading, WithHeadingRow
 {
     use Responser;
 
@@ -29,10 +29,10 @@ class ImportPartNumbers implements ToModel, WithHeadingRow, WithBatchInserts, Wi
             [
                 'centerid' => $centerid,
                 'warehouseid' => $warehouseid,
-                'prtnum' => trim((string)$row['prtnum']),
+                'prtnum' => trim((string) $row['prtnum']),
             ],
             [
-                'lngdsc' => (string)$lngdsc,
+                'lngdsc' => (string) $lngdsc,
                 'abccod' => isset($row['abccod']) ? trim($row['abccod']) : 'A',
                 'shelflife' => isset($row['shelflife']) ? trim($row['shelflife']) : '0',
                 'untcas' => isset($row['untcas']) ? trim($row['untcas']) : '1',

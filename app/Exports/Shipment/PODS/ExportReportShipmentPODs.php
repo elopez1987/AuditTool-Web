@@ -13,10 +13,12 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 
-class ExportReportShipmentPODs implements FromCollection, WithHeadings, WithMapping, WithEvents, ShouldAutoSize
+class ExportReportShipmentPODs implements FromCollection, ShouldAutoSize, WithEvents, WithHeadings, WithMapping
 {
     use Exportable;
+
     private $workdayin;
+
     private $workdayout;
 
     public function __construct($workdayin, $workdayout)
@@ -45,6 +47,7 @@ class ExportReportShipmentPODs implements FromCollection, WithHeadings, WithMapp
     public function collection()
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return DB::table('orderdeliveries')
             ->select(
                 'orderdeliveries.centerid as centro',

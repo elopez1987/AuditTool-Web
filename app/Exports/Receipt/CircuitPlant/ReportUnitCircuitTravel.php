@@ -17,10 +17,12 @@ use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
-class ReportUnitCircuitTravel implements FromCollection, WithHeadings, WithMapping, WithEvents, ShouldAutoSize, WithColumnFormatting
+class ReportUnitCircuitTravel implements FromCollection, ShouldAutoSize, WithColumnFormatting, WithEvents, WithHeadings, WithMapping
 {
     use Exportable;
+
     private $workdayin;
+
     private $workdayout;
 
     public function __construct($workdayin, $workdayout)
@@ -81,6 +83,7 @@ class ReportUnitCircuitTravel implements FromCollection, WithHeadings, WithMappi
         if (! empty($center)) {
             $centerpl = SystemCenterDistribution::where('centerid', $center)->value('auxiliary02');
         }
+
         return StorageBoxTravel::join('systemstatus', 'vw_storageboxtravels.statusid', '=', 'systemstatus.statusid')
             ->join('systemcenterdistributions', 'vw_storageboxtravels.centerid', '=', 'systemcenterdistributions.centerid')
             ->leftJoin('storagereceiptunitarrive', 'vw_storageboxtravels.foliowarehouse', '=', 'storagereceiptunitarrive.value01')

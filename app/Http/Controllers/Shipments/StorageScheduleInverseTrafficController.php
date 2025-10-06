@@ -19,6 +19,7 @@ class StorageScheduleInverseTrafficController extends BaseController
     {
         $this->authorize('storagescheduleinverse.edit');
         $details = StorageScheduleInverse::getDataInverse($storagescheduleinverse);
+
         return view(
             'Shipments.StorageScheduleInverse.edit',
             compact('storagescheduleinverse', 'details')
@@ -36,6 +37,7 @@ class StorageScheduleInverseTrafficController extends BaseController
         $storagescheduleinverse->folionumber = $request['folionumber'];
         $storagescheduleinverse->appointment = $request['appointment'];
         $storagescheduleinverse->save();
+
         return $this->redirectBackSuccessMessage('Registro actualizado con exito');
     }
 
@@ -61,17 +63,10 @@ class StorageScheduleInverseTrafficController extends BaseController
         if ($success) {
             return $this->redirectBackSuccessMessage('Datos agregados correctamente');
         }
+
         return $this->errorResponse('No se pudieron guardar los datos' . $error);
     }
 
-    /**
-     * @param $order
-     * @param StorageScheduleInverse $storagescheduleinverse
-     * @param Request $request
-     * @param int $i
-     *
-     * @return void
-     */
     public function updateTraffic($order, StorageScheduleInverse $storagescheduleinverse, Request $request, int $i): void
     {
         StorageScheduleInverseTraffic::updateOrCreate(
@@ -104,8 +99,6 @@ class StorageScheduleInverseTrafficController extends BaseController
     }
 
     /**
-     * @param StorageScheduleInverse $storagescheduleinverse
-     *
      * @return OrderDeliverie|Builder|Model|object|null
      */
     public function getDeliverie(StorageScheduleInverse $storagescheduleinverse)

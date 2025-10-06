@@ -13,13 +13,14 @@ use Illuminate\Support\Facades\Http;
 class ObtenerETAdeRecursoConfiable extends Command
 {
     protected $signature = 'rc:ObtenerETAdeRecursoConfiable';
+
     protected $description = 'Este comando se conecta a RC y obtiene el ETA de los embarques ingresados de la operacion de Onr Roof';
 
     public function handle()
     {
         $parameterCenter = $this->getParameterCenter();
         if (! empty($parameterCenter) && in_array('SDC-05', $parameterCenter)) {
-            $conect = new Client();
+            $conect = new Client;
             $token = $this->getToken();
             $url = 'https://app.rcontrol.com.mx/Japi/get_full_travel_info?' . 'token=' . $token;
             $journeys = $this->getShipmentJourneys();
@@ -74,6 +75,7 @@ class ObtenerETAdeRecursoConfiable extends Command
         $url = $dataapi->value02 . $endPoint . 'arg00=' . $dataapi->value03 . '&' . 'arg01=' . $dataapi->value04;
         $responseRControl = Http::post($url);
         $data = json_decode($responseRControl->getBody()->getContents());
+
         return $data->token;
     }
 
@@ -88,6 +90,7 @@ class ObtenerETAdeRecursoConfiable extends Command
                 'final_date' => Carbon::now()->addDays(15)->toDateTimeString(),
             ],
         ];
+
         return json_encode($json);
     }
 

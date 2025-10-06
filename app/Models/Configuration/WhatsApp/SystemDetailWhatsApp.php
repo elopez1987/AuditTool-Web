@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $phonenumber03
  * @property-read SystemCenterDistribution $center
  * @property-read SystemWarehouse $warehouse
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailWhatsApp newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailWhatsApp newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailWhatsApp query()
@@ -31,13 +32,17 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailWhatsApp whereRecordid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailWhatsApp whereWarehouseid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailWhatsApp whereWhatsappid($value)
+ *
  * @mixin \Eloquent
  */
 class SystemDetailWhatsApp extends Model
 {
     public $timestamps = false;
+
     public $incrementing = true;
+
     protected $table = 'systemdetailwhatsapps';
+
     protected $primaryKey = 'recordid';
 
     protected $fillable = [
@@ -65,6 +70,7 @@ class SystemDetailWhatsApp extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return SystemDetailWhatsApp::whereIn('systemdetailwhatsapps.warehouseid', $warehouses)
             ->whereIn('systemdetailwhatsapps.centerid', $centers);
     }

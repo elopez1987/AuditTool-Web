@@ -12,6 +12,7 @@ class InventoryPartNumberCategory02sController extends BaseController
     public function index()
     {
         $this->authorize('inventorypartnumbercategory02.index');
+
         return view('Inventory.InventoryPartNumberCategory02.index');
     }
 
@@ -21,6 +22,7 @@ class InventoryPartNumberCategory02sController extends BaseController
             ->with(['status', 'center', 'warehouse'])
             ->Status($request->get('statusid'))
             ->Name($request->get('name'))->get();
+
         return $this->showDataToView(
             $data,
             'Inventory.InventoryPartNumberCategory02.partials.buttons'
@@ -30,6 +32,7 @@ class InventoryPartNumberCategory02sController extends BaseController
     public function create()
     {
         $this->authorize('inventorypartnumbercategory02.create');
+
         return view('Inventory.InventoryPartNumberCategory02.create');
     }
 
@@ -42,6 +45,7 @@ class InventoryPartNumberCategory02sController extends BaseController
             ['warehouseid' => $access->warehouseid]
         );
         $category01->save();
+
         return $this->successResponse('inventorypartnumbercategory02.index');
     }
 
@@ -49,6 +53,7 @@ class InventoryPartNumberCategory02sController extends BaseController
     {
         $this->authorize('inventorypartnumbercategory02.edit');
         $status = $this->getStatusForSchema('STS');
+
         return view(
             'Inventory.InventoryPartNumberCategory02.edit',
             compact('status', 'inventorypartnumbercategory02')
@@ -58,6 +63,7 @@ class InventoryPartNumberCategory02sController extends BaseController
     public function update(Request $request, InventoryPartNumberCategory02 $inventorypartnumbercategory02)
     {
         $inventorypartnumbercategory02->update($request->all());
+
         return $this->infoResponse('inventorypartnumbercategory02.index');
     }
 }

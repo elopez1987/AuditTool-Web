@@ -33,6 +33,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $origen
  * @property string|null $status
  * @property string $enpatio
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReportUnitEvidence newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReportUnitEvidence newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReportUnitEvidence query()
@@ -63,6 +64,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReportUnitEvidence whereUsuariosalida($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReportUnitEvidence whereWarehouseid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReportUnitEvidence whereZonename($value)
+ *
  * @mixin \Eloquent
  */
 class ReportUnitEvidence extends Model
@@ -72,6 +74,7 @@ class ReportUnitEvidence extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return ReportUnitEvidence::whereIn('vw_storageunitevidence.centerid', $centers);
     }
 }

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static where(string $string, mixed $schemaid)
  * @method static create(array $array)
  * @method static whereSchemaid(string $string)
+ *
  * @property string|null $centerid
  * @property string|null $warehouseid
  * @property string $schemaid
@@ -21,6 +22,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $auxiliary05
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemStatus newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemStatus newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemStatus query()
@@ -36,14 +38,19 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemStatus whereStatusid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemStatus whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemStatus whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class SystemStatus extends Model
 {
     public $incrementing = false;
+
     public $keyType = 'string';
+
     protected $table = 'systemstatus';
+
     protected $primaryKey = 'statusid';
+
     protected $dateFormat = 'Y-m-d H:i:s';
 
     protected $fillable = [

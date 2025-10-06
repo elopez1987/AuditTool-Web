@@ -18,6 +18,7 @@ class ImportRequestNEInverse implements ToCollection, WithHeadingRow, WithValida
             $zare = StorageScheduleInverseTraffic::where('zare', trim($row['zare']))->first();
             if (empty($zare)) {
                 StorageLogInverse::createNewLog('No existe número de Zare en la bitacora de devoluciones', $row['zare']);
+
                 continue;
             }
             $zare->requestne = Carbon::now();

@@ -36,6 +36,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read SystemSchema $schema
  * @property-read SystemStatus|null $status
  * @property-read SystemWarehouse $warehouse
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTaskMail newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTaskMail newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTaskMail query()
@@ -54,6 +55,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTaskMail whereValue04($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTaskMail whereValue05($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTaskMail whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class StorageTaskMail extends Model
@@ -91,6 +93,7 @@ class StorageTaskMail extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return StorageTaskMail::whereIn('storagetaskmails.warehouseid', $warehouses)
             ->whereIn('storagetaskmails.centerid', $centers);
     }

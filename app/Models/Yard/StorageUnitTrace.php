@@ -48,6 +48,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property-read User|null $user
  * @property-read SystemWarehouse $warehouse
  * @property-read StorageZone|null $zone
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTrace boxNumber($box)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTrace carrier($carrierid)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTrace date($datein, $dateout)
@@ -78,6 +79,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTrace whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTrace whereWarehouseid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTrace whereZoneid($value)
+ *
  * @mixin \Eloquent
  */
 class StorageUnitTrace extends Model
@@ -207,6 +209,7 @@ class StorageUnitTrace extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return StorageUnitTrace::whereIn('storageunittrace.warehouseid', $warehouses)
             ->whereIn('storageunittrace.centerid', $centers);
     }

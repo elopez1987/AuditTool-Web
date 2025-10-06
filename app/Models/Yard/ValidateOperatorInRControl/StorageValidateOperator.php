@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Auth;
  * @property string|null $auxiliary03
  * @property string|null $auxiliary04
  * @property string|null $auxiliary05
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageValidateOperator newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageValidateOperator newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageValidateOperator query()
@@ -35,12 +36,15 @@ use Illuminate\Support\Facades\Auth;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageValidateOperator whereOrderid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageValidateOperator whereStatusoperator($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageValidateOperator whereUserid($value)
+ *
  * @mixin \Eloquent
  */
 class StorageValidateOperator extends Model
 {
     public $timestamps = false;
+
     protected $table = 'storagevalidateoperators';
+
     protected $primaryKey = 'id';
 
     protected $fillable = [
@@ -58,6 +62,7 @@ class StorageValidateOperator extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return StorageValidateOperator::whereIn('storagevalidateoperators.centerid', $centers);
     }
 

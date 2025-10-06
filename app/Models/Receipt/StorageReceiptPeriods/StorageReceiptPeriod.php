@@ -37,6 +37,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read SystemStatus $status
  * @property-read User|null $user
  * @property-read SystemWarehouse $warehouse
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReceiptPeriod name($name)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReceiptPeriod newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReceiptPeriod newQuery()
@@ -59,12 +60,13 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReceiptPeriod whereWarehouseid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReceiptPeriod withTrashed(bool $withTrashed = true)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReceiptPeriod withoutTrashed()
+ *
  * @mixin \Eloquent
  */
 class StorageReceiptPeriod extends Model
 {
-    use SoftDeletes;
     use LogsActivity;
+    use SoftDeletes;
 
     protected $table = 'storagereceiptperiods';
 
@@ -100,6 +102,7 @@ class StorageReceiptPeriod extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return StorageReceiptPeriod::whereIn('storagereceiptperiods.warehouseid', $warehouses)
             ->whereIn('storagereceiptperiods.centerid', $centers);
     }

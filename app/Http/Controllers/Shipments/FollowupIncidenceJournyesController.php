@@ -20,6 +20,7 @@ class FollowupIncidenceJournyesController extends BaseController
     public function getDataIncidences(Request $request)
     {
         $data = $this->getIncidence($request);
+
         return DataTables::collection($data)
             ->addColumn('btn', 'Shipments.FollowupIncidences.partials.buttons')
             ->addColumn('keystatus', 'Shipments.FollowupIncidences.partials.keystatus')

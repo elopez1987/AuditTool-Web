@@ -24,6 +24,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
  * @property-read OrderDeliverie $order
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentPod carrierIn($carrierid)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentPod customerIn($customer)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentPod newModelQuery()
@@ -43,6 +44,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentPod whereValue03($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentPod whereValue04($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentPod whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class ShipmentPod extends Model
@@ -50,6 +52,7 @@ class ShipmentPod extends Model
     use LogsActivity;
 
     public $timestamps = true;
+
     protected $table = 'shipmentpods';
 
     protected $fillable = [
@@ -72,6 +75,7 @@ class ShipmentPod extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return ShipmentPod::whereIn('shipmentpods.warehouseid', $warehouses)
             ->whereIn('shipmentpods.centerid', $centers);
     }

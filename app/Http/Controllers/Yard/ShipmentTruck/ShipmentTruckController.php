@@ -12,6 +12,7 @@ class ShipmentTruckController extends BaseController
     public function index()
     {
         $this->authorize('shipmenttrucks.index');
+
         return view('Yards.ShipmentTrucks.index');
     }
 
@@ -20,6 +21,7 @@ class ShipmentTruckController extends BaseController
         $data = ShipmentTruck::controlAccessUser()
             ->with(['status', 'center'])
             ->Name($request->get('name'))->get();
+
         return $this->showDataToView($data, 'Yards.ShipmentTrucks.partials.buttons');
     }
 
@@ -27,12 +29,14 @@ class ShipmentTruckController extends BaseController
     {
         $this->authorize('shipmenttrucks.create');
         $centers = $this->getCenterForSelect();
+
         return view('Yards.ShipmentTrucks.create', compact('centers'));
     }
 
     public function store(CreateTruckRequest $request)
     {
         ShipmentTruck::create($request->validated());
+
         return $this->successResponse('shipmenttrucks.index');
     }
 
@@ -40,18 +44,21 @@ class ShipmentTruckController extends BaseController
     {
         $this->authorize('shipmenttrucks.edit');
         $status = $this->getStatusSTS();
+
         return view('Yards.ShipmentTrucks.edit', compact('shipmenttruck', 'status'));
     }
 
     public function update(ShipmentTruck $shipmenttruck, Request $request)
     {
         $shipmenttruck->update($request->all());
+
         return $this->infoResponse('shipmenttrucks.index');
     }
 
     public function destroy(ShipmentTruck $shipmenttruck)
     {
         $shipmenttruck->delete();
+
         return $this->successResponse('shipmenttrucks.index');
     }
 }

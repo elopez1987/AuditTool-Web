@@ -16,6 +16,7 @@ class ActivityLogController extends Controller
         $descriptions = ActivityLog::select(['description', 'description'])->distinct()->get();
         $models = ActivityLog::select(['subject_type', 'subject_type'])->distinct()->get();
         $users = User::select(['name', 'id'])->where('statusid', '=', 'E')->get();
+
         return view('Configuration.ActivityLogs.index', compact('descriptions', 'models', 'users'));
     }
 
@@ -29,6 +30,7 @@ class ActivityLogController extends Controller
             ->ForUser($request->get('user'))
             ->ForFolio($request->get('id'))->limit(1000)
             ->get();
+
         return DataTables::of($data)
             ->addColumn('btn', 'Configuration.ActivityLogs.partials.buttons')
             ->rawColumns(['btn'])
@@ -39,6 +41,7 @@ class ActivityLogController extends Controller
     {
         $register = ActivityLog::findOrFail($id);
         $jsonObject = json_decode($register->properties);
+
         return view('Configuration.ActivityLogs.show', compact('register', 'jsonObject'));
     }
 }

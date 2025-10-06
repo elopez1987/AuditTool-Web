@@ -23,8 +23,9 @@ class ImportShipmentCheckController extends BaseController
         ini_set('max_execution_time', 300);
         $file = $request->file('file');
         DB::table('logimports')->delete();
-        Excel::import(new ShipmentCheckImport(), $file, '', \Maatwebsite\Excel\Excel::XLSX);
+        Excel::import(new ShipmentCheckImport, $file, '', \Maatwebsite\Excel\Excel::XLSX);
         $data = LogImportFile::get();
+
         return view('Configuration.EdiLogs.LogImportFile.index', compact('data'));
     }
 }

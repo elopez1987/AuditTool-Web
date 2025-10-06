@@ -79,20 +79,20 @@ Route::middleware(['auth'])->group(function () {
     //  -------------------------------------------------- Monitor de deliveries   -----------------------------------------
     Route::resource('orderdeliveries', OrderDeliveryController::class);
     Route::get('getDataSchedule', [OrderDeliveryController::class, 'getDataSchedule'])->name('getDataSchedule');
-//    Descargar evidencias del embarque
+    //    Descargar evidencias del embarque
     Route::get('downloadfilesdeliveries/{id}', [DownLoadEvidenceForShipmentController::class, 'index']);
     //   Vista para Subir evidencia de carga desde la version web
     Route::get('orderdeliveries/{id}/uploadevidence', [EvidenceOrderDeliveryController::class, 'index'])->name('uploadevidence');
-//    Subir evidencia por ajax
+    //    Subir evidencia por ajax
     Route::post('loadevidenceorder/{id}/upload', [EvidenceOrderDeliveryController::class, 'loadevidenceorder'])->name('loadevidenceorder');
-//    Imprimir formato de conteo de anden de bridgestone
+    //    Imprimir formato de conteo de anden de bridgestone
     Route::get('printformatcountbridgestone/{id}', [ImprimirConteoAndenController::class, 'index'])->name('printformatcountbridgestone');
-//    Imprimir conteo de vigilante
+    //    Imprimir conteo de vigilante
     Route::get('printformatcountbridgestonevig/{id}', [ImprimirConteoAndenController::class, 'printformatcountbridgestonevig'])->name('printformatcountbridgestonevig');
-//    Imprimir formato de conteo APT Bridgestone
+    //    Imprimir formato de conteo APT Bridgestone
     Route::get('printformatcountaptbridgestone/{id}', [ImprimirConteoAndenController::class, 'printformatcountaptbridgestone'])->name('printformatcountaptbridgestone');
 
-//    ------------------------------------------------- Importadores ---------------------------------------------------
+    //    ------------------------------------------------- Importadores ---------------------------------------------------
     //  Importar comentarios a los embarques
     Route::post('importcommentshipment', [ImportCommentShipmentController::class, 'importcommentshipment'])->name('importcommentshipment');
     //   Importar facturas de los embrques
@@ -103,7 +103,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('uploadfiledeliveries', [ImportOrderPlanController::class, 'index'])->name('uploadfiledeliveries');
     //  Subir la evidencia documental del embarque
     Route::put('orderdeliveries.uploadfile/{id}', [UploadDocumentToShipmentController::class, 'uploadfile'])->name('orderdeliveries.uploadfile');
-//    Subir facturas del embarque
+    //    Subir facturas del embarque
     Route::get('orderdeliveries/{id}/adddeliveries', [StorageShipmentBillingsController::class, 'index'])->name('orderdeliveries.adddeliveries');
     Route::put('orderdeliveriesadddelivery/{id}', [StorageShipmentBillingsController::class, 'store'])->name('orderdeliveriesadddelivery');
 
@@ -113,12 +113,12 @@ Route::middleware(['auth'])->group(function () {
     //  Cancelar el embarque
     Route::put('cancelshipment/{id}', [CancelOrderDeliveryController::class, 'index'])->name('cancelshipment');
 
-//    ---------------------------------------------  Monitor de operaciones ---------------------------------------------
+    //    ---------------------------------------------  Monitor de operaciones ---------------------------------------------
     Route::resource('monitoroperation', MonitorOperationController::class)->except('destroy', 'show', 'store');
     Route::get('getdataoperationmonitor', [MonitorOperationController::class, 'getDataOperationMonitor'])->name('getdataoperationmonitor');
 
-//    ---------------------------- Eventos de Embarques desde el monitor de operaciones---------------------------------
-//    Registrar el incio de armado o lanzamiento de ola
+    //    ---------------------------- Eventos de Embarques desde el monitor de operaciones---------------------------------
+    //    Registrar el incio de armado o lanzamiento de ola
     Route::put('addstartshipment/{id}', [StartOrderDeliveryController::class, 'index'])->name('addstartshipment');
     //  Registrar Preparado En Piso o Armando
     Route::put('addendchecker/{id}', [EndCheckOrderDeliveryController::class, 'index'])->name('shipmentoperation.addendchecker');
@@ -130,33 +130,33 @@ Route::middleware(['auth'])->group(function () {
     Route::put('addendload/{id}', [FinishLoadOrderDeliveryController::class, 'index'])->name('shipmentoperation.addendload');
     //  Registrar envío de documentos a facturacion
     Route::put('addsenddocument/{id}', [SendDocumentOrderDeliveryController::class, 'index'])->name('shipmentoperation.addsenddocument');
-//    Registrar solicitud de carta porte
+    //    Registrar solicitud de carta porte
     Route::put('requestletter/{id}', [RequestLetterController::class, 'requestletter'])->name('requestletter');
-//    Registrar la recepcion de la carta porté
+    //    Registrar la recepcion de la carta porté
     Route::put('responseletter/{id}', [RequestLetterController::class, 'responseletter'])->name('responseletter');
     //  -------------------------------- Eventos de Embarques desde el monitor de operaciones---------------------------------
-//    Monitor principal
+    //    Monitor principal
     Route::get('monitoroperation/{id}/monitorcheck', [ModuleMonitorVerifyProcessController::class, 'index'])->name('monitoroperation.monitorcheck');
-//    Reabrir conteo de sde web
+    //    Reabrir conteo de sde web
     Route::post('openCount', [OpenVerificationProcessController::class, 'index'])->name('openCount');
-//    Cerrar proceso de verificación
+    //    Cerrar proceso de verificación
     Route::post('closeverificprocess', [CloseVerificationProcessController::class, 'index'])->name('closeverificprocess');
-//    Agregar numero de parte al embarque
+    //    Agregar numero de parte al embarque
     Route::post('addpartnumbertoshipment', [AddPartNumberToShipmentController::class, 'index'])->name('addpartnumbertoshipment');
-//    Registrar concepto de faltante
+    //    Registrar concepto de faltante
     Route::put('registermissingconcep/{id}', [RegisterMissingConcepToShipmentController::class, 'index'])->name('registermissingconcep');
-//    Eliminar un lpn desde el módulo de verificacion
+    //    Eliminar un lpn desde el módulo de verificacion
     Route::post('deletelpnfromshipment', [DeleteLpnFromShipmentController::class, 'index'])->name('deletelpnfromshipment');
 
-//    ---------------------------------------------  Monitor de trafico ---------------------------------------------
+    //    ---------------------------------------------  Monitor de trafico ---------------------------------------------
     Route::resource('monitoranalistatrafico', MonitorTrafficController::class)->except('destroy', 'show', 'create');
     Route::get('getdatamonitortraffic', [MonitorTrafficController::class, 'getDataMonitorTraffic'])->name('getdatamonitortraffic');
-//    Registro de incio de facturacion
+    //    Registro de incio de facturacion
     Route::put('addstartgoodissuedate/{id}', [StartGoogIssueController::class, 'index'])->name('addstartgoodissuedate');
-//    Finalizar el proceso de facturacion
+    //    Finalizar el proceso de facturacion
     Route::put('addgoodissuedate/{id}', [FinishGoodIssueController::class, 'index'])->name('addgoodissuedate');
 
-//    ------------------------------  Monitor General de timpos de proceso calculado -------------------------------
+    //    ------------------------------  Monitor General de timpos de proceso calculado -------------------------------
     Route::resource('ordermonitor', OrderMonitorController::class)->except(['show', 'destroy', 'create', 'store']);
     Route::get('getDataMonitor', [OrderMonitorController::class, 'getDataMonitor'])->name('getDataMonitor');
 
@@ -173,8 +173,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('getshipmentstage', [ShipmentStagesController::class, 'getshipmentstage'])->name('getshipmentstage');
     Route::get('shipmentstages/{id}/editstage', [ShipmentStagesController::class, 'editstage']);
 
-//    ----------------------------------------------- Asignacion de Transporte a Viaje----------------------------------
-//    Agregar datos del transporte esperado
+    //    ----------------------------------------------- Asignacion de Transporte a Viaje----------------------------------
+    //    Agregar datos del transporte esperado
     Route::resource('datatransport', StorageShipmentTransportsController::class)->only(['index', 'edit', 'update']);
     Route::get('getDataTransportShipment', [StorageShipmentTransportsController::class, 'getDataTransportShipment'])->name('getDataTransportShipment');
     // Imprimir el fotmato de QR para acceso a cedis
@@ -184,11 +184,11 @@ Route::middleware(['auth'])->group(function () {
     //  --------------------------------------------------  Monitor de PODS  ------------------------------------------------------------
     Route::resource('monitorpods', MonitorPodsController::class)->except(['destroy', 'update', 'edit']);
     Route::get('getDataMonitorPods', [MonitorPodsController::class, 'getDataMonitorPods'])->name('getDataMonitorPods');
-//    Route::delete('deletefilepod/{id}', [MonitorPodsController::class,'deletefilepod'])->name('deletefilepod');
+    //    Route::delete('deletefilepod/{id}', [MonitorPodsController::class,'deletefilepod'])->name('deletefilepod');
     Route::post('deletefilepod', [EventsPodsController::class, 'deletefilepod'])->name('deletefilepod');
-//    Actualizar el estatus del documento si es aceptado o rechazado
+    //    Actualizar el estatus del documento si es aceptado o rechazado
     Route::put('updatestatuspods/{id}', [EventsPodsController::class, 'updatestatuspods'])->name('updatestatuspods');
-//    Subir documentos al embarque
+    //    Subir documentos al embarque
     Route::post('uploadPdfToShipment/{id}/uploadpdf', [UploadDocumentController::class, 'index'])->name('uploadPdfToShipment');
     //  Buscar documentos POD en Rcontrol desde el monitor web
     Route::post('searchPODInRecConfiable', [SearchPODController::class, 'index'])->name('searchPODInRecConfiable');
@@ -198,12 +198,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('getscheduleinverse', [ScheduleInverseController::class, 'getScheduleInverse'])->name('getscheduleinverse');
     Route::post('activateschedulle', [ScheduleInverseController::class, 'activateschedulle'])->name('activateschedulle');
 
-//    Detalle del horario de inversa
+    //    Detalle del horario de inversa
     Route::get('scheduleinverseshow/{id}', [ScheduleInverseDetailController::class, 'index'])->name('scheduleinverseshow');
     Route::get('getSchedulleInverseDetail', [ScheduleInverseDetailController::class, 'getSchedulleInverseDetail'])->name('getSchedulleInverseDetail');
     Route::post('changestatusdetail', [ScheduleInverseDetailController::class, 'changestatusdetail'])->name('changestatusdetail');
 
-//    Vista detalle de las citas
+    //    Vista detalle de las citas
     Route::get('viewschedulleinverse', [ViewSchedulleInverseController::class, 'index'])->name('viewschedulleinverse');
 
     //  --------------------------------------------------  Realizar reserva de bloques para entrega de producto -------------------
@@ -211,19 +211,19 @@ Route::middleware(['auth'])->group(function () {
     Route::get('getreserveschedulleinverse', [StorageShipmentScheduleController::class, 'getReserveschedulleinverse'])->name('getreserveschedulleinverse');
     Route::get('getDetailIncidenteJourney', [StorageShipmentScheduleController::class, 'getDetailIncidenteJourney'])->name('getDetailIncidenteJourney');
 
-//    Consultas para contruir el horario de cantidades al crear cita
+    //    Consultas para contruir el horario de cantidades al crear cita
     Route::get('getQuantityForDays', [StorageShipmentScheduleController::class, 'getQuantityForDays'])->name('getQuantityForDays');
     Route::get('getWorkdays', [StorageShipmentScheduleController::class, 'getWorkdays'])->name('getWorkdays');
     Route::get('getQuantityMax', [StorageShipmentScheduleController::class, 'getQuantityMax'])->name('getQuantityMax');
 
     Route::post('saveSchedulleInverse', [StorageShipmentScheduleController::class, 'saveSchedulleInverse'])->name('saveSchedulleInverse');
 
-//    Eventos del horario
-//    Imprimir formato de cita a detalle
+    //    Eventos del horario
+    //    Imprimir formato de cita a detalle
     Route::get('schedulleinverseprinformat/{id}', [PrinFormatInvoiceSchedulleController::class, 'schedulleinverseprinformat'])->name('schedulleinverseprinformat');
     //  -----------------------------------  Detalle del folio de reserva de cita de horario de devoluciones -------------------
 
-//    ****************************************************** INCIO DE MONITORES  ********************************************************
+    //    ****************************************************** INCIO DE MONITORES  ********************************************************
     //  ------------------------------------------------  Monitor de trafico ----------------------------------------------------
     Route::get('monitortrafico', [MonitorShipmentController::class, 'monitortrafico'])->name('monitortrafico');
     Route::get('getDataMonitorTrafico', [MonitorShipmentController::class, 'getDataMonitorTrafico'])->name('getDataMonitorTrafico');
@@ -243,29 +243,29 @@ Route::middleware(['auth'])->group(function () {
     //  -----------------------------------------------  Monitor de interfaces a procesar  ----------------------------------------
     Route::resource('edishipments', EdiShipmentsController::class)->only(['index', 'destroy']);
 
-//    ****************************************************** FIN DE MONITORES  ********************************************************
+    //    ****************************************************** FIN DE MONITORES  ********************************************************
 
-//    ****************************************************** INICIO DE CATALOGOS   ********************************************************
-//    Categorias de incidencias
+    //    ****************************************************** INICIO DE CATALOGOS   ********************************************************
+    //    Categorias de incidencias
     Route::resource('storagecategoryincidences', StorageCategoryIncidencesController::class);
     Route::get('getdatacategoryincidences', [StorageCategoryIncidencesController::class, 'getDatacategoryincidences'])->name('getdatacategoryincidences');
-    //Detalle de categorias de incidencias
+    // Detalle de categorias de incidencias
     Route::get('storagecategoryincidences/{id}/adddetail', [StorageCategoryIncidenceDetailController::class, 'adddetailcategory'])->name('storagecategoryincidences');
     Route::put('storedetailcategoryincidence/{id}', [StorageCategoryIncidenceDetailController::class, 'storedetailcategoryincidence'])->name('storedetailcategoryincidence');
     Route::put('updatedetail/{id}', [StorageCategoryIncidenceDetailController::class, 'updatedetail'])->name('updatedetail');
     //  Tipos de embarques
     Route::resource('shipmenttypes', ShipmentTypesController::class)->except('destroy', 'show');
     Route::get('getDataShipmentTypes', [ShipmentTypesController::class, 'getDataShipmentTypes'])->name('getDataShipmentTypes');
-//    ****************************************************** FIN DE CATALOGOS   ********************************************************
+    //    ****************************************************** FIN DE CATALOGOS   ********************************************************
 
-//    ****************************************************** INICIO DE REPORTES   ********************************************************
+    //    ****************************************************** INICIO DE REPORTES   ********************************************************
     Route::get('reporteshipments', [ReportShipmentController::class, 'index'])->name('reporteshipments');
     Route::get('exportreportshipments', [ReportShipmentController::class, 'exportreportshipments'])->name('exportreportshipments');
-//    ****************************************************** FIN DE REPORTES   ********************************************************
+    //    ****************************************************** FIN DE REPORTES   ********************************************************
 
     //    ****************************************************** INICIO DE LOGISTICA INVERSA   ********************************************************
 
-//    Reporte de incidencias en viajes
+    //    Reporte de incidencias en viajes
     Route::resource('storageincidencesjourneys', StorageIncidenceJourneysController::class);
     Route::get('getDataIncidenceShipments', [StorageIncidenceJourneysController::class, 'getDataIncidenceShipments'])->name('getDataIncidenceShipments');
 
@@ -273,38 +273,38 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('followupofincidences', FollowupIncidenceJournyesController::class)->except(['destroy']);
     Route::get('getDataIncidences', [FollowupIncidenceJournyesController::class, 'getDataIncidences'])->name('getDataIncidences');
 
-//    Eventos de Incidencias de viajes
+    //    Eventos de Incidencias de viajes
     Route::get('storageincidencesjourneys/{folioid}/open', [EventsIncidenceJourneysController::class, 'openincidence'])->name('openincidence');
     Route::post('uploadevidenceshipment/{id}/upload', [EventsIncidenceJourneysController::class, 'uploadevidenceshipment'])->name('uploadevidenceshipment');
 
-//    Imprimir PDF para Devolucion
+    //    Imprimir PDF para Devolucion
     Route::get('storageincidencesjourneysgeneratepdf/{folioid}', [EventsIncidenceJourneysController::class, 'generatepdf'])->name('storageincidencesjourneysgeneratepdf');
 
     Route::put('storageincidencesjourneysupdatedetail/{id}', [EventsIncidenceJourneysController::class, 'updatedetail'])->name('storageincidencesjourneys.updatedetail');
     Route::get('getDetailIncidenceCreate', [EventsIncidenceJourneysController::class, 'getDetailIncidenceCreate'])->name('getDetailIncidenceCreate');
 
-//    Agregar respuesta a la incidencia
+    //    Agregar respuesta a la incidencia
     Route::get('storageincidencesjourneys/{id}/viewresponse', [ResponseIncidenceJourneyController::class, 'viewresponse'])->name('storageincidencesjourneys.response');
     Route::put('storageincidencesjourneysresponsestore/{id}', [ResponseIncidenceJourneyController::class, 'responsestore'])->name('storageincidencesjourneys.responsestore');
     Route::post('uploadEvidenceForIncidences/{id}/upload', [ResponseIncidenceJourneyController::class, 'uploadEvidenceForIncidences']);
 
     Route::get('searchPhotoInShipment/{id}', [ResponseIncidenceJourneyController::class, 'searchPhotoInShipment'])->name('searchPhotoInShipment');
 
-//    Respuesta de la línea de transporte
+    //    Respuesta de la línea de transporte
     Route::post('saveResponseAcceptIncidence', [ResponseIncidenceTransportController::class, 'saveResponseAcceptIncidence'])->name('saveResponseAcceptIncidence');
     Route::post('saveResponseValidateIncidence', [ResponseIncidenceTransportController::class, 'saveResponseValidateIncidence'])->name('saveResponseValidateIncidence');
 
-//    Firmas de operaciones para las incidencias
+    //    Firmas de operaciones para las incidencias
     Route::resource('storagekeyincidencesopetations', StorageKeyIncidenceOperationController::class)->except(['show', 'destroy']);
     Route::get('getIncidencesKeysPending', [StorageKeyIncidenceOperationController::class, 'getIncidencesKeysPending'])->name('getIncidencesKeysPending');
 
-//    Firmas por area de transporte
+    //    Firmas por area de transporte
     Route::resource('storagekeyincidencestransport', StorageKeyIncidenceTransportController::class);
     Route::get('getIncidencesKeyTransport', [StorageKeyIncidenceTransportController::class, 'getIncidencesKeyTransport'])->name('getIncidencesKeyTransport');
 
     //  -----------------------------------------------  Reportes de embarques  ------------------------------------------------
 
-//    Horario de incidencias y logistica inversa
+    //    Horario de incidencias y logistica inversa
     Route::resource('storagescheduleinverse', StorageScheduleInversesController::class)->except(['destroy']);
     Route::get('getDataInverse', [StorageScheduleInversesController::class, 'getDataInverse'])->name('getDataInverse');
     Route::post('closeprocessinverse', [StorageScheduleInversesController::class, 'closeprocessinverse'])->name('closeprocessinverse');
@@ -334,15 +334,15 @@ Route::middleware(['auth'])->group(function () {
     Route::post('openCountToReceiptInverse', [StorageScheduleInverseOperationsController::class, 'openCountToReceiptInverse'])->name('openCountToReceiptInverse');
     Route::post('openCountCheck', [StorageScheduleInverseOperationsController::class, 'openCountCheck'])->name('openCountCheck');
 
-//    Dashboards
+    //    Dashboards
     Route::get('dashboardshipments', [DashboardShipmentsController::class, 'index'])->name('dashboardshipments');
     Route::post('getDataDashboardShipments', [DashboardShipmentsController::class, 'getDataDashboardShipments'])->name('getDataDashboardShipments');
 
-//    Horario de carga Bridgestone
+    //    Horario de carga Bridgestone
     Route::get('monitoroperationbrid', [ShipmentSchedulleBridgestoneController::class, 'index'])->name('monitoroperationbrid');
     Route::get('getDataSchedulleShipmentBridgestone', [ShipmentSchedulleBridgestoneController::class, 'getDataSchedulleShipmentBridgestone'])->name('getDataSchedulleShipmentBridgestone');
 
-//    Folios de conteos de andén para vigilancia
+    //    Folios de conteos de andén para vigilancia
     Route::resource('storageshipmentfolios', StorageShipmentFoliosController::class)->except(['create', 'store']);
     Route::get('getDataShipmentFolios', [StorageShipmentFoliosController::class, 'getDataShipmentFolios'])->name('getDataShipmentFolios');
     Route::get('storageshipmentfoliospdf/{id}', [StorageShipmentFoliosController::class, 'storageshipmentfoliospdf'])->name('storageshipmentfoliospdf');

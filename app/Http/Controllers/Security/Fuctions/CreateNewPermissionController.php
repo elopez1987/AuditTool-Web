@@ -18,6 +18,7 @@ class CreateNewPermissionController extends BaseController
                 return $resposeSave;
             }
         }
+
         return $this->redirectBackSuccessMessage('Permisos creados con exito!!');
     }
 

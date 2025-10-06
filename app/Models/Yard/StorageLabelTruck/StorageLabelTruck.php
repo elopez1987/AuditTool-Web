@@ -39,6 +39,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read ShipmentTruck|null $truck
  * @property-read StorageUnitType|null $unittype
  * @property-read SystemWarehouse|null $warehouse
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLabelTruck boxNumber($boxnumber)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLabelTruck carrier($carrierid)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLabelTruck forCarrierOperator($carrier)
@@ -63,11 +64,13 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLabelTruck whereTypeid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLabelTruck whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLabelTruck whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class StorageLabelTruck extends Model
 {
     use LogsActivity;
+
     protected $table = 'storagelabeltrucks';
 
     protected $fillable = [
@@ -107,6 +110,7 @@ class StorageLabelTruck extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return StorageLabelTruck::whereIn('storagelabeltrucks.centerid', $centers);
     }
 

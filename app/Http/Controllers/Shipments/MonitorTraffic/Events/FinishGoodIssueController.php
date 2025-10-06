@@ -48,11 +48,13 @@ class FinishGoodIssueController extends BaseController
             $this->createShipmentPod($orderDelivery);
 
             DB::commit();
+
             return $this->redirectBackSuccessMessage('Fin de facturación finalizada con exito.');
         } catch (Exception $e) {
             $error = $e->getMessage();
             Log::error($error);
             DB::rollback();
+
             return $this->errorResponse('No se pudieron guardar los datos, favor de validar.' . $error);
         }
     }
@@ -63,12 +65,6 @@ class FinishGoodIssueController extends BaseController
         $orderDelivery->save();
     }
 
-    /**
-     * @param $orderDelivery
-     * @param $delivery
-     *
-     * @return void
-     */
     public function updateShipmentHeader($orderDelivery, $delivery): void
     {
         $shipmentheader = ShipmentHeader::controlAccessUser()->where('orderid', $orderDelivery->id)->first();
@@ -78,11 +74,6 @@ class FinishGoodIssueController extends BaseController
         $shipmentheader->save();
     }
 
-    /**
-     * @param $orderDelivery
-     *
-     * @return void
-     */
     public function updateShipmentSeal($orderDelivery): void
     {
         $shipmentseal = ShipmentSeal::controlAccessUser()->whereOrderid($orderDelivery->id)->first();
@@ -90,11 +81,6 @@ class FinishGoodIssueController extends BaseController
         $shipmentseal->save();
     }
 
-    /**
-     * @param $orderDelivery
-     *
-     * @return void
-     */
     public function updateOrderMonitor($orderDelivery): void
     {
         $ordermonitor = OrderMonitor::where('orderid', $orderDelivery->id)->first();
@@ -102,11 +88,6 @@ class FinishGoodIssueController extends BaseController
         $ordermonitor->save();
     }
 
-    /**
-     * @param $orderDelivery
-     *
-     * @return void
-     */
     public function closeUnitForProcessAmazon($orderDelivery): void
     {
         //            Cierra la unidad virtual para clientes amazon
@@ -118,12 +99,6 @@ class FinishGoodIssueController extends BaseController
         }
     }
 
-    /**
-     * @param $parameter
-     * @param $orderDelivery
-     *
-     * @return void
-     */
     public function sendMessages($parameter, $orderDelivery): void
     {
         if (! empty($parameter) && in_array('SDC-09', (array) $parameter)) {
@@ -137,11 +112,6 @@ class FinishGoodIssueController extends BaseController
         }
     }
 
-    /**
-     * @param $orderDelivery
-     *
-     * @return void
-     */
     public function createShipmentPod($orderDelivery): void
     {
         ShipmentPod::updateOrCreate([

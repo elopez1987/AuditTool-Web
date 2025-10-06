@@ -33,6 +33,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read SystemCenterDistribution $center
  * @property-read SystemStatus|null $status
  * @property-read User $user
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourType name($name)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourType newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourType newQuery()
@@ -53,12 +54,13 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourType whereValue03($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourType withTrashed(bool $withTrashed = true)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourType withoutTrashed()
+ *
  * @mixin \Eloquent
  */
 class StorageSafetyTourType extends Model
 {
-    use SoftDeletes;
     use LogsActivity;
+    use SoftDeletes;
 
     protected $table = 'storagesafetytourtypes';
 
@@ -79,6 +81,7 @@ class StorageSafetyTourType extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return StorageSafetyTourType::whereIn('storagesafetytourtypes.centerid', $centers);
     }
 
@@ -91,6 +94,7 @@ class StorageSafetyTourType extends Model
     {
         return $this->belongsTo(User::class, 'userid');
     }
+
     public function status(): BelongsTo
     {
         return $this->belongsTo(SystemStatus::class, 'statusid', 'statusid');

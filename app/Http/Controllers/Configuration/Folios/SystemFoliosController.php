@@ -11,6 +11,7 @@ class SystemFoliosController extends BaseController
     public function index()
     {
         $this->authorize('systemfolios.index');
+
         return view('Configuration.SystemFolios.index');
     }
 
@@ -29,6 +30,7 @@ class SystemFoliosController extends BaseController
             ->select([
                 'systemfolio.*',
             ]);
+
         return $this->showDataToView($data, 'Configuration.SystemFolios.partials.buttons');
     }
 
@@ -37,6 +39,7 @@ class SystemFoliosController extends BaseController
         $this->authorize('systemfolios.create');
         $status = $this->getStatusForSchema('FOL');
         $centers = $this->getCenterForSelect();
+
         return view(
             'Configuration.SystemFolios.create',
             compact('centers', 'status')
@@ -47,18 +50,21 @@ class SystemFoliosController extends BaseController
     {
         $folio = new SystemFolio($request->all());
         $folio->save();
+
         return $this->redirectBackSuccess();
     }
 
     public function edit(SystemFolio $systemfolio)
     {
         $this->authorize('systemfolios.edit');
+
         return view('Configuration.SystemFolios.edit', compact('systemfolio'));
     }
 
     public function update(Request $request, SystemFolio $systemfolio)
     {
         $systemfolio->update($request->all());
+
         return $this->redirectBackSuccess();
     }
 }

@@ -27,6 +27,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
  * @property-read User|null $user
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListEvidenceProcessUnit newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListEvidenceProcessUnit newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListEvidenceProcessUnit query()
@@ -45,6 +46,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListEvidenceProcessUnit whereValue03($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListEvidenceProcessUnit whereValue04($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListEvidenceProcessUnit whereValue05($value)
+ *
  * @mixin \Eloquent
  */
 class CheckListEvidenceProcessUnit extends Model
@@ -53,7 +55,9 @@ class CheckListEvidenceProcessUnit extends Model
 
     //    Tabla para guardar las fotos de proceso de carga o descarga mediante check list
     public $timestamps = true;
+
     protected $table = 'storagecheckListevidenceprocessunit';
+
     protected $primaryKey = 'id';
 
     protected $fillable = [
@@ -85,6 +89,7 @@ class CheckListEvidenceProcessUnit extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return CheckListEvidenceProcessUnit::whereIn('storagecheckListevidenceprocessunit.centerid', $centers);
     }
 }

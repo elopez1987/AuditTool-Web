@@ -14,7 +14,9 @@ use Illuminate\Support\Facades\Http;
 class SendEventForShipmentCommand extends Command
 {
     use GetParameters;
+
     protected $signature = 'rc:SendEventForShipmentCommand';
+
     protected $description = 'Envia los eventos operativos a recurso confiable, registro de ingreso, inicio y fin de proceso, facturacion y salida de unidad';
 
     public function handle(): void
@@ -26,7 +28,7 @@ class SendEventForShipmentCommand extends Command
         $endPoint = 'https://www.rcontrol.com.mx/Japi/save_event_rest_std?';
         $token = $this->getToken();
         $url = $endPoint . 'token=' . $token;
-        $conect = new Client();
+        $conect = new Client;
         foreach ($shipments as $shipment) {
             $parameter = $this->getParametersOfWarehouse($shipment->warehouseid);
             if (! empty($parameter) && in_array('SWH-21', (array) $parameter)) {
@@ -63,6 +65,7 @@ class SendEventForShipmentCommand extends Command
                 'plate' => $dataQuery->trucknumber,
             ],
         ];
+
         return json_encode($json);
     }
 
@@ -73,6 +76,7 @@ class SendEventForShipmentCommand extends Command
         $url = $dataapi->value02 . $endPoint . 'arg00=' . $dataapi->value03 . '&' . 'arg01=' . $dataapi->value04;
         $responseRControl = Http::post($url);
         $data = json_decode($responseRControl->getBody()->getContents());
+
         return $data->token;
     }
 

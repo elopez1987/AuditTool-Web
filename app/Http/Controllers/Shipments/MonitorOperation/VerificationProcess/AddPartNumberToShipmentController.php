@@ -37,6 +37,7 @@ class AddPartNumberToShipmentController extends BaseController
             'quantityrequested' => $request['quantity'],
             'quantityfail' => $request['quantity'],
         ]);
+
         return $this->getJsonResponse('Registro agregado correctamente', [], 200, 'success');
     }
 

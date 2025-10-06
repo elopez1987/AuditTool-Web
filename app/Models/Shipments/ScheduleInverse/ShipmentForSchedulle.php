@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $carrierid
  * @property string|null $statusdevid
  * @property float|null $quantity
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentForSchedulle carrierIn($carrierid)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentForSchedulle newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentForSchedulle newQuery()
@@ -30,17 +31,20 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentForSchedulle whereShipmentid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentForSchedulle whereStatusdevid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentForSchedulle whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class ShipmentForSchedulle extends Model
 {
     public $timestamps = false;
+
     protected $table = 'vw_shipmentforschedulleinverse';
 
     public static function controlAccessUser()
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return ShipmentForSchedulle::whereIn('vw_shipmentforschedulleinverse.warehouseid', $warehouses)
             ->whereIn('vw_shipmentforschedulleinverse.centerid', $centers);
     }

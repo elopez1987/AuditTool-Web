@@ -10,7 +10,7 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Events\AfterSheet;
 
-class InventoryLocationExport implements FromCollection, WithHeadings, WithMapping, WithEvents, ShouldAutoSize
+class InventoryLocationExport implements FromCollection, ShouldAutoSize, WithEvents, WithHeadings, WithMapping
 {
     public function headings(): array
     {

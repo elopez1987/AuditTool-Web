@@ -20,6 +20,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property string $created_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListDetailLiftTruck newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListDetailLiftTruck newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListDetailLiftTruck query()
@@ -34,14 +35,17 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListDetailLiftTruck whereValue02($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListDetailLiftTruck whereValue03($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListDetailLiftTruck whereValue04($value)
+ *
  * @mixin \Eloquent
  */
 class CheckListDetailLiftTruck extends Model
 {
     use LogsActivity;
+
     public $timestamps = false;
 
     protected $table = 'checklistlifttruckdetails';
+
     protected $primaryKey = 'id';
 
     protected $fillable = [

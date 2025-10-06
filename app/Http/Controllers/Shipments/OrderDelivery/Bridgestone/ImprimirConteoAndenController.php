@@ -24,6 +24,7 @@ class ImprimirConteoAndenController extends BaseController
         }
         $fortmat = 'Shipments.OrderDeliveries.Formats.Bridgestone.ConteoAndenes';
         $pdf = Pdf::loadView($fortmat, compact('orderDelivery', 'conteos'))->setPaper('A4', 'landscape');
+
         return response($pdf->output(), 200)->header('Content-Type', 'application/pdf');
     }
 
@@ -41,6 +42,7 @@ class ImprimirConteoAndenController extends BaseController
         }
         $fortmat = 'Shipments.OrderDeliveries.Formats.Bridgestone.ConteoAndenesVig';
         $pdf = Pdf::loadView($fortmat, compact('orderDelivery', 'conteos'))->setPaper('A4', 'landscape');
+
         return response($pdf->output(), 200)->header('Content-Type', 'application/pdf');
     }
 
@@ -55,6 +57,7 @@ class ImprimirConteoAndenController extends BaseController
         $fortmat = 'Shipments.OrderDeliveries.Formats.Bridgestone.ControlConteo';
         $pdf = Pdf::loadView($fortmat, compact('orderDelivery', 'controlCount', 'conteos'))
             ->setPaper('A4', 'landscape');
+
         return response($pdf->output(), 200)->header('Content-Type', 'application/pdf');
     }
 }

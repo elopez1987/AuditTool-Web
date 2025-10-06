@@ -9,9 +9,11 @@ use Illuminate\Support\Facades\Config;
 /**
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SendTelegram newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SendTelegram newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SendTelegram query()
+ *
  * @mixin \Eloquent
  */
 class SendTelegram extends Model
@@ -19,6 +21,7 @@ class SendTelegram extends Model
     use Notifiable;
 
     protected $table = 'telegrams';
+
     protected $dateFormat = 'Y-m-d H:i:s';
 
     protected $fillable = [
@@ -43,6 +46,7 @@ class SendTelegram extends Model
             'telegramid' => Config::get('services.telegram_yard'),
         ]);
         $notice->save();
+
         return $notice;
     }
 }

@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $auxiliary03
  * @property string|null $auxiliary04
  * @property string|null $auxiliary05
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|AccessCarrier newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|AccessCarrier newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|AccessCarrier query()
@@ -26,12 +27,15 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|AccessCarrier whereCenterid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|AccessCarrier whereRecordid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|AccessCarrier whereUsername($value)
+ *
  * @mixin \Eloquent
  */
 class AccessCarrier extends Model
 {
     public $timestamps = false;
+
     protected $table = 'securityaccesscarriers';
+
     protected $primaryKey = 'recordid';
 
     protected $fillable = [

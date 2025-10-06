@@ -17,6 +17,7 @@ class ReceiptUnitAdjustmentController extends BaseController
         $status = $this->getStatusForSchema('RUS');
         $concepts = StorageReason::where('type', 'IN')->select(['id', 'name'])->get();
         $unitstatus = StorageUnitStatus::where('statusid', 'E')->select(['id', 'name'])->get();
+
         return view('Yards.AdjustmentUnit.index', compact('status', 'concepts', 'unitstatus'));
     }
 
@@ -36,6 +37,7 @@ class ReceiptUnitAdjustmentController extends BaseController
         $receiptunit->razonstatusid = $request['razonstatusid'] ?? $receiptunit->razonstatusid;
         $receiptunit->unitstatusid = $request['unitstatus'] ?? $receiptunit->unitstatusid;
         $receiptunit->save();
+
         return $this->redirectBackSuccessMessage('Registro actualizado con exito.');
     }
 }

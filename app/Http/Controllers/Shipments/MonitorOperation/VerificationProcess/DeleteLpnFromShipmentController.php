@@ -34,10 +34,12 @@ class DeleteLpnFromShipmentController extends Controller
             $lpn->delete();
             ShipmentStock::where('lpnid', '=', $lpn->lpnid)->delete();
             DB::commit();
+
             return $this->responseSuccessAjax('', 'Proceso ejecuta con exito.');
         } catch (Exception $e) {
             DB::rollback();
             Log::error($e->getMessage());
+
             return $this->responseSuccessAjax('', 'Error al procesar la solicitud, favor de intentarlo de nuevo.');
         }
     }

@@ -27,6 +27,7 @@ class AddPlanReceiptController extends BaseController
             'schemaid' => 'SRE',
             'statusid' => 'PG',
         ]);
+
         return response()->json([
             'shipmentid' => $receipt->shipmentid,
             'addasndate' => $receipt->addasndate,

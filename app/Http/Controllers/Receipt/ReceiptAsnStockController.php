@@ -17,6 +17,7 @@ class ReceiptAsnStockController extends BaseController
     {
         $receiptasn = ReceiptAsn::controlAccessUser()->whereId($id)->first();
         $stocks = ReceiptStock::controlAccessUser()->whereReceiptid($id)->get();
+
         return view(
             'Receipt.ReceiptAsn.addStock',
             compact('receiptasn', 'stocks')
@@ -40,6 +41,7 @@ class ReceiptAsnStockController extends BaseController
         if ($success) {
             return $this->redirectBackSuccess();
         }
+
         return redirect::back()->withInput()->with(session()->flash('error', 'No se pudieron guardar los datos!!' . $error));
     }
 
@@ -72,6 +74,7 @@ class ReceiptAsnStockController extends BaseController
         $stock->quantitytrue = $request['quantitytrue'];
         $stock->expirecode = $request['expirecode'];
         $stock->save();
+
         return $this->redirectBackSuccess();
     }
 
@@ -79,6 +82,7 @@ class ReceiptAsnStockController extends BaseController
     {
         $stock = ReceiptStock::controlAccessUser()->findOrFail($id);
         $stock->delete();
+
         return $this->redirectBackSuccess();
     }
 }

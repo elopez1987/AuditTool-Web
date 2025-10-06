@@ -24,6 +24,7 @@ trait StorageWebPhotoTrait
         $directory = $this->createDirectoryPath($centerid, $module, $submodule, $folder);
         $basePath = public_path('storage/' . $directory . $imageName);
         $this->resizeImage($file, $basePath);
+
         return $directory . $imageName;
     }
 
@@ -61,6 +62,7 @@ trait StorageWebPhotoTrait
         if (! Storage::exists($directory)) {
             \Storage::makeDirectory($directory);
         }
+
         return $directory;
     }
 }

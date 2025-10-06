@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $stageid
  * @property string $username
  * @property string $created_at
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageDoorStage newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageDoorStage newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageDoorStage query()
@@ -23,12 +24,15 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageDoorStage whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageDoorStage whereStageid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageDoorStage whereUsername($value)
+ *
  * @mixin \Eloquent
  */
 class StorageDoorStage extends Model
 {
     public $timestamps = false;
+
     protected $table = 'storagedoorstages';
+
     protected $primaryKey = 'id';
 
     protected $fillable = [
@@ -42,6 +46,7 @@ class StorageDoorStage extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return StorageDoorStage::whereIn('storagedoorstages.centerid', $centers);
     }
 

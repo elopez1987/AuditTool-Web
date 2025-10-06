@@ -42,6 +42,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read User|null $user
  * @property-read StorageZone|null $zonenew
  * @property-read StorageZone|null $zoneold
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryCountStock newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryCountStock newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryCountStock query()
@@ -62,6 +63,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryCountStock whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryCountStock whereUserid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryCountStock whereZoneid($value)
+ *
  * @mixin \Eloquent
  */
 class InventoryCountStock extends Model
@@ -69,6 +71,7 @@ class InventoryCountStock extends Model
     use LogsActivity;
 
     protected $table = 'inventorycountstock';
+
     protected $primaryKey = 'id';
 
     protected $fillable = [
@@ -100,6 +103,7 @@ class InventoryCountStock extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return InventoryCountStock::whereIn('inventorycountstock.centerid', $centers);
     }
 
@@ -137,6 +141,7 @@ class InventoryCountStock extends Model
     {
         return $this->belongsTo(User::class, 'userid', 'id')->withTrashed()->select('id', 'username', 'name');
     }
+
     public function folio()
     {
         return $this->belongsTo(ReceiptUnit::class, 'folionumber', 'id');

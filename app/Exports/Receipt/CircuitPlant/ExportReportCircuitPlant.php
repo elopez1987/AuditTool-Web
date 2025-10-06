@@ -13,11 +13,14 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 
-class ExportReportCircuitPlant implements FromCollection, WithHeadings, WithEvents, ShouldAutoSize, WithMapping
+class ExportReportCircuitPlant implements FromCollection, ShouldAutoSize, WithEvents, WithHeadings, WithMapping
 {
     use Exportable;
+
     private $centerid;
+
     private $entrydate;
+
     /**
      * @var mixed
      */
@@ -77,7 +80,7 @@ class ExportReportCircuitPlant implements FromCollection, WithHeadings, WithEven
             ->leftJoin('shipmentcarriers', 'receiptunits.carrierid', '=', 'shipmentcarriers.id')
             ->leftJoin('storagereceiptunitarrive', 'receiptunits.id', '=', 'storagereceiptunitarrive.value01')
             ->leftJoin('receipttrucks', 'receiptunits.foliotruck', '=', 'receipttrucks.id')
-            ->whereIn('receiptunits.carrierid', [40286,40305,42433,42434])
+            ->whereIn('receiptunits.carrierid', [40286, 40305, 42433, 42434])
             ->whereBetween('receiptunits.entrydate', [$this->entrydate, $this->finishdate])
             ->where([
                 ['receiptunits.razonstatusid', '=', '2'],

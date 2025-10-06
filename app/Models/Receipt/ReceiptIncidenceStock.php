@@ -28,6 +28,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \App\Models\Receipt\ReceiptStock $stock
  * @property-read \App\Models\Receipt\StorageCategoryIncidenceDetail|null $subcategoryincidence
  * @property-read User|null $user
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptIncidenceStock newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptIncidenceStock newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptIncidenceStock query()
@@ -45,12 +46,15 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptIncidenceStock whereValue02($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptIncidenceStock whereValue03($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptIncidenceStock whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class ReceiptIncidenceStock extends Model
 {
     public $timestamps = false;
+
     protected $table = 'receiptincidencestock';
+
     protected $primaryKey = 'recordid';
 
     protected $fillable = [

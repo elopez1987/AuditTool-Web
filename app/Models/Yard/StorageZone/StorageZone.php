@@ -14,6 +14,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * @method static whereStatusid(string $string)
+ *
  * @property int $id
  * @property string $centerid
  * @property string|null $warehouseid
@@ -36,6 +37,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read SystemCenterDistribution $center
  * @property-read SystemStatus $status
  * @property-read SystemWarehouse|null $warehouse
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageZone name($name)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageZone newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageZone newQuery()
@@ -60,14 +62,18 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageZone whereZoneid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageZone withTrashed(bool $withTrashed = true)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageZone withoutTrashed()
+ *
  * @mixin \Eloquent
  */
 class StorageZone extends Model
 {
     use LogsActivity;
     use SoftDeletes;
+
     protected $table = 'storagezones';
+
     protected $dateFormat = 'Y-m-d H:i:s';
+
     protected $fillable = [
         'centerid',
         'warehouseid',
@@ -87,10 +93,12 @@ class StorageZone extends Model
         'updated_at',
         'schemaid',
     ];
+
     protected $attributes = [
         'statusid' => 'E',
         'schemaid' => 'STS',
     ];
+
     protected $casts = [
         'configurationflag' => 'array',
     ];
@@ -99,10 +107,12 @@ class StorageZone extends Model
     {
         return LogOptions::defaults()->logFillable();
     }
+
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
         $warehouses = SecurityAccessWarehouse::Warehouses();
+
         return StorageZone::whereIn('storagezones.centerid', $centers)
             ->whereIn('storagezones.warehouseid', $warehouses);
     }
@@ -112,6 +122,7 @@ class StorageZone extends Model
     {
         return $this->belongsTo(SystemCenterDistribution::class, 'centerid');
     }
+
     public function status(): BelongsTo
     {
         return $this->belongsTo(SystemStatus::class, 'statusid', 'statusid');

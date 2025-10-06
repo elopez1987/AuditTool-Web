@@ -14,6 +14,7 @@ use Log;
 class TiempoExcedidoParaSalirDePatio extends Command
 {
     protected $signature = 'command:TiempoExcedidoParaSalirDePatio';
+
     protected $description = 'Envia mensaje de whatsapps de cajas con tiempo excedido para salir de la bodega de one roof ';
 
     public function __construct()
@@ -23,7 +24,7 @@ class TiempoExcedidoParaSalirDePatio extends Command
 
     public function handle()
     {
-        $client = new Client();
+        $client = new Client;
         $url = 'https://api.1msg.io/HEI523482986/sendTemplate';
         $parameterCenter = $this->getParameter();
         if (! empty($parameterCenter) && in_array('SDC-01', (array) $parameterCenter)) {
@@ -80,12 +81,6 @@ class TiempoExcedidoParaSalirDePatio extends Command
         return SystemCenterDistribution::whereCenterid('HENKELTOL01')->value('configurationflag');
     }
 
-    /**
-     * @param $unit
-     * @param $contact
-     *
-     * @return array
-     */
     public function getBodyData($unit, $contact): array
     {
         return [

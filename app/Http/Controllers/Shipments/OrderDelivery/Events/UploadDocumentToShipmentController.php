@@ -18,6 +18,7 @@ class UploadDocumentToShipmentController extends BaseController
         $pathdb = $this->addFileToModel($request, $shipment);
         $shipment->evidencefile = $pathdb;
         $shipment->save();
+
         return $this->redirectBackSuccessMessage('Archivo cargado con exito!!');
     }
 
@@ -32,6 +33,7 @@ class UploadDocumentToShipmentController extends BaseController
             Storage::makeDirectory($directory, 0755, true);
         }
         Storage::disk('local')->put($filePath, File::get($file));
+
         return $filePath;
     }
 }

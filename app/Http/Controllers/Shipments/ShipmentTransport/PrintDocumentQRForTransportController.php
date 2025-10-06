@@ -15,6 +15,7 @@ class PrintDocumentQRForTransportController extends Controller
         $data = $this->getModelDeliveryForPrintFormat($id);
         $fortmat = 'Shipments.StorageShipmenTransport.partials.format';
         $pdf = PDF::loadView($fortmat, compact('data'));
+
         return $pdf->download('Acceso_De_Entrada-' . $data->id . '.pdf');
     }
 }

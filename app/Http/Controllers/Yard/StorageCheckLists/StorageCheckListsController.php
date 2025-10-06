@@ -14,6 +14,7 @@ class StorageCheckListsController extends BaseController
     {
         $this->authorize('storagechecklists.index');
         $warehouses = $this->getWarehouseForSelect();
+
         return view('Yards.StorageCheckLists.index', compact('warehouses'));
     }
 
@@ -24,12 +25,13 @@ class StorageCheckListsController extends BaseController
             ->Name($request->get('name'))
             ->Warehouse($request->get('warehouseid'))
             ->get();
+
         return DataTables::of($data)
             ->addColumn('btn', 'Yards.StorageCheckLists.partials.buttons')
             ->addColumn('warehousename', function ($row) {
                 return $row->warehouse ? $row->warehouse->name : '';
             })
-            ->rawColumns(['btn','warehousename'])
+            ->rawColumns(['btn', 'warehousename'])
             ->toJson();
     }
 
@@ -38,6 +40,7 @@ class StorageCheckListsController extends BaseController
         $this->authorize('storagechecklists.create');
         $centers = $this->getCenterForSelect();
         $warehouses = $this->getWarehouseForSelect();
+
         return view('Yards.StorageCheckLists.create', compact('centers', 'warehouses'));
     }
 
@@ -45,6 +48,7 @@ class StorageCheckListsController extends BaseController
     {
         $checklist = new StorageCheckList($request->validated());
         $checklist->save();
+
         return $this->successResponse('storagechecklists.index');
     }
 
@@ -53,12 +57,14 @@ class StorageCheckListsController extends BaseController
         $this->authorize('storagechecklists.edit');
         $status = $this->getStatusSTS();
         $warehouses = $this->getWarehouseForSelect();
+
         return view('Yards.StorageCheckLists.edit', compact('storagechecklist', 'status', 'warehouses'));
     }
 
     public function update(Request $request, StorageCheckList $storagechecklist)
     {
         $storagechecklist->update($request->all());
+
         return $this->infoResponse('storagechecklists.index');
     }
 }

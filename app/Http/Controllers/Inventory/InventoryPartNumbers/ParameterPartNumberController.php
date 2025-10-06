@@ -14,6 +14,7 @@ class ParameterPartNumberController extends BaseController
         $model = InventoryPartnumber::controlAccessUser()->where('id', $id)->first();
         $parameters = SystemStatus::whereSchemaid('PIV')
             ->select(['statusid', 'name'])->get();
+
         return view('Inventory.InventoryPartnumbers.Parameters.create', compact('model', 'parameters'));
     }
 
@@ -22,6 +23,7 @@ class ParameterPartNumberController extends BaseController
         $inventorypartnumber = InventoryPartnumber::controlAccessUser()->where('id', $id)->first();
         $inventorypartnumber->configurationflag = $request['parameter'];
         $inventorypartnumber->save();
+
         return $this->redirectBackSuccessMessage('Parametros registrados con exito.');
     }
 }

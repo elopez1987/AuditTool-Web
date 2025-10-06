@@ -11,6 +11,7 @@ class ReceiptTruckTraceController extends BaseController
     public function index()
     {
         $this->authorize('receipttrucktrace.index');
+
         return view('Yards.ReceiptTruckTrace.index');
     }
 
@@ -30,6 +31,7 @@ class ReceiptTruckTraceController extends BaseController
             ->leftJoin('users as u1', 'receipttrucks.createuser', '=', 'u1.id')
             ->leftJoin('users as u2', 'receipttrucks.updateuser', '=', 'u2.id')
             ->get();
+
         return $this->showDataToView($data, '');
     }
 }

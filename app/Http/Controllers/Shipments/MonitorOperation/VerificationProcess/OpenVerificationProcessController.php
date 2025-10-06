@@ -39,10 +39,12 @@ class OpenVerificationProcessController extends BaseController
             }
 
             DB::commit();
+
             return $this->getJsonResponse('Verificación reiniciada', $shipmentControl, 200, 'success');
         } catch (Exception $e) {
             $error = $e->getMessage();
             DB::rollback();
+
             return $this->errorResponse($error);
         }
     }
@@ -59,7 +61,7 @@ class OpenVerificationProcessController extends BaseController
     {
         return ShipmentControl::where('orderid', $orderDelivery->id)
             ->where('quantityfail', '!=', 0)
-            ->select(['recordid', 'quantityfail', 'quantitytrue', 'missingconceptid', 'quantityrequested','partnumberid'])
+            ->select(['recordid', 'quantityfail', 'quantitytrue', 'missingconceptid', 'quantityrequested', 'partnumberid'])
             ->get();
     }
 

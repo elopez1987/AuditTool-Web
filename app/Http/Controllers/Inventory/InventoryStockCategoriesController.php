@@ -13,6 +13,7 @@ class InventoryStockCategoriesController extends BaseController
     {
         $this->authorize('inventorystockcategories.index');
         $status = $this->getStatusForSchema('STS');
+
         return view(
             'Inventory.InventoryStockCategory.index',
             compact('status')
@@ -23,6 +24,7 @@ class InventoryStockCategoriesController extends BaseController
     {
         $data = InventoryStockCategory::with(['status'])
             ->Name($request->get('name'))->get();
+
         return $this->showDataToView(
             $data,
             'Inventory.InventoryStockCategory.partials.buttons'
@@ -32,6 +34,7 @@ class InventoryStockCategoriesController extends BaseController
     public function create()
     {
         $this->authorize('inventorystockcategories.create');
+
         return view('Inventory.InventoryStockCategory.create');
     }
 
@@ -39,12 +42,14 @@ class InventoryStockCategoriesController extends BaseController
     {
         $category = new InventoryStockCategory($request->validated());
         $category->save();
+
         return $this->successResponse('inventorystockcategories.index');
     }
 
     public function edit(InventoryStockCategory $inventorystockcategory)
     {
         $this->authorize('inventorystockcategories.edit');
+
         return view(
             'Inventory.InventoryStockCategory.edit',
             compact('inventorystockcategory')
@@ -54,6 +59,7 @@ class InventoryStockCategoriesController extends BaseController
     public function update(Request $request, InventoryStockCategory $inventorystockcategory)
     {
         $inventorystockcategory->update($request->all());
+
         return $this->redirectBackSuccess();
     }
 }

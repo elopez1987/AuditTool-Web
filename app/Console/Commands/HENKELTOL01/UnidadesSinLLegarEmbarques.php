@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Log;
 class UnidadesSinLLegarEmbarques extends Command
 {
     protected $signature = 'command:UnidadesSinLLegarEmbarques';
+
     protected $description = 'Envia un mensaje de las unidades sin arrivar a la bodega que superan la fecha de cita de carga';
 
     public function __construct()
@@ -25,11 +26,11 @@ class UnidadesSinLLegarEmbarques extends Command
     {
         $parameterCenter = $this->getParameter();
         if (! empty($parameterCenter) && in_array('SDC-04', (array) $parameterCenter)) {
-            $client = new Client();
+            $client = new Client;
             $url = 'https://api.1msg.io/HEI523482986/sendTemplate';
             $shipments = $this->getShipments();
             if (empty($shipments)) {
-                return null;
+                return;
             }
             $contacts = $this->getContacts();
             if (! empty($contacts)) {

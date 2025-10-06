@@ -25,6 +25,7 @@ class MoveBoxController extends BaseController
         $unitstatus = StorageUnitStatus::whereStatusid('E')
             ->whereIn('id', ['1', '2'])
             ->select(['name', 'id'])->get();
+
         return view(
             'Yards.MoveBoxes.index',
             compact('zones', 'locations', 'unitstatus')
@@ -63,11 +64,13 @@ class MoveBoxController extends BaseController
             StorageUnitTrace::createTraceUnit($receiptunit, $razonstatusid);
 
             DB::commit();
+
             return $this->redirectBackSuccessMessage('Unidad reubicada con exito!!');
         } catch (Exception $e) {
             $error = $e->getMessage();
             Log::error($error);
             DB::rollback();
+
             return $this->errorResponse('Error al procesar la solicitud :' . $error);
         }
     }
@@ -99,6 +102,7 @@ class MoveBoxController extends BaseController
         } else {
             $razonstatusid = '26';
         }
+
         return [$status, $razonstatusid];
     }
 
@@ -119,6 +123,7 @@ class MoveBoxController extends BaseController
         } elseif ($zoneid === 'PA') {
             $status = 'IN';
         }
+
         return $status;
     }
 }

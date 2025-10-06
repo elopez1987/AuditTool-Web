@@ -13,11 +13,14 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 
-class ExportReportDetailShipmentChecker implements FromCollection, WithHeadings, WithMapping, WithEvents, ShouldAutoSize, WithColumnFormatting
+class ExportReportDetailShipmentChecker implements FromCollection, ShouldAutoSize, WithColumnFormatting, WithEvents, WithHeadings, WithMapping
 {
     use Exportable;
+
     private $workdayin;
+
     private $workdayout;
+
     private $centerid;
 
     public function __construct($workdayin, $workdayout, $centerid)
@@ -30,7 +33,7 @@ class ExportReportDetailShipmentChecker implements FromCollection, WithHeadings,
     public function columnFormats(): array
     {
         return [
-//            'A' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+            //            'A' => NumberFormat::FORMAT_DATE_DDMMYYYY,
         ];
     }
 
@@ -92,7 +95,7 @@ class ExportReportDetailShipmentChecker implements FromCollection, WithHeadings,
             })
             ->join('users', 'shipmentstock.createuser', '=', 'users.username')
             ->where('orderdeliveries.centerid', $this->centerid)
-            ->whereBetween('shipmentstock.created_at', [$this->workdayin,$this->workdayout])
+            ->whereBetween('shipmentstock.created_at', [$this->workdayin, $this->workdayout])
             ->get();
     }
 

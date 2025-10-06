@@ -23,12 +23,14 @@ class ReceiptTrucksController extends BaseController
         $this->authorize('receipttrucks.index');
         $carriers = $this->getCarriersForSelect();
         $warehouses = $this->getWarehouseForSelect();
+
         return view('Yards.ReceiptTrucks.index', compact('carriers', 'warehouses'));
     }
 
     public function getDataReceiptTrucks(Request $request)
     {
         $data = $this->getDataAll($request);
+
         return DataTables::of($data)
             ->addColumn('btn', 'Yards.ReceiptTrucks.partials.buttons')
             ->rawColumns(['btn'])->toJson();
@@ -40,6 +42,7 @@ class ReceiptTrucksController extends BaseController
         $centers = $this->getCenterForSelect();
         $warehouses = $this->getWarehouseForSelect();
         $carriers = $this->getCarriersForSelect();
+
         return view('Yards.ReceiptTrucks.create', compact('carriers', 'centers', 'warehouses'));
     }
 
@@ -53,10 +56,12 @@ class ReceiptTrucksController extends BaseController
             }
             $receiptTruck = $this->createNewTruck($request);
             DB::commit();
+
             return $this->redirectBackSuccessMessage('Tracto registrado con exito,folio : ' . $receiptTruck->id);
         } catch (Exception $e) {
             $error = $e->getMessage();
             DB::rollback();
+
             return $this->errorResponse('Error al procesar la solicitud : ' . $error);
         }
     }
@@ -65,18 +70,21 @@ class ReceiptTrucksController extends BaseController
     {
         $this->authorize('receipttrucks.edit');
         $carriers = $this->getCarriersForSelect();
+
         return view('Yards.ReceiptTrucks.edit', compact('carriers', 'receipttruck'));
     }
 
     public function update(Request $request, ReceiptTruck $receipttruck)
     {
         $receipttruck->update($request->except('centerid', 'warehouseid'));
+
         return $this->redirectBackSuccessMessage('Registro actualizado con exito');
     }
 
     public function generateinvoicetransporttruck(ReceiptTruck $receipttruck)
     {
         $pdf = PDF::loadView('Yards.ReceiptTrucks.InvoiceFormats.Invoice', compact('receipttruck'));
+
         return $pdf->download('Folio_De_Entrada_Tracto-' . $receipttruck->id . '.pdf');
     }
 
@@ -88,10 +96,12 @@ class ReceiptTrucksController extends BaseController
             ReceiptUnit::controlAccessUser()->where('foliotruck', $receipttruck->id)
                 ->update(['foliotruck' => null]);
             DB::commit();
+
             return $this->redirectBackSuccessMessage('Salida con exito de tracto!!');
         } catch (Exception $e) {
             $error = $e->getMessage();
             DB::rollback();
+
             return $this->errorResponse('Error al procesa la solicitud : ' . $error);
         }
     }

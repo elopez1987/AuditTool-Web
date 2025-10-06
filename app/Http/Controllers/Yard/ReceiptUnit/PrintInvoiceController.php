@@ -20,6 +20,7 @@ class PrintInvoiceController extends Controller
     public function generatelabel($id)
     {
         $receiptunit = ReceiptUnit::findOrFail($id);
+
         return $this->generateLabelTruck($receiptunit, 'web');
     }
 }

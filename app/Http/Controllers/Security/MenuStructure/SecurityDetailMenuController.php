@@ -24,6 +24,7 @@ class SecurityDetailMenuController extends BaseController
                 ]);
             }
         }
+
         return $this->redirectBackSuccessMessage('Modulos agregados con exito.');
     }
 
@@ -40,6 +41,7 @@ class SecurityDetailMenuController extends BaseController
             Log::error($e->getMessage());
             DB::rollback();
         }
+
         return $this->responseSuccessAjax('', '');
     }
 }

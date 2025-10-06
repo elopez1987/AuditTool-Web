@@ -14,6 +14,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property array<array-key, mixed>|null $response
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WsLog newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WsLog newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WsLog query()
@@ -22,6 +23,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WsLog whereRequest($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WsLog whereResponse($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WsLog whereService($value)
+ *
  * @mixin \Eloquent
  */
 class WsLog extends Model
@@ -29,6 +31,7 @@ class WsLog extends Model
     use LogsActivity;
 
     public $timestamps = false;
+
     protected $table = 'ediwslogs';
 
     protected $fillable = [

@@ -12,6 +12,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * @method static whereStatusid(string $string)
+ *
  * @property int $id
  * @property string $name
  * @property string|null $turnid
@@ -29,6 +30,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read int|null $activities_count
  * @property-read SystemCenterDistribution|null $center
  * @property-read SystemStatus $status
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTurn name($name)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTurn newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTurn newQuery()
@@ -45,6 +47,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTurn whereSchemaid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTurn whereTurnid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTurn whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class StorageTurn extends Model
@@ -85,6 +88,7 @@ class StorageTurn extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return StorageTurn::whereIn('centerid', $centers);
     }
 

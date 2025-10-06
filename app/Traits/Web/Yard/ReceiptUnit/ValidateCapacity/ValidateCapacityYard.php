@@ -14,8 +14,8 @@ trait ValidateCapacityYard
     {
         $centerid = $request->get('centerid');
         $parameterCenter = $this->getParametersOfCenter($centerid);
-        if (!$parameterCenter || !in_array('SDC-11', (array)$parameterCenter)) {
-            return null;
+        if (! $parameterCenter || ! in_array('SDC-11', (array) $parameterCenter)) {
+            return;
         }
         $totalExist = ReceiptUnit::controlAccessUser()->whereNotIn('statusid', ['TR', 'ES'])->count();
         $totalLocations = StorageZone::controlAccessUser()

@@ -11,6 +11,7 @@ class LogDeviceForUserController extends BaseController
     public function index()
     {
         $this->authorize('logdeviceuser');
+
         return view('Configuration.LogDeviceUser.index');
     }
 
@@ -21,6 +22,7 @@ class LogDeviceForUserController extends BaseController
                 ->select(['users.name as user', 'securitydeviceforuser.serialnumber', 'securitydeviceforuser.created_at'])
                 ->ForSerialNumber($request->get('serialnumber'))
                 ->get();
+
             return $this->showDataToView($data, []);
         }
     }

@@ -13,6 +13,7 @@ class InventoryPartnumbersController extends BaseController
     public function index()
     {
         $this->authorize('inventorypartnumbers.index');
+
         return view('Inventory.InventoryPartnumbers.index');
     }
 
@@ -22,6 +23,7 @@ class InventoryPartnumbersController extends BaseController
             ->PartNumber($request->get('prtnum'))
             ->Status($request->get('statusid'))
             ->select(['inventorypartnumbers.*']);
+
         return $this->showDataToView($data, 'Inventory.InventoryPartnumbers.partials.buttons');
     }
 
@@ -31,6 +33,7 @@ class InventoryPartnumbersController extends BaseController
         $category01 = $this->getCategoryInv01();
         $category02 = $this->getCategoryInv02();
         $units = InventoryUnitMeasure::controlAccessUser()->where('statusid', 'E')->get();
+
         return view(
             'Inventory.InventoryPartnumbers.create',
             compact('category01', 'category02', 'units')
@@ -50,6 +53,7 @@ class InventoryPartnumbersController extends BaseController
             ['centerid' => $access->centerid] +
             ['warehouseid' => $access->warehouseid]);
         $partnumber->save();
+
         return $this->redirectBackSuccess();
     }
 
@@ -60,6 +64,7 @@ class InventoryPartnumbersController extends BaseController
         $category02 = $this->getCategoryInv02();
         $status = $this->getStatusForSchema('STS');
         $units = InventoryUnitMeasure::controlAccessUser()->where('statusid', 'E')->get();
+
         return view(
             'Inventory.InventoryPartnumbers.edit',
             compact('inventorypartnumber', 'status', 'category02', 'category01', 'units')
@@ -69,6 +74,7 @@ class InventoryPartnumbersController extends BaseController
     public function update(Request $request, InventoryPartnumber $inventorypartnumber)
     {
         $inventorypartnumber->update($request->all());
+
         return $this->redirectBackSuccess();
     }
 }

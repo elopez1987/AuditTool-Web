@@ -22,6 +22,7 @@ trait QueryStorageDoorStages
     public function getAllDoorsForStage($id)
     {
         $center = SecurityAccessWarehouse::where('username', Auth::user()->username)->value('centerid');
+
         return StorageLocation::controlAccessUser()
             ->select(['id', 'name'])
             ->whereIn('zoneid', function ($query) use ($center) {

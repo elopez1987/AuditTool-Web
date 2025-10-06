@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Security\Role newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Security\Role newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Security\Role query()
@@ -26,6 +27,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Security\Role whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Security\Role whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Security\Role whereUpdatedAt($value)
+ *
  * @property string|null $centerid
  * @property string|null $menustrucid
  * @property string|null $description
@@ -34,6 +36,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read SystemCenterDistribution|null $center
  * @property-read SystemStatus|null $status
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Role forStatus($statusid)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Role name($name)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Role onlyTrashed()
@@ -46,14 +49,17 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Role whereStatusid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Role withTrashed(bool $withTrashed = true)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Role withoutTrashed()
+ *
  * @mixin \Eloquent
  */
 class Role extends Model
 {
     use SoftDeletes;
+
     public $timestamps = false;
 
     protected $table = 'roles';
+
     protected $dateFormat = 'Y-m-d H:i:s';
 
     protected $fillable = [
@@ -112,6 +118,7 @@ class Role extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return Role::whereIn('roles.centerid', $centers);
     }
 

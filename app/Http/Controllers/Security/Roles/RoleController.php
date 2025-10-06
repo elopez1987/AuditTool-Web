@@ -29,12 +29,14 @@ class RoleController extends BaseController
         $this->authorize('securityroles.index');
         $status = $this->getStatusForSchema('STS');
         $roles = Role::controlAccessUser()->select(['description', 'id'])->get();
+
         return view('Security.Roles.index', compact('roles', 'status'));
     }
 
     public function getDataRoles(Request $request)
     {
         $data = $this->getAllRoles($request);
+
         return $this->showDataToView($data, 'Security.Roles.partials.buttons');
     }
 
@@ -43,6 +45,7 @@ class RoleController extends BaseController
         $this->authorize('securityroles.create');
         $centers = $this->getCenterForSelect();
         $menuStrucs = $this->getMenus();
+
         return view('Security.Roles.create', compact('centers', 'menuStrucs'));
     }
 
@@ -50,6 +53,7 @@ class RoleController extends BaseController
     {
         $role = Role::create($request->all());
         $role->save();
+
         return redirect('securityroles/' . $role->id . '/edit');
     }
 
@@ -64,6 +68,7 @@ class RoleController extends BaseController
         $status = $this->getStatusForSchema('STS');
         $menus = $this->getStructureMenus();
         $checkMtn = SystemDetailParameter::where('value02', $securityrole->id)->where('parameterid', 'ROLE-TRUCK')->count();
+
         return view('Security.Roles.edit', compact(
             'securityrole',
             'permissions',
@@ -80,6 +85,7 @@ class RoleController extends BaseController
     public function update(Request $request, Role $securityrole): RedirectResponse
     {
         $securityrole->update($request->all());
+
         return $this->redirectBackSuccess();
     }
 
@@ -87,6 +93,7 @@ class RoleController extends BaseController
     {
         $this->authorize('securityroles.destroy');
         $securityrole->delete();
+
         return $this->redirectBackSuccessMessage('Registro eliminado con exito!!');
     }
 
@@ -95,6 +102,7 @@ class RoleController extends BaseController
         $this->serviceRole->destroyPermissionsToRole($securityrole);
         $this->serviceRole->createNewPermissionToRole($request, $securityrole);
         \Artisan::call('optimize:clear');
+
         return $this->redirectBackSuccess();
     }
 }

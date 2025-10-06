@@ -30,6 +30,7 @@ use Storage;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
  * @property-read User $user
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|EvidencePhoto newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|EvidencePhoto newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|EvidencePhoto query()
@@ -47,6 +48,7 @@ use Storage;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|EvidencePhoto wherePath($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|EvidencePhoto whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|EvidencePhoto whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class EvidencePhoto extends Model

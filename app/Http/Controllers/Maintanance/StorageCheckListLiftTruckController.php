@@ -15,12 +15,14 @@ class StorageCheckListLiftTruckController extends BaseController
     public function index()
     {
         $this->authorize('storagechecklistlifttrucks.index');
+
         return view('Maintenance.StorageCheckLists.index');
     }
 
     public function getDataCheckListLiftTrucks(Request $request)
     {
         $data = $this->getAllCheckList($request);
+
         return $this->showDataToView(
             $data,
             'Maintenance.StorageCheckLists.partials.buttons'
@@ -31,6 +33,7 @@ class StorageCheckListLiftTruckController extends BaseController
     {
         $this->authorize('storagechecklistlifttrucks.create');
         $types = $this->getStatusForSchema('TPM');
+
         return view('Maintenance.StorageCheckLists.create', compact('types'));
     }
 
@@ -39,6 +42,7 @@ class StorageCheckListLiftTruckController extends BaseController
         $centerid = $this->getCenterForUser();
         $checkList = new StorageCheckListLiftTrucks($request->all() + ['centerid' => $centerid]);
         $checkList->save();
+
         return $this->redirectBackSuccessMessage('Registro guardado con exito.');
     }
 
@@ -47,6 +51,7 @@ class StorageCheckListLiftTruckController extends BaseController
         $this->authorize('storagechecklistlifttrucks.edit');
         $checkList = StorageCheckListLiftTrucks::findOrFail($id);
         $status = $this->getStatusForSchema('STS');
+
         return view(
             'Maintenance.StorageCheckLists.edit',
             compact('status', 'checkList')
@@ -57,6 +62,7 @@ class StorageCheckListLiftTruckController extends BaseController
     {
         $checkList = StorageCheckListLiftTrucks::findOrFail($id);
         $checkList->update($request->all());
+
         return $this->redirectBackSuccessMessage('Registro actualizado con exito.');
     }
 
@@ -65,6 +71,7 @@ class StorageCheckListLiftTruckController extends BaseController
         $this->authorize('storagechecklistlifttrucks.destroy');
         $checkList = StorageCheckListLiftTrucks::findOrFail($id);
         $checkList->delete();
+
         return $this->redirectBackSuccessMessage('Registro eliminado con exito.');
     }
 }

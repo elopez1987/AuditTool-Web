@@ -21,6 +21,7 @@ class StorageKeyIncidenceTransportController extends BaseController
     public function getIncidencesKeyTransport(Request $request)
     {
         $data = StorageKeyIncidenceTransport::getAllKeyTransports();
+
         return $this->showDataToView($data, 'Shipments.ShipmentKeyTranspors.partials.buttons');
     }
 
@@ -31,6 +32,7 @@ class StorageKeyIncidenceTransportController extends BaseController
         $motivos = StorageCategoryIncidenceDetail::controlAccessUser()->where('auxiliary01', '=', 'KEY')
             ->where('auxiliary02', '=', 'TR')
             ->select(['description', 'categoryincdetailid'])->get();
+
         return view('Shipments.ShipmentKeyTranspors.edit', compact('order', 'details', 'motivos'));
     }
 

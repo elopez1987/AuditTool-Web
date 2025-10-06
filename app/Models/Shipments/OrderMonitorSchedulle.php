@@ -47,6 +47,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read StorageShipmentTransport|null $transport
  * @property-read StorageTurn|null $turn
  * @property-read SystemWarehouse|null $warehouse
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|OrderMonitorSchedulle forStatus($status)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|OrderMonitorSchedulle newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|OrderMonitorSchedulle newQuery()
@@ -76,6 +77,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|OrderMonitorSchedulle whereStatusid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|OrderMonitorSchedulle whereWarehouseid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|OrderMonitorSchedulle whereWorkday($value)
+ *
  * @mixin \Eloquent
  */
 class OrderMonitorSchedulle extends Model
@@ -90,6 +92,7 @@ class OrderMonitorSchedulle extends Model
     {
         $centers = SecurityAccessWarehouse::Centers();
         $warehouses = SecurityAccessWarehouse::Warehouses();
+
         return OrderMonitorSchedulle::whereIn('centerid', $centers)->whereIn('warehouseid', $warehouses);
     }
 

@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read User|null $reviewedBy
  * @property-read User $user
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SuspiciousActivity newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SuspiciousActivity newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SuspiciousActivity query()
@@ -32,6 +33,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SuspiciousActivity whereSeverity($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SuspiciousActivity whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SuspiciousActivity whereUserId($value)
+ *
  * @mixin \Eloquent
  */
 class SuspiciousActivity extends Model

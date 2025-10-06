@@ -32,6 +32,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property string|null $containersealout
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitKey newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitKey newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitKey query()
@@ -57,6 +58,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitKey whereSupervisorkey($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitKey whereSupervisorname($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitKey whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class ReceiptUnitKey extends Model
@@ -64,6 +66,7 @@ class ReceiptUnitKey extends Model
     use LogsActivity;
 
     public $timestamps = false;
+
     protected $table = 'receiptunitkeys';
 
     protected $fillable = [
@@ -96,6 +99,7 @@ class ReceiptUnitKey extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return ReceiptUnitKey::whereIn('receiptunitkeys.warehouseid', $warehouses)
             ->where('receiptunitkeys.centerid', $centers);
     }

@@ -34,6 +34,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read int|null $activities_count
  * @property-read SystemCenterDistribution $center
  * @property-read SystemWarehouse|null $warehouse
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemEventWebServiceIzel boxNumber($boxnumber)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemEventWebServiceIzel folioNumber($folionumber)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemEventWebServiceIzel newModelQuery()
@@ -58,6 +59,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemEventWebServiceIzel whereValue04($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemEventWebServiceIzel whereValue05($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemEventWebServiceIzel whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class SystemEventWebServiceIzel extends Model
@@ -111,6 +113,7 @@ class SystemEventWebServiceIzel extends Model
     {
         $centers = SecurityAccessWarehouse::Centers();
         $warehouses = SecurityAccessWarehouse::Warehouses();
+
         return SystemEventWebServiceIzel::whereIn('systemeventwebserviceizel.centerid', $centers)
             ->whereIn('systemeventwebserviceizel.warehouseid', $warehouses);
     }
