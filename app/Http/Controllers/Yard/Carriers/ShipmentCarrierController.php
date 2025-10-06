@@ -18,6 +18,7 @@ class ShipmentCarrierController extends BaseController
     {
         $this->authorize('shipmentcarriers.index');
         $status = $this->getStatusSTS();
+
         return view('Yards.ShipmentCarriers.index', compact('status'));
     }
 
@@ -29,6 +30,7 @@ class ShipmentCarrierController extends BaseController
             ->Carrier($request->get('carrierid'))
             ->Status($request->get('statusid'))
             ->get();
+
         return DataTables::of($data)
             ->addColumn('btn', 'Yards.ShipmentCarriers.partials.buttons')
             ->rawColumns(['btn'])
@@ -39,12 +41,14 @@ class ShipmentCarrierController extends BaseController
     {
         $this->authorize('shipmentcarriers.create');
         $centers = $this->getCenterForSelect();
+
         return view('Yards.ShipmentCarriers.create', compact('centers'));
     }
 
     public function store(CreateCarrierRequest $request): RedirectResponse
     {
         ShipmentCarrier::create($request->validated());
+
         return $this->successResponse('shipmentcarriers.index');
     }
 
@@ -52,6 +56,7 @@ class ShipmentCarrierController extends BaseController
     {
         $this->authorize('shipmentcarriers.edit');
         $status = $this->getStatusSTS();
+
         return view('Yards.ShipmentCarriers.edit', compact('shipmentcarrier', 'status'));
     }
 
@@ -68,6 +73,7 @@ class ShipmentCarrierController extends BaseController
             $shipmentcarrier->auxiliary05 = $path;
             $shipmentcarrier->save();
         }
+
         return $this->infoResponse('shipmentcarriers.index');
     }
 }

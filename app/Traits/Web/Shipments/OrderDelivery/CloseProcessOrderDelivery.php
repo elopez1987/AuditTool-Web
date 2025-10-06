@@ -27,6 +27,7 @@ trait CloseProcessOrderDelivery
         $order = OrderDeliverie::findOrFail($id);
         $order->statusid = 'DH';
         $order->save();
+
         return $order;
     }
 
@@ -36,6 +37,7 @@ trait CloseProcessOrderDelivery
             ->first(['locationid', 'statusid']);
         $header->statusid = 'DH';
         $header->save();
+
         return $header;
     }
 

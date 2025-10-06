@@ -16,6 +16,7 @@ class SecurityFunctionsController extends BaseController
     {
         $this->authorize('securityfunctions.index');
         $modules = SecurityModule::select(['description', 'moduleid'])->get();
+
         return view('Security.SecurtiyFunctions.index', compact('modules'));
     }
 
@@ -24,6 +25,7 @@ class SecurityFunctionsController extends BaseController
         $data = SecurityFunction::with('module')
             ->Description($request->get('description'))
             ->Module($request->get('moduleid'));
+
         return $this->showDataToView($data, 'Security.SecurtiyFunctions.partials.buttons');
     }
 
@@ -31,6 +33,7 @@ class SecurityFunctionsController extends BaseController
     {
         $this->authorize('securityfunctions.create');
         $modules = SecurityModule::select(['description', 'moduleid'])->get();
+
         return view('Security.SecurtiyFunctions.create', compact('modules'));
     }
 
@@ -38,6 +41,7 @@ class SecurityFunctionsController extends BaseController
     {
         $function = new SecurityFunction($request->all());
         $function->save();
+
         return redirect('securityfunctions/' . $function->functionid . '/edit');
     }
 
@@ -47,6 +51,7 @@ class SecurityFunctionsController extends BaseController
         $modules = SecurityModule::select(['description', 'moduleid'])->get();
         $permissions = Permission::where('functionid', $securityfunction->functionid)
             ->select(['description', 'id', 'name', 'category', 'moduleid', 'functionid', 'guard_name'])->get();
+
         return view(
             'Security.SecurtiyFunctions.edit',
             compact('securityfunction', 'modules', 'permissions')
@@ -69,6 +74,7 @@ class SecurityFunctionsController extends BaseController
                 ]);
             }
         }
+
         return $this->redirectBackInfo();
     }
 
@@ -77,6 +83,7 @@ class SecurityFunctionsController extends BaseController
         SecurityFunctionsMenuStructure::where('functionid', $id)->delete();
         Permission::where('functionid', $id)->delete();
         SecurityFunction::destroy($id);
+
         return $this->redirectBackSuccess();
     }
 
@@ -89,6 +96,7 @@ class SecurityFunctionsController extends BaseController
             'edit' => 'Modificar',
             'destroy' => 'Eliminar',
         ];
+
         return $descriptions[$route] ?? '';
     }
 }

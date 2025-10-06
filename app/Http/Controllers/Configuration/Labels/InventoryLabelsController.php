@@ -12,12 +12,14 @@ class InventoryLabelsController extends BaseController
     public function index()
     {
         $this->authorize('inventorylabels.index');
+
         return view('Configuration.InventoryLabels.index');
     }
 
     public function getDataLabels()
     {
-        $data = InventoryLabel::controlAccessUser()->with(['center','status'])->select('inventorylabels.*');
+        $data = InventoryLabel::controlAccessUser()->with(['center', 'status'])->select('inventorylabels.*');
+
         return $this->showDataToView($data, 'Configuration.InventoryLabels.partials.buttons');
     }
 
@@ -25,6 +27,7 @@ class InventoryLabelsController extends BaseController
     {
         $this->authorize('inventorylabels.create');
         $centers = $this->getCenterForSelect();
+
         return view('Configuration.InventoryLabels.create', compact('centers'));
     }
 
@@ -32,6 +35,7 @@ class InventoryLabelsController extends BaseController
     {
         $label = new InventoryLabel($request->all());
         $label->save();
+
         return $this->redirectBackSuccess();
     }
 
@@ -39,6 +43,7 @@ class InventoryLabelsController extends BaseController
     {
         $this->authorize('inventorylabels.edit');
         $status = $this->getStatusForSchema('STS');
+
         return view(
             'Configuration.InventoryLabels.edit',
             compact('inventorylabel', 'status')
@@ -48,6 +53,7 @@ class InventoryLabelsController extends BaseController
     public function update(Request $request, InventoryLabel $inventorylabel)
     {
         $inventorylabel->update($request->all());
+
         return $this->redirectBackSuccess();
     }
 }

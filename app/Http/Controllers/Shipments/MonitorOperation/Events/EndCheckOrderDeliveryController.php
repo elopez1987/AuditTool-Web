@@ -17,18 +17,15 @@ class EndCheckOrderDeliveryController extends BaseController
             $this->updateShipmentDataOperation($id);
             $this->updateStatusOrderDelivery($id);
             DB::commit();
+
             return $this->redirectBackSuccess();
         } catch (Exception $e) {
             DB::rollback();
+
             return $this->errorResponse($e->getMessage());
         }
     }
 
-    /**
-     * @param $id
-     *
-     * @return void
-     */
     public function updateStatusOrderDelivery($id): void
     {
         $orderdelivery = OrderDeliverie::controlAccessUser()->whereId($id)->first();
@@ -36,11 +33,6 @@ class EndCheckOrderDeliveryController extends BaseController
         $orderdelivery->save();
     }
 
-    /**
-     * @param $id
-     *
-     * @return void
-     */
     public function updateShipmentDataOperation($id): void
     {
         $shipment = ShipmentDataOperation::controlAccessUser()->where('orderid', $id)->first();

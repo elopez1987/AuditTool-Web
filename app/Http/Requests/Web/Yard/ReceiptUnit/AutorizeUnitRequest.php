@@ -15,8 +15,8 @@ class AutorizeUnitRequest extends FormRequest
             'centerid' => 'required|string|max:20|exists:systemcenterdistributions,centerid',
             'warehouseid' => 'required|string|max:20|exists:systemwarehouses,warehouseid',
             'razonstatusid' => 'required|exists:storagereasons,id',
-//            'ticket' => 'nullable|max_digits:20',
-//            'weightout' => 'nullable|max_digits:15',
+            //            'ticket' => 'nullable|max_digits:20',
+            //            'weightout' => 'nullable|max_digits:15',
         ];
     }
 

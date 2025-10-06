@@ -30,6 +30,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read SystemCenterDistribution $center
  * @property-read SystemStatus $status
  * @property-read SystemWarehouse $warehouse
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ScheduleInverse newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ScheduleInverse newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ScheduleInverse query()
@@ -45,6 +46,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ScheduleInverse whereStatusid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ScheduleInverse whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ScheduleInverse whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class ScheduleInverse extends Model
@@ -58,8 +60,8 @@ class ScheduleInverse extends Model
         'name', 'startdate', 'finishdate', 'statusid',
     ];
 
-    //INO = Inactivo
-    //ACT = Activo
+    // INO = Inactivo
+    // ACT = Activo
     protected $attributes = [
         'statusid' => 'INO',
         'schemaid' => 'KLD',
@@ -74,6 +76,7 @@ class ScheduleInverse extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return ScheduleInverse::whereIn('scheduleinverse.warehouseid', $warehouses)
             ->whereIn('scheduleinverse.centerid', $centers);
     }

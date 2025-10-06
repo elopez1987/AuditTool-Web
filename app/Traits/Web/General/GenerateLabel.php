@@ -11,11 +11,6 @@ use RuntimeException;
 
 trait GenerateLabel
 {
-    /**
-     * @param $type
-     *
-     * @return string
-     */
     public function getTypeRegister($type): string
     {
         if ($type === 'BX') {
@@ -23,6 +18,7 @@ trait GenerateLabel
         } else {
             $type = 'TRACTO';
         }
+
         return $type;
     }
 
@@ -70,6 +66,7 @@ trait GenerateLabel
         if ($type === 'web') {
             return response()->download($nameFile)->deleteFileAfterSend();
         }
+
         return file_get_contents($nameFile);
     }
 
@@ -94,6 +91,7 @@ trait GenerateLabel
             fwrite($file, $valor . "\n");
         }
         fclose($file);
+
         return response()->download($nameFile)->deleteFileAfterSend();
     }
 
@@ -125,6 +123,7 @@ trait GenerateLabel
             fwrite($file, $valor . "\n");
         }
         fclose($file);
+
         return response()->download($nameFile)->deleteFileAfterSend();
     }
 }

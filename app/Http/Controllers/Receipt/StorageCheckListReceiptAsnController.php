@@ -48,11 +48,12 @@ class StorageCheckListReceiptAsnController extends BaseController
     public function addchecklistAR($id, Request $request)
     {
         $receipt = ReceiptAsn::findOrFail($id);
-        $receipt->auxiliary03 = $request['categoryid']; //Categoria de material esquema CRE
+        $receipt->auxiliary03 = $request['categoryid']; // Categoria de material esquema CRE
         $receipt->auxiliary08 = \Auth::user()->username;
         $receipt->save();
         $this->destroyCheckListOfReceipt($receipt, $request);
         $this->createCheckListReceipt($request, $receipt);
+
         return $this->redirectBackSuccess();
     }
 
@@ -65,10 +66,6 @@ class StorageCheckListReceiptAsnController extends BaseController
             ->delete();
     }
 
-    /**
-     * @param Request $request
-     * @param $receipt
-     */
     private function createCheckListReceipt(Request $request, $receipt): void
     {
         $reg = $request->input('checklistdetailid');

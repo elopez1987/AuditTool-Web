@@ -11,7 +11,7 @@ class DownLoadEvidenceForShipmentController extends Controller
     public function index($id)
     {
         $order = OrderDeliverie::findOrFail($id);
-        $zip = new \ZipArchive();
+        $zip = new \ZipArchive;
         $zip->open($order->shipmentid . '.zip', \ZipArchive::CREATE);
         $files = EvidencePhoto::where('model_type', '=', 'OrderDelivery')
             ->where('auxiliary01', '=', 'SH')

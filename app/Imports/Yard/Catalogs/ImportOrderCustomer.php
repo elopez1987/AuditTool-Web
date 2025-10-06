@@ -11,7 +11,7 @@ use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 
-class ImportOrderCustomer implements ToModel, WithHeadingRow, WithValidation, WithBatchInserts, WithChunkReading
+class ImportOrderCustomer implements ToModel, WithBatchInserts, WithChunkReading, WithHeadingRow, WithValidation
 {
     use Importable;
     use Responser;

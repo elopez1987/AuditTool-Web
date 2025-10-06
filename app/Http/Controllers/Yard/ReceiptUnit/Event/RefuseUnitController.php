@@ -13,13 +13,14 @@ use Exception;
 
 class RefuseUnitController extends BaseController
 {
-    use GetParameters;
-    use DeclineUnitForShipment;
     use DeclineUnitForReceipt;
+    use DeclineUnitForShipment;
+    use GetParameters;
 
     public function index()
     {
         $this->authorize('refuseunit');
+
         return view('Yards.RefuseUnit.index');
     }
 
@@ -39,10 +40,12 @@ class RefuseUnitController extends BaseController
                 $this->declineUnitForReceipt($receiptunit->id);
             }
             DB::commit();
+
             return $this->redirectBackSuccessMessage('Unidad rechazada con exito!!');
         } catch (Exception $e) {
             $error = $e->getMessage();
             DB::rollback();
+
             return $this->errorResponse('Error al procesar la solicitud, intente mas tarde!!' . $error);
         }
     }

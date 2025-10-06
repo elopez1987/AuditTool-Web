@@ -14,6 +14,7 @@ class DashboardController extends BaseController
     public function index()
     {
         $this->authorize('dashboardtrucks');
+
         return view('Maintenance.Dashboard.dashboard');
     }
 
@@ -46,6 +47,7 @@ class DashboardController extends BaseController
             ->leftJoin('users', 'storagelifttruckassigned.username', '=', 'users.id')
             ->where('storagelifttrucks.centerid', '=', $center)
             ->get()->toArray();
+
         return response()->json($data);
     }
 
@@ -53,6 +55,7 @@ class DashboardController extends BaseController
     {
         $this->authorize('storagelifttrucks.reports');
         $centers = $this->getCenterForSelect();
+
         return view('Maintenance.Dashboard.reports', compact('centers'));
     }
 

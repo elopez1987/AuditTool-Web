@@ -18,6 +18,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property string|null $auxiliary05
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryLabelDetail newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryLabelDetail newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryLabelDetail query()
@@ -29,14 +30,17 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryLabelDetail whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryLabelDetail whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryLabelDetail whereLabelid($value)
+ *
  * @mixin \Eloquent
  */
 class InventoryLabelDetail extends Model
 {
     use LogsActivity;
+
     public $timestamps = false;
 
     protected $table = 'inventorylabeldetails';
+
     protected $keyType = 'integer';
 
     protected $dateFormat = 'Y-m-d H:i:s';
@@ -59,6 +63,7 @@ class InventoryLabelDetail extends Model
     public static function getDetailForLabel($label)
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return InventoryLabelDetail::join('inventorylabels', 'inventorylabeldetails.labelid', '=', 'inventorylabels.labelid')
             ->whereIn('inventorylabels.centerid', $centers)
             ->where('inventorylabels.auxiliary01', '=', $label)

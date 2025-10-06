@@ -27,6 +27,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
  * @property-read ShipmentCarrier $carrier
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentSchedule carrierIn($carrierid)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentSchedule newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentSchedule newQuery()
@@ -45,6 +46,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentSchedule whereValue02($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentSchedule whereValue03($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentSchedule whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class StorageShipmentSchedule extends Model
@@ -79,6 +81,7 @@ class StorageShipmentSchedule extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return StorageShipmentSchedule::whereIn('storageshipmentsschedule.warehouseid', $warehouses)
             ->whereIn('storageshipmentsschedule.centerid', $centers);
     }

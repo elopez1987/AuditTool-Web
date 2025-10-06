@@ -16,6 +16,7 @@ class PermissionController extends BaseController
     {
         $this->authorize('securitypermissions.index');
         $modules = SecurityModule::select(['description', 'moduleid'])->get();
+
         return view('Security.Permissions.index', compact('modules'));
     }
 
@@ -26,6 +27,7 @@ class PermissionController extends BaseController
             ->ForFunction($request->get('functionid'))
             ->Name($request->get('name'))
             ->Description($request->get('description'))->get();
+
         return $this->showDataToView($data, 'Security.Permissions.partials.buttons2');
     }
 
@@ -33,12 +35,14 @@ class PermissionController extends BaseController
     {
         $this->authorize('securitypermissions.create');
         $modules = SecurityModule::select(['description', 'moduleid'])->get();
+
         return view('Security.Permissions.create', compact('modules'));
     }
 
     public function store(CreatePermissionRequest $request): RedirectResponse
     {
         Permission::create($request->validated() + ['guard_name' => 'web']);
+
         return $this->redirectBackSuccess();
     }
 
@@ -47,6 +51,7 @@ class PermissionController extends BaseController
         $this->authorize('securitypermissions.edit');
         $modules = SecurityModule::select(['description', 'moduleid'])->get();
         $functions = SecurityFunction::select(['description', 'functionid'])->get();
+
         return view(
             'Security.Permissions.edit',
             compact('securitypermission', 'functions', 'modules')
@@ -56,6 +61,7 @@ class PermissionController extends BaseController
     public function update(Request $request, Permission $securitypermission)
     {
         $securitypermission->update($request->all());
+
         return $this->redirectBackSuccess();
         //        return redirect('securityfunctions/' . $securitypermission->functionid . '/edit');
     }
@@ -64,6 +70,7 @@ class PermissionController extends BaseController
     {
         $this->authorize('securitypermissions.destroy');
         Permission::destroy($id);
+
         return $this->redirectBackSuccessMessage('Registro eliminado con exito!!');
     }
 }

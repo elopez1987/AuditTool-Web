@@ -42,6 +42,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string|null $weightout
  * @property-read SystemCenterDistribution|null $center
  * @property-read mixed $operator_name
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageBoxStock barcode($barcode)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageBoxStock boxNumber($boxnumber)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageBoxStock folio($folionumber)
@@ -80,6 +81,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageBoxStock whereWarehouseid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageBoxStock whereWeightin($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageBoxStock whereWeightout($value)
+ *
  * @mixin \Eloquent
  */
 class StorageBoxStock extends Model
@@ -95,21 +97,26 @@ class StorageBoxStock extends Model
     {
         $centers = SecurityAccessWarehouse::Centers();
         $warehouses = SecurityAccessWarehouse::Warehouses();
+
         return StorageBoxStock::whereIn('vw_storageboxstock.centerid', $centers)
             ->whereIn('vw_storageboxstock.warehouseid', $warehouses);
     }
+
     public function getOperatorNameAttribute($value)
     {
         return ucwords($value);
     }
+
     public function center()
     {
         return $this->belongsTo(SystemCenterDistribution::class, 'centerid');
     }
+
     public function warehouse(): BelongsTo
     {
         return $this->belongsTo(SystemWarehouse::class, 'warehouseid');
     }
+
     public function status(): BelongsTo
     {
         return $this->belongsTo(SystemStatus::class, 'statusid', 'statusid');

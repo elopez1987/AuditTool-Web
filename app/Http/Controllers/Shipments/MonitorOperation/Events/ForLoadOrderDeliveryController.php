@@ -16,8 +16,8 @@ use Illuminate\Support\Facades\DB;
 
 class ForLoadOrderDeliveryController extends BaseController
 {
-    use NewUnitVirtual;
     use CheckOutVirtual;
+    use NewUnitVirtual;
 
     public function index($id)
     {
@@ -41,18 +41,15 @@ class ForLoadOrderDeliveryController extends BaseController
             }
 
             DB::commit();
+
             return $this->redirectBackSuccess();
         } catch (Exception $e) {
             DB::rollback();
+
             return $this->errorResponse($e->getMessage());
         }
     }
 
-    /**
-     * @param $id
-     *
-     * @return void
-     */
     public function updateShipmentDataOperation($id): void
     {
         $shipment = ShipmentDataOperation::controlAccessUser()->where('orderid', $id)->first();
@@ -61,11 +58,6 @@ class ForLoadOrderDeliveryController extends BaseController
         $shipment->save();
     }
 
-    /**
-     * @param $id
-     *
-     * @return void
-     */
     public function updateShipmentHeader($id): void
     {
         $shipmentheader = ShipmentHeader::controlAccessUser()->whereOrderid($id)->first();
@@ -73,11 +65,6 @@ class ForLoadOrderDeliveryController extends BaseController
         $shipmentheader->save();
     }
 
-    /**
-     * @param $id
-     *
-     * @return void
-     */
     public function updateShipmentSeal($id): void
     {
         $shipmentseal = ShipmentSeal::whereOrderid($id)->first();
@@ -85,25 +72,15 @@ class ForLoadOrderDeliveryController extends BaseController
         $shipmentseal->save();
     }
 
-    /**
-     * @param $id
-     *
-     * @return OrderDeliverie
-     */
     public function updateOrderDelivery($id): OrderDeliverie
     {
         $orderDelivery = OrderDeliverie::controlAccessUser()->where('id', $id)->first();
         $orderDelivery->statusid = 'PC';
         $orderDelivery->save();
+
         return $orderDelivery;
     }
 
-    /**
-     * @param $parameterCustomer
-     * @param OrderDeliverie $orderDelivery
-     *
-     * @return void
-     */
     public function createUnitVirtualForCustomer($parameterCustomer, OrderDeliverie $orderDelivery): void
     {
         //      Creamos la unidad virtual si el cliente tiene activo el parametro OCF-04
@@ -114,12 +91,6 @@ class ForLoadOrderDeliveryController extends BaseController
         }
     }
 
-    /**
-     * @param $parameterWarehouse
-     * @param OrderDeliverie $orderDelivery
-     *
-     * @return void
-     */
     public function sendMessageToOperator($parameterWarehouse, OrderDeliverie $orderDelivery): void
     {
         //     Proceso para enviar mensaje a operador que está en patio para enrampar

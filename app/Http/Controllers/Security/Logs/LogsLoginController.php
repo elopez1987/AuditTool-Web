@@ -13,12 +13,10 @@ class LogsLoginController extends BaseController
         return view('Security.LogAuthentication.index');
     }
 
-
     public function logsloginAuthentication()
     {
         $data = AuthenticationAuditLog::orderBy('id', 'desc')->get()->take(2000);
+
         return $this->showDataToView($data, '');
     }
-
-
 }

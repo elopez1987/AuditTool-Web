@@ -23,12 +23,14 @@ class SecurityFunctionsMenuController extends BaseController
                 ]);
             }
         }
+
         return $this->redirectBackSuccessMessage('Modulos agregados con exito.');
     }
 
     public function deletefunctionformenu(Request $request)
     {
         SecurityFunctionsMenuStructure::destroy($request['id']);
+
         return $this->responseSuccessAjax('', '');
     }
 }

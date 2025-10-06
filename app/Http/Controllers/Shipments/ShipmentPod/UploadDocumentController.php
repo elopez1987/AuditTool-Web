@@ -24,7 +24,7 @@ class UploadDocumentController extends Controller
     {
         $receiver = new FileReceiver('file', $request, HandlerFactory::classFromRequest($request));
         if ($receiver->isUploaded() === false) {
-            throw new UploadMissingFileException();
+            throw new UploadMissingFileException;
         }
         $save = $receiver->receive();
         if ($save->isFinished()) {
@@ -50,11 +50,6 @@ class UploadDocumentController extends Controller
         ]);
     }
 
-    /**
-     * @param $id
-     *
-     * @return void
-     */
     public function updateShipmentPodStatus($id): void
     {
         $shipmentpod = ShipmentPod::controlAccessUser()->where('orderid', $id)->first();

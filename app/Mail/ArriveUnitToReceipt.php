@@ -12,6 +12,7 @@ class ArriveUnitToReceipt extends Mailable
 {
     use Queueable;
     use SerializesModels;
+
     public $receipt;
 
     /**

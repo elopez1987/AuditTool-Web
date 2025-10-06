@@ -16,6 +16,7 @@ class EventsPodsController extends BaseController
         $file = StorageShipmentsPods::findOrFail($id);
         $file->statusid = $request['statusid'];
         $file->save();
+
         return $this->redirectBackSuccessMessage('Estatus actualizado con exito!!');
     }
 
@@ -29,6 +30,7 @@ class EventsPodsController extends BaseController
             }
             $file->delete();
             DB::commit();
+
             return response()->json([
                 'ServiceName' => 'deletefilepod',
                 'ProcessDate' => Carbon::now()->format('Y-m-d H:m:s'),
@@ -36,6 +38,7 @@ class EventsPodsController extends BaseController
             ], '200');
         } catch (Exception) {
             DB::rollback();
+
             return response()->json([
                 'ServiceName' => 'deletefilepod',
                 'ProcessDate' => Carbon::now()->format('Y-m-d H:m:s'),

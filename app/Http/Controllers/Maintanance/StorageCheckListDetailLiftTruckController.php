@@ -16,6 +16,7 @@ class StorageCheckListDetailLiftTruckController extends BaseController
         $checkList = StorageCheckListLiftTrucks::findOrFail($id);
         $types = $this->getStatusForSchema('TPV');
         $details = StorageCheckListDetailLiftTruck::where('checklistid', '=', $id)->get();
+
         return view(
             'Maintenance.StorageCheckListDetails.create',
             compact('checkList', 'types', 'details')
@@ -32,6 +33,7 @@ class StorageCheckListDetailLiftTruckController extends BaseController
             'typeid' => $request['typeid'],
             'auxiliary01' => $request['statuslistid'],
         ]);
+
         return $this->redirectBackSuccessMessage('Detalle guardado con exito.');
     }
 
@@ -44,6 +46,7 @@ class StorageCheckListDetailLiftTruckController extends BaseController
             $detail->statusid = 'E';
         }
         $detail->save();
+
         return $this->redirectBackSuccessMessage('Registro actualizado con exito.');
     }
 
@@ -53,6 +56,7 @@ class StorageCheckListDetailLiftTruckController extends BaseController
         $detail->typeid = $request['typeid'];
         $detail->auxiliary01 = $request['statuslistid'];
         $detail->save();
+
         return $this->redirectBackSuccessMessage('Regsitro actualizado con exito.');
     }
 
@@ -61,6 +65,7 @@ class StorageCheckListDetailLiftTruckController extends BaseController
         $this->authorize('deletedetailchecklistlifttrucks');
         $detail = StorageCheckListDetailLiftTruck::findOrFail($id);
         $detail->delete();
+
         return $this->redirectBackSuccessMessage('Regsitro eliminado con exito.');
     }
 }

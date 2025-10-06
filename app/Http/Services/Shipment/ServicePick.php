@@ -56,12 +56,6 @@ class ServicePick
         }
     }
 
-    /**
-     * @param $shipment
-     * @param $request
-     *
-     * @return void
-     */
     public function createNewStock($shipment, $request): void
     {
         ShipmentStock::create([
@@ -85,12 +79,6 @@ class ServicePick
         ]);
     }
 
-    /**
-     * @param $shipment
-     * @param $lpnid
-     *
-     * @return ShipmentContainer
-     */
     public function getShipmentContainer($shipment, $lpnid): ShipmentContainer
     {
         return ShipmentContainer::where('orderid', $shipment->id)

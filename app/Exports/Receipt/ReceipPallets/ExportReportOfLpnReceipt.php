@@ -13,11 +13,14 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 
-class ExportReportOfLpnReceipt implements FromCollection, WithHeadings, WithMapping, WithEvents, ShouldAutoSize, WithColumnFormatting
+class ExportReportOfLpnReceipt implements FromCollection, ShouldAutoSize, WithColumnFormatting, WithEvents, WithHeadings, WithMapping
 {
     use Exportable;
+
     private $workdayin;
+
     private $workdayout;
+
     private $centerid;
 
     public function __construct($workdayin, $workdayout, $centerid)
@@ -30,7 +33,7 @@ class ExportReportOfLpnReceipt implements FromCollection, WithHeadings, WithMapp
     public function columnFormats(): array
     {
         return [
-//            'A' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+            //            'A' => NumberFormat::FORMAT_DATE_DDMMYYYY,
         ];
     }
 
@@ -79,7 +82,7 @@ class ExportReportOfLpnReceipt implements FromCollection, WithHeadings, WithMapp
             ->leftJoin('users', 'receiptcontainers.createuser', '=', 'users.username')
             ->where('receiptasn.centerid', '=', $this->centerid)
             ->where('receiptasn.statusid', '=', 'IG')
-            ->whereBetween('receiptasn.addasndate', [$this->workdayin,$this->workdayout])
+            ->whereBetween('receiptasn.addasndate', [$this->workdayin, $this->workdayout])
             ->get();
     }
 

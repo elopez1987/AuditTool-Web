@@ -38,6 +38,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $statusid
  * @property int|null $trayectoida
  * @property int|null $trayectovuelta
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageBoxTravel boxNumber($boxnumber)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageBoxTravel folio($folionumber)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageBoxTravel foliowm($folionumberwm)
@@ -77,6 +78,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageBoxTravel whereTmesawarehouse($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageBoxTravel whereTrayectoida($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageBoxTravel whereTrayectovuelta($value)
+ *
  * @mixin \Eloquent
  */
 class StorageBoxTravel extends Model
@@ -86,6 +88,7 @@ class StorageBoxTravel extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return StorageBoxTravel::whereIn('vw_storageboxtravels.centerid', $centers);
     }
 

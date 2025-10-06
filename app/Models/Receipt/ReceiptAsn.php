@@ -73,6 +73,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read SystemStatus $status
  * @property-read StorageTurn|null $turn
  * @property-read SystemWarehouse $warehouse
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptAsn delivery($delivery)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptAsn factura($billoflading)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptAsn folioNumber($folionumber)
@@ -128,6 +129,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptAsn whereWarehouseid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptAsn whereWorkday($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptAsn workDay($workday)
+ *
  * @mixin \Eloquent
  */
 class ReceiptAsn extends Model
@@ -135,7 +137,9 @@ class ReceiptAsn extends Model
     use LogsActivity;
 
     protected $table = 'receiptasn';
+
     protected $dateFormat = 'Y-m-d H:i:s';
+
     protected $fillable = [
         'centerid', 'warehouseid', 'providerid', 'shipmentid', 'billoflading',
         'oc', 'chep', 'downloadpriority', 'arriveddate', 'operatorname', 'addasndate',
@@ -143,7 +147,7 @@ class ReceiptAsn extends Model
         'carrierid', 'razonstatusid', 'folionumber', 'containerseal', 'stockcategoryid', 'turnid', 'auxiliary01',
         'auxiliary02', 'auxiliary03', 'auxiliary04', 'auxiliary05', 'auxiliary06', 'auxiliary07',
         'auxiliary08', 'auxiliary09', 'auxiliary10', 'statusid', 'totalcontainers', 'workday',
-        'verifystartdate', 'verifyfinishdate','partnumberid','quantity','po','comment',
+        'verifystartdate', 'verifyfinishdate', 'partnumberid', 'quantity', 'po', 'comment',
     ];
 
     protected $attributes = [
@@ -170,6 +174,7 @@ class ReceiptAsn extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return ReceiptAsn::whereIn('receiptasn.warehouseid', $warehouses)
             ->whereIn('receiptasn.centerid', $centers);
     }

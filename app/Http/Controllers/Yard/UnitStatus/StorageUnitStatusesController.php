@@ -13,6 +13,7 @@ class StorageUnitStatusesController extends BaseController
     {
         $this->authorize('storageunitstatus.index');
         $status = $this->getStatusSTS();
+
         return view(
             'Yards.StorageUnitStatus.index',
             compact('status')
@@ -25,12 +26,14 @@ class StorageUnitStatusesController extends BaseController
             ->Name($request->get('name'))
             ->Status($request->get('statusid'))
             ->get();
+
         return $this->showDataToView($data, 'Yards.StorageUnitStatus.partials.buttons');
     }
 
     public function create()
     {
         $this->authorize('storageunitstatus.create');
+
         return view('Yards.StorageUnitStatus.create');
     }
 
@@ -38,6 +41,7 @@ class StorageUnitStatusesController extends BaseController
     {
         $statusunit = new StorageUnitStatus($request->all());
         $statusunit->save();
+
         return $this->successResponse('storageunitstatus.index');
     }
 
@@ -45,6 +49,7 @@ class StorageUnitStatusesController extends BaseController
     {
         $this->authorize('storageunitstatus.edit');
         $status = $this->getStatusSTS();
+
         return view(
             'Yards.StorageUnitStatus.edit',
             compact('status', 'storageunitstatus')
@@ -54,6 +59,7 @@ class StorageUnitStatusesController extends BaseController
     public function update(Request $request, StorageUnitStatus $storageunitstatus)
     {
         $storageunitstatus->update($request->all());
+
         return $this->infoResponse('storageunitstatus.index');
     }
 }

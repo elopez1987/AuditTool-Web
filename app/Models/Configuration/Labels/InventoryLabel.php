@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $statusid
  * @property-read SystemCenterDistribution $center
  * @property-read SystemStatus|null $status
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryLabel newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryLabel newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryLabel query()
@@ -33,13 +34,17 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryLabel whereLabelid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryLabel whereSchemaid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryLabel whereStatusid($value)
+ *
  * @mixin \Eloquent
  */
 class InventoryLabel extends Model
 {
     public $timestamps = false;
+
     protected $table = 'inventorylabels';
+
     protected $keyType = 'integer';
+
     protected $primaryKey = 'labelid';
 
     protected $dateFormat = 'Y-m-d H:i:s';
@@ -69,6 +74,7 @@ class InventoryLabel extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return InventoryLabel::whereIn('inventorylabels.centerid', $centers);
     }
 

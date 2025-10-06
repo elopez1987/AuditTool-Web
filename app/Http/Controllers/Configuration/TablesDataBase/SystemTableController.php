@@ -13,24 +13,28 @@ class SystemTableController extends BaseController
     public function index()
     {
         $this->authorize('systemtables.index');
+
         return view('Configuration.SystemTables.index');
     }
 
     public function getsystemtables(Request $request)
     {
         $data = SystemTable::ForName($request->get('tableid'));
+
         return $this->showDataToView($data, 'Configuration.SystemTables.partials.buttons');
     }
 
     public function edit(SystemTable $systemtable)
     {
         $this->authorize('systemtables.edit');
+
         return view('Configuration.SystemTables.edit', compact('systemtable'));
     }
 
     public function update(Request $request, SystemTable $systemtable)
     {
         $systemtable->update($request->all());
+
         return $this->infoResponse('systemtables.index');
     }
 
@@ -43,6 +47,7 @@ class SystemTableController extends BaseController
                 'tableid' => $table->TABLE_NAME,
             ]);
         }
+
         return $this->redirectBackSuccessMessage('Tablas agregadas con exito.');
     }
 
@@ -60,6 +65,7 @@ class SystemTableController extends BaseController
                 'columnid' => $column->columnid,
             ]);
         }
+
         return $this->redirectBackSuccessMessage('Columnas agregadas correctamente a las tablas.');
     }
 
@@ -67,6 +73,7 @@ class SystemTableController extends BaseController
     {
         $table = SystemTable::findOrFail($id);
         $columns = SystemColumn::where('tableid', $id)->get();
+
         return view('Configuration.SystemTables.addColumnToTable', compact('table', 'columns'));
     }
 
@@ -82,6 +89,7 @@ class SystemTableController extends BaseController
                 'shortdesc' => $request['shortdesc'],
             ]
         );
+
         return $this->redirectBackSuccess();
     }
 }

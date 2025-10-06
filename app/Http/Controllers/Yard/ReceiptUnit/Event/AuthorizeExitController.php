@@ -28,6 +28,7 @@ class AuthorizeExitController extends BaseController
         $checkAS = StorageCheckListDetail::controlAccessUser()->select('storagechecklistdetails.*')
             ->leftJoin('storagechecklists', 'storagechecklistdetails.checklistid', '=', 'storagechecklists.id')
             ->where('storagechecklists.type', 'AS')->get();
+
         return view(
             'Yards.RegisterMovementsBox.autorizeoutput',
             compact('zones', 'locations', 'unitstatus', 'checkAS', 'parameter')
@@ -47,10 +48,12 @@ class AuthorizeExitController extends BaseController
                 return $resultProcess;
             }
             DB::commit();
+
             return $this->redirectBackSuccessMessage('Datos actualizados correctamente!!');
         } catch (Exception $e) {
             $error = $e->getMessage();
             DB::rollback();
+
             return $this->errorResponse('Error al procesar la solicitud :' . $error);
         }
     }

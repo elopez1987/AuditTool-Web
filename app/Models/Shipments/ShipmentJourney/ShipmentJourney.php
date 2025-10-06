@@ -33,6 +33,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
  * @property-read OrderDeliverie $order
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentJourney forCarrier($carrierid)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentJourney forCustomer($customername)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentJourney newModelQuery()
@@ -59,6 +60,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentJourney whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentJourney whereUpdateuserid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentJourney whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class ShipmentJourney extends Model
@@ -87,6 +89,7 @@ class ShipmentJourney extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return ShipmentJourney::whereIn('shipmentjourneys.warehouseid', $warehouses)
             ->whereIn('shipmentjourneys.centerid', $centers);
     }

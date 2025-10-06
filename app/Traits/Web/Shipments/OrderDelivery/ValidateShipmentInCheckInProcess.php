@@ -16,6 +16,4 @@ trait ValidateShipmentInCheckInProcess
             return redirect()->back()->withInput()->with(session()->flash('error', 'La linea de transporte es diferente a la planeada,favor de validar.'));
         }
     }
-
-
 }

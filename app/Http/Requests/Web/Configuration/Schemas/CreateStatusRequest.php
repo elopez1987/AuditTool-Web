@@ -16,7 +16,7 @@ class CreateStatusRequest extends FormRequest
         return [
             'statusid' => 'required|string|max:10|unique:systemstatus,statusid',
             'namestatus' => 'required|string|max:100',
-//            'comment' => 'required|string|max:50',
+            //            'comment' => 'required|string|max:50',
         ];
     }
 }

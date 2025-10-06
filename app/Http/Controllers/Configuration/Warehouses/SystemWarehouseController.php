@@ -17,12 +17,14 @@ class SystemWarehouseController extends BaseController
     public function index()
     {
         $this->authorize('systemwarehouses.index');
+
         return view('Configuration.SystemWarehouses.index');
     }
 
     public function getDataWarehouses(Request $request)
     {
         $data = $this->getAllWarehouses($request);
+
         return $this->showDataToView($data, 'Configuration.SystemWarehouses.partials.buttons');
     }
 
@@ -30,6 +32,7 @@ class SystemWarehouseController extends BaseController
     {
         $this->authorize('systemwarehouses.create');
         $centers = $this->getCenters();
+
         return view('Configuration.SystemWarehouses.create', compact('centers'));
     }
 
@@ -37,6 +40,7 @@ class SystemWarehouseController extends BaseController
     {
         $warehouse = new SystemWarehouse($request->all());
         $warehouse->save();
+
         return $this->successResponse('systemwarehouses.index');
     }
 
@@ -44,6 +48,7 @@ class SystemWarehouseController extends BaseController
     {
         $this->authorize('systemwarehouses.edit');
         $status = $this->getStatusForSchema('STS');
+
         return view(
             'Configuration.SystemWarehouses.edit',
             compact('status', 'systemwarehouse')
@@ -61,6 +66,7 @@ class SystemWarehouseController extends BaseController
             $systemwarehouse->auxiliary09 = $path;
             $systemwarehouse->save();
         }
+
         return $this->infoResponse('systemwarehouses.index');
     }
 

@@ -18,12 +18,14 @@ class AssignShipmentController extends BaseController
     public function index()
     {
         $this->authorize('assignshipment');
+
         return view('Yards.AssignShipment.index');
     }
 
     public function getDataTransport()
     {
         $data = $this->getData();
+
         return DataTables::of($data)
             ->addColumn('shipmentbutton', 'Yards.ReceiptUnits.partials.shipment')
             ->addColumn('addresponsible', 'Yards.AssignShipment.partials.responsable')
@@ -59,10 +61,12 @@ class AssignShipmentController extends BaseController
             }
             StorageUnitTrace::createTraceUnit($receiptunit, '6');
             DB::commit();
+
             return $this->redirectBackSuccessMessage('Embarque asignado con exito!!');
         } catch (Exception $e) {
             $error = $e->getMessage();
             DB::rollback();
+
             return $this->errorResponse('Error al procesar la solicitud' . $error);
         }
     }
@@ -121,6 +125,7 @@ class AssignShipmentController extends BaseController
             'responsibleid' => $request['responsibleid'],
             'areaid' => $request['areaid'],
         ]);
+
         return $this->redirectBackSuccessMessage('Responsable asignado con exito!!');
     }
 }

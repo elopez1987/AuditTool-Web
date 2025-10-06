@@ -18,8 +18,9 @@ class ImportOrderPlanController extends BaseController
             return $this->errorResponse('El archivo es incorrecto, favor de validar');
         }
         $file = $request->file('file');
-        Excel::import(new OrderImport(), $file);
+        Excel::import(new OrderImport, $file);
         $data = LogImportFile::get();
+
         return view('Configuration.EdiLogs.LogImportFile.index', compact('data'));
     }
 }

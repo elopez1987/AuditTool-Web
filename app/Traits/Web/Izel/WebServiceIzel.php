@@ -24,6 +24,7 @@ trait WebServiceIzel
             $url = $dataUserCenter->url . 'receiptunitout';
         }
         $contentBody = json_encode($dataFolioNumber[0]);
+
         return Http::withHeaders(['Content-Type' => 'application/json', 'Authorization' => $encodeDataUserAndToken])
             ->withBody($contentBody, 'application/json')->post($url);
     }
@@ -38,9 +39,10 @@ trait WebServiceIzel
         if ($response->status() === 200) {
             $data = json_decode($response->getBody()->getContents());
             $tokenWms = $this->getTokenLogin($parameter, $data);
+
             return base64_encode("{$dataUserCenter->userapi} {$dataUserCenter->passwordapi} {$tokenWms}");
         }
-        return null;
+
     }
 
     public function getSystemCenterDistribution($centerid)
@@ -48,12 +50,6 @@ trait WebServiceIzel
         return SystemCenterDistribution::whereCenterid($centerid)->first();
     }
 
-    /**
-     * @param $parameter
-     * @param $dataUserCenter
-     *
-     * @return string
-     */
     public function getUrlLogin($parameter, $dataUserCenter): string
     {
         if (in_array('SDC-07', (array) $parameter)) {
@@ -61,13 +57,11 @@ trait WebServiceIzel
         } else {
             $url = $dataUserCenter->url . 'gettoken';
         }
+
         return $url;
     }
 
     /**
-     * @param $parameter
-     * @param $data
-     *
      * @return mixed
      */
     public function getTokenLogin($parameter, $data)
@@ -77,6 +71,7 @@ trait WebServiceIzel
         } else {
             $tokenWms = $data->{'Token'};
         }
+
         return $tokenWms;
     }
 

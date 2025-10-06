@@ -32,7 +32,7 @@ class EnviarMensajaSorianaJob implements ShouldQueue
     public function handle(): void
     {
         $url = 'https://api.1msg.io/HEI523482986/sendTemplate';
-        $client = new Client();
+        $client = new Client;
         $order = OrderDeliverie::where('id', '=', $this->orderDelivery->id)->first();
         $customer = OrderCustomer::where('id', $order->customerid)->select(['auxiliary02'])->first();
         if ($customer->auxiliary02 === 'S') {

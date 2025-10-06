@@ -21,6 +21,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read int|null $activities_count
  * @property-read SystemCenterDistribution $center
  * @property-read User|null $user
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListTruckErrorLog newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListTruckErrorLog newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListTruckErrorLog query()
@@ -29,6 +30,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListTruckErrorLog whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListTruckErrorLog whereScanuser($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListTruckErrorLog whereSerialnumber($value)
+ *
  * @mixin \Eloquent
  */
 class CheckListTruckErrorLog extends Model
@@ -36,6 +38,7 @@ class CheckListTruckErrorLog extends Model
     use LogsActivity;
 
     public $timestamps = false;
+
     protected $table = 'checklistlifttruckerrorlog';
 
     protected $fillable = [
@@ -57,6 +60,7 @@ class CheckListTruckErrorLog extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return CheckListTruckErrorLog::whereIn('checklistlifttruckerrorlog.centerid', $centers);
     }
 

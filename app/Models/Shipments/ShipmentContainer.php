@@ -33,6 +33,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read SystemStatus $status
  * @property-read User|null $user
  * @property-read User|null $userload
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentContainer newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentContainer newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentContainer onlyTrashed()
@@ -55,12 +56,14 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentContainer whereWarehouseid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentContainer withTrashed(bool $withTrashed = true)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentContainer withoutTrashed()
+ *
  * @mixin \Eloquent
  */
 class ShipmentContainer extends Model
 {
-    use SoftDeletes;
     use LogsActivity;
+    use SoftDeletes;
+
     public $timestamps = false;
 
     protected $table = 'shipmentcontainers';
@@ -93,6 +96,7 @@ class ShipmentContainer extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return ShipmentContainer::whereIn('shipmentcontainers.warehouseid', $warehouses)
             ->whereIn('shipmentcontainers.centerid', $centers);
     }

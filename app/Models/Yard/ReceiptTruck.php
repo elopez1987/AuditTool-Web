@@ -46,6 +46,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read SystemCenterDistribution $center
  * @property-read SystemStatus $status
  * @property-read SystemWarehouse $warehouse
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptTruck barcode($barcode)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptTruck carrier($carrierid)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptTruck ecoNumber($econumber)
@@ -83,6 +84,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptTruck whereUpdateuser($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptTruck whereValidity($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptTruck whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class ReceiptTruck extends Model
@@ -90,6 +92,7 @@ class ReceiptTruck extends Model
     use LogsActivity;
 
     public $timestamps = false;
+
     protected $table = 'receipttrucks';
 
     protected $casts = [
@@ -144,6 +147,7 @@ class ReceiptTruck extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return ReceiptTruck::whereIn('receipttrucks.warehouseid', $warehouses)
             ->whereIn('receipttrucks.centerid', $centers);
     }
@@ -217,6 +221,7 @@ class ReceiptTruck extends Model
             $query->where('receipttrucks.carrierid', '=', $carrierid);
         }
     }
+
     public function scopeFilterForRangeDate($query, $startDate, $endDate)
     {
         if ($startDate !== '' && $endDate !== '') {

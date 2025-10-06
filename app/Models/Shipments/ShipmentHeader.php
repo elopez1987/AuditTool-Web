@@ -15,6 +15,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * @method static create(array $array)
+ *
  * @property int $id
  * @property string $centerid
  * @property string $warehouseid
@@ -50,6 +51,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read SystemStatus $status
  * @property-read User|null $user
  * @property-read SystemWarehouse $warehouse
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentHeader forShipment($shipmentid)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentHeader newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentHeader newQuery()
@@ -79,6 +81,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentHeader whereTotalweight($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentHeader whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentHeader whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class ShipmentHeader extends Model
@@ -86,6 +89,7 @@ class ShipmentHeader extends Model
     use LogsActivity;
 
     protected $table = 'shipmentheader';
+
     protected $dateFormat = 'Y-m-d H:i:s';
 
     protected $fillable = [
@@ -114,6 +118,7 @@ class ShipmentHeader extends Model
     {
         $centers = SecurityAccessWarehouse::Centers();
         $warehouses = SecurityAccessWarehouse::Warehouses();
+
         return ShipmentHeader::whereIn('shipmentheader.centerid', $centers)
             ->whereIn('shipmentheader.warehouseid', $warehouses);
     }

@@ -39,6 +39,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read SystemStatus|null $status
  * @property-read User $usercreate
  * @property-read User|null $userupdate
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitTicket boxNumber($boxnumber)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitTicket carrier()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitTicket folioNumber($folionumber)
@@ -68,6 +69,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitTicket whereWeightout($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitTicket whereWeightoutlb($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitTicket whereWeightoutsap($value)
+ *
  * @mixin \Eloquent
  */
 class ReceiptUnitTicket extends Model
@@ -75,6 +77,7 @@ class ReceiptUnitTicket extends Model
     use LogsActivity;
 
     public $timestamps = false;
+
     protected $table = 'storagereceiptunitticket';
 
     protected $fillable = [
@@ -86,7 +89,7 @@ class ReceiptUnitTicket extends Model
         'weightinlb',
         'weightdifferencelb',
         'boxnumber',
-        'statusid'
+        'statusid',
     ];
 
     public function getActivitylogOptions(): LogOptions
@@ -97,7 +100,6 @@ class ReceiptUnitTicket extends Model
     protected $attributes = [
         'statusid' => 'E',
     ];
-
 
     //  -----------------------  Relaciones entre modelos  ---------------------------------------------
     public function usercreate()

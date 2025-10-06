@@ -18,6 +18,7 @@ class SystemStatusController extends BaseController
         $centers = $this->getCenterForSelect();
         $warehouses = $this->getWarehouseForSelect();
         $statusList = SystemStatus::where('schemaid', $systemschema->schemaid)->get();
+
         return view(
             'Configuration.SystemSchemas.createstatus',
             compact('systemschema', 'status', 'centers', 'warehouses', 'statusList')
@@ -38,6 +39,7 @@ class SystemStatusController extends BaseController
             'auxiliary04' => $request['auxiliary04'],
             'auxiliary05' => $request['auxiliary05'],
         ]);
+
         return $this->redirectBackInfo();
     }
 
@@ -55,12 +57,14 @@ class SystemStatusController extends BaseController
         $status->auxiliary05 = $request['auxiliary05'];
 
         $status->save();
+
         return $this->redirectBackSuccess();
     }
 
     public function destroystatus($id)
     {
         SystemStatus::destroy($id);
+
         return $this->redirectBackSuccessMessage('Estatus eliminado con exito.');
     }
 }

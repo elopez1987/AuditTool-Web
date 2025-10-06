@@ -17,10 +17,12 @@ class DebugShipmentController extends BaseController
         try {
             $this->closeOrderDelivery($id);
             DB::commit();
+
             return $this->redirectBackSuccessMessage('Embarque cerrado correctamente!!');
         } catch (Exception $e) {
             $error = $e->getMessage();
             DB::rollback();
+
             return $this->errorResponse('Error al procesar la solicitud!!' . $error);
         }
     }

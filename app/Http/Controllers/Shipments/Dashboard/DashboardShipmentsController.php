@@ -67,7 +67,7 @@ class DashboardShipmentsController extends BaseController
 
         \Log::info($statusarrive);
         //
-        ////        Estatus de salida de embarques
+        // //        Estatus de salida de embarques
         //        $statussalida = DB::select("
         //        SELECT
         //                status,
@@ -90,7 +90,7 @@ class DashboardShipmentsController extends BaseController
         //            ) AS subquery
         //            GROUP BY status;");
         //
-        ////        Estadia promedio
+        // //        Estadia promedio
         //        $estadiapromedio = DB::select("
         //        SELECT
         //                CAST(AVG(DATEDIFF(MINUTE, r2.entrydate, COALESCE(r2.outputdate, GETDATE()))) / 60 AS VARCHAR) + ' horas ' +
@@ -102,7 +102,7 @@ class DashboardShipmentsController extends BaseController
         //        ");
         //
         //
-        ////        BackLog
+        // //        BackLog
         //        $backlog = OrderDeliverie::controlAccessUser()
         //            ->select([
         //                    'orderdeliveries.workday',
@@ -134,7 +134,7 @@ class DashboardShipmentsController extends BaseController
         //            ->get();
         //
         //
-        ////        Total por cliente
+        // //        Total por cliente
         //        $totalclientes =  OrderDeliverie::controlAccessUser()
         //            ->select('o2.name as customer', DB::raw('COUNT(orderdeliveries.customerid) as total'))
         //            ->leftJoin('ordercustomers as o2', function($join) {
@@ -145,7 +145,7 @@ class DashboardShipmentsController extends BaseController
         //            ->groupBy('o2.name')
         //            ->get();
         //
-        ////        -- Detalle de los embarques para DOR
+        // //        -- Detalle de los embarques para DOR
         //        $detalleEmbarques = DB::table('orderdeliveries as o')
         //            ->select(
         //                'o.workday',
@@ -168,7 +168,7 @@ class DashboardShipmentsController extends BaseController
         //            ->orderBy('o.turnid')
         //            ->get();
         //
-        ////        -- Embarques totales
+        // //        -- Embarques totales
         //        $totalEmbarques = DB::table('orderdeliveries as o')
         //            ->select(
         //                'o.workday',
@@ -211,13 +211,13 @@ class DashboardShipmentsController extends BaseController
                 'totalembarquesstatus' => $embarquesstatus,
                 'statusarrive' => $statusarrive,
 
-//                'statussalida' => $statussalida,
-//                'estadiapromedio' => $estadiapromedio,
-//                'backlog' => $backlog,
-//                'totalclientes' => $totalclientes,
-//                'detalleEmbarques' => $detalleEmbarques,
-//                'totalEmbarques' => $totalEmbarques,
-//                'totalBacklog' => $totalBacklog,
+                //                'statussalida' => $statussalida,
+                //                'estadiapromedio' => $estadiapromedio,
+                //                'backlog' => $backlog,
+                //                'totalclientes' => $totalclientes,
+                //                'detalleEmbarques' => $detalleEmbarques,
+                //                'totalEmbarques' => $totalEmbarques,
+                //                'totalBacklog' => $totalBacklog,
             ]
         );
     }

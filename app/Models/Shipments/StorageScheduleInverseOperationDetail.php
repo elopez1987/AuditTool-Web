@@ -28,6 +28,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property string|null $value03
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageScheduleInverseOperationDetail newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageScheduleInverseOperationDetail newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageScheduleInverseOperationDetail query()
@@ -48,6 +49,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageScheduleInverseOperationDetail whereValue02($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageScheduleInverseOperationDetail whereValue03($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageScheduleInverseOperationDetail whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class StorageScheduleInverseOperationDetail extends Model
@@ -58,8 +60,8 @@ class StorageScheduleInverseOperationDetail extends Model
 
     protected $fillable = [
         'centerid', 'warehouseid', 'orderid', 'inverseid',
-        'delivery', 'partnumberid', 'quantity', 'unitmeasureid', 'statusid','value01',
-        'value02','value03',
+        'delivery', 'partnumberid', 'quantity', 'unitmeasureid', 'statusid', 'value01',
+        'value02', 'value03',
     ];
 
     protected $hidden = [
@@ -81,6 +83,7 @@ class StorageScheduleInverseOperationDetail extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return StorageScheduleInverseOperationDetail::whereIn('storagescheduleinverseoperationdetails.warehouseid', $warehouses)
             ->whereIn('storagescheduleinverseoperationdetails.centerid', $centers);
     }

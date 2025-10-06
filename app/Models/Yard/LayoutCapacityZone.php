@@ -16,6 +16,7 @@ use Illuminate\Notifications\Notifiable;
  * @property-read SystemCenterDistribution|null $center
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|LayoutCapacityZone newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|LayoutCapacityZone newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|LayoutCapacityZone query()
@@ -24,6 +25,7 @@ use Illuminate\Notifications\Notifiable;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|LayoutCapacityZone whereE($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|LayoutCapacityZone whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|LayoutCapacityZone whereZona($value)
+ *
  * @mixin \Eloquent
  */
 class LayoutCapacityZone extends Model
@@ -40,6 +42,7 @@ class LayoutCapacityZone extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return LayoutCapacityZone::whereIn('centerid', $centers);
     }
 }

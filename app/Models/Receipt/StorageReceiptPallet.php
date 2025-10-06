@@ -26,6 +26,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReceiptPallet newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReceiptPallet newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReceiptPallet query()
@@ -44,6 +45,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReceiptPallet whereValue04($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReceiptPallet whereValue05($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReceiptPallet whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class StorageReceiptPallet extends Model
@@ -51,6 +53,7 @@ class StorageReceiptPallet extends Model
     use LogsActivity;
 
     protected $table = 'storagereceiptpallets';
+
     protected $primaryKey = 'id';
 
     protected $fillable = [
@@ -67,6 +70,7 @@ class StorageReceiptPallet extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return StorageReceiptPallet::whereIn('storagereceiptpallets.warehouseid', $warehouses)
             ->whereIn('storagereceiptpallets.centerid', $centers);
     }

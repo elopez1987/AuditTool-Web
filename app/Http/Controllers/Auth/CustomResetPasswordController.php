@@ -26,7 +26,6 @@ class CustomResetPasswordController extends Controller
     /**
      * Reset the given user's password (custom implementation without auto-login).
      *
-     * @param  \Illuminate\Http\Request  $request
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
      */
@@ -55,9 +54,7 @@ class CustomResetPasswordController extends Controller
     /**
      * Display the password reset view for the given token.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  string|null  $token
-     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function showResetForm(Request $request, $token = null)
@@ -72,7 +69,6 @@ class CustomResetPasswordController extends Controller
      *
      * @param  \Illuminate\Contracts\Auth\CanResetPassword  $user
      * @param  string  $password
-     *
      * @return void
      */
     protected function resetPassword($user, $password)
@@ -93,9 +89,7 @@ class CustomResetPasswordController extends Controller
     /**
      * Get the response for a successful password reset.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  string  $response
-     *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
      */
     protected function sendResetResponse(Request $request, $response)

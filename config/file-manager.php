@@ -1,7 +1,7 @@
 <?php
 
-use Alexusmai\LaravelFileManager\Services\ConfigService\DefaultConfigRepository;
 use Alexusmai\LaravelFileManager\Services\ACLService\ConfigACLRepository;
+use Alexusmai\LaravelFileManager\Services\ConfigService\DefaultConfigRepository;
 
 return [
 
@@ -19,7 +19,7 @@ return [
      */
     'aclRepository' => ConfigACLRepository::class,
 
-    //********* Default configuration for DefaultConfigRepository **************
+    // ********* Default configuration for DefaultConfigRepository **************
 
     /**
      * LFM Route prefix
@@ -31,7 +31,7 @@ return [
      * List of disk names that you want to use
      * (from config/filesystems)
      */
-    'diskList' => ['Logs','Media','local','public'],
+    'diskList' => ['Logs', 'Media', 'local', 'public'],
 
     /**
      * Default disk for left manager
@@ -135,8 +135,7 @@ return [
      */
     'aclRulesCache' => null,
 
-    //********* Default configuration for DefaultConfigRepository END **********
-
+    // ********* Default configuration for DefaultConfigRepository END **********
 
     /***************************************************************************
      * ACL rules list - used for default ACL repository (ConfigACLRepository)
@@ -158,11 +157,11 @@ return [
      */
     'aclRules' => [
         null => [
-            //['disk' => 'public', 'path' => '/', 'access' => 2],
+            // ['disk' => 'public', 'path' => '/', 'access' => 2],
         ],
         1 => [
-            //['disk' => 'public', 'path' => 'images/arch*.jpg', 'access' => 2],
-            //['disk' => 'public', 'path' => 'files/*', 'access' => 1],
+            // ['disk' => 'public', 'path' => 'images/arch*.jpg', 'access' => 2],
+            // ['disk' => 'public', 'path' => 'files/*', 'access' => 1],
         ],
     ],
 ];

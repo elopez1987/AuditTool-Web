@@ -16,11 +16,11 @@ trait SendMessageWhatsAppForTask
     {
         $contact = $this->getContact($task);
         if (! $contact->phone || $contact->phone === '' || $contact->phone === null) {
-            return null;
+            return;
         }
         $task = $this->getStorageTask($task);
         $url = 'https://api.1msg.io/HEI523482986/sendTemplate';
-        $client = new Client();
+        $client = new Client;
         try {
             $data = $this->getBodyData($task, $contact);
             $response = $client->request('POST', $url, ['json' => $data, 'headers' => ['Content-Type' => 'application/json']]);
@@ -58,11 +58,6 @@ trait SendMessageWhatsAppForTask
         ];
     }
 
-    /**
-     * @param $task
-     *
-     * @return StorageTask
-     */
     public function getStorageTask($task): StorageTask
     {
         return StorageTask::controlAccessUser()
@@ -74,16 +69,11 @@ trait SendMessageWhatsAppForTask
             ->where('storagetasks.id', '=', $task->id)
             ->select(['receiptunits.boxnumber', 'storagetasks.receiptunitid as folionumber', 'receiptunits.econumber',
                 'storagezones.name as zone', 'storagelocations.name as destino', 'shipmentcarriers.name as carriername',
-                'storagetasks.centerid','storagetasks.warehouseid',
+                'storagetasks.centerid', 'storagetasks.warehouseid',
                 'sl.name as origen',
             ])->first();
     }
 
-    /**
-     * @param $task
-     *
-     * @return ReceiptUnit|User
-     */
     public function getContact($task): ReceiptUnit|User
     {
         if ($task->assignedto === 1) {
@@ -91,6 +81,7 @@ trait SendMessageWhatsAppForTask
         } else {
             $contact = User::where('id', $task->operatoryard)->select('auxiliary01 as phone')->first();
         }
+
         return $contact;
     }
 }

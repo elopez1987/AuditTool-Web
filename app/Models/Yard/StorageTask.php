@@ -36,6 +36,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read SystemStatus $status
  * @property-read SystemWarehouse $warehouse
  * @property-read StorageZone|null $zone
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTask forStatusTask($statusid)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTask newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTask newQuery()
@@ -53,11 +54,13 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTask whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTask whereWarehouseid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTask whereZoneid($value)
+ *
  * @mixin \Eloquent
  */
 class StorageTask extends Model
 {
     use LogsActivity;
+
     protected $table = 'storagetasks';
 
     protected $dateFormat = 'Y-m-d H:i:s';
@@ -92,6 +95,7 @@ class StorageTask extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return StorageTask::whereIn('storagetasks.warehouseid', $warehouses)
             ->whereIn('storagetasks.centerid', $centers);
     }

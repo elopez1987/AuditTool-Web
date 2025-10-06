@@ -11,7 +11,7 @@ use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 
-class ImportUsers implements ToModel, WithHeadingRow, WithChunkReading, WithBatchInserts, WithValidation
+class ImportUsers implements ToModel, WithBatchInserts, WithChunkReading, WithHeadingRow, WithValidation
 {
     use Importable;
 
@@ -67,11 +67,6 @@ class ImportUsers implements ToModel, WithHeadingRow, WithChunkReading, WithBatc
         ];
     }
 
-    /**
-     * @param array $row
-     *
-     * @return User
-     */
     public function getUpdateOrCreateUser(array $row): User
     {
         return User::updateOrCreate(
@@ -86,12 +81,6 @@ class ImportUsers implements ToModel, WithHeadingRow, WithChunkReading, WithBatc
         );
     }
 
-    /**
-     * @param array $row
-     * @param User $user
-     *
-     * @return void
-     */
     public function createAccessWarehouse(array $row, User $user): void
     {
         SecurityAccessWarehouse::create([

@@ -12,13 +12,11 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Style\Fill as FillAlias;
 
-class ExportLogWebService implements FromCollection, WithHeadings, WithMapping, WithEvents, ShouldAutoSize
+class ExportLogWebService implements FromCollection, ShouldAutoSize, WithEvents, WithHeadings, WithMapping
 {
     use Exportable;
 
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     public function headings(): array
     {

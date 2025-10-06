@@ -25,6 +25,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read int|null $activities_count
  * @property-read InventoryPartnumber $partnumber
  * @property-read User|null $user
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentStock newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentStock newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentStock query()
@@ -39,6 +40,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentStock whereQuantity($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentStock whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentStock whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class ShipmentStock extends Model

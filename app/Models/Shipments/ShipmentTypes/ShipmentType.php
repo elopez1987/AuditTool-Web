@@ -28,6 +28,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read int|null $activities_count
  * @property-read SystemCenterDistribution $center
  * @property-read SystemStatus $status
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentType name($name)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentType newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentType newQuery()
@@ -45,6 +46,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentType whereSchemaid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentType whereStatusid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentType whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class ShipmentType extends Model
@@ -52,6 +54,7 @@ class ShipmentType extends Model
     use LogsActivity;
 
     protected $table = 'shipmenttypes';
+
     protected $fillable = [
         'centerid',
         'name',
@@ -74,7 +77,7 @@ class ShipmentType extends Model
         return LogOptions::defaults()->logFillable();
     }
 
-    //***************************** Relaciones entre modelos **********************************
+    // ***************************** Relaciones entre modelos **********************************
     public function status(): BelongsTo
     {
         return $this->belongsTo(SystemStatus::class, 'statusid', 'statusid');
@@ -88,6 +91,7 @@ class ShipmentType extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return ShipmentType::whereIn('centerid', $centers);
     }
 

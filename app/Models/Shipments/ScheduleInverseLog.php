@@ -18,6 +18,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property \Illuminate\Support\Carbon $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ScheduleInverseLog newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ScheduleInverseLog newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ScheduleInverseLog query()
@@ -29,6 +30,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ScheduleInverseLog whereStatusid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ScheduleInverseLog whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ScheduleInverseLog whereUsername($value)
+ *
  * @mixin \Eloquent
  */
 class ScheduleInverseLog extends Model

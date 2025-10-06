@@ -19,6 +19,7 @@ class ScheduleInverseController extends BaseController
     public function index()
     {
         $this->authorize('scheduleinverse.index');
+
         return view('Shipments.ScheduleInverse.index');
     }
 
@@ -36,6 +37,7 @@ class ScheduleInverseController extends BaseController
                 'systemstatus.name as statusname',
                 'scheduleinverse.*',
             ])->get();
+
         return $this->showDataToView($data, 'Shipments.ScheduleInverse.partials.buttons');
     }
 
@@ -44,6 +46,7 @@ class ScheduleInverseController extends BaseController
         $this->authorize('scheduleinverse.create');
         $centers = $this->getCenterForSelect();
         $warehouses = $this->getWarehouseForSelect();
+
         return view('Shipments.ScheduleInverse.create', compact('centers', 'warehouses'));
     }
 
@@ -69,11 +72,13 @@ class ScheduleInverseController extends BaseController
                 }
             }
             DB::commit();
+
             return $this->redirectBackSuccessMessage('Horario creado con exito');
         } catch (Exception $e) {
             $error = $e->getMessage();
             Log::error($error);
             DB::rollback();
+
             return $this->errorResponse('Error al guardar los datos, intente nuevamente');
         }
     }
@@ -88,6 +93,7 @@ class ScheduleInverseController extends BaseController
         $schedulle = ScheduleInverse::find($request['id']);
         $schedulle->statusid = 'ACT';
         $schedulle->save();
+
         return response()->json([
             'ProcessDate' => Carbon::now()->format('Y-m-d H:m:s'),
             'Code' => '0',
@@ -106,6 +112,7 @@ class ScheduleInverseController extends BaseController
             }
             $fechaInicio->modify('+1 day');
         }
+
         return $fechas;
     }
 }

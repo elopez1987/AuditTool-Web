@@ -11,6 +11,7 @@ trait QueryShipmentTransport
     {
         $carriers = $this->getCarrierForUser();
         $customers = $this->getCustomerForUser();
+
         return OrderDeliverie::controlAccessUser()
             ->leftJoin('ordercustomers', 'orderdeliveries.customerid', '=', 'ordercustomers.id')
             ->leftJoin('shipmenttransport', 'orderdeliveries.id', '=', 'shipmenttransport.orderid')

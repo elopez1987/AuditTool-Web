@@ -7,6 +7,6 @@ use App\Traits\Web\General\Responser;
 
 class BaseController extends Controller
 {
-    use Responser;
     use GetParameters;
+    use Responser;
 }

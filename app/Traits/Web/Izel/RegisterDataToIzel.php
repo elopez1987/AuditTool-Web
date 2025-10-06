@@ -18,6 +18,7 @@ trait RegisterDataToIzel
                     SystemEventWebServiceIzel::createRegisterLog($receiptunit, $statusService, $parameter);
                 } else {
                     SystemEventWebServiceIzel::createRegisterLog($receiptunit, $statusService, $parameter);
+
                     return redirect()->back()->with(session()->flash('error', 'Error al ingresar el folio en wms'));
                 }
             }

@@ -37,6 +37,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read SystemCenterDistribution $center
  * @property-read SystemStatus $status
  * @property-read SystemStatus|null $type
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCheckListLiftTrucks forName($name)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCheckListLiftTrucks newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCheckListLiftTrucks newQuery()
@@ -65,15 +66,16 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCheckListLiftTrucks whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCheckListLiftTrucks withTrashed(bool $withTrashed = true)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCheckListLiftTrucks withoutTrashed()
+ *
  * @mixin \Eloquent
  */
 class StorageCheckListLiftTrucks extends Model
 {
     use LogsActivity;
-
     use SoftDeletes;
 
     protected $primaryKey = 'id';
+
     protected $table = 'storagechecklistslifttrucks';
 
     protected $fillable = [
@@ -121,6 +123,7 @@ class StorageCheckListLiftTrucks extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return StorageCheckListLiftTrucks::whereIn('storagechecklistslifttrucks.centerid', $centers);
     }
 

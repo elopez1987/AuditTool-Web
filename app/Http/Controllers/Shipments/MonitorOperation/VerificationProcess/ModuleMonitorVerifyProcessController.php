@@ -30,6 +30,7 @@ class ModuleMonitorVerifyProcessController extends BaseController
         $pedidos = ShipmentControl::controlAccessUser()->where('orderid', '=', $id)->get();
         $total = $this->getTotalGeneral($id);
         $detailLpns = $this->getDetailLpns($id);
+
         return view(
             'Shipments.OrderMonitor.MonitorOperation.VerificationProcess.index',
             compact('orderDelivery', 'checks', 'total', 'concepts', 'lpns', 'detailLpns', 'lpsFusionados', 'kardexMoveBox', 'pedidos')

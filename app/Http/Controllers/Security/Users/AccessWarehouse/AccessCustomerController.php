@@ -26,6 +26,7 @@ class AccessCustomerController extends BaseController
         $user = User::where('uuiduser', $uuiduser)->firstOrFail();
         $customers = $this->getOrderCustomerForSelect();
         $listCustomers = SecurityAccessCustomer::where('username', $user->username)->get();
+
         return view(
             'Security.Users.AccessCustomer.index',
             compact('user', 'customers', 'listCustomers')
@@ -36,12 +37,14 @@ class AccessCustomerController extends BaseController
     {
         $centerCustomer = $this->getCenterForCustomer($request['customerid']);
         $this->serviceUser->assignCustomerToUser($request, $centerCustomer);
+
         return $this->redirectBackSuccessMessage('Cliente agregado con exito');
     }
 
     public function destroy($id)
     {
         SecurityAccessCustomer::destroy($id);
+
         return $this->redirectBackSuccessMessage('Registro eliminado con exito.');
     }
 }

@@ -24,6 +24,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
  * @property-read InventoryPartnumber|null $partnumber
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentPallet newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentPallet newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentPallet query()
@@ -37,14 +38,17 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentPallet whereQuantity($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentPallet whereUpdate($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentPallet whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class ShipmentPallet extends Model
 {
     use LogsActivity;
+
     public $timestamps = false;
 
     protected $table = 'shipmentpallets';
+
     protected $primaryKey = 'id';
 
     protected $fillable = ['centerid', 'warehouseid', 'orderid',
@@ -60,6 +64,7 @@ class ShipmentPallet extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return ShipmentPallet::whereIn('shipmentpallets.warehouseid', $warehouses)
             ->whereIn('shipmentpallets.centerid', $centers);
     }

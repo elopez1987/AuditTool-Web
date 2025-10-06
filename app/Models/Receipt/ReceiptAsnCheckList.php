@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $checklistdetailid
  * @property string $createuser
  * @property string $created_at
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptAsnCheckList newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptAsnCheckList newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptAsnCheckList query()
@@ -24,12 +25,15 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptAsnCheckList whereReceiptid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptAsnCheckList whereRecordid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptAsnCheckList whereTypeid($value)
+ *
  * @mixin \Eloquent
  */
 class ReceiptAsnCheckList extends Model
 {
     public $timestamps = false;
+
     protected $table = 'receiptasnchecklist';
+
     protected $primaryKey = 'recordid';
 
     protected $fillable = [

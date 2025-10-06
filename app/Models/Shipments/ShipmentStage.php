@@ -16,6 +16,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property string|null $value05
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentStage newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentStage newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentStage query()
@@ -26,11 +27,13 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentStage whereValue03($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentStage whereValue04($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentStage whereValue05($value)
+ *
  * @mixin \Eloquent
  */
 class ShipmentStage extends Model
 {
     use LogsActivity;
+
     public $timestamps = false;
 
     protected $table = 'shipmentstages';

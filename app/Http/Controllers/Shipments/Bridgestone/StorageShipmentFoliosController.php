@@ -21,6 +21,7 @@ class StorageShipmentFoliosController extends BaseController
             ->with(['center:centerid,name,description', 'warehouse:warehouseid,name',
                 'user:id,name', 'statuskey:statusid,name', 'status:statusid,name',
             ])->get();
+
         return $this->showDataToView($data, 'Shipments.Bridgestone.ShipmentFolios.partials.buttons');
     }
 
@@ -41,6 +42,7 @@ class StorageShipmentFoliosController extends BaseController
 
         $fortmat = 'Shipments.Bridgestone.ShipmentFolios.Pdfs.ControlConteo';
         $pdf = Pdf::loadView($fortmat, compact('folio', 'detalleFolio'))->setPaper('A4', 'landscape');
+
         return response($pdf->output(), 200)->header('Content-Type', 'application/pdf');
     }
 }

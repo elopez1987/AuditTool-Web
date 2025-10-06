@@ -9,9 +9,9 @@ class CreateAccessWarehouseQrRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'centerid' => ['required','exists:systemcenterdistributions,centerid'],
-            'warehouseid' => ['required','exists:systemwarehouses,warehouseid'],
-            'operatorid' => ['required','exists:storageoperators,id'],
+            'centerid' => ['required', 'exists:systemcenterdistributions,centerid'],
+            'warehouseid' => ['required', 'exists:systemwarehouses,warehouseid'],
+            'operatorid' => ['required', 'exists:storageoperators,id'],
             'boxid' => ['required', 'exists:storagelabeltrucks,id'],
             'truckid' => ['nullable'],
             'shipmentid' => ['nullable'],

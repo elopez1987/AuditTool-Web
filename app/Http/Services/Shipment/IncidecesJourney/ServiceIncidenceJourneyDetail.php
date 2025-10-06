@@ -32,9 +32,6 @@ class ServiceIncidenceJourneyDetail
         }
     }
 
-    /**
-     * @return array
-     */
     public static function getCategoryIncidences(): array
     {
         return StorageCategoryIncidenceDetail::controlAccessUser()
@@ -44,9 +41,6 @@ class ServiceIncidenceJourneyDetail
     }
 
     /**
-     * @param $request
-     * @param int $i
-     *
      * @return StorageIncidenceJourneyDetails|Builder|Model|object|null
      */
     public static function UpdateIncidenceDetail($request, int $i)
@@ -58,15 +52,10 @@ class ServiceIncidenceJourneyDetail
         $detail->auxiliary04 = Auth::user()->username;
         $detail->comment = $request['comment'][$i];
         $detail->save();
+
         return $detail;
     }
 
-    /**
-     * @param $detail
-     * @param array $categories
-     *
-     * @return void
-     */
     public static function createNewRegisterForKeyOperation($detail, array $categories): void
     {
         if (in_array($detail->razoncode, $categories)) {

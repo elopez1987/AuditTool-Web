@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $value01
  * @property string|null $value02
  * @property string|null $value03
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCategoryRole newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCategoryRole newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCategoryRole query()
@@ -24,11 +25,13 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCategoryRole whereValue01($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCategoryRole whereValue02($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCategoryRole whereValue03($value)
+ *
  * @mixin \Eloquent
  */
 class StorageCategoryRole extends Model
 {
     public $timestamps = false;
+
     protected $table = 'storagecategoryrole';
 
     protected $fillable = [

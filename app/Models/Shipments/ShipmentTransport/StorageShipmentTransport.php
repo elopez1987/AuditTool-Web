@@ -29,6 +29,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
  * @property-read ShipmentCarrier $carrier
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentTransport newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentTransport newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentTransport query()
@@ -49,11 +50,13 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentTransport wherePhone($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentTransport whereTrucknumber($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentTransport whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class StorageShipmentTransport extends Model
 {
     use LogsActivity;
+
     public $timestamps = false;
 
     //    Auxiliary01 == Ingreso de unidad en el moduo de patios (1 con transporte)
@@ -62,6 +65,7 @@ class StorageShipmentTransport extends Model
     //    Auxiliary04 == Número de economico de tracto
 
     protected $table = 'shipmenttransport';
+
     protected $primaryKey = 'id';
 
     protected $fillable = [
@@ -97,6 +101,7 @@ class StorageShipmentTransport extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return StorageShipmentTransport::whereIn('shipmenttransport.warehouseid', $warehouses)
             ->whereIn('shipmenttransport.centerid', $centers);
     }

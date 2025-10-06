@@ -32,6 +32,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @property-read SystemStatus $status
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCheckListDetail name($name)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCheckListDetail newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCheckListDetail newQuery()
@@ -49,14 +50,16 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCheckListDetail whereSchemaid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCheckListDetail whereStatusid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCheckListDetail whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class StorageCheckListDetail extends Model
 {
-    use Notifiable;
     use LogsActivity;
+    use Notifiable;
 
     protected $table = 'storagechecklistdetails';
+
     protected $dateFormat = 'Y-m-d H:i:s';
 
     protected $fillable = [
@@ -95,6 +98,7 @@ class StorageCheckListDetail extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return StorageCheckListDetail::whereIn('storagechecklistdetails.centerid', $centers);
     }
 

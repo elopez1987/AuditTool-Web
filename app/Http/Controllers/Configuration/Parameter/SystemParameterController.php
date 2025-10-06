@@ -13,6 +13,7 @@ class SystemParameterController extends BaseController
     public function index()
     {
         $this->authorize('systemparameters.index');
+
         return view('Configuration.SystemParameters.index');
     }
 
@@ -28,12 +29,14 @@ class SystemParameterController extends BaseController
             ->ForName($request->get('name'))
             ->ForParameter($request->get('parameterid'))
             ->select('systemparameters.*');
+
         return $this->showDataToView($data, 'Configuration.SystemParameters.partials.buttons');
     }
 
     public function create()
     {
         $this->authorize('systemparameters.create');
+
         return view('Configuration.SystemParameters.create');
     }
 
@@ -41,12 +44,14 @@ class SystemParameterController extends BaseController
     {
         $parameter = new SystemParameter($request->all());
         $parameter->save();
+
         return redirect('detailparameter/' . $parameter->parameterid . '/add');
     }
 
     public function edit(SystemParameter $systemparameter)
     {
         $this->authorize('systemparameters.edit');
+
         return view(
             'Configuration.SystemParameters.edit',
             compact('systemparameter')
@@ -56,6 +61,7 @@ class SystemParameterController extends BaseController
     public function update(Request $request, SystemParameter $systemparameter): RedirectResponse
     {
         $systemparameter->update($request->all());
+
         return $this->infoResponse('systemparameters.index');
     }
 
@@ -64,6 +70,7 @@ class SystemParameterController extends BaseController
         $systemparameter->statusid = 'D';
         $systemparameter->save();
         $systemparameter->delete();
+
         return $this->infoResponse('systemparameters.index');
     }
 }

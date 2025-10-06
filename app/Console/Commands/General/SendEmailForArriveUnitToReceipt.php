@@ -20,7 +20,7 @@ class SendEmailForArriveUnitToReceipt extends Command
      * @var string
      */
     protected $signature = 'app:send-email-for-arrive-unit-to-receipt';
-    //SWH-30 => ENVIA EL CORREO DE LLEGADA DE PROVEEDOR EN EL REGISTRO DE UNIDAD
+    // SWH-30 => ENVIA EL CORREO DE LLEGADA DE PROVEEDOR EN EL REGISTRO DE UNIDAD
 
     /**
      * The console command description.

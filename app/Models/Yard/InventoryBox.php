@@ -28,6 +28,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read SystemCenterDistribution $center
  * @property-read SystemStatus|null $status
  * @property-read SystemStatus|null $type
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryBox forFolio($folio)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryBox forStatus($statusid)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryBox newModelQuery()
@@ -44,14 +45,17 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryBox whereSchematypeid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryBox whereStatusid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryBox whereStatustypeid($value)
+ *
  * @mixin \Eloquent
  */
 class InventoryBox extends Model
 {
     use LogsActivity;
+
     public $timestamps = false;
 
     protected $table = 'inventoryboxstock';
+
     protected $primaryKey = 'id';
 
     protected $fillable = [
@@ -94,6 +98,7 @@ class InventoryBox extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return InventoryBox::whereIn('inventoryboxstock.centerid', $centers);
     }
 

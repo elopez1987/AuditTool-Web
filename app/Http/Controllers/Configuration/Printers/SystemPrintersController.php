@@ -12,6 +12,7 @@ class SystemPrintersController extends BaseController
     public function index()
     {
         $this->authorize('systemprinters.index');
+
         return view('Configuration.SystemPrinters.index');
     }
 
@@ -35,6 +36,7 @@ class SystemPrintersController extends BaseController
     {
         $this->authorize('systemprinters.create');
         $centers = $this->getCenterForSelect();
+
         return view('Configuration.SystemPrinters.create', compact('centers'));
     }
 
@@ -42,6 +44,7 @@ class SystemPrintersController extends BaseController
     {
         $printer = new SystemPrinter($request->all());
         $printer->save();
+
         return $this->redirectBackSuccess();
     }
 
@@ -49,12 +52,14 @@ class SystemPrintersController extends BaseController
     {
         $this->authorize('systemprinters.edit');
         $status = $this->getStatusForSchema('STS');
+
         return view('Configuration.SystemPrinters.edit', compact('systemprinter', 'status'));
     }
 
     public function update(Request $request, SystemPrinter $systemprinter)
     {
         $systemprinter->update($request->all());
+
         return $this->redirectBackInfo();
     }
 }

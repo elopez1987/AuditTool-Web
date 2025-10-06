@@ -13,6 +13,7 @@ class MonitorShipmentStatusController extends BaseController
     public function index()
     {
         $this->authorize('shipmentstatustransport');
+
         return view('Shipments.MonitorStatusTransport.index');
     }
 
@@ -40,6 +41,7 @@ class MonitorShipmentStatusController extends BaseController
             ->whereNotIn('orderdeliveries.statusid', ['DH', 'CA'])
             ->get();
         $data = json_encode($data);
+
         return response()->json($data);
     }
 }

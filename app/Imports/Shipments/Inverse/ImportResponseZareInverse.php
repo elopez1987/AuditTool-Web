@@ -19,6 +19,7 @@ class ImportResponseZareInverse implements ToCollection, WithHeadingRow, WithVal
                 ->where('partnumberid', trim($row['partnumberid']))->first();
             if (empty($delivery)) {
                 StorageLogInverse::createNewLog('No existe número de factura en la bitacora de devoluciones', trim($row['delivery']));
+
                 continue;
             }
             $delivery->zare = trim($row['zare']);

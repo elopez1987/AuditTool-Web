@@ -12,8 +12,11 @@ class MailForNewIncidenceInReceipt extends Mailable
     use SerializesModels;
 
     public $incidenceStock;
+
     public $contact;
+
     public $receipt;
+
     public $archivosadjuntos;
 
     /**
@@ -40,6 +43,7 @@ class MailForNewIncidenceInReceipt extends Mailable
         foreach ($this->archivosadjuntos as $rutaArchivo) {
             $email->attachFromStorage($rutaArchivo->path);
         }
+
         return $email;
     }
 }

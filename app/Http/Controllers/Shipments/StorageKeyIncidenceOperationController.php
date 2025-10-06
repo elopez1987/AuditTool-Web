@@ -22,6 +22,7 @@ class StorageKeyIncidenceOperationController extends BaseController
     public function getIncidencesKeysPending(Request $request)
     {
         $data = StorageKeyIncidenceOperation::getData($request);
+
         return $this->showDataToView($data, 'Shipments.ShipmentKeyIncidences.partials.buttons');
     }
 
@@ -32,6 +33,7 @@ class StorageKeyIncidenceOperationController extends BaseController
         $motivos = StorageCategoryIncidenceDetail::controlAccessUser()->where('auxiliary01', '=', 'KEY')
             ->where('auxiliary02', '=', 'OP')
             ->select(['description', 'categoryincdetailid'])->get();
+
         return view('Shipments.ShipmentKeyIncidences.edit', compact('order', 'details', 'motivos'));
     }
 

@@ -115,7 +115,8 @@ trait Responser
     {
         $centers = SecurityAccessWarehouse::Centers();
         $warehouses = SecurityAccessWarehouse::Warehouses();
-        return (new SystemWarehouse())->whereStatusid('E')
+
+        return (new SystemWarehouse)->whereStatusid('E')
             ->whereIn('systemwarehouses.centerid', $centers)
             ->whereIn('systemwarehouses.warehouseid', $warehouses)
             ->select(['name', 'warehouseid'])->get();
@@ -124,6 +125,7 @@ trait Responser
     public function getCarriersForSelect()
     {
         $carriers = $this->getCarrierForUser();
+
         return ShipmentCarrier::controlAccessUser()->whereStatusid('E')
             ->Carriers($carriers)
             ->select(['name', 'id'])->get();
@@ -133,7 +135,8 @@ trait Responser
     {
         $centers = SecurityAccessWarehouse::Centers();
         $warehouses = SecurityAccessWarehouse::Warehouses();
-        return (new ReceiptProvider())->whereStatusid('E')
+
+        return (new ReceiptProvider)->whereStatusid('E')
             ->whereIn('centerid', $centers)
             ->whereIn('warehouseid', $warehouses)
             ->select(['name', 'id'])->get();
@@ -149,6 +152,7 @@ trait Responser
     {
         $centers = SecurityAccessWarehouse::Centers();
         $warehouses = SecurityAccessWarehouse::Warehouses();
+
         return InventoryPartNumberCategory01::whereStatusid('E')
             ->whereIn('centerid', $centers)
             ->whereIn('warehouseid', $warehouses)
@@ -159,6 +163,7 @@ trait Responser
     {
         $centers = SecurityAccessWarehouse::Centers();
         $warehouses = SecurityAccessWarehouse::Warehouses();
+
         return InventoryPartNumberCategory02::whereStatusid('E')
             ->whereIn('centerid', $centers)
             ->whereIn('warehouseid', $warehouses)
@@ -174,6 +179,7 @@ trait Responser
     public function shipmentTruckSelect()
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return ShipmentTruck::whereStatusid('E')
             ->whereIn('centerid', $centers)
             ->select('name', 'id')->get();
@@ -222,6 +228,7 @@ trait Responser
     public function getOperatorForCarriers()
     {
         $carriers = $this->getCarrierForUser();
+
         return StorageOperator::controlAccessUser()
             ->select(['name', 'id'])
             ->where('statusid', '=', 'E')
@@ -231,6 +238,7 @@ trait Responser
     public function getBoxForCarrier()
     {
         $carriers = $this->getCarrierForUser();
+
         return StorageLabelTruck::controlAccessUser()
             ->where('storagelabeltrucks.statusid', '=', 'E')
             ->where('storagelabeltrucks.typeid', '=', 'BX')
@@ -247,6 +255,7 @@ trait Responser
     public function getTruckForCarrier()
     {
         $carriers = $this->getCarrierForUser();
+
         return StorageLabelTruck::controlAccessUser()
             ->whereTypeid('TR')
             ->where('statusid', '=', 'E')
@@ -290,6 +299,7 @@ trait Responser
         foreach ($period as $date) {
             $dates[] = $date->format('Y-m-d');
         }
+
         return $dates;
     }
 }

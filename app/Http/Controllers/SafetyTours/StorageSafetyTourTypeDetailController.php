@@ -25,6 +25,7 @@ class StorageSafetyTourTypeDetailController extends BaseController
                 ]);
             }
         }
+
         return $this->redirectBackSuccessMessage('Registro guardado con exito.');
     }
 
@@ -32,6 +33,7 @@ class StorageSafetyTourTypeDetailController extends BaseController
     {
         $detail = StorageSafetyTourTypeDetail::findOrFail($id);
         $detail->delete();
+
         return $this->redirectBackSuccessMessage('Registro eliminado con exito.');
     }
 
@@ -39,6 +41,7 @@ class StorageSafetyTourTypeDetailController extends BaseController
     {
         $detail = StorageSafetyTourTypeDetail::withTrashed()->findOrFail($id);
         $detail->restore();
+
         return $this->redirectBackSuccessMessage('Registro restaurado con exito.');
     }
 }

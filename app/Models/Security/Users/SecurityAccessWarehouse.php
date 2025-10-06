@@ -21,6 +21,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read int|null $activities_count
  * @property-read SystemCenterDistribution $center
  * @property-read SystemWarehouse $warehouse
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SecurityAccessWarehouse newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SecurityAccessWarehouse newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SecurityAccessWarehouse query()
@@ -31,6 +32,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SecurityAccessWarehouse whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SecurityAccessWarehouse whereUsername($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SecurityAccessWarehouse whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class SecurityAccessWarehouse extends Model
@@ -38,6 +40,7 @@ class SecurityAccessWarehouse extends Model
     use LogsActivity;
 
     protected $table = 'securityaccesswarehouses';
+
     protected $dateFormat = 'Y-m-d H:i:s';
 
     protected $fillable = [
@@ -54,7 +57,7 @@ class SecurityAccessWarehouse extends Model
 
     public static function Centers()
     {
-        return (new SecurityAccessWarehouse())
+        return (new SecurityAccessWarehouse)
             ->where('username', Auth::user()->username)
             ->select('centerid')
             ->get()
@@ -63,7 +66,7 @@ class SecurityAccessWarehouse extends Model
 
     public static function Warehouses()
     {
-        return (new SecurityAccessWarehouse())
+        return (new SecurityAccessWarehouse)
             ->where('username', Auth::user()->username)
             ->select('warehouseid')
             ->get()

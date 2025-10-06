@@ -12,7 +12,7 @@ use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 
-class ImportDataReceipt implements ToModel, WithHeadingRow, WithBatchInserts, WithChunkReading, WithValidation
+class ImportDataReceipt implements ToModel, WithBatchInserts, WithChunkReading, WithHeadingRow, WithValidation
 {
     use Importable;
 
@@ -44,7 +44,7 @@ class ImportDataReceipt implements ToModel, WithHeadingRow, WithBatchInserts, Wi
         ]);
     }
 
-    //shelflife
+    // shelflife
 
     // Si el archivo tiene encabezados, empieza a leer desde la segunda fila
     public function startRow(): int
@@ -66,7 +66,7 @@ class ImportDataReceipt implements ToModel, WithHeadingRow, WithBatchInserts, Wi
     {
         return [
             '*.sku' => [
-//                'string',
+                //                'string',
                 'required',
             ],
             '*.quantity' => [
@@ -74,11 +74,11 @@ class ImportDataReceipt implements ToModel, WithHeadingRow, WithBatchInserts, Wi
                 'required',
             ],
             '*.batch' => [
-//                'string',
+                //                'string',
                 'required',
             ],
             '*.category' => [
-//                'string',
+                //                'string',
                 'required',
             ],
         ];

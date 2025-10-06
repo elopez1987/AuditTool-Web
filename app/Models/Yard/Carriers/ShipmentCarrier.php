@@ -13,6 +13,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * @method static whereStatusid(string $string)
+ *
  * @property int $id
  * @property string $centerid
  * @property string $name
@@ -33,6 +34,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read int|null $activities_count
  * @property-read SystemCenterDistribution $center
  * @property-read SystemStatus $status
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentCarrier carrier($carrierid)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentCarrier carriers($carries)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentCarrier name($name)
@@ -58,13 +60,16 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentCarrier whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentCarrier withTrashed(bool $withTrashed = true)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentCarrier withoutTrashed()
+ *
  * @mixin \Eloquent
  */
 class ShipmentCarrier extends Model
 {
     use LogsActivity;
     use softDeletes;
+
     protected $table = 'shipmentcarriers';
+
     protected $dateFormat = 'Y-m-d H:i:s';
 
     protected $fillable = [
@@ -106,6 +111,7 @@ class ShipmentCarrier extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return ShipmentCarrier::whereIn('shipmentcarriers.centerid', $centers);
     }
 

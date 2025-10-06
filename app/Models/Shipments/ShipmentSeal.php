@@ -33,6 +33,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read \App\Models\Shipments\OrderDeliverie $shipment
  * @property-read User|null $user
  * @property-read SystemWarehouse $warehouse
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentSeal forShipment($shipmentid)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentSeal newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentSeal newQuery()
@@ -52,6 +53,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentSeal whereStatusorderid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentSeal whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentSeal whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class ShipmentSeal extends Model
@@ -97,6 +99,7 @@ class ShipmentSeal extends Model
     {
         $centers = SecurityAccessWarehouse::Centers();
         $warehouses = SecurityAccessWarehouse::Warehouses();
+
         return ShipmentSeal::whereIn('centerid', $centers)
             ->whereIn('warehouseid', $warehouses);
     }

@@ -17,10 +17,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-//Auxiliary01 = NOmbre del cliente o proveedor
-//Auxiliary02 = Número de folio del cual fue generado en el proceso de Reautilizar folio
-//Auxiliary03 = Tipo de entrada en los modulos de registro (TR = Transporte, QR = Acceso por QR, ST = Registro Estandar)
-//Auxiliary04 =
+// Auxiliary01 = NOmbre del cliente o proveedor
+// Auxiliary02 = Número de folio del cual fue generado en el proceso de Reautilizar folio
+// Auxiliary03 = Tipo de entrada en los modulos de registro (TR = Transporte, QR = Acceso por QR, ST = Registro Estandar)
+// Auxiliary04 =
 
 /**
  * @property int $id
@@ -86,6 +86,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read User|null $userclose
  * @property-read SystemWarehouse $warehouse
  * @property-read StorageZone|null $zone
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnit barcode($barcode)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnit box($boxnumber)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnit boxNumber($boxnumber)
@@ -149,12 +150,15 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnit whereUpdateuser($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnit whereWarehouseid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnit whereZoneid($value)
+ *
  * @mixin \Eloquent
  */
 class ReceiptUnit extends Model
 {
     use LogsActivity;
+
     public $timestamps = false;
+
     protected $table = 'receiptunits';
 
     protected $fillable = [
@@ -209,6 +213,7 @@ class ReceiptUnit extends Model
 
     protected $casts = [
     ];
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()->logFillable();
@@ -218,6 +223,7 @@ class ReceiptUnit extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return ReceiptUnit::whereIn('receiptunits.warehouseid', $warehouses)
             ->whereIn('receiptunits.centerid', $centers);
     }
@@ -291,6 +297,7 @@ class ReceiptUnit extends Model
     {
         return $this->belongsTo(User::class, 'updateuser', 'id')->withTrashed();
     }
+
     public function key()
     {
         return $this->belongsTo(ReceiptUnitKey::class, 'id', 'folionumber');
@@ -449,7 +456,7 @@ class ReceiptUnit extends Model
         }
     }
 
-    //----------------------------------------------------- Filtros del modelo -----------------------
+    // ----------------------------------------------------- Filtros del modelo -----------------------
     public static function searchForBarcode($barcode)
     {
         return ReceiptUnit::controlAccessUser()->whereBarcode($barcode)->whereNotIn('statusid', ['TR'])->first();
@@ -485,7 +492,7 @@ class ReceiptUnit extends Model
         return ReceiptUnit::controlAccessUser()->where('locationid', $locationid)->whereNotIn('statusid', ['TR'])->first();
     }
 
-    //------------------------------------------------------ Funciones auxiliares ---------------------------------------------
+    // ------------------------------------------------------ Funciones auxiliares ---------------------------------------------
     public static function updateUnitForRefuse($folio)
     {
         $unit = ReceiptUnit::controlAccessUser()->where('id', '=', $folio)->whereNotIn('statusid', ['TR'])->first();
@@ -495,10 +502,11 @@ class ReceiptUnit extends Model
         $unit->unitstatusid = '3';
         $unit->save();
         StorageUnitTrace::createTraceUnit($unit, '23');
+
         return $unit;
     }
 
-    //------------------------------------------------------ Funciones auxiliares ---------------------------------------------
+    // ------------------------------------------------------ Funciones auxiliares ---------------------------------------------
     public static function moveUnitToLostForInventory($receiptunit, $location)
     {
         $receiptunit->zoneid = $location->value02;

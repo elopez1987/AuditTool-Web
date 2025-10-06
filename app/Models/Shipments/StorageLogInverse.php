@@ -21,6 +21,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLogInverse newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLogInverse newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLogInverse query()
@@ -35,6 +36,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLogInverse whereValue03($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLogInverse whereValue04($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageLogInverse whereValue05($value)
+ *
  * @mixin \Eloquent
  */
 class StorageLogInverse extends Model

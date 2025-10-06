@@ -32,6 +32,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read SystemCenterDistribution $center
  * @property-read SystemStatus|null $status
  * @property-read SystemWarehouse $warehouse
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageAreas name($name)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageAreas newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageAreas newQuery()
@@ -55,12 +56,13 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageAreas whereWarehouseid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageAreas withTrashed(bool $withTrashed = true)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageAreas withoutTrashed()
+ *
  * @mixin \Eloquent
  */
 class StorageAreas extends Model
 {
-    use SoftDeletes;
     use LogsActivity;
+    use SoftDeletes;
 
     protected $table = 'storageareas';
 
@@ -97,6 +99,7 @@ class StorageAreas extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return StorageAreas::whereIn('storageareas.warehouseid', $warehouses)
             ->whereIn('storageareas.centerid', $centers);
     }
@@ -142,7 +145,7 @@ class StorageAreas extends Model
     protected static function boot()
     {
         parent::boot();
-        if (!app()->runningInConsole()) {
+        if (! app()->runningInConsole()) {
             self::creating(function (StorageAreas $model) {
                 $model->slug = Uuid::uuid4();
             });

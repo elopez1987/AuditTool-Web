@@ -24,6 +24,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * @method static whereStatusid(string $string)
+ *
  * @property int $id
  * @property string $centerid
  * @property string|null $warehouseid
@@ -50,6 +51,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read SystemStatus $status
  * @property-read SystemWarehouse|null $warehouse
  * @property-read StorageZone $zone
+ *
  * @method static Builder<static>|StorageLocation name($name)
  * @method static Builder<static>|StorageLocation newModelQuery()
  * @method static Builder<static>|StorageLocation newQuery()
@@ -77,16 +79,17 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static Builder<static>|StorageLocation withTrashed(bool $withTrashed = true)
  * @method static Builder<static>|StorageLocation withoutTrashed()
  * @method static Builder<static>|StorageLocation zone($zoneid)
+ *
  * @mixin Eloquent
  */
 class StorageLocation extends Model
 {
+    use LogsActivity;
     use Notifiable;
     use SoftDeletes;
 
-    use LogsActivity;
-
     protected $table = 'storagelocations';
+
     protected $dateFormat = 'Y-m-d H:i:s';
 
     protected $fillable = [
@@ -128,7 +131,7 @@ class StorageLocation extends Model
     protected static function boot()
     {
         parent::boot();
-        if (!app()->runningInConsole()) {
+        if (! app()->runningInConsole()) {
             self::creating(function (StorageLocation $model) {
                 $model->auxiliary05 = Auth::user()->username;
                 $model->barcode = rand(100000, 999999);
@@ -143,6 +146,7 @@ class StorageLocation extends Model
     {
         $centers = SecurityAccessWarehouse::Centers();
         $warehouses = SecurityAccessWarehouse::Warehouses();
+
         return StorageLocation::whereIn('storagelocations.centerid', $centers)
             ->whereIn('storagelocations.warehouseid', $warehouses);
     }
@@ -209,12 +213,11 @@ class StorageLocation extends Model
     {
         $centers = SecurityAccessWarehouse::Centers();
         $warehouses = SecurityAccessWarehouse::Warehouses();
+
         return StorageLocation::whereStatusid('E')
             ->whereIn('storagelocations.centerid', $centers)
             ->whereIn('storagelocations.warehouseid', $warehouses)
             ->whereNotIn('storagelocations.name', ['DUMMY'])
             ->select(['name', 'id'])->get();
     }
-
-
 }

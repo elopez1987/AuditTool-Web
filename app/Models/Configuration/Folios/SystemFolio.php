@@ -24,6 +24,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read int|null $activities_count
  * @property-read SystemCenterDistribution $center
  * @property-read SystemStatus|null $status
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemFolio description($description)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemFolio newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemFolio newQuery()
@@ -38,12 +39,15 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemFolio whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemFolio whereSchemaid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemFolio whereStatusid($value)
+ *
  * @mixin \Eloquent
  */
 class SystemFolio extends Model
 {
     use LogsActivity;
+
     public $incrementing = false;
+
     public $timestamps = false;
 
     protected $table = 'systemfolio';
@@ -81,6 +85,7 @@ class SystemFolio extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return SystemFolio::whereIn('systemfolio.centerid', $centers);
     }
 

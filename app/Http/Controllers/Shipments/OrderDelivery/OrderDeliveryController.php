@@ -20,14 +20,15 @@ use Illuminate\Support\Facades\DB;
 class OrderDeliveryController extends BaseController
 {
     use CreateNewOrder;
-    use UpdateOrderDelivery;
     use UpdateMaximunOutPutShipment;
+    use UpdateOrderDelivery;
 
     public function index()
     {
         $this->authorize('orderdeliveries.index');
         $status = $this->getStatusForSchema('KLE');
         $turns = $this->getTurns();
+
         return view('Shipments.OrderDeliveries.index', compact('status', 'turns'));
     }
 
@@ -57,6 +58,7 @@ class OrderDeliveryController extends BaseController
             ->leftJoin('systemstatus as s5', 'orderdeliveries.statusid', '=', 's5.statusid')
             ->orderBy('orderdeliveries.id', 'desc')
             ->limit(300)->get();
+
         return $this->showDataToView($data, 'Shipments.OrderDeliveries.partials.buttons');
     }
 
@@ -69,6 +71,7 @@ class OrderDeliveryController extends BaseController
         $turns = $this->getTurns();
         $customers = $this->getOrderCustomerForSelect();
         $shipmenttypes = $this->getShipmentTypeToSelect();
+
         return view(
             'Shipments.OrderDeliveries.create',
             compact('carriers', 'turns', 'customers', 'shipmenttypes', 'centers', 'warehouses')
@@ -82,10 +85,12 @@ class OrderDeliveryController extends BaseController
             $shipment = OrderDeliverie::create($request->validated());
             $this->createNewOrder($shipment, $request, 'Model');
             DB::commit();
+
             return $this->successResponse('orderdeliveries.index');
         } catch (Exception $e) {
             DB::rollback();
             $error = $e->getMessage();
+
             return $this->errorResponse($error);
         }
     }
@@ -101,6 +106,7 @@ class OrderDeliveryController extends BaseController
         $conteos = Storagechecklocationbridg::controlAccessUser()->where('orderid', $orderdelivery->id)->get();
         $conteosVig = StoragechecklocationbridgVig::controlAccessUser()->where('orderid', $orderdelivery->id)->get();
         $comments = StorageComment::where('modeltype', 'orderdeliveries')->where('modelid', $orderdelivery->id)->get();
+
         return view('Shipments.OrderDeliveries.show', compact('orderdelivery', 'evidences', 'traces', 'conteos', 'comments', 'conteosVig'));
     }
 
@@ -111,6 +117,7 @@ class OrderDeliveryController extends BaseController
         $turns = $this->getTurns();
         $customers = $this->getOrderCustomerForSelect();
         $shipmenttypes = $this->getShipmentTypeToSelect();
+
         return view(
             'Shipments.OrderDeliveries.edit',
             compact('carriers', 'turns', 'customers', 'shipmenttypes', 'orderdelivery')
@@ -125,10 +132,12 @@ class OrderDeliveryController extends BaseController
             $this->updateMaximunOutPutShipment($orderdelivery);
             $this->editOrderDelivery($orderdelivery, $request);
             DB::commit();
+
             return $this->successResponse('orderdeliveries.index');
         } catch (Exception $e) {
             $error = $e->getMessage();
             DB::rollback();
+
             return $this->errorResponse($error);
         }
     }
@@ -146,8 +155,10 @@ class OrderDeliveryController extends BaseController
             return $this->errorResponse('Error en la base de datos al intentar eliminar el registro');
         } catch (Exception $e) {
             Log::error('Error al eliminar registro: ' . $e->getMessage());
+
             return $this->errorResponse('Ocurrió un error inesperado: ' . $e->getMessage());
         }
+
         return redirect()->route('orderdeliveries.index')->with(session()->flash('success', 'Registro eliminado con exito'));
     }
 }

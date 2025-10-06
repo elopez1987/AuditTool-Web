@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $statusid
  * @property-read SystemCenterDistribution $center
  * @property-read SystemStatus|null $status
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCategoryIncidence forDescription($description)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCategoryIncidence newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCategoryIncidence newQuery()
@@ -34,12 +35,15 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCategoryIncidence whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCategoryIncidence whereSchemaid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCategoryIncidence whereStatusid($value)
+ *
  * @mixin \Eloquent
  */
 class StorageCategoryIncidence extends Model
 {
     public $timestamps = false;
+
     protected $table = 'storagecategoryincidences';
+
     protected $primaryKey = 'categoryincid';
 
     protected $fillable = [
@@ -61,6 +65,7 @@ class StorageCategoryIncidence extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return StorageCategoryIncidence::whereIn('storagecategoryincidences.centerid', $centers);
     }
 

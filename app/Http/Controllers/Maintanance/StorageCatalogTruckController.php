@@ -10,12 +10,14 @@ use Illuminate\Http\Request;
 class StorageCatalogTruckController extends BaseController
 {
     use Responser;
+
     public function index()
     {
         $this->authorize('storagelifttruckscatalogs');
         $marcas = SystemStatus::where('schemaid', 'MCM')->get();
         $modelos = SystemStatus::where('schemaid', 'MDM')->get();
         $types = SystemStatus::where('schemaid', 'TPM')->get();
+
         return view('Maintenance.Catalogs.index', compact('marcas', 'modelos', 'types'));
     }
 
@@ -26,8 +28,9 @@ class StorageCatalogTruckController extends BaseController
         SystemStatus::create([
             'schemaid' => 'MCM',
             'name' => $request['namemarca'],
-            'statusid' => 'MC'. '-' . $total,
+            'statusid' => 'MC' . '-' . $total,
         ]);
+
         return $this->redirectBackSuccess();
     }
 
@@ -38,8 +41,9 @@ class StorageCatalogTruckController extends BaseController
         SystemStatus::create([
             'schemaid' => 'MDM',
             'name' => $request['namemodel'],
-            'statusid' => 'MD'. '-' . $total,
+            'statusid' => 'MD' . '-' . $total,
         ]);
+
         return $this->redirectBackSuccess();
     }
 
@@ -52,6 +56,7 @@ class StorageCatalogTruckController extends BaseController
             'name' => $request['nametype'],
             'statusid' => "MT-{$total}",
         ]);
+
         return $this->redirectBackSuccess();
     }
 }

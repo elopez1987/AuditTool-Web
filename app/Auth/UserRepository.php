@@ -18,6 +18,7 @@ final class UserRepository extends UserRepositoryAbstract implements UserReposit
         if ($identifier === null) {
             return null;
         }
+
         return \App\User::where('auth0', $identifier)->first();
     }
 
@@ -26,9 +27,9 @@ final class UserRepository extends UserRepositoryAbstract implements UserReposit
         $identifier = $user['sub'] ?? $user['auth0'] ?? null;
         $profile = [
             'auth0' => $identifier,
-//            'name' => $user['name'] ?? '',
-//            'email' => $user['email'] ?? '',
-//            'email_verified' => in_array($user['email_verified'], [1, true], true),
+            //            'name' => $user['name'] ?? '',
+            //            'email' => $user['email'] ?? '',
+            //            'email_verified' => in_array($user['email_verified'], [1, true], true),
         ];
         $cached = $this->withoutRecording(fn () => Cache::get('auth0_user_' . $identifier));
 
@@ -91,7 +92,7 @@ final class UserRepository extends UserRepositoryAbstract implements UserReposit
      *
      * @link https://github.com/auth0/laravel-auth0/tree/main/docs/Telescope.md
      *
-     * @param callable $callback
+     * @param  callable  $callback
      */
     private function withoutRecording($callback): mixed
     {

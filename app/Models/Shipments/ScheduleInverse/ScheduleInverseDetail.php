@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null $assigneduser
  * @property string $schemaid
  * @property string|null $statusid
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ScheduleInverseDetail newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ScheduleInverseDetail newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ScheduleInverseDetail query()
@@ -33,11 +34,13 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ScheduleInverseDetail whereStatusid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ScheduleInverseDetail whereWarehouseid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ScheduleInverseDetail whereWorkday($value)
+ *
  * @mixin \Eloquent
  */
 class ScheduleInverseDetail extends Model
 {
     public $timestamps = false;
+
     protected $table = 'scheduleinversedetail';
 
     protected $fillable = [
@@ -62,6 +65,7 @@ class ScheduleInverseDetail extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return ScheduleInverseDetail::whereIn('scheduleinversedetail.warehouseid', $warehouses)
             ->whereIn('scheduleinversedetail.centerid', $centers);
     }

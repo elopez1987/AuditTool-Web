@@ -18,6 +18,7 @@ class ShipmentStagesController extends BaseController
         $this->authorize('shipmentstages.index');
         $status = SystemStatus::SchemaSCHIndex();
         $turns = StorageTurn::turnActiveToSelect();
+
         return view('Shipments.ShipmentStages.index', compact('status', 'turns'));
     }
 
@@ -78,6 +79,7 @@ class ShipmentStagesController extends BaseController
             'value02' => $request['locationid02'],
             'value03' => $request['locationid03'],
         ]);
+
         return $this->redirectBackSuccess();
     }
 }

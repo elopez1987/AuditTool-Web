@@ -14,6 +14,7 @@ class ShipmentTruckToleranceController extends BaseController
         $this->authorize('shipmenttrucks.tolerance');
         $shipmenttruck = ShipmentTruck::find($id);
         $details = ShipmentTruckTolerance::where('truckid', $id)->get();
+
         return view('Yards.ShipmentTrucks.tolerance.index', compact('shipmenttruck', 'details'));
     }
 
@@ -30,6 +31,7 @@ class ShipmentTruckToleranceController extends BaseController
             'value04' => $request->value04,
             'value05' => $request->value05,
         ]);
+
         return $this->redirectBackSuccessMessage('Registro agregado correctamente');
     }
 }

@@ -11,20 +11,20 @@ Route::middleware(['auth'])->group(function () {
         return view('layouts.Menu.SafetyTours.menu');
     })->name('tours');
 
-//    Modulo de Tags
+    //    Modulo de Tags
     Route::resource('storagetags', StorageTagController::class);
-    Route::get('getDataStorageTags', [StorageTagController::class,'getDataStorageTags'])->name('getDataStorageTags');
+    Route::get('getDataStorageTags', [StorageTagController::class, 'getDataStorageTags'])->name('getDataStorageTags');
 
-//    Tipos de recorridos
+    //    Tipos de recorridos
     Route::resource('storagesafetytourtype', StorageSafetyTourTypeController::class);
-    Route::get('getDataStorageSafetyTourType', [StorageSafetyTourTypeController::class,'getDataStorageSafetyTourType'])->name('getDataStorageSafetyTourType');
+    Route::get('getDataStorageSafetyTourType', [StorageSafetyTourTypeController::class, 'getDataStorageSafetyTourType'])->name('getDataStorageSafetyTourType');
 
-//    Crear el recorrido con los tags
-    Route::put('createSafetyTour/{id}', [StorageSafetyTourTypeDetailController::class,'store'])->name('createSafetyTour');
-    Route::delete('destroySafetyTour/{id}', [StorageSafetyTourTypeDetailController::class,'destroy'])->name('destroySafetyTour');
-    Route::put('restoreSafetyTour/{id}', [StorageSafetyTourTypeDetailController::class,'restore'])->name('restoreSafetyTour');
+    //    Crear el recorrido con los tags
+    Route::put('createSafetyTour/{id}', [StorageSafetyTourTypeDetailController::class, 'store'])->name('createSafetyTour');
+    Route::delete('destroySafetyTour/{id}', [StorageSafetyTourTypeDetailController::class, 'destroy'])->name('destroySafetyTour');
+    Route::put('restoreSafetyTour/{id}', [StorageSafetyTourTypeDetailController::class, 'restore'])->name('restoreSafetyTour');
 
-//    Recorridos de seguridad
+    //    Recorridos de seguridad
     Route::resource('storagesafetytours', StorageSafetyToursController::class);
-    Route::get('getDataStorageSafetyTours', [StorageSafetyToursController::class,'getDataStorageSafetyTours'])->name('getDataStorageSafetyTours');
+    Route::get('getDataStorageSafetyTours', [StorageSafetyToursController::class, 'getDataStorageSafetyTours'])->name('getDataStorageSafetyTours');
 });

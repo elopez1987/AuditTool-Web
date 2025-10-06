@@ -18,7 +18,7 @@ class ImportCheckListDetails implements ToCollection, WithHeadingRow, WithValida
     }
 
     /**
-     * @param Collection $collection
+     * @param  Collection  $collection
      */
     public function collection(Collection $rows)
     {
@@ -39,7 +39,7 @@ class ImportCheckListDetails implements ToCollection, WithHeadingRow, WithValida
     public function rules(): array
     {
         return [
-            '*.id' => ['required','int'],
+            '*.id' => ['required', 'int'],
             '*.name' => ['required', 'string', 'max:255'],
         ];
     }

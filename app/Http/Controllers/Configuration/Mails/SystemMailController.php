@@ -13,6 +13,7 @@ class SystemMailController extends BaseController
     public function index()
     {
         $this->authorize('systemmails.index');
+
         return view('Configuration.SystemMails.index');
     }
 
@@ -23,12 +24,14 @@ class SystemMailController extends BaseController
                 $q->select('statusid', 'name');
             },
         ])->select('systemmails.*');
+
         return $this->showDataToView($data, 'Configuration.SystemMails.partials.buttons');
     }
 
     public function create()
     {
         $this->authorize('systemmails.create');
+
         return view('Configuration.SystemMails.create');
     }
 
@@ -36,6 +39,7 @@ class SystemMailController extends BaseController
     {
         $mail = new SystemMail($request->validated());
         $mail->save();
+
         return redirect('systemmails/' . $mail->mailid . '/createMailDetail');
     }
 
@@ -43,6 +47,7 @@ class SystemMailController extends BaseController
     {
         $this->authorize('systemmails.edit');
         $status = $this->getStatusForSchema('STS');
+
         return view(
             'Configuration.SystemMails.edit',
             compact('status', 'systemmail')
@@ -52,6 +57,7 @@ class SystemMailController extends BaseController
     public function update(Request $request, SystemMail $systemmail): RedirectResponse
     {
         $systemmail->update($request->all());
+
         return $this->infoResponse('systemmails.index');
     }
 }

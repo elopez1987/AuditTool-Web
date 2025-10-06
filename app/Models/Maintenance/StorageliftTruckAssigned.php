@@ -25,6 +25,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Illuminate\Support\Carbon $updated_at
  * @property-read SystemCenterDistribution $center
  * @property-read SystemStatus $status
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageliftTruckAssigned newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageliftTruckAssigned newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageliftTruckAssigned query()
@@ -42,12 +43,15 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageliftTruckAssigned whereStatusid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageliftTruckAssigned whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageliftTruckAssigned whereUsername($value)
+ *
  * @mixin \Eloquent
  */
 class StorageliftTruckAssigned extends Model
 {
     protected $table = 'storagelifttruckassigned';
+
     protected $primaryKey = 'serialnumber';
+
     protected $keyType = 'string';
 
     protected $fillable = [
@@ -85,6 +89,7 @@ class StorageliftTruckAssigned extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return StorageliftTruckAssigned::whereIn('storagelifttruckassigned.centerid', $centers);
     }
 

@@ -47,6 +47,7 @@ trait PrintFormat
                 $fortmat = 'Yards.ReceiptUnits.InvoiceFormats.Henkel.InvoiceHenkelReceipt';
             }
             $pdf = PDF::loadView($fortmat, compact('receiptunit', 'verified', 'folio'));
+
             return $this->printFormat($type, $receiptunit, $pdf);
         }
 
@@ -54,6 +55,7 @@ trait PrintFormat
         if ($receiptunit->centerid === 'PLANHENKTOL') {
             $fortmat = 'Yards.ReceiptUnits.InvoiceFormats.Henkel.InvoicePlantHenkel';
             $pdf = PDF::loadView($fortmat, compact('receiptunit', 'verified'));
+
             return $this->printFormat($type, $receiptunit, $pdf);
         }
 
@@ -66,6 +68,7 @@ trait PrintFormat
                 $fortmat = 'Yards.ReceiptUnits.InvoiceFormats.Kraft.Exportacion';
             }
             $pdf = PDF::loadView($fortmat, compact('receiptunit', 'verified'));
+
             return $this->printFormat($type, $receiptunit, $pdf);
         }
 
@@ -73,6 +76,7 @@ trait PrintFormat
         if ($receiptunit->centerid == 'BARRYTOL') {
             $fortmat = 'Yards.ReceiptUnits.InvoiceFormats.Barry.InvoiceBarry';
             $pdf = PDF::loadView($fortmat, compact('receiptunit', 'verified', 'comment'));
+
             return $this->printFormat($type, $receiptunit, $pdf);
 
         }
@@ -86,6 +90,7 @@ trait PrintFormat
             $pdf = PDF::loadView($fortmat, compact('receiptunit', 'verified', 'logo', 'comment', 'firma'));
             $pdf->setPaper('A4', 'landscape');
         }
+
         return $this->printFormat($type, $receiptunit, $pdf);
     }
 
@@ -98,6 +103,7 @@ trait PrintFormat
         $fileName = 'Folio-' . $receiptunit->id . '-' . Str::random(10) . '.pdf';
         $pdf->save($path . '/' . $fileName);
         $fileFolio = base64_encode(file_get_contents($path . $fileName));
+
         return $this->getResponseSuccess('generatePDFToFolio', ['pdf' => $fileFolio]);
     }
 
@@ -137,6 +143,7 @@ trait PrintFormat
             ])->first();
         $fortmat = 'Yards.GenerateAccess.partials.format';
         $pdf = PDF::loadView($fortmat, compact('data'));
+
         return $pdf->download('Acceso_De_Entrada-' . $data->id . '.pdf');
     }
 }

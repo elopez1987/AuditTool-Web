@@ -40,6 +40,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read int|null $notifications_count
  * @property-read SystemStatus $status
  * @property-read SystemWarehouse|null $warehouse
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCheckList name($name)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCheckList newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCheckList newQuery()
@@ -65,12 +66,13 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCheckList whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCheckList whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCheckList whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class StorageCheckList extends Model
 {
-    use Notifiable;
     use LogsActivity;
+    use Notifiable;
 
     protected $table = 'storagechecklists';
 
@@ -114,6 +116,7 @@ class StorageCheckList extends Model
     {
         $centers = SecurityAccessWarehouse::Centers();
         $warehouses = SecurityAccessWarehouse::Warehouses();
+
         return StorageCheckList::whereIn('storagechecklists.centerid', $centers)
             ->whereIn('storagechecklists.warehouseid', $warehouses);
     }

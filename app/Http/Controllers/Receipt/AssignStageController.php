@@ -29,6 +29,7 @@ class AssignStageController extends BaseController
             ->get();
 
         $stages = ReceiptStage::where('receiptid', $id)->get();
+
         return view(
             'Receipt.ScheduleReceipt.addstage',
             compact('receiptasn', 'locations', 'stages')
@@ -47,6 +48,7 @@ class AssignStageController extends BaseController
                 'locationid' => $locationstage,
             ]);
         }
+
         return $this->redirectBackSuccessMessage('Cortinas asignadas con exito.');
     }
 
@@ -54,6 +56,7 @@ class AssignStageController extends BaseController
     {
         $stage = ReceiptStage::where('id', $request['id'])->first();
         $stage->delete();
+
         return $this->responseSuccessAjax('', Carbon::now());
     }
 }

@@ -19,10 +19,10 @@ use Illuminate\Http\Request;
 
 trait AuthorizeProcessExit
 {
+    use CheckListTransportTrait;
     use GetParameters;
     use ResponseApi;
     use Responser;
-    use CheckListTransportTrait;
 
     public function authorizeProcess($receiptunit, $request, $platform)
     {
@@ -115,7 +115,7 @@ trait AuthorizeProcessExit
             $checkid = $request->get('checklistid');
 
             foreach ($checklistids as $i => $checklistDetailId) {
-                $checkListTransport = new CheckListTransport();
+                $checkListTransport = new CheckListTransport;
                 $checkListTransport->centerid = $receiptunit->centerid;
                 $checkListTransport->checklistid = $checkid[$i];
                 $checkListTransport->receiptunitid = $receiptunit->id;

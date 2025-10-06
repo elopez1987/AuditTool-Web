@@ -11,7 +11,7 @@ class CreateNewInventoryRequest extends FormRequest
         return [
             'centerid' => ['required', 'exists:systemcenterdistributions,centerid'],
             'statustypeid' => ['required', 'exists:systemstatus,statusid'],
-            'description' => ['required','string','max:100'],
+            'description' => ['required', 'string', 'max:100'],
         ];
     }
 

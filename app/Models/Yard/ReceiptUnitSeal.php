@@ -27,6 +27,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
  * @property-read User $user
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitSeal newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitSeal newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitSeal query()
@@ -44,6 +45,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitSeal whereValue02($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitSeal whereValue03($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitSeal whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class ReceiptUnitSeal extends Model
@@ -51,6 +53,7 @@ class ReceiptUnitSeal extends Model
     use LogsActivity;
 
     public $timestamps = true;
+
     protected $table = 'receiptunitseals';
 
     protected $fillable = [
@@ -66,6 +69,7 @@ class ReceiptUnitSeal extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return ReceiptUnitSeal::whereIn('receiptunitseals.warehouseid', $warehouses)
             ->whereIn('receiptunitseals.centerid', $centers);
     }

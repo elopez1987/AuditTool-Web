@@ -26,6 +26,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
  * @property-read User|null $user
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageKeyIncidenceOperation newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageKeyIncidenceOperation newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageKeyIncidenceOperation query()
@@ -41,6 +42,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageKeyIncidenceOperation whereSchemaid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageKeyIncidenceOperation whereStatusid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageKeyIncidenceOperation whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class StorageKeyIncidenceOperation extends Model
@@ -48,6 +50,7 @@ class StorageKeyIncidenceOperation extends Model
     use LogsActivity;
 
     public $timestamps = false;
+
     protected $table = 'storagesincidencekeyoperation';
 
     protected $fillable = [
@@ -75,6 +78,7 @@ class StorageKeyIncidenceOperation extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return StorageKeyIncidenceOperation::whereIn('storagesincidencekeyoperation.warehouseid', $warehouses)
             ->whereIn('storagesincidencekeyoperation.centerid', $centers);
     }
@@ -88,6 +92,7 @@ class StorageKeyIncidenceOperation extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return DB::table('storagesincidencekeyoperation')
             ->select(
                 'storagesincidencekeyoperation.orderid as id',
@@ -143,6 +148,7 @@ class StorageKeyIncidenceOperation extends Model
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
         $concepts = self::getConcepts();
+
         return DB::table('storageincidencejourneydetails')
             ->select(
                 'storagesincidencekeyoperation.id',

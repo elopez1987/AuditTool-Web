@@ -13,24 +13,28 @@ class EdiTokenController extends BaseController
     public function index()
     {
         $this->authorize('editokens.index');
+
         return view('Configuration.EdiToken.index');
     }
 
     public function geteditokens(Request $request)
     {
         $data = EdiToken::get();
+
         return $this->showDataToView($data, 'Configuration.EdiToken.partials.buttons');
     }
 
     public function create()
     {
         $this->authorize('editokens.create');
+
         return view('Configuration.EdiToken.create');
     }
 
     public function store(CreateEdiTokenRequest $request)
     {
         EdiToken::create($request->validated());
+
         return $this->redirectBackSuccessMessage('Token registrado con exito.');
     }
 
@@ -38,6 +42,7 @@ class EdiTokenController extends BaseController
     {
         $this->authorize('editokens.edit');
         $token = EdiToken::findOrFail($id);
+
         return view('Configuration.EdiToken.edit', compact('token'));
     }
 
@@ -45,6 +50,7 @@ class EdiTokenController extends BaseController
     {
         $token = EdiToken::findOrFail($id);
         $token->update($request->all());
+
         return $this->redirectBackSuccessMessage('Token actualizado con exito.');
     }
 
@@ -53,6 +59,7 @@ class EdiTokenController extends BaseController
         $this->authorize('editokens.destroy');
         $token = EdiToken::findOrFail($request->id);
         $token->delete();
+
         return response()->json([
             'ProcessDate' => Carbon::now()->format('Y-m-d H:m:s'),
             'Code' => '0',

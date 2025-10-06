@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $shortdesc
  * @property string|null $description
  * @property int $id
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemColumn newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemColumn newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemColumn query()
@@ -18,12 +19,15 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemColumn whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemColumn whereShortdesc($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemColumn whereTableid($value)
+ *
  * @mixin \Eloquent
  */
 class SystemColumn extends Model
 {
     public $timestamps = false;
+
     protected $table = 'systemcolumns';
+
     protected $primaryKey = 'id';
 
     protected $fillable = [

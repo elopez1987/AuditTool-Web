@@ -27,6 +27,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|LogMessageWhatsApp forNumber($number)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|LogMessageWhatsApp forShipment($shipmentid)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|LogMessageWhatsApp newModelQuery()
@@ -50,6 +51,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|LogMessageWhatsApp whereValue08($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|LogMessageWhatsApp whereValue09($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|LogMessageWhatsApp whereValue10($value)
+ *
  * @mixin \Eloquent
  */
 class LogMessageWhatsApp extends Model
@@ -57,6 +59,7 @@ class LogMessageWhatsApp extends Model
     use LogsActivity;
 
     protected $table = 'logsmessagewhatsapp';
+
     protected $primaryKey = 'id';
 
     protected $fillable = [

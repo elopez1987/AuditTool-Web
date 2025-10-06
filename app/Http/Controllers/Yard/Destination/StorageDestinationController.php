@@ -13,12 +13,14 @@ class StorageDestinationController extends BaseController
     public function index()
     {
         $this->authorize('storagedestinations.index');
+
         return view('Yards.StorageDestinations.index');
     }
 
     public function getDataDestinations(Request $request)
     {
         $data = $this->getData($request);
+
         return $this->showDataToView(
             $data,
             'Yards.StorageDestinations.partials.buttons'
@@ -30,6 +32,7 @@ class StorageDestinationController extends BaseController
         $this->authorize('storagedestinations.create');
         $centers = $this->getCenterForSelect();
         $warehouses = $this->getWarehouseForSelect();
+
         return view(
             'Yards.StorageDestinations.create',
             compact('centers', 'warehouses')
@@ -40,6 +43,7 @@ class StorageDestinationController extends BaseController
     {
         $destination = new StorageDestination($request->all());
         $destination->save();
+
         return $this->successResponse('storagedestinations.index');
     }
 
@@ -47,6 +51,7 @@ class StorageDestinationController extends BaseController
     {
         $this->authorize('storagedestinations.edit');
         $status = $this->getStatusForSchema('STS');
+
         return view(
             'Yards.StorageDestinations.edit',
             compact('storagedestination', 'status')
@@ -56,6 +61,7 @@ class StorageDestinationController extends BaseController
     public function update(StorageDestination $storagedestination, Request $request): RedirectResponse
     {
         $storagedestination->update($request->all());
+
         return $this->infoResponse('storagedestinations.index');
     }
 

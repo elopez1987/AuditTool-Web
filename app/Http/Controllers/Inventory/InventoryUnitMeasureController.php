@@ -12,13 +12,15 @@ class InventoryUnitMeasureController extends BaseController
     public function index()
     {
         $this->authorize('inventoryunitmeasure.index');
+
         return view('Inventory.InventoryUnits.index');
     }
 
     public function getInventoryUnits(Request $request)
     {
-        $data = InventoryUnitMeasure::controlAccessUser()->with(['status','center'])
+        $data = InventoryUnitMeasure::controlAccessUser()->with(['status', 'center'])
             ->Name($request->get('name'))->get();
+
         return DataTables::of($data)
             ->addColumn('btn', 'Inventory.InventoryUnits.partials.buttons')
             ->rawColumns(['btn'])->toJson();
@@ -27,6 +29,7 @@ class InventoryUnitMeasureController extends BaseController
     public function create()
     {
         $this->authorize('inventoryunitmeasure.index');
+
         return view('Inventory.InventoryUnits.create');
     }
 
@@ -39,6 +42,7 @@ class InventoryUnitMeasureController extends BaseController
             ['warehouseid' => $access->warehouseid]
         );
         $category01->save();
+
         return $this->successResponse('inventoryunitmeasure.index');
     }
 
@@ -46,16 +50,16 @@ class InventoryUnitMeasureController extends BaseController
     {
         $this->authorize('inventoryunitmeasure.edit');
         $status = $this->getStatusSTS();
+
         return view('Inventory.InventoryUnits.edit', compact('status', 'inventoryunitmeasure'));
     }
 
     public function update(Request $request, InventoryUnitMeasure $inventoryunitmeasure)
     {
         $inventoryunitmeasure->update($request->all());
+
         return $this->infoResponse('inventoryunitmeasure.index');
     }
 
-    public function destroy($id)
-    {
-    }
+    public function destroy($id) {}
 }

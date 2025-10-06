@@ -28,6 +28,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read int|null $activities_count
  * @property-read SystemCenterDistribution $center
  * @property-read SystemStatus $status
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitType name($name)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitType newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitType newQuery()
@@ -46,6 +47,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitType whereStatusid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitType whereUnittypeid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitType whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class StorageUnitType extends Model
@@ -97,6 +99,7 @@ class StorageUnitType extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return StorageUnitType::whereIn('storageunittypes.centerid', $centers);
     }
 

@@ -25,6 +25,7 @@ class CapacityYardController extends BaseController
         $locationfill = ReceiptUnit::controlAccessUser()
             ->whereNotIn('statusid', ['TR'])
             ->select(['zoneid', DB::raw('COUNT(zoneid) as ocupado')])->groupBy('zoneid')->get();
+
         return view(
             'Yards.CapacityYard.index',
             compact('centers', 'totalLocations', 'locationsBusy', 'zones', 'locationfill')
@@ -36,12 +37,13 @@ class CapacityYardController extends BaseController
     {
         $zones = StorageZone::controlAccessUser()->whereStatusid('E')->whereRaw("charindex('ZO-01', configurationflag) > 0")->get();
         $locations = $this->getDataLocationStatus();
+
         return view('Yards.CapacityYard.inventoryforzone', compact('zones', 'locations'));
     }
 
     public function exportDataLocationsForStatus()
     {
-        return Excel::download(new InventoryLocationExport(), 'Inventario de Ubicaciones.xlsx')->deleteFileAfterSend();
+        return Excel::download(new InventoryLocationExport, 'Inventario de Ubicaciones.xlsx')->deleteFileAfterSend();
     }
 
     public function getDataLocationStatus()

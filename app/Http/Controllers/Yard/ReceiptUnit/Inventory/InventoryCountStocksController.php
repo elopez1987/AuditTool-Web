@@ -23,6 +23,7 @@ class InventoryCountStocksController extends BaseController
             ->whereNotIn('zoneid', ['ST'])->select(['name', 'id'])->get();
         $locations = StorageLocation::controlAccessUser()->select(['name', 'id'])->get();
         $unitstatus = $this->unitStatusActiveToSelect();
+
         return view('Yards.InventoryBoxesCount.index', compact('zones', 'locations', 'unitstatus'));
     }
 
@@ -70,6 +71,7 @@ class InventoryCountStocksController extends BaseController
         if ($success) {
             return $this->redirectBackSuccessMessage('Caja reubicada correctamente!!');
         }
+
         return $this->errorResponse('Error el procesar la solicitud' . $error);
     }
 }

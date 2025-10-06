@@ -33,6 +33,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read InventoryPartnumber|null $partnumber
  * @property-read User|null $user
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptContainer newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptContainer newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptContainer query()
@@ -58,16 +59,18 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptContainer whereRecordid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptContainer whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptContainer whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class ReceiptContainer extends Model
 {
     protected $table = 'receiptcontainers';
+
     protected $primaryKey = 'recordid';
 
     protected $fillable = [
         'centerid', 'warehouseid', 'receiptid', 'partnumberid', 'quantity', 'lpnid',
-        'batch','productiondate','codeplant','eanbox','eanpz','photo',
+        'batch', 'productiondate', 'codeplant', 'eanbox', 'eanpz', 'photo',
     ];
 
     protected $hidden = [
@@ -80,6 +83,7 @@ class ReceiptContainer extends Model
     {
         $centers = SecurityAccessWarehouse::Centers();
         $warehouses = SecurityAccessWarehouse::Warehouses();
+
         return ReceiptContainer::whereIn('receiptcontainers.centerid', $centers)
             ->whereIn('receiptcontainers.warehouseid', $warehouses);
     }

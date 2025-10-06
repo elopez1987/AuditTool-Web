@@ -30,7 +30,7 @@ class EnviarMensajeFinFacturacionJob implements ShouldQueue
     public function handle(): void
     {
         $url = 'https://api.1msg.io/HEI523482986/sendTemplate';
-        $client = new Client();
+        $client = new Client;
         $orderid = $this->orderDelivery->id;
         $shipment = OrderDeliverie::where('id', '=', $orderid)->first();
         $contacts = $this->getPhones($shipment);

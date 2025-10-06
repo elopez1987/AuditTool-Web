@@ -40,6 +40,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read OrderDeliverie $order
  * @property-read User|null $user
  * @property-read SystemWarehouse $warehouse
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentCheckTotal newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentCheckTotal newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentCheckTotal query()
@@ -60,6 +61,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentCheckTotal whereValue02($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentCheckTotal whereValue03($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentCheckTotal whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class StorageShipmentCheckTotal extends Model
@@ -98,6 +100,7 @@ class StorageShipmentCheckTotal extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return StorageShipmentCheckTotal::whereIn('storageshipmentchecktotal.warehouseid', $warehouses)
             ->whereIn('storageshipmentchecktotal.centerid', $centers);
     }

@@ -13,12 +13,14 @@ class MonitorOperationHenkelController extends BaseController
     public function monitoroperationhenkel()
     {
         $this->authorize('monitoroperationhenkel');
+
         return view('Shipments.MonitorShipments.MonitorOperation.index');
     }
 
     public function getDataMonitorOperation()
     {
         $data = $this->getOrderDeliveries();
+
         return DataTables::of($data)
             ->addColumn('stayskey', function ($data) {
                 return Carbon::now()->diff($data->keydate)->format('%H:%i h/m');

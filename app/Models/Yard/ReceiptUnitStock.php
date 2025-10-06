@@ -38,6 +38,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $weightin
  * @property string|null $weightout
  * @property int|null $foliotruck
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitStock barcode($barcode)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitStock boxNumber($boxnumber)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitStock carrier($carrierid)
@@ -84,19 +85,20 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitStock whereWeightin($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitStock whereWeightout($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitStock whereZone($value)
+ *
  * @mixin \Eloquent
  */
-
-
 class ReceiptUnitStock extends Model
 {
     public $timestamps = false;
+
     protected $table = 'vw_storagestockunits';
 
     public static function controlAccessUser()
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return ReceiptUnitStock::whereIn('vw_storagestockunits.warehouseid', $warehouses)
             ->whereIn('vw_storagestockunits.centerid', $centers);
     }

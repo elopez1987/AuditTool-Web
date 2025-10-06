@@ -13,6 +13,7 @@ use Maatwebsite\Excel\Concerns\WithValidation;
 class ImportProviders implements ToCollection, WithHeadingRow, WithValidation
 {
     use Responser;
+
     public function collection(Collection $rows)
     {
         $warehouseid = $this->getWarehouseForUser();

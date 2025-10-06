@@ -24,6 +24,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
  * @property-read SystemStatus $status
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryStockCategory name($name)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryStockCategory newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryStockCategory newQuery()
@@ -40,11 +41,13 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryStockCategory whereStatusid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryStockCategory whereStockcategoryid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryStockCategory whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class InventoryStockCategory extends Model
 {
     use LogsActivity;
+
     protected $table = 'inventorystockcategories';
 
     protected $dateFormat = 'Y-m-d H:i:s';
@@ -70,6 +73,7 @@ class InventoryStockCategory extends Model
         'statusid' => 'E',
         'schemaid' => 'STS',
     ];
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()->logFillable();

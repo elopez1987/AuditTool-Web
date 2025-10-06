@@ -23,6 +23,7 @@ class StorageShipmentScheduleController extends BaseController
     public function index()
     {
         $this->authorize('reserveschedulleinverse.index');
+
         return view('Shipments.ReserveSchedulleInverse.index');
     }
 
@@ -44,12 +45,14 @@ class StorageShipmentScheduleController extends BaseController
                 'shipmentcarriers.name as carriername',
                 'users.name as createuser',
             ])->get();
+
         return $this->showDataToView($data, 'Shipments.ReserveSchedulleInverse.partials.buttons');
     }
 
     public function create()
     {
         $this->authorize('reserveschedulleinverse.create');
+
         return view('Shipments.ReserveSchedulleInverse.create');
     }
 
@@ -58,6 +61,7 @@ class StorageShipmentScheduleController extends BaseController
         $center = $this->getCenterForUser();
         $quantitymax = SystemDetailParameter::where('parameterid', 'QUANTITY-DEV')
             ->where('value01', $center)->first();
+
         return response()->json($quantitymax);
     }
 
@@ -72,6 +76,7 @@ class StorageShipmentScheduleController extends BaseController
             ->where('scheduleinverse.statusid', 'ACT')
             ->distinct()
             ->get();
+
         return response()->json($workdays);
     }
 
@@ -88,6 +93,7 @@ class StorageShipmentScheduleController extends BaseController
             ->distinct()
             ->groupBy('scheduleinversedetail.workday')
             ->get();
+
         return response()->json($quantityForDays);
     }
 
@@ -97,6 +103,7 @@ class StorageShipmentScheduleController extends BaseController
         $data = ShipmentForSchedulle::controlAccessUser()
             ->CarrierIn($carriers)
             ->whereNotIn('statusdevid', ['AGD', 'ENT'])->get();
+
         return $this->showDataToView($data, '');
     }
 
@@ -168,10 +175,12 @@ class StorageShipmentScheduleController extends BaseController
                 }
             }
             DB::commit();
+
             return response()->json(['message' => 'Horario generado exitosamente']);
         } catch (Exception $e) {
             Log::error($e->getMessage());
             DB::rollback();
+
             return response()->json(['message' => 'Error al generar el horario.']);
         }
     }
@@ -204,6 +213,7 @@ class StorageShipmentScheduleController extends BaseController
             })
             ->where('storageshipmentsschedule.id', $id)
             ->get();
+
         return view('Shipments.ReserveSchedulleInverse.show', compact('reserveschedule', 'details', 'shipments'));
     }
 }

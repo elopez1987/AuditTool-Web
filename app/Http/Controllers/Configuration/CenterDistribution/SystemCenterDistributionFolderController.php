@@ -16,6 +16,7 @@ class SystemCenterDistributionFolderController extends BaseController
         $center = SystemCenterDistribution::findOrFail($id);
         $folders = $this->getDetailParameters();
         $directories = Storage::directories('public/' . $id);
+
         return view(
             'Configuration.SystemCenterDistributions.Folders.create',
             compact('center', 'folders', 'directories')
@@ -28,6 +29,7 @@ class SystemCenterDistributionFolderController extends BaseController
         if (! empty($folders)) {
             $this->createDirectories($id, $folders);
         }
+
         return $this->redirectBackSuccessMessage('Directorios agregados con exito.');
     }
 

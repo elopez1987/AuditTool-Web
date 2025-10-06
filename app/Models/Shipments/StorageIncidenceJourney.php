@@ -35,6 +35,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \App\Models\Shipments\StorageKeyIncidenceTransport $keytransport
  * @property-read \App\Models\Shipments\OrderDeliverie $order
  * @property-read SystemStatus $status
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageIncidenceJourney carrier($carrierid)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageIncidenceJourney forDate($datein, $dateout)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageIncidenceJourney forShipment($shipmentid)
@@ -64,11 +65,13 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageIncidenceJourney whereStatuskeytrid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageIncidenceJourney whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageIncidenceJourney whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class StorageIncidenceJourney extends Model
 {
     protected $table = 'storageincidencejourneys';
+
     protected $primaryKey = 'folioid';
 
     protected $fillable = ['centerid', 'warehouseid', 'orderid',
@@ -86,26 +89,26 @@ class StorageIncidenceJourney extends Model
 
     protected $attributes = [
 
-//        Estatus del reporte
+        //        Estatus del reporte
         'statusid' => 'AB',
         'schemaid' => 'EIJ',
 
-//        Estatus de firma de almacen
+        //        Estatus de firma de almacen
         'statuskeyid' => 'SF',
         'schemakeyid' => 'KEY',
 
-//        Estatus de firma de transporte
+        //        Estatus de firma de transporte
         'statuskeytrid' => 'SF',
         'schemakeytrid' => 'KEY',
 
-//        Estatus de cita de entrega
+        //        Estatus de cita de entrega
         'statusdevid' => 'SIC',
         'schemadevid' => 'DEC',
 
     ];
 
     protected $casts = [
-//        'created_at' => 'datetime:Y-m-d H:s',
+        //        'created_at' => 'datetime:Y-m-d H:s',
     ];
 
     public function order()
@@ -132,6 +135,7 @@ class StorageIncidenceJourney extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return StorageIncidenceJourney::whereIn('storageincidencejourneys.warehouseid', $warehouses)
             ->whereIn('storageincidencejourneys.centerid', $centers);
     }

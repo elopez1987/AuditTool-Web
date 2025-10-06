@@ -12,6 +12,7 @@ class MonitorShipmentController extends BaseController
     public function monitortrafico()
     {
         $this->authorize('monitortrafico');
+
         return view('Shipments.MonitorShipments.MonitorTrafico.index');
     }
 
@@ -48,6 +49,7 @@ class MonitorShipmentController extends BaseController
             ->whereNull('orderdeliveries.folionumber')
             ->orderByDesc('orderdeliveries.loadingdate')
             ->get();
+
         return DataTables::of($data)->toJson();
     }
 }

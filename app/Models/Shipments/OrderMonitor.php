@@ -29,6 +29,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property string $statusid
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|OrderMonitor newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|OrderMonitor newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|OrderMonitor query()
@@ -52,11 +53,13 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|OrderMonitor whereUserid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|OrderMonitor whereWarehouseid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|OrderMonitor whereWorkday($value)
+ *
  * @mixin \Eloquent
  */
 class OrderMonitor extends Model
 {
     use LogsActivity;
+
     public $timestamps = false;
 
     protected $table = 'ordermonitor';

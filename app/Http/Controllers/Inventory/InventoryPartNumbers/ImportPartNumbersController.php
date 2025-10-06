@@ -19,7 +19,8 @@ class ImportPartNumbersController extends BaseController
         }
         ini_set('max_execution_time', 400);
         $file = $request->file('file');
-        Excel::import(new ImportPartNumbers(), $file);
+        Excel::import(new ImportPartNumbers, $file);
+
         return $this->successResponse('inventorypartnumbers.index');
     }
 }

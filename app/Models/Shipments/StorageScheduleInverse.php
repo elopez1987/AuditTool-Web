@@ -27,6 +27,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read \App\Models\Shipments\StorageScheduleInverseInventory $inventory
  * @property-read \App\Models\Shipments\OrderDeliverie $order
  * @property-read SystemStatus $status
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageScheduleInverse forShipment($shipmentid)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageScheduleInverse forStatus($statusid)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageScheduleInverse newModelQuery()
@@ -43,6 +44,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageScheduleInverse whereStatusid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageScheduleInverse whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageScheduleInverse whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class StorageScheduleInverse extends Model
@@ -50,6 +52,7 @@ class StorageScheduleInverse extends Model
     use LogsActivity;
 
     protected $table = 'storagescheduleinverse';
+
     protected $primaryKey = 'id';
 
     protected $fillable = [
@@ -77,6 +80,7 @@ class StorageScheduleInverse extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return StorageScheduleInverse::whereIn('storagescheduleinverse.warehouseid', $warehouses)
             ->whereIn('storagescheduleinverse.centerid', $centers);
     }

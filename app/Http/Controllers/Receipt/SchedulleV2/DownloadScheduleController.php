@@ -20,6 +20,7 @@ class DownloadScheduleController extends BaseController
     public function index()
     {
         $status = $this->getStatusForSchema('SRE');
+
         return view('Receipt.SchedulleV2.index', compact('status'));
     }
 
@@ -91,7 +92,7 @@ class DownloadScheduleController extends BaseController
             ->addColumn('btn', 'Receipt.SchedulleV2.partials.buttons')
             ->addColumn('prioridad', 'Receipt.SchedulleV2.addpriority')
             ->addColumn('po', 'Receipt.SchedulleV2.goodissuedate')
-            ->rawColumns(['btn','prioridad','po'])
+            ->rawColumns(['btn', 'prioridad', 'po'])
             ->toJson();
     }
 
@@ -106,6 +107,7 @@ class DownloadScheduleController extends BaseController
         $carriers = $this->getCarriersForSelect();
         $categorystocks = InventoryStockCategory::select('description', 'id')->get();
         $reasons = StorageReason::whereType('RE')->select('name', 'id')->get();
+
         return view(
             'Receipt.SchedulleV2.edit',
             compact('schedulleReceipt', 'carriers', 'providers', 'reasons', 'categorystocks', 'turns', 'centers', 'warehouses')
@@ -126,7 +128,7 @@ class DownloadScheduleController extends BaseController
             $receipt->statusid = 'PG';
             $receipt->addasndate = $formattedDateTime;
             $receipt->workday = Carbon::parse($schedulleReceipt->workday)->format('Y-m-d');
-            $receipt->auxiliary01 = Auth::user()->name;  //Planeador del recibo
+            $receipt->auxiliary01 = Auth::user()->name;  // Planeador del recibo
             $receipt->save();
 
             $schedulleReceipt->receiptid = $receipt->id;
@@ -134,9 +136,11 @@ class DownloadScheduleController extends BaseController
             $schedulleReceipt->save();
 
             DB::commit();
+
             return $this->redirectBackSuccessMessage('Recibo agregado al plan de entrega');
         } catch (\Exception $e) {
             DB::rollBack();
+
             return $this->errorResponse($e->getMessage());
         }
     }

@@ -15,6 +15,7 @@ class ParameterLocationsController extends BaseController
         $model = Storagelocation::controlAccessUser()->find($id);
         $parameters = SystemStatus::whereSchemaid('PUB')
             ->select(['statusid', 'name'])->get();
+
         return view('Yards.StorageLocations.Parameters.create', compact('model', 'parameters'));
     }
 
@@ -23,6 +24,7 @@ class ParameterLocationsController extends BaseController
         $model = Storagelocation::controlAccessUser()->find($id);
         $model->configurationflag = $request['parameter'];
         $model->save();
+
         return $this->redirectBackSuccess();
     }
 }

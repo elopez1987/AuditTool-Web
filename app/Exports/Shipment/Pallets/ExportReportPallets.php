@@ -13,11 +13,14 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 
-class ExportReportPallets implements FromCollection, WithHeadings, WithMapping, WithEvents, ShouldAutoSize, WithColumnFormatting
+class ExportReportPallets implements FromCollection, ShouldAutoSize, WithColumnFormatting, WithEvents, WithHeadings, WithMapping
 {
     use Exportable;
+
     private $workdayin;
+
     private $workdayout;
+
     private $centerid;
 
     public function __construct($workdayin, $workdayout, $centerid)
@@ -30,7 +33,7 @@ class ExportReportPallets implements FromCollection, WithHeadings, WithMapping, 
     public function columnFormats(): array
     {
         return [
-//            'A' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+            //            'A' => NumberFormat::FORMAT_DATE_DDMMYYYY,
         ];
     }
 
@@ -74,6 +77,7 @@ class ExportReportPallets implements FromCollection, WithHeadings, WithMapping, 
     {
         $startDate = $this->workdayin;
         $endDate = $this->workdayout;
+
         return DB::table('orderdeliveries as o')
             ->leftJoin('ordercustomers as o2', 'o.customerid', '=', 'o2.id')
             ->leftJoin('shipmentpallets as s', 'o.id', '=', 's.orderid')

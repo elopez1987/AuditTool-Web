@@ -24,34 +24,26 @@ class StartOrderDeliveryController extends BaseController
             $this->updateShipmentSeal($id);
             $this->BloquedLocationStage($shipment, $request['locationid']);
             DB::commit();
+
             return $this->redirectBackSuccess();
         } catch (Exception $e) {
             $error = $e->getMessage();
             DB::rollback();
+
             return $this->errorResponse($error);
         }
     }
 
-    /**
-     * @param $id
-     *
-     * @return ShipmentDataOperation
-     */
     public function updateShipmentDataOperation($id): ShipmentDataOperation
     {
         $shipment = ShipmentDataOperation::controlAccessUser()->where('orderid', $id)->first();
         $shipment->startshipment = now();
         $shipment->lastuserid = Auth::user()->id;
         $shipment->save();
+
         return $shipment;
     }
 
-    /**
-     * @param $id
-     * @param $locationid
-     *
-     * @return void
-     */
     public function updateShipmentHeader($id, $locationid): void
     {
         $header = ShipmentHeader::controlAccessUser()->where('orderid', $id)->first();
@@ -61,11 +53,6 @@ class StartOrderDeliveryController extends BaseController
         $header->save();
     }
 
-    /**
-     * @param $id
-     *
-     * @return void
-     */
     public function updateOrderDelivery($id): void
     {
         $orderdelivery = OrderDeliverie::whereId($id)->first();
@@ -73,11 +60,6 @@ class StartOrderDeliveryController extends BaseController
         $orderdelivery->save();
     }
 
-    /**
-     * @param $id
-     *
-     * @return void
-     */
     public function updateShipmentSeal($id): void
     {
         $shipmentseal = ShipmentSeal::whereOrderid($id)->first();
@@ -85,12 +67,6 @@ class StartOrderDeliveryController extends BaseController
         $shipmentseal->save();
     }
 
-    /**
-     * @param ShipmentDataOperation $shipment
-     * @param $locationid
-     *
-     * @return void
-     */
     public function BloquedLocationStage(ShipmentDataOperation $shipment, $locationid): void
     {
         $parameter = $this->getParametersOfWarehouse($shipment->warehouseid);

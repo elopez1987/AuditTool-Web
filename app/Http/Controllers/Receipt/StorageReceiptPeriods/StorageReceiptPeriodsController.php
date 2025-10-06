@@ -18,6 +18,7 @@ class StorageReceiptPeriodsController extends BaseController
     {
         $this->authorize('storagereceiptperiods.index');
         $status = $this->getStatusForSchema('STS');
+
         return view('Receipt.StorageReceiptPeriod.index', compact('status'));
     }
 
@@ -26,6 +27,7 @@ class StorageReceiptPeriodsController extends BaseController
         $this->authorize('storagereceiptperiods.index');
         $data = StorageReceiptPeriod::controlAccessUser()->with(['center', 'warehouse', 'status'])
             ->Name($request->get('name'))->get();
+
         return $this->showDataToView($data, 'Receipt.StorageReceiptPeriod.partials.buttons');
     }
 
@@ -34,6 +36,7 @@ class StorageReceiptPeriodsController extends BaseController
         $this->authorize('storagereceiptperiods.create');
         $centers = $this->getCenterForSelect();
         $warehouses = $this->getWarehouseForSelect();
+
         return view('Receipt.StorageReceiptPeriod.create', compact('centers', 'warehouses'));
     }
 
@@ -72,10 +75,12 @@ class StorageReceiptPeriodsController extends BaseController
                 }
             }
             DB::commit();
+
             return $this->successResponse('storagereceiptperiods.index');
         } catch (Exception $e) {
             Log::error($e->getMessage());
             DB::rollback();
+
             return $this->errorResponse('No se pudo crear el periodo de recibo, favor de intentar nuevamente');
         }
     }
@@ -88,6 +93,7 @@ class StorageReceiptPeriodsController extends BaseController
         $detalle = StorageSchedulleReceipt::controlAccessUser()
             ->with(['center', 'warehouse', 'status', 'statussecuence', 'receipt', 'period'])
             ->where('periodid', $id)->get();
+
         return view('Receipt.StorageReceiptPeriod.show', compact('periods', 'status', 'detalle'));
     }
 
@@ -108,6 +114,7 @@ class StorageReceiptPeriodsController extends BaseController
             }
             $period->save();
         }
+
         return $this->redirectBackSuccessMessage('Periodo actualizado con exito');
     }
 
@@ -115,6 +122,7 @@ class StorageReceiptPeriodsController extends BaseController
     {
         $this->authorize('storagereceiptperiods.destroy');
         $storagereceiptperiod->delete();
+
         return $this->redirectBackSuccessMessage('Registro eliminado con exito!!');
     }
 }

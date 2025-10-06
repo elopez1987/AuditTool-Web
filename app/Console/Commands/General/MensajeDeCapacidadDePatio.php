@@ -37,7 +37,7 @@ class MensajeDeCapacidadDePatio extends Command
     public function handle()
     {
         $url = 'https://api.1msg.io/HEI523482986/sendTemplate';
-        $client = new Client();
+        $client = new Client;
         $centers = SystemCenterDistribution::select(['centerid', 'configurationflag', 'capacityyard'])->get();
         foreach ($centers as $center) {
             $parameter = SystemCenterDistribution::whereCenterid($center->centerid)->value('configurationflag');
@@ -97,13 +97,6 @@ class MensajeDeCapacidadDePatio extends Command
         ];
     }
 
-    /**
-     * @param $center
-     * @param $contact
-     * @param $resp
-     *
-     * @return void
-     */
     public function createLog($center, $contact, $resp): void
     {
         LogMessageWhatsApp::create([
@@ -118,11 +111,6 @@ class MensajeDeCapacidadDePatio extends Command
         ]);
     }
 
-    /**
-     * @param $center
-     *
-     * @return int
-     */
     public function getTotalUnitStock($center): int
     {
         return ReceiptUnit::where('centerid', $center->centerid)
@@ -130,8 +118,6 @@ class MensajeDeCapacidadDePatio extends Command
     }
 
     /**
-     * @param $center
-     *
      * @return mixed|null
      */
     public function getTotalCapacity($center)

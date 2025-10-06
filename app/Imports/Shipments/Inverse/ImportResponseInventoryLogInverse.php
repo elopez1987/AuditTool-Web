@@ -37,12 +37,6 @@ class ImportResponseInventoryLogInverse implements ToCollection, WithHeadingRow
         }
     }
 
-    /**
-     * @param $inverse
-     * @param $row
-     *
-     * @return void
-     */
     public function createOrUpdateNoteForInventory($inverse, $row): void
     {
         StorageScheduleInverseInventory::updateOrCreate(
@@ -61,11 +55,6 @@ class ImportResponseInventoryLogInverse implements ToCollection, WithHeadingRow
         );
     }
 
-    /**
-     * @param OrderDeliverie $shipment
-     *
-     * @return void
-     */
     public function closeInverseOperation(OrderDeliverie $shipment): void
     {
         $logOperation = StorageScheduleInverseOperation::where('orderid', '=', $shipment->id)->first();
@@ -75,11 +64,6 @@ class ImportResponseInventoryLogInverse implements ToCollection, WithHeadingRow
         $logOperation->save();
     }
 
-    /**
-     * @param $inverse
-     *
-     * @return void
-     */
     public function closeInverse($inverse): void
     {
         $inverse->statusid = 'TD';
@@ -87,9 +71,6 @@ class ImportResponseInventoryLogInverse implements ToCollection, WithHeadingRow
     }
 
     /**
-     * @param OrderDeliverie $shipment
-     * @param $delivery
-     *
      * @return StorageScheduleInverseTraffic|Builder|Model|object|null
      */
     public function getStorageScheduleInverseTraffic(OrderDeliverie $shipment, $delivery)

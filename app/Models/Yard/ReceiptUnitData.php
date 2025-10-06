@@ -47,6 +47,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property string|null $tolerance
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitData newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitData newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitData query()
@@ -87,12 +88,15 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitData whereUneven($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitData whereValidity($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitData whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class ReceiptUnitData extends Model
 {
     use LogsActivity;
+
     public $timestamps = false;
+
     protected $table = 'receiptunitdata';
 
     protected $fillable = [
@@ -143,6 +147,7 @@ class ReceiptUnitData extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return ReceiptUnitData::whereIn('receiptunitdata.warehouseid', $warehouses)
             ->whereIn('receiptunitdata.centerid', $centers);
     }

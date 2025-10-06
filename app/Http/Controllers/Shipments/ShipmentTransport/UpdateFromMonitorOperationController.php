@@ -24,6 +24,7 @@ class UpdateFromMonitorOperationController extends BaseController
             'auxiliary04',
             'trucknumber'
         ) + ['auxiliary02' => '1']);
+
         return $this->redirectBackSuccess();
     }
 }

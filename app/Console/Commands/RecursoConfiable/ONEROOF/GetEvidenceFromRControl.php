@@ -38,7 +38,7 @@ class GetEvidenceFromRControl extends Command
                         ->select(['recordid', 'orderid', 'pathfile'])->first();
                     if (empty($pod)) {
                         $contentBody = $this->createJsonFilter($shipment->shipmentid);
-                        $conect = new Client();
+                        $conect = new Client;
                         $response = $conect->post($url, ['form_params' => ['parameters' => $contentBody]]);
                         if ($response->getStatusCode() === 200) {
                             $result = json_decode($response->getBody()->getContents());
@@ -75,6 +75,7 @@ class GetEvidenceFromRControl extends Command
                 'final_date' => Carbon::now()->addDays(15)->toDateTimeString(),
             ],
         ];
+
         return json_encode($json);
     }
 
@@ -85,15 +86,10 @@ class GetEvidenceFromRControl extends Command
         $url = $dataapi->value02 . $endPoint . 'arg00=' . $dataapi->value03 . '&' . 'arg01=' . $dataapi->value04;
         $responseRControl = Http::post($url);
         $data = json_decode($responseRControl->getBody()->getContents());
+
         return $data->token;
     }
 
-    /**
-     * @param $shipment
-     * @param string $path
-     *
-     * @return void
-     */
     public function createRegisterPOD($shipment, string $path): void
     {
         StorageShipmentsPods::create([

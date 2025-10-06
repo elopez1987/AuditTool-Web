@@ -18,6 +18,7 @@ trait EvidencePhotoTrait
     public function downloadPhoto($id): StreamedResponse
     {
         $photo = EvidencePhoto::findOrFail($id);
+
         return Storage::download($photo->path);
     }
 
@@ -26,12 +27,14 @@ trait EvidencePhotoTrait
         $photo = EvidencePhoto::findOrFail($id);
         Storage::delete($photo->path);
         EvidencePhoto::destroy($id);
+
         return redirect()->back()->with(session()->flash('success', 'Fotografia eliminado con exito!!'));
     }
 
     public function downloadPhotoTire($id): StreamedResponse
     {
         $photo = CheckListEvidenceProcessUnit::findOrFail($id);
+
         return Storage::download($photo->path);
     }
 
@@ -40,6 +43,7 @@ trait EvidencePhotoTrait
         $photo = CheckListEvidenceProcessUnit::findOrFail($id);
         Storage::delete($photo->path);
         CheckListEvidenceProcessUnit::destroy($id);
+
         return redirect()->back()->with(session()->flash('success', 'Fotografia eliminado con exito!!'));
     }
 
@@ -53,6 +57,7 @@ trait EvidencePhotoTrait
                 ->resize(1200, 1200, function ($constraint) {
                     $constraint->aspectRatio();
                 })->save($path);
+
             return $pathdb;
         }
     }

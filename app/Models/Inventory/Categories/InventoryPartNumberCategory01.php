@@ -31,6 +31,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read SystemCenterDistribution $center
  * @property-read SystemStatus $status
  * @property-read SystemWarehouse $warehouse
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryPartNumberCategory01 name($name)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryPartNumberCategory01 newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryPartNumberCategory01 newQuery()
@@ -49,11 +50,13 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryPartNumberCategory01 whereStatusid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryPartNumberCategory01 whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryPartNumberCategory01 whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class InventoryPartNumberCategory01 extends Model
 {
     use LogsActivity;
+
     protected $table = 'inventorypartnumbercategory01';
 
     protected $dateFormat = 'Y-m-d H:i:s';
@@ -80,6 +83,7 @@ class InventoryPartNumberCategory01 extends Model
         'statusid' => 'E',
         'schemaid' => 'STS',
     ];
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()->logFillable();
@@ -89,6 +93,7 @@ class InventoryPartNumberCategory01 extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return InventoryPartNumberCategory01::whereIn('warehouseid', $warehouses)
             ->whereIn('centerid', $centers);
     }
@@ -97,6 +102,7 @@ class InventoryPartNumberCategory01 extends Model
     {
         $centers = SecurityAccessWarehouse::Centers();
         $warehouses = SecurityAccessWarehouse::Warehouses();
+
         return InventoryPartNumberCategory01::whereStatusid('E')
             ->whereIn('centerid', $centers)
             ->whereIn('warehouseid', $warehouses)

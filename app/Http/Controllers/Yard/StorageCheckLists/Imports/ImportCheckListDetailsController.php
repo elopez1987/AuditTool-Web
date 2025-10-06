@@ -17,6 +17,7 @@ class ImportCheckListDetailsController extends BaseController
     {
         $checkList = StorageCheckList::findOrFail($request['checklistid']);
         Excel::import(new ImportCheckListDetails($checkList), $request->file('file'), '', \Maatwebsite\Excel\Excel::XLSX);
+
         return $this->redirectBackSuccessMessage('Archivo cargado con exito');
     }
 }

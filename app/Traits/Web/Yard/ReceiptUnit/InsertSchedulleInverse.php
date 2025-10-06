@@ -55,13 +55,6 @@ trait InsertSchedulleInverse
         );
     }
 
-    /**
-     * @param $incidence
-     * @param $inverse
-     * @param $delivery
-     *
-     * @return void
-     */
     public function createRegisterInventory($incidence, $inverse, $delivery): void
     {
         StorageScheduleInverseInventory::updateOrCreate(
@@ -75,13 +68,6 @@ trait InsertSchedulleInverse
         );
     }
 
-    /**
-     * @param $incidence
-     * @param $inverse
-     * @param $delivery
-     *
-     * @return void
-     */
     public function createRegisterTraffic($incidence, $inverse, $delivery): void
     {
         StorageScheduleInverseTraffic::updateOrCreate([
@@ -108,8 +94,6 @@ trait InsertSchedulleInverse
     }
 
     /**
-     * @param $shipmentid
-     *
      * @return array<StorageShipmentSchedule>|_IH_StorageShipmentSchedule_C
      */
     public function getStorageShipmentSchedules($shipmentid): _IH_StorageShipmentSchedule_C|array

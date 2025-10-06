@@ -20,8 +20,8 @@ use Illuminate\Http\Request;
 class TransportOutPutController extends BaseController
 {
     use CheckListTransportTrait;
-    use RegisterEdiShipment;
     use QueryReceiptTruck;
+    use RegisterEdiShipment;
 
     public function edit($id)
     {
@@ -39,6 +39,7 @@ class TransportOutPutController extends BaseController
         } else {
             $checklist = 'off';
         }
+
         return view('Yards.TransportOutPut.edit', compact('receiptunit', 'checklistdetails', 'checklist'));
     }
 
@@ -75,21 +76,16 @@ class TransportOutPutController extends BaseController
             $this->addNewEdiForIzel($receiptunit, $parameter, 'OUT');
 
             DB::commit();
+
             return redirect('/registercheckout')->with(session()->flash('success', 'Registro actualizado correctamente!!'));
         } catch (Exception $e) {
             $error = $e->getMessage();
             DB::rollback();
+
             return redirect()->back()->with(session()->flash('error', 'No se pudieron guardar los datos!!' . $error));
         }
     }
 
-    /**
-     * @param ReceiptTruck $tracto
-     * @param $receiptunit
-     * @param Request $request
-     *
-     * @return void
-     */
     public function updateDataOfReceiptUnitClose(ReceiptTruck $tracto, $receiptunit, Request $request): void
     {
         $receiptunit->operatorname = $tracto->operatorname;

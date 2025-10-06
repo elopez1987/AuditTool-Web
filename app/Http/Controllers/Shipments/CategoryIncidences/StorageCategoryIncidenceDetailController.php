@@ -14,6 +14,7 @@ class StorageCategoryIncidenceDetailController extends BaseController
         $category = StorageCategoryIncidence::findOrFail($id);
         $details = StorageCategoryIncidenceDetail::where('categoryincid', $id)->get();
         $status = $this->getStatusSTS();
+
         return view('Shipments.CategoryIncidences.adddetail', compact('category', 'details', 'status'));
     }
 
@@ -30,6 +31,7 @@ class StorageCategoryIncidenceDetailController extends BaseController
             'auxiliary04' => $request['auxiliary04'],
             'auxiliary05' => $request['auxiliary05'],
         ]);
+
         return $this->redirectBackSuccess();
     }
 
@@ -44,6 +46,7 @@ class StorageCategoryIncidenceDetailController extends BaseController
         $detail->auxiliary05 = $request['auxiliary05'];
         $detail->statusid = $request['statusid'];
         $detail->save();
+
         return $this->redirectBackSuccess();
     }
 }

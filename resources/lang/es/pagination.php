@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Edgar Prisciliano L
@@ -17,5 +18,5 @@ return [
     |
     */
     'previous' => '&laquo; Anterior',
-    'next'     => 'Siguiente &raquo;',
+    'next' => 'Siguiente &raquo;',
 ];

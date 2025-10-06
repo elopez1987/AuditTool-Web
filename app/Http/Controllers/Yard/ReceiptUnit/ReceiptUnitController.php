@@ -21,13 +21,14 @@ use Yajra\DataTables\Facades\DataTables;
 
 class ReceiptUnitController extends BaseController
 {
-    use RegisterEdiShipment;
     use QueryReceiptTruck;
-    use ValidateShipmentInCheckInProcess;
-    use ValidateReceiptInCheckInProcess;
+    use RegisterEdiShipment;
     use ValidateCapacityYard;
+    use ValidateReceiptInCheckInProcess;
+    use ValidateShipmentInCheckInProcess;
 
     protected $routePath = 'receiptunits';
+
     protected $viewPath = 'Yards.ReceiptUnits';
 
     private ServiceReceiptUnit $serviceReceiptUnit;
@@ -44,12 +45,14 @@ class ReceiptUnitController extends BaseController
         $warehouses = $this->getWarehouseForSelect();
         $rason = $this->typeReasonInActiveToSelect();
         $status = $this->getStatusForSchema('RUS');
+
         return view('Yards.ReceiptUnits.index', compact('carriers', 'warehouses', 'rason', 'status'));
     }
 
     public function getDataReceipts(Request $request)
     {
         $data = $this->getData($request);
+
         return DataTables::of($data)
             ->addColumn('btn', "{$this->viewPath}.partials.buttons")->rawColumns(['btn'])->toJson();
     }
@@ -69,6 +72,7 @@ class ReceiptUnitController extends BaseController
         $unitsstatus = $this->unitStatusActiveToSelect();
         $unittypes = $this->unitTypeActiveToSelect();
         $truckcategories = $this->getCateroriesTruckForSelects();
+
         return view('Yards.ReceiptUnits.create', compact(
             'carriers',
             'movents',
@@ -95,22 +99,22 @@ class ReceiptUnitController extends BaseController
             }
             $parameter = $this->getParametersOfWarehouse($request['warehouseid']);
             $registerBox = ReceiptUnit::searchForBoxNumber($request['boxnumber']);
-            if (!empty($registerBox)) {
+            if (! empty($registerBox)) {
                 return $this->errorResponse('La placa de la caja se encuentra en patio,favor de validar.');
             }
             $registerCode = ReceiptUnit::searchForBarcode($request['barcodebox']);
-            if (!empty($registerCode)) {
+            if (! empty($registerCode)) {
                 return $this->errorResponse('El código de barra se encuentra en patio,favor de validar.');
             }
 
-            if ($request['razonstatusid'] === '1' && !empty($parameter) && in_array('SWH-01', (array)$parameter)) {
+            if ($request['razonstatusid'] === '1' && ! empty($parameter) && in_array('SWH-01', (array) $parameter)) {
                 $resultCheckShiopment = $this->validateShipmentInCheckIn($request);
                 if ($resultCheckShiopment) {
                     return $resultCheckShiopment;
                 }
             }
 
-            if ($request['razonstatusid'] == '2' && !empty($parameter) && in_array('SWH-02', (array)$parameter)) {
+            if ($request['razonstatusid'] == '2' && ! empty($parameter) && in_array('SWH-02', (array) $parameter)) {
                 $resultCheckReceipt = $this->validateReceiptInCheckIn($request, $parameter);
                 if ($resultCheckReceipt) {
                     return $resultCheckReceipt;
@@ -120,20 +124,21 @@ class ReceiptUnitController extends BaseController
             $truck = $this->createNewTruck($request);
             $receiptunit = $this->serviceReceiptUnit->createNewReceiptUnit($request, $truck);
 
-
             if ($receiptunit->statusid === 'QI') {
                 $this->addNewEdiForIzel($receiptunit, $parameter, 'IN');
                 $this->sendDataToRControl($receiptunit, $parameter, 'ENTRANCE');
             }
 
             DB::commit();
-            if (in_array('SWH-05', (array)$parameter)) {
+            if (in_array('SWH-05', (array) $parameter)) {
                 return redirect('authorizetransportentry/' . $receiptunit->id . '/edit');
             }
+
             return redirect()->back()->with(session()->flash('success', 'Registro agregado con exito,folio :' . $receiptunit->id));
         } catch (Exception $e) {
             $error = $e->getMessage();
             DB::rollback();
+
             return redirect()->back()->withInput()->with(session()->flash('error', 'Error al registrar el folio :' . $error));
         }
     }
@@ -142,6 +147,7 @@ class ReceiptUnitController extends BaseController
     {
         $this->authorize('receiptunits.edit');
         $carriers = $this->getCarriersForSelect();
+
         return view("{$this->viewPath}.edit", compact('receiptunit', 'carriers'));
     }
 
@@ -149,6 +155,7 @@ class ReceiptUnitController extends BaseController
     {
         $receiptunit->update($request->all());
         StorageUnitTrace::createTraceUnit($receiptunit, '6');
+
         return $this->infoResponse("{$this->routePath}.index");
     }
 

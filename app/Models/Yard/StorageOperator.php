@@ -34,6 +34,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read ShipmentCarrier|null $carrier
  * @property-read SystemCenterDistribution $center
  * @property-read SystemStatus $status
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageOperator barcode($barcode)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageOperator forCarrierOperator($carrier)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageOperator name($name)
@@ -57,13 +58,17 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageOperator whereSchemaid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageOperator whereStatusid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageOperator whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class StorageOperator extends Model
 {
     use LogsActivity;
+
     protected $table = 'storageoperators';
+
     protected $primaryKey = 'id';
+
     protected $keyType = 'integer';
 
     protected $dateFormat = 'Y-m-d H:i:s';
@@ -144,6 +149,7 @@ class StorageOperator extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return StorageOperator::whereIn('storageoperators.centerid', $centers);
     }
 }

@@ -31,6 +31,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read SystemCenterDistribution $center
  * @property-read SystemStatus $status
  * @property-read SystemWarehouse $warehouse
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryPartNumberCategory02 name($name)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryPartNumberCategory02 newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryPartNumberCategory02 newQuery()
@@ -50,6 +51,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryPartNumberCategory02 whereStatusid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryPartNumberCategory02 whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryPartNumberCategory02 whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class InventoryPartNumberCategory02 extends Model
@@ -82,6 +84,7 @@ class InventoryPartNumberCategory02 extends Model
         'statusid' => 'E',
         'schemaid' => 'STS',
     ];
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()->logFillable();
@@ -91,6 +94,7 @@ class InventoryPartNumberCategory02 extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return InventoryPartNumberCategory02::whereIn('warehouseid', $warehouses)
             ->whereIn('centerid', $centers);
     }
@@ -99,6 +103,7 @@ class InventoryPartNumberCategory02 extends Model
     {
         $centers = SecurityAccessWarehouse::Centers();
         $warehouses = SecurityAccessWarehouse::Warehouses();
+
         return InventoryPartNumberCategory02::whereStatusid('E')
             ->whereIn('centerid', $centers)
             ->whereIn('warehouseid', $warehouses)

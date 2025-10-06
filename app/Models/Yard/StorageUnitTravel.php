@@ -23,6 +23,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property string $statusid
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTravel newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTravel newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTravel query()
@@ -40,14 +41,17 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTravel whereSchemaid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTravel whereStatusid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUnitTravel whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class StorageUnitTravel extends Model
 {
     use LogsActivity;
+
     public $timestamps = false;
 
     protected $table = 'storageunittravels';
+
     protected $primaryKey = 'id';
 
     protected $fillable = [

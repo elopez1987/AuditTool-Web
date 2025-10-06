@@ -34,6 +34,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read SystemStatus $status
  * @property-read SystemStatus|null $type
  * @property-read User|null $usertruck
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageAssignLiftTrucks newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageAssignLiftTrucks newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageAssignLiftTrucks query()
@@ -52,6 +53,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageAssignLiftTrucks whereTypeid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageAssignLiftTrucks whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageAssignLiftTrucks whereUsername($value)
+ *
  * @mixin \Eloquent
  */
 class StorageAssignLiftTrucks extends Model
@@ -93,6 +95,7 @@ class StorageAssignLiftTrucks extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return StorageAssignLiftTrucks::whereIn('storageassignlifttrucks.centerid', $centers);
     }
 

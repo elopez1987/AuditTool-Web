@@ -24,7 +24,8 @@ class ImportDataInverseController extends BaseController
         if ($validator->fails()) {
             return $this->errorResponse('El formato de archivo no es correcto.');
         }
-        Excel::import(new ImportRequestZareInverse(), $request->file('file'), '', \Maatwebsite\Excel\Excel::XLSX);
+        Excel::import(new ImportRequestZareInverse, $request->file('file'), '', \Maatwebsite\Excel\Excel::XLSX);
+
         return $this->redirectBackSuccessMessage('Importación terminada con exito.');
     }
 
@@ -36,7 +37,8 @@ class ImportDataInverseController extends BaseController
         if ($validator->fails()) {
             return $this->errorResponse('El formato de archivo no es correcto.');
         }
-        Excel::import(new ImportResponseZareInverse(), $request->file('file'), '', \Maatwebsite\Excel\Excel::XLSX);
+        Excel::import(new ImportResponseZareInverse, $request->file('file'), '', \Maatwebsite\Excel\Excel::XLSX);
+
         return $this->redirectBackSuccessMessage('Importación terminada con exito.');
     }
 
@@ -48,7 +50,8 @@ class ImportDataInverseController extends BaseController
         if ($validator->fails()) {
             return $this->errorResponse('El formato de archivo no es correcto.');
         }
-        Excel::import(new ImportRequestNEInverse(), $request->file('file'), '', \Maatwebsite\Excel\Excel::XLSX);
+        Excel::import(new ImportRequestNEInverse, $request->file('file'), '', \Maatwebsite\Excel\Excel::XLSX);
+
         return $this->redirectBackSuccessMessage('Importación terminada con exito.');
     }
 
@@ -60,7 +63,8 @@ class ImportDataInverseController extends BaseController
         if ($validator->fails()) {
             return $this->errorResponse('El formato de archivo no es correcto.');
         }
-        Excel::import(new ImportResponseNEInverse(), $request->file('file'), '', \Maatwebsite\Excel\Excel::XLSX);
+        Excel::import(new ImportResponseNEInverse, $request->file('file'), '', \Maatwebsite\Excel\Excel::XLSX);
+
         return $this->redirectBackSuccessMessage('Importación terminada con exito.');
     }
 
@@ -72,7 +76,8 @@ class ImportDataInverseController extends BaseController
         if ($validator->fails()) {
             return $this->errorResponse('El formato de archivo no es correcto.');
         }
-        Excel::import(new ImportRequestNCInverse(), $request->file('file'), '', \Maatwebsite\Excel\Excel::XLSX);
+        Excel::import(new ImportRequestNCInverse, $request->file('file'), '', \Maatwebsite\Excel\Excel::XLSX);
+
         return $this->redirectBackSuccessMessage('Importación terminada con exito.');
     }
 
@@ -84,13 +89,15 @@ class ImportDataInverseController extends BaseController
         if ($validator->fails()) {
             return $this->errorResponse('El formato de archivo no es correcto.');
         }
-        Excel::import(new ImportResponseNCInverse(), $request->file('file'), '', \Maatwebsite\Excel\Excel::XLSX);
+        Excel::import(new ImportResponseNCInverse, $request->file('file'), '', \Maatwebsite\Excel\Excel::XLSX);
+
         return $this->redirectBackSuccessMessage('Importación terminada con exito.');
     }
 
     public function importregisterwms(Request $request)
     {
-        Excel::import(new ImportWmsDateInverse(), $request->file('file'), '', \Maatwebsite\Excel\Excel::XLSX);
+        Excel::import(new ImportWmsDateInverse, $request->file('file'), '', \Maatwebsite\Excel\Excel::XLSX);
+
         return $this->redirectBackSuccessMessage('Importación terminada con exito.');
     }
 
@@ -102,7 +109,8 @@ class ImportDataInverseController extends BaseController
         if ($validator->fails()) {
             return $this->errorResponse('El formato de archivo no es correcto.');
         }
-        Excel::import(new ImportResponseInventoryLogInverse(), $request->file('file'), '', \Maatwebsite\Excel\Excel::XLSX);
+        Excel::import(new ImportResponseInventoryLogInverse, $request->file('file'), '', \Maatwebsite\Excel\Excel::XLSX);
+
         return $this->redirectBackSuccessMessage('Importación terminada con exito.');
     }
 }

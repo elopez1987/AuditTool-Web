@@ -15,6 +15,7 @@ class ShipmentSchedulleBridgestoneController extends BaseController
         $this->authorize('monitoroperation.index');
         $status = $this->getStatusForSchema('KLE');
         $warehouses = $this->getWarehouseForSelect();
+
         return view(
             'Shipments.ShipmentSchedulle.Bridgestone.index',
             compact('status', 'warehouses')
@@ -93,6 +94,7 @@ class ShipmentSchedulleBridgestoneController extends BaseController
             ])
             ->whereNotIn('orderdeliveries.statusid', ['CA'])
             ->orderBy('orderdeliveries.id', 'desc')->limit(200)->get();
+
         return DataTables::of($data)
             ->addColumn('btn', 'Shipments.OrderMonitor.MonitorOperation.partials.btnoperation')
             ->rawColumns(['btn'])

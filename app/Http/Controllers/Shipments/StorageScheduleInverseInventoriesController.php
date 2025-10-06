@@ -16,14 +16,10 @@ class StorageScheduleInverseInventoriesController extends BaseController
     public function updateDataInventory(StorageScheduleInverse $storagescheduleinverse)
     {
         $details = $this->getData($storagescheduleinverse);
+
         return view('Shipments.StorageScheduleInverse.inventory.edit', compact('storagescheduleinverse', 'details'));
     }
 
-    /**
-     * @param StorageScheduleInverse $storagescheduleinverse
-     *
-     * @return Collection
-     */
     public function getData(StorageScheduleInverse $storagescheduleinverse): Collection
     {
         return DB::table('storagescheduleinverse')
@@ -92,6 +88,7 @@ class StorageScheduleInverseInventoriesController extends BaseController
         if ($success) {
             return $this->redirectBackSuccessMessage('Datos agregados correctamente');
         }
+
         return $this->errorResponse('No se pudieron guardar los datos!!' . $error);
     }
 }

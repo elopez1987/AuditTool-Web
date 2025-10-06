@@ -18,6 +18,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property string $created_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUserDevice forSerialNumber($serialnumber)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUserDevice newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUserDevice newQuery()
@@ -31,6 +32,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUserDevice whereValue03($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUserDevice whereValue04($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageUserDevice whereValue05($value)
+ *
  * @mixin \Eloquent
  */
 class StorageUserDevice extends Model

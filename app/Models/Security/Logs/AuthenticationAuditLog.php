@@ -26,6 +26,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $processing_time_ms
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|AuthenticationAuditLog newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|AuthenticationAuditLog newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|AuthenticationAuditLog query()
@@ -50,11 +51,10 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|AuthenticationAuditLog whereUserAgentEncrypted($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|AuthenticationAuditLog whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|AuthenticationAuditLog whereUsername($value)
+ *
  * @mixin \Eloquent
  */
 class AuthenticationAuditLog extends Model
 {
     protected $table = 'authentication_audit_logs';
-
-
 }

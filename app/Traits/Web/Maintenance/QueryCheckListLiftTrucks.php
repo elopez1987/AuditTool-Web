@@ -36,7 +36,7 @@ trait QueryCheckListLiftTrucks
             ->select([
                 'checklistlifttrucks.id', 'checklistlifttrucks.centerid', 'checklistlifttrucks.serialnumber',
                 'storagelifttrucks.numbertruck', 'systemstatus.name as type',
-                'checklistlifttrucks.horometro','users.name as monta',
+                'checklistlifttrucks.horometro', 'users.name as monta',
                 'checklistlifttrucks.supervisorname', 'checklistlifttrucks.created_at as created',
             ])->orderBy('checklistlifttrucks.id', 'desc')->take(200)->get();
     }

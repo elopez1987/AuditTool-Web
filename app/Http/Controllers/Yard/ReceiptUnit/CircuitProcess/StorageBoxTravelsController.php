@@ -17,6 +17,7 @@ class StorageBoxTravelsController extends BaseController
     public function index()
     {
         $this->authorize('monitorcircuitplant');
+
         return view('Yards.MonitorBoxTravels.index');
     }
 
@@ -30,6 +31,7 @@ class StorageBoxTravelsController extends BaseController
             ->Folio($request->get('folionumber'))
             ->Foliowm($request->get('folionumberwm'))
             ->where('statusid', '=', 'PL');
+
         return DataTables::of($data)
             ->addColumn('btn', 'Yards.MonitorBoxTravels.partials.buttons')
             ->addColumn('add', 'Yards.MonitorBoxTravels.partials.add')
@@ -44,6 +46,7 @@ class StorageBoxTravelsController extends BaseController
         $folio->circuitclose = now();
         $folio->statusid = 'CL';
         $folio->save();
+
         return $this->redirectBackSuccess();
     }
 
@@ -59,8 +62,10 @@ class StorageBoxTravelsController extends BaseController
             $travel->foliowarehouse = $foliowm->id;
             $travel->checkinwarehouse = $foliowm->entrydate;
             $travel->save();
+
             return $this->redirectBackSuccessMessage('Folio agregado con exito');
         }
+
         return $this->errorResponse('El número de placa no  corresponde');
     }
 }

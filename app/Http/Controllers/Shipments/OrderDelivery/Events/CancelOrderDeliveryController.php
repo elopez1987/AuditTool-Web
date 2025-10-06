@@ -22,10 +22,12 @@ class CancelOrderDeliveryController extends BaseController
             self::canceShipmentSeal($orderDelivery);
             self::cancelOrdeMonitor($orderDelivery);
             DB::commit();
+
             return $this->successResponse('orderdeliveries.index');
         } catch (Exception $e) {
             $error = $e->getMessage();
             DB::rollback();
+
             return $this->errorResponse($error);
         }
     }
@@ -38,6 +40,7 @@ class CancelOrderDeliveryController extends BaseController
         $orderDelivery->statusid = 'CA';
         $orderDelivery->auxiliary05 = Auth::user()->id;
         $orderDelivery->save();
+
         return $orderDelivery;
     }
 

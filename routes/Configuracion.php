@@ -38,108 +38,108 @@ Route::middleware(['auth'])->group(function () {
         return view('layouts.Menu.Security.menu');
     })->name('menuconfiguration');
 
-//    ---------------------------------------------------- Nombre del sistema ------------------------------------------
+    //    ---------------------------------------------------- Nombre del sistema ------------------------------------------
     Route::resource('namesystem', NameSystemController::class);
-//    ---------------------------------------------------- Esquemas del sistema ----------------------------------------
+    //    ---------------------------------------------------- Esquemas del sistema ----------------------------------------
     Route::resource('systemschemas', SystemSchemaController::class);
     Route::get('getDataSchemas', [SystemSchemaController::class, 'getDataSchemas'])->name('getDataSchemas');
-//    Crear nuevo estatus en esquema
+    //    Crear nuevo estatus en esquema
     Route::get('systemschemas/{id}/createstatus', [SystemStatusController::class, 'addStatus'])->name('systemschemas.createstatus');
     Route::put('storeStatus/{id}', [SystemStatusController::class, 'storeStatus'])->name('storeStatus');
-//    Actualizar estatus desde detalle de esquema
+    //    Actualizar estatus desde detalle de esquema
     Route::put('updatestatus/{id}', [SystemStatusController::class, 'updateStatus'])->name('updateStatus');
     Route::delete('deletestatus/{id}', [SystemStatusController::class, 'destroystatus'])->name('deletestatus');
 
-//    ---------------------------------------------------- Logs del sistema --------------------------------------------
+    //    ---------------------------------------------------- Logs del sistema --------------------------------------------
     Route::resource('activitylog', ActivityLogController::class);
     Route::get('getDataActivityLog', [ActivityLogController::class, 'getDataActivityLog'])->name('getDataActivityLog');
-//    ---------------------------------------------------- Parametros --------------------------------------------------
+    //    ---------------------------------------------------- Parametros --------------------------------------------------
     Route::resource('systemparameters', SystemParameterController::class);
     Route::get('getDataParameters', [SystemParameterController::class, 'getDataParameters'])->name('getDataParameters');
-//    Detalle de parametros
+    //    Detalle de parametros
     Route::get('detailparameter/{systemparameter}/add', [SystemDetailParametersController::class, 'adddetailparameter'])->name('adddetailparameter');
     Route::put('savedetailparameter/{systemparameter}', [SystemDetailParametersController::class, 'savedetailparameter'])->name('savedetailparameter');
     Route::delete('deletedetailparameter/{systemdetailparameter}', [SystemDetailParametersController::class, 'deleteregister'])->name('deletedetailparameter');
     Route::put('editdetailparameter/{systemdetailparameter}', [SystemDetailParametersController::class, 'editdetailparameter'])->name('editdetailparameter');
 
-//    ---------------------------------------------------- Centros de distribucion  ------------------------------------
+    //    ---------------------------------------------------- Centros de distribucion  ------------------------------------
     Route::resource('systemcenterdistributions', SystemCenterDistributionController::class);
     Route::get('getDataCenterDistributions', [SystemCenterDistributionController::class, 'getDataCenterDistributions'])->name('getDataCenterDistributions');
-//    Parametros de centros de distribucion
+    //    Parametros de centros de distribucion
     Route::get('systemcenterdistributions/{id}/parameters', [CenterParameterController::class, 'parameters'])->name('systemcenterdistributions.parameters');
     Route::put('systemcenterdistributionsparameters/{id}', [CenterParameterController::class, 'systemcenterdistributionsparameters'])->name('systemcenterdistributionsparameters');
-//    Parametros de App
+    //    Parametros de App
     Route::get('systemcenterdistributions/{id}/parametersapp', [CenterParameterController::class, 'parametersapp'])->name('systemcenterdistributions.parametersapp');
     Route::put('systemparametersapp/{id}', [CenterParameterController::class, 'systemparametersapp'])->name('systemparametersapp');
-//    Creacion de directorios para el centro de distribucion
+    //    Creacion de directorios para el centro de distribucion
     Route::get('systemcenterdistributions/{id}/folder', [SystemCenterDistributionFolderController::class, 'index'])->name('systemcenterdistributions.folder');
     Route::put('systemcenterdistributionfolder/{id}', [SystemCenterDistributionFolderController::class, 'systemcenterdistributionfolder'])->name('systemcenterdistributionfolder');
 
-//    ---------------------------------------------------- Bodegas  ----------------------------------------------------
+    //    ---------------------------------------------------- Bodegas  ----------------------------------------------------
     Route::resource('systemwarehouses', SystemWarehouseController::class);
     Route::get('getDataWarehouses', [SystemWarehouseController::class, 'getDataWarehouses'])->name('getDataWarehouses');
-//    Parametros de bodegas
+    //    Parametros de bodegas
     Route::get('systemwarehouses/{id}/parameters', [ParameterWarehousesController::class, 'parameters'])->name('systemwarehouses.parameters');
     Route::put('systemwarehouseparameters/{id}', [ParameterWarehousesController::class, 'systemwarehouseparameters'])->name('systemwarehouseparameters');
-//    Seteo de bodega a usuario
+    //    Seteo de bodega a usuario
     Route::get('setwarehouse', [SetWarehouseController::class, 'index'])->name('setwarehouse');
     Route::put('setwarehousestore/{username}', [SetWarehouseController::class, 'setwarehousestore'])->name('setwarehousestore');
-//    ---------------------------------------------------- Correos  ----------------------------------------------------
+    //    ---------------------------------------------------- Correos  ----------------------------------------------------
     Route::resource('systemmails', SystemMailController::class);
     Route::get('getDataMails', [SystemMailController::class, 'getDataMails'])->name('getDataMails');
-//    Detalle de correo
+    //    Detalle de correo
     Route::get('systemmails/{id}/createMailDetail', [SystemDetailMailController::class, 'createMailDetail'])->name('systemmails.createMailDetail');
     Route::put('storeMailDetail/{id}', [SystemDetailMailController::class, 'storeMailDetail'])->name('storeMailDetail');
     Route::delete('deletedetailmail/{id}', [SystemDetailMailController::class, 'destroy'])->name('deletedetailmail');
 
-//    ---------------------------------------------------- Web Service  ----------------------------------------------------
+    //    ---------------------------------------------------- Web Service  ----------------------------------------------------
     Route::get('webservicelog', [WebServiceLogController::class, 'index'])->name('webservicelog');
     Route::get('getDataLogsWs', [WebServiceLogController::class, 'getDataLogsWs'])->name('getDataLogsWs');
-//    Reprocesar interface de izel
+    //    Reprocesar interface de izel
     Route::put('reprocessizel/{receiptunit}', [WebServiceLogController::class, 'reprocessizel'])->name('reprocessizel');
-//    Reprocesar la interface de RControl
+    //    Reprocesar la interface de RControl
     Route::put('reporcesswebservicercontrol/{id}', [WebServiceLogController::class, 'reporcesswebservicercontrol'])->name('reporcesswebservicercontrol');
 
-//    ---------------------------------------------------- WhatsApp  ----------------------------------------------------
+    //    ---------------------------------------------------- WhatsApp  ----------------------------------------------------
     Route::resource('systemwhatsapps', NotificationWhatsAppController::class)->except('destroy');
     Route::get('getDataNotifications', [NotificationWhatsAppController::class, 'getDataNotifications'])->name('getDataNotifications');
-//    Kardex
+    //    Kardex
     Route::get('getKardexEventsForWhatApp', [NotificationWhatsAppController::class, 'getKardexEventsForWhatApp'])->name('getKardexEventsForWhatsApp');
-//    Detalle de whatsapp
+    //    Detalle de whatsapp
     Route::get('systemwhatsapps/{systemwhatsapp}/createNotificationDetail', [WhatsAppDetailController::class, 'createNotificationDetail'])->name('createNotificationDetail');
     Route::put('storenotificationdetail/{systemwhatsapp}', [WhatsAppDetailController::class, 'storenotificationdetail'])->name('storenotificationdetail');
     Route::delete('deletewhatsappcontact/{id}', [WhatsAppDetailController::class, 'deletecontact'])->name('deletewhatsappcontact');
 
-//    ---------------------------------------------------- Folios del sistema  ----------------------------------------------------
+    //    ---------------------------------------------------- Folios del sistema  ----------------------------------------------------
     Route::resource('systemfolios', SystemFoliosController::class);
     Route::get('getdatafolios', [SystemFoliosController::class, 'getDataFolios'])->name('getDataFolios');
 
-//    ---------------------------------------------------- Modulo de Token WebService Okta  ----------------------------------------------------
+    //    ---------------------------------------------------- Modulo de Token WebService Okta  ----------------------------------------------------
     Route::resource('editokens', EdiTokenController::class)->except('show', 'destroy');
     Route::post('destroytoken', [EdiTokenController::class, 'destroytoken'])->name('destroytoken');
     Route::get('geteditokens', [EdiTokenController::class, 'geteditokens'])->name('geteditokens');
 
-//    ---------------------------------------------------- Edi Logs  ----------------------------------------------------
+    //    ---------------------------------------------------- Edi Logs  ----------------------------------------------------
     Route::resource('edilogs', EdiLogsController::class);
     Route::get('getdatalogs', [EdiLogsController::class, 'getDataLogs'])->name('getDataLogs');
-//    ---------------------------------------------------- Impresoras  ----------------------------------------------------
+    //    ---------------------------------------------------- Impresoras  ----------------------------------------------------
     //    Catalogos de impresoras
     Route::resource('systemprinters', SystemPrintersController::class)->except(['show', 'destroy']);
     Route::get('getDataPrinters', [SystemPrintersController::class, 'getDataPrinters'])->name('getDataPrinters');
 
-//    ---------------------------------------------------- Etiquetas  ----------------------------------------------------
+    //    ---------------------------------------------------- Etiquetas  ----------------------------------------------------
     Route::resource('inventorylabels', InventoryLabelsController::class)->except(['show', 'destroy']);
     Route::get('getDataLabels', [InventoryLabelsController::class, 'getDataLabels'])->name('getDataLabels');
-//    Detalle de la etiqueta
+    //    Detalle de la etiqueta
     Route::get('inventorylabels/{id}/addDetailLabel', [InventoryLabelDetailsController::class, 'addDetailLabel'])->name('inventorylabels.addDetailLabel');
     Route::put('storeLabelDetail/{id}', [InventoryLabelDetailsController::class, 'storeLabelDetail'])->name('storeLabelDetail');
 });
 
 Route::group(['middleware' => ['role:ADMINISTRADOR']], function () {
     Route::resource('databaseupdate', DataBaseController::class)->only(['index', 'store']);
-//    ---------------------------------------------------- Log de errores del sistema  ----------------------------------------------------
+    //    ---------------------------------------------------- Log de errores del sistema  ----------------------------------------------------
     Route::get('logsystems', [LogViewerController::class, 'index'])->name('logsystems');
-//    ---------------------------------------------------- Tablas de base de datos  ----------------------------------------------------
+    //    ---------------------------------------------------- Tablas de base de datos  ----------------------------------------------------
     Route::resource('systemtables', SystemTableController::class)->except(['destroy', 'show']);
     Route::get('getsystemtables', [SystemTableController::class, 'getsystemtables'])->name('getsystemtables');
     Route::post('uploadfiletables', [SystemTableController::class, 'uploadfiletables'])->name('uploadfiletables');
@@ -148,7 +148,7 @@ Route::group(['middleware' => ['role:ADMINISTRADOR']], function () {
     Route::get('systemtables/{id}/addColumnToTable', [SystemTableController::class, 'addColumnToTable'])->name('systemtables.addColumnToTable');
     Route::put('updatecolumntotable/{id}', [SystemTableController::class, 'updatecolumntotable'])->name('updatecolumntotable');
 
-//    ---------------------------------------------------- Comandos del sistema  ----------------------------------------------------
+    //    ---------------------------------------------------- Comandos del sistema  ----------------------------------------------------
     Route::get('commandmenu', [CommandController::class, 'commandmenu'])->name('commandmenu');
     Route::get('clearcachesystem', [CommandController::class, 'clearcachesystem'])->name('clearcachesystem');
     Route::get('senddatatorcontrol', [CommandController::class, 'senddatatorcontrol'])->name('senddatatorcontrol');
@@ -168,7 +168,7 @@ Route::group(['middleware' => ['role:ADMINISTRADOR']], function () {
     Route::get('sendmessagefordifferenceweight', [CommandController::class, 'sendmessagefordifferenceweight'])->name('sendmessagefordifferenceweight');
     Route::get('createuuidtouser', [CommandController::class, 'createuuidtouser'])->name('createuuidtouser');
 
-//    -------------------------------------  Logs de inicio de sesion de dispositivos  ----------------------------------------------------
+    //    -------------------------------------  Logs de inicio de sesion de dispositivos  ----------------------------------------------------
     Route::get('logdeviceforuser', [LogDeviceForUserController::class, 'index'])->name('logdeviceuser');
     Route::get('getDevicesForUser', [LogDeviceForUserController::class, 'getDevicesForUser'])->name('getDevicesForUser');
 

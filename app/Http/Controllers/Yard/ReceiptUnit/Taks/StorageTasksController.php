@@ -23,6 +23,7 @@ class StorageTasksController extends BaseController
     {
         $this->authorize('storagetask.index');
         $status = $this->getStatusForSchema('SKS');
+
         return view('Yards.StorageTask.index', compact('status'));
     }
 
@@ -41,6 +42,7 @@ class StorageTasksController extends BaseController
             ->whereNotNull('configurationflag')
             ->whereRaw("charindex('USR-01', configurationflag) > 0")
             ->get();
+
         return view('Yards.StorageTask.create', compact('zones', 'locations', 'patieros'));
     }
 
@@ -105,6 +107,7 @@ class StorageTasksController extends BaseController
         if (! empty($parameter) && in_array('SWH-11', (array) $parameter)) {
             $this->sendMessageNewTask($task);
         }
+
         return $this->successResponse('storagetask.index');
     }
 
@@ -112,16 +115,10 @@ class StorageTasksController extends BaseController
     {
         $storagetask->statusid = 'CO';
         $storagetask->save();
+
         return $this->redirectBackInfo();
     }
 
-    /**
-     * @param ReceiptUnit $receiptunit
-     * @param string $razonstatusid
-     * @param CreateTaksOperator $request
-     *
-     * @return StorageTask
-     */
     public function createNewTask(ReceiptUnit $receiptunit, string $razonstatusid, CreateTaksOperator $request): StorageTask
     {
         return StorageTask::create([
@@ -136,11 +133,6 @@ class StorageTasksController extends BaseController
         ]);
     }
 
-    /**
-     * @param StorageZone $zone
-     *
-     * @return string
-     */
     public function getRazonStatus(StorageZone $zone): string
     {
         if ($zone->zoneid === 'PA') {
@@ -148,6 +140,7 @@ class StorageTasksController extends BaseController
         } elseif ($zone->zoneid === 'CO') {
             $razonstatusid = '4';
         }
+
         return $razonstatusid;
     }
 }

@@ -29,6 +29,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Configuration\Parameters\SystemDetailParameter> $detailparameter
  * @property-read int|null $detailparameter_count
  * @property-read SystemStatus $status
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemParameter forName($name)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemParameter forParameter($parameterid)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemParameter newModelQuery()
@@ -55,15 +56,21 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemParameter whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemParameter withTrashed(bool $withTrashed = true)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemParameter withoutTrashed()
+ *
  * @mixin \Eloquent
  */
 class SystemParameter extends Model
 {
     use SoftDeletes;
+
     public $incrementing = false;
+
     public $keyType = 'string';
+
     protected $table = 'systemparameters';
+
     protected $primaryKey = 'parameterid';
+
     protected $dateFormat = 'Y-m-d H:i:s';
 
     protected $fillable = [

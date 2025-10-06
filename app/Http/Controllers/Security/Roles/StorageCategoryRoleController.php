@@ -13,6 +13,7 @@ class StorageCategoryRoleController extends BaseController
     {
         $role = Role::findOrFail($id);
         $details = StorageCategoryRole::where('roleid', $id)->get();
+
         return view(
             'Security.Roles.Parameters.conceptajust',
             compact('role', 'details')
@@ -28,12 +29,14 @@ class StorageCategoryRoleController extends BaseController
             'categoryincid' => $request['categoryincid'],
             'categoryincdetailid' => $request['categoryincdetailid'],
         ]);
+
         return $this->redirectBackSuccess();
     }
 
     public function destroy($id)
     {
         StorageCategoryRole::destroy($id);
+
         return $this->redirectBackSuccessMessage('Registro eliminado con exito.');
     }
 }

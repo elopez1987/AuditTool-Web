@@ -17,6 +17,7 @@ class ReportReceiptsController extends BaseController
     {
         $this->authorize('reportreceipts');
         $centers = $this->getCenterForSelect();
+
         return view('Receipt.Reports.reportreceipts', compact('centers'));
     }
 

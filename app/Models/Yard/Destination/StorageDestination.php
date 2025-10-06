@@ -14,6 +14,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 /**
  * @method static whereStatusid(string $string)
  * @method static whereId(mixed $destinationid)
+ *
  * @property int $id
  * @property string $centerid
  * @property string $warehouseid
@@ -34,6 +35,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read SystemCenterDistribution $center
  * @property-read SystemStatus $status
  * @property-read SystemWarehouse $warehouse
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageDestination name($name)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageDestination newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageDestination newQuery()
@@ -51,6 +53,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageDestination whereTime($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageDestination whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageDestination whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class StorageDestination extends Model
@@ -93,12 +96,14 @@ class StorageDestination extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return StorageDestination::whereIn('centerid', $centers);
     }
 
     public static function destinationActiveToSelect()
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return StorageDestination::whereStatusid('E')
             ->whereIn('centerid', $centers)
             ->pluck('name', 'id')->toArray();

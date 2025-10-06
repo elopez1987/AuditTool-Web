@@ -14,12 +14,14 @@ class ReceiptUnitCommentController extends BaseController
     {
         $receiptunit = ReceiptUnit::searchForId($id);
         $comments = StorageComment::getCommentForModel($receiptunit->id, 'ReceiptUnits');
+
         return view('Yards.ReceiptUnits.comment', compact('receiptunit', 'comments'));
     }
 
     public function receiptunitscommentssave(Request $request, $id)
     {
         StorageComment::createCommentary('ReceiptUnits', $id, $request);
+
         return $this->redirectBackSuccessMessage('Registro agregado con exito.');
     }
 }

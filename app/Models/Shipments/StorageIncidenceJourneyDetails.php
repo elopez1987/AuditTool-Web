@@ -33,6 +33,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read StorageCategoryIncidenceDetail|null $category
  * @property-read InventoryPartnumber|null $partnumber
  * @property-read SystemStatus $status
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageIncidenceJourneyDetails newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageIncidenceJourneyDetails newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageIncidenceJourneyDetails query()
@@ -57,11 +58,13 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageIncidenceJourneyDetails whereUnitmeasure($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageIncidenceJourneyDetails whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageIncidenceJourneyDetails whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class StorageIncidenceJourneyDetails extends Model
 {
     protected $table = 'storageincidencejourneydetails';
+
     protected $primaryKey = 'folioid';
 
     protected $fillable = [
@@ -99,6 +102,7 @@ class StorageIncidenceJourneyDetails extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return StorageIncidenceJourneyDetails::whereIn('storageincidencejourneydetails.warehouseid', $warehouses)
             ->whereIn('storageincidencejourneydetails.centerid', $centers);
     }

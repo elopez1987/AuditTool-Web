@@ -17,6 +17,7 @@ class HomeController extends BaseController
     public function index()
     {
         $image = NameSystem::first();
+
         return view('home', compact('image'));
     }
 

@@ -16,6 +16,7 @@ class StorageOperatorsController extends BaseController
     public function index()
     {
         $this->authorize('storageoperators.index');
+
         return view('Yards.StorageOperators.index');
     }
 
@@ -29,6 +30,7 @@ class StorageOperatorsController extends BaseController
             ->Name($request->get('name'))
             ->Barcode($request->get('barcode'))
             ->select('storageoperators.*');
+
         return $this->showDataToView($data, 'Yards.StorageOperators.partials.buttons');
     }
 
@@ -37,6 +39,7 @@ class StorageOperatorsController extends BaseController
         $this->authorize('storageoperators.create');
         $centers = $this->getCenterForSelect();
         $carriers = $this->getCarriersForSelect();
+
         return view(
             'Yards.StorageOperators.create',
             compact('centers', 'carriers')
@@ -48,6 +51,7 @@ class StorageOperatorsController extends BaseController
         $barcode = $this->getFolioYMS($request['centerid']);
         $operator = new StorageOperator($request->validated() + ['barcode' => $barcode->folionumber]);
         $operator->save();
+
         return $this->successResponse('storageoperators.index');
     }
 
@@ -56,12 +60,14 @@ class StorageOperatorsController extends BaseController
         $this->authorize('storageoperators.edit');
         $carriers = $this->getCarriersForSelect();
         $status = $this->getStatusSTS();
+
         return view('Yards.StorageOperators.edit', compact('storageoperator', 'carriers', 'status'));
     }
 
     public function update(Request $request, StorageOperator $storageoperator): RedirectResponse
     {
         $storageoperator->update($request->except('centerid'));
+
         return $this->infoResponse('storageoperators.index');
     }
 
@@ -69,12 +75,14 @@ class StorageOperatorsController extends BaseController
     {
         $this->authorize('storageoperators.destroy');
         $storageoperator->delete();
+
         return $this->redirectBackSuccess();
     }
 
     public function printlabeloperator(StorageOperator $storageoperator)
     {
         $this->authorize('storageoperators.printcard');
+
         return $this->generateLabelOperator($storageoperator);
     }
 }

@@ -30,6 +30,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read SystemCenterDistribution $center
  * @property-read \App\Models\Shipments\OrderDeliverie|null $shipment
  * @property-read SystemWarehouse $warehouse
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|EdiShipment newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|EdiShipment newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|EdiShipment query()
@@ -48,6 +49,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|EdiShipment whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|EdiShipment whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|EdiShipment whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class EdiShipment extends Model
@@ -55,6 +57,7 @@ class EdiShipment extends Model
     use LogsActivity;
 
     protected $table = 'edishipments';
+
     protected $primaryKey = 'id';
 
     protected $fillable = [
@@ -80,6 +83,7 @@ class EdiShipment extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return EdiShipment::whereIn('edishipments.centerid', $centers);
     }
 

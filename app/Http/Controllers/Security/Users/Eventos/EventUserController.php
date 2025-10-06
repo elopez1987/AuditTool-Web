@@ -16,12 +16,14 @@ class EventUserController extends BaseController
         $user->statusid = 'E';
         $user->save();
         $user->restore();
+
         return $this->redirectBackSuccessMessage('Usuario restaurado correctamente');
     }
 
     public function importusers(Request $request)
     {
-        Excel::import(new ImportUsers(), $request->file('file'), '', \Maatwebsite\Excel\Excel::XLSX);
+        Excel::import(new ImportUsers, $request->file('file'), '', \Maatwebsite\Excel\Excel::XLSX);
+
         return $this->successResponse('securityusers.index');
     }
 
@@ -30,6 +32,7 @@ class EventUserController extends BaseController
         $this->authorize('securityusers.parameter');
         $user = User::where('uuiduser', $uuiduser)->withTrashed()->firstOrFail();
         $parameters = $this->getStatusForSchema('USR');
+
         return view('Security.Users.Parameter.create', compact('user', 'parameters'));
     }
 
@@ -38,6 +41,7 @@ class EventUserController extends BaseController
         $user = User::where('uuiduser', $uuiduser)->withTrashed()->first();
         $user->configurationflag = $request['parameter'];
         $user->save();
+
         return $this->redirectBackSuccess();
     }
 }

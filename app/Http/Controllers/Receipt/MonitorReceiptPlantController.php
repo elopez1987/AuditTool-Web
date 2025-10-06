@@ -11,6 +11,7 @@ class MonitorReceiptPlantController extends Controller
     public function index()
     {
         $this->authorize('monitorreceiptplant');
+
         return view('Receipt.MonitorPlant.index');
     }
 
@@ -36,6 +37,7 @@ class MonitorReceiptPlantController extends Controller
             ->distinct()
             ->get();
         $data = json_encode($data);
+
         return response()->json($data);
     }
 }

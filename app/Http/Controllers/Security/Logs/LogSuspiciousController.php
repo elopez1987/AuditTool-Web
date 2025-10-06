@@ -15,6 +15,7 @@ class LogSuspiciousController extends BaseController
     public function getLogsuspicious()
     {
         $data = SuspiciousActivity::orderBy('id', 'desc')->get()->take(2000);
+
         return $this->showDataToView($data, '');
     }
 }

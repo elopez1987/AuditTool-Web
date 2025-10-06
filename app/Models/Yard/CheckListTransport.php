@@ -25,6 +25,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read \App\Models\Yard\StorageCheckListDetail $checklistdetail
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListTransport newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListTransport newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListTransport query()
@@ -37,14 +38,16 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListTransport whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListTransport whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListTransport whereVerified($value)
+ *
  * @mixin \Eloquent
  */
 class CheckListTransport extends Model
 {
-    use Notifiable;
     use LogsActivity;
+    use Notifiable;
 
     protected $table = 'storagechecklisttransports';
+
     protected $dateFormat = 'Y-m-d H:i:s';
 
     protected $fillable = [
@@ -69,6 +72,7 @@ class CheckListTransport extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return CheckListTransport::whereIn('storagechecklisttransports.centerid', $centers);
     }
 

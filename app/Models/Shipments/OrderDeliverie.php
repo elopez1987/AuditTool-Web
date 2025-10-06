@@ -23,6 +23,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * @method static whereIn(string $string, array<string> $array)
+ *
  * @property int $id
  * @property string $centerid
  * @property string $warehouseid
@@ -70,6 +71,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read StorageTurn $turns
  * @property-read User|null $user
  * @property-read SystemWarehouse $warehouse
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|OrderDeliverie carrier($carrierid)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|OrderDeliverie carrierIn($carrierid)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|OrderDeliverie customerIn($customer)
@@ -107,6 +109,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|OrderDeliverie whereWarehouseid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|OrderDeliverie whereWorkday($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|OrderDeliverie workday($workday)
+ *
  * @mixin \Eloquent
  */
 class OrderDeliverie extends Model
@@ -141,6 +144,7 @@ class OrderDeliverie extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return OrderDeliverie::whereIn('orderdeliveries.warehouseid', $warehouses)
             ->whereIn('orderdeliveries.centerid', $centers);
     }

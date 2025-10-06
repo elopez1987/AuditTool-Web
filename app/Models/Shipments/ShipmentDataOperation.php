@@ -44,6 +44,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Shipments\ShipmentPallet> $pallets
  * @property-read int|null $pallets_count
  * @property-read User|null $user
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentDataOperation newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentDataOperation newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentDataOperation query()
@@ -76,13 +77,17 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentDataOperation whereStartshipment($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentDataOperation whereSupervisor($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentDataOperation whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class ShipmentDataOperation extends Model
 {
     use LogsActivity;
+
     public $timestamps = false;
+
     protected $table = 'shipmentdataoperation';
+
     protected $primaryKey = 'id';
 
     protected $fillable = ['centerid', 'warehouseid', 'orderid', 'supervisor', 'checker',
@@ -91,6 +96,7 @@ class ShipmentDataOperation extends Model
         'comment02', 'comment03', 'comment04', 'comment05', 'fullpallet', 'fullpickng',
         'createuserid', 'lastuserid', 'forload',
     ];
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()->logFillable();
@@ -100,6 +106,7 @@ class ShipmentDataOperation extends Model
     {
         $centers = SecurityAccessWarehouse::Centers();
         $warehouses = SecurityAccessWarehouse::Warehouses();
+
         return ShipmentDataOperation::whereIn('centerid', $centers)
             ->whereIn('warehouseid', $warehouses);
     }

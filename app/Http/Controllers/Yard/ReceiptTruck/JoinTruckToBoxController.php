@@ -21,12 +21,14 @@ class JoinTruckToBoxController extends BaseController
     {
         $this->authorize('storagejointrucktobox.index');
         $carriers = $this->getCarriersForSelect();
+
         return view('Yards.AssignTrucks.index', compact('carriers'));
     }
 
     public function getDataTruckForBox(Request $request)
     {
         $data = $this->getDataToJoin($request);
+
         return DataTables::of($data)
             ->addColumn('btn', 'Yards.AssignTrucks.partials.buttons')
             ->rawColumns(['btn'])->toJson();
@@ -37,6 +39,7 @@ class JoinTruckToBoxController extends BaseController
         $this->authorize('storagejointrucktobox.edit');
         $receiptunit = ReceiptUnit::findOrFail($id);
         $trucks = ReceiptTruck::searchTrucksForCarrier($receiptunit->carrierid);
+
         return view('Yards.AssignTrucks.edit', compact('receiptunit', 'trucks'));
     }
 
@@ -52,10 +55,12 @@ class JoinTruckToBoxController extends BaseController
             $newAssign = self::updateUnitForNewTruck($id, $truck);
             StorageUnitTrace::createTraceUnit($newAssign, 25);
             DB::commit();
+
             return $this->redirectBackSuccess();
         } catch (Exception $e) {
             $error = $e->getMessage();
             DB::rollback();
+
             return $this->errorResponse('No se pudieron guardar los datos !!' . $error);
         }
     }
@@ -66,6 +71,7 @@ class JoinTruckToBoxController extends BaseController
         $newAssign->auxiliary01 = $truck->barcode;
         $newAssign->foliotruck = $truck->id;
         $newAssign->save();
+
         return $newAssign;
     }
 

@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 class ParameterCustomerController extends BaseController
 {
     protected string $routePath = 'ordercustomers';
+
     protected string $viewPath = 'Yards.OrderCustomers';
 
     public function parameters($id)
@@ -18,6 +19,7 @@ class ParameterCustomerController extends BaseController
         $model = OrderCustomer::findOrFail($id);
         $parameters = SystemStatus::whereSchemaid('OCF')
             ->select(['statusid', 'name'])->get();
+
         return view(
             "{$this->viewPath}.Parameters.create",
             compact('model', 'parameters')
@@ -29,6 +31,7 @@ class ParameterCustomerController extends BaseController
         $carrier = OrderCustomer::findOrFail($id);
         $carrier->configurationflag = $request['parameter'];
         $carrier->save();
+
         return $this->redirectBackSuccess();
     }
 }

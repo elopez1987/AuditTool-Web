@@ -12,6 +12,7 @@ class ParameterZonesController extends BaseController
     {
         $zone = StorageZone::findOrFail($id);
         $parameters = $this->getStatusForSchema('ZON');
+
         return view('Yards.StorageZones.Parameters.create', compact('zone', 'parameters'));
     }
 
@@ -20,6 +21,7 @@ class ParameterZonesController extends BaseController
         $zone = StorageZone::findOrFail($id);
         $zone->configurationflag = $request['parameter'];
         $zone->save();
+
         return $this->redirectBackSuccess();
     }
 }

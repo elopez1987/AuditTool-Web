@@ -15,10 +15,12 @@ use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
-class StorageBoxStockExport implements FromCollection, WithHeadings, WithMapping, WithEvents, ShouldAutoSize, WithColumnFormatting
+class StorageBoxStockExport implements FromCollection, ShouldAutoSize, WithColumnFormatting, WithEvents, WithHeadings, WithMapping
 {
     use Exportable;
+
     private $workdayin;
+
     private $workdayout;
 
     public function __construct($workdayin, $workdayout)

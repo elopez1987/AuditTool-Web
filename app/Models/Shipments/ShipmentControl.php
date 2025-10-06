@@ -25,6 +25,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read StorageCategoryIncidenceDetail|null $concept
  * @property-read \App\Models\Shipments\OrderDeliverie $order
  * @property-read InventoryPartnumber $product
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentControl newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentControl newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentControl query()
@@ -42,12 +43,15 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentControl whereRecordid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentControl whereUnitmeasureid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentControl whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class ShipmentControl extends Model
 {
     public $timestamps = false;
+
     protected $table = 'shipmentcontrol';
+
     protected $primaryKey = 'recordid';
 
     protected $fillable = ['centerid', 'warehouseid', 'orderid', 'deliveryid',
@@ -74,6 +78,7 @@ class ShipmentControl extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return ShipmentControl::whereIn('shipmentcontrol.warehouseid', $warehouses)
             ->whereIn('shipmentcontrol.centerid', $centers);
     }

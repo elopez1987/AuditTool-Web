@@ -17,12 +17,14 @@ class NameSystemController extends BaseController
     {
         $this->authorize('namesystem.index');
         $names = NameSystem::get();
+
         return view('Configuration.NameSystem.index', compact('names'));
     }
 
     public function create()
     {
         $this->authorize('namesystem.create');
+
         return view('Configuration.NameSystem.create');
     }
 
@@ -30,12 +32,14 @@ class NameSystemController extends BaseController
     {
         $name = new NameSystem($request->all());
         $name->save();
+
         return $this->successResponse('namesystem.index');
     }
 
     public function edit(NameSystem $namesystem)
     {
         $this->authorize('namesystem.edit');
+
         return view('Configuration.NameSystem.edit', compact('namesystem'));
     }
 
@@ -50,6 +54,7 @@ class NameSystemController extends BaseController
             $namesystem->auxiliary05 = $path;
             $namesystem->save();
         }
+
         return $this->infoResponse('namesystem.index');
     }
 }

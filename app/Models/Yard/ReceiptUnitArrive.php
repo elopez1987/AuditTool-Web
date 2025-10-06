@@ -17,6 +17,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property string|null $value04
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitArrive newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitArrive newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitArrive query()
@@ -28,6 +29,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitArrive whereValue02($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitArrive whereValue03($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptUnitArrive whereValue04($value)
+ *
  * @mixin \Eloquent
  */
 class ReceiptUnitArrive extends Model
@@ -35,6 +37,7 @@ class ReceiptUnitArrive extends Model
     use LogsActivity;
 
     public $timestamps = false;
+
     protected $table = 'storagereceiptunitarrive';
 
     protected $fillable = ['token', 'startdate', 'closedate', 'value01', 'value02', 'value03', 'value04'];

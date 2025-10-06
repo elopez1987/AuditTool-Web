@@ -13,6 +13,7 @@ class DashboardYardController extends BaseController
     public function index()
     {
         $this->authorize('dashboardyard');
+
         return view('Yards.Dashboard.dashboard');
     }
 
@@ -20,6 +21,7 @@ class DashboardYardController extends BaseController
     {
         $data = $this->getStadia($request);
         $data = json_encode($data);
+
         return response()->json($data);
     }
 
@@ -27,6 +29,7 @@ class DashboardYardController extends BaseController
     {
         $data = $this->getTotalForZoneFilter($request);
         $data = json_encode($data);
+
         return response()->json($data);
     }
 
@@ -34,6 +37,7 @@ class DashboardYardController extends BaseController
     {
         $data = $this->ForTotalDays($request);
         $data = json_encode($data);
+
         return response()->json($data);
     }
 
@@ -41,6 +45,7 @@ class DashboardYardController extends BaseController
     {
         $data = $this->ForTotalEvents($request);
         $data = json_encode($data);
+
         return response()->json($data);
     }
 
@@ -48,6 +53,7 @@ class DashboardYardController extends BaseController
     {
         $data = $this->ForTotalTypeTruck($request);
         $data = json_encode($data);
+
         return response()->json($data);
     }
 
@@ -55,6 +61,7 @@ class DashboardYardController extends BaseController
     {
         $data = $this->ForTotalRason($request);
         $data = json_encode($data);
+
         return response()->json($data);
     }
 
@@ -62,6 +69,7 @@ class DashboardYardController extends BaseController
     {
         $data = $this->ForTotalCarrier($request);
         $data = json_encode($data);
+
         return response()->json($data);
     }
 
@@ -69,6 +77,7 @@ class DashboardYardController extends BaseController
     {
         $data = $this->ForTotalStatus($request);
         $data = json_encode($data);
+
         return response()->json($data);
     }
 }

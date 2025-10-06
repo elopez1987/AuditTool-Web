@@ -31,6 +31,7 @@ class ReceiptContainersController extends BaseController
                 'storagereceiptpallets.id',
                 'storagereceiptpallets.partnumberid',
             ])->get();
+
         return view('Receipt.ReceiptAsn.AddPallets.index', compact('receipt', 'materials', 'data'));
     }
 
@@ -50,6 +51,7 @@ class ReceiptContainersController extends BaseController
                 'damage' => $request['damage'],
             ]
         );
+
         return $this->redirectBackSuccessMessage('Datos guardados con exito!!');
     }
 
@@ -63,6 +65,7 @@ class ReceiptContainersController extends BaseController
         $data->quantity = $request['quantitymod'];
         $data->damage = $request['damagemod'];
         $data->save();
+
         return $this->redirectBackSuccessMessage('Datos actualizados con exito!!');
     }
 
@@ -70,6 +73,7 @@ class ReceiptContainersController extends BaseController
     {
         $data = StorageReceiptPallet::controlAccessUser()->findOrFail($id);
         $data->delete();
+
         return $this->redirectBackSuccessMessage('Datos eliminados con exito!!');
     }
 
@@ -80,6 +84,7 @@ class ReceiptContainersController extends BaseController
     {
         $container = ReceiptContainer::where('recordid', '=', $request['id'])->first();
         $container->delete();
+
         return response()->json();
     }
 
@@ -89,6 +94,7 @@ class ReceiptContainersController extends BaseController
         $container = ReceiptContainer::controlAccessUser()->where('recordid', '=', $id)->first();
         $container->quantity = $request['quantity'];
         $container->save();
+
         return $this->redirectBackSuccessMessage('Datos actualizados con exito!!');
     }
 }

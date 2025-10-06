@@ -21,6 +21,7 @@ trait QuerysIncidencesJourneys
         $centers = SecurityAccessWarehouse::Centers();
         $carrier = $this->getCarriers();
         $days = $this->getDays($centers);
+
         return OrderDeliverie::controlAccessUser()
             ->select(['id', 'shipmentid'])
             ->CarrierIn($carrier)
@@ -36,6 +37,7 @@ trait QuerysIncidencesJourneys
     public function getAllIncidenceJourneys()
     {
         $carrier = $this->getCarriers();
+
         return StorageIncidenceJourney::controlAccessUser()
             ->leftJoin('orderdeliveries as o', function ($join) {
                 $join->on('storageincidencejourneys.orderid', '=', 'o.id')
@@ -62,9 +64,6 @@ trait QuerysIncidencesJourneys
             ])->get();
     }
 
-    /**
-     * @return array
-     */
     public function getCarriers(): array
     {
         return AccessCarrier::where('username', Auth::user()->username)
@@ -72,8 +71,6 @@ trait QuerysIncidencesJourneys
     }
 
     /**
-     * @param array $centers
-     *
      * @return mixed|null
      */
     public function getDays(array $centers)
@@ -117,11 +114,6 @@ trait QuerysIncidencesJourneys
             ->get();
     }
 
-    /**
-     * @param $incidence
-     *
-     * @return Collection
-     */
     public function getDetailsForGeneratePDF($incidence): Collection
     {
         return DB::table('storageincidencejourneys')

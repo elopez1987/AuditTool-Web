@@ -15,6 +15,7 @@ class InventoryLabelDetailsController extends BaseController
         $label = InventoryLabel::findOrFail($id);
         $labelDetail = InventoryLabelDetail::where('labelid', '=', $id)
             ->select(['id', 'labelid', 'description'])->get();
+
         return view(
             'Configuration.InventoryLabels.createdetails',
             compact('label', 'labelDetail')
@@ -35,14 +36,10 @@ class InventoryLabelDetailsController extends BaseController
                 }
             }
         }
+
         return $this->redirectBackSuccessMessage('Detalle agregado con exito');
     }
 
-    /**
-     * @param $id
-     *
-     * @return void
-     */
     public function deleteDetailLabel($id): void
     {
         $labelDetails = InventoryLabelDetail::where('labelid', '=', $id)->pluck('id')->toArray();

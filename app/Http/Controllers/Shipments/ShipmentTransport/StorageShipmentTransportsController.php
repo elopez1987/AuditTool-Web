@@ -18,12 +18,14 @@ class StorageShipmentTransportsController extends BaseController
     {
         $this->authorize('datatransport.index');
         $carriers = $this->getCarriersForSelect();
+
         return view('Shipments.StorageShipmenTransport.index', compact('carriers'));
     }
 
     public function getDataTransportShipment(Request $request)
     {
         $data = $this->getShipmentInProcess($request);
+
         return DataTables::of($data)
             ->addColumn('btn', 'Shipments.StorageShipmenTransport.partials.buttons')
             ->addColumn('transport', 'Shipments.StorageShipmenTransport.partials.statustransport')
@@ -33,6 +35,7 @@ class StorageShipmentTransportsController extends BaseController
     public function edit($id)
     {
         $transport = $this->getModelTransportEdit($id);
+
         return view('Shipments.StorageShipmenTransport.edit', compact('transport'));
     }
 
@@ -57,6 +60,7 @@ class StorageShipmentTransportsController extends BaseController
                 'statusoperator' => $request['statusoperator'],
             ]);
         }
+
         return $this->successResponse('datatransport.index');
     }
 }

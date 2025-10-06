@@ -56,15 +56,10 @@ trait CreateNewOrderMonitorShipment
         } else {
             $datemax = Carbon::parse($shipment->downloaddate)->subMinutes($customer->timetransfer)->toDateTimeString();
         }
+
         return $datemax;
     }
 
-    /**
-     * @param $shipment
-     * @param string $datemax
-     *
-     * @return OrderMonitor
-     */
     private static function registerNewShipment($shipment, string $datemax): OrderMonitor
     {
         return OrderMonitor::updateOrCreate(

@@ -23,19 +23,16 @@ class StartGoogIssueController extends BaseController
             $this->updateOrderDelivery($orderDelivery);
             $this->SendEdiToRControl($orderDelivery);
             DB::commit();
+
             return $this->redirectBackSuccessMessage('Datos agregados correctamente');
         } catch (Exception $e) {
             DB::rollback();
             Log::error($e->getMessage());
+
             return $this->errorResponse([$e->getMessage()]);
         }
     }
 
-    /**
-     * @param OrderDeliverie $orderDelivery
-     *
-     * @return void
-     */
     public function updateShipmentHeader(OrderDeliverie $orderDelivery): void
     {
         $shipmentheader = ShipmentHeader::whereOrderid($orderDelivery->id)->first();
@@ -44,11 +41,6 @@ class StartGoogIssueController extends BaseController
         $shipmentheader->save();
     }
 
-    /**
-     * @param OrderDeliverie $orderDelivery
-     *
-     * @return void
-     */
     public function updateShipmentSeal(OrderDeliverie $orderDelivery): void
     {
         $shipmentseal = ShipmentSeal::whereOrderid($orderDelivery->id)->first();
@@ -56,22 +48,12 @@ class StartGoogIssueController extends BaseController
         $shipmentseal->save();
     }
 
-    /**
-     * @param OrderDeliverie $orderDelivery
-     *
-     * @return void
-     */
     public function updateOrderDelivery(OrderDeliverie $orderDelivery): void
     {
         $orderDelivery->statusid = 'IF';
         $orderDelivery->save();
     }
 
-    /**
-     * @param OrderDeliverie $orderDelivery
-     *
-     * @return void
-     */
     public function SendEdiToRControl(OrderDeliverie $orderDelivery): void
     {
         $parameter = $this->getParametersOfWarehouse($orderDelivery->warehouseid);

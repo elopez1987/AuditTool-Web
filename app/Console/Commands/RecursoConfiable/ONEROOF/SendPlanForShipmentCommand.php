@@ -14,7 +14,9 @@ use Illuminate\Support\Facades\Http;
 class SendPlanForShipmentCommand extends Command
 {
     use GetParameters;
+
     protected $signature = 'rc:SendPlanForShipmentCommand';
+
     protected $description = 'Envia el plan de carga a recurso confiable';
 
     public function handle()
@@ -29,7 +31,7 @@ class SendPlanForShipmentCommand extends Command
         $endPoint = 'https://app.rcontrol.com.mx/Japi/load_appointments_rest_service?';
         $token = $this->getToken();
         $url = $endPoint . 'token=' . $token;
-        $conect = new Client();
+        $conect = new Client;
         foreach ($shipments as $shipment) {
             $parameter = $this->getParametersOfWarehouse($shipment->warehouseid);
             if (in_array('SWH-21', (array) $parameter)) {
@@ -94,6 +96,7 @@ class SendPlanForShipmentCommand extends Command
                     ],
                 ],
             ];
+
             return json_encode($json);
         }
         EdiShipment::destroy($shipment->id);
@@ -106,6 +109,7 @@ class SendPlanForShipmentCommand extends Command
         $url = $dataapi->value02 . $endPoint . 'arg00=' . $dataapi->value03 . '&' . 'arg01=' . $dataapi->value04;
         $responseRControl = Http::post($url);
         $data = json_decode($responseRControl->getBody()->getContents());
+
         return $data->token;
     }
 

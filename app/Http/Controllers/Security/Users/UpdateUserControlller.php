@@ -22,6 +22,7 @@ class UpdateUserControlller extends Controller
     public function profile($uuiduser)
     {
         $user = User::where('uuiduser', $uuiduser)->first();
+
         return view('Security.Users.profile', compact('user'));
     }
 
@@ -48,6 +49,7 @@ class UpdateUserControlller extends Controller
             } else {
                 $user->save();
             }
+
             return redirect()->back()->with(session()->flash('info', 'Perfil actualizado con exito'));
         } catch (\Exception $e) {
             Log::error('Error al actualizar perfil de usuario', [
@@ -55,6 +57,7 @@ class UpdateUserControlller extends Controller
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
             ]);
+
             return redirect()->back()->with(session()->flash('danger', 'Error al actualizar perfil'));
         }
     }
@@ -62,11 +65,7 @@ class UpdateUserControlller extends Controller
     /**
      * Actualiza la contraseña del usuario con medidas de seguridad mejoradas
      *
-     * @param string $newPassword
-     * @param User $user
-     * @param string|null $currentPassword
-     *
-     * @return array
+     * @param  string|null  $currentPassword
      */
     public function updatePassword(string $newPassword, User $user, ?string $password_confirmation = null): array
     {
@@ -85,6 +84,7 @@ class UpdateUserControlller extends Controller
             $user->password = Hash::make($newPassword);
             $user->password_changed_at = now();
             $user->save();
+
             return ['success' => true, 'message' => 'Contraseña actualizada exitosamente.'];
         } catch (\Exception $e) {
             Log::error('Error al actualizar contraseña', [
@@ -92,6 +92,7 @@ class UpdateUserControlller extends Controller
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
             ]);
+
             return ['success' => false, 'message' => 'Error interno del servidor.'];
         }
     }

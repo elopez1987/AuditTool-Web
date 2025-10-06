@@ -15,12 +15,14 @@ class SecurityMenuController extends BaseController
     public function index()
     {
         $this->authorize('securitymenustructure.index');
+
         return view('Security.SecurityMenu.index');
     }
 
     public function getmenustructure()
     {
         $data = $this->getAllMenuStructure();
+
         return $this->showDataToView($data, 'Security.SecurityMenu.partials.buttons');
     }
 
@@ -28,12 +30,14 @@ class SecurityMenuController extends BaseController
     {
         $this->authorize('securitymenustructure.create');
         $centers = $this->getCenterForSelect();
+
         return view('Security.SecurityMenu.create', compact('centers'));
     }
 
     public function store(CreateNewMenuRequest $request)
     {
         SecurityMenu::create($request->validated());
+
         return $this->redirectBackSuccessMessage('Registro agregado con exito.');
     }
 
@@ -45,6 +49,7 @@ class SecurityMenuController extends BaseController
         $modulesDetails = $securitymenustructure->moduleDetails()->get();
         $functions = $this->getFuctionsForMenu($securitymenustructure);
         $functionsDetails = $securitymenustructure->functiondDetails()->get();
+
         return view(
             'Security.SecurityMenu.edit',
             compact('securitymenustructure', 'modules', 'modulesDetails', 'status', 'functions', 'functionsDetails')
@@ -54,6 +59,7 @@ class SecurityMenuController extends BaseController
     public function update(Request $request, SecurityMenu $securitymenustructure)
     {
         $securitymenustructure->update($request->all());
+
         return $this->redirectBackSuccessMessage('Actualización registrada con exito.');
     }
 
@@ -61,6 +67,7 @@ class SecurityMenuController extends BaseController
     {
         $this->authorize('securitymenustructure.destroy');
         SecurityMenu::controlAccessUser()->where('menustrucid', $id)->delete();
+
         return $this->redirectBackSuccessMessage('Menu eliminado con exito.');
     }
 }

@@ -12,6 +12,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * @method static whereStatusid(string $string)
+ *
  * @property int $id
  * @property string $centerid
  * @property string $name
@@ -29,6 +30,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read int|null $activities_count
  * @property-read SystemCenterDistribution $center
  * @property-read SystemStatus $status
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentType name($name)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentType newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentType newQuery()
@@ -45,6 +47,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentType whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentType whereSchemaid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentType whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class ShipmentType extends Model
@@ -52,6 +55,7 @@ class ShipmentType extends Model
     use LogsActivity;
 
     protected $table = 'shipmenttypes';
+
     protected $dateFormat = 'Y-m-d H:i:s';
 
     protected $fillable = [
@@ -84,6 +88,7 @@ class ShipmentType extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return ShipmentType::whereIn('shipmenttypes.centerid', $centers);
     }
 

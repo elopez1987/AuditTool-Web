@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string|null $event
  * @property string|null $batch_uuid
  * @property-read User|null $user
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ActivityLog forDate($date_in, $date_out)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ActivityLog forDescription($description)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ActivityLog forFolio($id)
@@ -41,12 +42,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ActivityLog whereSubjectId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ActivityLog whereSubjectType($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ActivityLog whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class ActivityLog extends Model
 {
     public $timestamps = false;
+
     protected $table = 'activity_log';
+
     protected $dateFormat = 'Y-m-d H:i:s';
 
     protected $fillable = [
@@ -86,6 +90,7 @@ class ActivityLog extends Model
             $query->where('activity_log.id', $id);
         }
     }
+
     public function scopeForSubject($query, $subject_id)
     {
         if ($subject_id !== '') {

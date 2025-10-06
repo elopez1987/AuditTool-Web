@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @method static whereStatusid(string $string)
+ *
  * @property int $id
  * @property string $name
  * @property string $razonstatusid
@@ -23,6 +24,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read SystemStatus $status
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReason name($name)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReason newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReason newQuery()
@@ -40,11 +42,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReason whereSchemaid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReason whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageReason whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class StorageReason extends Model
 {
     protected $table = 'storagereasons';
+
     protected $dateFormat = 'Y-m-d H:i:s';
 
     protected $fillable = [

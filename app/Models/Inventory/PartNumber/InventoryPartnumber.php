@@ -56,6 +56,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read SystemStatus $status
  * @property-read InventoryUnitMeasure|null $unitmeasure
  * @property-read SystemWarehouse $warehouse
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryPartnumber barcode($barcode)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryPartnumber newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryPartnumber newQuery()
@@ -93,6 +94,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryPartnumber whereUntpal($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryPartnumber whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryPartnumber whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class InventoryPartnumber extends Model
@@ -100,6 +102,7 @@ class InventoryPartnumber extends Model
     use LogsActivity;
 
     protected $table = 'inventorypartnumbers';
+
     protected $dateFormat = 'Y-m-d H:i:s';
 
     protected $fillable = [
@@ -157,6 +160,7 @@ class InventoryPartnumber extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return InventoryPartnumber::whereIn('inventorypartnumbers.warehouseid', $warehouses)
             ->whereIn('inventorypartnumbers.centerid', $centers);
     }
@@ -165,6 +169,7 @@ class InventoryPartnumber extends Model
     {
         $centers = SecurityAccessWarehouse::Centers();
         $warehouses = SecurityAccessWarehouse::Warehouses();
+
         return InventoryPartnumber::whereStatusid('E')
             ->whereIn('inventorypartnumbers.centerid', $centers)
             ->whereIn('inventorypartnumbers.warehouseid', $warehouses)

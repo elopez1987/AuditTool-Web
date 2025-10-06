@@ -15,6 +15,7 @@ class ReportYardController extends BaseController
     public function index()
     {
         $centers = $this->getCenterForSelect();
+
         return view('Yards.Reports.index', compact('centers'));
     }
 

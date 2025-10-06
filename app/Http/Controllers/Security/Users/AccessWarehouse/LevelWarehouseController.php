@@ -34,6 +34,7 @@ class LevelWarehouseController extends Controller
         } else {
             $centers = SystemCenterDistribution::controlAccessUser()->get(['centerid', 'name']);
         }
+
         return view('Security.Users.LevelWarehouse.create', compact('user', 'warehouses', 'access', 'centers'));
     }
 
@@ -46,19 +47,21 @@ class LevelWarehouseController extends Controller
         $warehouses = $requestInput['warehouse'];
         foreach ($warehouses as $warehouse) {
             $center = SystemWarehouse::where('warehouseid', $warehouse)->select('centerid')->first();
-            $securityAccess = new SecurityAccessWarehouse();
+            $securityAccess = new SecurityAccessWarehouse;
             $securityAccess->username = $user->username;
             $securityAccess->warehouseid = $warehouse;
             $securityAccess->centerid = $center->centerid;
             $securityAccess->save();
         }
+
         return redirect()->back()->with(session()->flash('info', 'Registro agregadó con exito'));
     }
 
     private function getAccess($id)
     {
         $user = User::findOrFail($id);
-        return (new SecurityAccessWarehouse())->where('username', $user->username)
+
+        return (new SecurityAccessWarehouse)->where('username', $user->username)
             ->select(['id', 'centerid', 'warehouseid'])->get();
     }
 }

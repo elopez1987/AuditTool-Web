@@ -26,6 +26,7 @@ class ResponseIncidenceTransportController extends Controller
         $incidence->statuskeytrid = 'OA';
         $incidence->auxiliary02 = Uuid::uuid4();
         $incidence->save();
+
         return $this->responseSuccessAjax('Incidencia aceptada con exito', '');
     }
 
@@ -33,6 +34,7 @@ class ResponseIncidenceTransportController extends Controller
     {
         $incidence = StorageIncidenceJourney::findOrFail($request['folioid']);
         $this->serviceResponseIncidences->createKeyTransport($incidence);
+
         return $this->responseSuccessAjax('La incidencia fue enviada a revisión por transporte.', '');
     }
 }

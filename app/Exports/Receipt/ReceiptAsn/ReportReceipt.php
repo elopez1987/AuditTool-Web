@@ -14,11 +14,14 @@ use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
-class ReportReceipt implements FromCollection, WithHeadings, WithMapping, WithEvents, ShouldAutoSize, WithColumnFormatting
+class ReportReceipt implements FromCollection, ShouldAutoSize, WithColumnFormatting, WithEvents, WithHeadings, WithMapping
 {
     use Exportable;
+
     private $workdayin;
+
     private $workdayout;
+
     private $centerid;
 
     public function __construct($workdayin, $workdayout, $centerid)

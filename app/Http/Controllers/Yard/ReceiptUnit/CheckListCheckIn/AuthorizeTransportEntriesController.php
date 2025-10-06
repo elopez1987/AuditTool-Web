@@ -24,15 +24,16 @@ use Redirect;
 class AuthorizeTransportEntriesController extends BaseController
 {
     use CheckListTransportTrait;
-    use RegisterEdiShipment;
+    use DeclineUnitForReceipt;
+    use DeclineUnitForShipment;
     use PrintFormat;
     use QueryReceiptTruck;
-    use DeclineUnitForShipment;
-    use DeclineUnitForReceipt;
+    use RegisterEdiShipment;
 
     public function index()
     {
         $this->authorize('authorizetransportentry.index');
+
         return view('Yards.AuthorizeTransportEntry.index');
     }
 
@@ -48,6 +49,7 @@ class AuthorizeTransportEntriesController extends BaseController
             ->Barcode($request->get('barcode'))
             ->where('receiptunits.statusid', 'ES')
             ->get();
+
         return $this->showDataToView($data, 'Yards.AuthorizeTransportEntry.partials.buttons');
     }
 
@@ -81,6 +83,7 @@ class AuthorizeTransportEntriesController extends BaseController
                 ->where('statusid', 'E')
                 ->get(['id as checklitsdetailid', 'description', 'checklistid']);
         }
+
         return view('Yards.AuthorizeTransportEntry.edit', compact('receiptunit', 'checklistdetails'));
     }
 
@@ -104,10 +107,12 @@ class AuthorizeTransportEntriesController extends BaseController
                 StorageComment::createCommentary('ReceiptUnits', $receiptunit->id, $request);
             }
             DB::commit();
+
             return redirect()->route('receiptunits.index')->with(session()->flash('success', 'Datos agregados correctamente!!'));
         } catch (Exception $e) {
             $error = $e->getMessage();
             DB::rollback();
+
             return redirect()->back()
                 ->with(session()->flash('error', 'No se pudieron guardar los datos!!' . $error));
         }
@@ -138,10 +143,12 @@ class AuthorizeTransportEntriesController extends BaseController
             }
             StorageUnitTrace::createTraceUnit($receiptunit, '23');
             DB::commit();
+
             return redirect::back()->with(session()->flash('success', 'Datos agregados correctamente!!'));
         } catch (\Exception $e) {
             $error = $e->getMessage();
             DB::rollback();
+
             return redirect()->back()->withInput()->with(session()->flash('error', 'La unidad no cumple con el check list : ' . $error));
         }
     }

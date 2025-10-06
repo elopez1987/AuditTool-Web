@@ -21,6 +21,7 @@ class EventReceiptUnitController extends BaseController
         $receiptunit = ReceiptUnit::searchForId($id);
         $parameter = $this->getParametersOfWarehouse($receiptunit->warehouseid);
         $this->addNewEdiForIzel($receiptunit, $parameter, 'IN');
+
         return $this->redirectBackSuccessMessage('Registro agregado al monitor de interface.');
     }
 
@@ -38,6 +39,7 @@ class EventReceiptUnitController extends BaseController
             $tracto->save();
         }
         StorageUnitTrace::createTraceUnit($receiptunit, '29');
+
         return response()->json(Carbon::now());
     }
 }

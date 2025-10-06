@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Configuration\WhatsApp\SystemDetailWhatsApp> $detailwhatsapp
  * @property-read int|null $detailwhatsapp_count
  * @property-read SystemStatus|null $status
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|NotificationWhatsApp name($name)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|NotificationWhatsApp newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|NotificationWhatsApp newQuery()
@@ -35,13 +36,17 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|NotificationWhatsApp whereSchemaid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|NotificationWhatsApp whereStatusid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|NotificationWhatsApp whereWhatsappid($value)
+ *
  * @mixin \Eloquent
  */
 class NotificationWhatsApp extends Model
 {
     public $timestamps = false;
+
     public $incrementing = false;
+
     protected $table = 'systemwhatsapps';
+
     protected $primaryKey = 'whatsappid';
 
     protected $fillable = [

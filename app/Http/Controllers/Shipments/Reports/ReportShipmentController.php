@@ -24,6 +24,7 @@ class ReportShipmentController extends BaseController
     public function index()
     {
         $centers = $this->getCenterForSelect();
+
         return view('Shipments.Reports.index', compact('centers'));
     }
 

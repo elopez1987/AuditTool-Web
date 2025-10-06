@@ -20,6 +20,7 @@ class EventsIncidenceJourneysController extends BaseController
         $shipment = StorageIncidenceJourney::searchIncidence($folioid);
         $shipment->statusid = 'AB';
         $shipment->save();
+
         return $this->redirectBackSuccessMessage('La incidencia fue abierta nuevamente.');
     }
 
@@ -35,6 +36,7 @@ class EventsIncidenceJourneysController extends BaseController
     public function updatedetail($folioid, Request $request, ServiceIncidenceJourneyDetail $serviceIncidenceJourneyDetail)
     {
         $serviceIncidenceJourneyDetail->updateDetailForFolio($request, $folioid);
+
         return $this->redirectBackSuccessMessage('Registro actualizado con exito');
     }
 
@@ -48,12 +50,14 @@ class EventsIncidenceJourneysController extends BaseController
             'Shipments.StorageIncidenceJourneys.partials.pdfdevolucion',
             compact('folioid', 'incidence', 'details', 'keys')
         );
+
         return $pdf->download('Folio_De_Devolución-' . $folioid . '.pdf');
     }
 
     public function getDetailIncidenceCreate(Request $request)
     {
         $data = $this->getDetailIncidence($request);
+
         return $this->showDataToView($data, '');
     }
 }

@@ -29,6 +29,7 @@
     },
     "require-dev": {
         "laravel/boost": "^1.2",
+        "laravel/pint": "^1.25",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.0",
         "nunomaduro/phpinsights": "^2.13",
@@ -77,6 +78,36 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
+        ],
+        "format": [
+            "./vendor/bin/pint"
+        ],
+        "format-test": [
+            "./vendor/bin/pint --test"
+        ],
+        "format-diff": [
+            "./vendor/bin/pint --test --diff"
+        ],
+        "format-verbose": [
+            "./vendor/bin/pint -v"
+        ],
+        "format-app": [
+            "./vendor/bin/pint app/"
+        ],
+        "format-config": [
+            "./vendor/bin/pint config/"
+        ],
+        "format-specific": [
+            "echo 'Usage: composer run format-specific -- path/to/file.php'"
+        ],
+        "pint": [
+            "./vendor/bin/pint"
+        ],
+        "install-hooks": [
+            "@install-pre-commit-hook"
+        ],
+        "install-pre-commit-hook": [
+            "./install-git-hooks.sh"
         ]
     }
 }

@@ -12,8 +12,8 @@ use Illuminate\Support\Facades\Auth;
 
 trait QueryReceiptTruck
 {
-    use Responser;
     use GetParameters;
+    use Responser;
 
     public function getDataAll(Request $request)
     {
@@ -47,13 +47,12 @@ trait QueryReceiptTruck
             'validity' => $request['validity'],
             'drivernumber' => $request['drivernumber'],
         ]);
-        if (!empty($parameter) && in_array('SWH-09', (array)$parameter)) {
+        if (! empty($parameter) && in_array('SWH-09', (array) $parameter)) {
             self::createLabelFromRegisterTruck($parameter, $truck);
         }
 
         return $truck;
     }
-
 
     public static function createLabelFromRegisterTruck($truck): void
     {
@@ -62,13 +61,13 @@ trait QueryReceiptTruck
                 'barcode' => $truck->barcode,
             ],
             [
-            'centerid' => $truck->centerid,
-            'warehouseid' => $truck->warehouseid,
-            'boxnumber' => $truck->trucknumber,
-            'econumber' => $truck->econumber,
-            'carrierid' => $truck->carrierid,
-            'typeid' => 'TR',
-        ]
+                'centerid' => $truck->centerid,
+                'warehouseid' => $truck->warehouseid,
+                'boxnumber' => $truck->trucknumber,
+                'econumber' => $truck->econumber,
+                'carrierid' => $truck->carrierid,
+                'typeid' => 'TR',
+            ]
         );
     }
 
@@ -82,5 +81,4 @@ trait QueryReceiptTruck
             'auxiliary01' => $type,
         ]);
     }
-
 }

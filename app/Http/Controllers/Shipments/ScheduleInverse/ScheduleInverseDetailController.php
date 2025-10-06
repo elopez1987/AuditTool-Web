@@ -14,6 +14,7 @@ class ScheduleInverseDetailController extends BaseController
     {
         $this->authorize('scheduleinverse.show');
         $schedulle = ScheduleInverse::find($id);
+
         return view('Shipments.ScheduleInverse.show', compact('schedulle'));
     }
 
@@ -37,6 +38,7 @@ class ScheduleInverseDetailController extends BaseController
             ->leftJoin('users', 'scheduleinversedetail.assigneduser', '=', 'users.id')
             ->where('scheduleinverse.id', $request['id'])
             ->get();
+
         return $this->showDataToView($data, 'Shipments.ScheduleInverse.SchedulleDetail.buttons');
     }
 
@@ -52,6 +54,7 @@ class ScheduleInverseDetailController extends BaseController
             $message = 'Registro activado con exito';
         }
         $schedulle->save();
+
         return response()->json([
             'ProcessDate' => Carbon::now()->format('Y-m-d H:m:s'),
             'Code' => '0',

@@ -43,7 +43,7 @@ return [
     'abbreviations' => [
         'ph' => 'placeholder',
         'max' => 'maxlength',
-        'tpl' => 'template'
+        'tpl' => 'template',
     ],
 
     /*
@@ -62,7 +62,7 @@ return [
                 // type => template
                 'checkbox' => 'checkbox',
                 'checkboxes' => 'collections',
-                'radios' => 'collections'
+                'radios' => 'collections',
             ],
             /*
              * Set the default classes for each field type
@@ -71,7 +71,7 @@ return [
                 // type => class or classes
                 'default' => 'form-control',
                 'checkbox' => '',
-                'error' => 'error'
+                'error' => 'error',
             ],
         ],
         /**
@@ -86,7 +86,7 @@ return [
                 // type => template
                 'checkbox' => 'checkbox',
                 'checkboxes' => 'collections',
-                'radios' => 'collections'
+                'radios' => 'collections',
             ],
             /*
              * Set the default classes for each field type
@@ -95,7 +95,7 @@ return [
                 // type => class or classes
                 'default' => 'form-control',
                 'checkbox' => 'form-check-input',
-                'error' => 'is-invalid'
+                'error' => 'is-invalid',
             ],
         ],
         /**
@@ -111,7 +111,7 @@ return [
                 'checkbox' => 'checkbox',
                 'checkboxes' => 'collections',
                 'radios' => 'collections',
-                'select'=>'selects',
+                'select' => 'selects',
 
             ],
             /*
@@ -119,12 +119,12 @@ return [
              */
             'field_classes' => [
                 // type => class or classes
-                'textarea'=>'textarea',
+                'textarea' => 'textarea',
                 'default' => 'input',
                 'checkbox' => 'checkbox',
-                'error' => 'is-danger'
+                'error' => 'is-danger',
             ],
-        ]
-    ]
+        ],
+    ],
 
 ];

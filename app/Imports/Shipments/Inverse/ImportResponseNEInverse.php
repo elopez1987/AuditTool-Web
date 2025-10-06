@@ -20,6 +20,7 @@ class ImportResponseNEInverse implements ToCollection, WithHeadingRow, WithValid
                 ->where('delivery', '=', trim($row['delivery']))->first();
             if (empty($zare)) {
                 StorageLogInverse::createNewLog('No existen registros con las condiciones (Delivery/Zare) ingresadas', $row['zare']);
+
                 continue;
             }
             $zare->ne = trim($row['ne']);

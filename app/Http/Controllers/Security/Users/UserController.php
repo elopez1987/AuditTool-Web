@@ -32,12 +32,14 @@ class UserController extends BaseController
         $this->authorize('securityusers.index');
         $status = $this->getStatusSTS();
         $roles = $this->getRoles();
+
         return view('Security.Users.index', compact('roles', 'status'));
     }
 
     public function getDataUsers(Request $request)
     {
         $data = $this->getAllUsers($request);
+
         return DataTables::of($data)
             ->addColumn('btn', 'Security.Users.partials.buttons')
             ->rawColumns(['btn'])->toJson();
@@ -49,6 +51,7 @@ class UserController extends BaseController
         $centers = $this->getCenterForSelect();
         $roles = $this->getRoles();
         $warehouses = $this->getWarehouseForSelect();
+
         return view('Security.Users.create', compact('roles', 'centers', 'warehouses'));
     }
 
@@ -69,6 +72,7 @@ class UserController extends BaseController
         if ($success) {
             return redirect::back()->with(session()->flash('success', 'Datos agregados correctamente!!'));
         }
+
         return redirect::back()->withInput()->with(session()->flash('success', 'No se pudieron guardar los datos!!' . $error));
     }
 
@@ -78,6 +82,7 @@ class UserController extends BaseController
         $user = User::withTrashed()->where('uuiduser', $uuiduser)->firstOrFail();
         $roles = $this->getRoles();
         $access = $this->getRoleForUser($user->id);
+
         return view('Security.Users.edit', compact('user', 'roles', 'access'));
     }
 
@@ -86,6 +91,7 @@ class UserController extends BaseController
         $securityuser = User::where('uuiduser', $uuiduser)->first();
         $securityuser->update($request->validated());
         $securityuser->syncRoles([$request['role_id']]);
+
         return $this->infoResponse('securityusers.index');
     }
 
@@ -95,6 +101,7 @@ class UserController extends BaseController
         $user = User::withTrashed()->where('uuiduser', $uuiduser)->firstOrFail();
         $user->statusid = 'D';
         $user->save();
+
         return redirect()->route('securityusers.index')->with(session()
             ->flash('success', 'Registro eliminadó con exito'));
     }
@@ -124,6 +131,7 @@ class UserController extends BaseController
             if ($status === Password::RESET_LINK_SENT) {
                 return redirect()->back()->with('success', 'Se ha enviado un correo de reinicio de contraseña a: ' . $user->email);
             }
+
             return redirect()->back()->with('error', 'No se pudo enviar el correo de reinicio. Por favor, inténtelo de nuevo.');
         } catch (Exception $e) {
             Log::error('Error al enviar correo de reset de contraseña', [

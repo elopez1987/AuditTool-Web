@@ -13,7 +13,7 @@ trait QuerySecurityRoles
 {
     public function getAllRoles($request)
     {
-        $centers = (new SecurityAccessWarehouse())
+        $centers = (new SecurityAccessWarehouse)
             ->where('username', Auth::user()->username)
             ->select('centerid')->get()->toArray();
 
@@ -62,6 +62,6 @@ trait QuerySecurityRoles
     public function getStructureMenus()
     {
         return SecurityMenu::controlAccessUser()->where('statusid', '=', 'E')
-            ->select(['menustrucid','description'])->get();
+            ->select(['menustrucid', 'description'])->get();
     }
 }

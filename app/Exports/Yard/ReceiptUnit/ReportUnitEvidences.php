@@ -12,10 +12,12 @@ use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 
-class ReportUnitEvidences implements FromCollection, WithHeadings, WithMapping, WithEvents, ShouldAutoSize
+class ReportUnitEvidences implements FromCollection, ShouldAutoSize, WithEvents, WithHeadings, WithMapping
 {
     use Exportable;
+
     private $workdayin;
+
     private $workdayout;
 
     public function __construct($workdayin, $workdayout)

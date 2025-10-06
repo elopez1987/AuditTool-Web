@@ -39,6 +39,7 @@ class PrinFormatInvoiceSchedulleController extends BaseController
             'Shipments.ReserveSchedulleInverse.partials.pdf',
             compact('reserveschedule', 'details', 'shipments')
         );
+
         return $pdf->download('Folio_De_Devolución-' . $reserveschedule->id . '.pdf');
     }
 }

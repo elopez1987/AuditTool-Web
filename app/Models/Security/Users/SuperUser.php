@@ -14,6 +14,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property string|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SuperUser newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SuperUser newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SuperUser query()
@@ -21,6 +22,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SuperUser whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SuperUser whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SuperUser whereUserid($value)
+ *
  * @mixin \Eloquent
  */
 class SuperUser extends Model
@@ -28,7 +30,9 @@ class SuperUser extends Model
     use LogsActivity;
 
     public $timestamps = false;
+
     protected $table = 'securitysuperusers';
+
     protected $primaryKey = 'id';
 
     protected $fillable = [

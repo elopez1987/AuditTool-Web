@@ -27,10 +27,10 @@ class EnviaMensajeDeNuevaIncidenciaRegistrada extends Command
     public function handle()
     {
         $url = 'https://api.1msg.io/HEI523482986/sendTemplate';
-        $client = new Client();
+        $client = new Client;
         $shipments = $this->getShipments();
         if ($shipments->isEmpty()) {
-            return null;
+            return;
         }
         foreach ($shipments as $shipment) {
             $parameter = $this->getParametersOfWarehouse($shipment->warehouseid);

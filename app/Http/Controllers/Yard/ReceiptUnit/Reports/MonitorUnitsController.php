@@ -16,12 +16,14 @@ class MonitorUnitsController extends Controller
     {
         $this->authorize('monitorunitsyard');
         $razon = StorageReason::where('type', '=', 'IN')->select('name', 'id')->get();
+
         return view('Yards.MonitorUnits.index', compact('razon'));
     }
 
     public function getDataStockBox(Request $request)
     {
         $data = $this->getDataMonitorUnit($request);
+
         return DataTables::of($data)
             ->addColumn('shipmentbutton', 'Yards.ReceiptUnits.partials.shipment')
             ->rawColumns(['shipmentbutton'])

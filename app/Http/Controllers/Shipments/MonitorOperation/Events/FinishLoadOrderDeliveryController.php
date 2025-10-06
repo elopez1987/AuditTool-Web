@@ -32,19 +32,15 @@ class FinishLoadOrderDeliveryController extends BaseController
             $this->updateOrderDelivery($orderDelivery);
             $this->updateShipmentSeal($orderDelivery);
             DB::commit();
+
             return $this->redirectBackSuccess();
         } catch (Exception $e) {
             DB::rollback();
+
             return $this->errorResponse($e->getMessage());
         }
     }
 
-    /**
-     * @param $folioNumber
-     * @param $orderDelivery
-     *
-     * @return void
-     */
     public function updateFolioNumber($folioNumber, $orderDelivery): void
     {
         $folioNumber->unitstatusid = '2';
@@ -54,11 +50,6 @@ class FinishLoadOrderDeliveryController extends BaseController
         $folioNumber->save();
     }
 
-    /**
-     * @param $orderDelivery
-     *
-     * @return void
-     */
     public function updateShipmentDataOperation($orderDelivery): void
     {
         $shipment = ShipmentDataOperation::controlAccessUser()
@@ -68,11 +59,6 @@ class FinishLoadOrderDeliveryController extends BaseController
         $shipment->save();
     }
 
-    /**
-     * @param $orderDelivery
-     *
-     * @return void
-     */
     public function sendEDITToRControl($orderDelivery): void
     {
         $parameter = $this->getParametersOfWarehouse($orderDelivery->warehouseid);
@@ -91,22 +77,12 @@ class FinishLoadOrderDeliveryController extends BaseController
         StorageLocation::updateLocation($shipmentHeader->locationid, 'E', '');
     }
 
-    /**
-     * @param $orderdelivery
-     *
-     * @return void
-     */
     public function updateOrderDelivery($orderdelivery): void
     {
         $orderdelivery->statusid = 'FO';
         $orderdelivery->save();
     }
 
-    /**
-     * @param $orderDelivery
-     *
-     * @return void
-     */
     public function updateShipmentSeal($orderDelivery): void
     {
         $shipmentseal = ShipmentSeal::controlAccessUser()->whereOrderid($orderDelivery->id)->first();

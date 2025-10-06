@@ -9,6 +9,7 @@ use Illuminate\Console\Command;
 class CloseValidateQRReceipt extends Command
 {
     protected $signature = 'command:CloseValidateQRReceipt';
+
     protected $description = 'Cierra el tiempo de valides de los codigo QR generados para el circito de la planta';
 
     public function __construct()

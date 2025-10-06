@@ -37,29 +37,21 @@ class StartLoadOrderDeliveryController extends BaseController
             $this->sendEDIToRControl($orderDelivery);
 
             DB::commit();
+
             return $this->redirectBackSuccess();
         } catch (Exception $e) {
             DB::rollback();
+
             return $this->errorResponse($e->getMessage());
         }
     }
 
-    /**
-     * @param $orderDelivery
-     *
-     * @return void
-     */
     public function updateOrderDelivery($orderDelivery): void
     {
         $orderDelivery->statusid = 'IP';
         $orderDelivery->save();
     }
 
-    /**
-     * @param $folionumber
-     *
-     * @return void
-     */
     public function updateFolioNumber($folionumber): void
     {
         $folionumber->statusid = 'EP';
@@ -67,11 +59,6 @@ class StartLoadOrderDeliveryController extends BaseController
         $folionumber->save();
     }
 
-    /**
-     * @param $id
-     *
-     * @return void
-     */
     public function updateShipmentDataOperation($id): void
     {
         $shipment = ShipmentDataOperation::controlAccessUser()->where('orderid', $id)->first();
@@ -80,11 +67,6 @@ class StartLoadOrderDeliveryController extends BaseController
         $shipment->save();
     }
 
-    /**
-     * @param $id
-     *
-     * @return void
-     */
     public function updateShipmentHeader($id): void
     {
         $shipmentheader = ShipmentHeader::whereOrderid($id)->first();
@@ -92,11 +74,6 @@ class StartLoadOrderDeliveryController extends BaseController
         $shipmentheader->save();
     }
 
-    /**
-     * @param $id
-     *
-     * @return void
-     */
     public function updateShipmentSeal($id): void
     {
         $shipmentseal = ShipmentSeal::whereOrderid($id)->first();
@@ -105,10 +82,7 @@ class StartLoadOrderDeliveryController extends BaseController
     }
 
     /**
-     * @param $orderDelivery
-     * @param $order
-     *
-     * @return void
+     * @param  $order
      */
     public function sendEDIToRControl($orderDelivery): void
     {

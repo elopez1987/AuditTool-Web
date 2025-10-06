@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 /**
  * @method static where(string $string, mixed $id)
  * @method static create(array $array)
+ *
  * @property string $id
  * @property string $centerid
  * @property string $warehouseid
@@ -31,6 +32,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property-read SystemCenterDistribution $center
  * @property-read SystemStatus $status
  * @property-read SystemWarehouse $warehouse
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailMail newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailMail newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailMail query()
@@ -50,13 +52,17 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailMail whereStatusid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailMail whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemDetailMail whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class SystemDetailMail extends Model
 {
     public $keyType = 'string';
+
     protected static $logAttributes = ['*'];
+
     protected $table = 'systemdetailmails';
+
     protected $dateFormat = 'Y-m-d H:i:s';
 
     protected $fillable = [
@@ -88,6 +94,7 @@ class SystemDetailMail extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return SystemDetailMail::whereIn('systemdetailmails.warehouseid', $warehouses)
             ->whereIn('systemdetailmails.centerid', $centers);
     }

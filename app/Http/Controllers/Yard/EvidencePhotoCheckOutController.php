@@ -16,6 +16,7 @@ class EvidencePhotoCheckOutController extends Controller
     use EvidencePhotoTrait;
 
     private const PHOTO_SH = 'SH';
+
     private const SUCCESS_MESSAGE = 'Fotografia eliminado con exito!!';
 
     public function uploadPhotoCheckOut(UploadImageRequest $request, $id)
@@ -86,13 +87,15 @@ class EvidencePhotoCheckOutController extends Controller
             Storage::delete($photo->path);
         }
         EvidencePhoto::destroy($id);
+
         return redirect()->back()->with(session()->flash('success', self::SUCCESS_MESSAGE));
     }
 
     private function generatePath($centerId, $categoryName, $fileName)
     {
-        $pathbase = join(DIRECTORY_SEPARATOR, [storage_path(), 'app', 'public', $centerId, $categoryName, $fileName]);
-        $path = join(DIRECTORY_SEPARATOR, ['public', $centerId, $categoryName, $fileName]);
+        $pathbase = implode(DIRECTORY_SEPARATOR, [storage_path(), 'app', 'public', $centerId, $categoryName, $fileName]);
+        $path = implode(DIRECTORY_SEPARATOR, ['public', $centerId, $categoryName, $fileName]);
+
         return [$pathbase, $path];
     }
 

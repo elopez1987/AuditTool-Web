@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string|null $statusid
  * @property-read SystemCenterDistribution $center
  * @property-read SystemStatus|null $status
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryUnitMeasure name($name)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryUnitMeasure newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryUnitMeasure newQuery()
@@ -29,12 +30,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryUnitMeasure whereSchemaid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryUnitMeasure whereStatusid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryUnitMeasure whereUnitmeasureid($value)
+ *
  * @mixin \Eloquent
  */
 class InventoryUnitMeasure extends Model
 {
     public $timestamps = false;
+
     protected $table = 'inventoryunitsmeasure';
+
     protected $primaryKey = 'id';
 
     protected $fillable = [
@@ -54,6 +58,7 @@ class InventoryUnitMeasure extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return InventoryUnitMeasure::whereIn('inventoryunitsmeasure.centerid', $centers);
     }
 

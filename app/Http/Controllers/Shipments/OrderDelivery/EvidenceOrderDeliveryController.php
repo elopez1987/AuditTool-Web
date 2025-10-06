@@ -14,6 +14,7 @@ class EvidenceOrderDeliveryController extends BaseController
     public function index($id)
     {
         $orderDelivery = OrderDeliverie::controlAccessUser()->where('auxiliary05', $id)->first();
+
         return view('Shipments.OrderDeliveries.EvidenceProcess.index', compact('orderDelivery'));
     }
 

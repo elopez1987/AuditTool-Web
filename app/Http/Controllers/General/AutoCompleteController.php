@@ -15,6 +15,7 @@ class AutoCompleteController extends Controller
     {
         $query = $request->get('query');
         $filterResult = User::where('users.name', 'like', "%{$query}%")->select(['name'])->get();
+
         return response()->json($filterResult);
     }
 
@@ -22,6 +23,7 @@ class AutoCompleteController extends Controller
     {
         $query = $request->get('query');
         $tables = SystemTable::where('systemtables.tableid', 'like', "%{$query}%")->get();
+
         return response()->json($tables);
     }
 
@@ -32,6 +34,7 @@ class AutoCompleteController extends Controller
             ->whereNotIn('statusid', ['TR'])
             ->whereNotNull(['boxnumber'])
             ->where('boxnumber', 'like', "%{$query}%")->pluck('boxnumber');
+
         return response()->json($units);
     }
 
@@ -40,6 +43,7 @@ class AutoCompleteController extends Controller
         $query = $request->get('query');
         $partnumber = InventoryPartnumber::controlAccessUser()
             ->where('prtnum', 'like', "%{$query}%")->pluck('prtnum');
+
         return response()->json($partnumber);
     }
 }

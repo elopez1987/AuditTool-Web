@@ -54,11 +54,13 @@ class CloseVerificationProcessController extends BaseController
             $shipmentseal->save();
 
             DB::commit();
+
             return $this->getJsonResponse('Verificación cerrada', [], 200, 'success');
         } catch (\Exception $exception) {
             $error = $exception->getMessage();
             Log::error($error);
             DB::rollBack();
+
             return $this->getJsonResponse('Error al procesar la solicitud.', [], 200, 'error');
         }
     }

@@ -12,6 +12,7 @@ class StorageReasonController extends BaseController
     public function index()
     {
         $this->authorize('storagereasons.index');
+
         return view('Configuration.StorageReasons.index');
     }
 
@@ -23,12 +24,14 @@ class StorageReasonController extends BaseController
         ])
             ->Name($request->get('name'))
             ->select('storagereasons.*');
+
         return $this->showDataToView($data, 'Configuration.StorageReasons.partials.buttons');
     }
 
     public function create()
     {
         $this->authorize('storagereasons.create');
+
         return view('Configuration.StorageReasons.create');
     }
 
@@ -36,6 +39,7 @@ class StorageReasonController extends BaseController
     {
         $type = new StorageReason($request->all());
         $type->save();
+
         return $this->successResponse('storagereasons.index');
     }
 
@@ -43,12 +47,14 @@ class StorageReasonController extends BaseController
     {
         $this->authorize('storagereasons.edit');
         $status = $this->getStatusSTS();
+
         return view('Configuration.StorageReasons.edit', compact('storagereason', 'status'));
     }
 
     public function update(StorageReason $storagereason, Request $request): RedirectResponse
     {
         $storagereason->update($request->all());
+
         return $this->infoResponse('storagereasons.index');
     }
 }

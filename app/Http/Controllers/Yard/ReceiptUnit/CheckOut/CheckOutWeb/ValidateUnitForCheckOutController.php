@@ -11,6 +11,7 @@ class ValidateUnitForCheckOutController extends BaseController
     public function index()
     {
         $this->authorize('registercheckout');
+
         return view('Yards.TransportOutPut.index');
     }
 
@@ -30,6 +31,7 @@ class ValidateUnitForCheckOutController extends BaseController
             if (in_array('SWH-22', (array) $parameterwarehouse)) {
                 return $this->redirectOutput($receiptunit);
             }
+
             return $this->validateStatusBox($receiptunit);
         }
         if ($receiptunit->razonstatusid === 3) {
@@ -42,6 +44,7 @@ class ValidateUnitForCheckOutController extends BaseController
         if ($receiptunit->statusid !== 'OU') {
             return $this->errorResponse('Falta autorización de salida!!');
         }
+
         return redirect('authorizetransportoutput/' . $receiptunit->id . '/edit');
     }
 

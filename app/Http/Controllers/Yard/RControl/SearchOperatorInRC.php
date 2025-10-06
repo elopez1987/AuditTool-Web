@@ -20,22 +20,23 @@ class SearchOperatorInRC extends Controller
         $endPoint = 'https://www.rcontrol.com.mx/Japi/get_driver_information_restfull_srv?';
         $url = $endPoint . 'token=' . $token;
         $contentBody = $this->createJsonFilter($request);
-        $conect = new Client();
+        $conect = new Client;
         $responseUrl = $conect->post($url, ['form_params' => ['parameters' => $contentBody]]);
         if ($responseUrl->getStatusCode() === 200) {
             $result = json_decode($responseUrl->getBody()->getContents());
+
             return response()->json(
                 [
-                'operator' => [
-                    'operatorname' => $result->{'driverInfo_result'}[0]->{'driver'}->{'driver_name'},
-                    'statusoperator' => $result->{'driverInfo_result'}[0]->{'driver'}->{'driver_status'},
-                    'licence' => $result->{'driverInfo_result'}[0]->{'driver'}->{'driver_license'},
-                    'rfcoperator' => $result->{'driverInfo_result'}[0]->{'driver'}->{'driver_fiscal_code'},
-                    'credential' => $result->{'driverInfo_result'}[0]->{'driver'}->{'driver_credential'},
-                    'carriername' => $result->{'driverInfo_result'}[0]->{'transline'}->{'transline_name'},
-                    'rfccarrier' => $result->{'driverInfo_result'}[0]->{'transline'}->{'transline_fiscal_code'},
-                ],
-            ]
+                    'operator' => [
+                        'operatorname' => $result->{'driverInfo_result'}[0]->{'driver'}->{'driver_name'},
+                        'statusoperator' => $result->{'driverInfo_result'}[0]->{'driver'}->{'driver_status'},
+                        'licence' => $result->{'driverInfo_result'}[0]->{'driver'}->{'driver_license'},
+                        'rfcoperator' => $result->{'driverInfo_result'}[0]->{'driver'}->{'driver_fiscal_code'},
+                        'credential' => $result->{'driverInfo_result'}[0]->{'driver'}->{'driver_credential'},
+                        'carriername' => $result->{'driverInfo_result'}[0]->{'transline'}->{'transline_name'},
+                        'rfccarrier' => $result->{'driverInfo_result'}[0]->{'transline'}->{'transline_fiscal_code'},
+                    ],
+                ]
             );
         }
     }
@@ -47,6 +48,7 @@ class SearchOperatorInRC extends Controller
         $url = "{$dataapi->value02}{$endPoint}arg00={$dataapi->value03}&arg01={$dataapi->value04}";
         $responseRControl = Http::post($url);
         $data = json_decode($responseRControl->getBody()->getContents());
+
         return $data->token;
     }
 
@@ -60,6 +62,7 @@ class SearchOperatorInRC extends Controller
                 ],
             ],
         ];
+
         return json_encode($json);
     }
 

@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 /**
  * @method whereStatusid(string $string)
  * @method static whereIn(string $string, $centers)
+ *
  * @property string $centerid
  * @property string $name
  * @property string $description
@@ -30,6 +31,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read SystemStatus $status
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemCenterDistribution forName($name)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemCenterDistribution newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemCenterDistribution newQuery()
@@ -52,15 +54,21 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemCenterDistribution whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemCenterDistribution whereUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemCenterDistribution whereUserapi($value)
+ *
  * @mixin \Eloquent
  */
 class SystemCenterDistribution extends Model
 {
     public $incrementing = false;
+
     public $keyType = 'string';
+
     protected static $logAttributes = ['*'];
+
     protected $table = 'systemcenterdistributions';
+
     protected $primaryKey = 'centerid';
+
     protected $dateFormat = 'Y-m-d H:i:s';
 
     protected $fillable = [
@@ -92,6 +100,7 @@ class SystemCenterDistribution extends Model
         'statusid' => 'E',
         'schemaid' => 'STS',
     ];
+
     protected $casts = [
         'configurationflag' => 'array',
         'auxiliary05' => 'array',
@@ -100,6 +109,7 @@ class SystemCenterDistribution extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
+
         return SystemCenterDistribution::whereIn('systemcenterdistributions.centerid', $centers)
             ->where('statusid', 'E');
     }

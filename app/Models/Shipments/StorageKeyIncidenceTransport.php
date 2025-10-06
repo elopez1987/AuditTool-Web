@@ -26,6 +26,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
  * @property-read User|null $user
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageKeyIncidenceTransport newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageKeyIncidenceTransport newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageKeyIncidenceTransport query()
@@ -41,6 +42,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageKeyIncidenceTransport whereSchemaid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageKeyIncidenceTransport whereStatusid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageKeyIncidenceTransport whereWarehouseid($value)
+ *
  * @mixin \Eloquent
  */
 class StorageKeyIncidenceTransport extends Model
@@ -48,6 +50,7 @@ class StorageKeyIncidenceTransport extends Model
     use LogsActivity;
 
     public $timestamps = false;
+
     protected $table = 'storageincidencekeytransport';
 
     protected $fillable = [
@@ -75,6 +78,7 @@ class StorageKeyIncidenceTransport extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return StorageKeyIncidenceTransport::whereIn('storageincidencekeytransport.warehouseid', $warehouses)
             ->whereIn('storageincidencekeytransport.centerid', $centers);
     }
@@ -88,6 +92,7 @@ class StorageKeyIncidenceTransport extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
+
         return DB::table('storageincidencekeytransport')
             ->select(
                 'storageincidencekeytransport.orderid as id',
@@ -139,6 +144,7 @@ class StorageKeyIncidenceTransport extends Model
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
         $concepts = self::getConcepts();
+
         return DB::table('storageincidencejourneydetails')
             ->select(
                 'storageincidencekeytransport.id',
