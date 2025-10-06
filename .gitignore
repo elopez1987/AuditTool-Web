@@ -85,3 +85,5 @@ pnpm-lock.yaml
 /modules_statuses.json
 /.styleci.yml
 /pint.json
+/install-git-hooks.sh
+/README-git-hooks.md
