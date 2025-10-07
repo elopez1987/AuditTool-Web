@@ -307,7 +307,7 @@
                     </div>
                     <div class="col-lg-2 col-md-6 col-sm-12">
                         <div class="form-group">
-                            <label for="unittypeid">Tipo<span style="color: red">*</span></label>
+                            <label for="unittypeid">Origen<span style="color: red">*</span></label>
                             <select name="unittypeid" id="unittypeid"
                                     class="form-control select2 @error('unittypeid') is-invalid @enderror">
                                 @foreach($unittypeid as $model)

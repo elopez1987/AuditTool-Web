@@ -14,7 +14,7 @@ class PrintInvoiceController extends Controller
 
     public function generateInvoiceTransport(ReceiptUnit $receiptunit)
     {
-        return $this->printFormatInvoice($receiptunit, 'web');
+        return $this->printFormatInvoice($receiptunit);
     }
 
     public function generatelabel($id)

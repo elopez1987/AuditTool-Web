@@ -67,17 +67,36 @@
         </div>
     </div>
 </div>
-{{--<div class="row">--}}
-{{--    <div class="col-lg-2 col-md-6 col-sm-12">--}}
-{{--        {!! Field::select('razonstatusid',$movents,['class' => 'select2', 'required']) !!}--}}
-{{--    </div>--}}
-{{--    <div class="col-lg-2 col-md-6 col-sm-12">--}}
-{{--        {!! Field::select('truckid',$trucks,['class' => 'select2', 'required']) !!}--}}
-{{--    </div>--}}
-{{--    <div class="col-lg-2 col-md-6 col-sm-12">--}}
-{{--        {!! Field::select('truckcategoryid',$truckcategories,['class' => 'select2','required']) !!}--}}
-{{--    </div>--}}
-{{--</div>--}}
+<div class="row">
+    <div class="col-lg-2 col-md-6 col-sm-12">
+        <div class="form-group">
+            <label for="razonstatusid">Tipo de entrada<span style="color: red">*</span></label>
+            <select name="razonstatusid" id="razonstatusid"
+                    class="form-control select2 @error('razonstatusid') is-invalid @enderror">
+                @foreach($movents as $model)
+                    <option value="{{$model->id}}" {{ old('razonstatusid') == $model->id ? 'selected' : '' }}> {{$model->name}} </option>
+                @endforeach
+            </select>
+            @error('razonstatusid')
+            <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+    </div>
+    <div class="col-lg-2 col-md-6 col-sm-12">
+        <div class="form-group">
+            <label for="unittypeid">Origen<span style="color: red">*</span></label>
+            <select name="unittypeid" id="unittypeid"
+                    class="form-control select2 @error('unittypeid') is-invalid @enderror">
+                @foreach($unittypeid as $model)
+                    <option value="{{$model->id}}" {{ old('unittypeid') == $model->id ? 'selected' : '' }}> {{$model->description}} </option>
+                @endforeach
+            </select>
+            @error('unittypeid')
+            <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+    </div>
+</div>
 <div class="row">
     <div class="col-lg-2 col-md-6 col-sm-12">
         <div class="form-group">

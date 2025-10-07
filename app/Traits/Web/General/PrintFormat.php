@@ -8,7 +8,10 @@ use App\Models\Yard\GenerateAccessWarehouse;
 use App\Models\Yard\ReceiptUnitKey;
 use App\Models\Yard\StorageFolioClient;
 use App\Traits\ResponseApi;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use PDF;
 
@@ -16,7 +19,7 @@ trait PrintFormat
 {
     use ResponseApi;
 
-    public function printFormatInvoice($receiptunit, $type)
+    public function printFormatInvoice($receiptunit): JsonResponse
     {
         $verified = DB::table('storagechecklisttransports as s')
             ->select(
@@ -48,7 +51,7 @@ trait PrintFormat
             }
             $pdf = PDF::loadView($fortmat, compact('receiptunit', 'verified', 'folio'));
 
-            return $this->printFormat($type, $receiptunit, $pdf);
+            return $this->printFormat($receiptunit, $pdf);
         }
 
         //  Planta Henkel
@@ -56,7 +59,7 @@ trait PrintFormat
             $fortmat = 'Yards.ReceiptUnits.InvoiceFormats.Henkel.InvoicePlantHenkel';
             $pdf = PDF::loadView($fortmat, compact('receiptunit', 'verified'));
 
-            return $this->printFormat($type, $receiptunit, $pdf);
+            return $this->printFormat($receiptunit, $pdf);
         }
 
         //	Kraft
@@ -69,7 +72,7 @@ trait PrintFormat
             }
             $pdf = PDF::loadView($fortmat, compact('receiptunit', 'verified'));
 
-            return $this->printFormat($type, $receiptunit, $pdf);
+            return $this->printFormat($receiptunit, $pdf);
         }
 
         // Barry
@@ -77,7 +80,7 @@ trait PrintFormat
             $fortmat = 'Yards.ReceiptUnits.InvoiceFormats.Barry.InvoiceBarry';
             $pdf = PDF::loadView($fortmat, compact('receiptunit', 'verified', 'comment'));
 
-            return $this->printFormat($type, $receiptunit, $pdf);
+            return $this->printFormat($receiptunit, $pdf);
 
         }
 
@@ -91,24 +94,32 @@ trait PrintFormat
             $pdf->setPaper('A4', 'landscape');
         }
 
-        return $this->printFormat($type, $receiptunit, $pdf);
+        return $this->printFormat($receiptunit, $pdf);
     }
 
-    public function printFormat($type, $receiptunit, $pdf)
+    private function printFormat($receiptunit, $pdf): JsonResponse
     {
-        if ($type === 'web') {
-            return $pdf->download('Folio_De_Entrada-' . $receiptunit->id . '.pdf');
-        }
-        $path = storage_path() . '/app/public/' . $receiptunit->centerid . '/EvidenceIn/';
+        $path = $this->createDirectoryPath($receiptunit->centerid);
         $fileName = 'Folio-' . $receiptunit->id . '-' . Str::random(10) . '.pdf';
-        $pdf->save($path . '/' . $fileName);
-        $fileFolio = base64_encode(file_get_contents($path . $fileName));
+        $pdfContent = $pdf->output();
+        Storage::put($path . '/' . $fileName, $pdfContent);
+        $fileFolio = base64_encode(Storage::get($path . '/' . $fileName));
 
         return $this->getResponseSuccess('generatePDFToFolio', ['pdf' => $fileFolio]);
     }
 
-    //    Genera el acceso para la planta en el modulo de circuito
-    public function printFormatAccess($id)
+    private function createDirectoryPath($centerId): string
+    {
+        $directory = 'public/' . $centerId . '/Formats';
+        if (! Storage::exists($directory)) {
+            Storage::makeDirectory($directory, 0775, true);
+        }
+
+        return $directory;
+    }
+
+    //    Genera el formato para el QR de  planta en el modulo de circuito
+    public function printFormatAccess($id): Response
     {
         $data = GenerateAccessWarehouse::controlAccessUser()->where('storageaccesswarehouse.id', $id)
             ->leftJoin('systemcenterdistributions as cd', 'storageaccesswarehouse.centerid', '=', 'cd.centerid')

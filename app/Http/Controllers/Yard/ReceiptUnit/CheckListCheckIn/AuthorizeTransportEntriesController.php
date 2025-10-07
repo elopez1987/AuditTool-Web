@@ -7,6 +7,7 @@ use App\Http\Controllers\Yard\Exception;
 use App\Models\General\StorageComment;
 use App\Models\Yard\ReceiptTruck;
 use App\Models\Yard\ReceiptUnit;
+use App\Models\Yard\StorageCheckList;
 use App\Models\Yard\StorageCheckListDetail;
 use App\Models\Yard\StorageUnitTrace;
 use App\Traits\Web\General\PrintFormat;
@@ -55,34 +56,23 @@ class AuthorizeTransportEntriesController extends BaseController
 
     public function edit($id)
     {
-        $receiptunit = ReceiptUnit::findOrFail($id);
+        $receiptunit = ReceiptUnit::controlAccessUser()->with('unittype')->findOrFail($id);
         $origen = $receiptunit->unittype->auxiliary01;
-        $type = $receiptunit->razonstatusid;
-        if ($receiptunit->centerid === 'HENKELTOL01') {
-            if ($receiptunit->razonstatusid === '1') {
-                $checklistdetails = StorageCheckListDetail::whereCenterid($receiptunit->centerid)
-                    ->where('checklistid', '=', '3')
-                    ->where('statusid', 'E')
-                    ->get(['id as checklitsdetailid', 'description', 'checklistid']);
-            } else {
-                $checklistdetails = StorageCheckListDetail::whereCenterid($receiptunit->centerid)
-                    ->where('checklistid', '=', '10018')
-                    ->where('statusid', 'E')
-                    ->get(['id as checklitsdetailid', 'description', 'checklistid']);
-            }
-        } else {
-            $checklistdetails = StorageCheckListDetail::whereCenterid($receiptunit->centerid)
-                ->whereHas('checklist', function ($q) use ($receiptunit, $origen, $type) {
-                    $q->where('type', 'IN');
-                    $q->where('statusid', 'E');
-                    $q->where('auxiliary01', $origen);
-                    $q->where('auxiliary03', $type);
-                    $q->where('centerid', $receiptunit->centerid);
-                    $q->where('warehouseid', $receiptunit->warehouseid);
-                })
-                ->where('statusid', 'E')
-                ->get(['id as checklitsdetailid', 'description', 'checklistid']);
+        $razonstatusid = $receiptunit->razonstatusid;
+
+        $checkList = StorageCheckList::where('centerid', $receiptunit->centerid)
+            ->where('warehouseid', $receiptunit->warehouseid)
+            ->where('type', 'IN')
+            ->where('statusid', 'E')
+            ->where('auxiliary01', $origen)
+            ->where('auxiliary03', $razonstatusid)
+            ->select(['id', 'auxiliary02'])->first();
+
+        if (! $checkList) {
+            return $this->errorResponse('No existe el check list para la unidad, favor de validar el Origen y Concepto de Entrada');
         }
+        $checklistdetails = StorageCheckListDetail::query()->where('checklistid', $checkList->id)
+            ->where('statusid', 'E')->select(['checklistid', 'id as checklitsdetailid', 'description'])->get();
 
         return view('Yards.AuthorizeTransportEntry.edit', compact('receiptunit', 'checklistdetails'));
     }
@@ -108,13 +98,12 @@ class AuthorizeTransportEntriesController extends BaseController
             }
             DB::commit();
 
-            return redirect()->route('receiptunits.index')->with(session()->flash('success', 'Datos agregados correctamente!!'));
+            return $this->successResponse('receiptunits.index');
         } catch (Exception $e) {
             $error = $e->getMessage();
             DB::rollback();
 
-            return redirect()->back()
-                ->with(session()->flash('error', 'No se pudieron guardar los datos!!' . $error));
+            return $this->errorResponse('No se pudieron guardar los datos!!' . $error);
         }
     }
 
