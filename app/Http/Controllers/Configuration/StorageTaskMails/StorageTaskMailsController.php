@@ -25,6 +25,6 @@ class StorageTaskMailsController extends BaseController
     {
         StorageTaskMail::destroy($id);
 
-        return $this->redirectBackSuccessMessage('Registro eliminado con exito.');
+        return $this->redirectBackSuccessMessage('Registro eliminado con éxito.');
     }
 }
