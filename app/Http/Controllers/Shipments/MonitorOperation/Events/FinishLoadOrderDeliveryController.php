@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Shipments\MonitorOperation\Events;
 
 use App\Http\Controllers\BaseController;
-use App\Http\Controllers\Shipments\OrderDelivery\Events\Exception;
 use App\Models\Shipments\EdiShipment;
 use App\Models\Shipments\OrderDeliverie;
 use App\Models\Shipments\ShipmentDataOperation;
@@ -11,6 +10,7 @@ use App\Models\Shipments\ShipmentHeader;
 use App\Models\Shipments\ShipmentSeal;
 use App\Models\Yard\ReceiptUnit;
 use App\Models\Yard\StorageLocation;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -21,11 +21,15 @@ class FinishLoadOrderDeliveryController extends BaseController
         DB::beginTransaction();
         try {
             $orderDelivery = OrderDeliverie::controlAccessUser()->whereId($id)->first();
-            $folioNumber = ReceiptUnit::whereId($orderDelivery->folionumber)->first(['id', 'statusid', 'shipmentid']);
-            if (empty($folioNumber)) {
-                return $this->errorResponse('El embarque ya no cuenta con unidad acoplada, favor de validar.');
+
+            $parameter = $this->getParametersOfWarehouse($orderDelivery->warehouseid);
+            if (! empty($parameter) && in_array('SWH-32', (array) $parameter)) {
+                $folioNumber = ReceiptUnit::whereId($orderDelivery->folionumber)->first(['id', 'statusid', 'shipmentid']);
+                if (empty($folioNumber)) {
+                    return $this->errorResponse('El embarque no cuenta con unidad acoplada, favor de validar.');
+                }
+                $this->updateFolioNumber($folioNumber, $orderDelivery);
             }
-            $this->updateFolioNumber($folioNumber, $orderDelivery);
             $this->updateShipmentDataOperation($orderDelivery);
             $this->sendEDITToRControl($orderDelivery);
             $this->updateShipmentHeader($orderDelivery);
@@ -41,7 +45,7 @@ class FinishLoadOrderDeliveryController extends BaseController
         }
     }
 
-    public function updateFolioNumber($folioNumber, $orderDelivery): void
+    private function updateFolioNumber($folioNumber, $orderDelivery): void
     {
         $folioNumber->unitstatusid = '2';
         $folioNumber->statusid = 'FI';
@@ -50,7 +54,7 @@ class FinishLoadOrderDeliveryController extends BaseController
         $folioNumber->save();
     }
 
-    public function updateShipmentDataOperation($orderDelivery): void
+    private function updateShipmentDataOperation($orderDelivery): void
     {
         $shipment = ShipmentDataOperation::controlAccessUser()
             ->where('orderid', $orderDelivery->id)->first();
@@ -59,7 +63,7 @@ class FinishLoadOrderDeliveryController extends BaseController
         $shipment->save();
     }
 
-    public function sendEDITToRControl($orderDelivery): void
+    private function sendEDITToRControl($orderDelivery): void
     {
         $parameter = $this->getParametersOfWarehouse($orderDelivery->warehouseid);
         if (! empty($parameter) && in_array('SWH-21', (array) $parameter)) {
@@ -67,7 +71,7 @@ class FinishLoadOrderDeliveryController extends BaseController
         }
     }
 
-    public function updateShipmentHeader($orderDelivery): void
+    private function updateShipmentHeader($orderDelivery): void
     {
         $shipmentHeader = ShipmentHeader::where('orderid', $orderDelivery->id)->first();
         $shipmentHeader->statusid = 'FO';
@@ -77,13 +81,13 @@ class FinishLoadOrderDeliveryController extends BaseController
         StorageLocation::updateLocation($shipmentHeader->locationid, 'E', '');
     }
 
-    public function updateOrderDelivery($orderdelivery): void
+    private function updateOrderDelivery($orderdelivery): void
     {
         $orderdelivery->statusid = 'FO';
         $orderdelivery->save();
     }
 
-    public function updateShipmentSeal($orderDelivery): void
+    private function updateShipmentSeal($orderDelivery): void
     {
         $shipmentseal = ShipmentSeal::controlAccessUser()->whereOrderid($orderDelivery->id)->first();
         $shipmentseal->statusorderid = 'FO';

@@ -115,7 +115,7 @@ class EdiShipment extends Model
         ]);
     }
 
-    //    Crea el registro de envío del evento del embarque (Entrada/Inicio y fin de proceso, facturacion y salida)
+    //    Crea el registro de envío del evento del embarque (Entrada/Inicio y fin de proceso, facturación y salida)
     public static function createEDIForEventToShipment($shipment, $event)
     {
         EdiShipment::updateOrCreate([

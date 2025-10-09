@@ -9,6 +9,7 @@ use App\Models\Shipments\ShipmentDataOperation;
 use App\Models\Shipments\ShipmentHeader;
 use App\Models\Shipments\ShipmentSeal;
 use App\Models\Yard\ReceiptUnit;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -19,18 +20,21 @@ class StartLoadOrderDeliveryController extends BaseController
         DB::beginTransaction();
         try {
             $orderDelivery = OrderDeliverie::controlAccessUser()->whereId($id)->first();
-            if ($orderDelivery->folionumber === '') {
-                return redirect()->back()->with(session()
-                    ->flash('error', 'El embarque no cuenta con transporte'));
-            }
-            $folionumber = ReceiptUnit::whereId($orderDelivery->folionumber)->first(['zoneid', 'id']);
-            if ($folionumber->zone->zoneid !== 'CO') {
-                return redirect()->back()->with(session()
-                    ->flash('error', 'La caja no se encuentra en cortina, favor de enrampar.'));
+
+            $parameter = $this->getParametersOfWarehouse($orderDelivery->warehouseid);
+            if (! empty($parameter) && in_array('SWH-32', (array) $parameter)) {
+
+                $folionumber = ReceiptUnit::whereId($orderDelivery->folionumber)->first(['zoneid', 'id']);
+                if (! $folionumber) {
+                    return redirect()->back()->with(session()->flash('error', 'El embarque no cuenta con transporte,favor de validar.'));
+                }
+                if ($folionumber->zone->zoneid !== 'CO') {
+                    return redirect()->back()->with(session()->flash('error', 'La caja no se encuentra en cortina, favor de enrampar.'));
+                }
+                $this->updateFolioNumber($folionumber);
             }
 
             $this->updateOrderDelivery($orderDelivery);
-            $this->updateFolioNumber($folionumber);
             $this->updateShipmentDataOperation($id);
             $this->updateShipmentHeader($id);
             $this->updateShipmentSeal($id);
@@ -46,20 +50,20 @@ class StartLoadOrderDeliveryController extends BaseController
         }
     }
 
-    public function updateOrderDelivery($orderDelivery): void
+    private function updateOrderDelivery($orderDelivery): void
     {
         $orderDelivery->statusid = 'IP';
         $orderDelivery->save();
     }
 
-    public function updateFolioNumber($folionumber): void
+    private function updateFolioNumber($folionumber): void
     {
         $folionumber->statusid = 'EP';
         $folionumber->startdate = now();
         $folionumber->save();
     }
 
-    public function updateShipmentDataOperation($id): void
+    private function updateShipmentDataOperation($id): void
     {
         $shipment = ShipmentDataOperation::controlAccessUser()->where('orderid', $id)->first();
         $shipment->startload = now();
@@ -67,24 +71,21 @@ class StartLoadOrderDeliveryController extends BaseController
         $shipment->save();
     }
 
-    public function updateShipmentHeader($id): void
+    private function updateShipmentHeader($id): void
     {
         $shipmentheader = ShipmentHeader::whereOrderid($id)->first();
         $shipmentheader->statusid = 'IP';
         $shipmentheader->save();
     }
 
-    public function updateShipmentSeal($id): void
+    private function updateShipmentSeal($id): void
     {
         $shipmentseal = ShipmentSeal::whereOrderid($id)->first();
         $shipmentseal->statusorderid = 'IP';
         $shipmentseal->save();
     }
 
-    /**
-     * @param  $order
-     */
-    public function sendEDIToRControl($orderDelivery): void
+    private function sendEDIToRControl($orderDelivery): void
     {
         $parameter = $this->getParametersOfWarehouse($orderDelivery->warehouseid);
         if (! empty($parameter) && in_array('SWH-21', (array) $parameter)) {

@@ -14,8 +14,12 @@ use App\Traits\Web\Shipments\OrderDelivery\CreateNewOrder;
 use App\Traits\Web\Shipments\OrderDelivery\UpdateOrderDelivery;
 use App\Traits\Web\Shipments\OrderMonitor\UpdateMaximunOutPutShipment;
 use Exception;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class OrderDeliveryController extends BaseController
 {
@@ -148,10 +152,16 @@ class OrderDeliveryController extends BaseController
         try {
             $orderdelivery->delete();
         } catch (AuthorizationException $e) {
+            Log::error('Error al eliminar registro: ' . $e->getMessage());
+
             return $this->errorResponse('No tienes permisos para eliminar este registro', 403);
         } catch (ModelNotFoundException $e) {
+            Log::error('Error al eliminar registro: ' . $e->getMessage());
+
             return $this->errorResponse('El registro no fue encontrado', 404);
         } catch (QueryException $e) {
+            Log::error('Error al eliminar registro: ' . $e->getMessage());
+
             return $this->errorResponse('Error en la base de datos al intentar eliminar el registro');
         } catch (Exception $e) {
             Log::error('Error al eliminar registro: ' . $e->getMessage());
@@ -159,6 +169,6 @@ class OrderDeliveryController extends BaseController
             return $this->errorResponse('Ocurrió un error inesperado: ' . $e->getMessage());
         }
 
-        return redirect()->route('orderdeliveries.index')->with(session()->flash('success', 'Registro eliminado con exito'));
+        return redirect()->route('orderdeliveries.index')->with(session()->flash('success', 'Registro eliminado con éxito'));
     }
 }

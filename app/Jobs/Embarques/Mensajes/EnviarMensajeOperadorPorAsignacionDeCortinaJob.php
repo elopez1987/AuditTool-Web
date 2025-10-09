@@ -6,6 +6,7 @@ use App\Http\Services\Yard\AssingDoorToUnitFromShipment;
 use App\Models\Shipments\OrderDeliverie;
 use App\Models\Yard\ReceiptUnit;
 use App\Models\Yard\StorageLocation;
+use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -23,7 +24,7 @@ class EnviarMensajeOperadorPorAsignacionDeCortinaJob implements ShouldQueue
 
     public $orderDelivery;
 
-    private AssingDoorToUnitFromShipment $serviceAssingDoorToUnit;
+    public AssingDoorToUnitFromShipment $serviceAssingDoorToUnit;
 
     public function __construct($orderDelivery, AssingDoorToUnitFromShipment $assingDoorToUnitFromShipment)
     {
@@ -50,7 +51,7 @@ class EnviarMensajeOperadorPorAsignacionDeCortinaJob implements ShouldQueue
         }
     }
 
-    public function sendMessage($location, $receiptunit)
+    private function sendMessage($location, $receiptunit)
     {
         $url = 'https://api.1msg.io/HEI523482986/sendTemplate';
         $client = new Client;
@@ -64,7 +65,7 @@ class EnviarMensajeOperadorPorAsignacionDeCortinaJob implements ShouldQueue
         }
     }
 
-    public function getBodyDataMessageInProccess($location, $contact)
+    private function getBodyDataMessageInProccess($location, $contact)
     {
         return [
             'token' => 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbnN0YW5jZUlkIjoiSEVJNTIzNDgyOTg2IiwidG9rZW4iOiJtaGVaTTh4cTQ2a2RadjZ0Q0NJeXZydGo4dkc3bnlOeCIsImlzcyI6IjFtc2cuaW8iLCJpYXQiOjE3NTU2MTU3NTZ9.PNJB7YjZbqerW-s-r8TOSTlPOS_6OddKHxVbwfsQ9GY',
