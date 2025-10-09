@@ -85,15 +85,6 @@
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td class="font-12"> Ajustar Caja de Patios</td>
-                                    <td>
-                                        <a href="{{url('adjustmentbox')}}">
-                                            <img src="{{asset('/ico/systemfunctions.png')}}" alt="" class="img-25 ml-1">
-                                        </a>
-                                    </td>
-                                    <td>General</td>
-                                </tr>
-                                <tr>
                                     <td class="font-12"> Enviar mensaje de cajas autorizadas sin salir</td>
                                     <td>
                                         <a href="{{url('sendMessageExitUnitTime')}}">

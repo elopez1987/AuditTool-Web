@@ -19,7 +19,7 @@ class CommandController extends Controller
         Artisan::call('cache:clear');
         Artisan::call('optimize:clear');
 
-        return redirect()->back()->with(session()->flash('success', 'Proceso terminado con éxito'));
+        return redirect()->back()->with(session()->flash('success', 'Proceso de limpieza de sistema terminado con éxito.'));
     }
 
     public function senddatatorcontrol()
@@ -27,14 +27,14 @@ class CommandController extends Controller
         Artisan::call('rc:SendPlanForShipmentCommand');
         Artisan::call('rc:SendEventForShipmentCommand');
 
-        return redirect()->back()->with(session()->flash('success', 'Proceso terminado con éxito'));
+        return redirect()->back()->with(session()->flash('success', 'Los datos fueron enviados con éxito a Recurso Confiable.'));
     }
 
     public function senddatatoizel()
     {
         Artisan::call('command:SendDataToWmsIzel');
 
-        return redirect()->back()->with(session()->flash('success', 'Proceso terminado con éxito'));
+        return redirect()->back()->with(session()->flash('success', 'Datos enviados con éxito a Izel.'));
     }
 
     public function cleartablelogwebservice()
@@ -83,55 +83,55 @@ class CommandController extends Controller
     {
         Artisan::call('whatsapp:deletelog');
 
-        return redirect()->back()->with(session()->flash('success', 'Proceso terminado con éxito'));
+        return redirect()->back()->with(session()->flash('success', 'Limpieza de Logs de WhatsApp ejecutado con éxito.'));
     }
 
     public function deleteusers()
     {
         Artisan::call('system:deleteuser');
 
-        return redirect()->back()->with(session()->flash('success', 'Proceso terminado con éxito'));
+        return redirect()->back()->with(session()->flash('success', 'Proceso de borrado de usuarios sin inicio de sesión terminado con éxito.'));
     }
 
     public function clearReceiptAsn()
     {
         Artisan::call('clear:receiptasn');
 
-        return redirect()->back()->with(session()->flash('success', 'Proceso terminado con éxito'));
+        return redirect()->back()->with(session()->flash('success', 'Limpieza de recibos sin llegar realizados con éxito.'));
     }
 
     public function sendmessagefornewarrivereceipt()
     {
         Artisan::call('app:send-message-for-receipt-entry');
 
-        return redirect()->back()->with(session()->flash('success', 'Proceso terminado con éxito'));
+        return redirect()->back()->with(session()->flash('success', 'Mensajes enviado a los supervisores notificando de la llegada de la unidad.'));
     }
 
     public function sendmailfornewarrivereceipt()
     {
         Artisan::call('app:send-email-for-arrive-unit-to-receipt');
 
-        return redirect()->back()->with(session()->flash('success', 'Proceso terminado con éxito'));
+        return redirect()->back()->with(session()->flash('success', 'Correos enviado a los supervisores notificando de la llegada de la unidad.'));
     }
 
     public function sendmaiilfordifferenceweight()
     {
         Artisan::call('send:mail-for-difference-weight');
 
-        return redirect()->back()->with(session()->flash('success', 'Proceso terminado con éxito'));
+        return redirect()->back()->with(session()->flash('success', 'Correo enviado a los supervisores notificando de la diferencia de peso.'));
     }
 
     public function sendmessagefordifferenceweight()
     {
         Artisan::call('send:message-difference-weight');
 
-        return redirect()->back()->with(session()->flash('success', 'Proceso terminado con éxito'));
+        return redirect()->back()->with(session()->flash('success', 'Mensajes enviado a los supervisores notificando de la diferencia de peso.'));
     }
 
     public function createuuidtouser()
     {
         Artisan::call('create:uuid-to-user');
 
-        return redirect()->back()->with(session()->flash('success', 'Proceso terminado con éxito'));
+        return redirect()->back()->with(session()->flash('success', 'Los usuarios ahora cuentan con un UUID.'));
     }
 }
