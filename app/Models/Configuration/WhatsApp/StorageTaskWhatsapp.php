@@ -70,8 +70,6 @@ class StorageTaskWhatsapp extends Model
     ];
 
     protected $hidden = [
-        'created_at',
-        'updated_at',
         'schemaid',
     ];
 
@@ -83,6 +81,25 @@ class StorageTaskWhatsapp extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()->logFillable();
+    }
+
+    public static function controlAccessUser()
+    {
+        $warehouses = SecurityAccessWarehouse::Warehouses();
+        $centers = SecurityAccessWarehouse::Centers();
+
+        return StorageTaskWhatsapp::whereIn('storagetaskwhatsapp.warehouseid', $warehouses)
+            ->whereIn('storagetaskwhatsapp.centerid', $centers);
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (StorageTaskWhatsapp $model) {
+                $model->created_at = Carbon::now();
+            });
+        }
     }
 
     public function center(): BelongsTo
@@ -100,15 +117,6 @@ class StorageTaskWhatsapp extends Model
         return $this->belongsTo(SystemStatus::class, 'statusid', 'statusid');
     }
 
-    public static function controlAccessUser()
-    {
-        $warehouses = SecurityAccessWarehouse::Warehouses();
-        $centers = SecurityAccessWarehouse::Centers();
-
-        return StorageTaskWhatsapp::whereIn('storagetaskwhatsapp.warehouseid', $warehouses)
-            ->whereIn('storagetaskwhatsapp.centerid', $centers);
-    }
-
     public static function createNewTask($model, $key_id, $whatsapptype, $type)
     {
         StorageTaskWhatsapp::create([
@@ -119,15 +127,5 @@ class StorageTaskWhatsapp extends Model
             'whatsappid' => $whatsapptype,
             'value01' => $type,
         ]);
-    }
-
-    protected static function boot()
-    {
-        parent::boot();
-        if (! app()->runningInConsole()) {
-            self::creating(function (StorageTaskWhatsapp $model) {
-                $model->created_at = Carbon::now();
-            });
-        }
     }
 }
