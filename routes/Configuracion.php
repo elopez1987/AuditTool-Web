@@ -10,6 +10,7 @@ use App\Http\Controllers\Configuration\Labels\InventoryLabelDetailsController;
 use App\Http\Controllers\Configuration\Labels\InventoryLabelsController;
 use App\Http\Controllers\Configuration\LogDevice\LogDeviceForUserController;
 use App\Http\Controllers\Configuration\LogSystem\ActivityLogController;
+use App\Http\Controllers\Configuration\LogSystem\JobsController;
 use App\Http\Controllers\Configuration\Mails\SystemDetailMailController;
 use App\Http\Controllers\Configuration\Mails\SystemMailController;
 use App\Http\Controllers\Configuration\NameSystem\NameSystemController;
@@ -40,6 +41,10 @@ Route::middleware(['auth'])->group(function () {
 
     //    ---------------------------------------------------- Nombre del sistema ------------------------------------------
     Route::resource('namesystem', NameSystemController::class);
+
+    //    ---------------------------------------------------- Jobs ------------------------------------------
+    Route::get('jobs', [JobsController::class, 'index'])->name('jobs');
+
     //    ---------------------------------------------------- Esquemas del sistema ----------------------------------------
     Route::resource('systemschemas', SystemSchemaController::class);
     Route::get('getDataSchemas', [SystemSchemaController::class, 'getDataSchemas'])->name('getDataSchemas');

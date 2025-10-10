@@ -5,6 +5,7 @@ namespace App\Jobs\Embarques\Mensajes;
 use App\Models\Configuration\WhatsApp\SystemDetailWhatsApp;
 use App\Models\Shipments\OrderDeliverie;
 use App\Models\Yard\LogMessageWhatsApp;
+use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -31,19 +32,46 @@ class EnviarMensajeFinFacturacionJob implements ShouldQueue
     {
         $url = 'https://api.1msg.io/HEI523482986/sendTemplate';
         $client = new Client;
-        $orderid = $this->orderDelivery->id;
-        $shipment = OrderDeliverie::where('id', '=', $orderid)->first();
+
+        $orderId = $this->orderDelivery->id;
+        $shipment = OrderDeliverie::find($orderId);
+
+        if (! $shipment) {
+            Log::error("No se encontró el embarque con ID: {$orderId}");
+
+            return;
+        }
+
         $contacts = $this->getPhones($shipment);
-        if (! empty($contacts)) {
-            foreach ($contacts as $contact) {
-                try {
-                    $data = $this->getBodyData($shipment, $contact);
-                    $response = $client->request('POST', $url, ['json' => $data, 'headers' => ['Content-Type' => 'application/json']]);
-                    $respJson = $response->getBody();
-                    LogMessageWhatsApp::createLog($shipment, $contact, json_decode($respJson), 'WTH-ENVFAC', 'Envio de mensaje de documentos enviados a facturación.');
-                } catch (Exception) {
-                    Log::error('Error al enviar mensaje de nueva incidencia reportada.');
-                }
+
+        if (empty($contacts)) {
+            Log::warning("No hay contactos asociados al embarque {$shipment->shipmentid}");
+
+            return;
+        }
+
+        foreach ($contacts as $contact) {
+            try {
+                $data = $this->getBodyData($shipment, $contact);
+
+                $response = $client->post($url, [
+                    'json' => $data,
+                    'headers' => ['Content-Type' => 'application/json'],
+                ]);
+
+                $respJson = json_decode($response->getBody(), true);
+
+                LogMessageWhatsApp::createLog(
+                    $shipment,
+                    $contact,
+                    $respJson,
+                    'WTH-FINFAC',
+                    'Envío de mensaje de fin de facturación.'
+                );
+
+                Log::info("Mensaje de facturación enviado a {$contact->phonenumber}");
+            } catch (Exception $e) {
+                Log::error("Error al enviar mensaje de facturación a {$contact->phonenumber}: {$e->getMessage()}");
             }
         }
     }
@@ -64,7 +92,7 @@ class EnviarMensajeFinFacturacionJob implements ShouldQueue
             'template' => 'finfacvig',
             'language' => [
                 'policy' => 'deterministic',
-                'code' => 'es_MX',
+                'code' => 'es_ES',
             ],
             'params' => [
                 [
