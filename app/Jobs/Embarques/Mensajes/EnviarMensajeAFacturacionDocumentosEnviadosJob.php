@@ -4,6 +4,8 @@ namespace App\Jobs\Embarques\Mensajes;
 
 use App\Models\Configuration\WhatsApp\SystemDetailWhatsApp;
 use App\Models\Shipments\OrderDeliverie;
+use App\Models\Yard\LogMessageWhatsApp;
+use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -12,7 +14,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 
-class EnviarMensajeAFacturacionJob implements ShouldQueue
+class EnviarMensajeAFacturacionDocumentosEnviadosJob implements ShouldQueue
 {
     use Dispatchable;
     use InteractsWithQueue;
@@ -30,26 +32,58 @@ class EnviarMensajeAFacturacionJob implements ShouldQueue
     {
         $url = 'https://api.1msg.io/HEI523482986/sendTemplate';
         $client = new Client;
-        $orderid = $this->orderDelivery->id;
-        $shipment = OrderDeliverie::where('id', '=', $orderid)->first();
+
+        $orderId = $this->orderDelivery->id;
+        $shipment = OrderDeliverie::find($orderId);
+
+        if (! $shipment) {
+            Log::error("No se encontró el embarque con ID: {$orderId}");
+
+            return;
+        }
+
+        Log::info("El número de embarque es: {$shipment->shipmentid}");
+
         $contacts = $this->getPhones($shipment);
-        if (! empty($contacts)) {
-            foreach ($contacts as $contact) {
-                try {
-                    $data = $this->getBodyData($shipment, $contact);
-                    $response = $client->request('POST', $url, ['json' => $data, 'headers' => ['Content-Type' => 'application/json']]);
-                    $respJson = $response->getBody();
-                    LogMessageWhatsApp::createLog($shipment, $contact, json_decode($respJson), 'WTH-ENVFAC', 'Envio de mensaje de documentos enviados a facturación.');
-                } catch (Exception) {
-                    Log::error('Error al enviar mensaje de nueva incidencia reportada.');
-                }
+
+        if (empty($contacts)) {
+            Log::warning("No hay contactos asociados al embarque {$shipment->shipmentid}");
+
+            return;
+        }
+
+        foreach ($contacts as $contact) {
+            Log::info("El contacto es: {$contact->phonenumber}");
+
+            try {
+                $data = $this->getBodyData($shipment, $contact);
+
+                $response = $client->post($url, [
+                    'json' => $data,
+                    'headers' => ['Content-Type' => 'application/json'],
+                ]);
+
+                $respJson = json_decode($response->getBody(), true);
+
+                $description = $respJson['description'] ?? json_encode($respJson);
+                Log::info("La respuesta es: {$description}");
+
+                LogMessageWhatsApp::createLog(
+                    $shipment,
+                    $contact,
+                    $respJson,
+                    'WTH-ENVFAC',
+                    'Envío de mensaje de documentos enviados a facturación.'
+                );
+            } catch (Exception $e) {
+                Log::error("Error al enviar mensaje de facturación: {$e->getMessage()}");
             }
         }
     }
 
     public function getPhones($shipment)
     {
-        return SystemDetailWhatsApp::where('whatsappid', '=', 'WHT-ENVFAC')
+        return SystemDetailWhatsApp::where('whatsappid', '=', 'WTH-ENVFAC')
             ->where('centerid', '=', $shipment->centerid)
             ->where('warehouseid', '=', $shipment->warehouseid)
             ->select(['phonenumber'])->get();
@@ -63,7 +97,7 @@ class EnviarMensajeAFacturacionJob implements ShouldQueue
             'template' => 'envioafacturacion',
             'language' => [
                 'policy' => 'deterministic',
-                'code' => 'es_MX',
+                'code' => 'es',
             ],
             'params' => [
                 [

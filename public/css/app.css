@@ -12157,6 +12157,10 @@ thead, tbody, tfoot, tr, td, th {
   color: black !important;
 }
 
+table.dataTable.table-striped > tbody > tr.odd {
+  --bs-table-accent-bg: var( --bs-primary-bg-subtle) !important;
+}
+
 .table td, .table th {
   vertical-align: middle;
 }
@@ -12193,7 +12197,6 @@ span.select2-container {
   padding: 4px;
   font-weight: 500;
   font-size: 0.675rem;
-  color: #263238 !important;
 }
 
 .text-button {
@@ -12359,7 +12362,6 @@ span.select2-container {
 }
 
 .table > thead > tr > th {
-  background-color: #f5f5f6;
   color: black !important;
   font-size: 0.675rem !important;
   text-transform: uppercase !important;

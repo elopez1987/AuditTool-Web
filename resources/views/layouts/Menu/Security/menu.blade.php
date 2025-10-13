@@ -174,25 +174,34 @@
                         <h4>Dispositivos</h4>
                     </div>
                 </a>
-                @endcan
-                @can('storagetaskwhatsapp')
-                    <a href="{{route('storagetaskwhatsapp.index')}}">
-                        <div class="box">
-                            <i class="lni lni-whatsapp"></i>
-                            <h5>Mensajes pendientes</h5>
-                            <h4>Mensajes pendientes</h4>
-                        </div>
-                    </a>
             @endcan
-                @can('storagetaskmail')
-                    <a href="{{route('storagetaskmail.index')}}">
-                        <div class="box">
-                            <i class="lni lni-mailchimp"></i>
-                            <h5>Correos pendientes</h5>
-                            <h4>Correos pendientes</h4>
-                        </div>
-                    </a>
-                @endcan
+            @can('storagetaskwhatsapp')
+                <a href="{{route('storagetaskwhatsapp.index')}}">
+                    <div class="box">
+                        <i class="lni lni-whatsapp"></i>
+                        <h5>Mensajes pendientes</h5>
+                        <h4>Mensajes pendientes</h4>
+                    </div>
+                </a>
+            @endcan
+            @can('storagetaskmail')
+                <a href="{{route('storagetaskmail.index')}}">
+                    <div class="box">
+                        <i class="lni lni-mailchimp"></i>
+                        <h5>Correos pendientes</h5>
+                        <h4>Correos pendientes</h4>
+                    </div>
+                </a>
+            @endcan
+            @can('jobs')
+                <a href="{{route('jobs')}}">
+                    <div class="box">
+                        <i class="lni lni-mailchimp"></i>
+                        <h5>Tareas pendientes</h5>
+                        <h4>Tareas pendientes</h4>
+                    </div>
+                </a>
+            @endcan
 
             @endrole
         </div>

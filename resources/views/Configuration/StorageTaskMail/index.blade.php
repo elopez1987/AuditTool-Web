@@ -12,8 +12,17 @@
                         {{csrf_field()}}
                         <div class="row">
                             <div class="col-md-12">
-                                <a href="">
-                                    @include('buttons.search')
+                                <a href="{{route('sendmailfornewarrivereceipt')}}">
+                                    <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md" data-toggle="tooltip" data-placement="top" title="Refrescar la pagina">
+                                        <img src="{{asset('/ico/Email_30017.png')}}" alt="" class="img-16 ml-1">
+                                        <span style="font-size: 0.675rem "> Procesar Correo Entrada</span>
+                                    </button>
+                                </a>
+                                <a href="{{route('sendmaiilfordifferenceweight')}}">
+                                    <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md" data-toggle="tooltip" data-placement="top" title="Refrescar la pagina">
+                                        <img src="{{asset('/ico/Email_30017.png')}}" alt="" class="img-16 ml-1">
+                                        <span style="font-size: 0.675rem "> Procesar Correo Pesos</span>
+                                    </button>
                                 </a>
                                 <a>
                                     @include('buttons.reload')

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Configuration\StorageTaskMails;
 
 use App\Http\Controllers\BaseController;
 use App\Models\Configuration\Mails\StorageTaskMail;
+use Carbon\Carbon;
+use Yajra\DataTables\Facades\DataTables;
 
 class StorageTaskMailsController extends BaseController
 {
@@ -18,13 +20,21 @@ class StorageTaskMailsController extends BaseController
             ->with(['center:centerid,description', 'warehouse:warehouseid,name', 'status:statusid,name'])
             ->get();
 
-        return $this->showDataToView($data, 'Configuration.StorageTaskMail.partials.buttons');
+        return DataTables::of($data)
+            ->addColumn('btn', 'Configuration.StorageTaskMail.partials.buttons')
+            ->editColumn('created_at', function ($row) {
+                return Carbon::parse($row->created_at)
+                    ->setTimezone('America/Mexico_City')
+                    ->format('Y-m-d H:i');
+            })
+            ->rawColumns(['btn'])
+            ->toJson();
     }
 
     public function destroy($id)
     {
         StorageTaskMail::destroy($id);
 
-        return $this->redirectBackSuccessMessage('Registro eliminado con exito.');
+        return $this->redirectBackSuccessMessage('Registro eliminado con éxito.');
     }
 }

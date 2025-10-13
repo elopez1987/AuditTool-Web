@@ -10,8 +10,7 @@ trait CheckOutVirtual
 {
     public function checkOutVirtual($model)
     {
-        $receiptunit = ReceiptUnit::controlAccessUser()
-            ->where('id', $model->folionumber)->first();
+        $receiptunit = ReceiptUnit::controlAccessUser()->where('id', $model->folionumber)->first();
         if (! empty($receiptunit)) {
             $receiptunit->containerseal = '0000';
             $receiptunit->shipmentid = $model->shipmentid;

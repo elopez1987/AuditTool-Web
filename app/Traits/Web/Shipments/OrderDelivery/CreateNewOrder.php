@@ -33,7 +33,7 @@ trait CreateNewOrder
         self::createShipmentDataOperation($shipment);
         self::createNewProcessCheck($shipment);
         self::createEDIToRControl($shipment, $parameter);
-        if ($parameter && in_array('SWH-17', (array) $parameter)) {
+        if ($parameter && in_array('SWH-18', (array) $parameter)) {
             $this->createNewRegisterMonitor($shipment);
         }
     }

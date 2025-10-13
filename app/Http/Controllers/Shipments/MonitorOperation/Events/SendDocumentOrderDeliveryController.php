@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Shipments\MonitorOperation\Events;
 
 use App\Http\Controllers\BaseController;
-use App\Jobs\Embarques\Mensajes\EnviarMensajeAFacturacionJob;
+use App\Jobs\Embarques\Mensajes\EnviarMensajeAFacturacionDocumentosEnviadosJob;
 use App\Models\Shipments\OrderDeliverie;
 use App\Models\Shipments\ShipmentDataOperation;
 use App\Models\Shipments\ShipmentHeader;
 use App\Models\Shipments\ShipmentSeal;
 use App\Traits\Web\General\GetParameters;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -27,7 +28,7 @@ class SendDocumentOrderDeliveryController extends BaseController
 
             $parameter = $this->getParametersOfWarehouse($orderDelivery->warehouseid);
             if (! empty($parameter) && in_array('SWH-16', (array) $parameter)) {
-                EnviarMensajeAFacturacionJob::dispatch($orderDelivery);
+                EnviarMensajeAFacturacionDocumentosEnviadosJob::dispatch($orderDelivery);
             }
 
             DB::commit();
@@ -40,34 +41,42 @@ class SendDocumentOrderDeliveryController extends BaseController
         }
     }
 
-    public function updateOrderDelivery($id): OrderDeliverie
+    private function updateOrderDelivery($id): OrderDeliverie
     {
         $orderDelivery = OrderDeliverie::controlAccessUser()->where('id', $id)->first();
-        $orderDelivery->statusid = 'DO';
-        $orderDelivery->save();
+        if (! empty($orderDelivery)) {
+            $orderDelivery->statusid = 'DO';
+            $orderDelivery->save();
 
-        return $orderDelivery;
+            return $orderDelivery;
+        }
     }
 
-    public function updateShipmentDataOperation(OrderDeliverie $orderDelivery): void
+    private function updateShipmentDataOperation(OrderDeliverie $orderDelivery): void
     {
         $shipment = ShipmentDataOperation::controlAccessUser()->where('orderid', $orderDelivery->id)->first();
-        $shipment->senddocument = now();
-        $shipment->lastuserid = Auth::user()->id;
-        $shipment->save();
+        if (! empty($shipment)) {
+            $shipment->senddocument = now();
+            $shipment->lastuserid = Auth::user()->id;
+            $shipment->save();
+        }
     }
 
-    public function updateShipmentHeader(OrderDeliverie $orderDelivery): void
+    private function updateShipmentHeader(OrderDeliverie $orderDelivery): void
     {
         $shipmentheader = ShipmentHeader::whereOrderid($orderDelivery->id)->first();
-        $shipmentheader->statusid = 'DO';
-        $shipmentheader->save();
+        if (! empty($shipmentheader)) {
+            $shipmentheader->statusid = 'DO';
+            $shipmentheader->save();
+        }
     }
 
-    public function updateShipmentSeal(OrderDeliverie $orderDelivery): void
+    private function updateShipmentSeal(OrderDeliverie $orderDelivery): void
     {
         $shipmentseal = ShipmentSeal::controlAccessUser()->whereOrderid($orderDelivery->id)->first();
-        $shipmentseal->statusorderid = 'DO';
-        $shipmentseal->save();
+        if (! empty($shipmentseal)) {
+            $shipmentseal->statusorderid = 'DO';
+            $shipmentseal->save();
+        }
     }
 }

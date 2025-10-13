@@ -14,6 +14,7 @@ use App\Models\Shipments\ShipmentPod\ShipmentPod;
 use App\Models\Shipments\ShipmentSeal;
 use App\Models\Yard\ReceiptUnit;
 use App\Traits\Web\Yard\VirtualUnit\CheckOutVirtual;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -30,6 +31,7 @@ class FinishGoodIssueController extends BaseController
             $order = $id;
             $orderDelivery = OrderDeliverie::whereId($order->id)->first();
             $parameter = $this->getParametersOfCenter($orderDelivery->centerid);
+            $parameterWarehouse = $this->getParametersOfWarehouse($orderDelivery->warehouseid);
 
             if (! empty($orderDelivery->folionumber)) {
                 $folio = ReceiptUnit::where('id', $orderDelivery->folionumber)->first();
@@ -39,7 +41,7 @@ class FinishGoodIssueController extends BaseController
                 $this->createJourney($orderDelivery);
             }
 
-            $this->sendMessages($parameter, $orderDelivery);
+            $this->sendMessages($parameter, $orderDelivery, $parameterWarehouse);
             $this->closeUnitForProcessAmazon($orderDelivery);
             $this->updateOrderDelivery($orderDelivery);
             $this->updateShipmentHeader($orderDelivery, $request['delivery']);
@@ -59,38 +61,43 @@ class FinishGoodIssueController extends BaseController
         }
     }
 
-    public function updateOrderDelivery($orderDelivery)
+    private function updateOrderDelivery($orderDelivery)
     {
         $orderDelivery->statusid = 'EJ';
         $orderDelivery->save();
     }
 
-    public function updateShipmentHeader($orderDelivery, $delivery): void
+    private function updateShipmentHeader($orderDelivery, $delivery): void
     {
         $shipmentheader = ShipmentHeader::controlAccessUser()->where('orderid', $orderDelivery->id)->first();
-        $shipmentheader->delivery = $delivery;
-        $shipmentheader->goodissuedate = now();
-        $shipmentheader->statusid = 'EJ';
-        $shipmentheader->save();
+        if (! empty($shipmentheader)) {
+            $shipmentheader->delivery = $delivery;
+            $shipmentheader->goodissuedate = now();
+            $shipmentheader->statusid = 'EJ';
+            $shipmentheader->save();
+        }
     }
 
-    public function updateShipmentSeal($orderDelivery): void
+    private function updateShipmentSeal($orderDelivery): void
     {
         $shipmentseal = ShipmentSeal::controlAccessUser()->whereOrderid($orderDelivery->id)->first();
-        $shipmentseal->statusorderid = 'EJ';
-        $shipmentseal->save();
+        if (! empty($shipmentseal)) {
+            $shipmentseal->statusorderid = 'EJ';
+            $shipmentseal->save();
+        }
     }
 
-    public function updateOrderMonitor($orderDelivery): void
+    private function updateOrderMonitor($orderDelivery): void
     {
         $ordermonitor = OrderMonitor::where('orderid', $orderDelivery->id)->first();
-        $ordermonitor->statusid = 'TM';
-        $ordermonitor->save();
+        if (! empty($ordermonitor)) {
+            $ordermonitor->statusid = 'TM';
+            $ordermonitor->save();
+        }
     }
 
-    public function closeUnitForProcessAmazon($orderDelivery): void
+    private function closeUnitForProcessAmazon($orderDelivery): void
     {
-        //            Cierra la unidad virtual para clientes amazon
         $parameterCustomer = $this->getParameterOfCustomer($orderDelivery->customerid);
         if (! empty($parameterCustomer) && in_array('OCF-04', (array) $parameterCustomer)) {
             $this->checkOutVirtual($orderDelivery);
@@ -99,7 +106,7 @@ class FinishGoodIssueController extends BaseController
         }
     }
 
-    public function sendMessages($parameter, $orderDelivery): void
+    private function sendMessages($parameter, $orderDelivery, $parameterWarehouse): void
     {
         if (! empty($parameter) && in_array('SDC-09', (array) $parameter)) {
             EnviarMensajeAOperadorJob::dispatch($orderDelivery);
@@ -107,12 +114,13 @@ class FinishGoodIssueController extends BaseController
         if (! empty($parameter) && in_array('SDC-03', (array) $parameter)) {
             EnviarMensajaSorianaJob::dispatch($orderDelivery);
         }
-        if (! empty($parameter) && in_array('SWH-17', (array) $parameter)) {
+        if (! empty($parameterWarehouse) && in_array('SWH-17', (array) $parameterWarehouse)) {
+            Log::info('Enviando mensaje a fin de facturacion.');
             EnviarMensajeFinFacturacionJob::dispatch($orderDelivery);
         }
     }
 
-    public function createShipmentPod($orderDelivery): void
+    private function createShipmentPod($orderDelivery): void
     {
         ShipmentPod::updateOrCreate([
             'centerid' => $orderDelivery->centerid,

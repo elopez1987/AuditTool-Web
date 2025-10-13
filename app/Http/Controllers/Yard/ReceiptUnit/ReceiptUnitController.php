@@ -27,9 +27,9 @@ class ReceiptUnitController extends BaseController
     use ValidateReceiptInCheckInProcess;
     use ValidateShipmentInCheckInProcess;
 
-    protected $routePath = 'receiptunits';
+    protected string $routePath = 'receiptunits';
 
-    protected $viewPath = 'Yards.ReceiptUnits';
+    protected string $viewPath = 'Yards.ReceiptUnits';
 
     private ServiceReceiptUnit $serviceReceiptUnit;
 
@@ -134,7 +134,7 @@ class ReceiptUnitController extends BaseController
                 return redirect('authorizetransportentry/' . $receiptunit->id . '/edit');
             }
 
-            return redirect()->back()->with(session()->flash('success', 'Registro agregado con exito,folio :' . $receiptunit->id));
+            return redirect()->back()->with(session()->flash('success', 'Registro agregado con éxito,folio :' . $receiptunit->id));
         } catch (Exception $e) {
             $error = $e->getMessage();
             DB::rollback();
@@ -147,8 +147,10 @@ class ReceiptUnitController extends BaseController
     {
         $this->authorize('receiptunits.edit');
         $carriers = $this->getCarriersForSelect();
+        $movents = $this->typeReasonInActiveToSelect();
+        $unittypeid = $this->getUnitType();
 
-        return view("{$this->viewPath}.edit", compact('receiptunit', 'carriers'));
+        return view("{$this->viewPath}.edit", compact('receiptunit', 'carriers', 'movents', 'unittypeid'));
     }
 
     public function update(ReceiptUnit $receiptunit, Request $request): RedirectResponse

@@ -8,12 +8,21 @@
                     Mensajes pendientes de enviar
                 </div>
                 <div class="card-body">
-                    <form method="GET" id="search" role="form">
-                        {{csrf_field()}}
+{{--                    <form method="GET" id="search" role="form">--}}
+{{--                        {{csrf_field()}}--}}
                         <div class="row">
                             <div class="col-md-12">
-                                <a href="">
-                                    @include('buttons.search')
+                                <a href="{{route('sendmessagefornewarrivereceipt')}}">
+                                    <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md" data-toggle="tooltip" data-placement="top" title="Refrescar la pagina">
+                                        <img src="{{asset('/ico/1486146469-telegram_79439.png')}}" alt="" class="img-16 ml-1">
+                                        <span style="font-size: 0.675rem "> Procesar Mensajes Entrada</span>
+                                    </button>
+                                </a>
+                                <a href="{{route('sendmessagefordifferenceweight')}}">
+                                    <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md" data-toggle="tooltip" data-placement="top" title="Refrescar la pagina">
+                                        <img src="{{asset('/ico/1486146469-telegram_79439.png')}}" alt="" class="img-16 ml-1">
+                                        <span style="font-size: 0.675rem "> Procesar Mensajes Pesos</span>
+                                    </button>
                                 </a>
                                 <a>
                                     @include('buttons.reload')
@@ -24,7 +33,7 @@
                             </div>
                         </div>
                         <hr class="mb-3">
-                    </form>
+{{--                    </form>--}}
                     <div class="card-input">
                         <div class="row">
                             <div class="col-lg-12 col-xs-12">
