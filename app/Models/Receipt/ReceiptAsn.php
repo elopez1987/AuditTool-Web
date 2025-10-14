@@ -228,35 +228,35 @@ class ReceiptAsn extends Model
     //   ---------------------------------- Filtros de consulta  --------------------------------------
     public function scopeName($query, $name)
     {
-        if (trim($name) !== '') {
+        if (trim($name) != '') {
             $query->where('receiptasn.name', 'like', "%{$name}%");
         }
     }
 
     public function scopeShipment($query, $shipmentid)
     {
-        if (trim($shipmentid) !== '') {
+        if (trim($shipmentid) != '') {
             $query->where('receiptasn.shipmentid', '=', $shipmentid);
         }
     }
 
     public function scopeDelivery($query, $delivery)
     {
-        if (trim($delivery) !== '') {
+        if (trim($delivery) != '') {
             $query->where('receiptasn.billoflading', '=', $delivery);
         }
     }
 
     public function scopeFolioNumber($query, $folionumber)
     {
-        if (trim($folionumber) !== '') {
+        if (trim($folionumber) != '') {
             $query->where('receiptasn.folionumber', '=', $folionumber);
         }
     }
 
     public function scopeWorkDay($query, $workday)
     {
-        if (trim($workday) !== '') {
+        if (trim($workday) != '') {
             $query->whereDate('receiptasn.addasndate', $workday);
         } else {
             $query->whereDate('receiptasn.addasndate', Carbon::now()->format('Y-m-d'));
@@ -265,28 +265,28 @@ class ReceiptAsn extends Model
 
     public function scopeOC($query, $oc)
     {
-        if (trim($oc) !== '') {
+        if (trim($oc) != '') {
             $query->where('receiptasn.oc', '=', $oc);
         }
     }
 
     public function scopeFactura($query, $billoflading)
     {
-        if (trim($billoflading) !== '') {
+        if (trim($billoflading) != '') {
             $query->where('billoflading', '=', $billoflading);
         }
     }
 
     public function scopeStatus($query, $statusid)
     {
-        if ($statusid !== '') {
+        if ($statusid != '') {
             $query->where('receiptasn.statusid', '=', $statusid);
         }
     }
 
     public function scopeProvider($query, $provierid)
     {
-        if ($provierid !== '') {
+        if ($provierid != '') {
             $query->where('receiptasn.providerid', '=', $provierid);
         }
     }

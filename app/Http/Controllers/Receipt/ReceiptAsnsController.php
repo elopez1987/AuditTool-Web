@@ -33,13 +33,13 @@ class ReceiptAsnsController extends BaseController
     public function getDataAsns(Request $request)
     {
         $data = ReceiptAsn::controlAccessUser()
-            ->with('status', 'center', 'warehouse', 'carrier', 'provider', 'turn', 'reason', 'inventorystock')
+            ->with(['status', 'center', 'warehouse', 'carrier', 'provider', 'turn', 'reason', 'inventorystock'])
             ->Name($request->get('name'))
             ->Shipment($request->get('shipmentid'))
             ->FolioNumber($request->get('folionumber'))
             ->OC($request->get('oc'))
             ->Status($request->get('statusid'))
-            ->select('receiptasn.*');
+            ->select('receiptasn.*')->get();
 
         return DataTables::of($data)
             ->addColumn('btn', 'Receipt.ReceiptAsn.partials.buttons')
