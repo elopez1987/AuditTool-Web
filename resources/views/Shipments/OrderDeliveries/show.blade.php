@@ -17,15 +17,15 @@
                                      <img src="{{asset('ico/viewdetail.png')}}" alt="" class="img-16 ml-2 mr-2">
                                 </span> <span class="hidden-xs-down">Detalle del embarque</span></a></li>
                         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view02" role="tab"><span
-                                    class="hidden-sm-up">
+                                        class="hidden-sm-up">
                                     <img src="{{asset('ico/checklistin.png')}}" alt="" class="img-16 ml-2 mr-2">
                                 </span> <span class="hidden-xs-down">Conteo en cortina</span></a></li>
                         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view03" role="tab"><span
-                                    class="hidden-sm-up">
+                                        class="hidden-sm-up">
                                 <img src="{{asset('ico/img.png')}}" alt="" class="img-16 ml-2 mr-2">
                                 </span> <span class="hidden-xs-down">Fotos</span></a></li>
                         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view04" role="tab"><span
-                                    class="hidden-sm-up">
+                                        class="hidden-sm-up">
                                 <img src="{{asset('ico/notepad_bloc_notes_15549.png')}}" alt=""
                                      class="img-16 ml-2 mr-2">
                                 </span> <span class="hidden-xs-down">Comentarios</span></a></li>
@@ -128,23 +128,20 @@
                                     <div class="col-lg-3 col-md-6">
                                         <div class="d-flex align-items-center">
                                             <div class="m-r-10"><span class="text-trax display-5"><i
-                                                        class="mdi mdi-map"></i></span></div>
+                                                            class="mdi mdi-map"></i></span></div>
                                             <div><span class="font-14">Estatus de arribo</span>
                                                 <h3 class="font-medium m-b-0">
-                                                    @if($orderdelivery->folio ? $orderdelivery->folio->entrydate != null : '')
+                                                    @if(optional($orderdelivery->folio)->entrydate)
                                                         @if($orderdelivery->folio->entrydate < $orderdelivery->loadingdate)
-                                                            <spam class="font-14 text-green"><i
-                                                                    class="mdi mdi-check"></i> En
-                                                                tiempo
-                                                            </spam>
+                                                            <span class="font-14 text-green">
+                                                                <i class="mdi mdi-check"></i> En tiempo
+                                                            </span>
                                                         @else
-                                                            <spam class="font-14 text-red"><i class="mdi mdi-alert"></i>
-                                                                Fuera
-                                                                de tiempo
-                                                            </spam>
+                                                            <span class="font-14 text-red">
+                                                                <i class="mdi mdi-alert"></i> Fuera de tiempo
+                                                            </span>
                                                         @endif
                                                     @endif
-
                                                 </h3>
                                             </div>
                                         </div>
@@ -154,20 +151,18 @@
                                     <div class="col-lg-3 col-md-6">
                                         <div class="d-flex align-items-center">
                                             <div class="m-r-10"><span class="text-trax display-5"><i
-                                                        class="mdi mdi-map"></i></span></div>
+                                                            class="mdi mdi-map"></i></span></div>
                                             <div><span class="font-14">Estatus de despacho</span>
                                                 <h3 class="font-medium m-b-0">
-                                                    @if($orderdelivery->folio ? $orderdelivery->folio->outputdate != null : '')
+                                                    @if(optional($orderdelivery->folio)->outputdate && optional($orderdelivery->monitor)->outputdate)
                                                         @if($orderdelivery->folio->outputdate < $orderdelivery->monitor->outputdate)
-                                                            <spam class="font-14 text-green"><i
-                                                                    class="mdi mdi-check"></i> En
-                                                                tiempo
-                                                            </spam>
+                                                            <span class="font-14 text-green">
+                                                                <i class="mdi mdi-check"></i> En tiempo
+                                                          </span>
                                                         @else
-                                                            <spam class="font-14 text-red"><i class="mdi mdi-alert"></i>
-                                                                Fuera
-                                                                de tiempo
-                                                            </spam>
+                                                            <span class="font-14 text-red">
+                                                                <i class="mdi mdi-alert"></i> Fuera de tiempo
+                                                            </span>
                                                         @endif
                                                     @endif
                                                 </h3>
@@ -179,19 +174,18 @@
                                     <div class="col-lg-3 col-md-6">
                                         <div class="d-flex align-items-center">
                                             <div class="m-r-10"><span class="text-trax display-5"><i
-                                                        class="mdi mdi-map"></i></span></div>
+                                                            class="mdi mdi-map"></i></span></div>
                                             <div><span class="font-14">Estatus de entrega</span>
                                                 <h3 class="font-medium m-b-0">
-                                                    @if($orderdelivery->journey ? $orderdelivery->journey->arrivedate != null : '')
+                                                    @if(optional($orderdelivery->journey)->arrivedate)
                                                         @if($orderdelivery->downloaddate > $orderdelivery->journey->arrivedate)
-                                                            <spam class="font-14 text-green"><i
-                                                                    class="mdi mdi-check"></i>
-                                                                En tiempo
-                                                            </spam>
+                                                            <span class="font-14 text-green">
+                                                                <i class="mdi mdi-check"></i> En tiempo
+                                                            </span>
                                                         @else
-                                                            <spam class="font-14 text-red"><i class="mdi mdi-alert"></i>
-                                                                Fuera de tiempo
-                                                            </spam>
+                                                            <span class="font-14 text-red">
+                                                                <i class="mdi mdi-alert"></i> Fuera de tiempo
+                                                            </span>
                                                         @endif
                                                     @endif
                                                 </h3>
@@ -202,19 +196,31 @@
                                     <!-- col -->
                                     <div class="col-lg-3 col-md-6">
                                         <div class="d-flex align-items-center">
-                                            <div class="m-r-10"><span class="text-trax display-5"><i
-                                                        class="mdi mdi-clock"></i></span></div>
-                                            <div><span class="font-14">Tiempo de estadia</span>
+                                            <div class="m-r-10"><span class="text-trax display-5"><i class="mdi mdi-clock"></i></span></div><div><span class="font-14">Tiempo de estadia</span>
                                                 @php
-                                                    $entryDate = Carbon::parse($orderdelivery->folio ? $orderdelivery->folio->entrydate : null);
-                                                    $outputDate = Carbon::parse($orderdelivery->folio ? $orderdelivery->folio->outputdate : null);
-                                                    $differenceInMinutes = $entryDate->diffInMinutes($outputDate);
-                                                    $hours = intdiv($differenceInMinutes, 60);
-                                                    $minutes = $differenceInMinutes % 60;
+                                                    $entryDate = optional($orderdelivery->folio)->entrydate
+                                                        ? Carbon::parse($orderdelivery->folio->entrydate)
+                                                        : null;
+
+                                                    $outputDate = optional($orderdelivery->folio)->outputdate
+                                                        ? Carbon::parse($orderdelivery->folio->outputdate)
+                                                        : null;
+
+                                                    if ($entryDate && $outputDate) {
+                                                        $differenceInMinutes = $entryDate->diffInMinutes($outputDate);
+                                                        $hours = intdiv($differenceInMinutes, 60);
+                                                        $minutes = $differenceInMinutes % 60;
+                                                    } else {
+                                                        $hours = $minutes = null;
+                                                    }
                                                 @endphp
+
                                                 <h3 class="font-medium m-b-0">
-                                                    <p class="font-14 text-danger"> {{ $hours }} horas y {{ $minutes }}
-                                                        minutos</p>
+                                                    @if(!is_null($hours))
+                                                        <p class="font-14 text-danger">{{ $hours }} horas y {{ $minutes }} minutos</p>
+                                                    @else
+                                                        <p class="font-14 text-muted">Sin datos de tiempo</p>
+                                                    @endif
                                                 </h3>
                                             </div>
                                         </div>
@@ -351,7 +357,7 @@
                                                                  aria-valuemax="100"
                                                                  style="width: 100%; height:20px;" role="progressbar">
                                                         <span
-                                                            class="sr-only">100% Complete (success)
+                                                                class="sr-only">100% Complete (success)
                                                         </span>
                                                             </div>
                                                         </div>
@@ -380,7 +386,7 @@
                                                                  aria-valuemax="100"
                                                                  style="width: 100%; height:20px;" role="progressbar">
                                                         <span
-                                                            class="sr-only">100% Complete (success)
+                                                                class="sr-only">100% Complete (success)
                                                         </span>
                                                             </div>
                                                         </div>
@@ -408,7 +414,7 @@
                                                                  aria-valuemax="100"
                                                                  style="width: 100%; height:20px;" role="progressbar">
                                                         <span
-                                                            class="sr-only">100% Complete (success)
+                                                                class="sr-only">100% Complete (success)
                                                         </span>
                                                             </div>
                                                         </div>
@@ -436,7 +442,7 @@
                                                                  aria-valuemax="100"
                                                                  style="width: 100%; height:20px;" role="progressbar">
                                                         <span
-                                                            class="sr-only">100% Complete (success)
+                                                                class="sr-only">100% Complete (success)
                                                         </span>
                                                             </div>
                                                         </div>
@@ -464,7 +470,7 @@
                                                                  aria-valuemax="100"
                                                                  style="width: 100%; height:20px;" role="progressbar">
                                                         <span
-                                                            class="sr-only">100% Complete (success)
+                                                                class="sr-only">100% Complete (success)
                                                         </span>
                                                             </div>
                                                         </div>
@@ -603,7 +609,7 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <table
-                                                class="table table-condensed table-bordered table-striped">
+                                                    class="table table-condensed table-bordered table-striped">
                                                 <thead>
                                                 <tr class="bg-inverse text-white">
                                                     <td>Evento</td>
@@ -677,7 +683,9 @@
                                 <div class="col-lg-12">
                                     <a href="{{url('printformatcountbridgestone/' . $orderdelivery->id)}}"
                                        target="_blank">
-                                        <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md" style="padding-right: 3px;">
+                                        <button type="button"
+                                                class="btn waves-effect waves-light btn-outline-info btn-md"
+                                                style="padding-right: 3px;">
                                             <img src="{{asset('/ico/papeleta.png')}}" alt="" class="img-16">
                                             Imprimir Conteo Operaciones
                                         </button>
@@ -766,14 +774,16 @@
                                                 <div class="col-lg-2 col-md-6 col-sm-12">
                                                     <div class="form-group">
                                                         <label for="shipmentid">Total</label>
-                                                        <input type="text" class="form-control " value="{{$conteo->totalfinal}}"
+                                                        <input type="text" class="form-control "
+                                                               value="{{$conteo->totalfinal}}"
                                                                disabled>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-2 col-md-6 col-sm-12">
                                                     <div class="form-group">
                                                         <label for="shipmentid">Contador</label>
-                                                        <input type="text" class="form-control " value="{{$conteo->name}}"
+                                                        <input type="text" class="form-control "
+                                                               value="{{$conteo->name}}"
                                                                disabled>
                                                     </div>
                                                 </div>
@@ -812,7 +822,8 @@
                                                                             }
                                                                         }
                                                                     @endphp
-                                                                    <td>Rack-{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</td>
+                                                                    <td>
+                                                                        Rack-{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</td>
                                                                     <td>{{ $codigo }}</td>
                                                                     <td>{{ $canal }}</td>
                                                                     <td>{{ $cantidad }}</td>
@@ -850,7 +861,8 @@
                                                                             }
                                                                         }
                                                                     @endphp
-                                                                    <td>Rack-{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</td>
+                                                                    <td>
+                                                                        Rack-{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</td>
                                                                     <td>{{ $codigo }}</td>
                                                                     <td>{{ $canal }}</td>
                                                                     <td>{{ $cantidad }}</td>
@@ -936,14 +948,16 @@
                                                 <div class="col-lg-2 col-md-6 col-sm-12">
                                                     <div class="form-group">
                                                         <label for="shipmentid">Total</label>
-                                                        <input type="text" class="form-control " value="{{$conteo->totalfinal}}"
+                                                        <input type="text" class="form-control "
+                                                               value="{{$conteo->totalfinal}}"
                                                                disabled>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-2 col-md-6 col-sm-12">
                                                     <div class="form-group">
                                                         <label for="shipmentid">Contador</label>
-                                                        <input type="text" class="form-control " value="{{$conteo->name}}"
+                                                        <input type="text" class="form-control "
+                                                               value="{{$conteo->name}}"
                                                                disabled>
                                                     </div>
                                                 </div>
@@ -983,7 +997,8 @@
                                                                         }
 
                                                                     @endphp
-                                                                    <td>Rack-{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</td>
+                                                                    <td>
+                                                                        Rack-{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</td>
                                                                     <td>{{ $codigo }}</td>
                                                                     <td>{{ $canal }}</td>
                                                                     <td>{{ $cantidad }}</td>
@@ -1021,7 +1036,8 @@
                                                                             }
                                                                         }
                                                                     @endphp
-                                                                    <td>Rack-{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</td>
+                                                                    <td>
+                                                                        Rack-{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</td>
                                                                     <td>{{ $codigo }}</td>
                                                                     <td>{{ $canal }}</td>
                                                                     <td>{{ $cantidad }}</td>
@@ -1059,11 +1075,11 @@
                                                                                 <div class="card">
                                                                                     <div class="el-card-item">
                                                                                         <div
-                                                                                            class="el-card-avatar el-overlay-1">
+                                                                                                class="el-card-avatar el-overlay-1">
                                                                                             <img
-                                                                                                src="{{asset('storage/' . $photo->path)}}"
-                                                                                                alt="user"
-                                                                                                style="max-height: 200px"/>
+                                                                                                    src="{{asset('storage/' . $photo->path)}}"
+                                                                                                    alt="user"
+                                                                                                    style="max-height: 200px"/>
                                                                                             <div class="el-overlay">
                                                                                                 <ul class="list-style-none el-info">
                                                                                                     <li class="el-item">
@@ -1088,7 +1104,7 @@
                                                                                         <div class="el-card-content">
                                                                                             <h4 class="m-b-0 font-10 font-weight-light"> {{$photo->user->name}} </h4>
                                                                                             <span
-                                                                                                class="text-muted">{{$photo->created_at}}</span>
+                                                                                                    class="text-muted">{{$photo->created_at}}</span>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -1119,18 +1135,19 @@
                                                         @foreach($comments as $comment)
                                                             <div class="d-flex flex-row comment-row m-t-0">
                                                                 <div><img
-                                                                        src="{{asset('ico/notepad_bloc_notes_15549.png')}}"
-                                                                        alt="user" width="50" class="rounded-circle">
+                                                                            src="{{asset('ico/notepad_bloc_notes_15549.png')}}"
+                                                                            alt="user" width="50"
+                                                                            class="rounded-circle">
                                                                 </div>
                                                                 <div class="comment-text w-100">
                                                                     <h6 class="font-medium">{{$comment->user ? $comment->user->name : ''}}</h6>
                                                                     <span
-                                                                        class="m-b-15 d-block">{{$comment->comment}}</span>
+                                                                            class="m-b-15 d-block">{{$comment->comment}}</span>
                                                                     <div class="comment-footer">
                                                                         <span
-                                                                            class="text-muted float-right">{{$comment->created_at}}</span>
+                                                                                class="text-muted float-right">{{$comment->created_at}}</span>
                                                                         <span
-                                                                            class="label label-rounded label-primary">Creado</span>
+                                                                                class="label label-rounded label-primary">Creado</span>
                                                                         <span class="action-icons">
                                                                     </span>
                                                                     </div>
