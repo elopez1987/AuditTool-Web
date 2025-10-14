@@ -11,15 +11,20 @@
 @endif
 
 @if ($statusid != 'DT')
-    @can('datatransport.edit')
-        <a href=""
-           data-target="#modal-addtransporttoshipment-{{$id}}"
-           data-toggle="modal" data-toggle="tooltip"
-           data-placement="top" title="Agregar transporte">
-            <img src="{{asset('/ico/typetruck.png')}}" alt="" class="img-16 ml-2">
-        </a>
-        @include('Shipments.OrderMonitor.AnalystTraffic.partials.addtransporttoshipment')
-    @endcan
+{{--    @can('datatransport.edit')--}}
+{{--        <a href=""--}}
+{{--           data-target="#modal-addtransporttoshipment-{{$id}}"--}}
+{{--           data-toggle="modal" data-toggle="tooltip"--}}
+{{--           data-placement="top" title="Agregar transporte">--}}
+{{--            <img src="{{asset('/ico/typetruck.png')}}" alt="" class="img-16 ml-2">--}}
+{{--        </a>--}}
+{{--        @include('Shipments.OrderMonitor.AnalystTraffic.partials.addtransporttoshipment')--}}
+{{--    @endcan--}}
+
+<a href="{{url('datatransport/' . $id . '/edit')}}" data-toggle="tooltip" data-placement="top"
+   title="Asignar cortina anticipada">
+    <img src="{{asset('/ico/typetruck.png')}}" alt="" class="img-16 ml-2">
+</a>
 @endif
 
 @can('shipmentstages.index')

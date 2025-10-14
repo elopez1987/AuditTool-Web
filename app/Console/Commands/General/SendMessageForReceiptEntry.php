@@ -41,37 +41,108 @@ class SendMessageForReceiptEntry extends Command
 
     public function handle()
     {
+
+        Log::info('=== Inicio del proceso de envío de mensajes WhatsApp ===');
+
         $client = new Client;
         $url = 'https://api.1msg.io/HEI523482986/sendTemplate';
-        $warehouses = SystemWarehouse::where('statusid', '=', 'E')->get();
-        if (! empty($warehouses)) {
-            foreach ($warehouses as $warehouse) {
-                $parameter = $warehouse->configurationflag;
-                if (! empty($parameter) && in_array('SWH-29', $parameter)) {
-                    $tasks = StorageTaskWhatsapp::where('warehouseid', $warehouse->warehouseid)->where('whatsappid', 'WTH-INGREREC')->where('statusid', 'E')->get();
-                    $contacts = $this->getContacts($warehouse->warehouseid);
-                    if (! empty($tasks)) {
-                        foreach ($tasks as $task) {
-                            $providername = ReceiptProvider::where('centerid', $task->centerid)
-                                ->where('warehouseid', $task->warehouseid)->where('id', $task->value01)->value('name');
-                            foreach ($contacts as $contact) {
-                                try {
-                                    $data = $this->getBodyData($task, $contact, $providername);
-                                    $response = $client->request('POST', $url, ['json' => $data, 'headers' => ['Content-Type' => 'application/json']]);
-                                    $respJson = $response->getBody();
-                                    $this->createLog(json_decode($respJson), $contact, $task);
-                                } catch (Exception $e) {
-                                    Log::error($e->getMessage());
-                                    Log::error('Error al enviar mensaje de ingreso de proveedor a CeDis.');
-                                }
-                            }
-                            $task->statusid = 'D';
-                            $task->save();
-                        }
+
+        $warehouses = SystemWarehouse::where('statusid', 'E')->get();
+        Log::info('Almacenes activos encontrados', ['count' => $warehouses->count()]);
+
+        if ($warehouses->isEmpty()) {
+            Log::warning('No hay almacenes activos con statusid = E');
+
+            return;
+        }
+
+        foreach ($warehouses as $warehouse) {
+            Log::info('Procesando warehouse', [
+                'warehouseid' => $warehouse->warehouseid,
+                'configurationflag' => $warehouse->configurationflag,
+            ]);
+
+            $parameter = $warehouse->configurationflag;
+
+            if (empty($parameter) || ! in_array('SWH-29', $parameter)) {
+                Log::info('Warehouse omitido: no contiene parámetro SWH-29', ['warehouseid' => $warehouse->warehouseid]);
+
+                continue;
+            }
+
+            $tasks = StorageTaskWhatsapp::where('warehouseid', $warehouse->warehouseid)
+                ->where('whatsappid', 'WTH-INGREREC')
+                ->where('statusid', 'E')
+                ->get();
+
+            Log::info('Tareas encontradas', [
+                'warehouseid' => $warehouse->warehouseid,
+                'tasks_count' => $tasks->count(),
+            ]);
+
+            if ($tasks->isEmpty()) {
+                continue;
+            }
+
+            $contacts = $this->getContacts($warehouse->warehouseid);
+            Log::info('Contactos obtenidos', [
+                'warehouseid' => $warehouse->warehouseid,
+                'contacts_count' => count($contacts),
+            ]);
+
+            foreach ($tasks as $task) {
+                Log::info('Procesando tarea', ['task_id' => $task->id, 'warehouseid' => $warehouse->warehouseid]);
+
+                $providername = ReceiptProvider::where('centerid', $task->centerid)
+                    ->where('warehouseid', $task->warehouseid)
+                    ->where('id', $task->value01)
+                    ->value('name');
+
+                foreach ($contacts as $contact) {
+                    try {
+                        $data = $this->getBodyData($task, $contact, $providername);
+                        Log::debug('Enviando request a API 1msg.io', [
+                            'contact' => $contact->phone ?? null,
+                            'task_id' => $task->id,
+                            'body_data' => $data,
+                        ]);
+
+                        $response = $client->request('POST', $url, [
+                            'json' => $data,
+                            'headers' => ['Content-Type' => 'application/json'],
+                        ]);
+
+                        $respJson = $response->getBody()->getContents();
+                        Log::debug('Respuesta de API', [
+                            'contact' => $contact->phone ?? null,
+                            'response' => $respJson,
+                        ]);
+
+                        $this->createLog(json_decode($respJson), $contact, $task);
+                        Log::info('Mensaje enviado y log registrado correctamente', [
+                            'contact' => $contact->phone ?? null,
+                            'task_id' => $task->id,
+                        ]);
+
+                    } catch (Exception $e) {
+                        Log::error('Error al enviar mensaje de ingreso de proveedor a CeDis.', [
+                            'warehouseid' => $warehouse->warehouseid,
+                            'task_id' => $task->id,
+                            'contact' => $contact->phone ?? null,
+                            'error' => $e->getMessage(),
+                        ]);
                     }
                 }
+
+                $task->statusid = 'D';
+                $task->save();
+
+                Log::info('Tarea actualizada a estado D', ['task_id' => $task->id]);
             }
         }
+
+        Log::info('=== Fin del proceso de envío de mensajes WhatsApp ===');
+
     }
 
     public function createLog($resp, $contact, $model)

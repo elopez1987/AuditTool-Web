@@ -8,18 +8,15 @@ use App\Models\Yard\GenerateAccessWarehouse;
 use App\Models\Yard\ReceiptUnitKey;
 use App\Models\Yard\StorageFolioClient;
 use App\Traits\ResponseApi;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use PDF;
 
 trait PrintFormat
 {
     use ResponseApi;
 
-    public function printFormatInvoice($receiptunit): JsonResponse
+    public function printFormatInvoice($receiptunit)
     {
         $verified = DB::table('storagechecklisttransports as s')
             ->select(
@@ -97,15 +94,9 @@ trait PrintFormat
         return $this->printFormat($receiptunit, $pdf);
     }
 
-    private function printFormat($receiptunit, $pdf): JsonResponse
+    private function printFormat($receiptunit, $pdf)
     {
-        $path = $this->createDirectoryPath($receiptunit->centerid);
-        $fileName = 'Folio-' . $receiptunit->id . '-' . Str::random(10) . '.pdf';
-        $pdfContent = $pdf->output();
-        Storage::put($path . '/' . $fileName, $pdfContent);
-        $fileFolio = base64_encode(Storage::get($path . '/' . $fileName));
-
-        return $this->getResponseSuccess('generatePDFToFolio', ['pdf' => $fileFolio]);
+        return $pdf->download('Folio_De_Entrada-' . $receiptunit->id . '.pdf');
     }
 
     private function createDirectoryPath($centerId): string
@@ -119,7 +110,7 @@ trait PrintFormat
     }
 
     //    Genera el formato para el QR de  planta en el modulo de circuito
-    public function printFormatAccess($id): Response
+    public function printFormatAccess($id)
     {
         $data = GenerateAccessWarehouse::controlAccessUser()->where('storageaccesswarehouse.id', $id)
             ->leftJoin('systemcenterdistributions as cd', 'storageaccesswarehouse.centerid', '=', 'cd.centerid')
