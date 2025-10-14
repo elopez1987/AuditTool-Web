@@ -198,8 +198,13 @@
                                         <div class="d-flex align-items-center">
                                             <div class="m-r-10"><span class="text-trax display-5"><i class="mdi mdi-clock"></i></span></div><div><span class="font-14">Tiempo de estadia</span>
                                                 @php
-                                                    $entryDate = optional(optional($orderdelivery->folio)->entrydate ? Carbon::parse($orderdelivery->folio->entrydate) : null);
-                                                    $outputDate = optional(optional($orderdelivery->folio)->outputdate ? Carbon::parse($orderdelivery->folio->outputdate) : null);
+                                                    $entryDate = optional($orderdelivery->folio)->entrydate
+                                                        ? Carbon::parse($orderdelivery->folio->entrydate)
+                                                        : null;
+
+                                                    $outputDate = optional($orderdelivery->folio)->outputdate
+                                                        ? Carbon::parse($orderdelivery->folio->outputdate)
+                                                        : null;
 
                                                     if ($entryDate && $outputDate) {
                                                         $differenceInMinutes = $entryDate->diffInMinutes($outputDate);
@@ -209,6 +214,7 @@
                                                         $hours = $minutes = null;
                                                     }
                                                 @endphp
+
                                                 <h3 class="font-medium m-b-0">
                                                     @if(!is_null($hours))
                                                         <p class="font-14 text-danger">{{ $hours }} horas y {{ $minutes }} minutos</p>
