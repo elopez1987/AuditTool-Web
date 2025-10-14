@@ -16,11 +16,11 @@ class ImprimirConteoAndenController extends BaseController
     {
         $orderDelivery = OrderDeliverie::controlAccessUser()->where('id', $id)->first();
         if (empty($orderDelivery)) {
-            return $this->errorResponse('No se encontro el registro solicitado.');
+            return $this->errorResponse('No se encontró el registro solicitado.');
         }
         $conteos = Storagechecklocationbridg::controlAccessUser()->where('orderid', $orderDelivery->id)->get();
         if (empty($conteos)) {
-            return $this->errorResponse('No se encontro el registro solicitado.');
+            return $this->errorResponse('No se encontró el registro solicitado.');
         }
         $fortmat = 'Shipments.OrderDeliveries.Formats.Bridgestone.ConteoAndenes';
         $pdf = Pdf::loadView($fortmat, compact('orderDelivery', 'conteos'))->setPaper('A4', 'landscape');
@@ -34,11 +34,11 @@ class ImprimirConteoAndenController extends BaseController
     {
         $orderDelivery = OrderDeliverie::controlAccessUser()->where('id', $id)->first();
         if (empty($orderDelivery)) {
-            return $this->errorResponse('No se encontro el registro solicitado.');
+            return $this->errorResponse('No se encontró el registro solicitado.');
         }
         $conteos = StoragechecklocationbridgVig::controlAccessUser()->where('orderid', $orderDelivery->id)->get();
         if (empty($conteos)) {
-            return $this->errorResponse('No se encontro el registro solicitado.');
+            return $this->errorResponse('No se encontró el registro solicitado.');
         }
         $fortmat = 'Shipments.OrderDeliveries.Formats.Bridgestone.ConteoAndenesVig';
         $pdf = Pdf::loadView($fortmat, compact('orderDelivery', 'conteos'))->setPaper('A4', 'landscape');
@@ -50,7 +50,7 @@ class ImprimirConteoAndenController extends BaseController
     {
         $orderDelivery = OrderDeliverie::controlAccessUser()->where('id', $id)->first();
         if (empty($orderDelivery)) {
-            return $this->errorResponse('No se encontro el registro solicitado.');
+            return $this->errorResponse('No se encontró el registro solicitado.');
         }
         $controlCount = StorageShipmentCheckTotal::controlAccessUser()->where('orderid', $orderDelivery->id)->first();
         $conteos = Storagechecklocationbridg::controlAccessUser()->where('orderid', $orderDelivery->id)->get();

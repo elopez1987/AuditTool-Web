@@ -95,7 +95,7 @@ Route::middleware(['auth'])->group(function () {
     //    ------------------------------------------------- Importadores ---------------------------------------------------
     //  Importar comentarios a los embarques
     Route::post('importcommentshipment', [ImportCommentShipmentController::class, 'importcommentshipment'])->name('importcommentshipment');
-    //   Importar facturas de los embrques
+    //   Importar facturas de los embarques
     Route::post('importbilling', [ImportbillingController::class, 'index'])->name('importbilling');
     //  Importar solicitud de material para verificacion
     Route::post('uploadFileCheck', [ImportShipmentCheckController::class, 'index'])->name('uploadFileCheck');
@@ -309,7 +309,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('getDataInverse', [StorageScheduleInversesController::class, 'getDataInverse'])->name('getDataInverse');
     Route::post('closeprocessinverse', [StorageScheduleInversesController::class, 'closeprocessinverse'])->name('closeprocessinverse');
 
-    //    Importadores del módulo de logistica inversa
+    //    Importadores del módulo de logística inversa
     Route::post('importrequestzare', [ImportDataInverseController::class, 'importrequestzare'])->name('importrequestzare');
     Route::post('importresponsezare', [ImportDataInverseController::class, 'importresponsezare'])->name('importresponsezare');
     Route::post('importrequestne', [ImportDataInverseController::class, 'importrequestne'])->name('importrequestne');
@@ -328,7 +328,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('updateDataInventory/{storagescheduleinverse}/edit', [StorageScheduleInverseInventoriesController::class, 'updateDataInventory'])->name('updateDataInventory');
     Route::resource('storagescheduleinverseinventory', StorageScheduleInverseInventoriesController::class)->except(['destroy', 'show', 'create', 'store']);
 
-    //  Modificacion por operaciones
+    //  Modificación por operaciones
     Route::get('updateDataOperation/{storagescheduleinverse}/edit', [StorageScheduleInverseOperationsController::class, 'updateDataOperation'])->name('updateDataOperation');
     Route::resource('storagescheduleinverseoperation', StorageScheduleInverseOperationsController::class)->except(['destroy', 'show', 'create', 'store']);
     Route::post('openCountToReceiptInverse', [StorageScheduleInverseOperationsController::class, 'openCountToReceiptInverse'])->name('openCountToReceiptInverse');

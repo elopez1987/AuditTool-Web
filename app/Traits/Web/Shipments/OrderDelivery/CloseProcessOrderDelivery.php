@@ -35,18 +35,21 @@ trait CloseProcessOrderDelivery
     {
         $header = ShipmentHeader::where('orderid', $order->id)
             ->first(['locationid', 'statusid']);
-        $header->statusid = 'DH';
-        $header->save();
+        if (! empty($header)) {
+            $header->statusid = 'DH';
+            $header->save();
+        }
 
         return $header;
     }
 
     public function cierreDelMonitor($order): void
     {
-        $monitor = OrderMonitor::where('orderid', $order->id)
-            ->first(['id', 'statusid']);
-        $monitor->statusid = 'TM';
-        $monitor->save();
+        $monitor = OrderMonitor::where('orderid', $order->id)->first(['id', 'statusid']);
+        if (! empty($monitor)) {
+            $monitor->statusid = 'TM';
+            $monitor->save();
+        }
     }
 
     public function createNewJourney($order): void
