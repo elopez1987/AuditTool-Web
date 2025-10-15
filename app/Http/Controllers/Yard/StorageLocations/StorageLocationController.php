@@ -32,7 +32,7 @@ class StorageLocationController extends BaseController
             ->Name($request->get('name'))
             ->Zone($request->get('zoneid'))
             ->Warehouse($request->get('warehouseid'))
-            ->Status($request->get('statusid'));
+            ->Status($request->get('statusid'))->get();
 
         return DataTables::of($data)
             ->addColumn('btn', 'Yards.StorageLocations.partials.buttons')

@@ -30,8 +30,7 @@ class OrderMonitorController extends BaseController
     {
         $data = OrderMonitorSchedulle::controlAccessUser()
             ->Shipmentid($request->get('shipmentid'))
-            ->ForStatus($request->get('statusid'))
-            ->get();
+            ->ForStatus($request->get('statusid'))->get();
 
         return DataTables::of($data)
             ->addColumn('autorizarsalida', 'Shipments.OrderMonitor.MonitorGeneral.time.autorizarsalida')
