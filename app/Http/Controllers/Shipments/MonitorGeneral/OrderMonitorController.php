@@ -3,12 +3,19 @@
 namespace App\Http\Controllers\Shipments\MonitorGeneral;
 
 use App\Http\Controllers\BaseController;
+use App\Models\Shipments\OrderDeliverie;
 use App\Models\Shipments\OrderMonitorSchedulle;
+use App\Traits\Web\Shipments\OrderMonitor\CreateNewOrderMonitorShipment;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Log;
 use Yajra\DataTables\Facades\DataTables;
 
 class OrderMonitorController extends BaseController
 {
+    use CreateNewOrderMonitorShipment;
+
     //    Monitor general
     public function index()
     {
@@ -35,5 +42,32 @@ class OrderMonitorController extends BaseController
             ->addColumn('preparacion', 'Shipments.OrderMonitor.MonitorGeneral.time.preparacion')
             ->rawColumns(['autorizarsalida', 'iniciofact', 'doctufac', 'carga', 'arribo', 'preparacion'])
             ->toJson();
+    }
+
+    public function create()
+    {
+        return view('Shipments.OrderMonitor.MonitorGeneral.create');
+    }
+
+    public function store(Request $request)
+    {
+        $this->authorize('ordermonitor.create');
+        $orderDelivery = OrderDeliverie::controlAccessUser()->where('shipmentid', $request['shipmentid'])->first();
+        if (empty($orderDelivery)) {
+            return $this->errorResponse('El número de embarque no existe, favor de validar');
+        }
+        DB::beginTransaction();
+        try {
+            $this->createNewRegisterMonitor($orderDelivery);
+            DB::commit();
+
+            return $this->redirectBackSuccessMessage('Registro agregado en el monitor correctamente.');
+
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            DB::rollback();
+
+            return $this->errorResponse('No se pudieron guardar los datos, favor de validar.');
+        }
     }
 }

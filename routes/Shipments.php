@@ -157,7 +157,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('addgoodissuedate/{id}', [FinishGoodIssueController::class, 'index'])->name('addgoodissuedate');
 
     //    ------------------------------  Monitor General de timpos de proceso calculado -------------------------------
-    Route::resource('ordermonitor', OrderMonitorController::class)->except(['show', 'destroy', 'create', 'store']);
+    Route::resource('ordermonitor', OrderMonitorController::class)->except(['show', 'destroy']);
     Route::get('getDataMonitor', [OrderMonitorController::class, 'getDataMonitor'])->name('getDataMonitor');
 
     // ------------------------------------------  Seguimiento de viaje  ---------------------------------------------------

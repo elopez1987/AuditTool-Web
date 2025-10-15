@@ -12,6 +12,11 @@
                         {{csrf_field()}}
                         <div class="row mb-3">
                             <div class="col-md-12">
+                                @can('ordermonitor.create')
+                                    <a href="{{route('ordermonitor.create')}}">
+                                        @include('buttons.add')
+                                    </a>
+                                @endcan
                                 <a href="{{route('menushipment')}}">
                                     @include('buttons.cancel')
                                 </a>
@@ -47,21 +52,22 @@
                     </form>
                     <div class="row">
                         <div class="col-12">
-                            <table id="table-monitorgeneral" class="table table-bordered table-striped table-condensed table-hover">
+                            <table id="table-monitorgeneral"
+                                   class="table table-bordered table-striped table-condensed table-hover">
                                 <thead>
-                                    <tr>
-                                        <th>Fecha</th>
-                                        <th>Embarque</th>
-                                        <th>Estatus</th>
-                                        <th>Cita con cliente</th>
-{{--                                        <th>Inicio de Preparación</th>--}}
-{{--                                        <th>Arribo de Unidad</th>--}}
-{{--                                        <th>Inicio de Carga</th>--}}
-                                        <th>Enviar a Facturación</th>
-                                        <th>Inicio de Facturación</th>
-                                        <th>Autorizar Salida</th>
-                                        <th>Salida maxima</th>
-                                    </tr>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Embarque</th>
+                                    <th>Estatus</th>
+                                    <th>Cita con cliente</th>
+                                    {{--                                        <th>Inicio de Preparación</th>--}}
+                                    {{--                                        <th>Arribo de Unidad</th>--}}
+                                    {{--                                        <th>Inicio de Carga</th>--}}
+                                    <th>Enviar a Facturación</th>
+                                    <th>Inicio de Facturación</th>
+                                    <th>Autorizar Salida</th>
+                                    <th>Salida maxima</th>
+                                </tr>
                                 </thead>
                             </table>
                         </div>
@@ -82,7 +88,7 @@
 @section('script')
     <script src="{{asset('/theme/assets/libs/moment/moment.js')}}"></script>
     <script
-        src="{{asset('/theme/assets/libs/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker-custom.js')}}"></script>
+            src="{{asset('/theme/assets/libs/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker-custom.js')}}"></script>
     <script>
         $('#workday').bootstrapMaterialDatePicker({format: 'YYYY-MM-DD', weekStart: 1, time: false});
     </script>
