@@ -34,7 +34,7 @@ class StorageShipmentFoliosController extends BaseController
             ])
             ->where('id', $id)->first();
         if (empty($folio)) {
-            return $this->errorResponse('No existe folio de envio en sistema, favor de validar');
+            return $this->errorResponse('No existe folio de envío en sistema, favor de validar');
         }
         $detalleFolio = StorageShipmentCheckTotal::controlAccessUser()
             ->with(['center:centerid,name,description', 'warehouse:warehouseid,name', 'order'])
