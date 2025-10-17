@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Yard\ReceiptUnit\TraceUnit;
 use App\Http\Controllers\BaseController;
 use App\Models\General\EvidencePhoto;
 use App\Models\General\StorageComment;
+use App\Models\Shipments\OrderDeliverie;
 use App\Models\Yard\CheckListEvidenceProcessUnit;
 use App\Models\Yard\CheckListTransport;
 use App\Models\Yard\ReceiptTruck;
@@ -207,9 +208,10 @@ class TraceReceiptUnitController extends BaseController
     public function downloadticket($id)
     {
         $receiptunit = ReceiptUnit::controlAccessUser()->findOrFail($id);
+        $orderDelivery = OrderDeliverie::controlAccessUser()->where('folionumber', $receiptunit->id)->first();
         $trace = StorageUnitTrace::controlAccessUser()->where('receiptunitid', $id)->first();
         $fortmat = 'Yards.ReceiptUnits.InvoiceFormats.Bridgestone.ticket';
-        $pdf = PDF::loadView($fortmat, compact('receiptunit', 'trace'));
+        $pdf = PDF::loadView($fortmat, compact('receiptunit', 'trace', 'orderDelivery'));
 
         return $pdf->download('Ticket de peso -' . $receiptunit->id . '.pdf');
     }

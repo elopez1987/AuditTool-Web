@@ -582,8 +582,7 @@
                                 <div class="col-lg-4">
                                     <div class="card ">
                                         <div class="card-body" style="height: 235px;">
-                                            <h6 class="font-weight-light bg-inverse text-white padding-3 "> Datos
-                                                operativos</h6>
+                                            <h6 class="font-weight-light bg-inverse text-white padding-3 "> Datos operativos</h6>
                                             <table class="table table-condensed table-striped table-bordered">
                                                 <tr>
                                                     <td>Supervisor</td>
@@ -608,6 +607,7 @@
                                 <div class="col-lg-4">
                                     <div class="card">
                                         <div class="card-body">
+                                            <h6 class="font-weight-light bg-inverse text-white padding-3 "> Tiempos operativos</h6>
                                             <table
                                                     class="table table-condensed table-bordered table-striped">
                                                 <thead>
@@ -624,6 +624,16 @@
                                                 <tr>
                                                     <td>Fin de preparación :</td>
                                                     <td> {{$orderdelivery->operation ? $orderdelivery->operation->endchecker : ''}}</td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Inicio de verificación :</td>
+                                                    <td> {{$orderdelivery->check ? $orderdelivery->check->startdate : ''}}</td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Fin de verificación :</td>
+                                                    <td> {{$orderdelivery->check ? $orderdelivery->check->finishdate : ''}}</td>
                                                     <td></td>
                                                 </tr>
                                                 <tr>
