@@ -10,6 +10,7 @@ use App\Models\Receipt\ReceiptAsn;
 use App\Models\Receipt\StorageSchedulleReceipt;
 use App\Models\Yard\StorageReason;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -33,6 +34,7 @@ class DownloadScheduleController extends BaseController
                 'storageschedullereceipt.centerid',
                 'storageschedullereceipt.warehouseid',
                 'storageschedullereceipt.statusid',
+                'storageschedullereceipt.value01',
                 'sc.description as centername',
                 'sw.name as warehousename',
                 'storageschedullereceipt.id',
@@ -56,7 +58,7 @@ class DownloadScheduleController extends BaseController
                 'ra.id as receiptid',
                 'ra.downloadpriority',
                 'ra.goodissuedate as goodissuedate',
-                'ra.statusid',
+                //                'ra.statusid',
                 'ra.po as grsap',
             ])
             ->leftJoin('receiptasn as ra', function ($join) {
@@ -138,7 +140,7 @@ class DownloadScheduleController extends BaseController
             DB::commit();
 
             return $this->redirectBackSuccessMessage('Recibo agregado al plan de entrega');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
 
             return $this->errorResponse($e->getMessage());
