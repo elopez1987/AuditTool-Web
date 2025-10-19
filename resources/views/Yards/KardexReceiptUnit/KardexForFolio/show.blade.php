@@ -137,6 +137,65 @@
                                 <div class="tab-pane active" id="view01" role="tabpanel">
                                     <div class="p-20">
                                         @include('Yards.KardexReceiptUnit.tabletrace')
+                                        <hr class="mt-3">
+                                        <div class="row mt-4">
+                                            <div class="col-lg-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h5 class="card-title">Timeline de Eventos </h5>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="timeline-horizontal">
+                                                            <ul class="list-unstyled d-flex flex-wrap justify-content-between align-items-start position-relative">
+                                                                @foreach($traces as $index => $trace)
+                                                                    <li class="timeline-item text-center" style="min-width: 150px; max-width: 200px; position: relative;">
+                                                                        <div class="timeline-badge bg-info rounded-circle mx-auto" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; z-index: 1;">
+                                                                            <i class="mdi mdi-check text-white"></i>
+                                                                        </div>
+                                                                        <div class="timeline-panel mt-2">
+                                                                            <h6 class="mb-1 font-weight-bold" style="font-size: 11px;">{{ $trace->event ? $trace->event->name : 'Sin evento' }}</h6>
+                                                                            <p class="text-muted mb-0" style="font-size: 10px;">{{ \Carbon\Carbon::parse($trace->created_at)->format('d/m/Y') }}</p>
+                                                                            <p class="text-muted" style="font-size: 9px;">{{ \Carbon\Carbon::parse($trace->created_at)->format('H:i') }}</p>
+                                                                        </div>
+                                                                        @if($index < count($traces) - 1)
+                                                                            @php
+                                                                                $currentTime = \Carbon\Carbon::parse($trace->created_at);
+                                                                                $nextTime = \Carbon\Carbon::parse($traces[$index + 1]->created_at);
+                                                                                $diff = $currentTime->diff($nextTime);
+                                                                                $hours = $diff->h + ($diff->days * 24);
+                                                                                $minutes = $diff->i;
+                                                                            @endphp
+                                                                            <div class="timeline-duration" style="position: absolute; top: -20px; left: 100%; width: 150px; text-align: center; font-size: 12px; color: #6c757d;">
+                                                                                {{ $hours }}h {{ $minutes }}m
+                                                                            </div>
+                                                                        @endif
+                                                                    </li>
+                                                                @endforeach
+                                                            </ul>
+                                                            @if(count($traces) > 0)
+                                                                @php
+                                                                    $firstTime = \Carbon\Carbon::parse($traces->first()->created_at);
+                                                                    $lastTime = \Carbon\Carbon::parse($traces->last()->created_at);
+                                                                    $totalDiff = $firstTime->diff($lastTime);
+                                                                    $totalHours = $totalDiff->h + ($totalDiff->days * 24);
+                                                                    $totalMinutes = $totalDiff->i;
+                                                                @endphp
+                                                                <div class="row mt-4">
+                                                                    <div class="col-12 d-flex justify-content-center">
+                                                                        <div class="card bg-cyan text-white" style="max-width: 300px;">
+                                                                            <div class="card-body text-center py-3">
+                                                                                <h5 class="card-title mb-1" style="font-size: 13px; font-weight: bold;">Tiempo Total</h5>
+                                                                                <p class="card-text mb-0" style="font-size: 18px; font-weight: bold;">{{ $totalHours }}h {{ $totalMinutes }}m</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="tab-pane" id="view02" role="tabpanel">
@@ -782,6 +841,34 @@
 
 @section('css')
     <link rel="stylesheet" href="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.min.css')}}">
+    <style>
+        .timeline-horizontal {
+            overflow-x: auto;
+            padding: 20px 0;
+        }
+        .timeline-horizontal ul {
+            position: relative;
+            margin: 0;
+            padding: 0;
+        }
+        .timeline-horizontal ul::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #e9ecef;
+            z-index: 0;
+        }
+        .timeline-item {
+            flex: 0 0 auto;
+        }
+        .timeline-badge {
+            border: 3px solid #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+    </style>
 @endsection
 
 
