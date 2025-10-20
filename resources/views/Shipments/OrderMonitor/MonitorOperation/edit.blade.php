@@ -288,7 +288,7 @@
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-lg-8 col-md-6 col-sm-12">
-                                                <table class="table table-condensed  table-bordered">
+                                                <table class="table table-condensed  table-bordered table-striped">
                                                     <tbody>
                                                     <tr>
                                                         <th style="font-size: 11px">Inicio de Preparación</th>
@@ -473,8 +473,7 @@
 @endsection
 
 @section('css')
-    <link rel="stylesheet"
-          href="{{asset('/theme/assets/libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css')}}">
+    <link rel="stylesheet" href="{{asset('/theme/assets/libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css')}}">
 @endsection
 
 @section('script')
