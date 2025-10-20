@@ -184,6 +184,8 @@ span.select2-container {
 
 .text-button {
   font-size: 0.675rem;
+  padding-left: 3px;
+  padding-right: 3px;
 }
 
 .dropdown-item-mod {
@@ -1099,3 +1101,23 @@ tfoot input {
   width: 100%;
 }
 
+
+.timeline-horizontal > ul:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 20px; // align with center of 40px badges
+  height: 3px;
+  background-color: #E3E935;
+  z-index: 0;
+}
+
+.timeline-item .timeline-badge {
+  box-shadow: 0 0 0 3px rgba(227, 233, 53, 0.3);
+}
+
+.timeline-panel .diff {
+  margin-top: 2px;
+  color: #6c757d;
+}

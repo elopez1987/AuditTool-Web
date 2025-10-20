@@ -12201,6 +12201,8 @@ span.select2-container {
 
 .text-button {
   font-size: 0.675rem;
+  padding-left: 3px;
+  padding-right: 3px;
 }
 
 .dropdown-item-mod {
@@ -13044,3 +13046,28 @@ tfoot input {
   right: 0;
   width: 100%;
 }
+
+.timeline-horizontal > ul:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 20px;
+  height: 3px;
+  background-color: #E3E935;
+  z-index: 0;
+}
+
+.timeline-item .timeline-badge {
+  box-shadow: 0 0 0 3px rgba(227, 233, 53, 0.3);
+}
+
+.timeline-panel .diff {
+  margin-top: 2px;
+  color: #6c757d;
+}
+
+/* Timeline horizontal connector and diff text (inline addition for immediate effect) */
+.timeline-horizontal > ul:before { content: ""; position: absolute; left: 0; right: 0; top: 20px; height: 3px; background-color: #E3E935; z-index: 0; }
+.timeline-item .timeline-badge { box-shadow: 0 0 0 3px rgba(227, 233, 53, 0.3); }
+.timeline-panel .diff { margin-top: 2px; color: #6c757d; }
