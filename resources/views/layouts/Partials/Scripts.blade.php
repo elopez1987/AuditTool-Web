@@ -14,11 +14,46 @@
 <script src="{{asset('/theme/dist/js/custom.min.js')}}"></script>
 
 <script src="{{asset('theme/assets/extra-libs/toastr/dist/build/toastr.min.js')}}"></script>
+
+
 <script src="{{asset('/theme/assets/libs/select2/dist/js/select2.full.min.js')}}"></script>
 <script src="{{asset('/theme/assets/libs/select2/dist/js/select2.min.js')}}"></script>
 
+
+<style>
+    /* Ensure Select2 dropdowns appear above Bootstrap modals (fallback) */
+    .select2-container {
+        z-index: 2050 !important;
+        width: 100% !important;
+    }
+</style>
 <script>
-    $(".select2").select2();
+    (function($){
+        function initSelect2InContext($ctx){
+            $ctx.find('.select2').each(function(){
+                var $el = $(this);
+                var $modal = $el.closest('.modal');
+                if ($modal.length) {
+                    // If already initialized without proper parent, destroy and re-init scoped to modal
+                    if ($el.data('select2')) { $el.select2('destroy'); }
+                    $el.select2({ dropdownParent: $modal, width: '100%' });
+                } else {
+                    if (!$el.data('select2')) {
+                        $el.select2({ width: '100%' });
+                    }
+                }
+            });
+        }
+
+        $(function(){
+            // Initialize on page load
+            initSelect2InContext($(document));
+            // Initialize when any Bootstrap modal is shown
+            $(document).on('shown.bs.modal', '.modal', function(){
+                initSelect2InContext($(this));
+            });
+        });
+    })(jQuery);
 </script>
 
 

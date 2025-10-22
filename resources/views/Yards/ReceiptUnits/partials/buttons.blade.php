@@ -55,6 +55,13 @@
                 <span style="text-transform: capitalize">Kardex de unidad</span>
             </a>
         @endcan
+
+        @can('receiptunits.ticket')
+            <a href="{{url('downloadticket/' . $id)}}" class="dropdown-item ">
+                <img src="{{asset('/ico/papeleta.png')}}" alt="" class="img-16 ml-2">
+                <span style="text-transform: capitalize">Descargar Ticket de bascula</span>
+            </a>
+        @endcan
     </div>
 </div>
 

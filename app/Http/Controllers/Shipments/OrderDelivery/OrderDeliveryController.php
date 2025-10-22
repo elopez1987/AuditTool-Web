@@ -9,6 +9,7 @@ use App\Models\General\StorageComment;
 use App\Models\Shipments\Bridgestone\Verificacion\Storagechecklocationbridg;
 use App\Models\Shipments\Bridgestone\Verificacion\StoragechecklocationbridgVig;
 use App\Models\Shipments\OrderDeliverie;
+use App\Models\Shipments\ViewShipmentEvent;
 use App\Models\Yard\StorageUnitTrace;
 use App\Traits\Web\Shipments\OrderDelivery\CreateNewOrder;
 use App\Traits\Web\Shipments\OrderDelivery\UpdateOrderDelivery;
@@ -105,13 +106,13 @@ class OrderDeliveryController extends BaseController
         $evidences = EvidencePhoto::where('model_id', $orderdelivery->id)
             ->where('model_type', '=', 'OrderDelivery')
             ->where('auxiliary01', '=', 'SH')->get();
-        $traces = StorageUnitTrace::controlAccessUser()
-            ->where('receiptunitid', $orderdelivery->folionumber)->get();
+        $traces = StorageUnitTrace::controlAccessUser()->where('receiptunitid', $orderdelivery->folionumber)->get();
         $conteos = Storagechecklocationbridg::controlAccessUser()->where('orderid', $orderdelivery->id)->get();
         $conteosVig = StoragechecklocationbridgVig::controlAccessUser()->where('orderid', $orderdelivery->id)->get();
         $comments = StorageComment::where('modeltype', 'orderdeliveries')->where('modelid', $orderdelivery->id)->get();
+        $events = ViewShipmentEvent::controlAccessUser()->where('embarque', $orderdelivery->shipmentid)->first();
 
-        return view('Shipments.OrderDeliveries.show', compact('orderdelivery', 'evidences', 'traces', 'conteos', 'comments', 'conteosVig'));
+        return view('Shipments.OrderDeliveries.show', compact('orderdelivery', 'evidences', 'traces', 'conteos', 'comments', 'conteosVig', 'events'));
     }
 
     public function edit(OrderDeliverie $orderdelivery)

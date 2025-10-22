@@ -70,6 +70,8 @@ class StorageSchedulleReceipt extends Model
 {
     use LogsActivity;
 
+    //	$value01 = Usuario que bloquea el registro para apartarlo
+
     protected $table = 'storageschedullereceipt';
 
     protected $fillable = [

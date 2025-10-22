@@ -6,122 +6,124 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header font-14 ">
-                    Detalle de guía -- {{$orderdelivery->shipmentid}} -- <span>{{$orderdelivery->status->name}}</span>
+                    <span style="font-size: 10px">Detalle del embarque</span> -- <span
+                            style="font-size: 18px;color: red;font-weight: 700 !important;"> {{$orderdelivery->shipmentid}}  </span>
+                    -- <span style="font-size: 12px;font-style: italic">{{$orderdelivery->status->name}}</span>
                 </div>
                 <div class="card-body">
+                    <div class="row mt-2 mb-3">
+                        <div class="col-md-12">
+                            <a href="{{route('orderdeliveries.index')}}">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-outline-info btn-md text-button"
+                                        style="padding-right: 3px;"
+                                        data-toggle="tooltip" data-placement="top" title="Regresar"
+                                >
+                                    <img src="{{asset('/ico/back.png')}}" alt="" class="img-16 mr-2">
+                                    <span class="mr-2">Regresar</span>
+                                </button>
+                            </a>
+                            @can('orderdeliveries.cancel')
+                                @if($orderdelivery->statusid != "DH"  )
+                                    @if ($orderdelivery->statusid != "CA")
+                                        <a href="" style="padding-left: 5px;padding-right: 5px;"
+                                           data-target="#modal-cancel-{{$orderdelivery->id}}"
+                                           data-toggle="modal"
+                                           data-placement="top" title="Cancelar embarque">
+                                            <button type="reset"
+                                                    class="btn waves-effect waves-light btn-outline-info btn-md text-button"
+                                                    data-toggle="tooltip" data-placement="top"
+                                                    title="Cancelar Embarque">
+                                                <img src="{{asset('/ico/adcancelar.png')}}" alt=""
+                                                     class="img-16 mr-2">
+                                             <span class="mr-2"> Cancelar </span>
+                                            </button>
+                                        </a>
+                                        @include('Shipments.OrderDeliveries.cancelorder')
+                                    @endif
+                                @endif
+                            @endcan
 
+                            @can('debugshipment')
+                                @if($orderdelivery->statusid != "DH"  )
+                                    @if ($orderdelivery->statusid != "CA")
+                                        <a href="" style="padding-left: 5px;padding-right: 5px;"
+                                           data-target="#modal-debug-{{$orderdelivery->id}}" data-toggle="modal"
+                                           data-placement="top" title="Liberar embarque">
+                                            <button type="reset"
+                                                    class="btn waves-effect waves-light btn-outline-info btn-md text-button"
+                                                    data-toggle="tooltip" data-placement="top"
+                                                    title="Liberar embarque">
+                                                <img src="{{asset('/ico/unitoutput.png')}}" alt=""
+                                                     class="img-16 mr-2">
+                                                <span class="mr-2">  Liberar </span>
+                                            </button>
+                                        </a>
+                                        @include('Shipments.OrderDeliveries.debugshipment')
+                                    @endif
+                                @endif
+                            @endcan
+                            @can('orderdeliveries.delete')
+                                @if($orderdelivery->statusid != 'DH')
+                                    <a href="" style="padding-left: 5px;padding-right: 5px;"
+                                       data-target="#modal-destroy-{{$orderdelivery->id}}" data-toggle="modal"
+                                       data-placement="top" title="Eliminar embarque">
+                                        <button type="reset"
+                                                class="btn waves-effect waves-light btn-outline-info btn-md text-button"
+                                                data-toggle="tooltip" data-placement="top"
+                                                title="Eliminar Registro">
+                                            <img src="{{asset('/ico/addestroy1.png')}}" alt="" class="img-16 mr-2">
+                                           <span class="mr-2"> Eliminar </span>
+                                        </button>
+                                    </a>
+                                    @include('Shipments.OrderDeliveries.destroyorder')
+                                @endif
+                            @endcan
+                            <a href="" style="padding-left: 5px;padding-right: 5px;">
+                                <button type="reset"
+                                        class="btn waves-effect waves-light btn-outline-info btn-md text-button"
+                                        data-toggle="tooltip" data-placement="top" title="Recargar la pagina">
+                                    <img src="{{asset('/ico/reloadpage.png')}}" alt="" class="img-16 mr-2">
+                                    <span class="mr-2">Recargar </span>
+                                </button>
+                            </a>
+                            @if (!empty($evidences))
+                                @can('downloadfilesdeliveries')
+                                    <a href="{{url('downloadfilesdeliveries/' . $orderdelivery->id)}}">
+                                        <button type="button"
+                                                class="btn waves-effect waves-light btn-outline-info btn-md text-button">
+                                            <img src="{{asset('/ico/files.png')}}" alt="" class="img-16 mr-2 ">
+                                           <span class="mr-2"> Descargar Evidencias </span>
+                                        </button>
+                                    </a>
+                                @endcan
+                            @endif
+                        </div>
+                    </div>
+                    <hr class="m-t-1">
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs customtab" role="tablist">
-                        <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#view01"
-                                                role="tab"><span class="hidden-sm-up">
+                        <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#view01" role="tab"><span class="hidden-sm-up">
                                      <img src="{{asset('ico/viewdetail.png')}}" alt="" class="img-16 ml-2 mr-2">
-                                </span> <span class="hidden-xs-down">Detalle del embarque</span></a></li>
+                                </span> <span class="hidden-xs-down font-12 text-black">Detalle del embarque</span></a></li>
                         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view02" role="tab"><span
                                         class="hidden-sm-up">
                                     <img src="{{asset('ico/checklistin.png')}}" alt="" class="img-16 ml-2 mr-2">
-                                </span> <span class="hidden-xs-down">Conteo en cortina</span></a></li>
+                                </span> <span class="hidden-xs-down font-12 text-black">Conteo en cortina</span></a></li>
                         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view03" role="tab"><span
                                         class="hidden-sm-up">
                                 <img src="{{asset('ico/img.png')}}" alt="" class="img-16 ml-2 mr-2">
-                                </span> <span class="hidden-xs-down">Fotos</span></a></li>
+                                </span> <span class="hidden-xs-down font-12 text-black">Fotos</span></a></li>
                         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view04" role="tab"><span
                                         class="hidden-sm-up">
                                 <img src="{{asset('ico/notepad_bloc_notes_15549.png')}}" alt=""
                                      class="img-16 ml-2 mr-2">
-                                </span> <span class="hidden-xs-down">Comentarios</span></a></li>
+                                </span> <span class="hidden-xs-down font-12 text-black">Comentarios</span></a></li>
                     </ul>
                     <!-- Tab panes -->
                     <div class="tab-content">
                         {{--                        Detalle--}}
                         <div class="tab-pane active" id="view01" role="tabpanel">
-                            <div class="row mt-4">
-                                <div class="col-md-12">
-                                    <a href="{{route('orderdeliveries.index')}}">
-                                        <button type="button"
-                                                class="btn waves-effect waves-light btn-outline-info btn-md"
-                                                style="padding-right: 3px;"
-                                                data-toggle="tooltip" data-placement="top" title="Regresar"
-                                        >
-                                            <img src="{{asset('/ico/back.png')}}" alt="" class="img-16"> Regresar
-                                        </button>
-                                    </a>
-                                    @can('orderdeliveries.cancel')
-                                        @if($orderdelivery->statusid != "DH"  )
-                                            @if ($orderdelivery->statusid != "CA")
-                                                <a href="" style="padding-left: 5px;padding-right: 5px;"
-                                                   data-target="#modal-cancel-{{$orderdelivery->id}}"
-                                                   data-toggle="modal"
-                                                   data-placement="top" title="Cancelar embarque">
-                                                    <button type="reset"
-                                                            class="btn waves-effect waves-light btn-outline-info btn-md"
-                                                            data-toggle="tooltip" data-placement="top"
-                                                            title="Cancelar Embarque">
-                                                        <img src="{{asset('/ico/adcancelar.png')}}" alt=""
-                                                             class="img-16">
-                                                        Cancelar
-                                                    </button>
-                                                </a>
-                                                @include('Shipments.OrderDeliveries.cancelorder')
-                                            @endif
-                                        @endif
-                                    @endcan
-
-                                    @can('debugshipment')
-                                        @if($orderdelivery->statusid != "DH"  )
-                                            @if ($orderdelivery->statusid != "CA")
-                                                <a href="" style="padding-left: 5px;padding-right: 5px;"
-                                                   data-target="#modal-debug-{{$orderdelivery->id}}" data-toggle="modal"
-                                                   data-placement="top" title="Liberar embarque">
-                                                    <button type="reset"
-                                                            class="btn waves-effect waves-light btn-outline-info btn-md"
-                                                            data-toggle="tooltip" data-placement="top"
-                                                            title="Liberar embarque">
-                                                        <img src="{{asset('/ico/unitoutput.png')}}" alt=""
-                                                             class="img-16">
-                                                        Liberar
-                                                    </button>
-                                                </a>
-                                                @include('Shipments.OrderDeliveries.debugshipment')
-                                            @endif
-                                        @endif
-                                    @endcan
-                                    @can('orderdeliveries.delete')
-                                        @if($orderdelivery->statusid != 'DH')
-                                            <a href="" style="padding-left: 5px;padding-right: 5px;"
-                                               data-target="#modal-destroy-{{$orderdelivery->id}}" data-toggle="modal"
-                                               data-placement="top" title="Eliminar embarque">
-                                                <button type="reset"
-                                                        class="btn waves-effect waves-light btn-outline-info btn-md"
-                                                        data-toggle="tooltip" data-placement="top"
-                                                        title="Eliminar Registro">
-                                                    <img src="{{asset('/ico/addestroy1.png')}}" alt="" class="img-16">
-                                                    Eliminar
-                                                </button>
-                                            </a>
-                                            @include('Shipments.OrderDeliveries.destroyorder')
-                                        @endif
-                                    @endcan
-                                    <a href="" style="padding-left: 5px;padding-right: 5px;">
-                                        <button type="reset"
-                                                class="btn waves-effect waves-light btn-outline-info btn-md"
-                                                data-toggle="tooltip" data-placement="top" title="Recargar la pagina">
-                                            <img src="{{asset('/ico/reloadpage.png')}}" alt="" class="img-16"> Recargar
-                                        </button>
-                                    </a>
-                                    @if (!empty($evidences))
-                                        @can('downloadfilesdeliveries')
-                                            <a href="{{url('downloadfilesdeliveries/' . $orderdelivery->id)}}">
-                                                <button type="button"
-                                                        class="btn waves-effect waves-light btn-outline-info btn-md">
-                                                    <img src="{{asset('/ico/files.png')}}" alt="" class="img-16">
-                                                    <span style="font-size: 11px;"> Descargar Evidencias</span>
-                                                </button>
-                                            </a>
-                                        @endcan
-                                    @endif
-                                </div>
-                            </div>
-                            <hr class="m-t-1">
                             <div class="card-body border-top">
                                 <div class="row m-b-0">
                                     <!-- col -->
@@ -196,7 +198,9 @@
                                     <!-- col -->
                                     <div class="col-lg-3 col-md-6">
                                         <div class="d-flex align-items-center">
-                                            <div class="m-r-10"><span class="text-trax display-5"><i class="mdi mdi-clock"></i></span></div><div><span class="font-14">Tiempo de estadia</span>
+                                            <div class="m-r-10"><span class="text-trax display-5"><i
+                                                            class="mdi mdi-clock"></i></span></div>
+                                            <div><span class="font-14">Tiempo de estadia</span>
                                                 @php
                                                     $entryDate = optional($orderdelivery->folio)->entrydate
                                                         ? Carbon::parse($orderdelivery->folio->entrydate)
@@ -217,7 +221,8 @@
 
                                                 <h3 class="font-medium m-b-0">
                                                     @if(!is_null($hours))
-                                                        <p class="font-14 text-danger">{{ $hours }} horas y {{ $minutes }} minutos</p>
+                                                        <p class="font-14 text-danger">{{ $hours }} horas
+                                                            y {{ $minutes }} minutos</p>
                                                     @else
                                                         <p class="font-14 text-muted">Sin datos de tiempo</p>
                                                     @endif
@@ -228,14 +233,18 @@
                                     <!-- col -->
                                 </div>
                             </div>
-                            <hr class="m-t-1">
+
+                            @include('Shipments.OrderDeliveries.timeline')
+
                             <div class="row">
                                 <div class="col-lg-4 col-md-6">
                                     <div class="card ">
-                                        <div class="card-body" style="height: 235px;">
-                                            <h6 class="font-weight-light bg-inverse text-white padding-3 ">Datos de la
+                                        <div class="card-body" style="height: 280px;">
+                                            <h6 class="font-weight-light  text-white padding-3 "
+                                                style="background-color: #607d8b;border-radius: 5px;">Datos de la
                                                 entrega</h6>
                                             <table class="table table-condensed table-striped table-bordered">
+                                                <tbody>
                                                 <tr>
                                                     <td>Turno</td>
                                                     <td>{{$orderdelivery->turns->name}}</td>
@@ -247,6 +256,14 @@
                                                 <tr>
                                                     <td>Destino</td>
                                                     <td>{{$orderdelivery->customer ? $orderdelivery->customer->city : ''}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Cita de carga</td>
+                                                    <td>{{$orderdelivery->loadingdate}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Hora de llegada</td>
+                                                    <td>{{$orderdelivery->folio ? $orderdelivery->folio->entrydate : ''}}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Cita de descarga</td>
@@ -268,7 +285,7 @@
                                                                      class="img-16">
                                                                 <span class="text-red"></span></a>
                                                         @else
-                                                            <span class="text-danger font-12">Sin evidencia</span>
+                                                            <span class="text-danger ">Sin evidencia</span>
                                                         @endif
                                                     </td>
                                                 </tr>
@@ -281,17 +298,19 @@
                                                             <span class="text-red"></span></a>
                                                     </td>
                                                 </tr>
+                                                </tbody>
                                             </table>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-6">
                                     <div class="card ">
-                                        <div class="card-body" style="height: 235px;">
+                                        <div class="card-body" style="height: 280px;">
                                             <div class="row">
                                                 <div class="col-lg-10">
-                                                    <h6 class="font-weight-light bg-inverse text-white padding-3">Datos
-                                                        del
+                                                    <h6 class="font-weight-light  text-white padding-3"
+                                                        style="border-radius: 5px;padding-left: 5px;background-color: #607d8b">
+                                                        Datos del
                                                         transporte - Folio : {{$orderdelivery->folionumber}} </h6>
                                                 </div>
                                                 <div class="col-lg-2">
@@ -325,202 +344,218 @@
                                                     <td>Nombre del operador</td>
                                                     <td>{{$orderdelivery->folio ? $orderdelivery->folio->operatorname : ''}}</td>
                                                 </tr>
+                                                <tr>
+                                                    <td>ETA</td>
+                                                    <td>{{$orderdelivery->journey ? $orderdelivery->journey->eta : ''}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Fecha de entrega</td>
+                                                    <td>{{$orderdelivery->journey ? $orderdelivery->journey->arrivedate : ''}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Estatus del transporte</td>
+                                                    <td>{{$orderdelivery->journey ?  $orderdelivery->journey->auxiliary02 : ''}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tipo de Registros</td>
+                                                    <td>{{$orderdelivery->journey  ? $orderdelivery->journey->auxiliary01 : ''}}</td>
+                                                </tr>
                                             </table>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-6">
                                     <div class="card">
-                                        <div class="card-body" style="height: 235px;">
-                                            <h6 class="font-weight-light bg-inverse text-white padding-3">Estatus del
+                                        <div class="card-body" style="height: 280px;">
+                                            <h6 class="font-weight-light text-white padding-3"
+                                                style="background-color: #607d8b;border-radius: 5px">Estatus del
                                                 proceso</h6>
-                                            <table class="table table-condensed table-striped table-bordered">
-                                                <tr>
-                                                    <td style="width: 30%">Arribo de la unidad</td>
-                                                    <td style="width: 10%">
-                                                        @if ($orderdelivery->folionumber != null)
-                                                            <span>100%</span>
-                                                        @else
-                                                            <span>0%</span>
-                                                        @endif
-                                                    </td>
-                                                    <td>
-                                                        <div class="progress">
-                                                            <div class="progress-bar
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <table class="table table-condensed table-striped table-bordered">
+                                                        <tr>
+                                                            <td style="width: 30%">Arribo de la unidad</td>
+                                                            <td style="width: 10%">
+                                                                @if ($orderdelivery->folionumber != null)
+                                                                    <span>100%</span>
+                                                                @else
+                                                                    <span>0%</span>
+                                                                @endif
+                                                            </td>
+                                                            <td>
+                                                                <div class="progress">
+                                                                    <div class="progress-bar
                                                     @if ($orderdelivery->folionumber != null)
                                                         bg-success
                                                             @else
                                                         bg-info
                                                             @endif
                                                         progress-bar-striped"
-                                                                 aria-valuenow="100" aria-valuemin="0"
-                                                                 aria-valuemax="100"
-                                                                 style="width: 100%; height:20px;" role="progressbar">
+                                                                         aria-valuenow="100" aria-valuemin="0"
+                                                                         aria-valuemax="100"
+                                                                         style="width: 100%; height:20px;"
+                                                                         role="progressbar">
                                                         <span
                                                                 class="sr-only">100% Complete (success)
                                                         </span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Enrampado</td>
-                                                    <td style="width: 10%">
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Enrampado</td>
+                                                            <td style="width: 10%">
 
-                                                        @if ($orderdelivery->folio ? $orderdelivery->folio->ensnare : null)
-                                                            <span>100%</span>
-                                                        @else
-                                                            <span>0%</span>
-                                                        @endif
-                                                    </td>
-                                                    <td>
-                                                        <div class="progress">
-                                                            <div class="progress-bar
+                                                                @if ($orderdelivery->folio ? $orderdelivery->folio->ensnare : null)
+                                                                    <span>100%</span>
+                                                                @else
+                                                                    <span>0%</span>
+                                                                @endif
+                                                            </td>
+                                                            <td>
+                                                                <div class="progress">
+                                                                    <div class="progress-bar
                                                          @if ($orderdelivery->folio ? $orderdelivery->folio->ensnare : '')
                                                         bg-success
                                                         @else
                                                         bg-info
                                                         @endif
                                                         progress-bar-striped"
-                                                                 aria-valuenow="100" aria-valuemin="0"
-                                                                 aria-valuemax="100"
-                                                                 style="width: 100%; height:20px;" role="progressbar">
+                                                                         aria-valuenow="100" aria-valuemin="0"
+                                                                         aria-valuemax="100"
+                                                                         style="width: 100%; height:20px;"
+                                                                         role="progressbar">
                                                         <span
                                                                 class="sr-only">100% Complete (success)
                                                         </span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Cargado</td>
-                                                    <td style="width: 10%">
-                                                        @if ($orderdelivery->header ? $orderdelivery->header->finishdate : null)
-                                                            <span>100%</span>
-                                                        @else
-                                                            <span>0%</span>
-                                                        @endif
-                                                    </td>
-                                                    <td>
-                                                        <div class="progress">
-                                                            <div class="progress-bar
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Cargado</td>
+                                                            <td style="width: 10%">
+                                                                @if ($orderdelivery->header ? $orderdelivery->header->finishdate : null)
+                                                                    <span>100%</span>
+                                                                @else
+                                                                    <span>0%</span>
+                                                                @endif
+                                                            </td>
+                                                            <td>
+                                                                <div class="progress">
+                                                                    <div class="progress-bar
                                                         @if ($orderdelivery->header ? $orderdelivery->header->finishdate : '')
                                                         bg-success
                                                         @else
                                                         bg-info
                                                         @endif
                                                         progress-bar-striped"
-                                                                 aria-valuenow="100" aria-valuemin="0"
-                                                                 aria-valuemax="100"
-                                                                 style="width: 100%; height:20px;" role="progressbar">
+                                                                         aria-valuenow="100" aria-valuemin="0"
+                                                                         aria-valuemax="100"
+                                                                         style="width: 100%; height:20px;"
+                                                                         role="progressbar">
                                                         <span
                                                                 class="sr-only">100% Complete (success)
                                                         </span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Facturado</td>
-                                                    <td style="width: 10%">
-                                                        @if ($orderdelivery->header ? $orderdelivery->header->goodissuedate : '')
-                                                            <span>100%</span>
-                                                        @else
-                                                            <span>0%</span>
-                                                        @endif
-                                                    </td>
-                                                    <td>
-                                                        <div class="progress">
-                                                            <div class="progress-bar
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Facturado</td>
+                                                            <td style="width: 10%">
+                                                                @if ($orderdelivery->header ? $orderdelivery->header->goodissuedate : '')
+                                                                    <span>100%</span>
+                                                                @else
+                                                                    <span>0%</span>
+                                                                @endif
+                                                            </td>
+                                                            <td>
+                                                                <div class="progress">
+                                                                    <div class="progress-bar
                                                         @if ($orderdelivery->header ? $orderdelivery->header->goodissuedate : '')
                                                         bg-success
                                                         @else
                                                         bg-info
                                                         @endif
                                                         progress-bar-striped"
-                                                                 aria-valuenow="100" aria-valuemin="0"
-                                                                 aria-valuemax="100"
-                                                                 style="width: 100%; height:20px;" role="progressbar">
+                                                                         aria-valuenow="100" aria-valuemin="0"
+                                                                         aria-valuemax="100"
+                                                                         style="width: 100%; height:20px;"
+                                                                         role="progressbar">
                                                         <span
                                                                 class="sr-only">100% Complete (success)
                                                         </span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Salida Cedis</td>
-                                                    <td style="width: 10%">
-                                                        @if ($orderdelivery->folio ? $orderdelivery->folio->outputdate : '')
-                                                            <span>100%</span>
-                                                        @else
-                                                            <span>0%</span>
-                                                        @endif
-                                                    </td>
-                                                    <td>
-                                                        <div class="progress">
-                                                            <div class="progress-bar
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Salida Cedis</td>
+                                                            <td style="width: 10%">
+                                                                @if ($orderdelivery->folio ? $orderdelivery->folio->outputdate : '')
+                                                                    <span>100%</span>
+                                                                @else
+                                                                    <span>0%</span>
+                                                                @endif
+                                                            </td>
+                                                            <td>
+                                                                <div class="progress">
+                                                                    <div class="progress-bar
                                                         @if ($orderdelivery->folio ? $orderdelivery->folio->outputdate : '')
                                                         bg-success
                                                         @else
                                                         bg-info
                                                         @endif
                                                         progress-bar-striped"
-                                                                 aria-valuenow="100" aria-valuemin="0"
-                                                                 aria-valuemax="100"
-                                                                 style="width: 100%; height:20px;" role="progressbar">
+                                                                         aria-valuenow="100" aria-valuemin="0"
+                                                                         aria-valuemax="100"
+                                                                         style="width: 100%; height:20px;"
+                                                                         role="progressbar">
                                                         <span
                                                                 class="sr-only">100% Complete (success)
                                                         </span>
-                                                            </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <span style="font-size: 16px; font-weight: bold;"> Estadia Total :</span>
+                                                            @php
+                                                                $inicio = isset($events) && $events && $events->lanzamientoola ? \Carbon\Carbon::parse($events->lanzamientoola) : null;
+                                                                $fin = isset($events) && $events && $events->salidadeunidad ? \Carbon\Carbon::parse($events->salidadeunidad) : null;
+                                                            @endphp
+                                                            @if($inicio && $fin)
+                                                                @php
+                                                                    $diff = $inicio->diff($fin);
+                                                                    $hours = ($diff->d * 24) + $diff->h;
+                                                                    $minutes = $diff->i;
+                                                                @endphp
+                                                                <span>{{ $hours }}h {{ $minutes }}m</span>
+                                                            @else
+                                                                <span style="font-size: 16px; font-weight: bold;color: #607d8b"></span>
+                                                            @endif
                                                         </div>
-                                                    </td>
-                                                </tr>
-                                            </table>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <hr class="m-t-0">
                             <div class="row">
                                 <div class="col-lg-4">
                                     <div class="card ">
-                                        <div class="card-body" style="height: 235px;">
-                                            <h6 class="font-weight-light bg-inverse text-white padding-3 "> Tiempos del
-                                                proceso</h6>
-                                            <table class="table table-condensed table-striped table-bordered">
-                                                <tr>
-                                                    <td>Cita de carga</td>
-                                                    <td>{{$orderdelivery->loadingdate}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Hora de llegada</td>
-                                                    <td>{{$orderdelivery->folio ? $orderdelivery->folio->entrydate : ''}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Hora de inicio de carga</td>
-                                                    <td>{{$orderdelivery->header ? $orderdelivery->header->startdate : null}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Hora de fin de carga</td>
-                                                    <td>{{$orderdelivery->header ? $orderdelivery->header->finishdate : null}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Hora de inicio de facturación</td>
-                                                    <td>{{$orderdelivery->header ? $orderdelivery->header->startgoodissuedate : null}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Hora de fin de facturación</td>
-                                                    <td>{{$orderdelivery->header ? $orderdelivery->header->goodissuedate : null}}</td>
-                                                </tr>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="card ">
-                                        <div class="card-body" style="height: 235px;">
-                                            <h6 class="font-weight-light bg-inverse text-white padding-3 "> Datos del
+                                        <div class="card-body" style="height: 280px;">
+                                            <h6 class="font-weight-light text-white padding-3 "
+                                                style="background-color: #607d8b;border-radius: 5px"> Datos del
                                                 embarque</h6>
                                             <table class="table table-condensed table-striped table-bordered">
                                                 <tr>
@@ -547,16 +582,6 @@
                                                     <td>Pallets facturados</td>
                                                     <td>{{$orderdelivery->header ? $orderdelivery->header->totalcontainersfac : ''}}</td>
                                                 </tr>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="card ">
-                                        <div class="card-body" style="height: 235px;">
-                                            <h6 class="font-weight-light bg-inverse text-white padding-3 "> Sellos del
-                                                embarque</h6>
-                                            <table class="table table-condensed table-striped table-bordered">
                                                 <tr>
                                                     <td>Sello 01</td>
                                                     <td>{{$orderdelivery->seal ? $orderdelivery->seal->containerseal01 : ''}}</td>
@@ -566,10 +591,6 @@
                                                     <td>{{$orderdelivery->seal ? $orderdelivery->seal->containerseal02 : ''}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Sello 03</td>
-                                                    <td>{{$orderdelivery->seal ? $orderdelivery->seal->containerseal03 : ''}}</td>
-                                                </tr>
-                                                <tr>
                                                     <td>Entregado a</td>
                                                     <td>{{$orderdelivery->seal ? $orderdelivery->seal->receivername : ''}}</td>
                                                 </tr>
@@ -577,12 +598,69 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="card">
+                                        <div class="card-body" style="height: 280px;">
+                                            <h6 class="font-weight-light  text-white padding-3 "
+                                                style="background-color: #607d8b;border-radius: 5px"> Tiempos
+                                                operativos</h6>
+                                            <table class="table table-condensed table-bordered table-striped">
+                                                <tbody>
+                                                <tr>
+                                                    <td>Inicio de preparación :</td>
+                                                    <td> {{$orderdelivery->operation ? $orderdelivery->operation->startshipment : ''}}</td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Fin de preparación :</td>
+                                                    <td> {{$orderdelivery->operation ? $orderdelivery->operation->endchecker : ''}}</td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Inicio de verificación :</td>
+                                                    <td> {{$orderdelivery->check ? $orderdelivery->check->startdate : ''}}</td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Fin de verificación :</td>
+                                                    <td> {{$orderdelivery->check ? $orderdelivery->check->finishdate : ''}}</td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Inicio de carga :</td>
+                                                    <td> {{$orderdelivery->operation ? $orderdelivery->operation->startload : ''}}</td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Fin de carga :</td>
+                                                    <td> {{$orderdelivery->operation ? $orderdelivery->operation->endload : ''}}</td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Entrega de documentos :</td>
+                                                    <td> {{$orderdelivery->operation ? $orderdelivery->operation->senddocument : ''}}</td>
+                                                    <td>{{$orderdelivery->operation->user ? $orderdelivery->operation->user->name : ''}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Hora de inicio de facturación</td>
+                                                    <td>{{$orderdelivery->header ? $orderdelivery->header->startgoodissuedate : null}}</td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Hora de fin de facturación</td>
+                                                    <td>{{$orderdelivery->header ? $orderdelivery->header->goodissuedate : null}}</td>
+                                                    <td></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="col-lg-4">
                                     <div class="card ">
-                                        <div class="card-body" style="height: 235px;">
-                                            <h6 class="font-weight-light bg-inverse text-white padding-3 "> Datos
+                                        <div class="card-body" style="height: 280px;">
+                                            <h6 class="font-weight-light text-white padding-3 "
+                                                style="background-color: #607d8b;border-radius: 5px"> Datos
                                                 operativos</h6>
                                             <table class="table table-condensed table-striped table-bordered">
                                                 <tr>
@@ -605,74 +683,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <table
-                                                    class="table table-condensed table-bordered table-striped">
-                                                <thead>
-                                                <tr class="bg-inverse text-white">
-                                                    <td>Evento</td>
-                                                    <td>Fecha y hora registrada</td>
-                                                    <td>Usuario</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Lanzamiento de ola :</td>
-                                                    <td> {{$orderdelivery->operation ? $orderdelivery->operation->startshipment : ''}}</td>
-                                                    <td></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Fin de preparación :</td>
-                                                    <td> {{$orderdelivery->operation ? $orderdelivery->operation->endchecker : ''}}</td>
-                                                    <td></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Inicio de carga :</td>
-                                                    <td> {{$orderdelivery->operation ? $orderdelivery->operation->startload : ''}}</td>
-                                                    <td></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Fin de carga :</td>
-                                                    <td> {{$orderdelivery->operation ? $orderdelivery->operation->endload : ''}}</td>
-                                                    <td></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Entrega de documentos :</td>
-                                                    <td> {{$orderdelivery->operation ? $orderdelivery->operation->senddocument : ''}}</td>
-                                                    <td>{{$orderdelivery->operation->user ? $orderdelivery->operation->user->name : ''}}</td>
-                                                </tr>
-                                                </thead>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="card ">
-                                        <div class="card-body" style="height: 235px;">
-                                            <h6 class="font-weight-light bg-inverse text-white padding-3 "> Datos de
-                                                entrega del
-                                                transporte</h6>
-                                            <table class="table table-condensed table-striped table-bordered">
-                                                <tr>
-                                                    <td>ETA</td>
-                                                    <td>{{$orderdelivery->journey ? $orderdelivery->journey->eta : ''}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Fecha de entrega</td>
-                                                    <td>{{$orderdelivery->journey ? $orderdelivery->journey->arrivedate : ''}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Estatus del transporte</td>
-                                                    <td>{{$orderdelivery->journey ?  $orderdelivery->journey->auxiliary02 : ''}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Tipo de Registros</td>
-                                                    <td>{{$orderdelivery->journey  ? $orderdelivery->journey->auxiliary01 : ''}}</td>
-                                                </tr>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
 
@@ -684,7 +694,7 @@
                                     <a href="{{url('printformatcountbridgestone/' . $orderdelivery->id)}}"
                                        target="_blank">
                                         <button type="button"
-                                                class="btn waves-effect waves-light btn-outline-info btn-md"
+                                                class="btn waves-effect waves-light btn-outline-info btn-md text-button"
                                                 style="padding-right: 3px;">
                                             <img src="{{asset('/ico/papeleta.png')}}" alt="" class="img-16">
                                             Imprimir Conteo Operaciones
@@ -693,7 +703,7 @@
                                     <a href="{{url('printformatcountbridgestonevig/' . $orderdelivery->id)}}"
                                        target="_blank">
                                         <button type="button"
-                                                class="btn waves-effect waves-light btn-outline-info btn-md"
+                                                class="btn waves-effect waves-light btn-outline-info btn-md text-button"
                                                 style="padding-right: 3px;">
                                             <img src="{{asset('/ico/papeleta.png')}}" alt="" class="img-16">
                                             Imprimir Conteo Vigilancia

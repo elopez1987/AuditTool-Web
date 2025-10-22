@@ -14,7 +14,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-lg-12">
-                            <span class="font-12">¿Desea registrar el lanzamiento de ola?</span>
+                            <span class="font-12">¿Desea registrar el inicio de preparación?</span>
                         </div>
                     </div>
                     <div class="row mt-3">

@@ -159,14 +159,14 @@ class OrderMonitorSchedulle extends Model
 
     public function scopeShipmentid($query, $shipmentid)
     {
-        if (trim($shipmentid) !== '') {
+        if (trim($shipmentid) != '') {
             $query->where('viewmonitorscheduelle.shipmentid', '=', $shipmentid);
         }
     }
 
     public function scopeForStatus($query, $status)
     {
-        if (trim($status) !== '') {
+        if (trim($status) != '') {
             $query->where('viewmonitorscheduelle.statusid', '=', $status);
         }
     }

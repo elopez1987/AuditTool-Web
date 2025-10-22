@@ -33,19 +33,19 @@ trait CreateNewOrder
         self::createShipmentDataOperation($shipment);
         self::createNewProcessCheck($shipment);
         self::createEDIToRControl($shipment, $parameter);
-        if ($parameter && in_array('SWH-18', (array) $parameter)) {
+        if (! empty($parameter) && in_array('SWH-18', (array) $parameter)) {
             $this->createNewRegisterMonitor($shipment);
         }
     }
 
-    public static function createEDIToRControl($shipment, $parameter)
+    private static function createEDIToRControl($shipment, $parameter)
     {
         if (in_array('SWH-21', (array) $parameter)) {
             EdiShipment::createEDIForPlanToShipment($shipment);
         }
     }
 
-    public static function createNewRegisterHeader($shipment, $request)
+    private static function createNewRegisterHeader($shipment, $request)
     {
         ShipmentHeader::updateOrCreate(
             [
@@ -62,7 +62,7 @@ trait CreateNewOrder
         );
     }
 
-    public static function createNewRegisterSeal($shipment)
+    private static function createNewRegisterSeal($shipment)
     {
         ShipmentSeal::updateOrCreate(
             [
@@ -76,7 +76,7 @@ trait CreateNewOrder
         );
     }
 
-    public static function createNewRegisterShipmentTransport($shipment)
+    private static function createNewRegisterShipmentTransport($shipment)
     {
         StorageShipmentTransport::updateOrCreate(
             [
@@ -93,7 +93,7 @@ trait CreateNewOrder
         );
     }
 
-    public static function createShipmentDataOperation($shipment)
+    private static function createShipmentDataOperation($shipment)
     {
         ShipmentDataOperation::updateOrCreate(
             [
@@ -109,7 +109,7 @@ trait CreateNewOrder
         );
     }
 
-    public static function createNewProcessCheck($shipment)
+    private static function createNewProcessCheck($shipment)
     {
         ShipmentCheck::updateOrCreate([
             'centerid' => $shipment->centerid,
