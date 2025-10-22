@@ -19,7 +19,8 @@
                                         style="padding-right: 3px;"
                                         data-toggle="tooltip" data-placement="top" title="Regresar"
                                 >
-                                    <img src="{{asset('/ico/back.png')}}" alt="" class="img-16 mr-2"> Regresar
+                                    <img src="{{asset('/ico/back.png')}}" alt="" class="img-16 mr-2">
+                                    <span class="mr-2">Regresar</span>
                                 </button>
                             </a>
                             @can('orderdeliveries.cancel')
@@ -35,7 +36,7 @@
                                                     title="Cancelar Embarque">
                                                 <img src="{{asset('/ico/adcancelar.png')}}" alt=""
                                                      class="img-16 mr-2">
-                                                Cancelar
+                                             <span class="mr-2"> Cancelar </span>
                                             </button>
                                         </a>
                                         @include('Shipments.OrderDeliveries.cancelorder')
@@ -55,7 +56,7 @@
                                                     title="Liberar embarque">
                                                 <img src="{{asset('/ico/unitoutput.png')}}" alt=""
                                                      class="img-16 mr-2">
-                                                Liberar
+                                                <span class="mr-2">  Liberar </span>
                                             </button>
                                         </a>
                                         @include('Shipments.OrderDeliveries.debugshipment')
@@ -72,7 +73,7 @@
                                                 data-toggle="tooltip" data-placement="top"
                                                 title="Eliminar Registro">
                                             <img src="{{asset('/ico/addestroy1.png')}}" alt="" class="img-16 mr-2">
-                                            Eliminar
+                                           <span class="mr-2"> Eliminar </span>
                                         </button>
                                     </a>
                                     @include('Shipments.OrderDeliveries.destroyorder')
@@ -82,7 +83,8 @@
                                 <button type="reset"
                                         class="btn waves-effect waves-light btn-outline-info btn-md text-button"
                                         data-toggle="tooltip" data-placement="top" title="Recargar la pagina">
-                                    <img src="{{asset('/ico/reloadpage.png')}}" alt="" class="img-16 mr-2"> Recargar
+                                    <img src="{{asset('/ico/reloadpage.png')}}" alt="" class="img-16 mr-2">
+                                    <span class="mr-2">Recargar </span>
                                 </button>
                             </a>
                             @if (!empty($evidences))
@@ -90,8 +92,8 @@
                                     <a href="{{url('downloadfilesdeliveries/' . $orderdelivery->id)}}">
                                         <button type="button"
                                                 class="btn waves-effect waves-light btn-outline-info btn-md text-button">
-                                            <img src="{{asset('/ico/files.png')}}" alt="" class="img-16 mr-2"> Descargar
-                                            Evidencias
+                                            <img src="{{asset('/ico/files.png')}}" alt="" class="img-16 mr-2 ">
+                                           <span class="mr-2"> Descargar Evidencias </span>
                                         </button>
                                     </a>
                                 @endcan
@@ -101,23 +103,22 @@
                     <hr class="m-t-1">
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs customtab" role="tablist">
-                        <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#view01"
-                                                role="tab"><span class="hidden-sm-up">
+                        <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#view01" role="tab"><span class="hidden-sm-up">
                                      <img src="{{asset('ico/viewdetail.png')}}" alt="" class="img-16 ml-2 mr-2">
-                                </span> <span class="hidden-xs-down">Detalle del embarque</span></a></li>
+                                </span> <span class="hidden-xs-down font-12 text-black">Detalle del embarque</span></a></li>
                         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view02" role="tab"><span
                                         class="hidden-sm-up">
                                     <img src="{{asset('ico/checklistin.png')}}" alt="" class="img-16 ml-2 mr-2">
-                                </span> <span class="hidden-xs-down">Conteo en cortina</span></a></li>
+                                </span> <span class="hidden-xs-down font-12 text-black">Conteo en cortina</span></a></li>
                         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view03" role="tab"><span
                                         class="hidden-sm-up">
                                 <img src="{{asset('ico/img.png')}}" alt="" class="img-16 ml-2 mr-2">
-                                </span> <span class="hidden-xs-down">Fotos</span></a></li>
+                                </span> <span class="hidden-xs-down font-12 text-black">Fotos</span></a></li>
                         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view04" role="tab"><span
                                         class="hidden-sm-up">
                                 <img src="{{asset('ico/notepad_bloc_notes_15549.png')}}" alt=""
                                      class="img-16 ml-2 mr-2">
-                                </span> <span class="hidden-xs-down">Comentarios</span></a></li>
+                                </span> <span class="hidden-xs-down font-12 text-black">Comentarios</span></a></li>
                     </ul>
                     <!-- Tab panes -->
                     <div class="tab-content">

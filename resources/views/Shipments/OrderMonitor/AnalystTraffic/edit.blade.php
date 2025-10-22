@@ -5,8 +5,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    Número de embarque: <span
-                        style="font-size: 13px;font-weight: 700;text-align: left;margin-right: 100px"> {{ $orderDelivery->shipmentid}}</span>
+                    Número de embarque: <span style="font-size: 16px;color:red;font-weight: 700;text-align: left;margin-right: 100px"> {{ $orderDelivery->shipmentid}}</span>
                     Cliente: <span
                         style="font-size: 13px;font-weight: 400;text-align: left;margin-right: 100px"> {{ $orderDelivery->customer ? $orderDelivery->customer->name : ''}}</span>
                     Fecha de trabajo: <span
@@ -27,6 +26,15 @@
                                 <a href="{{ url()->previous() }}">
                                     @include('buttons.back')
                                 </a>
+
+                                @can('orderdeliveries.show')
+                                    <a href="{{url('orderdeliveries/' . $orderDelivery->id)}}" target="_blank">
+                                        <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
+                                            <img src="{{asset('/ico/viewdetail.png')}}" alt="" class="img-16">
+                                            <span style="font-size: 0.675rem "> Ver Kardex</span>
+                                        </button>
+                                    </a>
+                                @endcan
                             </div>
                         </div>
                         <hr class="mt-3"></hr>

@@ -8,7 +8,7 @@
                 <div class="card">
                     <div class="card-header">
                         Número de embarque: <span
-                            style="font-size: 18px;color: black;font-weight: 700;text-align: left;margin-right: 100px"> {{ $orderDelivery->shipmentid}}</span>
+                            style="font-size: 16px;color: black;font-weight: 700;text-align: left;margin-right: 100px;color: red"> {{ $orderDelivery->shipmentid}}</span>
                         Cliente: <span
                             style="font-size: 13px;color: black;font-weight: 400;text-align: left;margin-right: 100px"> {{ $orderDelivery->customer ? $orderDelivery->customer->name : ''}}</span>
                         Linea de transporte: <span

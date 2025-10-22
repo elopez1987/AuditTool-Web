@@ -6,11 +6,11 @@
             <div class="card">
                 <div class="card-header">
                     Número de embarque: <span
-                        style="font-size: 13px;font-weight: 700;text-align: left;margin-right: 100px"> {{ $orderDelivery->shipmentid}}</span>
+                            style="font-size: 16px;font-weight: 700;text-align: left;margin-right: 100px;color: red"> {{ $orderDelivery->shipmentid}}</span>
                     Cliente: <span
-                        style="font-size: 13px;font-weight: 400;text-align: left;margin-right: 100px"> {{ $orderDelivery->customer ? $orderDelivery->customer->name : ''}}</span>
+                            style="font-size: 13px;font-weight: 400;text-align: left;margin-right: 100px"> {{ $orderDelivery->customer ? $orderDelivery->customer->name : ''}}</span>
                     Estatus: <span
-                        style="font-size: 13px;font-weight: 400;text-align: left;margin-right: 100px"> {{ $orderDelivery->status ? $orderDelivery->status->name : ''}}</span>
+                            style="font-size: 13px;font-weight: 400;text-align: left;margin-right: 100px"> {{ $orderDelivery->status ? $orderDelivery->status->name : ''}}</span>
                 </div>
                 <div class="card-body">
                     <form method="POST" action="{{url('monitoroperation/' . $orderDelivery->id)}}"
@@ -25,6 +25,14 @@
                                 <a href="{{ url()->previous() }}">
                                     @include('buttons.back')
                                 </a>
+                                @can('orderdeliveries.show')
+                                    <a href="{{url('orderdeliveries/' . $orderDelivery->id)}}" target="_blank">
+                                        <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
+                                            <img src="{{asset('/ico/viewdetail.png')}}" alt="" class="img-16">
+                                            <span style="font-size: 0.675rem "> Ver Kardex</span>
+                                        </button>
+                                    </a>
+                                @endcan
                             </div>
                         </div>
                         <hr class="m-t-1">
@@ -32,12 +40,12 @@
                         <ul class="nav nav-tabs customtab" role="tablist">
                             <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#view01"
                                                     role="tab"><span
-                                        class="hidden-sm-up"><i class="ti-home font-12"></i></span> <span
-                                        class="hidden-xs-down ml-3 mr-3">Datos del embarque</span></a>
+                                            class="hidden-sm-up"><i class="ti-home font-12"></i></span> <span
+                                            class="hidden-xs-down ml-3 mr-3">Datos del embarque</span></a>
                             </li>
                             <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view02" role="tab"><span
-                                        class="hidden-sm-up"><i class="ti-comment font-12"></i></span> <span
-                                        class="hidden-xs-down ml-3 mr-3">Comentario</span></a>
+                                            class="hidden-sm-up"><i class="ti-comment font-12"></i></span> <span
+                                            class="hidden-xs-down ml-3 mr-3">Comentario</span></a>
                             </li>
                             <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view03" role="tab">
                                     <span class="hidden-sm-up"><i class="ti-arrows-vertical font-12"></i></span>
@@ -130,7 +138,7 @@
                                                                            name="fullpallet" id="check01"
                                                                            @if ($orderDelivery->operation ? $orderDelivery->operation->fullpallet : '' == 1)
                                                                                checked
-                                                                        @endif
+                                                                            @endif
                                                                     >
                                                                     <label class="custom-control-label" for="check01">
                                                                         Pallets terminados
@@ -148,7 +156,7 @@
                                                                            @if ($orderDelivery->operation ? $orderDelivery->operation->fullpicking : '' == 1)
 
                                                                                checked
-                                                                        @endif>
+                                                                            @endif>
                                                                     <label class="custom-control-label" for="check2">
                                                                         Restos terminados <span class="text-black-50"
                                                                                                 style="font-size: .750rem !important;">(Marque esta casilla si el proceso de piking ya finalizó. ) </span>
@@ -246,7 +254,7 @@
                                                 <div class="row mt-2">
                                                     <div class="col-lg-6">
                                                         <table
-                                                            class="table table-bordered table-condensed tablegeneral">
+                                                                class="table table-bordered table-condensed tablegeneral">
                                                             <thead>
                                                             <tr>
                                                                 <th>Sku</th>
@@ -298,17 +306,17 @@
                                                                    data-target="#modal-addstartshipment-{{$orderDelivery->id}}"
                                                                    data-toggle="modal">
                                                                     <button
-                                                                        class="btn waves-effect waves-light btn-outline-info btn-sm btn-block">
+                                                                            class="btn waves-effect waves-light btn-outline-info btn-sm btn-block">
                                                                         <img src="{{asset('/ico/priority.png')}}" alt=""
                                                                              class="img-16 ml-2 mr-2">
                                                                         <span
-                                                                            style="font-size: 0.675rem "> Iniciar</span>
+                                                                                style="font-size: 0.675rem "> Iniciar</span>
                                                                     </button>
                                                                 </a>
                                                                 @include('Shipments.OrderMonitor.MonitorOperation.Events.addstartshipment')
                                                             @else
                                                                 <span
-                                                                    style="font-size: 11px;">   {{$orderDelivery->operation->startshipment}} </span>
+                                                                        style="font-size: 11px;">   {{$orderDelivery->operation->startshipment}} </span>
                                                             @endif
                                                         </th>
                                                     </tr>
@@ -321,11 +329,11 @@
                                                                        data-target="#modal-addendchecker-{{$orderDelivery->id}}"
                                                                        data-toggle="modal">
                                                                         <button
-                                                                            class="btn waves-effect waves-light btn-outline-info btn-sm btn-block">
+                                                                                class="btn waves-effect waves-light btn-outline-info btn-sm btn-block">
                                                                             <img src="{{asset('/ico/priority.png')}}"
                                                                                  alt="" class="img-16 ml-2 mr-2">
                                                                             <span
-                                                                                style="font-size: 0.675rem "> Iniciar</span>
+                                                                                    style="font-size: 0.675rem "> Iniciar</span>
                                                                         </button>
                                                                     </a>
                                                                     @include('Shipments.OrderMonitor.MonitorOperation.Events.addendchecker')
@@ -362,10 +370,10 @@
                                                                            data-target="#modal-forload-{{$orderDelivery->id}}"
                                                                            data-toggle="modal">
                                                                             <button
-                                                                                class="btn waves-effect waves-light btn-outline-info btn-sm btn-block">
+                                                                                    class="btn waves-effect waves-light btn-outline-info btn-sm btn-block">
                                                                                 <img
-                                                                                    src="{{asset('/ico/priority.png')}}"
-                                                                                    alt="" class="img-16 ml-2 mr-2">
+                                                                                        src="{{asset('/ico/priority.png')}}"
+                                                                                        alt="" class="img-16 ml-2 mr-2">
                                                                                 <span style="font-size: 0.675rem "> Iniciar</span>
                                                                             </button>
                                                                         </a>
@@ -373,7 +381,7 @@
                                                                     @endcan
                                                                 @else
                                                                     <span
-                                                                        style="font-size: 11px;">{{$orderDelivery->operation->forload}}</span>
+                                                                            style="font-size: 11px;">{{$orderDelivery->operation->forload}}</span>
                                                                 @endif
                                                             @endif
                                                         </th>
@@ -388,10 +396,10 @@
                                                                            data-target="#modal-addstartload-{{$orderDelivery->id}}"
                                                                            data-toggle="modal">
                                                                             <button
-                                                                                class="btn waves-effect waves-light btn-outline-info btn-sm btn-block">
+                                                                                    class="btn waves-effect waves-light btn-outline-info btn-sm btn-block">
                                                                                 <img
-                                                                                    src="{{asset('/ico/priority.png')}}"
-                                                                                    alt="" class="img-16 ml-2 mr-2">
+                                                                                        src="{{asset('/ico/priority.png')}}"
+                                                                                        alt="" class="img-16 ml-2 mr-2">
                                                                                 <span style="font-size: 0.675rem "> Iniciar</span>
                                                                             </button>
                                                                         </a>
@@ -399,7 +407,7 @@
                                                                     @endcan
                                                                 @else
                                                                     <span
-                                                                        style="font-size: 11px;">{{$orderDelivery->operation->startload}}</span>
+                                                                            style="font-size: 11px;">{{$orderDelivery->operation->startload}}</span>
                                                                 @endif
                                                             @endif
                                                         </th>
@@ -414,10 +422,10 @@
                                                                            data-target="#modal-addendload-{{$orderDelivery->id}}"
                                                                            data-toggle="modal">
                                                                             <button
-                                                                                class="btn waves-effect waves-light btn-outline-info btn-sm btn-block">
+                                                                                    class="btn waves-effect waves-light btn-outline-info btn-sm btn-block">
                                                                                 <img
-                                                                                    src="{{asset('/ico/priority.png')}}"
-                                                                                    alt="" class="img-16 ml-2 mr-2">
+                                                                                        src="{{asset('/ico/priority.png')}}"
+                                                                                        alt="" class="img-16 ml-2 mr-2">
                                                                                 <span style="font-size: 0.675rem "> Iniciar</span>
                                                                             </button>
                                                                         </a>
@@ -425,7 +433,7 @@
                                                                     @endcan
                                                                 @else
                                                                     <span
-                                                                        style="font-size: 11px;">{{$orderDelivery->operation->endload}}</span>
+                                                                            style="font-size: 11px;">{{$orderDelivery->operation->endload}}</span>
                                                                 @endif
                                                             @endif
                                                         </th>
@@ -441,17 +449,17 @@
                                                                        data-target="#modal-addsenddocument-{{$orderDelivery->id}}"
                                                                        data-toggle="modal">
                                                                         <button
-                                                                            class="btn waves-effect waves-light btn-outline-info btn-sm btn-block">
+                                                                                class="btn waves-effect waves-light btn-outline-info btn-sm btn-block">
                                                                             <img src="{{asset('/ico/priority.png')}}"
                                                                                  alt="" class="img-16 ml-2 mr-2">
                                                                             <span
-                                                                                style="font-size: 0.675rem "> Iniciar</span>
+                                                                                    style="font-size: 0.675rem "> Iniciar</span>
                                                                         </button>
                                                                     </a>
                                                                     @include('Shipments.OrderMonitor.MonitorOperation.Events.addsenddocument')
                                                                 @else
                                                                     <span
-                                                                        style="font-size: 11px;">{{$orderDelivery->operation->senddocument}}</span>
+                                                                            style="font-size: 11px;">{{$orderDelivery->operation->senddocument}}</span>
                                                                 @endif
                                                             @endif
                                                         </th>
@@ -473,7 +481,8 @@
 @endsection
 
 @section('css')
-    <link rel="stylesheet" href="{{asset('/theme/assets/libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css')}}">
+    <link rel="stylesheet"
+          href="{{asset('/theme/assets/libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css')}}">
 @endsection
 
 @section('script')
