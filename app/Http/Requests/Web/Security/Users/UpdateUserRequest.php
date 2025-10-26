@@ -10,6 +10,7 @@ class UpdateUserRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:150',
+            'email' => 'required|email|max:150',
             'role_id' => 'required|exists:roles,name',
             'auxiliary01' => 'nullable|string|max:190|regex:/^[a-zA-Z0-9\s]+$/',
             'auxiliary02' => 'nullable|string|max:190|regex:/^[a-zA-Z0-9\s]+$/',

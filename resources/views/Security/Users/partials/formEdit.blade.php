@@ -13,8 +13,7 @@
                 <div class="col-lg-4 col-md-6 col-sm-12">
                     <div class="form-group">
                         <label for="email">Correo electronico</label>
-                        <input type="email" class="form-control" readonly id="email" name="email"
-                               value="{{$user->email}}"
+                        <input type="email" class="form-control"  id="email" name="email" value="{{$user->email}}"
                         >
                     </div>
                 </div>
