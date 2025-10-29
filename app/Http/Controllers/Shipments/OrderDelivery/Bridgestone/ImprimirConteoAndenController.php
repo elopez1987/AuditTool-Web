@@ -19,11 +19,12 @@ class ImprimirConteoAndenController extends BaseController
             return $this->errorResponse('No se encontró el registro solicitado.');
         }
         $conteos = Storagechecklocationbridg::controlAccessUser()->where('orderid', $orderDelivery->id)->get();
+        $total = Storagechecklocationbridg::controlAccessUser()->where('orderid', $orderDelivery->id)->select('totalfinal')->get()->sum('totalfinal');
         if (empty($conteos)) {
             return $this->errorResponse('No se encontró el registro solicitado.');
         }
         $fortmat = 'Shipments.OrderDeliveries.Formats.Bridgestone.ConteoAndenes';
-        $pdf = Pdf::loadView($fortmat, compact('orderDelivery', 'conteos'))->setPaper('A4', 'landscape');
+        $pdf = Pdf::loadView($fortmat, compact('orderDelivery', 'conteos', 'total'))->setPaper('A4', 'landscape');
 
         return response($pdf->output(), 200)->header('Content-Type', 'application/pdf');
     }
@@ -37,11 +38,12 @@ class ImprimirConteoAndenController extends BaseController
             return $this->errorResponse('No se encontró el registro solicitado.');
         }
         $conteos = StoragechecklocationbridgVig::controlAccessUser()->where('orderid', $orderDelivery->id)->get();
+        $total = StoragechecklocationbridgVig::controlAccessUser()->where('orderid', $orderDelivery->id)->select('totalfinal')->get()->sum('totalfinal');
         if (empty($conteos)) {
             return $this->errorResponse('No se encontró el registro solicitado.');
         }
         $fortmat = 'Shipments.OrderDeliveries.Formats.Bridgestone.ConteoAndenesVig';
-        $pdf = Pdf::loadView($fortmat, compact('orderDelivery', 'conteos'))->setPaper('A4', 'landscape');
+        $pdf = Pdf::loadView($fortmat, compact('orderDelivery', 'conteos', 'total'))->setPaper('A4', 'landscape');
 
         return response($pdf->output(), 200)->header('Content-Type', 'application/pdf');
     }

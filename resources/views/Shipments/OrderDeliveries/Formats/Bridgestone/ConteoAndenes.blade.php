@@ -32,31 +32,6 @@
             clear: both;
         }
 
-        /*table {*/
-        /*    border-collapse: collapse;*/
-        /*    border-spacing: 0;*/
-        /*    width: 100%;*/
-        /*    border: 1px solid #ddd;*/
-        /*}*/
-
-        /*th,*/
-        /*td {*/
-        /*    text-align: center;*/
-        /*    vertical-align: middle;*/
-        /*    padding: 1px;*/
-        /*    border: 1px solid #212121;*/
-        /*    font-family: Arial, Helvetica, sans-serif;*/
-        /*}*/
-
-        /*th:first-child,*/
-        /*td:first-child {*/
-        /*    text-align: left;*/
-        /*}*/
-
-        /*tr:nth-child(even) {*/
-        /*    background-color: #f2f2f2*/
-        /*}*/
-
         .table-bordered {
             border: 1px solid #212121;
         }
@@ -71,7 +46,7 @@
 
         .pdf-item {
             float: left;
-            width: 19%;           /* 5 tablas por fila */
+            width: 19%; /* 5 tablas por fila */
             margin: 0.5%;
             box-sizing: border-box;
         }
@@ -129,8 +104,12 @@
                 @if($conteos->count() > 0)
                     <div class="row" style="margin-bottom: 10px;margin-top: 10px">
                         <table class="border-none" style="width: 60%;margin-left: 100px">
-                            {{--                            <th class="border-none" style="height: 20px;padding-left: 10px;width: 20%;font-size: 10px">Supevisor de embarque: </th>--}}
-                            {{--                            <th style="border-bottom: 1px solid;width: 20%;font-size: 9px" class="border-none">{{$conteos[0]->name}} </th>--}}
+                            <th style="height: 20px;padding-left: 10px;width: 20%;font-size: 10px">
+                                Total:
+                            </th>
+                            <th style="border-bottom: 1px solid;width: 20%;font-size: 9px" >{{$total}} </th>
+
+
                             <th class="border-none" style="width: 10%;font-size: 10px">Cortina</th>
                             <th class="border-none"
                                 style="border-bottom: 1px solid;width: 10%;font-size: 10px">{{$conteos[0]->location ? $conteos[0]->location->name : ''}}</th>
@@ -153,7 +132,7 @@
                 @endif
 
 
-{{--                <div class="row">--}}
+                {{--                <div class="row">--}}
                 @if(!empty($conteos))
                     <div class="pdf-container">
                         @foreach($conteos as $conteo)
@@ -161,7 +140,8 @@
                                 <table class="table-bordered">
                                     <thead>
                                     <tr>
-                                        <th style="font-size:10px;background-color:black;color:white">Lado Izquierdo</th>
+                                        <th style="font-size:10px;background-color:black;color:white">Lado Izquierdo
+                                        </th>
                                         <th style="font-size:10px;background-color:black;color:white">Lado Derecho</th>
                                     </tr>
                                     </thead>
@@ -172,9 +152,13 @@
                                             <table class="table-bordered">
                                                 <thead>
                                                 <tr>
-                                                    <th style="font-size:8px;background-color:black;color:white">Rack</th>
-                                                    <th style="font-size:8px;background-color:black;color:white">Código</th>
-                                                    <th style="font-size:8px;background-color:black;color:white">Canal</th>
+                                                    <th style="font-size:8px;background-color:black;color:white">Rack
+                                                    </th>
+                                                    <th style="font-size:8px;background-color:black;color:white">
+                                                        Código
+                                                    </th>
+                                                    <th style="font-size:8px;background-color:black;color:white">Canal
+                                                    </th>
                                                     <th style="background-color:#0c69f1;font-size:8px">A</th>
                                                 </tr>
                                                 </thead>
@@ -199,17 +183,23 @@
                                                     <td colspan="3" style="font-size:7px">Total</td>
                                                     <td style="font-size:7px">{{ $conteo->totalIzquierdo }}</td>
                                                 </tr>
-                                                <tr><td colspan="4" style="background-color:green;height:5px;"></td></tr>
+                                                <tr>
+                                                    <td colspan="4" style="background-color:green;height:5px;"></td>
+                                                </tr>
                                                 <tr>
                                                     <td colspan="3" style="font-size:7px">Sobrante</td>
                                                     <td style="font-size:7px">{{ $conteo->sobranteizq }}</td>
                                                 </tr>
-                                                <tr><td colspan="4" style="background-color:green;height:5px;"></td></tr>
+                                                <tr>
+                                                    <td colspan="4" style="background-color:green;height:5px;"></td>
+                                                </tr>
                                                 <tr>
                                                     <td colspan="3" style="font-size:7px">Llanta NC</td>
                                                     <td style="font-size:7px">{{ $conteo->ncizq }}</td>
                                                 </tr>
-                                                <tr><td colspan="4" style="font-size:7px">Total</td></tr>
+                                                <tr>
+                                                    <td colspan="4" style="font-size:7px">Total</td>
+                                                </tr>
                                                 </tbody>
                                             </table>
                                         </td>
@@ -220,8 +210,11 @@
                                                 <thead>
                                                 <tr>
                                                     <th style="background-color:green;font-size:8px">B</th>
-                                                    <th style="font-size:8px;background-color:black;color:white">Código</th>
-                                                    <th style="font-size:8px;background-color:black;color:white">Canal</th>
+                                                    <th style="font-size:8px;background-color:black;color:white">
+                                                        Código
+                                                    </th>
+                                                    <th style="font-size:8px;background-color:black;color:white">Canal
+                                                    </th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -244,17 +237,23 @@
                                                     <td style="font-size:7px">{{ $conteo->totalderecho }}</td>
                                                     <td colspan="2" style="font-size:7px">Total</td>
                                                 </tr>
-                                                <tr><td colspan="3" style="background-color:green;height:5px;"></td></tr>
+                                                <tr>
+                                                    <td colspan="3" style="background-color:green;height:5px;"></td>
+                                                </tr>
                                                 <tr>
                                                     <td style="font-size:7px">{{ $conteo->sobranteder }}</td>
                                                     <td colspan="2" style="font-size:7px">Sobrante</td>
                                                 </tr>
-                                                <tr><td colspan="3" style="background-color:green;height:5px;"></td></tr>
+                                                <tr>
+                                                    <td colspan="3" style="background-color:green;height:5px;"></td>
+                                                </tr>
                                                 <tr>
                                                     <td style="font-size:7px">{{ $conteo->ncder }}</td>
                                                     <td colspan="2" style="font-size:7px">Llanta NC</td>
                                                 </tr>
-                                                <tr><td colspan="3" style="font-size:7px">{{ $conteo->totalfinal }}</td></tr>
+                                                <tr>
+                                                    <td colspan="3" style="font-size:7px">{{ $conteo->totalfinal }}</td>
+                                                </tr>
                                                 </tbody>
                                             </table>
                                         </td>
