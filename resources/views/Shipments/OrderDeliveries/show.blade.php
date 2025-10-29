@@ -717,8 +717,8 @@
                                     @if(!empty($conteos))
                                         @foreach($conteos as $conteo)
                                             <div class="row">
-                                                <div class="col-lg-12">
-                                                    <h3 class="text-center font-14 font-bold">Conteo Operativo</h3>
+                                                <div class="col-lg-12" style="align-content: center">
+                                                    <span class="badge bg-info  font-14 font-bold text-white mt-2 mb-2 padding-3">Conteo operaciones</span>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -893,7 +893,7 @@
                                         @foreach($conteosVig as $conteo)
                                             <div class="row">
                                                 <div class="col-lg-12">
-                                                    <h3 class="text-center font-14 font-bold">Conteo Vigilancia</h3>
+                                                    <span class="badge bg-warning font-14 font-bold text-black mt-2 mb-2 padding-3">Conteo vigilancia</span>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -1059,7 +1059,7 @@
                                                 </td>
                                                 </tbody>
                                             </table>
-                                            <hr class="m-t-2 m-b-2" style="border-color:2px solid #607d8b;">
+                                            <hr class="m-t-2 m-b-2" >
                                         @endforeach
                                     @endif
                                 </div>

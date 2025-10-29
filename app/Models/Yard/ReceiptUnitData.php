@@ -138,6 +138,10 @@ class ReceiptUnitData extends Model
         'tolerance',
     ];
 
+    protected $casts = [
+        'tolerance' => 'array',
+    ];
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()->logFillable();
