@@ -22,7 +22,7 @@ class SelectController extends Controller
         $centers = SecurityAccessWarehouse::Centers();
         $carrier = AccessCarrier::where('username', Auth::user()->username)
             ->select('carrierid')->get()->toArray();
-        if ($carrier !== null) {
+        if ($carrier != null) {
             $carriers = ShipmentCarrier::whereIn('shipmentcarriers.centerid', $centers)
                 ->whereStatusid('E')
                 ->where('shipmentcarriers.id', $carrier)
@@ -55,8 +55,7 @@ class SelectController extends Controller
 
     public function getRasonCode()
     {
-        $rason = StorageReason::whereIn('id', [1, 2, 3, 17])
-            ->select(['id', 'name'])->get();
+        $rason = StorageReason::whereIn('id', [1, 2, 3, 17])->select(['id', 'name'])->get();
 
         return response()->json($rason);
     }

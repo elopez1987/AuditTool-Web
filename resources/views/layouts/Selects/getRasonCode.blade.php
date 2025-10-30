@@ -1,13 +1,29 @@
 <script>
-    $('#razonstatusid').select2({
-        ajax: {
+    $(document).ready(function() {
+        $.ajax({
             url: '{{url('getRasonCode')}}',
+            type: 'GET',
+            dataType: 'json',
             success: function (response) {
+                var options = '';
                 $.each(response, function (indice, row) {
-                    $("#razonstatusid").append("<option value='" + row.id + "'>" + row.name + "</option>");
+                    options += "<option value='" + row.id + "'>" + row.name + "</option>";
                 });
-                $('#razonstatusid').select2();
+                $("#razonstatusid").html(options);
+                $('#razonstatusid').select2({
+                    placeholder: "Selecciona uno o más conceptos",
+                    allowClear: true,
+                    width: '100%'
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('Error cargando conceptos:', error);
+                $('#razonstatusid').select2({
+                    placeholder: "Error al cargar datos",
+                    allowClear: true,
+                    width: '100%'
+                });
             }
-        }
+        });
     });
 </script>

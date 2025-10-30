@@ -45,10 +45,12 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label class="d-block">&nbsp;</label>
-                                <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md" id="apply-filters">
-                                    <i class="fas fa-filter"></i>  <span class="text-button">Aplicar Filtros </span>
+                                <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md"
+                                        id="apply-filters">
+                                    <i class="fas fa-filter"></i> <span class="text-button">Aplicar Filtros </span>
                                 </button>
-                                <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md" id="clear-filters">
+                                <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md"
+                                        id="clear-filters">
                                     <i class="fas fa-times"></i> <span class="text-button"> Limpiar </span>
                                 </button>
                             </div>
@@ -99,54 +101,107 @@
             </div>
         </div>
     </div>
-    <div class="card">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-lg-6" id="chart-line"></div>
-                <div class="col-lg-3" id="chart-reason"></div>
-                <div class="col-lg-3" id="chart-origen"></div>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <div id="chart-line"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="card">
+                <div class="card-body">
+                    <div id="chart-reason"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="card">
+                <div class="card-body">
+                    <div  id="chart-origen"></div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="card">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-lg-4" id="chart-capacidad"></div>
-                <div class="col-lg-4" id="chart-categoria"></div>
-                <div class="col-lg-4" id="chart-unitstatu"></div>
+
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-body">
+                        <div id="chart-capacidad"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <div id="chart-categoria"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="col-lg-4" id="chart-unitstatu"></div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="card">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-lg-4" id="chart-status"></div>
-                <div class="col-lg-4" id="chart-zonas"></div>
-                <div class="col-lg-4" id="chart-estadias">
-                    <div class="card shadow-sm">
-                        <div class="card-body p-3">
-                            <h5 class="card-title font-weight-bold mb-2">Top 10 Unidades - Mayor Estadía</h5>
-                            <p class="card-subtitle text-muted mb-3" style="font-size: 12px;">Unidades ordenadas por tiempo en patio</p>
-                            <div class="table-responsive">
-                                <table class="table table-striped table-hover">
-                                    <thead class="bg-primary text-white">
+
+
+
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <div id="chart-status"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <div id="chart-zonas"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <div id="chart-estadias">
+                        <div class="card shadow-sm">
+                            <div class="card-body p-3">
+                                <h5 class="card-title font-weight-bold mb-2">Top 10 Unidades - Mayor Estadía</h5>
+                                <p class="card-subtitle text-muted mb-3" style="font-size: 12px;">Unidades ordenadas por
+                                    tiempo en patio</p>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover">
+                                        <thead class="bg-primary text-white">
                                         <tr>
                                             <th style="font-size: 12px;">Folio de Unidad</th>
                                             <th style="font-size: 12px;">Línea de Transporte</th>
                                             <th style="font-size: 12px;" class="text-right">Estadía</th>
                                         </tr>
-                                    </thead>
-                                    <tbody>
+                                        </thead>
+                                        <tbody>
                                         @foreach($topEstadias as $estadia)
                                             <tr>
-                                                <td style="font-size: 14px !important;" class="font-weight-bold">#{{ $estadia->id }}</td>
+                                                <td style="font-size: 14px !important;" class="font-weight-bold">
+                                                    #{{ $estadia->id }}</td>
                                                 <td style="font-size: 14px !important;">{{ $estadia->carrier ? $estadia->carrier->name : 'Sin Asignar' }}</td>
-                                                <td style="font-size: 12px !important;" class="text-right"><span class="badge badge-warning " style="font-size: 14px !important;" >{{ $estadia->estadia_formato }}</span>
+                                                <td style="font-size: 12px !important;" class="text-right"><span
+                                                            class="badge badge-warning "
+                                                            style="font-size: 14px !important;">{{ $estadia->estadia_formato }}</span>
                                                 </td>
                                             </tr>
                                         @endforeach
-                                    </tbody>
-                                </table>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -186,22 +241,23 @@
 
     <script>
         // Variables globales para almacenar referencias a las gráficas
-        let chartLine, chartReason, chartOrigen, chartCapacidad, chartCategoria, chartUnitstatu, chartStatus, chartZonas;
+        let chartLine, chartReason, chartOrigen, chartCapacidad, chartCategoria, chartUnitstatu, chartStatus,
+            chartZonas;
 
         $(document).ready(function () {
             // Función para aplicar filtros
-            $('#apply-filters').on('click', function() {
+            $('#apply-filters').on('click', function () {
                 const $btn = $(this);
                 const originalText = $btn.html();
-                
+
                 // Deshabilitar botón y mostrar loading
                 $btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Cargando...');
-                
+
                 const carrierId = $('#carrier_id').val();
                 const reasonId = $('#reason_id').val();
                 const warehouseId = $('#warehouse_id').val();
 
-                console.log('Enviando filtros:', { carrierId, reasonId, warehouseId });
+                console.log('Enviando filtros:', {carrierId, reasonId, warehouseId});
 
                 $.ajax({
                     url: '{{ route("home.filter") }}',
@@ -211,11 +267,11 @@
                         reason_id: reasonId,
                         warehouse_id: warehouseId
                     },
-                    success: function(data) {
+                    success: function (data) {
                         console.log('Datos recibidos:', data);
                         console.log('Tipo de datos:', typeof data);
                         console.log('Es string?', typeof data === 'string');
-                        
+
                         // Si la respuesta es un string, intentar parsearlo
                         if (typeof data === 'string') {
                             try {
@@ -227,17 +283,17 @@
                                 return;
                             }
                         }
-                        
+
                         updateCharts(data);
                     },
-                    error: function(xhr, status, error) {
+                    error: function (xhr, status, error) {
                         console.error('Error al aplicar filtros:');
                         console.error('Status:', status);
                         console.error('Error:', error);
                         console.error('Response:', xhr.responseText);
                         alert('Error al aplicar los filtros: ' + error);
                     },
-                    complete: function() {
+                    complete: function () {
                         // Restaurar botón
                         $btn.prop('disabled', false).html(originalText);
                     }
@@ -245,7 +301,7 @@
             });
 
             // Función para limpiar filtros
-            $('#clear-filters').on('click', function() {
+            $('#clear-filters').on('click', function () {
                 $('#filter-form')[0].reset();
                 $('#apply-filters').click();
             });
@@ -254,7 +310,7 @@
             function updateCharts(data) {
                 try {
                     console.log('Iniciando actualización de gráficas...');
-                    
+
                     // Actualizar cards totales
                     console.log('Actualizando cards...');
                     updateCards(data);
@@ -294,7 +350,7 @@
                     // Actualizar tabla de estadías
                     console.log('Actualizando tabla de estadías...', data.topEstadias);
                     updateEstadiasTable(data.topEstadias);
-                    
+
                     console.log('Actualización completada exitosamente');
                 } catch (error) {
                     console.error('Error al actualizar gráficas:', error);
@@ -310,7 +366,7 @@
                 // Actualizar cards por estatus
                 let statusCardsHtml = '';
                 if (data.unitsByStatus && Array.isArray(data.unitsByStatus)) {
-                    data.unitsByStatus.forEach(function(status) {
+                    data.unitsByStatus.forEach(function (status) {
                         if (status && status.unitstatus) {
                             statusCardsHtml += `
                                 <div class="col-md-6 col-sm-12 col-lg-3">
@@ -1031,7 +1087,7 @@
                 }
                 const categories = data.map(item => item.carrier ? item.carrier.name : 'Sin Asignar');
                 const values = data.map(item => parseFloat(item.total) || 0);
-                
+
                 chartLine.xAxis[0].setCategories(categories);
                 chartLine.series[0].setData(values);
             }
@@ -1047,7 +1103,7 @@
                     sliced: index === 0,
                     selected: index === 0
                 }));
-                
+
                 chartReason.series[0].setData(chartData);
             }
 
@@ -1062,7 +1118,7 @@
                     sliced: index === 0,
                     selected: index === 0
                 }));
-                
+
                 chartOrigen.series[0].setData(chartData);
             }
 
@@ -1077,7 +1133,7 @@
                     sliced: index === 0,
                     selected: index === 0
                 }));
-                
+
                 chartCapacidad.series[0].setData(chartData);
             }
 
@@ -1090,7 +1146,7 @@
                     name: item.truckcategory ? item.truckcategory.description : 'Sin Asignar',
                     y: parseFloat(item.total) || 0
                 }));
-                
+
                 chartCategoria.series[0].setData(chartData);
             }
 
@@ -1102,7 +1158,7 @@
                 }
                 const categories = data.filter(item => item.unitstatus).map(item => item.unitstatus.name);
                 const values = data.filter(item => item.unitstatus).map(item => parseFloat(item.total) || 0);
-                
+
                 chartUnitstatu.xAxis[0].setCategories(categories);
                 chartUnitstatu.series[0].setData(values);
             }
@@ -1118,7 +1174,7 @@
                     sliced: index === 0,
                     selected: index === 0
                 }));
-                
+
                 chartStatus.series[0].setData(chartData);
             }
 
@@ -1130,7 +1186,7 @@
                 }
                 const categories = data.map(item => item.zone ? item.zone.name : 'Sin Asignar');
                 const values = data.map(item => parseFloat(item.total) || 0);
-                
+
                 chartZonas.xAxis[0].setCategories(categories);
                 chartZonas.series[0].setData(values);
             }
@@ -1138,7 +1194,7 @@
             function updateEstadiasTable(data) {
                 let html = '';
                 if (data && Array.isArray(data) && data.length > 0) {
-                    data.forEach(function(estadia) {
+                    data.forEach(function (estadia) {
                         html += `
                             <tr>
                                 <td style="font-size: 14px !important;" class="font-weight-bold">#${estadia.id}</td>

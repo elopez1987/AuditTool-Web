@@ -82,28 +82,28 @@
 
                                         <div class="row mt-4">
                                             <div class="col-md-12">
-                                                <table id="table-capacity-{{$center->centerid}}" class="table table-striped table-bordered table-condensed table-capacity font-14">
+                                                <table id="table-capacity-{{$center->centerid}}" class="table table-bordered table-condensed table-capacity font-14">
                                                     <thead>
                                                     <tr>
-                                                        <th class="bg-inverse text-white"
-                                                            style="font-size: 11px !important;font-weight: 600">
+                                                        <th class="text-white"
+                                                            style="font-size: 13px !important;font-weight: 600; background-color: #78909c">
                                                             C.Distribución
                                                         </th>
-                                                        <th class="bg-inverse text-white"
-                                                            style="font-size: 11px !important;font-weight: 600">Zona
+                                                        <th class="text-white"
+                                                            style="font-size: 13px !important;font-weight: 600; background-color: #78909c">Zona
                                                         </th>
-                                                        <th class="bg-inverse text-white"
-                                                            style="font-size: 11px !important;font-weight: 600">
+                                                        <th class="text-white"
+                                                            style="font-size: 13px !important;font-weight: 600; background-color: #00c853">
                                                             Capacidad
                                                         </th>
-                                                        <th class="bg-inverse text-white"
-                                                            style="font-size: 11px !important;font-weight: 600">Ocupado
+                                                        <th class="text-white"
+                                                            style="font-size: 13px !important;font-weight: 600; background-color: #ff1744">Ocupado
                                                         </th>
-                                                        <th class="bg-inverse text-white"
-                                                            style="font-size: 11px !important;font-weight: 600">Libre
+                                                        <th class="text-white"
+                                                            style="font-size: 13px !important;font-weight: 600; background-color: #ffea00;color: black !important;">Libre
                                                         </th>
-                                                        <th class="bg-inverse text-white"
-                                                            style="font-size: 11px !important;font-weight: 600">Estatus
+                                                        <th class="text-white"
+                                                            style="font-size: 13px !important;font-weight: 600; background-color: #3d5afe">Estatus
                                                         </th>
                                                     </tr>
                                                     </thead>
@@ -114,21 +114,21 @@
                                                             $libre = $zone->capacity > 0 ? $zone->capacity - $ocupado : 0;
                                                             $porcentaje = $zone->capacity > 0 ? round((100 / $zone->capacity) * $ocupado) : 0;
                                                         @endphp
-                                                        <tr>
-                                                            <td style="font-size: 12px !important;">{{$zone->center->description}}</td>
-                                                            <td style="font-size: 12px !important;">{{$zone->name}}</td>
-                                                            <td style="font-size: 12px !important;">{{$zone->capacity}}</td>
-                                                            <td style="font-size: 12px !important;">{{$ocupado}}</td>
-                                                            <td style="font-size: 12px !important;">{{$libre}}</td>
-                                                            <td style="font-size: 12px !important;">
+                                                        <tr class="table-row-hover">
+                                                            <td style="font-size: 13px !important; font-weight: 500;">{{$zone->center->description}}</td>
+                                                            <td style="font-size: 13px !important; font-weight: 500;">{{$zone->name}}</td>
+                                                            <td style="font-size: 13px !important; font-weight: 600; color: #00c853;text-align: center">{{$zone->capacity}}</td>
+                                                            <td style="font-size: 13px !important; font-weight: 600; color: #ff1744;text-align: center">{{$ocupado}}</td>
+                                                            <td style="font-size: 13px !important; font-weight: 600; color: #00e676;text-align: center">{{$libre}}</td>
+                                                            <td style="font-size: 13px !important;">
                                                                 @if($zone->capacity > 0)
                                                                     @if($porcentaje > $center->capacityyard)
-                                                                        <span class="label label-danger font-12"> {{$porcentaje}} %</span>
+                                                                        <span class="badge badge-danger font-weight-bold" style="font-size: 13px !important; background-color: #ff1744;text-align: center">{{$porcentaje}}%</span>
                                                                     @else
-                                                                        <span class="label label-success font-12"> {{$porcentaje}} %</span>
+                                                                        <span class="badge badge-success font-weight-bold" style="font-size: 13px !important; background-color: #00e676; color: #000;text-align: center">{{$porcentaje}}%</span>
                                                                     @endif
                                                                 @else
-                                                                    <span class="label label-info font-12"> 0 %</span>
+                                                                    <span class="badge badge-primary font-weight-bold" style="font-size: 13px !important; background-color: #3d5afe;text-align: center">0%</span>
                                                                 @endif
                                                             </td>
                                                         </tr>
@@ -142,7 +142,11 @@
                                         <div class="row mt-4">
                                             @foreach($centerZones as $zone)
                                                 <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                                                    <div id="chart-zone-{{$zone->id}}" style="min-height: 300px;"></div>
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <div id="chart-zone-{{$zone->id}}" style="min-height: 300px;"></div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             @endforeach
                                         </div>
@@ -176,8 +180,25 @@
         .highcharts-credits {
             display: none !important;
         }
+        .table-capacity {
+            border: 2px solid #dee2e6 !important;
+        }
         .table-capacity tbody td {
-            font-size: 16px !important;
+            font-size: 14px !important;
+            vertical-align: middle;
+            border: 1px solid #dee2e6 !important;
+        }
+        .table-capacity thead th {
+            border: 1px solid #dee2e6 !important;
+            text-align: center;
+            vertical-align: middle;
+        }
+        .table-capacity tbody tr:hover {
+            background-color: #f8f9fa;
+            transition: background-color 0.2s ease;
+        }
+        .table-capacity tbody tr {
+            transition: background-color 0.2s ease;
         }
         .border-left-success {
             border-left: 4px solid #28a745 !important;
@@ -290,7 +311,7 @@
                 "paging": true,
                 "searching": true,
                 "ordering": true,
-                "sScrollY": "200px",
+                "sScrollY": "300px",
                 "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
                 "lengthMenu": [[25, 50, -1], [25, 50, "All"]],
                 buttons: [
