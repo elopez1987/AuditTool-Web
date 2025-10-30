@@ -163,7 +163,15 @@ class HomeController extends BaseController
         }
 
         // Total de unidades
-        $locationsBusy = $query->count();
+        $locationsBusy = (clone $query)->count();
+
+        // Unidades por estatus
+        $unitsByStatus = (clone $query)
+            ->with('unitstatus:id,name')
+            ->select(['unitstatusid', \DB::raw('COUNT(*) as total')])
+            ->groupBy('unitstatusid')
+            ->get()
+            ->keyBy('unitstatusid');
 
         // Unidades por carrier
         $unitsByCarrier = (clone $query)
@@ -173,11 +181,45 @@ class HomeController extends BaseController
             ->orderBy('total', 'desc')
             ->get();
 
-        // Unidades por estatus
-        $unitsByStatus = (clone $query)
-            ->with('unitstatus:id,name')
-            ->select(['unitstatusid', \DB::raw('COUNT(*) as total')])
-            ->groupBy('unitstatusid')
+        // Unidades por razón
+        $unitsByReason = (clone $query)
+            ->with('reason:id,name')
+            ->select(['razonstatusid', \DB::raw('COUNT(*) as total')])
+            ->groupBy('razonstatusid')
+            ->orderBy('total', 'desc')
+            ->get();
+
+        // Unidades por tipo
+        $unitsByType = (clone $query)
+            ->with('unittype:id,description')
+            ->select(['unittypeid', \DB::raw('COUNT(*) as total')])
+            ->groupBy('unittypeid')
+            ->orderBy('total', 'desc')
+            ->get();
+
+        // Unidades por camión
+        $unitsByTruck = (clone $query)
+            ->with('truck:id,name')
+            ->select(['truckid', \DB::raw('COUNT(*) as total')])
+            ->groupBy('truckid')
+            ->orderBy('total', 'desc')
+            ->limit(10)
+            ->get();
+
+        // Unidades por categoría de camión
+        $unitsByTruckCategory = (clone $query)
+            ->with('truckcategory:truckcategoryid,description')
+            ->select(['truckcategoryid', \DB::raw('COUNT(*) as total')])
+            ->groupBy('truckcategoryid')
+            ->orderBy('total', 'desc')
+            ->get();
+
+        // Unidades por estatus general
+        $unitsByGeneralStatus = (clone $query)
+            ->with('status:statusid,name')
+            ->select(['statusid', \DB::raw('COUNT(*) as total')])
+            ->groupBy('statusid')
+            ->orderBy('total', 'desc')
             ->get();
 
         // Unidades por zona
@@ -188,11 +230,32 @@ class HomeController extends BaseController
             ->orderBy('total', 'desc')
             ->get();
 
+        // Top 10 unidades con mayor estadía
+        $topEstadias = (clone $query)
+            ->with('carrier:id,name')
+            ->select(['id', 'carrierid', 'entrydate', \DB::raw('DATEDIFF(MINUTE, entrydate, GETDATE()) as minutos_estadia')])
+            ->orderBy('minutos_estadia', 'desc')
+            ->limit(10)
+            ->get()
+            ->map(function ($unit) {
+                $horas = floor($unit->minutos_estadia / 60);
+                $minutos = $unit->minutos_estadia % 60;
+                $unit->estadia_formato = sprintf('%d hrs %d min', $horas, $minutos);
+
+                return $unit;
+            });
+
         return response()->json([
             'locationsBusy' => $locationsBusy,
+            'unitsByStatus' => $unitsByStatus->values(),
             'unitsByCarrier' => $unitsByCarrier,
-            'unitsByStatus' => $unitsByStatus,
+            'unitsByReason' => $unitsByReason,
+            'unitsByType' => $unitsByType,
+            'unitsByTruck' => $unitsByTruck,
+            'unitsByTruckCategory' => $unitsByTruckCategory,
+            'unitsByGeneralStatus' => $unitsByGeneralStatus,
             'unitsByZone' => $unitsByZone,
+            'topEstadias' => $topEstadias,
         ]);
     }
 

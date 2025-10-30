@@ -149,46 +149,6 @@
                         <div class="col-lg-4">
                             <div class="card box-primary">
                                 <div class="card-header">
-                                    <h3 class="card-title text-trax" style="font-size: 12px;"> Total por Zona <span style="font-size: 0.657rem;color: red">(Existencia)</span></h3>
-                                </div>
-                                <div class="card-body no-padding">
-                                    <figure class="highcharts-figure" >
-                                        <div id="ForZone" ></div>
-                                    </figure>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="card box-primary">
-                                <div class="card-header">
-                                    <h3 class="card-title" style="font-size: 12px;"> Total por estatus. <span style="font-size: 0.657rem;color: red">(Existencia)</span></h3>
-                                </div>
-                                <div class="card-body no-padding">
-                                    <figure class="highcharts-figure">
-{{--                                        <div id="ForCarrier"></div>--}}
-                                    </figure>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="card box-primary">
-                                <div class="card-header">
-                                    <h3 class="card-title text-trax" style="font-size: 12px;"> Total por origen. <span style="font-size: 0.657rem;color: red">(Existencia)</span></h3>
-                                </div>
-                                <div class="card-body no-padding">
-                                    <figure class="highcharts-figure">
-{{--                                        <div id="ForStatus"></div>--}}
-                                    </figure>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <div class="card box-primary">
-                                <div class="card-header">
                                     <h3 class="card-title text-trax" style="font-size: 12px;"> Total por tipo de unidad.</h3>
                                 </div>
                                 <div class="card-body no-padding">
@@ -700,7 +660,6 @@
                     });
 
                     Highcharts.chart('ForStatus', {
-                        // colors: ['#585859', '#d4d952', '#d6d984', '#f0f2b3', '#f2f2f2'],
                         chart: {
                             plotBackgroundColor: null,
                             plotBorderWidth: 0,
@@ -713,12 +672,6 @@
                         tooltip: {
                             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>',
                         },
-                        // tooltip: {
-                        //     formatter: function() {
-                        //         return '<b>' + this.series.name + '</b>: <b>' + this.y + '</b><br/>' +
-                        //             '<a href="' + this.point.url + '">Ver detalle</a>'
-                        //     }
-                        // },
                         accessibility: {
                             point: {
                                 valueSuffix: '%'

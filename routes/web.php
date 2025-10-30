@@ -17,6 +17,7 @@ Route::post('password/reset', [CustomResetPasswordController::class, 'reset'])
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/home/filter', 'HomeController@filterData')->name('home.filter');
     Route::get('logout', 'HomeController@logout')->name('logout');
 
     // Subir fotografias del check list de salida de unidad
