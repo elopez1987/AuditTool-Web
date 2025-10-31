@@ -12,27 +12,14 @@
                         {{csrf_field()}}
                         <div class="row">
                             <div class="col-md-12">
-                                <a href="">
-                                    @include('buttons.search')
-                                </a>
-                                <a>
-                                    @include('buttons.reloadajax')
+                                <a href="{{route('storageshipmentfolios.index')}}">
+                                    @include('buttons.cancel')
                                 </a>
                             </div>
                         </div>
-                        <hr class="mb-2">
-                        <div class="row">
-                            <div class="col-lg-2 col-md-6 col-sm-12">
-                                <div class="form-group">
-                                    <label for="name">Embarque</label>
-                                    <input type="text" class="form-control" id="name" name="name"
-                                           aria-describedby="name">
-                                </div>
-                            </div>
-                        </div>
-                        <hr class="mt-4">
                     </form>
-                    <div class="row">
+                    <hr class="mt-3">
+                    <div class="row mt-3">
                         <div class="col-lg-12">
                             <table  class="table table-bordered table-striped table-condensed tablegeneral">
                                 <thead>
@@ -48,9 +35,9 @@
                                 <tbody>
                                     @foreach($details as $detail)
                                         <tr>
-                                            <td>{{$detail->order ? $detail->order->shipmentid : ''}}</td>
-                                            <td>{{$detail->order ? $detail->order->customer->name : ''}}</td>
-                                            <td>{{$detail->quantity}}</td>
+                                            <td style="font-size: 14px !important;">{{$detail->order ? $detail->order->shipmentid : ''}}</td>
+                                            <td style="font-size: 14px !important;">{{$detail->order ? $detail->order->customer->name : ''}}</td>
+                                            <td style="font-size: 18px !important;color: red">{{$detail->quantity}}</td>
                                             <td>
                                                 <img src="{{asset('storage/' . $detail->keyguard)}}" alt="Firma" style="width: 100px; height: 100px;">
                                             </td>
@@ -58,7 +45,7 @@
                                                 <img src="{{asset('storage/' . $detail->keysupervisor)}}" alt="Firma" style="width: 100px; height: 100px;">
                                             </td>
                                             <td>
-                                                @if($detail->keyoperator == null){
+                                                @if($detail->keyoperator == null)
                                                     Pendiente de firma
                                                 @else
                                                 <img src="{{asset('storage/' . $detail->keyoperator)}}" alt="Firma" style="width: 100px; height: 100px;">
