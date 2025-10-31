@@ -75,6 +75,17 @@ class ReceiptUnitTicketController extends BaseController
 
     }
 
+    public function update(Request $request, ReceiptUnitTicket $receiptunitticket)
+    {
+        $receiptunitticket->weightout = $request['weightout'];
+        $receiptunitticket->weightoutlb = $request['weightout'] * 2.20462;
+        $receiptunitticket->weightoutsap = $request['weightoutsap'];
+        $receiptunitticket->statusid = 'D';
+        $receiptunitticket->save();
+
+        return $this->redirectBackSuccessMessage('Registro actualizado con exito.');
+    }
+
     public function destroy(ReceiptUnitTicket $receiptunitticket)
     {
         $receiptunitticket->delete();

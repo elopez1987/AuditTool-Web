@@ -318,5 +318,5 @@ Route::middleware(['auth'])->group(function () {
     //  Ticket de pesos de báscula
     Route::resource('receiptunitticket', ReceiptUnitTicketController::class);
     Route::get('getUnitTickets', [ReceiptUnitTicketController::class, 'getUnitTickets'])->name('getUnitTickets');
-    Route::put('receiptunitticket/{id}', [ReceiptUnitTicketController::class, 'updatestatus'])->name('receiptunitticket.update');
+    Route::put('receiptunitticketstatus/{id}', [ReceiptUnitTicketController::class, 'updatestatus'])->name('receiptunitticketstatus.update');
 });
