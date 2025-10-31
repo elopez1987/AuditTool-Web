@@ -35,17 +35,17 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-lg-2 col-md-6 col-sm-12">
-                                <div class="form-group">
-                                    <label for="turnid">Turno<span style="color: red">*</span></label>
-                                    <select name="turnid" id='turnid' class="form-control select2">
-                                        <option value="" selected>Selecciona un valor</option>
-                                        @foreach($turns as $model)
-                                            <option value="{{$model->id}}"> {{$model->name}} </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
+{{--                            <div class="col-lg-2 col-md-6 col-sm-12">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="turnid">Turno<span style="color: red">*</span></label>--}}
+{{--                                    <select name="turnid" id='turnid' class="form-control select2">--}}
+{{--                                        <option value="" selected>Selecciona un valor</option>--}}
+{{--                                        @foreach($turns as $model)--}}
+{{--                                            <option value="{{$model->id}}"> {{$model->name}} </option>--}}
+{{--                                        @endforeach--}}
+{{--                                    </select>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label for="shipmentid">Embarque</label>
@@ -57,22 +57,21 @@
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label for="statusid">Estatus <span style="color: red">*</span></label>
-                                    <select name="statusid" id="statusid" class="form-control select2">
-                                        <option value="" selected>Seleeciona un valor</option>
+                                    <select name="statusid[]" id="statusid" class="form-control select2" multiple="multiple">
                                         @foreach($status as $model)
                                             <option value="{{$model->statusid}}"> {{$model->name}} </option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-lg-2 col-md-6 col-sm-12">
-                                <div class="form-group">
-                                    <label for="workday">Fecha de trabajo</label>
-                                    <input type="text" class="form-control" id="workday" name="workday"
-                                           onKeyUp=this.value=this.value.toUpperCase()
-                                    >
-                                </div>
-                            </div>
+{{--                            <div class="col-lg-2 col-md-6 col-sm-12">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="workday">Fecha de trabajo</label>--}}
+{{--                                    <input type="text" class="form-control" id="workday" name="workday"--}}
+{{--                                           onKeyUp=this.value=this.value.toUpperCase()--}}
+{{--                                    >--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                         </div>
                     </form>
                 </div>
@@ -172,10 +171,27 @@
             let nom = document.getElementById("shipmentid").value;
             sessionStorage.setItem("shipmentidop", nom);
         });
+        // Guardar valores seleccionados de statusid en sessionStorage
+        $("#statusid").on('change', function () {
+            let selectedValues = $(this).val();
+            if (selectedValues && selectedValues.length > 0) {
+                sessionStorage.setItem('statusidop', JSON.stringify(selectedValues));
+            } else {
+                sessionStorage.removeItem('statusidop');
+            }
+        });
     </script>
     <script>
         $(document).ready(function () {
             document.getElementById("shipmentid").value = sessionStorage.getItem('shipmentidop');
+            
+            // Cargar valores guardados de statusid
+            let savedStatus = sessionStorage.getItem('statusidop');
+            if (savedStatus) {
+                let statusValues = JSON.parse(savedStatus);
+                $('#statusid').val(statusValues).trigger('change');
+            }
+            
             reloadtable();
         });
     </script>
