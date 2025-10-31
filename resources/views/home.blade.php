@@ -146,7 +146,7 @@
         <div class="col-lg-4">
             <div class="card">
                 <div class="card-body">
-                    <div class="col-lg-4" id="chart-unitstatu"></div>
+                    <div  id="chart-unitstatu"></div>
                 </div>
             </div>
         </div>

@@ -61,23 +61,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
-{{--                                            @foreach($unitsByStatus as $status)--}}
-{{--                                                @if($status->unitstatus)--}}
-{{--                                                    <div class="col-md-6 col-sm-12 col-lg-2 mt-2">--}}
-{{--                                                        <div class="card border-left-info shadow h-100 py-2">--}}
-{{--                                                            <div class="card-body">--}}
-{{--                                                                <div class="d-flex align-items-center justify-content-center">--}}
-{{--                                                                    <div class="text-center">--}}
-{{--                                                                        <span class="font-14 font-weight-bold text-uppercase">{{$status->unitstatus->name}}</span>--}}
-{{--                                                                        <h2 class="font-medium m-b-0" style="font-size: 42px !important;font-weight: 700 !important;color: #17a2b8">{{$status->total}}</h2>--}}
-{{--                                                                    </div>--}}
-{{--                                                                </div>--}}
-{{--                                                            </div>--}}
-{{--                                                        </div>--}}
-{{--                                                    </div>--}}
-{{--                                                @endif--}}
-{{--                                            @endforeach--}}
                                         </div>
 
                                         <div class="row mt-4">

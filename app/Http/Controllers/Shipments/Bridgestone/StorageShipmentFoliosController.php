@@ -15,6 +15,17 @@ class StorageShipmentFoliosController extends BaseController
         return view('Shipments.Bridgestone.ShipmentFolios.index');
     }
 
+    public function show($id)
+    {
+        $this->authorize('storageshipmentfolios.show');
+        $folio = StorageShipmentFolios::controlAccessUser()->findOrFail($id);
+        $details = StorageShipmentCheckTotal::controlAccessUser()
+            ->where('folioid', $id)->get();
+
+        return view('Shipments.Bridgestone.ShipmentFolios.show', compact('details', 'folio'));
+
+    }
+
     public function getDataShipmentFolios(Request $request)
     {
         $data = StorageShipmentFolios::controlAccessUser()
