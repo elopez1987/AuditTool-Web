@@ -58,7 +58,11 @@
                                                 <img src="{{asset('storage/' . $detail->keysupervisor)}}" alt="Firma" style="width: 100px; height: 100px;">
                                             </td>
                                             <td>
+                                                @if($detail->keyoperator == null){
+                                                    Pendiente de firma
+                                                @else
                                                 <img src="{{asset('storage/' . $detail->keyoperator)}}" alt="Firma" style="width: 100px; height: 100px;">
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
