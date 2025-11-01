@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Yard\ReceiptUnit\Event;
 
 use App\Http\Controllers\BaseController;
-use App\Http\Controllers\Yard\Exception;
 use App\Http\Requests\Web\Yard\ReceiptUnit\CreateMoveBoxRequest;
 use App\Models\Receipt\ReceiptAsn;
 use App\Models\Yard\ReceiptUnit;
@@ -12,6 +11,7 @@ use App\Models\Yard\StorageUnitStatus;
 use App\Models\Yard\StorageUnitTrace;
 use App\Models\Yard\StorageZone\StorageZone;
 use DB;
+use Exception;
 use Illuminate\Http\Request;
 use Log;
 
@@ -28,7 +28,7 @@ class MoveBoxController extends BaseController
 
         return view(
             'Yards.MoveBoxes.index',
-            compact('zones', 'locations', 'unitstatus')
+            compact('zones', 'locations', 'unitstatus'),
         );
     }
 
@@ -38,19 +38,28 @@ class MoveBoxController extends BaseController
         try {
             $receiptunit = ReceiptUnit::searchForId($request['folionumber']);
             if (empty($receiptunit)) {
-                return $this->errorResponse('El número de folio no existe!!');
+                return response()->json([
+                    'success' => false,
+                    'message' => 'El número de folio no existe!!',
+                ], 422);
             }
             $parameter = $this->getParametersOfWarehouse($receiptunit->warehouseid);
             $zone = $this->getZone($request['zoneid']);
             if (! empty($parameter) && in_array('SWH-39', $parameter)) {
                 if ($receiptunit->deliverdate === null) {
-                    return $this->errorResponse('La unidad no cuenta con llegada a mesa de control,favor de realizar el evento.');
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'La unidad no cuenta con llegada a mesa de control,favor de realizar el evento.',
+                    ], 422);
                 }
             }
             if ($receiptunit->razonstatusid === 2) {
                 if (! empty($parameter) && in_array('SWH-36', $parameter)) {
                     if ($zone->zoneid === 'CO' && $receiptunit->deliverdate === null) {
-                        return $this->errorResponse('La unidad no cuenta con llegada a mesa de control,favor de realizar el evento.');
+                        return response()->json([
+                            'success' => false,
+                            'message' => 'La unidad no cuenta con llegada a mesa de control,favor de realizar el evento.',
+                        ], 422);
                     }
                 }
                 if ($zone->zoneid === 'CO') {
@@ -65,28 +74,34 @@ class MoveBoxController extends BaseController
 
             DB::commit();
 
-            return $this->redirectBackSuccessMessage('Unidad reubicada con exito!!');
+            return response()->json([
+                'success' => true,
+                'message' => 'Unidad reubicada con exito!!',
+            ], 200);
         } catch (Exception $e) {
             $error = $e->getMessage();
             Log::error($error);
             DB::rollback();
 
-            return $this->errorResponse('Error al procesar la solicitud :' . $error);
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al procesar la solicitud: ' . $error,
+            ], 500);
         }
     }
 
-    public static function updateUnitForMoveOfLocations($request, $receiptunit, $status)
+    private function updateUnitForMoveOfLocations($request, $receiptunit, $status)
     {
         $receiptunit->zoneid = $request['zoneid'];
         $receiptunit->statusid = $status;
         $receiptunit->locationid = $request['locationid'];
-        if ($request['unitstatusid'] !== '') {
-            $receiptunit->unitstatusid = $request['unitstatusid'];
-        }
+        //		if ($request['unitstatusid'] !== '') {
+        //			$receiptunit->unitstatusid = $request['unitstatusid'];
+        //		}
         $receiptunit->save();
     }
 
-    public function getStatusAndRazonStatus(ReceiptUnit $receiptunit, Request $request): array
+    private function getStatusAndRazonStatus(ReceiptUnit $receiptunit, Request $request): array
     {
         if ($receiptunit->statusid !== 'OU') {
             $status = $this->getZoneId($request, $receiptunit);
@@ -106,7 +121,7 @@ class MoveBoxController extends BaseController
         return [$status, $razonstatusid];
     }
 
-    public function getZone($zoneid)
+    private function getZone($zoneid)
     {
         return StorageZone::controlAccessUser()->where('id', $zoneid)->select(['id', 'zoneid'])->first();
     }

@@ -12,7 +12,7 @@ class CreateMoveBoxRequest extends FormRequest
             'folionumber' => 'required|numeric|max_digits:15|exists:receiptunits,id',
             'locationid' => 'required|exists:storagelocations,id',
             'zoneid' => 'required|exists:storagezones,id',
-            'unitstatusid' => 'required|exists:storageunitstatus,id',
+            //            'unitstatusid' => 'required|exists:storageunitstatus,id',
         ];
     }
 
@@ -30,8 +30,8 @@ class CreateMoveBoxRequest extends FormRequest
             'zoneid.exists' => 'The zone does not exist.',
             'locationid.required' => 'The location is required.',
             'locationid.exists' => 'The location does not exist.',
-            'unitstatusid.required' => 'The unit status is required.',
-            'unitstatusid.exists' => 'The unit status does not exist.',
+            //            'unitstatusid.required' => 'The unit status is required.',
+            //            'unitstatusid.exists' => 'The unit status does not exist.',
 
         ];
     }
