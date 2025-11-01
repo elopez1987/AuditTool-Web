@@ -113,16 +113,22 @@
             }
         });
 
+        // Variable para controlar si debemos validar el blur
+        var shouldValidateBlur = true;
+
         // Función para buscar datos del folio
         function searchFolioData() {
             var folioValue = $("#folionumber").val().trim();
             
             if (folioValue.length === 0) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error...',
-                    text: 'Ingrese el folio de la unidad!',
-                });
+                // Solo mostrar error si debemos validar
+                if (shouldValidateBlur) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error...',
+                        text: 'Ingrese el folio de la unidad!',
+                    });
+                }
                 return;
             }
             
@@ -199,6 +205,9 @@
                                 showConfirmButton: true,
                                 timer: 3000
                             }).then(() => {
+                                // Deshabilitar validación temporal
+                                shouldValidateBlur = false;
+                                
                                 $('#folionumber').val('');
                                 $('#barcode').val('');
                                 $('#operatorname').val('');
@@ -207,6 +216,11 @@
                                 $('#linea').val('');
                                 
                                 $('#folionumber').focus();
+                                
+                                // Reactivar validación después de un momento
+                                setTimeout(function() {
+                                    shouldValidateBlur = true;
+                                }, 100);
                                 
                                 $("#submitBtn").prop('disabled', false);
                             });

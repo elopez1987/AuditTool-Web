@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 class ReceiptUnitAdjustmentController extends BaseController
 {
-    //   Modulo de ajuste de unidad
+    //   Módulo de ajuste de unidad
     public function index()
     {
         $this->authorize('receiptunits.adjustmentunit');
@@ -25,8 +25,14 @@ class ReceiptUnitAdjustmentController extends BaseController
     {
         $receiptunit = ReceiptUnit::searchForId($request['folionumber']);
         if (empty($receiptunit)) {
-            return $this->errorResponse('No existe número de folio, favor de validar.');
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'No existe número de folio, favor de validar.',
+                ], 422);
+            }
         }
+
         $receiptunit->operatorname = $request['operatorname'];
         $receiptunit->boxnumber = $request['boxnumber'];
         $receiptunit->econumber = $request['econumber'];
@@ -38,6 +44,11 @@ class ReceiptUnitAdjustmentController extends BaseController
         $receiptunit->unitstatusid = $request['unitstatus'] ?? $receiptunit->unitstatusid;
         $receiptunit->save();
 
-        return $this->redirectBackSuccessMessage('Registro actualizado con exito.');
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Registro actualizado con éxito.',
+            ], 200);
+        }
     }
 }

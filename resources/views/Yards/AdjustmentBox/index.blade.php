@@ -104,17 +104,23 @@
             }
         });
 
+        // Variable para controlar si debemos validar el blur
+        var shouldValidateBlur = true;
+
         // Función para buscar datos del folio
         function searchFolioData() {
             var folioValue = $("#folionumber").val().trim();
             
             if (folioValue.length === 0) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error...',
-                    text: 'Ingrese el número de etiqueta!',
-                    width: '300px'
-                });
+                // Solo mostrar error si debemos validar
+                if (shouldValidateBlur) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error...',
+                        text: 'Ingrese el número de etiqueta!',
+                        width: '300px'
+                    });
+                }
                 return;
             }
             
@@ -201,6 +207,9 @@
                                 showConfirmButton: true,
                                 timer: 3000
                             }).then(() => {
+                                // Deshabilitar validación temporal
+                                shouldValidateBlur = false;
+                                
                                 // Limpiar todos los inputs del formulario
                                 $('#folionumber').val('');
                                 $('#carriername').val('');
@@ -213,6 +222,11 @@
                                 
                                 // Enfocar el campo de folio para nueva captura
                                 $('#folionumber').focus();
+                                
+                                // Reactivar validación después de un momento
+                                setTimeout(function() {
+                                    shouldValidateBlur = true;
+                                }, 100);
                                 
                                 // Habilitar botón de guardar
                                 $("#btnSave").prop('disabled', false);

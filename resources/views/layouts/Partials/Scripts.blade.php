@@ -27,6 +27,15 @@
         z-index: 2050 !important;
         width: 100% !important;
     }
+    
+    /* Ensure SweetAlert2 appears above Select2 and everything else */
+    .swal2-container {
+        z-index: 9999 !important;
+    }
+    
+    .swal2-popup {
+        z-index: 10000 !important;
+    }
 </style>
 <script>
     (function($){
