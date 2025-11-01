@@ -84,9 +84,15 @@
                     </div>
                     <div class="card-footer">
                         <div class="row">
-                            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                                <input type="submit" value="Rechazar Unidad" name="btn" id="2"
-                                       class="btn btn-block btn-block btn-outline-info">
+                            <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
+                                <button type="submit"   class="btn btn-block btn-block btn-outline-success btn-block">
+                                    <i class="fa fa-check ml-2 mr-2"></i>Rechazar Unidad
+                                </button>
+                            </div>
+                            <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+                                <a href="{{route('home')}}" class="btn btn-block btn-block btn-outline-danger" style="margin-left: 10px">
+                                    <i class="fas fa-times ml-2 mr-2"></i> Cancelar
+                                </a>
                             </div>
                         </div>
                     </div>

@@ -117,11 +117,13 @@
                     </div>
                     <div class="card-footer">
                         <div class="row">
-                            <div class="col-md-12">
-                                <button type="submit" id="btnSave" class="btn waves-effect waves-light btn-outline-info btn-md">
+                            <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+                                <button type="submit" id="btnSave" class="btn btn-block btn-block btn-outline-success btn-block">
                                     <i class="fas fa-save"></i> Guardar
                                 </button>
-                                <a href="{{route('home')}}" class="btn waves-effect waves-light btn-outline-info btn-md" style="margin-left: 10px">
+                            </div>
+                            <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+                                <a href="{{route('home')}}" class="btn btn-block btn-block btn-outline-danger" style="margin-left: 10px">
                                     <i class="fas fa-times"></i> Cancelar
                                 </a>
                             </div>

@@ -64,11 +64,16 @@
                     </div>
                     <div class="card-footer">
                         <div class="row">
-                            <div class="col-lg-6 col-md-4 col-sm-6 col-xs-12">
-                                <button type="submit" class="btn btn-block btn-block btn-outline-info">
-                                    <i class="ti ti-check text-green"></i>
+                            <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
+                                <button type="submit" class="btn btn-block btn-block btn-outline-success btn-block">
+                                    <i class="ti ti-check "></i>
                                     Guardar
                                 </button>
+                            </div>
+                            <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+                                <a href="{{route('home')}}" class="btn btn-block btn-block btn-outline-danger" style="margin-left: 10px">
+                                    <i class="fas fa-times"></i> Cancelar
+                                </a>
                             </div>
                         </div>
                     </div>
