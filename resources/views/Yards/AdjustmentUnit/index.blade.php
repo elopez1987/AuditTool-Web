@@ -11,18 +11,6 @@
                     @csrf
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-lg-12">
-                                <div class="alert alert-info">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button>
-                                    <h2 class="text-info font-12"><i class="fa fa-check-circle"></i> Aviso</h2>
-                                    "¡Hola! Queremos informarles que hemos realizado algunos cambios en el formulario <b>Ajuste De Unidad</b>
-                                    para hacerlo aún más fácil de usar. Los cambios realizados son : Cambio de <b>Código de Caja por Número de Folio </b> como valor de búsqueda.
-                                    ¡Esperamos que les guste la nueva versión!"
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
                             <div class="col-lg-4 col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label for="folionumber">Número de folio</label>
