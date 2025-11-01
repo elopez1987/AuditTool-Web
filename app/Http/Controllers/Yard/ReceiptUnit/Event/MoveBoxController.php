@@ -7,7 +7,6 @@ use App\Http\Requests\Web\Yard\ReceiptUnit\CreateMoveBoxRequest;
 use App\Models\Receipt\ReceiptAsn;
 use App\Models\Yard\ReceiptUnit;
 use App\Models\Yard\StorageLocation;
-use App\Models\Yard\StorageUnitStatus;
 use App\Models\Yard\StorageUnitTrace;
 use App\Models\Yard\StorageZone\StorageZone;
 use DB;
@@ -22,13 +21,10 @@ class MoveBoxController extends BaseController
         $this->authorize('movebox');
         $zones = $this->getZonesForMovementInternal();
         $locations = StorageLocation::activeLocationForZone();
-        $unitstatus = StorageUnitStatus::whereStatusid('E')
-            ->whereIn('id', ['1', '2'])
-            ->select(['name', 'id'])->get();
 
         return view(
             'Yards.MoveBoxes.index',
-            compact('zones', 'locations', 'unitstatus'),
+            compact('zones', 'locations'),
         );
     }
 

@@ -19,6 +19,7 @@
 <script src="{{asset('/theme/assets/libs/select2/dist/js/select2.full.min.js')}}"></script>
 <script src="{{asset('/theme/assets/libs/select2/dist/js/select2.min.js')}}"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.26.3/dist/sweetalert2.all.min.js"></script>
 
 <style>
     /* Ensure Select2 dropdowns appear above Bootstrap modals (fallback) */
@@ -71,3 +72,10 @@
 </script>
 
 
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        jQuery(".numeric").on('input', function () {
+            jQuery(this).val(jQuery(this).val().replace(/[^0-9]/g, ''));
+        });
+    });
+</script>

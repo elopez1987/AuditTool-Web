@@ -7,7 +7,7 @@
                 <div class="card-header">
                     Registra la entrega de documentacion a mesa de control.
                 </div>
-                <form method="POST" action="{{url('saveArriveUnitToCenter')}}" enctype="multipart/form-data">
+                <form id="arriveUnitForm">
                     @csrf
                     <div class="card-body">
                         <div class="row">
@@ -65,14 +65,13 @@
                     <div class="card-footer">
                         <div class="row">
                             <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
-                                <button type="submit" class="btn btn-block btn-block btn-outline-success btn-block">
-                                    <i class="ti ti-check "></i>
-                                    Guardar
+                                <button type="submit" class="btn btn-block btn-block btn-outline-success btn-block" id="submitBtn">
+                                    <i class="ti ti-check mr-2 "></i> Guardar
                                 </button>
                             </div>
                             <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
                                 <a href="{{route('home')}}" class="btn btn-block btn-block btn-outline-danger" style="margin-left: 10px">
-                                    <i class="fas fa-times"></i> Cancelar
+                                    <i class="fas fa-times mr-2"></i> Cancelar
                                 </a>
                             </div>
                         </div>
@@ -81,33 +80,29 @@
             </div>
         </div>
     </div>
-    @include('layouts.Partials.Errors')
 @endsection
 
 @section('css')
-    <link rel="stylesheet" href="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.min.css')}}">
+
 @endsection
 
-
-
 @section('script')
-    <script src="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.all.min.js')}}"></script>
     <script>
         $("#folionumber").blur(function () {
             if ($("#folionumber").val().length === 0) {
                 Swal.fire({
-                    type: 'error',
+                    icon: 'error',
                     title: 'Error...',
                     text: 'Ingrese el código de barra!',
-                })
+                });
             } else {
                 $.getJSON('./getDataInvoiceForFolio/' + $("#folionumber").val(), function (values) {
                     if (0 === values.length) {
                         Swal.fire({
-                            type: 'error',
+                            icon: 'error',
                             title: 'Oops...',
                             text: 'No se encuentran registros del folio!',
-                        })
+                        });
                     } else {
                         $("#boxnumber").attr("value", values[0].boxnumber);
                         $("#folionumber").attr("value", values[0].folio);
@@ -118,6 +113,73 @@
                     }
                 });
             }
+        });
+
+        $("#arriveUnitForm").on('submit', function (e) {
+            e.preventDefault();
+            
+            const folionumber = $("#folionumber").val();
+            
+            if (folionumber.length === 0) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Por favor ingrese el número de folio',
+                });
+                return;
+            }
+
+            // Deshabilitar botón de submit
+            $("#submitBtn").prop('disabled', true);
+
+            $.ajax({
+                url: '{{url("saveArriveUnitToCenter")}}',
+                method: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    folionumber: folionumber,
+                    barcode: $("#barcode").val(),
+                    linea: $("#linea").val(),
+                    operatorname: $("#operatorname").val(),
+                    boxnumber: $("#boxnumber").val(),
+                    econumber: $("#econumber").val()
+                },
+                success: function (response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Éxito!',
+                        text: response.message,
+                        showConfirmButton: true
+                    }).then((result) => {
+                        // Limpiar el formulario
+                        $("#arriveUnitForm")[0].reset();
+                        $("#boxnumber").val('');
+                        $("#folionumber").val('');
+                        $("#econumber").val('');
+                        $("#barcode").val('');
+                        $("#linea").val('');
+                        $("#operatorname").val('');
+                        $("#submitBtn").prop('disabled', false);
+                    });
+                },
+                error: function (xhr) {
+                    let errorMessage = 'Error al procesar la solicitud';
+                    
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        errorMessage = xhr.responseJSON.message;
+                    } else if (xhr.responseJSON && xhr.responseJSON.errors) {
+                        errorMessage = Object.values(xhr.responseJSON.errors).flat().join('\n');
+                    }
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: errorMessage,
+                    });
+                    
+                    $("#submitBtn").prop('disabled', false);
+                }
+            });
         });
     </script>
 @endsection

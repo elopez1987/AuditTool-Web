@@ -137,11 +137,11 @@
 @endsection
 
 @section('css')
-    <!-- SweetAlert2 CSS ya está incluido en sweetalert2.all.min.js -->
+
 @endsection
 
 @section('script')
-    <script src="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.all.min.js')}}"></script>
+
     <script>
         $(document).ready(function() {
             // Evento para cargar ubicaciones según la zona seleccionada
@@ -154,7 +154,6 @@
                     });
                 });
             });
-
             // Evento para buscar datos del folio
             $(document).on('blur', '#folionumber', function () {
                 const folioValue = $(this).val().trim();

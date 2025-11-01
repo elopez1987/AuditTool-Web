@@ -89,13 +89,7 @@
 @include('layouts.Scripts.Messages')
 @yield('script')
 
-<script type="text/javascript">
-    jQuery(document).ready(function () {
-        jQuery(".numeric").on('input', function () {
-            jQuery(this).val(jQuery(this).val().replace(/[^0-9]/g, ''));
-        });
-    });
-</script>
+
 
 </body>
 
