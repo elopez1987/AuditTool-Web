@@ -24,37 +24,29 @@ trait AuthorizeProcessExit
     use ResponseApi;
     use Responser;
 
-    public function authorizeProcess($receiptunit, $request, $platform)
+    public function authorizeProcess($receiptunit, $request)
     {
         $parameter = $this->getParametersOfWarehouse($receiptunit->warehouseid);
         if ($receiptunit->razonstatusid !== 3) {
             if (! empty($parameter) && in_array('SWH-39', $parameter)) {
                 if ($receiptunit->finishdate === null) {
-                    if ($platform === 'WEB') {
-                        return $this->errorResponse('La unidad no cuenta con fin de proceso, favor de validar. (SWH-39)');
-                    }
+                    return $this->errorResponse('La unidad no cuenta con fin de proceso, favor de validar. (SWH-39)');
                 }
             }
         }
 
-        if ($platform === 'WEB') {
-            if (in_array('SWH-24', $parameter)) {
-                if ($request['locationid'] === null) {
-                    return $this->errorResponse('La ubicación es un valor obligatorio (SWH-24)');
-                }
-                $location = $this->getStorageLocation($request['locationid']);
-                StorageLocation::updateLocation($request['locationid'], 'D', $receiptunit->boxnumber);
-            } else {
-                $location = $this->getLocationDummy($receiptunit->centerid);
+        if (in_array('SWH-24', $parameter)) {
+            if ($request['locationid'] === null) {
+                return $this->errorResponse('La ubicación es un valor obligatorio (SWH-24)');
             }
+            $location = $this->getStorageLocation($request['locationid']);
+            StorageLocation::updateLocation($request['locationid'], 'D', $receiptunit->boxnumber);
         } else {
             $location = $this->getLocationDummy($receiptunit->centerid);
         }
 
         if (empty($location)) {
-            if ($platform === 'WEB') {
-                return $this->errorResponse('La bodega no cuenta con ubicación DUMMY para colocar la caja!!');
-            }
+            return $this->errorResponse('La bodega no cuenta con ubicación DUMMY para colocar la caja!!');
         }
 
         StorageLocation::updateLocation($receiptunit->locationid, 'E', '');
@@ -63,12 +55,7 @@ trait AuthorizeProcessExit
             if (! empty($shipment)) {
                 if (! empty($parameter) && in_array('SWH-19', (array) $parameter)) {
                     if ($shipment->statusid !== 'EJ') {
-                        if ($platform === 'WEB') {
-                            return $this->errorResponse('El numero de embarque no se encuentra facturado (SWH-19)');
-                        }
-                        if ($platform === 'API') {
-                            return $this->getResponseWithErrors('autorizeExit', 'El número de embarque no se encuentra facturado (SWH-19)');
-                        }
+                        return $this->errorResponse('El numero de embarque no se encuentra facturado (SWH-19)');
                     } else {
                         $shipment->statusid = 'DT';
                         $shipment->save();
@@ -84,17 +71,13 @@ trait AuthorizeProcessExit
             if (in_array('SWH-31', (array) $parameter)) {
                 $shipmentReceipt = ReceiptAsn::searchReceiptForUnit($receiptunit->id);
                 if (! empty($shipmentReceipt) && $shipmentReceipt->unloadfinishdate === null) {
-                    if ($platform === 'WEB') {
-                        return $this->errorResponse('La descarga no ha finalizado: ' . $shipmentReceipt->shipmentid);
-                    }
+                    return $this->errorResponse('La descarga no ha finalizado: ' . $shipmentReceipt->shipmentid);
                 }
             }
         }
 
-        if ($platform === 'WEB') {
-            StorageComment::createCommentary('ReceiptUnits', $receiptunit->id, $request);
-            $this->saveCheckListAutorizeUnit($parameter, $request, $receiptunit);
-        }
+        StorageComment::createCommentary('ReceiptUnits', $receiptunit->id, $request);
+        $this->saveCheckListAutorizeUnit($parameter, $request, $receiptunit);
 
         $this->updateReceiptUnit($receiptunit, $location, $request);
         StorageUnitTrace::createTraceUnit($receiptunit, '11');
@@ -145,7 +128,6 @@ trait AuthorizeProcessExit
         $receiptunit->statusid = 'OU';
         $receiptunit->zoneid = $location->zoneid;
         $receiptunit->locationid = $location->id;
-        $receiptunit->unitstatusid = $request['unitstatusid'] ?? $receiptunit->unitstatusid;
         $receiptunit->save();
     }
 }

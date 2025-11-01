@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Yard\ReceiptUnit\Event;
 
 use App\Http\Controllers\BaseController;
-use App\Http\Controllers\Yard\Exception;
 use App\Http\Requests\Web\Yard\ReceiptUnit\AutorizeExitRequest;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\Models\Yard\ReceiptUnit;
@@ -11,6 +10,7 @@ use App\Models\Yard\StorageCheckListDetail;
 use App\Models\Yard\StorageLocation;
 use App\Traits\Web\Yard\ReceiptUnit\AuthorizeExit\AuthorizeProcessExit;
 use DB;
+use Exception;
 
 class AuthorizeExitController extends BaseController
 {
@@ -22,16 +22,15 @@ class AuthorizeExitController extends BaseController
         $this->authorize('autorizeoutput');
         $zones = $this->getZonesForMovementInternal();
         $locations = StorageLocation::activeLocationForZone();
-        $unitstatus = $this->unitStatusActiveToSelect();
         $war = SecurityAccessWarehouse::Warehouses();
         $parameter = $this->getParametersOfWarehouse($war[0]);
         $checkAS = StorageCheckListDetail::controlAccessUser()->select('storagechecklistdetails.*')
             ->leftJoin('storagechecklists', 'storagechecklistdetails.checklistid', '=', 'storagechecklists.id')
-            ->where('storagechecklists.type', 'AS')->get();
+            ->where('storagechecklists.type', 'AS')->where('storagechecklistdetails.statusid', 'E')->get();
 
         return view(
             'Yards.RegisterMovementsBox.autorizeoutput',
-            compact('zones', 'locations', 'unitstatus', 'checkAS', 'parameter')
+            compact('zones', 'locations', 'checkAS', 'parameter'),
         );
     }
 
@@ -41,20 +40,49 @@ class AuthorizeExitController extends BaseController
         try {
             $receiptunit = ReceiptUnit::searchForId($request['folionumber']);
             if (empty($receiptunit)) {
-                return $this->errorResponse('El número de caja no se encuentra en patio!!');
+                if ($request->ajax() || $request->wantsJson()) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'El número de caja no se encuentra en patio!!',
+                    ], 422);
+                }
             }
-            $resultProcess = $this->authorizeProcess($receiptunit, $request, 'WEB');
+            $resultProcess = $this->authorizeProcess($receiptunit, $request);
             if ($resultProcess) {
+                if ($request->ajax() || $request->wantsJson()) {
+                    // Extraer mensaje de error del redirect
+                    $errorMessage = 'Error al procesar la solicitud';
+                    if (session()->has('error')) {
+                        $errorMessage = session()->get('error');
+                    }
+
+                    return response()->json([
+                        'success' => false,
+                        'message' => $errorMessage,
+                    ], 422);
+                }
+
                 return $resultProcess;
             }
             DB::commit();
 
-            return $this->redirectBackSuccessMessage('Datos actualizados correctamente!!');
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Datos actualizados correctamente!!',
+                ], 200);
+            }
+
         } catch (Exception $e) {
             $error = $e->getMessage();
             DB::rollback();
 
-            return $this->errorResponse('Error al procesar la solicitud :' . $error);
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Error al procesar la solicitud: ' . $error,
+                ], 500);
+            }
         }
     }
 }
