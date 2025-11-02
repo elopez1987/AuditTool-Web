@@ -25,7 +25,7 @@
                     </form>
                     <div class="row">
                         <div class="col-lg-12">
-                            <table id="table-folios" class="table table-bordered table-striped table-condensed">
+                            <table id="table-folios" class="table table-bordered table-hover table-condensed">
                                 <thead>
                                 <tr>
                                     <th class="bg-inverse text-white">C.Distribución</th>

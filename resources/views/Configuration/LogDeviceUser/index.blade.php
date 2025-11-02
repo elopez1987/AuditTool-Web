@@ -51,7 +51,7 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <table width="100%" id="table-devices"
-                                   class="table table-condensed table-hover table-bordered table-striped">
+                                   class="table table-condensed table-hover table-bordered">
                                 <thead>
                                 <tr>
                                     <th>Número de serie</th>

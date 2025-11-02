@@ -40,7 +40,7 @@
                     </form>
                     <div class="row">
                         <div class="col-12">
-                            <table id="table-partnumber" class="table table-bordered table-striped table-condensed">
+                            <table id="table-partnumber" class="table table-bordered table-condensed">
                                 <thead>
                                 <tr>
                                     <th class="bg-inverse text-white">Bodega</th>

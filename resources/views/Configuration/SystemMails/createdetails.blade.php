@@ -80,7 +80,7 @@
 
                     <div class="row">
                         <div class="col-10">
-                            <table class="table table-condensed table-bordered table-striped">
+                            <table class="table table-condensed table-bordered">
                                 <thead>
                                 <tr>
                                     <th width="20%" class="bg-inverse text-white">C. Distribución</th>

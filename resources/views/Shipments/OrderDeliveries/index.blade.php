@@ -79,7 +79,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <table id="table-orders"
-                                   class="table table-bordered table-striped table-condensed table-hover table-uppercase">
+                                   class="table table-bordered  table-condensed table-hover table-uppercase">
                                 <thead >
                                 <tr>
                                     <th class="text-white">Bodega</th>

@@ -11,7 +11,7 @@
                     <div class="row">
                         <div class="col-10">
                             <table id="table-logs"
-                                   class="table table-bordered table-striped table-hover table-condensed tablegeneral">
+                                   class="table table-bordered  table-hover table-condensed tablegeneral">
                                 <thead>
                                 <tr>
                                     <th class="bg-inverse text-white" style="width: 50%">Evento</th>

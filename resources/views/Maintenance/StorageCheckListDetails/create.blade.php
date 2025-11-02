@@ -26,7 +26,7 @@
                     </form>
                     <div class="row">
                         <div class="col-8">
-                            <table class="table table-condensed table-striped table-bordered">
+                            <table class="table table-condensed  table-bordered">
                                 <thead>
                                 <tr>
                                     <th class="bg-inverse text-white">Punto de revisión</th>

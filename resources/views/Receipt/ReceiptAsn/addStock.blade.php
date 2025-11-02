@@ -88,7 +88,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-8">
-                            <table class="table table-bordered table-condensed table-striped tablegeneral ">
+                            <table class="table table-bordered table-condensed tablegeneral ">
                                 <thead>
                                 <tr>
                                     <th>Material</th>
@@ -141,7 +141,6 @@
 
 
 @section('css')
-    <link rel="stylesheet" href="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.min.css')}}">
     <link rel="stylesheet"
           href="{{asset('/theme/assets/libs/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css')}}">
     <link rel="stylesheet" href="{{asset('/theme/assets/libs/quill/dist/quill.snow.css')}}">
@@ -149,7 +148,6 @@
 
 @section('script')
     @include('layouts.Partials.DataTable')
-    <script src="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.all.min.js')}}"></script>
     <script src="{{asset('/theme/assets/libs/moment/moment.js')}}"></script>
     <script
         src="{{asset('/theme/assets/libs/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker-custom.js')}}"></script>

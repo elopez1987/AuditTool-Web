@@ -44,7 +44,7 @@
                     <div class="card-input">
                         <div class="row">
                             <div class="col-lg-12 col-xs-12">
-                                <table id="table-labelysystem" class="table table-bordered table-striped table-condensed">
+                                <table id="table-labelysystem" class="table table-bordered table-condensed">
                                     <thead>
                                     <tr>
                                         <th>C.Distribución</th>

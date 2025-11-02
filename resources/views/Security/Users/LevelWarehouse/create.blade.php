@@ -65,7 +65,7 @@
                                     @foreach($centers as $center)
                                         <div class="row">
                                             <div class="col-md-8">
-                                                <table class="table table-striped table-bordered table-condensed">
+                                                <table class="table table-hover table-bordered table-condensed">
                                                     <thead>
                                                     <tr>
                                                         <th class="bg-inverse text-white"></th>

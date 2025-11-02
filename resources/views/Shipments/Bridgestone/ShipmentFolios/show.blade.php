@@ -21,7 +21,7 @@
                     <hr class="mt-3">
                     <div class="row mt-3">
                         <div class="col-lg-12">
-                            <table  class="table table-bordered table-striped table-condensed tablegeneral">
+                            <table  class="table table-bordered table-hover table-condensed tablegeneral">
                                 <thead>
                                 <tr>
                                     <th >Embarque</th>

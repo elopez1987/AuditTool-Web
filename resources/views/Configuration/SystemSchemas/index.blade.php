@@ -55,7 +55,7 @@
                     <div class="card-input">
                         <div class="row">
                             <div class="col-lg-6">
-                                <table id="table-schema" class="table table-bordered table-striped table-condensed table-hover">
+                                <table id="table-schema" class="table table-bordered  table-condensed table-hover">
                                     <thead>
                                     <tr>
                                         <th class="bg-inverse text-white">Nombre</th>

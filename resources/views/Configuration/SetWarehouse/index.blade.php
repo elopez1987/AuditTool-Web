@@ -41,7 +41,7 @@
                         </div>
                         <div class="row mt-4">
                             <div class="col-lg-6">
-                                <table class="table table-condensed table-striped table-bordered">
+                                <table class="table table-condensed table-bordered">
                                     <thead>
                                     <tr>
                                         <th>Acceso</th>

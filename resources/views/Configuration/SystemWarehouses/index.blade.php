@@ -41,7 +41,7 @@
                     <hr class="mb-3">
                     <div class="row">
                         <div class="col-12">
-                            <table width="100%" id="table-warehouse" class="table table-bordered table-striped table-condensed">
+                            <table width="100%" id="table-warehouse" class="table table-bordered  table-condensed">
                                 <thead>
                                 <tr>
                                     <th class="bg-inverse text-white">C.Distribución</th>

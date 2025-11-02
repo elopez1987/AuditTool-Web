@@ -28,7 +28,7 @@
                     <div class="card-input">
                         <div class="row mt-3">
                             <div class="col-lg-6 ">
-                                <table id="table-users" class="table table-bordered table-striped table-condensed table-hover">
+                                <table id="table-users" class="table table-bordered table-condensed table-hover">
                                     <thead>
                                     <tr>
                                         <th class="bg-inverse text-white">Nombre</th>

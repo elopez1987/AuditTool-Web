@@ -38,7 +38,7 @@
                         <div class="row">
                             <div class="col-lg-12 col-xs-12">
                                 <table id="table-folio"
-                                       class="table table-bordered table-striped table-condensed table-hover">
+                                       class="table table-bordered table-condensed table-hover">
                                     <thead>
                                     <tr>
                                         <th class="bg-inverse text-white">C.Distribución</th>

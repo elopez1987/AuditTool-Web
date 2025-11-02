@@ -75,7 +75,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-12 col-md-10 col-xs-12">
-                            <table width="100%" id="table-monitorpods" class="table table-bordered table-striped table-condensed">
+                            <table width="100%" id="table-monitorpods" class="table table-bordered table-hover table-condensed">
                                 <thead>
                                 <tr>
                                     <th class="bg-inverse text-white">Transporte</th>

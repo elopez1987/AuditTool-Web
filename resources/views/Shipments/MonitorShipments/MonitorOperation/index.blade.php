@@ -29,7 +29,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <table id="table-monitortrafico"
-                                   class="table table-bordered table-striped table-condensed table-hover">
+                                   class="table table-bordered  table-condensed table-hover">
                                 <thead>
                                 <tr>
                                     <th class="bg-inverse text-white">Embarque</th>

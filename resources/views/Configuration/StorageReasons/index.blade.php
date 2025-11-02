@@ -42,7 +42,7 @@
                     <div class="row">
                         <div class="col-12">
                             <table id="table-reasons"
-                                   class="table table-bordered table-striped table-condensed table-hover">
+                                   class="table table-bordered table-condensed table-hover">
                                 <thead>
                                 <tr>
                                     <th>Código</th>

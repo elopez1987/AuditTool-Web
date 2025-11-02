@@ -50,7 +50,7 @@
                     </form>
                     <div class="row">
                         <div class="col-lg-12">
-                            <table id="table-checklisttruck" class="table table-bordered table-striped table-condensed">
+                            <table id="table-checklisttruck" class="table table-bordered table-condensed">
                                 <thead>
                                     <tr>
                                         <th class="bg-inverse text-white">Folio</th>

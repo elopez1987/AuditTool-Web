@@ -34,7 +34,7 @@
                     </form>
                     <div class="row">
                         <div class="col-lg-12">
-                            <table class="table table-hover table-condensed table-bordered table-striped tablegeneral">
+                            <table class="table table-hover table-condensed table-bordered  tablegeneral">
                                 <thead>
                                 <th class="bg-inverse text-white">C.Distribución</th>
                                 <th class="bg-inverse text-white">Inventario</th>
@@ -153,17 +153,17 @@
             buttons: [
                 {
                     "extend": "copy",
-                    "text": "<img src=\"{{asset('/pics/adcopiar.png')}}\"  alt=''><span  style='font-size: 11px;'> Copiar</span>",
+                    "text": "<img src=\"{{asset('/pics/adcopiar.png')}}\"  alt=''><span  style='font-size: .675rem;'> Copiar</span>",
                     "className": "btn btn-outline-info btn-md  btn-bold",
                 },
                 {
                     "extend": "csv",
-                    "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16'><span  style='font-size: 11px;'> Csv</span>",
+                    "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16'><span  style='font-size: .675rem;'> Csv</span>",
                     "className": "btn btn-outline-info btn-md  btn-bold",
                 },
                 {
                     "extend": "excel",
-                    "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt=''><span  style='font-size: 11px;'> Excel</span>",
+                    "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt=''><span  style='font-size: .675rem;'> Excel</span>",
                     "className": "btn btn-outline-info btn-md  btn-bold",
                 }
             ],

@@ -27,7 +27,7 @@
                     </div>
                     <div class="row">
                         <div class="col-lg-12">
-                            <table width="100%" id="table-lifttruck" class="table table-bordered table-striped table-hover table-condensed ">
+                            <table width="100%" id="table-lifttruck" class="table table-bordered table-hover table-condensed ">
                                 <thead>
                                     <tr>
                                         <th class="bg-inverse text-white">Número de serie</th>

@@ -158,7 +158,7 @@
                     <div class="card-input">
                         <div class="row">
                             <div class="col-lg-12 col-md-12">
-                                <table class="table table-condensed table-bordered table-striped tablegeneral">
+                                <table class="table table-condensed table-bordered tablegeneral">
                                     <thead>
                                     <tr>
                                         <th class="bg-inverse text-white">Secuencia</th>

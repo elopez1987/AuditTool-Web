@@ -76,7 +76,7 @@ trait SendMessageWhatsAppForTask
 
     public function getContact($task): ReceiptUnit|User
     {
-        if ($task->assignedto === 1) {
+        if ($task->assignedto == 1) {
             $contact = ReceiptUnit::controlAccessUser()->where('id', $task->receiptunitid)->select('phone')->first();
         } else {
             $contact = User::where('id', $task->operatoryard)->select('auxiliary01 as phone')->first();

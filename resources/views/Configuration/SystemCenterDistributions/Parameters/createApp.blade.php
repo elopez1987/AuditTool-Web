@@ -33,7 +33,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-10">
-                                <table class="table table-striped table-bordered table-condensed tabledata">
+                                <table class="table  table-bordered table-condensed tabledata">
                                     <thead>
                                     <tr>
                                         <th width="10%">Secuencia</th>

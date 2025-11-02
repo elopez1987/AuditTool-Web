@@ -95,7 +95,7 @@
             <div class="card">
                 <div class="card-header">Cantidad de tarimas</div>
                 <div class="card-body">
-                    <table class="table table-hover table-striped table-condensed table-bordered tablegeneral">
+                    <table class="table table-hover  table-condensed table-bordered tablegeneral">
                         <thead>
                         <tr>
                             <th>Tipo</th>
