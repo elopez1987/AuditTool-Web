@@ -22,10 +22,19 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.26.3/dist/sweetalert2.all.min.js"></script>
 
 <style>
-    /* Ensure Select2 dropdowns appear above Bootstrap modals (fallback) */
+    /* Ensure Select2 dropdowns appear above Bootstrap modals */
     .select2-container {
-        z-index: 2050 !important;
         width: 100% !important;
+    }
+    
+    /* Select2 dropdown that appears in the body should be above modal backdrop */
+    .select2-container--open {
+        z-index: 1056 !important;
+    }
+    
+    /* Select2 dropdown rendered in body above modal backdrop (1055) and modal (1050) */
+    .select2-dropdown {
+        z-index: 1056 !important;
     }
     
     /* Ensure SweetAlert2 appears above Select2 and everything else */

@@ -35,17 +35,6 @@
                                     </select>
                                 </div>
                             </div>
-{{--                            <div class="col-lg-2 col-md-6 col-sm-12">--}}
-{{--                                <div class="form-group">--}}
-{{--                                    <label for="turnid">Turno<span style="color: red">*</span></label>--}}
-{{--                                    <select name="turnid" id='turnid' class="form-control select2">--}}
-{{--                                        <option value="" selected>Selecciona un valor</option>--}}
-{{--                                        @foreach($turns as $model)--}}
-{{--                                            <option value="{{$model->id}}"> {{$model->name}} </option>--}}
-{{--                                        @endforeach--}}
-{{--                                    </select>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label for="shipmentid">Embarque</label>
@@ -64,34 +53,37 @@
                                     </select>
                                 </div>
                             </div>
-{{--                            <div class="col-lg-2 col-md-6 col-sm-12">--}}
-{{--                                <div class="form-group">--}}
-{{--                                    <label for="workday">Fecha de trabajo</label>--}}
-{{--                                    <input type="text" class="form-control" id="workday" name="workday"--}}
-{{--                                           onKeyUp=this.value=this.value.toUpperCase()--}}
-{{--                                    >--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
     <div class="row">
-        @foreach($statusQuantitys as $status)
-            <div class="col-lg-1 col-md-3">
-                <div class="card " style="border: 1px solid #cfdd01;border-radius: 8px">
-                    <div class="d-flex flex-row">
-                        <div class="p-10">
-                            <h3 class="text-black-50 m-b-0 ">{{$status->total}}</h3>
-                            <span class="text-black">{{$status->status->name}}</span>
-                        </div>
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header"></div>
+                <div class="card-body">
+                    <div class="row">
+                        @foreach($statusQuantitys as $status)
+                            <div class="col-lg-1 col-md-3">
+                                <div class="card card-shipment">
+                                        <div class="d-flex flex-row">
+                                            <div class="p-10">
+                                                <h3 class="text-black-50 m-b-0 ">{{$status->total}}</h3>
+                                                <span class="text-black">{{$status->status->name}}</span>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
-        @endforeach
+        </div>
     </div>
+
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
@@ -100,7 +92,7 @@
                     <div class="row">
                         <div class="col-12">
                             <table id="table-monitoroperation"
-                                   class="table table-bordered table-striped table-condensed table-list table-hover table-uppercase">
+                                   class="table table-bordered table-condensed table-list table-hover table-uppercase">
                                 <thead>
                                 <tr>
                                     <th class="bg-inverse text-white">Opciones</th>
@@ -134,6 +126,7 @@
                         </div>
                     </div>
                 </div>
+                <div class="card-footer"></div>
             </div>
         </div>
     </div>
@@ -143,6 +136,11 @@
     <link rel="stylesheet"
           href="{{asset('/theme/assets/libs/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css')}}">
     <link rel="stylesheet" href="{{asset('/theme/assets/libs/quill/dist/quill.snow.css')}}">
+    <style>
+        .card-shipment{
+            border-left: 3px solid #b0bec5 !important;
+        }
+    </style>
 @endsection
 
 @section('script')

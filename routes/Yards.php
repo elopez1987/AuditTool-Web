@@ -137,6 +137,8 @@ Route::middleware(['auth'])->group(function () {
     //  Tareas de enrampe y desenrampe para patieros y operadores
     Route::resource('storagetask', StorageTasksController::class);
     Route::get('getDataTask', [StorageTasksController::class, 'getDataTask'])->name('getDataTask');
+    Route::get('getZonesForCreateTask', [StorageTasksController::class, 'getZonesForCreateTask'])->name('getZonesForCreateTask');
+    Route::get('getPatierosForCreateTask', [StorageTasksController::class, 'getPatierosForCreateTask'])->name('getPatierosForCreateTask');
     //  Autorizar transporte para ser reutilizado en otro almacen y concepto de entrada.
     Route::get('autorizetransport', [AutorizeTransportController::class, 'autorizetransport'])->name('receiptunits.autorizeunit');
     Route::post('autoizetransportstore', [AutorizeTransportController::class, 'autoizetransportstore'])->name('autoizetransportstore');

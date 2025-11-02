@@ -70,7 +70,7 @@
                     </form>
                     <div class="row mt-4">
                         <div class="col-12">
-                            <table id="table-locations" class="table table-bordered  table-condensed">
+                            <table id="table-locations" class="table table-bordered  table-condensed table-hover">
                                 <thead>
                                 <tr>
                                     <th class="bg-inverse text-white">C.Distribución</th>
@@ -93,15 +93,15 @@
                     <div class="row">
                         @foreach($locations as $location)
                             <div class="col-lg-3 col-md-6">
-                                <div class="card  border-info border-top">
+                                <div class="card">
                                     <div class="card-body">
                                         <div class="d-flex no-block align-items-center">
                                             <div>
                                                 <h2>{{$location->total_locations}}</h2>
-                                                <h6 class="text-info">{{$location->zone->name}}</h6>
+                                                <h6 >{{$location->zone->name}}</h6>
                                             </div>
                                             <div class="ml-auto">
-                                                <span class="text-info display-6"><i class="ti-location-pin"></i></span>
+                                                <span class="display-6"><i class="ti-location-pin"></i></span>
                                             </div>
                                         </div>
                                     </div>
@@ -156,6 +156,64 @@
                 res.forEach(element => {
                     $("#zoneid").append(`<option value=${element.id}> ${element.name} </option>`);
                 });
+            });
+        });
+    </script>
+
+    <script>
+        // SweetAlert2 delete handler
+        $(document).on('click', '.btn-delete-location', function(e) {
+            e.preventDefault();
+            const locationId = $(this).data('id');
+            
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: '¿Deseas eliminar este registro?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Show loading
+                    Swal.fire({
+                        title: 'Eliminando...',
+                        allowOutsideClick: false,
+                        didOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
+
+                    // Send AJAX request
+                    $.ajax({
+                        url: `{{url('storagelocations')}}/${locationId}`,
+                        type: 'DELETE',
+                        data: {
+                            _token: '{{csrf_token()}}'
+                        },
+                        success: function(response) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: '¡Eliminado!',
+                                text: response.message,
+                                timer: 2000,
+                                showConfirmButton: false
+                            });
+                            // Reload DataTable
+                            $('#table-locations').DataTable().ajax.reload();
+                        },
+                        error: function(xhr) {
+                            const message = xhr.responseJSON?.message || 'Error al eliminar el registro';
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: message
+                            });
+                        }
+                    });
+                }
             });
         });
     </script>

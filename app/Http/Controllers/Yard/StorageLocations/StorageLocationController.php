@@ -27,16 +27,23 @@ class StorageLocationController extends BaseController
 
     public function getDataLocations(Request $request)
     {
-        $data = StorageLocation::controlAccessUser()
-            ->with(['zone:id,name,zoneid', 'center:centerid,name,description', 'status:statusid,name,auxiliary01', 'warehouse:warehouseid,name'])
+        $query = StorageLocation::controlAccessUser()
+            ->with([
+                'zone:id,name,zoneid',
+                'center:centerid,name,description',
+                'status:statusid,name,auxiliary01',
+                'warehouse:warehouseid,name',
+            ])
+            ->select('storagelocations.*')
             ->Name($request->get('name'))
             ->Zone($request->get('zoneid'))
             ->Warehouse($request->get('warehouseid'))
-            ->Status($request->get('statusid'))->get();
+            ->Status($request->get('statusid'));
 
-        return DataTables::of($data)
+        return DataTables::eloquent($query)
             ->addColumn('btn', 'Yards.StorageLocations.partials.buttons')
-            ->rawColumns(['btn'])->toJson();
+            ->rawColumns(['btn'])
+            ->toJson();
     }
 
     public function create()
@@ -76,11 +83,26 @@ class StorageLocationController extends BaseController
         return $this->infoResponse('storagelocations.index');
     }
 
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        $location = StorageLocation::findOrFail($id);
-        $location->delete();
+        try {
+            $location = StorageLocation::findOrFail($id);
+            $location->delete();
 
-        return $this->redirectBackSuccessMessage('Registro eliminado con exito.');
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Registro eliminado con éxito.',
+                ]);
+            }
+
+        } catch (\Exception $e) {
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Error al eliminar el registro: ' . $e->getMessage(),
+                ], 500);
+            }
+        }
     }
 }

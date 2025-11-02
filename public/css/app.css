@@ -12425,8 +12425,8 @@ span.select2-container {
 }
 
 .btn-outline-info {
+  color: #0b0b0b !important;
   border-color: #dedede;
-  color: #0b2e13;
   border-width: 1px;
   border-style: solid;
   background: rgb(255, 255, 255);
@@ -12435,9 +12435,13 @@ span.select2-container {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff", endColorstr="#ededed", GradientType=0);
 }
 
+.btn-outline-info:hover {
+  border-color: #b0bec5;
+}
+
 .page-item.active .page-link {
   z-index: 1;
-  color: black !important;
+  color: #0b0b0b !important;
   background: rgb(255, 255, 255);
   background: -webkit-gradient(left top, left bottom, color-stop(0%, rgb(255, 255, 255)), color-stop(47%, rgb(246, 246, 246)), color-stop(100%, rgb(237, 237, 237)));
   background: linear-gradient(to bottom, rgb(255, 255, 255) 0%, rgb(246, 246, 246) 47%, rgb(237, 237, 237) 100%);
@@ -12518,11 +12522,6 @@ ul, #myUL {
   background-color: #c8e6c9;
 }
 
-.btn-secondary {
-  font-size: 0.675rem;
-  background-color: white;
-}
-
 .border-card-top {
   border-top: 3px solid #e0e0e0;
   border-radius: 10px;
@@ -12596,10 +12595,6 @@ ul, #myUL {
   font-size: 0.8em;
   text-align: center;
   padding: 0.5em 0.3em;
-}
-
-.modal-header {
-  border-top: 15px solid #455a64;
 }
 
 main {
