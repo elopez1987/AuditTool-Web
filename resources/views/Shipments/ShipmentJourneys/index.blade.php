@@ -56,32 +56,32 @@
                     <div class="row">
                         <div class="col-12">
                             <table id="table-journeys"
-                                   class="table table-bordered table-striped table-condensed table-hover">
+                                   class="table table-bordered  table-condensed table-hover">
                                 <thead>
                                 <tr>
-                                    <th class="bg-inverse text-white">Embarque</th>
-                                    <th class="bg-inverse text-white">Linea de transporte</th>
-                                    <th class="bg-inverse text-white">Placas de caja</th>
-                                    <th class="bg-inverse text-white">Cliente</th>
-                                    <th class="bg-inverse text-white">Destino</th>
-                                    <th class="bg-inverse text-white">Cita con cliente</th>
-                                    <th class="bg-inverse text-white">Cita de carga</th>
-                                    <th class="bg-inverse text-white">F.llegada a carga</th>
-                                    <th class="bg-inverse text-white">Fin de facturación</th>
-                                    <th class="bg-inverse text-white">Liberación de unidad</th>
-                                    <th class="bg-inverse text-white">Salida del cedis</th>
-                                    <th class="bg-inverse text-white">Maximo de salida</th>
-                                    <th class="bg-inverse text-white">E. de salida</th>
-                                    <th class="bg-inverse text-white">E. de transito</th>
-                                    <th class="bg-inverse text-white">Ubicación</th>
-                                    <th class="bg-inverse text-white">Eta con cliente</th>
-                                    <th class="bg-inverse text-white">Llegada a destino</th>
-                                    <th class="bg-inverse text-white">Estatus</th>
-                                    <th class="bg-inverse text-white">Liberación de descarga</th>
-                                    <th class="bg-inverse text-white">Razon de salida tarde</th>
-                                    <th class="bg-inverse text-white">Causas de no automatización</th>
-                                    <th class="bg-inverse text-white">Comentario de BPO</th>
-                                    <th class="bg-inverse text-white">Opciones</th>
+                                    <th>Embarque</th>
+                                    <th>Linea de transporte</th>
+                                    <th>Placas de caja</th>
+                                    <th>Cliente</th>
+                                    <th>Destino</th>
+                                    <th>Cita con cliente</th>
+                                    <th>Cita de carga</th>
+                                    <th>F.llegada a carga</th>
+                                    <th>Fin de facturación</th>
+                                    <th>Liberación de unidad</th>
+                                    <th>Salida del cedis</th>
+                                    <th>Maximo de salida</th>
+                                    <th>E. de salida</th>
+                                    <th>E. de transito</th>
+                                    <th>Ubicación</th>
+                                    <th>Eta con cliente</th>
+                                    <th>Llegada a destino</th>
+                                    <th>Estatus</th>
+                                    <th>Liberación de descarga</th>
+                                    <th>Razon de salida tarde</th>
+                                    <th>Causas de no automatización</th>
+                                    <th>Comentario de BPO</th>
+                                    <th>Opciones</th>
                                 </tr>
                                 </thead>
                             </table>

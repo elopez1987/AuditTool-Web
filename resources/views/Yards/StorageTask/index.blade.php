@@ -70,7 +70,7 @@
 
                     <div class="row">
                         <div class="col-lg-12">
-                            <table id="table-trucks"  class="table table-bordered  table-condensed">
+                            <table id="table-trucks"  class="table table-bordered  table-condensed table-hover">
                                 <thead>
                                 <tr>
                                     <th class="bg-inverse text-white">C.Distribución</th>
@@ -263,6 +263,64 @@
                 $('#patieroid_modal').select2('destroy');
                 $('#zoneid_modal').select2('destroy');
                 $('#locationid_modal').select2('destroy');
+            });
+        });
+    </script>
+
+    <script>
+        // SweetAlert2 delete handler
+        $(document).on('click', '.btn-delete-task', function(e) {
+            e.preventDefault();
+            const taskId = $(this).data('id');
+
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: '¿Deseas eliminar este registro?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Show loading
+                    Swal.fire({
+                        title: 'Eliminando...',
+                        allowOutsideClick: false,
+                        didOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
+
+                    // Send AJAX request
+                    $.ajax({
+                        url: `{{url('storagetask')}}/${taskId}`,
+                        type: 'DELETE',
+                        data: {
+                            _token: '{{csrf_token()}}'
+                        },
+                        success: function(response) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: '¡Eliminado!',
+                                text: response.message,
+                                timer: 2000,
+                                showConfirmButton: false
+                            });
+                            // Reload DataTable
+                            $('#table-trucks').DataTable().ajax.reload();
+                        },
+                        error: function(xhr) {
+                            const message = xhr.responseJSON?.message || 'Error al eliminar el registro';
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: message
+                            });
+                        }
+                    });
+                }
             });
         });
     </script>

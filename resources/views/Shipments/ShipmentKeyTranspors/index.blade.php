@@ -47,16 +47,16 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-12 col-md-10 col-xs-12">
-                            <table id="table-monitorkeytransport" class="table table-bordered table-striped table-condensed">
+                            <table id="table-monitorkeytransport" class="table table-bordered table-hover table-condensed">
                                 <thead>
                                     <tr>
-                                        <th class="bg-inverse text-white">Embarque</th>
-                                        <th class="bg-inverse text-white">Transporte</th>
-                                        <th class="bg-inverse text-white">Cliente</th>
-                                        <th class="bg-inverse text-white">Ciudad</th>
-                                        <th class="bg-inverse text-white">Cita de entrega</th>
-                                        <th class="bg-inverse text-white">Estatus</th>
-                                        <th class="bg-inverse text-white">Opciones</th>
+                                        <th>Embarque</th>
+                                        <th >Transporte</th>
+                                        <th>Cliente</th>
+                                        <th>Ciudad</th>
+                                        <th>Cita de entrega</th>
+                                        <th>Estatus</th>
+                                        <th>Opciones</th>
                                     </tr>
                                 </thead>
                             </table>

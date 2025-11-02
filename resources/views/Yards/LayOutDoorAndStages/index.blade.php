@@ -5,31 +5,30 @@
         <div class="col-lg-6" style="height: 700px;overflow-y: scroll;">
             <div class="card">
                 <div class="card-header">
-                    Cortinas -- <span class="badge badge-danger font-12">Embarque</span> -- <span
-                        class="badge badge-success font-12">Descarga</span>
+                    Cortinas -- <span class="badge badge-danger font-12">Embarque</span> -- <span class="badge badge-success font-12">Descarga</span>
                 </div>
                 <div class="card-body">
                     <table class="table table-condensed table-hover table-bordered">
                         <thead style="position: sticky;top: 0;">
-                        <tr>
-                            <th style="width: 20%">Cortina</th>
-                            <th>Linea</th>
-                            <th>Embarque</th>
-                        </tr>
+                            <tr>
+                                <th style="width: 20%">Cortina</th>
+                                <th>Linea</th>
+                                <th>Embarque</th>
+                            </tr>
                         </thead>
                         <tbody>
                         @foreach($locations as $location)
                             @if($location->zoneid == 'CO')
                                 <tr>
-                                    <td>{{$location->name}}</td>
-                                    <td>
+                                    <td class="td-events">{{$location->name}}</td>
+                                    <td class="td-events">
                                         @foreach($units as $unit)
                                             @if ($unit->locationid == $location->id)
                                                 {{$unit->carrier->name}}
                                             @endif
                                         @endforeach
                                     </td>
-                                    <td>
+                                    <td class="td-events">
                                         @foreach($units as $unit)
                                             @if ($unit->locationid == $location->id)
                                                 <span
@@ -66,17 +65,17 @@
                 <div class="card-body">
                     <table class="table table-condensed table-hover table-bordered">
                         <thead style="position: sticky;top: 0;">
-                        <tr>
-                            <th style="width: 20%">Precargas</th>
-                            <th>Embarque</th>
-                        </tr>
+                            <tr>
+                                <th style="width: 20%">Precargas</th>
+                                <th>Embarque</th>
+                            </tr>
                         </thead>
                         <tbody>
                         @foreach($locations as $location)
                             @if($location->zoneid == 'ST')
                                 <tr>
-                                    <td>{{$location->name}}</td>
-                                    <td>
+                                    <td class="td-events">{{$location->name}}</td>
+                                    <td class="td-events">
                                         @foreach($shipments as $shipment)
                                             @if ($shipment->locationid == $location->id)
                                                 <a href="{{url('monitoroperation/' . $shipment->id . '/edit')}}">

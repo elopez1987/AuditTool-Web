@@ -29,20 +29,11 @@
                             </div>
                         </div>
                         <hr class="m-t-1">
-                        {{--                        <div class="row">--}}
-                        {{--                            <div class="col-lg-2 col-md-6 col-sm-12">--}}
-                        {{--                                <div class="form-group">--}}
-                        {{--                                    <label for="description">Nombre</label>--}}
-                        {{--                                    <input type="text" class="form-control" id="description" name="description"--}}
-                        {{--                                           aria-describedby="name">--}}
-                        {{--                                </div>--}}
-                        {{--                            </div>--}}
-                        {{--                        </div>--}}
                     </form>
                     <div class="row">
                         <div class="col-12">
                             <table id="table-scheduleinverse"
-                                   class="table table-bordered table-striped table-condensed">
+                                   class="table table-bordered table-hover table-condensed">
                                 <thead>
                                 <tr>
                                     <th class="bg-inverse text-white">C.Distribución</th>
@@ -66,13 +57,9 @@
 @endsection
 
 @section('css')
-    <link rel="stylesheet" href="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.min.css')}}">
 @endsection
 
-
-
 @section('script')
-    <script src="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.all.min.js')}}"></script>
     @include('Shipments.ScheduleInverse.partials.table')
     <script>
         function reloadtable() {

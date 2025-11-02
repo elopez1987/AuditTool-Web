@@ -12048,13 +12048,22 @@ a {
 }
 
 #main-wrapper[data-layout=vertical] .topbar .navbar-collapse[data-navbarbg=skin1], #main-wrapper[data-layout=vertical] .topbar[data-navbarbg=skin1], #main-wrapper[data-layout=horizontal] .topbar .navbar-collapse[data-navbarbg=skin1], #main-wrapper[data-layout=horizontal] .topbar[data-navbarbg=skin1] {
-  background: rgb(73, 155, 234) !important;
+  background: #546e7a !important;
   text-decoration: none;
 }
 
 #main-wrapper[data-layout=vertical] .topbar .top-navbar .navbar-header[data-logobg=skin1],
 #main-wrapper[data-layout=horizontal] .topbar .top-navbar .navbar-header[data-logobg=skin1] {
-  background: rgb(73, 155, 234);
+  background: #546e7a;
+}
+
+.box:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 30px -15px rgba(0, 0, 0, 0.5);
+  background: #c1d5e0;
+  z-index: 1;
+  border-bottom: 2px solid;
+  border-bottom-color: #78909c;
 }
 
 .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
@@ -12067,27 +12076,17 @@ a {
   min-width: 250px;
   max-width: 450px;
   text-align: left;
-  background-color: rgb(73, 155, 234);
-  color: #f0fafb;
-  border: 1px solid #80d8ff !important;
+  background-color: #c1d5e0;
+  color: #0b0b0b;
   font-size: 0.775rem;
   border-radius: 10px;
-}
-
-.box:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 30px -15px rgba(0, 0, 0, 0.5);
-  background: rgb(73, 155, 234);
-  z-index: 1;
-  border-bottom: 2px solid;
-  border-bottom-color: blue;
-  font-size: 15px !important;
+  padding: 10px;
 }
 
 #row-schedule {
   background-image: linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%);
-  border-top: 2px solid #00aff0;
-  border-bottom: 2px solid #00aff0;
+  border-top: 2px solid #c1d5e0;
+  border-bottom: 2px solid #c1d5e0;
   font-size: 0.675rem !important;
   font-weight: 700;
   text-align: center;
@@ -12162,6 +12161,10 @@ div.dataTables_wrapper div.dataTables_length select {
 
 table.dataTable tbody tr td {
   border: 1px solid #c1d5e0;
+}
+
+table tbody tr td {
+  border: 1px solid #e9ecef !important;
 }
 
 thead, tbody, tfoot, tr, td, th {
@@ -12662,7 +12665,7 @@ main h1, main .h1 {
 }
 
 .box:hover h5, .box:hover .h5 {
-  color: #fff;
+  color: #0b0b0b;
   opacity: 0;
 }
 
@@ -12681,7 +12684,7 @@ main h1, main .h1 {
   font-size: 10px;
   opacity: 1;
   filter: blur(0px);
-  color: #fff;
+  color: #0b0b0b;
   transition: all 600ms ease;
 }
 

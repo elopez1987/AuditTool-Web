@@ -242,7 +242,7 @@
                                             <h6 class="font-weight-light  text-white padding-3 "
                                                 style="background-color: #607d8b;border-radius: 5px;">Datos de la
                                                 entrega</h6>
-                                            <table class="table table-condensed table-striped table-bordered">
+                                            <table class="table table-condensed table-hover table-bordered">
                                                 <tbody>
                                                 <tr>
                                                     <td>Turno</td>
@@ -326,7 +326,7 @@
                                                     @include('Shipments.OrderDeliveries.kardexfolio')
                                                 </div>
                                             </div>
-                                            <table class="table table-condensed table-striped table-bordered">
+                                            <table class="table table-condensed table-hover table-bordered">
                                                 <tr>
                                                     <td>Linea de transporte</td>
                                                     <td>{{$orderdelivery->carrier ? $orderdelivery->carrier->name : ''}}</td>
@@ -371,7 +371,7 @@
                                                 proceso</h6>
                                             <div class="row">
                                                 <div class="col-lg-12">
-                                                    <table class="table table-condensed table-striped table-bordered">
+                                                    <table class="table table-condensed table-hover table-bordered">
                                                         <tr>
                                                             <td style="width: 30%">Arribo de la unidad</td>
                                                             <td style="width: 10%">
@@ -972,7 +972,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <table class="table table-bordered  table-condensed ">
+                                            <table class="table table-bordered  table-condensed table-hover">
                                                 <thead>
                                                 <th class="text-center font-16">Lado Izquierdo</th>
                                                 <th class="text-center font-16">Lado Derecho</th>
@@ -1019,7 +1019,7 @@
                                                     </table>
                                                 </td>
                                                 <td width="50%">
-                                                    <table class="table table-bordered  table-condensed">
+                                                    <table class="table table-bordered  table-condensed table-hover">
                                                         <thead>
                                                         <tr>
                                                             <th>Rack</th>

@@ -20,10 +20,10 @@
                             <table width="100%" id="tablecheck" class="table table-bordered table-condensed table-hover  ">
                                 <thead>
                                     <tr >
-                                        <th class="bg-thead-table-monitor"><span class="text-white font-12 p-4">Embarque</span></th>
-                                        <th class="bg-thead-table-monitor"><span class="text-white font-12 p-4">Cliente</span></th>
-                                        <th class="bg-thead-table-monitor"><span class="text-white font-12 p-4">Verificador</span></th>
-                                        <th class="bg-thead-table-monitor" width="30%"><span class="text-white font-12 p-4">% de Avance</span></th>
+                                        <th ><span class="font-11 p-4">Embarque</span></th>
+                                        <th ><span class="font-11 p-4">Cliente</span></th>
+                                        <th ><span class="font-11 p-4">Verificador</span></th>
+                                        <th  width="30%"><span class="font-11 p-4">% de Avance</span></th>
                                     </tr>
                                 </thead>
                                 <tbody>

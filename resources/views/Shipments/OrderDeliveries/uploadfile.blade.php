@@ -25,7 +25,7 @@
                     </div>
                     <div class="row mt-2">
                         <div class="col-lg-12">
-                            <table class="table table-bordered table-hover table-condensed table-striped">
+                            <table class="table table-bordered table-hover table-condensed">
                                 <thead>
                                     <tr>
                                         <th>Nombre en encabezado</th>

@@ -26,25 +26,6 @@ class StorageTasksController extends BaseController
         return view('Yards.StorageTask.index', compact('status'));
     }
 
-    //    public function create()
-    //    {
-    //        $this->authorize('storagetask.create');
-    //        $zones = StorageZone::controlAccessUser()
-    //            ->whereRaw("charindex('ZO-03', configurationflag) > 0")
-    //            ->select(['name', 'id'])->get();
-    //        $locations = StorageLocation::activeLocationForZone();
-    //        $center = $this->getCenterForUser();
-    //        $patieros = User::leftJoin('securityaccesswarehouses', 'users.username', '=', 'securityaccesswarehouses.username')
-    //            ->select(['users.name', 'users.id'])
-    //            ->where('securityaccesswarehouses.centerid', '=', $center)
-    //            ->where('users.statusid', '=', 'E')
-    //            ->whereNotNull('configurationflag')
-    //            ->whereRaw("charindex('USR-01', configurationflag) > 0")
-    //            ->get();
-    //
-    //        return view('Yards.StorageTask.create', compact('zones', 'locations', 'patieros'));
-    //    }
-
     public function getDataTask(Request $request)
     {
         $data = StorageTask::controlAccessUser()
@@ -104,8 +85,6 @@ class StorageTasksController extends BaseController
                         'message' => 'El número de folio no existe!!',
                     ], 404);
                 }
-
-                return $this->errorResponse('El número de folio no existe!!');
             }
 
             $zone = StorageZone::whereId($request['zoneid'])->select('zoneid')->first();
@@ -134,17 +113,21 @@ class StorageTasksController extends BaseController
                     'message' => 'Error al crear la tarea: ' . $e->getMessage(),
                 ], 500);
             }
-
-            return $this->errorResponse('Error al crear la tarea.');
         }
     }
 
-    public function update(StorageTask $storagetask)
+    public function destroy(Request $request, StorageTask $storagetask)
     {
         $storagetask->statusid = 'CO';
         $storagetask->save();
 
-        return $this->redirectBackInfo();
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Tarea cancelada exitosamente.',
+            ]);
+        }
+
     }
 
     public function createNewTask(ReceiptUnit $receiptunit, string $razonstatusid, CreateTaksOperator $request): StorageTask

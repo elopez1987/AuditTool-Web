@@ -23,7 +23,7 @@
                     </div>
                     <div class="row mt-3">
                         <div class="col-lg-12">
-                            <table class="table table-no-bordered table-condensed">
+                            <table class="table table-bordered table-condensed">
                                 <tr>
                                     <span class="font-14 text-dark mb-3">Importa una lista de clientes, el archivo debe de contener los siguientes datos y formatos</span>
                                 </tr>

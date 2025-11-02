@@ -22,13 +22,12 @@
 
                     <div class="row">
                         <div class="col-lg-6">
-                            <table id="table-doors" class="table table-bordered
-                            table-striped table-condensed tablegeneral">
+                            <table id="table-doors" class="table table-bordered  table-hover table-condensed tablegeneral">
                                 <thead>
                                 <tr>
-                                    <th class="bg-inverse text-white">Centro de distribución</th>
-                                    <th class="bg-inverse text-white">Precarga</th>
-                                    <th class="bg-inverse text-white">Opciones</th>
+                                    <th>Centro de distribución</th>
+                                    <th>Precarga</th>
+                                    <th>Opciones</th>
                                 </tr>
                                 </thead>
                                 <tbody>

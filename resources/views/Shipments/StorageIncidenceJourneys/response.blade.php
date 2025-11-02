@@ -146,7 +146,7 @@
                                         <div class="card">
                                             <div class="card-body">
                                                 <table id="table-incidencesjourney"
-                                                       class="table table-bordered table-condensed table-hover table-striped">
+                                                       class="table table-bordered table-condensed table-hover">
                                                     <thead>
                                                     <tr>
                                                         <th>Folio</th>

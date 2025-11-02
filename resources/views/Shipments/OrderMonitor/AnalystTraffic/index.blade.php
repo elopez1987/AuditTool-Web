@@ -73,40 +73,40 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-12">
-                            <table id="table-traffics" class="table table-bordered table-striped table-condensed  table-hover table-uppercase">
+                            <table id="table-traffics" class="table table-bordered  table-condensed  table-hover table-uppercase">
                                 <thead>
                                 <tr>
-                                    <th class="bg-inverse text-white">Opciones</th>
-                                    <th class="bg-inverse text-white">¿Datos?</th>
-                                    <th class="bg-inverse text-white">Fecha</th>
-                                    <th class="bg-inverse text-white">Turno</th>
-                                    <th class="bg-inverse text-white">Embarque</th>
-                                    <th class="bg-inverse text-white">Estatus</th>
-                                    <th class="bg-inverse text-white">Cortina</th>
-                                    <th class="bg-inverse text-white">¿Llaves?</th>
-                                    <th class="bg-inverse text-white">Comentario</th>
-                                    <th class="bg-inverse text-white">E.de llegada</th>
-                                    <th class="bg-inverse text-white">Operador</th>
-                                    <th class="bg-inverse text-white">Linea transportista</th>
-                                    <th class="bg-inverse text-white">Placa de caja</th>
-                                    <th class="bg-inverse text-white">Cliente</th>
-                                    <th class="bg-inverse text-white">Destino</th>
-                                    <th class="bg-inverse text-white">Cita de carga</th>
-                                    <th class="bg-inverse text-white">Cita con cliente</th>
-                                    <th class="bg-inverse text-white">Hora de llegada</th>
-                                    <th class="bg-inverse text-white">mesa de control</th>
-                                    <th class="bg-inverse text-white">T. de transito</th>
-                                    <th class="bg-inverse text-white">Aut. de salida</th>
-                                    <th class="bg-inverse text-white">Salida maxima</th>
-                                    <th class="bg-inverse text-white">Horas restantes</th>
-                                    <th class="bg-inverse text-white">D.Negocio</th>
-                                    <th class="bg-inverse text-white">Planeador</th>
-                                    <th class="bg-inverse text-white">Precarga</th>
-                                    <th class="bg-inverse text-white">F.Patios</th>
-                                    <th class="bg-inverse text-white">% de armado</th>
-                                    <th class="bg-inverse text-white">Cajas</th>
-                                    <th class="bg-inverse text-white">Pallets</th>
-                                    <th class="bg-inverse text-white">Peso Total</th>
+                                    <th >Opciones</th>
+                                    <th >¿Datos?</th>
+                                    <th >Fecha</th>
+                                    <th >Turno</th>
+                                    <th >Embarque</th>
+                                    <th >Estatus</th>
+                                    <th >Cortina</th>
+                                    <th >¿Llaves?</th>
+                                    <th >Comentario</th>
+                                    <th >E.de llegada</th>
+                                    <th >Operador</th>
+                                    <th >Linea transportista</th>
+                                    <th >Placa de caja</th>
+                                    <th >Cliente</th>
+                                    <th >Destino</th>
+                                    <th >Cita de carga</th>
+                                    <th >Cita con cliente</th>
+                                    <th >Hora de llegada</th>
+                                    <th >mesa de control</th>
+                                    <th >T. de transito</th>
+                                    <th >Aut. de salida</th>
+                                    <th >Salida maxima</th>
+                                    <th >Horas restantes</th>
+                                    <th >D.Negocio</th>
+                                    <th >Planeador</th>
+                                    <th >Precarga</th>
+                                    <th >F.Patios</th>
+                                    <th >% de armado</th>
+                                    <th >Cajas</th>
+                                    <th >Pallets</th>
+                                    <th>Peso Total</th>
                                 </tr>
                                 </thead>
                             </table>

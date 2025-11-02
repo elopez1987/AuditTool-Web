@@ -95,31 +95,31 @@
                                    class="table table-bordered table-condensed table-list table-hover table-uppercase">
                                 <thead>
                                 <tr>
-                                    <th class="bg-inverse text-white">Opciones</th>
-                                    <th class="bg-inverse text-white">Cita de carga</th>
-                                    <th class="bg-inverse text-white">Turno</th>
-                                    <th class="bg-inverse text-white">Embarque</th>
-                                    <th class="bg-inverse text-white">Estatus</th>
-                                    <th class="bg-inverse text-white">Pallets</th>
-                                    <th class="bg-inverse text-white">Cajas</th>
-                                    <th class="bg-inverse text-white">¿Enrampado?</th>
-                                    <th class="bg-inverse text-white">¿Llaves?</th>
-                                    <th class="bg-inverse text-white">Precarga</th>
-                                    <th class="bg-inverse text-white">Cortina</th>
-                                    <th class="bg-inverse text-white">Cliente</th>
-                                    <th class="bg-inverse text-white">Destino</th>
-                                    <th class="bg-inverse text-white">Max.Salida</th>
-                                    <th class="bg-inverse text-white">Cita con cliente</th>
-                                    <th class="bg-inverse text-white">Prioridad</th>
-                                    <th class="bg-inverse text-white">Ingreso de unidad</th>
-                                    <th class="bg-inverse text-white">Enrampe</th>
-                                    <th class="bg-inverse text-white">Peso total</th>
-                                    <th class="bg-inverse text-white">% de armado</th>
-                                    <th class="bg-inverse text-white">D.Negocio</th>
-                                    <th class="bg-inverse text-white">Planeador</th>
-                                    <th class="bg-inverse text-white">Comentario 01</th>
-                                    <th class="bg-inverse text-white">Comentario 02</th>
-                                    <th class="bg-inverse text-white">Comentario 03</th>
+                                    <th >Opciones</th>
+                                    <th >Cita de carga</th>
+                                    <th >Turno</th>
+                                    <th >Embarque</th>
+                                    <th >Estatus</th>
+                                    <th >Pallets</th>
+                                    <th >Cajas</th>
+                                    <th >¿Enrampado?</th>
+                                    <th >¿Llaves?</th>
+                                    <th >Precarga</th>
+                                    <th >Cortina</th>
+                                    <th >Cliente</th>
+                                    <th >Destino</th>
+                                    <th >Max.Salida</th>
+                                    <th >Cita con cliente</th>
+                                    <th >Prioridad</th>
+                                    <th >Ingreso de unidad</th>
+                                    <th >Enrampe</th>
+                                    <th >Peso total</th>
+                                    <th >% de armado</th>
+                                    <th >D.Negocio</th>
+                                    <th >Planeador</th>
+                                    <th >Comentario 01</th>
+                                    <th >Comentario 02</th>
+                                    <th >Comentario 03</th>
                                 </tr>
                                 </thead>
                             </table>

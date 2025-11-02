@@ -8,8 +8,6 @@
                     Detalle de cita
                 </div>
                 <div class="card-body">
-{{--                    <form method="GET" id="search" role="form">--}}
-{{--                        {{csrf_field()}}--}}
                         <div class="row">
                             <div class="col-md-12">
                                 <a>
@@ -43,7 +41,7 @@
                         </div>
                         <div class="row mt-4">
                             <div class="col-lg-6">
-                                <table class="table table-condensed table-bordered table-striped tablegeneral">
+                                <table class="table table-condensed table-bordered table-hover tablegeneral">
                                     <thead>
                                     <tr>
                                         <th>Fecha de entrega</th>
@@ -63,7 +61,7 @@
                                 </table>
                             </div>
                             <div class="col-lg-6">
-                                <table class="table table-condensed table-bordered table-striped tablegeneral">
+                                <table class="table table-condensed table-bordered table-hover tablegeneral">
                                     <thead>
                                     <tr>
                                         <th>Embarque</th>
@@ -91,7 +89,6 @@
 @endsection
 
 @section('script')
-    {{--    @include('Shipments.ReserveSchedulleInverse.partials.table')--}}
     <script>
         function reloadtable() {
             $('#table-categories').DataTable().ajax.reload();

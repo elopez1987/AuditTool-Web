@@ -38,17 +38,17 @@
 
                     <div class="row">
                         <div class="col-lg-12">
-                            <table id="table-types" class="table table-bordered table-striped table-condensed">
+                            <table id="table-types" class="table table-bordered table-hover table-condensed">
                                 <thead>
                                 <tr>
-                                    <th class="bg-inverse text-white">Nombre</th>
-                                    <th class="bg-inverse text-white">Auxiliar 01</th>
-                                    <th class="bg-inverse text-white">Auxiliar 02</th>
-                                    <th class="bg-inverse text-white">Auxiliar 03</th>
-                                    <th class="bg-inverse text-white">Auxiliar 04</th>
-                                    <th class="bg-inverse text-white">Auxiliar 05</th>
-                                    <th class="bg-inverse text-white">Estatus</th>
-                                    <th class="bg-inverse text-white">Opciones</th>
+                                    <th>Nombre</th>
+                                    <th>Auxiliar 01</th>
+                                    <th>Auxiliar 02</th>
+                                    <th>Auxiliar 03</th>
+                                    <th>Auxiliar 04</th>
+                                    <th>Auxiliar 05</th>
+                                    <th>Estatus</th>
+                                    <th>Opciones</th>
                                 </tr>
                                 </thead>
                             </table>

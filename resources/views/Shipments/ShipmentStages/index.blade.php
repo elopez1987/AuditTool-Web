@@ -36,18 +36,18 @@
 
                     <div class="row">
                         <div class="col-lg-12">
-                            <table id="table-stages" class="table table-bordered table-striped table-condensed table-hover">
+                            <table id="table-stages" class="table table-bordered table-condensed table-hover">
                                 <thead>
                                 <tr>
-                                    <th class="bg-inverse text-white">Fecha</th>
-                                    <th class="bg-inverse text-white">Turno</th>
-                                    <th class="bg-inverse text-white">Embarque</th>
-                                    <th class="bg-inverse text-white">Cliente</th>
-                                    <th class="bg-inverse text-white">Precarga</th>
-                                    <th class="bg-inverse text-white">Cortina 01</th>
-                                    <th class="bg-inverse text-white">Cortina 02</th>
-                                    <th class="bg-inverse text-white">Cortina 03</th>
-                                    <th class="bg-inverse text-white">Opciones</th>
+                                    <th>Fecha</th>
+                                    <th>Turno</th>
+                                    <th>Embarque</th>
+                                    <th>Cliente</th>
+                                    <th>Precarga</th>
+                                    <th>Cortina 01</th>
+                                    <th>Cortina 02</th>
+                                    <th>Cortina 03</th>
+                                    <th>Opciones</th>
                                 </tr>
                                 </thead>
                             </table>

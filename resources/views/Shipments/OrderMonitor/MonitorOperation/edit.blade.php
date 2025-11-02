@@ -296,11 +296,17 @@
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-lg-8 col-md-6 col-sm-12">
-                                                <table class="table table-condensed  table-bordered table-striped">
+                                                <table class="table table-condensed  table-bordered table-hover ">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Evento</th>
+                                                            <th>Fecha y Hora</th>
+                                                        </tr>
+                                                    </thead>
                                                     <tbody>
                                                     <tr>
-                                                        <th style="font-size: 11px">Inicio de Preparación</th>
-                                                        <th width="30%">
+                                                        <td class="td-events">Inicio de Preparación</td>
+                                                        <td width="30%" class="td-events">
                                                             @if ($orderDelivery->operation->startshipment == '')
                                                                 <a href=""
                                                                    data-target="#modal-addstartshipment-{{$orderDelivery->id}}"
@@ -318,11 +324,11 @@
                                                                 <span
                                                                         style="font-size: 11px;">   {{$orderDelivery->operation->startshipment}} </span>
                                                             @endif
-                                                        </th>
+                                                        </td>
                                                     </tr>
                                                     <tr>
-                                                        <th style="font-size: 11px">Preparado en piso / Armado</th>
-                                                        <th>
+                                                        <td class="td-events">Preparado en piso / Armado</td>
+                                                        <td class="td-events">
                                                             @if ($orderDelivery->operation->startshipment != '')
                                                                 @if ($orderDelivery->operation->endchecker == '')
                                                                     <a href=""
@@ -342,27 +348,27 @@
                                                                 </span>
                                                                 @endif
                                                             @endif
-                                                        </th>
+                                                        </td>
                                                     </tr>
                                                     <tr>
-                                                        <th style="font-size: 11px">Inicio de Verificación</th>
-                                                        <th>
+                                                        <td class="td-events">Inicio de Verificación</td>
+                                                        <td class="td-events">
                                                              <span class="font-12">
                                                                    {{ $orderDelivery->check ? $orderDelivery->check->startdate : ''}}
                                                               </span>
-                                                        </th>
+                                                        </td>
                                                     </tr>
                                                     <tr>
-                                                        <th style="font-size: 11px">Fin de Verificación</th>
-                                                        <th>
+                                                        <td class="td-events">Fin de Verificación</td>
+                                                        <td class="td-events">
                                                             <span style="font-size: 11px;">
                                                                 {{ $orderDelivery->check ? $orderDelivery->check->finishdate : ''}}
                                                             </span>
-                                                        </th>
+                                                        </td>
                                                     </tr>
                                                     <tr>
-                                                        <th style="font-size: 11px">Por cargar</th>
-                                                        <th>
+                                                        <td class="td-events">Por cargar</td>
+                                                        <td class="td-events">
                                                             @if ($orderDelivery->operation->endchecker != '')
                                                                 @if ($orderDelivery->operation->forload == '')
                                                                     @can('forloadshipment')
@@ -384,11 +390,11 @@
                                                                             style="font-size: 11px;">{{$orderDelivery->operation->forload}}</span>
                                                                 @endif
                                                             @endif
-                                                        </th>
+                                                        </td>
                                                     </tr>
                                                     <tr>
-                                                        <th style="font-size: 11px">Inicio de carga</th>
-                                                        <th>
+                                                        <td class="td-events">Inicio de carga</td>
+                                                        <td class="td-events">
                                                             @if ($orderDelivery->operation->forload != '')
                                                                 @if ($orderDelivery->operation->startload == '')
                                                                     @can('startload')
@@ -410,11 +416,11 @@
                                                                             style="font-size: 11px;">{{$orderDelivery->operation->startload}}</span>
                                                                 @endif
                                                             @endif
-                                                        </th>
+                                                        </td>
                                                     </tr>
                                                     <tr>
-                                                        <th style="font-size: 11px;">Fin de carga</th>
-                                                        <th>
+                                                        <td class="td-events">Fin de carga</td>
+                                                        <td class="td-events">
                                                             @if ($orderDelivery->operation->startload != '')
                                                                 @if ($orderDelivery->operation->endload == '')
                                                                     @can('finishload')
@@ -436,13 +442,12 @@
                                                                             style="font-size: 11px;">{{$orderDelivery->operation->endload}}</span>
                                                                 @endif
                                                             @endif
-                                                        </th>
+                                                        </td>
                                                     </tr>
 
                                                     <tr>
-                                                        <th style="font-size: 11px">Enviado a Facturación
-                                                        </th>
-                                                        <th>
+                                                        <td class="td-events">Enviado a Facturación</td>
+                                                        <td class="td-events">
                                                             @if ($orderDelivery->operation->endload != '')
                                                                 @if ($orderDelivery->operation->senddocument == '')
                                                                     <a href=""
@@ -462,7 +467,7 @@
                                                                             style="font-size: 11px;">{{$orderDelivery->operation->senddocument}}</span>
                                                                 @endif
                                                             @endif
-                                                        </th>
+                                                        </td>
                                                     </tr>
                                                     </tbody>
                                                 </table>
@@ -481,8 +486,8 @@
 @endsection
 
 @section('css')
-    <link rel="stylesheet"
-          href="{{asset('/theme/assets/libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css')}}">
+
+    <link rel="stylesheet" href="{{asset('/theme/assets/libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css')}}">
 @endsection
 
 @section('script')
