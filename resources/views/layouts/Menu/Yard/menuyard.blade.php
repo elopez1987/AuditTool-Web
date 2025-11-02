@@ -258,26 +258,26 @@
                     </div>
                 </a>
             @endcan
-            @can('registercheckout')
-                <a href="{{route('registercheckout')}}">
-                    <div class="box" data-toggle="tooltip" data-placement="top"
-                         title="Registre su salida de unidad realizando un check list de la documentación y evidencia fotografica.">
-                        <i class="lni lni-pointer"></i>
-                        <h5>Salida de caja <span style="color: red">*</span></h5>
-                        <h4>Salida de caja </h4>
-                    </div>
-                </a>
-            @endcan
-            @can('inventoryboxcount.index')
-                <a href="{{route('inventoryboxcount.index')}}">
-                    <div class="box" data-toggle="tooltip" data-placement="top"
-                         title="Modulo para la ejecución del inventario de cajas desde el dispositivo movil.">
-                        <i class="lni lni-laptop-phone"></i>
-                        <h5>Inventario <span style="color: red">*</span></h5>
-                        <h4>Inventario</h4>
-                    </div>
-                </a>
-            @endcan
+{{--            @can('registercheckout')--}}
+{{--                <a href="{{route('registercheckout')}}">--}}
+{{--                    <div class="box" data-toggle="tooltip" data-placement="top"--}}
+{{--                         title="Registre su salida de unidad realizando un check list de la documentación y evidencia fotografica.">--}}
+{{--                        <i class="lni lni-pointer"></i>--}}
+{{--                        <h5>Salida de caja <span style="color: red">*</span></h5>--}}
+{{--                        <h4>Salida de caja </h4>--}}
+{{--                    </div>--}}
+{{--                </a>--}}
+{{--            @endcan--}}
+{{--            @can('inventoryboxcount.index')--}}
+{{--                <a href="{{route('inventoryboxcount.index')}}">--}}
+{{--                    <div class="box" data-toggle="tooltip" data-placement="top"--}}
+{{--                         title="Modulo para la ejecución del inventario de cajas desde el dispositivo movil.">--}}
+{{--                        <i class="lni lni-laptop-phone"></i>--}}
+{{--                        <h5>Inventario <span style="color: red">*</span></h5>--}}
+{{--                        <h4>Inventario</h4>--}}
+{{--                    </div>--}}
+{{--                </a>--}}
+{{--            @endcan--}}
             @can('adjustmentbox')
                 <a href="{{route('adjustmentbox')}}">
                     <div class="box" data-toggle="tooltip" data-placement="top"

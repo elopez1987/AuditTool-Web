@@ -15,6 +15,6 @@
 
 @can('storagezones.destroy')
     <a  onclick="deletezone({!! $id !!})" >
-        <img src="{{asset('/ico/remove_delete_exit_close_1545.png')}}" alt="" class="img-16 ml-1">
+        <img src="{{asset('/ico/remove_delete_exit_close_1545.png')}}" alt="" class="img-16 ml-2">
     </a>
 @endcan

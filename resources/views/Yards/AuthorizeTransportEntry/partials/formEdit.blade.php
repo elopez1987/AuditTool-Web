@@ -50,7 +50,7 @@
 
 <div class="row">
     <div class="col-md-6">
-        <table class="table table-striped table-condensed table-bordered">
+        <table class="table table-condensed table-bordered tablegeneral">
             <thead>
             <tr>
                 <th class="hide"></th>
@@ -99,7 +99,7 @@
     <div class="col-md-6 col-sm-12">
         <div class="form-group">
             <label for="">Comentario</label>
-            <textarea class="form-control" rows="10" name="comment"
+            <textarea class="form-control" rows="5" name="comment"
                       placeholder="Ingrese un comentario corto..."></textarea>
         </div>
     </div>

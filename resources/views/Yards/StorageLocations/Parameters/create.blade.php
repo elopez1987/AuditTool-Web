@@ -32,13 +32,13 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                <table class="table  table-bordered table-condensed">
+                                <table class="table  table-bordered table-condensed tablegeneral">
                                     <thead>
                                     <tr>
-                                        <th width="5%" class="bg-inverse text-white">Secuencia</th>
-                                        <th class="bg-inverse text-white"></th>
-                                        <th class="bg-inverse text-white">Parametro</th>
-                                        <th class="bg-inverse text-white">Descripción</th>
+                                        <th width="5%" >Secuencia</th>
+                                        <th ></th>
+                                        <th >Parametro</th>
+                                        <th >Descripción</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -83,6 +83,7 @@
 @endsection
 
 @section('script')
+    @include('layouts.Partials.DataTable')
     <script src="{{asset('/theme/assets/libs/bootstrap-switch/dist/js/bootstrap-switch.min.js')}}"></script>
     <script>
         $(".switch input[type='checkbox']").bootstrapSwitch();
