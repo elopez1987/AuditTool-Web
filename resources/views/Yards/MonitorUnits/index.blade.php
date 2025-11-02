@@ -74,7 +74,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-12 ">
-                            <table id="table-monitorbox" class="table table-bordered table-striped table-condensed table-hover table-uppercase ">
+                            <table id="table-monitorbox" class="table table-bordered table-condensed table-hover table-uppercase ">
                                 <thead>
                                 <tr>
                                     <th class="text-white">Folio</th>

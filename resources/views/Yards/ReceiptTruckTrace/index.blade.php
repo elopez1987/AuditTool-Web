@@ -81,7 +81,7 @@
                     <div class="row mt-4">
                         <div class="col-lg-12">
                             <table width="100%" id="table-kardex"
-                                   class="table table-condensed table-hover table-bordered table-striped">
+                                   class="table table-condensed table-hover table-bordered">
                                 <thead>
                                 <tr>
                                     <th>Bodega</th>
@@ -96,7 +96,6 @@
                                     <th>Fecha de salida</th>
                                     <th>Usuario de entrada</th>
                                     <th>Usuario de salida</th>
-                                    {{--                                    <th>Opciones</th>--}}
                                 </tr>
                                 </thead>
                             </table>
@@ -113,14 +112,12 @@
 @endsection
 
 @section('css')
-    <link rel="stylesheet" href="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.min.css')}}">
     <link rel="stylesheet" href="{{asset('theme/assets/libs/daterangepicker/daterangepicker.css')}}">
 @endsection
 
 
 
 @section('script')
-    <script src="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.all.min.js')}}"></script>
     <script src="{{asset('/theme/assets/libs/daterangepicker/daterangepicker.js')}}"></script>
     <script src="{{asset('/theme/assets/libs/moment/moment.js')}}"></script>
     <script>

@@ -72,7 +72,7 @@
                 <div class="card-body">
                     <div class="row mt-3">
                         <div class="col-12">
-                            <table id="table-trucksbox" class="table table-bordered table-striped table-condensed table-hover table-uppercase">
+                            <table id="table-trucksbox" class="table table-bordered  table-condensed table-hover table-uppercase">
                                 <thead>
                                 <tr>
                                     <th class="text-white">Bodega</th>

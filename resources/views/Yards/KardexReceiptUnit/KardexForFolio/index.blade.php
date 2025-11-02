@@ -81,7 +81,7 @@
                     <div class="row mt-4">
                         <div class="col-lg-12">
                             <table width="100%" id="table-kardex"
-                                   class="table table-condensed table-hover table-bordered table-striped">
+                                   class="table table-condensed table-hover table-bordered ">
                                 <thead>
                                 <tr>
                                     <th>Número de folio</th>

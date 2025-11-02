@@ -30,7 +30,7 @@
                     <div class="row mt-4 p-4">
                         <div class="col-lg-12 col-xs-12">
                             <div class="card-input">
-                                <table id="table-stays" class="table table-bordered table-striped table-condensed">
+                                <table id="table-stays" class="table table-bordered  table-condensed">
                                     <thead>
                                     <tr>
                                         <th class="bg-inverse text-white">Bodega</th>

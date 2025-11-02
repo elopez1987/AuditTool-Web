@@ -54,7 +54,7 @@
                     <div class="row">
                         <div class="col-lg-12 ">
                             <table id="table-assignshipment"
-                                   class="table table-bordered table-striped table-condensed table-hover table-uppercase table-responsive">
+                                   class="table table-bordered  table-condensed table-hover table-uppercase table-responsive">
                                 <thead>
                                 <tr class="bg-inverse">
                                     <th class="text-white">Folio</th>

@@ -202,7 +202,7 @@
                                     <div class="row mt-3">
                                         <div class="col-lg-6">
                                             <table width="100%"
-                                                   class="table table-condensed table-bordered table-striped">
+                                                   class="table table-condensed table-bordered ">
                                                 <thead>
                                                 <tr>
                                                     <th>Concepto</th>
@@ -386,7 +386,7 @@
                                     <div class="row mt-3">
                                         <div class="col-lg-6">
                                             <table width="100%"
-                                                   class="table table-condensed table-bordered table-striped">
+                                                   class="table table-condensed table-bordered ">
                                                 <thead>
                                                 <tr>
                                                     <th>Concepto</th>
@@ -467,7 +467,7 @@
                                     <div class="row mt-3">
                                         <div class="col-lg-6">
                                             <table width="100%"
-                                                   class="table table-condensed table-bordered table-striped">
+                                                   class="table table-condensed table-bordered ">
                                                 <thead>
                                                 <tr>
                                                     <th>Concepto</th>
@@ -587,7 +587,7 @@
                                                     <div class="card">
                                                         <div class="card-body">
                                                             <table width="100%"
-                                                                   class="table table-condensed table-bordered table-striped table-hover">
+                                                                   class="table table-condensed table-bordered  table-hover">
                                                                 <thead>
                                                                 <tr>
                                                                     <th>Tipo</th>

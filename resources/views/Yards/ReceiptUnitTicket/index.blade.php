@@ -38,7 +38,7 @@
                     <div class="row">
                         <div class="col-12">
                             <table id="table-tickets"
-                                   class="table table-bordered table-striped table-condensed table-hover table-uppercase">
+                                   class="table table-bordered  table-condensed table-hover table-uppercase">
                                 <thead>
                                 <tr>
                                     <th class="text-white">Bodega</th>

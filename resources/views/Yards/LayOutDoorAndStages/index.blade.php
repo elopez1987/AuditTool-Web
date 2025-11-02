@@ -9,7 +9,7 @@
                         class="badge badge-success font-12">Descarga</span>
                 </div>
                 <div class="card-body">
-                    <table class="table table-condensed table-hover table-striped table-bordered">
+                    <table class="table table-condensed table-hover table-bordered">
                         <thead style="position: sticky;top: 0;">
                         <tr>
                             <th style="width: 20%">Cortina</th>
@@ -64,7 +64,7 @@
                     Precargas
                 </div>
                 <div class="card-body">
-                    <table class="table table-condensed table-hover table-striped table-bordered">
+                    <table class="table table-condensed table-hover table-bordered">
                         <thead style="position: sticky;top: 0;">
                         <tr>
                             <th style="width: 20%">Precargas</th>

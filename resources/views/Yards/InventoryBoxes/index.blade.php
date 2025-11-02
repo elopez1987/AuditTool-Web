@@ -51,7 +51,7 @@
                     <div class="row">
                         <div class="col-12">
                             <table id="table-boxes"
-                                   class="table table-bordered table-striped table-condensed table-hover">
+                                   class="table table-bordered table-condensed table-hover">
                                 <thead class="bg-inverse">
                                 <tr>
                                     <th class="text-white">C.Distribución</th>
