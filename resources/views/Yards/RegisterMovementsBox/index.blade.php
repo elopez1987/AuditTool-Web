@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-lg-8 col-md-12">
+        <div class="col-lg-6 col-md-12">
             <div class="card">
                 <div class="card-header">
                     Registra la entrega de documentacion a mesa de control.
@@ -11,7 +11,7 @@
                     @csrf
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-lg-6 col-md-6 col-xs-12">
+                            <div class="col-lg-4 col-md-6 col-xs-12">
                                 <div class="form-group">
                                     <label for="folionumber">Número de Folio
                                         <span style="color: red">*</span>
@@ -22,8 +22,7 @@
                                     @enderror
                                 </div>
                             </div>
-
-                            <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="col-lg-4 col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label for="barcode">Código de barra de la caja</label>
                                     <div class="input-group">
@@ -33,13 +32,13 @@
                             </div>
                         </div>
                         <div class="row mt-2">
-                            <div class="col-lg-6 col-md-6  col-xs-12">
+                            <div class="col-lg-4 col-md-6  col-xs-12">
                                 <div class="form-group">
                                     <label for="linea">Línea de Transporte</label>
                                     <input type="text" class="form-control" readonly  id="linea" name="linea" value="{{ old('linea') }}">
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-md-6 col-xs-12">
+                            <div class="col-lg-4 col-md-6 col-xs-12">
                                 <div class="form-group">
                                     <label for="operatorname">Nombre de Operador</label>
                                     <input type="text" class="form-control" readonly id="operatorname" name="operatorname" value="{{ old('operatorname') }}">
@@ -47,20 +46,19 @@
                             </div>
                         </div>
                         <div class="row mt-2">
-                            <div class="col-lg-6 col-md-6  col-xs-12">
+                            <div class="col-lg-4 col-md-6  col-xs-12">
                                 <div class="form-group">
                                     <label for="boxnumber">Placa de caja</label>
                                     <input type="text" class="form-control" readonly  id="boxnumber" name="boxnumber" value="{{ old('boxnumber') }}">
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-md-6 col-xs-12">
+                            <div class="col-lg-4 col-md-6 col-xs-12">
                                 <div class="form-group">
                                     <label for="econumber">Eco. De caja</label>
                                     <input type="text" class="form-control" readonly id="econumber" name="econumber" value="{{ old('econumber') }}">
                                 </div>
                             </div>
                         </div>
-
                     </div>
                     <div class="card-footer">
                         <div class="row">

@@ -20,17 +20,17 @@
                             <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
                                 <button id="filterBtn" class="btn waves-effect waves-light btn-outline-info btn-sm">
                                     <img src="{{asset('/ico/adbuscar.png')}}" alt="" class="img-16 ml-1">
-                                    <span style="font-size: 11px;"> Buscar</span>
+                                    <span class="text-button mr-2 ml-2"> Buscar</span>
                                 </button>
                                 <button type="button" id="clearBtn"
                                         class="btn waves-effect waves-light btn-outline-info btn-sm">
                                     <img src="{{asset('/ico/addestroy.png')}}" alt="" class="img-16 ml-1">
-                                    <span style="font-size: 11px;"> Limpiar filtros</span>
+                                    <span class="text-button ml-2 mr-2"> Limpiar filtros</span>
                                 </button>
                                 <button type="button" id="reloaddata"
                                         class="btn waves-effect waves-light btn-outline-info btn-sm">
                                     <img src="{{asset('/ico/changelocation.png')}}" alt="" class="img-16 ml-1">
-                                    <span style="font-size: 11px;"> Recargar datos</span>
+                                    <span class="text-button ml-2 mr-2" > Recargar datos</span>
                                 </button>
                             </div>
                         </div>
@@ -59,16 +59,15 @@
                 rowData.forEach((data) => {
                     let operatorName = data.operatorname ? data.operatorname : 'SIN ARRIBO DE UNIDAD';
                     cardsHtml += `<div class="col-lg-3">
-               <div class="card" style="border-radius: 10px;margin-left: 10px;border: 1px solid #2C009F">
-                  <div   style="font-size: 12px;font-weight: bold;background-color: darkblue;color: white;border-top-left-radius: 5px;border-top-right-radius:5px;padding: 5px;">
-                  Embarque:
-                             <a href="./orderdeliveries/${data.id}" style="color: white;">
+               <div class="card" style="border-radius: 10px;margin-left: 10px;border: 1px solid #546e7a">
+                  <div   style="font-size: 12px;font-weight: bold;background-color: #546e7a;color: white;border-top-left-radius: 5px;border-top-right-radius:5px;padding: 5px;">
+                    <span style="margin-left: 10px"> Embarque: </span>
+                             <a href="./orderdeliveries/${data.id}" style="color: white;margin-left: 10px;text-decoration: none;font-size: 14px;font-weight: bold;">
                 ${data.shipmentid}
             </a>
-
                   </div>
                   <div class="card-body">
-                    <table class="table table-condensed">
+                    <table class="table table-condensed table-bordered tale-hover">
                       <tr>
                         <td style="font-weight: bold">Linea de transporte:</td>
                         <td style="padding-left: 30px">${data.carriername}</td>
@@ -95,13 +94,12 @@
                       </tr>
                     </table>
                     <hr style="border: 1px solid;color: #0d47a1">
-                    <h5 class="text-center text-trax" style="color:#2C009F">${data.status}</h5>
+                    <h5 class="text-center text-trax font-bold" style="color:#546e7a">${data.status}</h5>
                     <hr style="border: 1px solid;color:#0d47a1;">
                   </div>
                 </div>
               </div>`;
                 });
-
                 cardsHtml += '</div>';
             });
             document.getElementById('cards-container').innerHTML = cardsHtml;

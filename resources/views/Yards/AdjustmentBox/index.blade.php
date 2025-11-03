@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-lg-8 col-md-12">
+        <div class="col-lg-6 col-md-12">
             <div class="card">
                 <div class="card-header">
                     Salida de caja por ajuste de Inventario.
