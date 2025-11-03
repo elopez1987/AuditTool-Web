@@ -494,7 +494,7 @@
                                                                             <div class="el-overlay">
                                                                                 <ul class="list-style-none el-info">
                                                                                     <li class="el-item">
-                                                                                        <a href="{{url('downloadphotocheckin/' . $photo->id)}}"
+                                                                                        <a href="{{url('downloadphoto/' . $photo->id)}}"
                                                                                            data-togggle="tooltip"
                                                                                            title="Descargar"
                                                                                            class="btn default btn-outline el-link">
