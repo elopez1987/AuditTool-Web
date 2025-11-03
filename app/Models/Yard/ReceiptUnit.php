@@ -347,7 +347,9 @@ class ReceiptUnit extends Model
 
     public function scopeCarrier($query, $carrierid)
     {
-        if (trim($carrierid) != '') {
+        if (is_array($carrierid) && ! empty($carrierid)) {
+            $query->whereIn('receiptunits.carrierid', $carrierid);
+        } elseif (trim($carrierid) != '') {
             $query->where('receiptunits.carrierid', '=', $carrierid);
         }
     }

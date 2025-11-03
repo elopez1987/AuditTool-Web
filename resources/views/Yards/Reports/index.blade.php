@@ -59,6 +59,11 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="row">
+
+                        </div>
+
                         <div class="row mt-4">
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
@@ -85,18 +90,5 @@
 @endsection
 
 @section('script')
-    <script>
-        $('#workdayin').bootstrapMaterialDatePicker({
-            format: 'YYYY-MM-DD HH:mm',
-            lang: 'es',
-            weekStart: 1,
-            cancelText: 'Cancelar'
-        });
-        $('#workdayout').bootstrapMaterialDatePicker({
-            format: 'YYYY-MM-DD HH:mm',
-            lang: 'es',
-            weekStart: 1,
-            cancelText: 'Cancelar'
-        });
-    </script>
+
 @endsection

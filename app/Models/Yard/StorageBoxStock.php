@@ -122,6 +122,12 @@ class StorageBoxStock extends Model
         return $this->belongsTo(SystemStatus::class, 'statusid', 'statusid');
     }
 
+    public function unit()
+    {
+        return $this->belongsTo(ReceiptUnit::class, 'id', 'id');
+    }
+
+    //	Filtros
     public function scopeFolio($query, $folionumber)
     {
         if (trim($folionumber) !== '') {
@@ -154,6 +160,15 @@ class StorageBoxStock extends Model
     {
         if (trim($razonstatusid) !== '') {
             $query->where('receiptunits.razonstatusid', $razonstatusid);
+        }
+    }
+
+    public function scopeCarrier($query, $carrierid)
+    {
+        if (is_array($carrierid) && ! empty($carrierid)) {
+            $query->whereIn('receiptunits.carrierid', $carrierid);
+        } elseif (trim($carrierid) != '') {
+            $query->where('receiptunits.carrierid', '=', $carrierid);
         }
     }
 }
