@@ -23,8 +23,7 @@
                         <div class="col-lg-4 col-md-6 col-sm-12">
                             <div id="categorydiv" class="">
                                 <label>Linea de transporte</label>
-                                <select name="carrierid" id="carrierid" class="form-control" multiple="multiple">
-                                </select>
+                                <select name="carrierid" id="carrierid" class="form-control" multiple="multiple"></select>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6 col-sm-12">
@@ -149,46 +148,6 @@
                         <div class="col-lg-4">
                             <div class="card box-primary">
                                 <div class="card-header">
-                                    <h3 class="card-title text-trax" style="font-size: 12px;"> Total por Zona <span style="font-size: 0.657rem;color: red">(Existencia)</span></h3>
-                                </div>
-                                <div class="card-body no-padding">
-                                    <figure class="highcharts-figure" >
-                                        <div id="ForZone" ></div>
-                                    </figure>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="card box-primary">
-                                <div class="card-header">
-                                    <h3 class="card-title" style="font-size: 12px;"> Total por estatus. <span style="font-size: 0.657rem;color: red">(Existencia)</span></h3>
-                                </div>
-                                <div class="card-body no-padding">
-                                    <figure class="highcharts-figure">
-{{--                                        <div id="ForCarrier"></div>--}}
-                                    </figure>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="card box-primary">
-                                <div class="card-header">
-                                    <h3 class="card-title text-trax" style="font-size: 12px;"> Total por origen. <span style="font-size: 0.657rem;color: red">(Existencia)</span></h3>
-                                </div>
-                                <div class="card-body no-padding">
-                                    <figure class="highcharts-figure">
-{{--                                        <div id="ForStatus"></div>--}}
-                                    </figure>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <div class="card box-primary">
-                                <div class="card-header">
                                     <h3 class="card-title text-trax" style="font-size: 12px;"> Total por tipo de unidad.</h3>
                                 </div>
                                 <div class="card-body no-padding">
@@ -201,8 +160,7 @@
                         <div class="col-lg-8">
                             <div class="card box-primary">
                                 <div class="card-header">
-                                    <h3 class="card-title text-trax" style="font-size: 12px;"> Total de registros por
-                                        dia.</h3>
+                                    <h3 class="card-title text-trax" style="font-size: 12px;"> Total de registros por dia.</h3>
                                 </div>
                                 <div class="card-body no-padding">
                                     <figure class="highcharts-figure">
@@ -246,8 +204,19 @@
 
 
     <script>
-        document.getElementById('filterData').addEventListener('click', function () {
+        // Función centralizada para cargar todas las gráficas
+        function loadAllCharts(from_date, to_date, selectedValuesCarrier, selectedValuesStatus, selectedValuesRason, selectedValuesWarehouse) {
+            fetchDataAndCreateChart(from_date, to_date, selectedValuesCarrier, selectedValuesStatus, selectedValuesRason, selectedValuesWarehouse);
+            fetchDataFroCarrier(from_date, to_date, selectedValuesCarrier, selectedValuesStatus, selectedValuesRason, selectedValuesWarehouse);
+            fetchDataFroStatus(from_date, to_date, selectedValuesCarrier, selectedValuesStatus, selectedValuesRason, selectedValuesWarehouse);
+            getTotalUnits(from_date, to_date, selectedValuesCarrier, selectedValuesStatus, selectedValuesRason, selectedValuesWarehouse);
+            getForTypeTruck(from_date, to_date, selectedValuesCarrier, selectedValuesStatus, selectedValuesRason, selectedValuesWarehouse);
+            getTotalUnitForDays(from_date, to_date, selectedValuesCarrier, selectedValuesStatus, selectedValuesRason, selectedValuesWarehouse);
+            getTotalEstadia(from_date, to_date, selectedValuesCarrier, selectedValuesStatus, selectedValuesRason, selectedValuesWarehouse);
+        }
 
+        // Evento del botón de filtros
+        document.getElementById('filterData').addEventListener('click', function () {
             let from_date = $('#daterange').data('daterangepicker').startDate.format('YYYY-MM-DD');
             let to_date = $('#daterange').data('daterangepicker').endDate.format('YYYY-MM-DD');
 
@@ -263,14 +232,8 @@
             var selectedValuesWarehouse = $('#warehouseid').select2('data').map(function (item) {
                 return item.id;
             });
-            fetchDataAndCreateChart(from_date, to_date, selectedValuesCarrier, selectedValuesStatus, selectedValuesRason,selectedValuesWarehouse);
-            fetchDataFroCarrier(from_date, to_date, selectedValuesCarrier, selectedValuesStatus, selectedValuesRason,selectedValuesWarehouse);
-            fetchDataFroStatus(from_date, to_date, selectedValuesCarrier, selectedValuesStatus, selectedValuesRason,selectedValuesWarehouse);
-            fetchDataForZone(from_date, to_date, selectedValuesCarrier, selectedValuesStatus, selectedValuesRason,selectedValuesWarehouse);
-            getTotalUnits(from_date, to_date, selectedValuesCarrier, selectedValuesStatus, selectedValuesRason,selectedValuesWarehouse);
-            getForTypeTruck(from_date, to_date, selectedValuesCarrier, selectedValuesStatus, selectedValuesRason,selectedValuesWarehouse);
-            getTotalUnitForDays(from_date, to_date, selectedValuesCarrier, selectedValuesStatus, selectedValuesRason,selectedValuesWarehouse);
-            getTotalEstadia(from_date, to_date, selectedValuesCarrier, selectedValuesStatus, selectedValuesRason,selectedValuesWarehouse);
+            
+            loadAllCharts(from_date, to_date, selectedValuesCarrier, selectedValuesStatus, selectedValuesRason, selectedValuesWarehouse);
         });
     </script>
 
@@ -290,6 +253,20 @@
             }
         }, function (start_data, end_date) {
             $('#daterange span').html(start_date.format('YYYY-MM-DD') + ' - ' + end_date.format('YYYY-MM-DD'));
+        });
+
+        // Cargar gráficas al iniciar la página con el rango de fecha predeterminado
+        $(document).ready(function() {
+            // Dar tiempo a que se carguen los select2 (1 segundo)
+            setTimeout(function() {
+                let from_date = start_date.format('YYYY-MM-DD');
+                let to_date = end_date.format('YYYY-MM-DD');
+                
+                console.log('Cargando gráficas iniciales con fechas:', from_date, 'a', to_date);
+                
+                // Cargar con filtros vacíos inicialmente
+                loadAllCharts(from_date, to_date, [], [], [], []);
+            }, 1000);
         });
     </script>
     <script>
@@ -313,6 +290,10 @@
                 success: function (response) {
                     var data = JSON.parse(response)
                     document.getElementById('totalunit').innerText = data;
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error en getTotalUnits:', error);
+                    document.getElementById('totalunit').innerText = '0';
                 }
             });
         }
@@ -337,7 +318,15 @@
                 },
                 success: function (response) {
                     var data = JSON.parse(response)
-                    document.getElementById('estadiatotal').innerText = data[0].estadia;
+                    if (data && data.length > 0 && data[0].estadia) {
+                        document.getElementById('estadiatotal').innerText = data[0].estadia;
+                    } else {
+                        document.getElementById('estadiatotal').innerText = '0 horas 0 minutos';
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error en getStadiaTotal:', error);
+                    document.getElementById('estadiatotal').innerText = 'Error';
                 }
             });
         }
@@ -363,13 +352,17 @@
                 success: function (response) {
                     var data = JSON.parse(response)
                     var fechas = data.map(function (item) {
-                        return [item.fecha]
+                        return item.fecha
                     });
                     var total = data.map(function (item) {
-                        return [parseInt(item.total)]
+                        return parseInt(item.total)
                     });
                     Highcharts.chart('getForTotalForDays', {
-                        // colors: ['#d4d952', '#d6d984', '#f0f2b3', '#f2f2f2'],
+                        colors: [
+                            '#3d5afe', '#00c853', '#ff1744', '#ffc107', '#17a2b8',
+                            '#6c757d', '#dc3545', '#28a745', '#007bff', '#fd7e14',
+                            '#6f42c1', '#e83e8c', '#20c997', '#343a40', '#f8f9fa'
+                        ],
                         chart: {
                             type: 'line'
                         },
@@ -401,6 +394,9 @@
                         }]
                     });
 
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error en getTotalUnitForDays:', error);
                 }
             });
         }
@@ -426,13 +422,17 @@
                 success: function (response) {
                     var data = JSON.parse(response)
                     var tipe = data.map(function (item) {
-                        return [item.name]
+                        return item.name
                     });
                     var total = data.map(function (item) {
-                        return [parseInt(item.total)]
+                        return parseInt(item.total)
                     });
                     Highcharts.chart('ForTypeTruck', {
-                        // colors: ['#d4d952', '#d6d984', '#f0f2b3', '#f2f2f2'],
+                        colors: [
+                            '#3d5afe', '#00c853', '#ff1744', '#ffc107', '#17a2b8',
+                            '#6c757d', '#dc3545', '#28a745', '#007bff', '#fd7e14',
+                            '#6f42c1', '#e83e8c', '#20c997', '#343a40', '#f8f9fa'
+                        ],
                         chart: {
                             type: 'column'
                         },
@@ -473,77 +473,14 @@
                             },
                         ]
                     });
-                }
-            });
-        }
-    </script>
-
-
-    <script>
-        function fetchDataForZone(startDate, endDate, carrierid, statusid, selectedValuesRason,selectedValuesWarehouse) {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url: '{{route('getTotalForZone')}}',
-                method: 'POST',
-                data: {
-                    startDate: startDate,
-                    endDate: endDate,
-                    carrierid: carrierid,
-                    statusid: statusid,
-                    razon: selectedValuesRason,
-                    warehouseid:selectedValuesWarehouse
                 },
-                success: function (response) {
-                    var data = JSON.parse(response)
-                    console.log(data)
-                    var arrays = data.map(function (item) {
-                        return [item.name, parseInt(item.total)]
-                    });
-                    Highcharts.chart('ForZone', {
-                        chart: {
-                            type: 'pie',
-                            options3d: {
-                                enabled: true,
-                                alpha: 45,
-                                beta: 0
-                            }
-                        },
-                        title: {
-                            text: '',
-                        },
-                        accessibility: {
-                            point: {
-                                valueSuffix: '%'
-                            }
-                        },
-                        tooltip: {
-                            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-                        },
-                        plotOptions: {
-                            pie: {
-                                allowPointSelect: true,
-                                cursor: 'pointer',
-                                depth: 35,
-                                dataLabels: {
-                                    enabled: true,
-                                    format: '{point.name}'
-                                }
-                            }
-                        },
-                        series: [{
-                            type: 'pie',
-                            name: 'Total',
-                            data: arrays
-                        }]
-                    });
+                error: function(xhr, status, error) {
+                    console.error('Error en getForTypeTruck:', error);
                 }
             });
         }
     </script>
+
 
     <script>
         function fetchDataAndCreateChart(startDate, endDate, carrierid, statusid, selectedValuesRason,selectedValuesWarehouse) {
@@ -569,7 +506,11 @@
                         return [item.name, parseInt(item.total)]
                     });
                     Highcharts.chart('ForType', {
-                        // colors: ['#585859', '#d4d952', '#d6d984', '#f0f2b3', '#f2f2f2'],
+                        colors: [
+                            '#3d5afe', '#00c853', '#ff1744', '#ffc107', '#17a2b8',
+                            '#6c757d', '#dc3545', '#28a745', '#007bff', '#fd7e14',
+                            '#6f42c1', '#e83e8c', '#20c997', '#343a40', '#f8f9fa'
+                        ],
                         chart: {
                             type: 'pie',
                             options3d: {
@@ -606,6 +547,9 @@
                             data: arrays
                         }]
                     });
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error en fetchDataAndCreateChart (ForType):', error);
                 }
             });
         }
@@ -634,7 +578,11 @@
                         return [item.name, parseInt(item.total)]
                     });
                     Highcharts.chart('ForCarrier', {
-                        // colors: ['#585859', '#d4d952', '#d6d984', '#f0f2b3', '#f2f2f2'],
+                        colors: [
+                            '#3d5afe', '#00c853', '#ff1744', '#ffc107', '#17a2b8',
+                            '#6c757d', '#dc3545', '#28a745', '#007bff', '#fd7e14',
+                            '#6f42c1', '#e83e8c', '#20c997', '#343a40', '#f8f9fa'
+                        ],
                         chart: {
                             type: 'pie',
                             options3d: {
@@ -671,6 +619,9 @@
                             data: arrays
                         }]
                     });
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error en fetchDataFroCarrier (ForCarrier):', error);
                 }
             });
         }
@@ -700,7 +651,11 @@
                     });
 
                     Highcharts.chart('ForStatus', {
-                        // colors: ['#585859', '#d4d952', '#d6d984', '#f0f2b3', '#f2f2f2'],
+                        colors: [
+                            '#3d5afe', '#00c853', '#ff1744', '#ffc107', '#17a2b8',
+                            '#6c757d', '#dc3545', '#28a745', '#007bff', '#fd7e14',
+                            '#6f42c1', '#e83e8c', '#20c997', '#343a40', '#f8f9fa'
+                        ],
                         chart: {
                             plotBackgroundColor: null,
                             plotBorderWidth: 0,
@@ -713,12 +668,6 @@
                         tooltip: {
                             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>',
                         },
-                        // tooltip: {
-                        //     formatter: function() {
-                        //         return '<b>' + this.series.name + '</b>: <b>' + this.y + '</b><br/>' +
-                        //             '<a href="' + this.point.url + '">Ver detalle</a>'
-                        //     }
-                        // },
                         accessibility: {
                             point: {
                                 valueSuffix: '%'
@@ -747,6 +696,9 @@
                             data: arrays,
                         }]
                     });
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error en fetchDataFroStatus (ForStatus):', error);
                 }
             });
         }

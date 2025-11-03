@@ -13,28 +13,25 @@
                             <a href="{{route('tracereceiptunit.index')}}">
                                 @include('buttons.cancel')
                             </a>
-                            <a href="{{url('generateinvoicekardex/' . $receiptunit->id)}}" data-toggle="tooltip"
-                               data-placement="top" title="Detalle del folio">
+                            <a href="{{url('generateinvoicekardex/' . $receiptunit->id)}}" >
                                 <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
                                     <img src="{{asset('/ico/papeleta.png')}}" alt="" class="img-16 ml-1">
-                                    <span style="font-size: 11px;"> Generar Kardex</span>
+                                    <span class="text-button"> Generar Kardex</span>
                                 </button>
                             </a>
                             @can('receiptunits.princhecklistbrid')
-                                <a href="{{url('printchecklistbrind/' . $receiptunit->id)}}" data-toggle="tooltip"
-                                   data-placement="top" title="Detalle del folio">
+                                <a href="{{url('printchecklistbrind/' . $receiptunit->id)}}" >
                                     <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
                                         <img src="{{asset('/ico/papeleta.png')}}" alt="" class="img-16 ml-1">
-                                        <span style="font-size: 11px;"> Generar Check List Bridgestone</span>
+                                        <span class="text-button"> Generar Check List Bridgestone</span>
                                     </button>
                                 </a>
                             @endcan
                             @can('receiptunits.calidadbridgestone')
-                                <a href="{{url('printqualitybridge/' . $receiptunit->id)}}" data-toggle="tooltip"
-                                   data-placement="top" title="Detalle del folio">
+                                <a href="{{url('printqualitybridge/' . $receiptunit->id)}}" >
                                     <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
                                         <img src="{{asset('/ico/papeleta.png')}}" alt="" class="img-16 ml-1">
-                                        <span style="font-size: 11px;"> Generar Check List Calidad</span>
+                                        <span class="text-button"> Generar Check List Calidad</span>
                                     </button>
                                 </a>
                             @endcan
@@ -44,38 +41,35 @@
                                         <button type="button"
                                                 class="btn waves-effect waves-light btn-outline-info btn-md">
                                             <img src="{{asset('/ico/go-back256_24856.png')}}" alt="" class="img-16">
-                                            <span style="font-size: 11px;"> Revivir Folio</span>
+                                            <span class="text-button"> Revivir Folio</span>
                                         </button>
                                     </a>
                                 @endcan
                             @endif
                             @can('receiptunits.downloadfiles')
-                                <a href="{{url('downloadfilesunit/' . $receiptunit->id)}}" data-toggle="tooltip"
-                                   data-placement="top" title="Descargar evidencias fotograficas">
+                                <a href="{{url('downloadfilesunit/' . $receiptunit->id)}}" >
                                     <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
                                         <img src="{{asset('/ico/galeria-de-fotos.png')}}" alt=""
                                              class="img-16 ml-1">
-                                        <span style="font-size: 11px;">Descargar Evidencias</span>
+                                        <span class="text-button">Descargar Evidencias</span>
                                     </button>
                                 </a>
                             @endcan
                             @can('receiptunits.ticket')
-                                <a href="{{url('downloadticket/' . $receiptunit->id)}}" data-toggle="tooltip"
-                                   data-placement="top" title="Descargar evidencias fotograficas">
+                                <a href="{{url('downloadticket/' . $receiptunit->id)}}" >
                                     <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
                                         <img src="{{asset('/ico/papeleta.png')}}" alt=""
                                              class="img-16 ml-1">
-                                        <span style="font-size: 11px;">Descargar Ticket de bascula</span>
+                                        <span class="text-button">Descargar Ticket de bascula</span>
                                     </button>
                                 </a>
                             @endcan
                             @can('generateinvoicetransport')
-                                <a href="{{url('generateinvoicetransport/' . $receiptunit->id)}}" data-toggle="tooltip"
-                                   data-placement="top" title="Descargar evidencias fotograficas">
+                                <a href="{{url('generateinvoicetransport/' . $receiptunit->id)}}" >
                                     <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
                                         <img src="{{asset('/ico/papeleta.png')}}" alt=""
                                              class="img-16 ml-1">
-                                        <span style="font-size: 11px;">Descargar Folio</span>
+                                        <span class="text-button">Descargar Folio</span>
                                     </button>
                                 </a>
                             @endcan
@@ -202,7 +196,7 @@
                                     <div class="row mt-3">
                                         <div class="col-lg-6">
                                             <table width="100%"
-                                                   class="table table-condensed table-bordered table-striped">
+                                                   class="table table-condensed table-bordered ">
                                                 <thead>
                                                 <tr>
                                                     <th>Concepto</th>
@@ -386,7 +380,7 @@
                                     <div class="row mt-3">
                                         <div class="col-lg-6">
                                             <table width="100%"
-                                                   class="table table-condensed table-bordered table-striped">
+                                                   class="table table-condensed table-bordered ">
                                                 <thead>
                                                 <tr>
                                                     <th>Concepto</th>
@@ -467,7 +461,7 @@
                                     <div class="row mt-3">
                                         <div class="col-lg-6">
                                             <table width="100%"
-                                                   class="table table-condensed table-bordered table-striped">
+                                                   class="table table-condensed table-bordered ">
                                                 <thead>
                                                 <tr>
                                                     <th>Concepto</th>
@@ -587,7 +581,7 @@
                                                     <div class="card">
                                                         <div class="card-body">
                                                             <table width="100%"
-                                                                   class="table table-condensed table-bordered table-striped table-hover">
+                                                                   class="table table-condensed table-bordered  table-hover">
                                                                 <thead>
                                                                 <tr>
                                                                     <th>Tipo</th>

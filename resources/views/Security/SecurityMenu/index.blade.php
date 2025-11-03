@@ -38,7 +38,7 @@
                     <hr class="mb-3">
                     <div class="row">
                         <div class="col-12">
-                            <table id="table-menustructu" class="table table-bordered table-striped table-condensed">
+                            <table id="table-menustructu" class="table table-bordered table-hover table-condensed">
                                 <thead>
                                 <tr>
                                     <th class="bg-inverse text-white">Centro de distribución</th>

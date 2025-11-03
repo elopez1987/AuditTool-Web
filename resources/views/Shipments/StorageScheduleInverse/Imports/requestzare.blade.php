@@ -21,7 +21,7 @@
                     </div>
                     <div class="row mt-3">
                         <div class="col-lg-12">
-                            <table class="table table-no-bordered table-condensed">
+                            <table class="table table-bordered table-condensed">
                                 <tr>
                                     <thead>
                                         <th>Nombre</th>

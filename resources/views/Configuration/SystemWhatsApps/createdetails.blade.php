@@ -98,7 +98,7 @@
 
                     <div class="row mt-4">
                         <div class="col-10">
-                            <table class="table table-condensed table-bordered table-striped tablegeneral">
+                            <table class="table table-condensed table-bordered tablegeneral">
                                 <thead>
                                 <tr>
                                     <th width="5%" class="bg-inverse text-white">Secuencia</th>

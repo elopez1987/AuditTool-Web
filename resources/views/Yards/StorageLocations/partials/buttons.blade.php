@@ -6,12 +6,9 @@
 @endcan
 
 @can('storagelocations.destroy')
-    <a href="" data-target="#modal-delete-{{$id}}"
-       data-toggle="modal">
-        <img src="{{asset('/ico/addestroy1.png')}}" alt=""
-             class="img-16 ml-2">
+    <a href="javascript:void(0)" class="btn-delete-location" data-id="{{$id}}" data-toggle="tooltip" data-placement="top" title="Eliminar Registro">
+        <img src="{{asset('/ico/addestroy1.png')}}" alt="" class="img-16 ml-2">
     </a>
-    @include('Yards.StorageLocations.delete')
 @endcan
 
 @can('storagelocations.parameters')

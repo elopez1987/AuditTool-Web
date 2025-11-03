@@ -62,7 +62,7 @@
                         <div class="col-lg-6">
                             <div class="row mt-5">
                                 <div class="col-lg-12">
-                                    <table class="table table-striped table-bordered table-condensed tablegeneral ">
+                                    <table class="table table-hover table-bordered table-condensed tablegeneral ">
                                         <thead>
                                         <tr>
                                             <th>Descripción</th>
@@ -128,7 +128,7 @@
                         <div class="col-lg-6">
                             <div class="row mt-5">
                                 <div class="col-lg-12">
-                                    <table class="table table-striped table-bordered table-condensed tablegeneral">
+                                    <table class="table table-hover table-bordered table-condensed tablegeneral">
                                         <thead>
                                         <tr>
                                             <th>Modulo</th>

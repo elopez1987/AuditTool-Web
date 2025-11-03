@@ -70,7 +70,7 @@
                                             Tabla de marcas de equipo
                                         </div>
                                         <div class="card-body">
-                                            <table id="table-marcas" class="table table-condensed table-bordered table-striped table-hover">
+                                            <table id="table-marcas" class="table table-condensed table-bordered  table-hover">
                                                 <thead>
                                                     <tr>
                                                         <th># ID</th>

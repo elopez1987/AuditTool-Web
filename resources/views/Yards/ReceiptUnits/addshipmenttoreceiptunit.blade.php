@@ -12,7 +12,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-lg-12">
-                            <table class="table table-condensed table-striped table-bordered">
+                            <table class="table table-condensed  table-bordered">
                                 <thead>
                                 <tr>
                                     <th>Folio</th>

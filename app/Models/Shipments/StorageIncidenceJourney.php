@@ -140,16 +140,33 @@ class StorageIncidenceJourney extends Model
             ->whereIn('storageincidencejourneys.centerid', $centers);
     }
 
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (StorageIncidenceJourney $model) {
+                $model->createuser = Auth::id();
+            });
+        }
+    }
+
     public function scopeCarrier($query, $carrierid)
     {
-        if (trim($carrierid) !== '') {
+        if (trim($carrierid) != '') {
             $query->where('orderdeliveries.carrierid', $carrierid);
+        }
+    }
+
+    public function scopeCarrierIn($query, $carrierid)
+    {
+        if (! empty($carrierid)) {
+            $query->whereIn('orderdeliveries.carrierid', $carrierid);
         }
     }
 
     public function scopeForShipment($query, $shipmentid)
     {
-        if (trim($shipmentid) !== '') {
+        if (trim($shipmentid) != '') {
             $query->where('orderdeliveries.shipmentid', $shipmentid);
         }
     }
@@ -174,15 +191,5 @@ class StorageIncidenceJourney extends Model
     {
         return StorageIncidenceJourney::controlAccessUser()
             ->where('folioid', $folioid)->first();
-    }
-
-    protected static function boot()
-    {
-        parent::boot();
-        if (! app()->runningInConsole()) {
-            self::creating(function (StorageIncidenceJourney $model) {
-                $model->createuser = Auth::id();
-            });
-        }
     }
 }

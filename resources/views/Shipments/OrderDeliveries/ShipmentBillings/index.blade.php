@@ -86,7 +86,7 @@
 
                     <div class="row mt-5">
                         <div class="col-lg-8">
-                            <table class="table table-condensed table-bordered table-hover table-striped tablegeneral">
+                            <table class="table table-condensed table-bordered table-hover tablegeneral">
                                 <thead>
                                 <th>Embarque</th>
                                 <th>Cliente</th>

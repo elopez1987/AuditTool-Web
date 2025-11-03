@@ -27,7 +27,7 @@
                                             title="Refrescar la pagina"
                                             onclick="reloadtable();">
                                         <img src="{{asset('/ico/reloadpage.png')}}" alt="" class="img-16 ml-1">
-                                        <span style="font-size: 11px;"> Refrescar</span>
+                                        <span class="text-button"> Refrescar</span>
                                     </button>
                                 </a>
                                 <a href="{{route('home')}}">
@@ -60,7 +60,7 @@
 
                     <div class="row">
                         <div class="col-12">
-                            <table id="table-zone" class="table table-bordered table-striped table-condensed">
+                            <table id="table-zone" class="table table-bordered  table-condensed table-hover">
                                 <thead>
                                 <tr>
                                     <th class="bg-inverse text-white">C.Distribución</th>

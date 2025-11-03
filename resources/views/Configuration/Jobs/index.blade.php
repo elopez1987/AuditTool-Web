@@ -8,14 +8,10 @@
                     Jobs
                 </div>
                 <div class="card-body">
-{{--                    <form method="GET" id="search" role="form">--}}
-{{--                        {{csrf_field()}}--}}
-
-{{--                    </form>--}}
                     <hr class="mb-3">
                     <div class="row">
                         <div class="col-10">
-                            <table class="table table-bordered table-striped table-condensed tablegeneral">
+                            <table class="table table-bordered  table-condensed tablegeneral">
                                 <thead>
                                 <tr>
                                     <th>ID</th>

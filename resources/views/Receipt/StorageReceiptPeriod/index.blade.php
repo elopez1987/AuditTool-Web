@@ -51,7 +51,7 @@
                     </form>
                     <div class="row">
                         <div class="col-lg-10">
-                            <table id="table-receiptperiods" class="table table-bordered table-striped table-condensed table-hover">
+                            <table id="table-receiptperiods" class="table table-bordered table-condensed table-hover">
                                 <thead>
                                 <tr>
                                     <th class="bg-inverse text-white">C.Distribución</th>

@@ -16,18 +16,6 @@
                             <hr class="mb-3">
                         </div>
                     </div>
-                    <div class="row  mt-3">
-                        <div class="col-lg-12 col-sm-12">
-                            <div class="alert alert-info">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                                        aria-hidden="true">×</span></button>
-                                <h3 class="text-info"><i class="fa fa-check-circle"></i> Información</h3>
-                                Selecione un número de embarque en la cual requiera reportar una
-                                incidencia, al dar clic se mostrara la información relacionada con el embarque
-                                seleccionado.
-                            </div>
-                        </div>
-                    </div>
                     <div class="row">
                         <div class="col-lg-2 col-md-6 col-sm-12">
                             <div class="form-group">
@@ -64,23 +52,6 @@
                                 <input type="text" class="form-control" readonly id="downloaddate" name="downloaddate"
                                        onKeyUp=this.value=this.value.toUpperCase()
                                 >
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row  mt-3">
-                        <div class="col-lg-6 col-sm-12">
-                            <div class="card p-2">
-                                <div class="alert alert-info">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                                            aria-hidden="true">×</span></button>
-                                    <h3 class="text-info font-12"><i class="fa fa-check-circle"></i> Información</h3>
-                                    En el siguiente apartado ingrese los datos solicitados para reportar su incidencia,
-                                    todos los registros son creados con estatus de <strong>SIN RESPUESTA</strong> hasta
-                                    ser revisados por
-                                    el equipo de inventarios del centro de distribución. <br>
-                                    En caso de registrar una incidencia por código cambiado favor de ingresar el segundo
-                                    IDH en el apartado que aparece abajo del resto de campos solicitados.
-                                </div>
                             </div>
                         </div>
                     </div>

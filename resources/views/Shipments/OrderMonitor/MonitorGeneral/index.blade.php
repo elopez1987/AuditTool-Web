@@ -53,16 +53,13 @@
                     <div class="row">
                         <div class="col-12">
                             <table id="table-monitorgeneral"
-                                   class="table table-bordered table-striped table-condensed table-hover">
+                                   class="table table-bordered  table-condensed table-hover">
                                 <thead>
                                 <tr>
                                     <th>Fecha</th>
                                     <th>Embarque</th>
                                     <th>Estatus</th>
                                     <th>Cita con cliente</th>
-                                    {{--                                        <th>Inicio de Preparación</th>--}}
-                                    {{--                                        <th>Arribo de Unidad</th>--}}
-                                    {{--                                        <th>Inicio de Carga</th>--}}
                                     <th>Enviar a Facturación</th>
                                     <th>Inicio de Facturación</th>
                                     <th>Autorizar Salida</th>

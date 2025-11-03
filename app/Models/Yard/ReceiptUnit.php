@@ -326,49 +326,51 @@ class ReceiptUnit extends Model
     //    --Scopes para filtros de tabla
     public function scopeFolio($query, $folionumber)
     {
-        if (trim($folionumber) !== '') {
+        if (trim($folionumber) != '') {
             $query->where('receiptunits.id', '=', $folionumber);
         }
     }
 
     public function scopeBarcode($query, $barcode)
     {
-        if (trim($barcode) !== '') {
+        if (trim($barcode) != '') {
             $query->where('receiptunits.barcode', 'like', "%{$barcode}%");
         }
     }
 
     public function scopeLocation($query, $location)
     {
-        if (trim($location) !== '') {
+        if (trim($location) != '') {
             $query->where('sl.name', 'like', "%{$location}%");
         }
     }
 
     public function scopeCarrier($query, $carrierid)
     {
-        if (trim($carrierid) !== '') {
+        if (is_array($carrierid) && ! empty($carrierid)) {
+            $query->whereIn('receiptunits.carrierid', $carrierid);
+        } elseif (trim($carrierid) != '') {
             $query->where('receiptunits.carrierid', '=', $carrierid);
         }
     }
 
     public function scopeCenter($query, $centerid)
     {
-        if (trim($centerid) !== '') {
+        if (trim($centerid) != '') {
             $query->where('receiptunits.centerid', '=', $centerid);
         }
     }
 
     public function scopeWarehouse($query, $warehouseid)
     {
-        if ($warehouseid !== '') {
+        if ($warehouseid != '') {
             $query->where('receiptunits.warehouseid', '=', $warehouseid);
         }
     }
 
     public function scopeRason($query, $rasonid)
     {
-        if (trim($rasonid) !== '') {
+        if (trim($rasonid) != '') {
             $query->where('receiptunits.razonstatusid', '=', $rasonid);
         }
     }
@@ -382,49 +384,49 @@ class ReceiptUnit extends Model
 
     public function scopeBoxNumber($query, $boxnumber)
     {
-        if (trim($boxnumber) !== '') {
+        if (trim($boxnumber) != '') {
             $query->where('receiptunits.boxnumber', 'like', "%{$boxnumber}%");
         }
     }
 
     public function scopeEcoNumber($query, $econumber)
     {
-        if (trim($econumber) !== '') {
+        if (trim($econumber) != '') {
             $query->where('receiptunits.econumber', 'like', "%{$econumber}%");
         }
     }
 
     public function scopeTruckNumber($query, $trucknumber)
     {
-        if (trim($trucknumber) !== '') {
+        if (trim($trucknumber) != '') {
             $query->where('receiptunits.trucknumber', 'like', "%{$trucknumber}%");
         }
     }
 
     public function scopeBox($query, $boxnumber)
     {
-        if (trim($boxnumber) !== '') {
+        if (trim($boxnumber) != '') {
             $query->where('receiptunits.boxnumber', '=', $boxnumber);
         }
     }
 
     public function scopeCode($query, $barcode)
     {
-        if (trim($barcode) !== '') {
+        if (trim($barcode) != '') {
             $query->where('receiptunits.barcode', '=', $barcode);
         }
     }
 
     public function scopeShipment($query, $shipmentid)
     {
-        if (trim($shipmentid) !== '') {
+        if (trim($shipmentid) != '') {
             $query->where('receiptunits.shipmentid', 'like', "%{$shipmentid}%");
         }
     }
 
     public function scopeShipmentid($query, $shipmentid)
     {
-        if (trim($shipmentid) !== '') {
+        if (trim($shipmentid) != '') {
             $query->where('receiptunits.shipmentid', '=', $shipmentid);
         }
     }

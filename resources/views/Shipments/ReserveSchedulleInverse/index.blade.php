@@ -29,38 +29,26 @@
                             </div>
                         </div>
                         <hr class="m-t-1">
-                        {{--                        <div class="row">--}}
-                        {{--                            <div class="col-lg-2 col-md-6 col-sm-12">--}}
-                        {{--                                <div class="form-group">--}}
-                        {{--                                    <label for="description">Nombre</label>--}}
-                        {{--                                    <input type="text" class="form-control" id="description" name="description"--}}
-                        {{--                                           aria-describedby="name">--}}
-                        {{--                                </div>--}}
-                        {{--                            </div>--}}
-                        {{--                        </div>--}}
                     </form>
                     <div class="row">
                         <div class="col-12">
                             <table id="table-schedulereserve"
-                                   class="table table-bordered table-striped table-condensed">
+                                   class="table table-bordered table-hover table-condensed">
                                 <thead>
                                 <tr>
-                                    <th class="bg-inverse text-white">C.Distribución</th>
-                                    <th class="bg-inverse text-white">Bodega</th>
-                                    <th class="bg-inverse text-white">Folio de cita</th>
-                                    <th class="bg-inverse text-white">Fecha</th>
-                                    <th class="bg-inverse text-white">Linea de transporte</th>
-                                    <th class="bg-inverse text-white">Usuario</th>
-                                    {{--                                    <th class="bg-inverse text-white">Cantidad de embarques</th>--}}
-                                    {{--                                    <th class="bg-inverse text-white">Cantidad de cajas</th>--}}
-                                    <th class="bg-inverse text-white">Estatus</th>
-                                    <th class="bg-inverse text-white">Opciones</th>
+                                    <th >C.Distribución</th>
+                                    <th >Bodega</th>
+                                    <th >Folio de cita</th>
+                                    <th >Fecha</th>
+                                    <th >Linea de transporte</th>
+                                    <th >Usuario</th>
+                                    <th >Estatus</th>
+                                    <th >Opciones</th>
                                 </tr>
                                 </thead>
                             </table>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>

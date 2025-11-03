@@ -68,7 +68,7 @@
                     </form>
                     <div class="row">
                         <div class="col-12">
-                            <table id="table-tags" class="table table-bordered table-striped table-condensed tablegeneral">
+                            <table id="table-tags" class="table table-bordered table-hover table-condensed tablegeneral">
                                 <thead>
                                 <tr>
                                     <th class="bg-inverse text-white">Tag</th>

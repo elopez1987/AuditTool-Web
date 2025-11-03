@@ -19,8 +19,10 @@ class InventoryBoxesController extends BaseController
         $this->authorize('inventorybox.index');
         $status = SystemStatus::whereSchemaid('IBX')
             ->select(['statusid', 'name'])->get();
+        $centers = $this->getCenterForSelect();
+        $types = SystemStatus::whereSchemaid('INC')->select('name', 'statusid')->get();
 
-        return view('Yards.InventoryBoxes.index', compact('status'));
+        return view('Yards.InventoryBoxes.index', compact('status', 'centers', 'types'));
     }
 
     public function getdatainventories(Request $request)
@@ -41,17 +43,9 @@ class InventoryBoxesController extends BaseController
         return $this->showDataToView($data, 'Yards.InventoryBoxes.partials.buttons');
     }
 
-    public function create()
-    {
-        $this->authorize('inventorybox.create');
-        $centers = $this->getCenterForSelect();
-        $types = SystemStatus::whereSchemaid('INC')->select('name', 'statusid')->get();
-
-        return view('Yards.InventoryBoxes.create', compact('centers', 'types'));
-    }
-
     public function store(CreateNewInventoryRequest $request)
     {
+
         $total = ReceiptUnit::getCountUnit($request['centerid']);
         $inventory = InventoryBox::createNewInventory($request, $total);
         DB::beginTransaction();
@@ -65,12 +59,21 @@ class InventoryBoxesController extends BaseController
             }
             DB::commit();
 
-            return redirect('inventorybox/' . $inventory->id . '/edit');
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Inventario agregado correctamente',
+                ], 200);
+            }
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             DB::rollBack();
-
-            return redirect()->back()->withInput()->with(session()->flash('error', 'Error al procesar la solicitud'));
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Error al crear  el inventario : ' . $e->getMessage(),
+                ], 500);
+            }
         }
     }
 
@@ -95,25 +98,29 @@ class InventoryBoxesController extends BaseController
         return $this->redirectBackSuccess();
     }
 
-    public function destroy(InventoryBox $inventorybox)
+    public function destroy(InventoryBox $inventorybox, Request $request)
     {
         $this->authorize('inventorybox.destroy');
         $inventorybox->delete();
 
-        return $this->successResponse('inventorybox.index');
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Inventario agregado correctamente',
+            ], 200);
+        }
+
     }
 
     public function activateInventory(Request $request)
     {
         $this->authorize('inventorybox.edit');
-        $inventoryboxActive = InventoryBox::controlAccessUser()
-            ->where('statusid', 'AT')->first();
+        $inventoryboxActive = InventoryBox::controlAccessUser()->where('statusid', 'AT')->first();
         if (! empty($inventoryboxActive)) {
             $inventoryboxActive->statusid = 'TO';
             $inventoryboxActive->save();
         }
-        $inventorybox = InventoryBox::controlAccessUser()
-            ->where('id', $request['id'])->first();
+        $inventorybox = InventoryBox::controlAccessUser()->where('id', $request['id'])->first();
         $inventorybox->statusid = 'AT';
         $inventorybox->save();
 

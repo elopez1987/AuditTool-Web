@@ -24,7 +24,7 @@
                     <hr class="mb-3">
                     <div class="row">
                         <div class="col-10">
-                            <table id="table-logs" class="table table-bordered table-striped table-condensed">
+                            <table id="table-logs" class="table table-bordered  table-condensed">
                                 <thead>
                                 <tr>
                                     <th class="bg-inverse text-white">Tranferencia</th>

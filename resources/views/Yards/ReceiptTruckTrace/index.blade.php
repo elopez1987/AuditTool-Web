@@ -18,14 +18,14 @@
                                             <button id="searchData" type="button"
                                                     class="btn waves-effect waves-light btn-outline-info btn-md">
                                                 <img src="{{asset('/ico/reloadpage.png')}}" alt="" class="img-16 ml-1">
-                                                <span style="font-size: 11px;"> Buscar</span>
+                                                <span class="text-button"> Buscar</span>
                                             </button>
                                         </a>
                                         <a>
                                             <button id="clearinput" type="button"
                                                     class="btn waves-effect waves-light btn-outline-info btn-md">
                                                 <img src="{{asset('/ico/closemodal.png')}}" alt="" class="img-16 ml-1">
-                                                <span style="font-size: 11px;"> Limpiar filtros</span>
+                                                <span class="text-button"> Limpiar filtros</span>
                                             </button>
                                         </a>
                                         <a href="{{route('home')}}">
@@ -81,7 +81,7 @@
                     <div class="row mt-4">
                         <div class="col-lg-12">
                             <table width="100%" id="table-kardex"
-                                   class="table table-condensed table-hover table-bordered table-striped">
+                                   class="table table-condensed table-hover table-bordered">
                                 <thead>
                                 <tr>
                                     <th>Bodega</th>
@@ -96,7 +96,6 @@
                                     <th>Fecha de salida</th>
                                     <th>Usuario de entrada</th>
                                     <th>Usuario de salida</th>
-                                    {{--                                    <th>Opciones</th>--}}
                                 </tr>
                                 </thead>
                             </table>
@@ -113,14 +112,12 @@
 @endsection
 
 @section('css')
-    <link rel="stylesheet" href="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.min.css')}}">
     <link rel="stylesheet" href="{{asset('theme/assets/libs/daterangepicker/daterangepicker.css')}}">
 @endsection
 
 
 
 @section('script')
-    <script src="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.all.min.js')}}"></script>
     <script src="{{asset('/theme/assets/libs/daterangepicker/daterangepicker.js')}}"></script>
     <script src="{{asset('/theme/assets/libs/moment/moment.js')}}"></script>
     <script>

@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-lg-12">
-        <table width="100%" class="table table-bordered table-condensed table-striped " id="table-detailkardex">
+        <table width="100%" class="table table-bordered table-condensed table-hover" id="table-detailkardex">
             <thead>
             <tr>
                 <th class="bg-inverse text-white">Folio</th>

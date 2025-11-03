@@ -95,15 +95,14 @@ class UserController extends BaseController
         return $this->infoResponse('securityusers.index');
     }
 
-    public function destroy($uuiduser)
+    public function destroy($id)
     {
         $this->authorize('securityusers.destroy');
-        $user = User::withTrashed()->where('uuiduser', $uuiduser)->firstOrFail();
+        $user = User::withTrashed()->where('id', $id)->firstOrFail();
         $user->statusid = 'D';
         $user->save();
 
-        return redirect()->route('securityusers.index')->with(session()
-            ->flash('success', 'Registro eliminadó con exito'));
+        return redirect()->route('securityusers.index')->with(session()->flash('success', 'Registro eliminadó con exito'));
     }
 
     /**

@@ -50,7 +50,7 @@
 
                     <div class="row">
                         <div class="col-lg-12">
-                            <table id="schedulle" class="table table-bordered table-hover table-striped table-condensed">
+                            <table id="schedulle" class="table table-bordered table-hover  table-condensed">
                                 <thead>
                                 <tr>
                                     <th>Opciones</th>

@@ -5,13 +5,12 @@ namespace App\Http\Controllers\Yard\ReceiptUnit\Event;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Yard\ReceiptUnit\SaveArriveUnitRequest;
 use App\Models\Yard\ReceiptUnit;
-use App\Traits\Web\Yard\ReceiptUnit\ArriveUnit\SaveArriveUnit;
+use App\Models\Yard\StorageUnitTrace;
 use DB;
+use Exception;
 
 class ArriveUnitController extends BaseController
 {
-    use SaveArriveUnit;
-
     //    Registro de llegada a mesa de control
     public function index()
     {
@@ -24,21 +23,49 @@ class ArriveUnitController extends BaseController
     {
         $receiptunit = ReceiptUnit::searchForId($request['folionumber']);
         if (empty($receiptunit)) {
-            return $this->errorResponse('El número de caja no se encuentra en patio!!');
+            return response()->json([
+                'success' => false,
+                'message' => 'El número de caja no se encuentra en patio!!',
+            ], 400);
         }
         DB::beginTransaction();
         try {
-            $result = $this->saveArriveUnit($receiptunit, 'WEB');
-            if ($result) {
-                return $result;
+
+            if ($receiptunit->statusid !== 'QI') {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'La unidad se encuentra en estatus diferente ENTRADA AUTORIZADA.',
+                ], 400);
             }
+            if ($receiptunit->deliverdate !== null) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'La unidad ya cuenta con registro de Mesa de Control',
+                ], 400);
+            }
+            $this->updateDataUnit($receiptunit);
+            StorageUnitTrace::createTraceUnit($receiptunit, '10');
+
             DB::commit();
 
-            return $this->redirectBackSuccessMessage('Datos actualizados correctamente!!');
+            return response()->json([
+                'success' => true,
+                'message' => 'Datos actualizados correctamente!!',
+            ], 200);
         } catch (Exception $e) {
             DB::rollback();
 
-            return $this->errorResponse('Error al procesar la solicitud :' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al procesar la solicitud: ' . $e->getMessage(),
+            ], 500);
         }
+    }
+
+    private function updateDataUnit(ReceiptUnit $receiptunit)
+    {
+        $receiptunit->deliverdate = now();
+        $receiptunit->statusid = 'IN';
+        $receiptunit->save();
     }
 }

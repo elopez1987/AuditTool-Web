@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Yard\ReceiptUnit\Taks;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Yard\Task\CreateTaksOperator;
 use App\Models\Yard\ReceiptUnit;
-use App\Models\Yard\StorageLocation;
 use App\Models\Yard\StorageTask;
 use App\Models\Yard\StorageUnitTrace;
 use App\Models\Yard\StorageZone\StorageZone;
@@ -25,25 +24,6 @@ class StorageTasksController extends BaseController
         $status = $this->getStatusForSchema('SKS');
 
         return view('Yards.StorageTask.index', compact('status'));
-    }
-
-    public function create()
-    {
-        $this->authorize('storagetask.create');
-        $zones = StorageZone::controlAccessUser()
-            ->whereRaw("charindex('ZO-03', configurationflag) > 0")
-            ->select(['name', 'id'])->get();
-        $locations = StorageLocation::activeLocationForZone();
-        $center = $this->getCenterForUser();
-        $patieros = User::leftJoin('securityaccesswarehouses', 'users.username', '=', 'securityaccesswarehouses.username')
-            ->select(['users.name', 'users.id'])
-            ->where('securityaccesswarehouses.centerid', '=', $center)
-            ->where('users.statusid', '=', 'E')
-            ->whereNotNull('configurationflag')
-            ->whereRaw("charindex('USR-01', configurationflag) > 0")
-            ->get();
-
-        return view('Yards.StorageTask.create', compact('zones', 'locations', 'patieros'));
     }
 
     public function getDataTask(Request $request)
@@ -95,28 +75,59 @@ class StorageTasksController extends BaseController
 
     public function store(CreateTaksOperator $request)
     {
-        $receiptunit = ReceiptUnit::searchForId($request['folionumber']);
-        if (empty($receiptunit)) {
-            return $this->errorResponse('El número de folio no existe!!');
-        }
-        $zone = StorageZone::whereId($request['zoneid'])->select('zoneid')->first();
-        $razonstatusid = $this->getRazonStatus($zone);
-        $task = $this->createNewTask($receiptunit, $razonstatusid, $request);
-        StorageUnitTrace::createTraceUnit($receiptunit, '4');
-        $parameter = $this->getParametersOfWarehouse($receiptunit->warehouseid);
-        if (! empty($parameter) && in_array('SWH-11', (array) $parameter)) {
-            $this->sendMessageNewTask($task);
-        }
+        try {
+            $receiptunit = ReceiptUnit::searchForId($request['folionumber']);
 
-        return $this->successResponse('storagetask.index');
+            if (empty($receiptunit)) {
+                if ($request->ajax() || $request->wantsJson()) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'El número de folio no existe!!',
+                    ], 404);
+                }
+            }
+
+            $zone = StorageZone::whereId($request['zoneid'])->select('zoneid')->first();
+            $razonstatusid = $this->getRazonStatus($zone);
+            $task = $this->createNewTask($receiptunit, $razonstatusid, $request);
+            StorageUnitTrace::createTraceUnit($receiptunit, '4');
+            $parameter = $this->getParametersOfWarehouse($receiptunit->warehouseid);
+
+            if (! empty($parameter) && in_array('SWH-11', (array) $parameter)) {
+                $this->sendMessageNewTask($task);
+            }
+
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Tarea creada exitosamente.',
+                    'task' => $task,
+                ]);
+            }
+
+            return $this->successResponse('storagetask.index');
+        } catch (\Exception $e) {
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Error al crear la tarea: ' . $e->getMessage(),
+                ], 500);
+            }
+        }
     }
 
-    public function update(StorageTask $storagetask)
+    public function destroy(Request $request, StorageTask $storagetask)
     {
         $storagetask->statusid = 'CO';
         $storagetask->save();
 
-        return $this->redirectBackInfo();
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Tarea cancelada exitosamente.',
+            ]);
+        }
+
     }
 
     public function createNewTask(ReceiptUnit $receiptunit, string $razonstatusid, CreateTaksOperator $request): StorageTask
@@ -142,5 +153,28 @@ class StorageTasksController extends BaseController
         }
 
         return $razonstatusid;
+    }
+
+    public function getZonesForCreateTask()
+    {
+        $zones = StorageZone::controlAccessUser()
+            ->whereRaw("charindex('ZO-03', configurationflag) > 0")
+            ->select(['name', 'id'])->get();
+
+        return response()->json($zones);
+    }
+
+    public function getPatierosForCreateTask()
+    {
+        $center = $this->getCenterForUser();
+        $patieros = User::leftJoin('securityaccesswarehouses', 'users.username', '=', 'securityaccesswarehouses.username')
+            ->select(['users.name', 'users.id'])
+            ->where('securityaccesswarehouses.centerid', '=', $center)
+            ->where('users.statusid', '=', 'E')
+            ->whereNotNull('configurationflag')
+            ->whereRaw("charindex('USR-01', configurationflag) > 0")
+            ->get();
+
+        return response()->json($patieros);
     }
 }

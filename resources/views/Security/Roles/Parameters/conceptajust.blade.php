@@ -55,7 +55,7 @@
                     <div class="card-input">
                         <div class="row">
                             <div class="col-lg-6">
-                                <table class="table table-condensed table-bordered table-striped tablegeneral">
+                                <table class="table table-condensed table-bordered table-hover tablegeneral">
                                     <thead>
                                     <tr>
                                         <th>Centro de distribución</th>

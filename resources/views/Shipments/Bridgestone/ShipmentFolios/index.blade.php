@@ -20,21 +20,12 @@
                                 </a>
                             </div>
                         </div>
-                        <hr class="mb-2">
-                        <div class="row">
-                            <div class="col-lg-2 col-md-6 col-sm-12">
-                                <div class="form-group">
-                                    <label for="name">Nombre</label>
-                                    <input type="text" class="form-control" id="name" name="name"
-                                           aria-describedby="name">
-                                </div>
-                            </div>
-                        </div>
+
                         <hr class="mt-4">
                     </form>
                     <div class="row">
                         <div class="col-lg-12">
-                            <table id="table-folios" class="table table-bordered table-striped table-condensed">
+                            <table id="table-folios" class="table table-bordered table-hover table-condensed">
                                 <thead>
                                 <tr>
                                     <th class="bg-inverse text-white">C.Distribución</th>

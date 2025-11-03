@@ -137,6 +137,8 @@ Route::middleware(['auth'])->group(function () {
     //  Tareas de enrampe y desenrampe para patieros y operadores
     Route::resource('storagetask', StorageTasksController::class);
     Route::get('getDataTask', [StorageTasksController::class, 'getDataTask'])->name('getDataTask');
+    Route::get('getZonesForCreateTask', [StorageTasksController::class, 'getZonesForCreateTask'])->name('getZonesForCreateTask');
+    Route::get('getPatierosForCreateTask', [StorageTasksController::class, 'getPatierosForCreateTask'])->name('getPatierosForCreateTask');
     //  Autorizar transporte para ser reutilizado en otro almacen y concepto de entrada.
     Route::get('autorizetransport', [AutorizeTransportController::class, 'autorizetransport'])->name('receiptunits.autorizeunit');
     Route::post('autoizetransportstore', [AutorizeTransportController::class, 'autoizetransportstore'])->name('autoizetransportstore');
@@ -318,5 +320,5 @@ Route::middleware(['auth'])->group(function () {
     //  Ticket de pesos de báscula
     Route::resource('receiptunitticket', ReceiptUnitTicketController::class);
     Route::get('getUnitTickets', [ReceiptUnitTicketController::class, 'getUnitTickets'])->name('getUnitTickets');
-    Route::put('receiptunitticket/{id}', [ReceiptUnitTicketController::class, 'updatestatus'])->name('receiptunitticket.update');
+    Route::put('receiptunitticketstatus/{id}', [ReceiptUnitTicketController::class, 'updatestatus'])->name('receiptunitticketstatus.update');
 });

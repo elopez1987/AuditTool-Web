@@ -63,7 +63,7 @@
                     <div class="row">
                         <div class="col-lg-10 col-md-12 col-sm-12">
                             <table width="100%" id="table-roles"
-                                   class="table table-bordered table-striped table-condensed table-hover">
+                                   class="table table-bordered  table-condensed table-hover">
                                 <thead>
                                 <tr>
                                     <th class="bg-inverse text-white">C.Distribución</th>

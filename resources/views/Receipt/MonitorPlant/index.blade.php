@@ -58,7 +58,7 @@
                   Recibo :  ${data.shipmentid}
                   </div>
                   <div class="card-body">
-                    <table class="table table-condensed">
+                    <table class="table table-condensed table-bordered">
                       <tr>
                         <td style="font-weight: bold">Linea de transporte:</td>
                         <td style="padding-left: 30px">${data.carriername}</td>

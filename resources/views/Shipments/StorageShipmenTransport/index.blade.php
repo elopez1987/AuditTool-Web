@@ -56,22 +56,21 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-12">
-                            <table id="table-journeytransport"
-                                   class="table table-bordered table-striped table-condensed">
+                            <table id="table-journeytransport" class="table table-bordered table-hover table-condensed">
                                 <thead>
                                 <tr>
-                                    <th class="bg-inverse text-white">Embarque</th>
-                                    <th class="bg-inverse text-white">Cliente</th>
-                                    <th class="bg-inverse text-white">Ciudad</th>
-                                    <th class="bg-inverse text-white">Cita de carga</th>
-                                    <th class="bg-inverse text-white">Cita de entrega</th>
-                                    <th class="bg-inverse text-white">Confirmación</th>
-                                    <th class="bg-inverse text-white">Linea de transporte</th>
-                                    <th class="bg-inverse text-white">Operador</th>
-                                    <th class="bg-inverse text-white">Placa de caja</th>
-                                    <th class="bg-inverse text-white">Placa de tracto</th>
-                                    <th class="bg-inverse text-white">Estatus</th>
-                                    <th class="bg-inverse text-white">Opciones</th>
+                                    <th>Embarque</th>
+                                    <th>Cliente</th>
+                                    <th>Ciudad</th>
+                                    <th>Cita de carga</th>
+                                    <th>Cita de entrega</th>
+                                    <th>Confirmación</th>
+                                    <th>Linea de transporte</th>
+                                    <th>Operador</th>
+                                    <th>Placa de caja</th>
+                                    <th>Placa de tracto</th>
+                                    <th>Estatus</th>
+                                    <th>Opciones</th>
                                 </tr>
                                 </thead>
                             </table>

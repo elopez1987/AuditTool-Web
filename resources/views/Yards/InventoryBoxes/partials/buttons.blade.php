@@ -14,11 +14,10 @@
 
 @can('inventorybox.destroy')
     @if ($statusid != 'TO')
-        <a href="" data-target="#modal-destroy-{{$id}}" data-toggle="modal" data-toggle="tooltip"
-           data-placement="top" title="Eliminar Inventario" class="ml-2">
-            <img src="{{asset('/ico/destroy2.png')}}" alt="" class="img-16">
+        <a href="javascript:void(0)" class="btn-delete-inventory" data-id="{{$id}}" data-toggle="tooltip"
+           data-placement="top" title="Eliminar Registro">
+            <img src="{{asset('/ico/addestroy1.png')}}" alt="" class="img-16 ml-2">
         </a>
-        @include('Yards.InventoryBoxes.destroyInventory')
     @endif
 @endcan
 

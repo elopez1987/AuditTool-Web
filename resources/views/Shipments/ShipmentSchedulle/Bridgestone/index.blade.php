@@ -22,10 +22,7 @@
                                     @include('buttons.reloadajax')
                                 </a>
                             </div>
-
                         </div>
-
-
                         <hr class="m-t-0">
                         <div class="row">
                             <div class="col-lg-2 col-md-6 col-sm-12">
@@ -77,22 +74,22 @@
                     <div class="row">
                         <div class="col-12">
                             <table id="table-schedullebrid"
-                                   class="table table-bordered table-striped table-condensed table-list table-hover table-uppercase">
+                                   class="table table-bordered table-condensed table-list table-hover table-uppercase">
                                 <thead>
                                 <tr>
-                                    <th class="bg-inverse text-white">Opciones</th>
-                                    <th class="bg-inverse text-white">Embarque</th>
-                                    <th class="bg-inverse text-white">Destino</th>
-                                    <th class="bg-inverse text-white">Linea de Transporte</th>
-                                    <th class="bg-inverse text-white">Tipo de Transporte</th>
-                                    <th class="bg-inverse text-white">Cita de carga</th>
-                                    <th class="bg-inverse text-white">Canal</th>
-                                    <th class="bg-inverse text-white">Cortina</th>
-                                    <th class="bg-inverse text-white">Estatus</th>
-                                    <th class="bg-inverse text-white">Placa de caja</th>
-                                    <th class="bg-inverse text-white">Eco. de caja</th>
-                                    <th class="bg-inverse text-white">ETA</th>
-                                    <th class="bg-inverse text-white">Cantidad de llantas</th>
+                                    <th>Opciones</th>
+                                    <th>Embarque</th>
+                                    <th>Destino</th>
+                                    <th>Linea de Transporte</th>
+                                    <th>Tipo de Transporte</th>
+                                    <th>Cita de carga</th>
+                                    <th>Canal</th>
+                                    <th>Cortina</th>
+                                    <th>Estatus</th>
+                                    <th>Placa de caja</th>
+                                    <th>Eco. de caja</th>
+                                    <th>ETA</th>
+                                    <th>Cantidad de llantas</th>
                                 </tr>
                                 </thead>
                             </table>

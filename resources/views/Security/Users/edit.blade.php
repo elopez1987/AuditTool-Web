@@ -42,6 +42,7 @@
                             @endif
 
                             @can('securityusers.destroy')
+
                                 <a href="" data-target="#modal-delete-{{$user->id}}" data-toggle="modal">
                                     <button type="button"
                                             class="btn waves-effect waves-light btn-outline-info btn-md">

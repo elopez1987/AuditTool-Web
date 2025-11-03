@@ -71,7 +71,7 @@
 
         .pdf-item {
             float: left;
-            width: 19%;           /* 5 tablas por fila */
+            width: 19%; /* 5 tablas por fila */
             margin: 0.5%;
             box-sizing: border-box;
         }
@@ -118,7 +118,7 @@
                 <div class="row">
                     <table class="border-none">
                         <th
-                            style="height:15px;border-top: 0;border-left: 0;border-right: 0;
+                                style="height:15px;border-top: 0;border-left: 0;border-right: 0;
                         align-content: center;text-align: center;width: 100%;padding: 0;border-bottom: 0;font-size: 18px;">
                             Conteo de Embarques Guardia
                         </th>
@@ -129,8 +129,10 @@
                 @if($conteos->count() > 0)
                     <div class="row" style="margin-bottom: 10px;margin-top: 10px">
                         <table class="border-none" style="width: 60%;margin-left: 100px">
-                            {{--                            <th class="border-none" style="height: 20px;padding-left: 10px;width: 20%;font-size: 10px">Supevisor de embarque: </th>--}}
-                            {{--                            <th style="border-bottom: 1px solid;width: 20%;font-size: 9px" class="border-none">{{$conteos[0]->name}} </th>--}}
+                            <th style="height: 20px;padding-left: 10px;width: 20%;font-size: 10px">
+                                Total:
+                            </th>
+                            <th style="border-bottom: 1px solid;width: 20%;font-size: 9px">{{$total}} </th>
                             <th class="border-none" style="width: 10%;font-size: 10px">Cortina</th>
                             <th class="border-none"
                                 style="border-bottom: 1px solid;width: 10%;font-size: 10px">{{$conteos[0]->location ? $conteos[0]->location->name : ''}}</th>
@@ -172,7 +174,9 @@
                                                 <table class="table-bordered">
                                                     <thead>
                                                     <tr>
-                                                        <th style="font-size:8px;background-color:black;color:white">Rack</th>
+                                                        <th style="font-size:8px;background-color:black;color:white">
+                                                            Rack
+                                                        </th>
                                                         <th style="background-color:#81d4fa;font-size:8px">A</th>
                                                     </tr>
                                                     </thead>
@@ -195,12 +199,18 @@
                                                         <td style="font-size:7px">Total</td>
                                                         <td style="font-size:7px">{{ $conteo->totalIzquierdo }}</td>
                                                     </tr>
-                                                    <tr><td colspan="2" style="font-size:7px;background-color:#9ccc65;height:5px"></td></tr>
+                                                    <tr>
+                                                        <td colspan="2"
+                                                            style="font-size:7px;background-color:#9ccc65;height:5px"></td>
+                                                    </tr>
                                                     <tr>
                                                         <td style="font-size:7px">Sobrante</td>
                                                         <td style="font-size:7px">{{ $conteo->sobranteizq }}</td>
                                                     </tr>
-                                                    <tr><td colspan="2" style="font-size:7px;background-color:#9ccc65;height:5px"></td></tr>
+                                                    <tr>
+                                                        <td colspan="2"
+                                                            style="font-size:7px;background-color:#9ccc65;height:5px"></td>
+                                                    </tr>
                                                     <tr>
                                                         <td colspan="2" style="font-size:7px">Total</td>
                                                     </tr>
@@ -233,11 +243,15 @@
                                                     <tr>
                                                         <td style="font-size:7px">{{ $conteo->totalderecho }}</td>
                                                     </tr>
-                                                    <tr><td style="font-size:7px;background-color:#9ccc65;height:5px"></td></tr>
+                                                    <tr>
+                                                        <td style="font-size:7px;background-color:#9ccc65;height:5px"></td>
+                                                    </tr>
                                                     <tr>
                                                         <td style="font-size:7px">{{ $conteo->sobranteder }}</td>
                                                     </tr>
-                                                    <tr><td style="font-size:7px;background-color:#9ccc65;height:5px"></td></tr>
+                                                    <tr>
+                                                        <td style="font-size:7px;background-color:#9ccc65;height:5px"></td>
+                                                    </tr>
                                                     <tr>
                                                         <td style="font-size:7px">{{ $conteo->totalfinal }}</td>
                                                     </tr>

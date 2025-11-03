@@ -13,30 +13,63 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class CapacityYardController extends BaseController
 {
-    //    Ocupacion de patio
+    //    Ocupación de patio
     public function index()
     {
-        $zones = StorageZone::controlAccessUser()->select(['id', 'name', 'capacity', 'centerid'])
-            ->whereRaw("charindex('ZO-01', configurationflag) > 0")->where('statusid', '=', 'E')->get();
-        $totalLocations = StorageZone::controlAccessUser()->select(['capacity'])->where('statusid', '=', 'E')->sum('capacity');
-        $locationsBusy = ReceiptUnit::controlAccessUser()->whereNotIn('statusid', ['TR'])->get()->count();
+        // Obtener centros de distribución
         $centers = SystemCenterDistribution::controlAccessUser()
-            ->select(['centerid', 'name', 'description', 'capacityyard'])->get();
+            ->select(['centerid', 'name', 'description', 'capacityyard'])
+            ->get();
+
+        // Obtener zonas con eager loading de la relación center
+        $zones = StorageZone::controlAccessUser()
+            ->with('center:centerid,description')
+            ->select(['id', 'name', 'capacity', 'centerid'])
+            ->whereRaw("charindex('ZO-01', configurationflag) > 0")
+            ->where('statusid', '=', 'E')
+            ->get();
+
+        // Calcular totales de manera optimizada
+        $totalLocations = $zones->sum('capacity');
+
+        // Contar unidades ocupadas (sin el get())
+        $locationsBusy = ReceiptUnit::controlAccessUser()
+            ->whereNotIn('statusid', ['TR'])
+            ->count();
+
+        // Obtener ocupación por zona indexado por zoneid
         $locationfill = ReceiptUnit::controlAccessUser()
             ->whereNotIn('statusid', ['TR'])
-            ->select(['zoneid', DB::raw('COUNT(zoneid) as ocupado')])->groupBy('zoneid')->get();
+            ->select(['zoneid', DB::raw('COUNT(zoneid) as ocupado')])
+            ->groupBy('zoneid')
+            ->pluck('ocupado', 'zoneid');
+
+        // Obtener conteo por estatus de unidad con relación unitstatus
+        $unitsByStatus = ReceiptUnit::controlAccessUser()
+            ->whereNotIn('statusid', ['TR'])
+            ->with('unitstatus:id,name')
+            ->select(['unitstatusid', DB::raw('COUNT(*) as total')])
+            ->groupBy('unitstatusid')
+            ->get()
+            ->keyBy('unitstatusid');
+
+        // Agrupar zonas por centro para evitar loops en la vista
+        $zonesByCenter = $zones->groupBy('centerid');
 
         return view(
             'Yards.CapacityYard.index',
-            compact('centers', 'totalLocations', 'locationsBusy', 'zones', 'locationfill')
+            compact('centers', 'totalLocations', 'zones', 'locationsBusy', 'zonesByCenter', 'locationfill', 'unitsByStatus')
         );
     }
 
-    //    Detalle de ocupacion del patio por la placa de la unidad
+    //    Detalle de ocupación del patio por la placa de la unidad
     public function layoutinventoryforzone()
     {
         $zones = StorageZone::controlAccessUser()->whereStatusid('E')->whereRaw("charindex('ZO-01', configurationflag) > 0")->get();
-        $locations = $this->getDataLocationStatus();
+        $locations = StorageLocation::controlAccessUser()
+            ->select(['zoneid', 'id', 'locationid', 'name', 'auxiliary01', 'statusid'])
+            ->whereIn('statusid', ['E', 'D'])
+            ->get();
 
         return view('Yards.CapacityYard.inventoryforzone', compact('zones', 'locations'));
     }
@@ -44,13 +77,5 @@ class CapacityYardController extends BaseController
     public function exportDataLocationsForStatus()
     {
         return Excel::download(new InventoryLocationExport, 'Inventario de Ubicaciones.xlsx')->deleteFileAfterSend();
-    }
-
-    public function getDataLocationStatus()
-    {
-        return StorageLocation::controlAccessUser()
-            ->select(['zoneid', 'id', 'locationid', 'name', 'auxiliary01', 'statusid'])
-            ->whereIn('statusid', ['E', 'D'])
-            ->get();
     }
 }

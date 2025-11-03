@@ -45,7 +45,7 @@
                     </form>
                     <div class="row">
                         <div class="col-lg-12 col-xs-12">
-                            <table id="table-authorize" width="100%" class="table table-bordered table-striped table-condensed">
+                            <table id="table-authorize" width="100%" class="table table-bordered  table-condensed">
                                 <thead>
                                 <tr>
                                     <th class="bg-inverse text-white">C.Distribución</th>

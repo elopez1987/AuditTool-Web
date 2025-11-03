@@ -7,7 +7,7 @@
                 <div class="card-header">
                     Reubicación de caja.
                 </div>
-                <form method="POST" action="{{url('storeMoveBox')}}" enctype="multipart/form-data">
+                <form id="moveBoxForm" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
                         <div class="row">
@@ -114,33 +114,17 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-lg-4 col-md-6 col-sm-12">
-                                <div class="form-group">
-                                    <label for="unitstatusid">Estatus de unidad
-                                        <span style="color: red">*</span>
-                                        @error("unitstatusid")
-                                        <span class="message-error">{{$message}}</span>
-                                        @enderror
-                                    </label>
-                                    <select name="unitstatusid" required id="unitstatusid" class="form-control select2 @error('unitstatusid') is-invalid @enderror">
-                                        <option value="" selected>Seleccione una opción</option>
-                                        @foreach($unitstatus as $model)
-                                            <option value="{{$model->id}}" {{ old('unitstatusid') == $model->id ? 'selected' : '' }}> {{$model->name}} </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                     <div class="card-footer">
                         <div class="row">
-                            <div class="col-md-12">
-                                <a href="">
-                                    @include('buttons.save')
-                                </a>
-                                <a href="{{route('home')}}" style="margin-left: 10px">
-                                    @include('buttons.cancel')
+                            <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+                                <button type="submit" id="btnSave" class="btn btn-block btn-block btn-outline-success btn-block">
+                                    <i class="fas fa-save"></i> Guardar
+                                </button>
+                            </div>
+                            <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+                                <a href="{{route('home')}}" class="btn btn-block btn-block btn-outline-danger" style="margin-left: 10px">
+                                    <i class="fas fa-times"></i> Cancelar
                                 </a>
                             </div>
                         </div>
@@ -153,49 +137,153 @@
 @endsection
 
 @section('css')
-    <link rel="stylesheet" href="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.min.css')}}">
+
 @endsection
 
 @section('script')
-    <script src="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.all.min.js')}}"></script>
+
     <script>
-        $("#zoneid").change(event => {
-            $.get(`./getLocationForZone/${event.target.value}`, function (res) {
-                $("#locationid").empty();
-                res.forEach(element => {
-                    $("#locationid").append(`<option value=${element.id}> ${element.name} </option>`);
+        $(document).ready(function() {
+            // Evento para cargar ubicaciones según la zona seleccionada
+            $(document).on('change', '#zoneid', function(event) {
+                $.get(`./getLocationForZone/${event.target.value}`, function (res) {
+                    $("#locationid").empty();
+                    $("#locationid").append('<option value="">Seleccione una opción</option>');
+                    res.forEach(element => {
+                        $("#locationid").append(`<option value=${element.id}> ${element.name} </option>`);
+                    });
                 });
+            });
+            // Evento para buscar datos del folio
+            $(document).on('blur', '#folionumber', function () {
+                const folioValue = $(this).val().trim();
+                
+                if (folioValue.length === 0) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Atención',
+                        text: 'Ingrese el numero de Folio o Etiqueta!',
+                        width: '400px',
+                        confirmButtonText: 'Entendido'
+                    });
+                } else {
+                    $.getJSON('./getDataInvoiceForFolio/' + folioValue, function (values) {
+                        if (values.length === 0) {
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'No encontrado',
+                                text: 'No se encuentran registros del folio!',
+                                width: '400px',
+                                confirmButtonText: 'Entendido'
+                            });
+                            // Limpiar campos si no se encuentra
+                            $('#barcode').val('');
+                            $('#statusid').val('');
+                            $('#boxnumber').val('');
+                            $('#containerseal').val('');
+                            $('#econumber').val('');
+                            $('#originzoneid').val('');
+                            $('#originlocationid').val('');
+                        } else {
+                            // Llenar los campos con los datos obtenidos
+                            $("#boxnumber").val(values[0].boxnumber);
+                            $("#containerseal").val(values[0].containerseal);
+                            $("#originzoneid").val(values[0].zona);
+                            $("#originlocationid").val(values[0].ubicacion);
+                            $("#statusid").val(values[0].status);
+                            $("#econumber").val(values[0].econumber);
+                            $("#barcode").val(values[0].barcode);
+                        }
+                    }).fail(function() {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Error al buscar el folio',
+                            width: '400px',
+                            confirmButtonText: 'Entendido'
+                        });
+                    });
+                }
             });
         });
     </script>
     <script>
-        $("#folionumber").blur(function () {
-            if ($("#folionumber").val().length === 0) {
-                Swal.fire({
-                    type: 'error',
-                    title: 'Error...',
-                    text: 'Ingrese el numero de Folio o Etiqueta!',
-                    width: '300px'
-                })
-            } else {
-                $.getJSON('./getDataInvoiceForFolio/' + $("#folionumber").val(), function (values) {
-                    if (0 === values.length) {
-                        Swal.fire({
-                            type: 'error',
-                            title: 'Oops...',
-                            text: 'No se encuentran registros del folio!',
-                            width: '300px'
-                        })
-                    } else {
-                        $("#boxnumber").attr("value", values[0].boxnumber);
-                        $("#containerseal").attr("value", values[0].containerseal);
-                        $("#originzoneid").attr("value", values[0].zona);
-                        $("#originlocationid").attr("value", values[0].ubicacion);
-                        $("#statusid").attr("value", values[0].status);
-                        $("#econumber").attr("value", values[0].econumber);
-                        $("#barcode").attr("value", values[0].barcode);
-                    }
+        const moveBoxForm = document.getElementById('moveBoxForm');
+        
+        moveBoxForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const btnSave = document.getElementById('btnSave');
+            const originalContent = btnSave.innerHTML;
+            
+            // Deshabilitar botón durante el proceso
+            btnSave.disabled = true;
+            btnSave.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
+            
+            const formData = new FormData(this);
+            
+            try {
+                const response = await fetch('{{ url("storeMoveBox") }}', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: formData
                 });
+                
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    // Mostrar mensaje de éxito
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Éxito',
+                        text: data.message,
+                        timer: 2000,
+                        width: '400px',
+                        showConfirmButton: false,
+                        iconColor: '#28a745'
+                    });
+                    
+                    // Limpiar campos del formulario
+                    $('#folionumber').val('');
+                    $('#barcode').val('');
+                    $('#statusid').val('');
+                    $('#boxnumber').val('');
+                    $('#containerseal').val('');
+                    $('#econumber').val('');
+                    $('#originzoneid').val('');
+                    $('#originlocationid').val('');
+                    $('#zoneid').val('').trigger('change');
+                    $('#locationid').val('').trigger('change');
+                    $('#unitstatusid').val('').trigger('change');
+                    
+                    // Enfocar en el campo de folio para siguiente captura
+                    setTimeout(() => {
+                        $('#folionumber').focus();
+                    }, 2100);
+                } else {
+                    await Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: data.message || 'Ocurrió un error al procesar la solicitud',
+                        width: '400px'
+                    });
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                await Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Error de conexión con el servidor',
+                    width: '400px'
+                });
+            } finally {
+                // Siempre rehabilitar el botón al final
+                btnSave.disabled = false;
+                btnSave.innerHTML = originalContent;
             }
         });
     </script>

@@ -36,7 +36,7 @@
                                                     title="Cancelar Embarque">
                                                 <img src="{{asset('/ico/adcancelar.png')}}" alt=""
                                                      class="img-16 mr-2">
-                                             <span class="mr-2"> Cancelar </span>
+                                                <span class="mr-2"> Cancelar </span>
                                             </button>
                                         </a>
                                         @include('Shipments.OrderDeliveries.cancelorder')
@@ -73,7 +73,7 @@
                                                 data-toggle="tooltip" data-placement="top"
                                                 title="Eliminar Registro">
                                             <img src="{{asset('/ico/addestroy1.png')}}" alt="" class="img-16 mr-2">
-                                           <span class="mr-2"> Eliminar </span>
+                                            <span class="mr-2"> Eliminar </span>
                                         </button>
                                     </a>
                                     @include('Shipments.OrderDeliveries.destroyorder')
@@ -93,7 +93,7 @@
                                         <button type="button"
                                                 class="btn waves-effect waves-light btn-outline-info btn-md text-button">
                                             <img src="{{asset('/ico/files.png')}}" alt="" class="img-16 mr-2 ">
-                                           <span class="mr-2"> Descargar Evidencias </span>
+                                            <span class="mr-2"> Descargar Evidencias </span>
                                         </button>
                                     </a>
                                 @endcan
@@ -103,13 +103,16 @@
                     <hr class="m-t-1">
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs customtab" role="tablist">
-                        <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#view01" role="tab"><span class="hidden-sm-up">
+                        <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#view01"
+                                                role="tab"><span class="hidden-sm-up">
                                      <img src="{{asset('ico/viewdetail.png')}}" alt="" class="img-16 ml-2 mr-2">
-                                </span> <span class="hidden-xs-down font-12 text-black">Detalle del embarque</span></a></li>
+                                </span> <span class="hidden-xs-down font-12 text-black">Detalle del embarque</span></a>
+                        </li>
                         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view02" role="tab"><span
                                         class="hidden-sm-up">
                                     <img src="{{asset('ico/checklistin.png')}}" alt="" class="img-16 ml-2 mr-2">
-                                </span> <span class="hidden-xs-down font-12 text-black">Conteo en cortina</span></a></li>
+                                </span> <span class="hidden-xs-down font-12 text-black">Conteo en cortina</span></a>
+                        </li>
                         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view03" role="tab"><span
                                         class="hidden-sm-up">
                                 <img src="{{asset('ico/img.png')}}" alt="" class="img-16 ml-2 mr-2">
@@ -198,8 +201,7 @@
                                     <!-- col -->
                                     <div class="col-lg-3 col-md-6">
                                         <div class="d-flex align-items-center">
-                                            <div class="m-r-10"><span class="text-trax display-5"><i
-                                                            class="mdi mdi-clock"></i></span></div>
+                                            <div class="m-r-10"><span class="text-trax display-5"><i class="mdi mdi-clock"></i></span></div>
                                             <div><span class="font-14">Tiempo de estadia</span>
                                                 @php
                                                     $entryDate = optional($orderdelivery->folio)->entrydate
@@ -219,14 +221,11 @@
                                                     }
                                                 @endphp
 
-                                                <h3 class="font-medium m-b-0">
-                                                    @if(!is_null($hours))
-                                                        <p class="font-14 text-danger">{{ $hours }} horas
-                                                            y {{ $minutes }} minutos</p>
-                                                    @else
-                                                        <p class="font-14 text-muted">Sin datos de tiempo</p>
-                                                    @endif
-                                                </h3>
+                                                @if(!is_null($hours))
+                                                    <p class="font-14 text-danger">{{ $hours }} horas y {{ $minutes }} minutos</p>
+                                                @else
+                                                    <p class="font-14 text-muted">Sin datos de tiempo</p>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -243,7 +242,7 @@
                                             <h6 class="font-weight-light  text-white padding-3 "
                                                 style="background-color: #607d8b;border-radius: 5px;">Datos de la
                                                 entrega</h6>
-                                            <table class="table table-condensed table-striped table-bordered">
+                                            <table class="table table-condensed table-hover table-bordered">
                                                 <tbody>
                                                 <tr>
                                                     <td>Turno</td>
@@ -327,7 +326,7 @@
                                                     @include('Shipments.OrderDeliveries.kardexfolio')
                                                 </div>
                                             </div>
-                                            <table class="table table-condensed table-striped table-bordered">
+                                            <table class="table table-condensed table-hover table-bordered">
                                                 <tr>
                                                     <td>Linea de transporte</td>
                                                     <td>{{$orderdelivery->carrier ? $orderdelivery->carrier->name : ''}}</td>
@@ -372,7 +371,7 @@
                                                 proceso</h6>
                                             <div class="row">
                                                 <div class="col-lg-12">
-                                                    <table class="table table-condensed table-striped table-bordered">
+                                                    <table class="table table-condensed table-hover table-bordered">
                                                         <tr>
                                                             <td style="width: 30%">Arribo de la unidad</td>
                                                             <td style="width: 10%">
@@ -538,7 +537,7 @@
                                                                     $hours = ($diff->d * 24) + $diff->h;
                                                                     $minutes = $diff->i;
                                                                 @endphp
-                                                                <span>{{ $hours }}h {{ $minutes }}m</span>
+                                                                <span class="font-20 text-red">{{ $hours }}h {{ $minutes }}m</span>
                                                             @else
                                                                 <span style="font-size: 16px; font-weight: bold;color: #607d8b"></span>
                                                             @endif
@@ -714,14 +713,14 @@
                             <hr class="m-t-1">
                             <div class="row">
                                 <div class="col-lg-6">
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <h3 class="text-center">Conteo Operativo</h3>
-                                        </div>
-                                    </div>
+
                                     @if(!empty($conteos))
                                         @foreach($conteos as $conteo)
-                                            <hr class="mt-5">
+                                            <div class="row">
+                                                <div class="col-lg-12" style="align-content: center">
+                                                    <span class="badge bg-info  font-14 font-bold text-white mt-2 mb-2 padding-3">Conteo operaciones</span>
+                                                </div>
+                                            </div>
                                             <div class="row">
                                                 <div class="col-lg-6">
                                                     <div class="row">
@@ -884,18 +883,19 @@
                                                 </td>
                                                 </tbody>
                                             </table>
+                                            <hr class="m-t-2 m-b-2" style="border-color:2px solid #607d8b;">
                                         @endforeach
                                     @endif
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <h3 class="text-center">Conteo Vigilancia</h3>
-                                        </div>
-                                    </div>
+                                <div class="col-lg-6" style="border-left:  2px solid #b0bec5">
+
                                     @if(!empty($conteosVig))
                                         @foreach($conteosVig as $conteo)
-                                            <hr class="mt-5">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <span class="badge bg-warning font-14 font-bold text-black mt-2 mb-2 padding-3">Conteo vigilancia</span>
+                                                </div>
+                                            </div>
                                             <div class="row">
                                                 <div class="col-lg-6">
                                                     <div class="row">
@@ -972,7 +972,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <table class="table table-bordered  table-condensed ">
+                                            <table class="table table-bordered  table-condensed table-hover">
                                                 <thead>
                                                 <th class="text-center font-16">Lado Izquierdo</th>
                                                 <th class="text-center font-16">Lado Derecho</th>
@@ -1019,7 +1019,7 @@
                                                     </table>
                                                 </td>
                                                 <td width="50%">
-                                                    <table class="table table-bordered  table-condensed">
+                                                    <table class="table table-bordered  table-condensed table-hover">
                                                         <thead>
                                                         <tr>
                                                             <th>Rack</th>
@@ -1059,6 +1059,7 @@
                                                 </td>
                                                 </tbody>
                                             </table>
+                                            <hr class="m-t-2 m-b-2" >
                                         @endforeach
                                     @endif
                                 </div>

@@ -41,7 +41,7 @@
                     <hr class="mb-3">
                     <div class="row">
                         <div class="col-12">
-                            <table width="100%" id="table-center" class="table table-bordered table-striped table-condensed table-hover">
+                            <table width="100%" id="table-center" class="table table-bordered table-condensed table-hover">
                                 <thead>
                                     <tr>
                                         <th class="bg-inverse text-white">C.Distribución</th>

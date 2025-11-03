@@ -64,7 +64,7 @@
                     </form>
                     <div class="row mt-4">
                         <div class="col-12">
-                            <table id="table-areas" class="table table-bordered table-striped table-condensed">
+                            <table id="table-areas" class="table table-bordered  table-condensed">
                                 <thead>
                                 <tr>
                                     <th class="bg-inverse text-white">Centro de distribución</th>

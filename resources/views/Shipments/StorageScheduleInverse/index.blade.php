@@ -53,20 +53,20 @@
                     </form>
                     <div class="row">
                         <div class="col-lg-12 col-md-12">
-                            <table id="table-inverse" class="table table-bordered table-striped table-condensed">
+                            <table id="table-inverse" class="table table-bordered table-hover table-condensed">
                                 <thead>
                                 <tr>
-                                    <th class="bg-inverse text-white">C.Distribución</th>
-                                    <th class="bg-inverse text-white">Bodega</th>
-                                    <th class="bg-inverse text-white">Embarque</th>
-                                    <th class="bg-inverse text-white">Cliente</th>
-                                    <th class="bg-inverse text-white">Linea de transporte</th>
-                                    <th class="bg-inverse text-white">Fecha de reporte</th>
-                                    <th class="bg-inverse text-white">Cita de entrega</th>
-                                    <th class="bg-inverse text-white">Folio Patios</th>
-                                    <th class="bg-inverse text-white">Fecha de llegada</th>
-                                    <th class="bg-inverse text-white">Estatus</th>
-                                    <th class="bg-inverse text-white">Opciones</th>
+                                    <th>C.Distribución</th>
+                                    <th>Bodega</th>
+                                    <th>Embarque</th>
+                                    <th>Cliente</th>
+                                    <th>Linea de transporte</th>
+                                    <th>Fecha de reporte</th>
+                                    <th>Cita de entrega</th>
+                                    <th>Folio Patios</th>
+                                    <th>Fecha de llegada</th>
+                                    <th>Estatus</th>
+                                    <th>Opciones</th>
                                 </tr>
                                 </thead>
                             </table>
@@ -162,11 +162,9 @@
 @endsection
 
 @section('css')
-    <link rel="stylesheet" href="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.min.css')}}">
 @endsection
 
 @section('script')
-    <script src="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.all.min.js')}}"></script>
     @include('Shipments.StorageScheduleInverse.partials.table')
     <script>
         function reloadtable() {

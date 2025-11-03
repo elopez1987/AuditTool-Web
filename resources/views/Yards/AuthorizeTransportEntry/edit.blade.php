@@ -32,13 +32,13 @@
 
                     <div class="row">
                         <div class="col-lg-6">
-                            <h4 class="card-title" style="font-size: 12px;">Fotografias de Evidencias</h4>
+                            <h4 class="card-title" style="font-size: 11px;">Fotografias de Evidencias</h4>
                             <div class="card-foto" style="border-radius: 10px">
                                 <form action="{{ url('uploadphotocheckin/'. $receiptunit->id .'/upload') }}"
                                       class="dropzone" id="myAwesomeDropzone">
                                     {{ csrf_field() }}
                                     <div class="dz-message" data-dz-message>
-                                        <span style="font-size: 12px;color: #4db6ac;font-weight: 500">
+                                        <span style="font-size: 10px;color: #4db6ac;font-weight: 500">
                                             Toca para abrir la camara o el selector de imagenes. <br><br>
                                             <i class="fa fa-camera fa-4x"></i>
                                         </span>
@@ -63,6 +63,7 @@
 @endsection
 
 @section('script')
+    @include('layouts.Partials.DataTable')
     <script src="{{asset('/theme/assets/libs/bootstrap-switch/dist/js/bootstrap-switch.min.js')}}"></script>
     <script>
         $(".switch input[type='radio']").bootstrapSwitch();

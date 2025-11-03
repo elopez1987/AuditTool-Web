@@ -2,25 +2,14 @@
 
 @section('content')
     <div class="row">
-        <div class="col-lg-8 col-md-12">
+        <div class="col-lg-6 col-md-12">
             <div class="card">
                 <div class="card-header">
                     Salida de caja por ajuste de Inventario.
                 </div>
-                <form method="POST" action="{{url('registeroutputunit')}}">
+                <form id="adjustmentBoxForm" method="POST">
                     @csrf
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="alert alert-info">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button>
-                                    <h2 class="text-info font-12"><i class="fa fa-check-circle"></i> Aviso</h2>
-                                    "¡Hola! Queremos informarles que hemos realizado algunos cambios en el formulario <b>Salida De Unidad Por Ajuste</b>
-                                    para hacerlo aún más fácil de usar. Los cambios realizados son : Cambio de <b>Código de Caja por Número de Folio </b> como valor de búsqueda.
-                                    ¡Esperamos que les guste la nueva versión!"
-                                </div>
-                            </div>
-                        </div>
                         <div class="row">
                             <div class="col-lg-4 col-md-6 col-sm-12">
                                 <div class="form-group">
@@ -83,12 +72,14 @@
                     </div>
                     <div class="card-footer">
                         <div class="row">
-                            <div class="col-md-12">
-                                <a href="">
-                                    @include('buttons.save')
-                                </a>
-                                <a href="{{route('home')}}" style="margin-left: 10px">
-                                    @include('buttons.cancel')
+                            <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+                                <button type="button" id="btnSave" class="btn btn-block btn-block btn-outline-success btn-block">
+                                    <i class="fas fa-check mr-2"></i> Guardar
+                                </button>
+                            </div>
+                            <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+                                <a href="{{route('home')}}" class="btn btn-block btn-block btn-outline-danger" style="margin-left: 10px">
+                                    <i class="fas fa-times mr-2"></i> Cancelar
                                 </a>
                             </div>
                         </div>
@@ -101,40 +92,174 @@
 @endsection
 
 @section('css')
-    <link rel="stylesheet" href="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.min.css')}}">
+
 @endsection
 
 @section('script')
-    <script src="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.all.min.js')}}"></script>
     <script>
-        $("#folionumber").blur(function () {
-            if ($("#folionumber").val().length === 0) {
-                Swal.fire({
-                    type: 'error',
-                    title: 'Error...',
-                    text: 'Ingrese el numero de Etiqueta!',
-                    width: '300px'
-                })
-            } else {
-                $.getJSON('./getDataInvoiceForFolio/' + $("#folionumber").val(), function (values) {
-                    if (0 === values.length) {
-                        Swal.fire({
-                            type: 'error',
-                            title: 'Oops...',
-                            text: 'No se encuentran registros del folio!',
-                            width: '300px'
-                        })
-                    } else {
-                        $("#boxnumber").attr("value", values[0].boxnumber);
-                        $("#trucknumber").attr("value", values[0].trucknumber);
-                        $("#statusid").attr("value", values[0].status);
-                        $("#econumber").attr("value", values[0].econumber);
-                        $("#folioid").attr("value", values[0].folio);
-                        $("#carriername").attr("value", values[0].linea);
-                        $("#barcodetruck").attr("value", values[0].barcodetruck);
-                    }
-                });
+        // Configurar CSRF token para todas las peticiones AJAX
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
+        });
+
+        // Variable para controlar si debemos validar el blur
+        var shouldValidateBlur = true;
+
+        // Función para buscar datos del folio
+        function searchFolioData() {
+            var folioValue = $("#folionumber").val().trim();
+            
+            if (folioValue.length === 0) {
+                // Solo mostrar error si debemos validar
+                if (shouldValidateBlur) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error...',
+                        text: 'Ingrese el número de etiqueta!',
+                        width: '300px'
+                    });
+                }
+                return;
+            }
+            
+            $.getJSON('./getDataInvoiceForFolio/' + folioValue, function (values) {
+                if (0 === values.length) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'No se encuentran registros del folio!',
+                        width: '300px'
+                    });
+                    // Limpiar campos si no se encuentra
+                    $("#boxnumber").val('');
+                    $("#trucknumber").val('');
+                    $("#statusid").val('');
+                    $("#econumber").val('');
+                    $("#carriername").val('');
+                    $("#barcodetruck").val('');
+                } else {
+                    // Usar .val() en lugar de .attr("value") para actualizar correctamente
+                    $("#boxnumber").val(values[0].boxnumber);
+                    $("#trucknumber").val(values[0].trucknumber);
+                    $("#statusid").val(values[0].status);
+                    $("#econumber").val(values[0].econumber);
+                    $("#folionumber").val(values[0].folio);
+                    $("#carriername").val(values[0].linea);
+                    $("#barcodetruck").val(values[0].barcodetruck);
+                }
+            }).fail(function() {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Error al consultar los datos del folio',
+                    width: '300px'
+                });
+            });
+        }
+
+        // Vincular evento blur al campo folionumber
+        $(document).on('blur', '#folionumber', function() {
+            searchFolioData();
+        });
+
+        // Evento del botón de guardar
+        $("#btnSave").click(function(e) {
+            e.preventDefault();
+            
+            // Validar formulario
+            let form = document.getElementById('adjustmentBoxForm');
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            // Confirmar acción
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "¿Deseas registrar esta salida por ajuste de inventario?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, registrar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Deshabilitar botón para evitar doble click
+                    $("#btnSave").prop('disabled', true);
+
+                    // Preparar datos del formulario
+                    let formData = new FormData(form);
+
+                    $.ajax({
+                        url: '{{url("registeroutputunit")}}',
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(response) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: '¡Éxito!',
+                                text: response.message || 'Ajuste realizado correctamente',
+                                showConfirmButton: true,
+                                timer: 3000
+                            }).then(() => {
+                                // Deshabilitar validación temporal
+                                shouldValidateBlur = false;
+                                
+                                // Limpiar todos los inputs del formulario
+                                $('#folionumber').val('');
+                                $('#carriername').val('');
+                                $('#statusid').val('');
+                                $('#boxnumber').val('');
+                                $('#econumber').val('');
+                                $('#trucknumber').val('');
+                                $('#barcodetruck').val('');
+                                $('#comment').val('');
+                                
+                                // Enfocar el campo de folio para nueva captura
+                                $('#folionumber').focus();
+                                
+                                // Reactivar validación después de un momento
+                                setTimeout(function() {
+                                    shouldValidateBlur = true;
+                                }, 100);
+                                
+                                // Habilitar botón de guardar
+                                $("#btnSave").prop('disabled', false);
+                            });
+                        },
+                        error: function(xhr) {
+                            let errorMessage = 'Error al procesar la solicitud';
+                            
+                            if (xhr.responseJSON && xhr.responseJSON.message) {
+                                errorMessage = xhr.responseJSON.message;
+                            } else if (xhr.responseJSON && xhr.responseJSON.error) {
+                                errorMessage = xhr.responseJSON.error;
+                            } else if (xhr.responseText) {
+                                try {
+                                    let response = JSON.parse(xhr.responseText);
+                                    errorMessage = response.message || response.error || errorMessage;
+                                } catch(e) {
+                                    errorMessage = xhr.statusText || errorMessage;
+                                }
+                            }
+
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: errorMessage,
+                                showConfirmButton: true
+                            });
+                            
+                            $("#btnSave").prop('disabled', false);
+                        }
+                    });
+                }
+            });
         });
     </script>
 @endsection

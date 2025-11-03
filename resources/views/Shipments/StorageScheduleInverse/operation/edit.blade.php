@@ -163,8 +163,7 @@
                                         <div class="tab-pane active" id="view01" role="tabpanel">
                                             <div class="row">
                                                 <div class="col-lg-12">
-                                                    <table
-                                                        class="table table-bordered table-condensed table-striped table-hover tablegeneral">
+                                                    <table class="table table-bordered table-condensed  table-hover tablegeneral">
                                                         <thead>
                                                         <tr>
                                                             <th>Embarque</th>
@@ -218,7 +217,7 @@
                                             <div class="row">
                                                 <div class="col-lg-12">
                                                     <table
-                                                        class="table table-condensed table-bordered table-striped table-hover">
+                                                        class="table table-condensed table-bordered table-hover">
                                                         <thead>
                                                         <tr>
                                                             <th>Embarque</th>
@@ -251,7 +250,7 @@
                                             <div class="row">
                                                 <div class="col-lg-12">
                                                     <table
-                                                        class="table table-bordered table-condensed table-striped table-hover tablegeneral">
+                                                        class="table table-bordered table-condensed  table-hover tablegeneral">
                                                         <thead>
                                                         <tr>
                                                             <th>Embarque</th>
@@ -351,11 +350,9 @@
 @endsection
 
 @section('css')
-    <link rel="stylesheet" href="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.min.css')}}">
 @endsection
 
 @section('script')
-    <script src="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.all.min.js')}}"></script>
     <script>
         $(document).ready(function () {
             $('a[data-toggle="tab"]').on('shown.bs.tab', function () {

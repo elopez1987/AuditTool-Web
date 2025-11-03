@@ -38,7 +38,7 @@
                     <hr class="mb-3">
                     <div class="row">
                         <div class="col-12">
-                            <table id="table-logs" class="table table-bordered table-striped table-condensed edilog">
+                            <table id="table-logs" class="table table-bordered table-hover table-condensed edilog">
                                 <thead>
                                 <tr>
                                     <th class="bg-inverse text-white">C.Distribución</th>

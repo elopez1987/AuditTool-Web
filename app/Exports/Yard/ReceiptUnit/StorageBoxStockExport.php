@@ -44,12 +44,13 @@ class StorageBoxStockExport implements FromCollection, ShouldAutoSize, WithColum
             'Folio',
             'C.Barra',
             'Embarque',
-            'Tipo',
             'Linea de transporte',
             'Placa de caja',
             'Placa de tracto',
             'Operador',
+            'Concepto de entrada',
             'Registro de llegada',
+            'Origen',
             'Llegada a mesa de control',
             'Enrampe',
             'Inicio de proceso',
@@ -63,6 +64,7 @@ class StorageBoxStockExport implements FromCollection, ShouldAutoSize, WithColum
             'Ticket de peso',
             'Peso de entrada',
             'Peso de salida',
+            'Estadía total',
             'Estatus',
         ];
     }
@@ -76,17 +78,31 @@ class StorageBoxStockExport implements FromCollection, ShouldAutoSize, WithColum
 
     public function map($shipments): array
     {
+        // Calcular diferencia entre entrada y salida
+        $diff = null;
+        if ($shipments->registro && $shipments->salida) {
+            $inicio = Carbon::parse($shipments->registro);
+            $fin = Carbon::parse($shipments->salida);
+            $diffInMinutes = $inicio->diffInMinutes($fin);
+            $hours = floor($diffInMinutes / 60);
+            $minutes = $diffInMinutes % 60;
+            $diff = sprintf('%02dh %02dm', $hours, $minutes); // formato 02h 15m
+        } else {
+            $diff = '---'; // o "En proceso" si lo prefieres
+        }
+
         return [
             $shipments->warehouse,
             Carbon::parse($shipments->registro)->format('d/m/Y'),
             $shipments->id,
             $shipments->barcode,
             $shipments->shipmentid,
-            $shipments->tipo,
             $shipments->linea,
             $shipments->boxnumber,
             $shipments->trucknumber,
             $shipments->operatorname,
+            $shipments->unit->reason->name,
+            $shipments->unit->unittype->description,
             $shipments->registro,
             $shipments->llegadamesa,
             $shipments->enrampe,
@@ -101,6 +117,7 @@ class StorageBoxStockExport implements FromCollection, ShouldAutoSize, WithColum
             $shipments->ticket,
             $shipments->weightin,
             $shipments->weightout,
+            $diff,
             $shipments->status,
         ];
     }

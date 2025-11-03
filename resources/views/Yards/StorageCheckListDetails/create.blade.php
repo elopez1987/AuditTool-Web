@@ -33,7 +33,7 @@
                     <div class="row">
                         <div class="col-lg-10">
                             <table width="100%" id="table-detailchecklist"
-                                   class="table table-condensed table-striped table-bordered ">
+                                   class="table table-condensed  table-bordered ">
                                 <thead>
                                 <tr>
                                     <th># ID</th>

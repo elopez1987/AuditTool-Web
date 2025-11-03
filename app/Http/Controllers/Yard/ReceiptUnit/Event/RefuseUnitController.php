@@ -30,7 +30,12 @@ class RefuseUnitController extends BaseController
         try {
             $folio = ReceiptUnit::searchForId($request['folionumber']);
             if (empty($folio)) {
-                return $this->errorResponse('El número de folio no existe!!');
+                if ($request->ajax() || $request->wantsJson()) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'El número de folio no existe!!',
+                    ], 422);
+                }
             }
             $receiptunit = ReceiptUnit::updateUnitForRefuse($folio->id);
             if ($receiptunit->razonstatusid === 1) {
@@ -41,12 +46,23 @@ class RefuseUnitController extends BaseController
             }
             DB::commit();
 
-            return $this->redirectBackSuccessMessage('Unidad rechazada con exito!!');
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Unidad rechazada con éxito!!',
+                ], 200);
+            }
+
         } catch (Exception $e) {
             $error = $e->getMessage();
             DB::rollback();
 
-            return $this->errorResponse('Error al procesar la solicitud, intente mas tarde!!' . $error);
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Error al procesar la solicitud, intente más tarde: ' . $error,
+                ], 500);
+            }
         }
     }
 }

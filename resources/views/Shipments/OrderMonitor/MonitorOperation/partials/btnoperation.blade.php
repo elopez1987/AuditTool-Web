@@ -1,5 +1,5 @@
 <div class="btn-group">
-    <button type="button" class="btn waves-effect waves-light btn-outline-info btn-sm  dropdown-toggle"
+    <button type="button" class="btn waves-effect waves-light btn-outline-info btn-sm btn-block dropdown-toggle"
             data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
         <i class="ti ti-settings"></i>

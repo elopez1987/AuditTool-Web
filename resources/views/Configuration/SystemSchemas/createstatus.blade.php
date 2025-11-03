@@ -129,7 +129,7 @@
                     <hr class="mb-3">
                     <div class="row">
                         <div class="col-lg-10 col-md-6">
-                            <table class="table table-condensed table-bordered table-striped table-list">
+                            <table class="table table-condensed table-bordered table-list">
                                 <thead>
                                     <tr>
                                         <th>Centro de distribución</th>

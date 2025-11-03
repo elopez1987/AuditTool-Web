@@ -34,7 +34,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-md-10">
-                                <table class="table table-striped table-bordered table-condensed table-list">
+                                <table class="table table-bordered table-condensed table-list">
                                     <thead>
                                     <tr>
                                         <th width="10%">Secuencia</th>
@@ -99,7 +99,7 @@
                 "searching": true,
                 "ordering": true,
                 "sScrollY": "400px",
-                "dom": '<"top"B>frt<"bottom"p><"clear"i>',
+                "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
                 "lengthMenu": [[-1], ["Todos"]],
                 buttons: [
                     {

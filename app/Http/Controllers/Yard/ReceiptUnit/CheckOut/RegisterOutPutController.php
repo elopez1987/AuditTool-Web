@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Yard\ReceiptUnit\CheckOut;
 
 use App\Http\Controllers\BaseController;
-use App\Http\Controllers\Yard\Exception;
 use App\Models\General\StorageComment;
 use App\Models\Yard\ReceiptTruck;
 use App\Models\Yard\ReceiptUnit;
@@ -13,6 +12,7 @@ use App\Traits\Web\Izel\RegisterEdiShipment;
 use App\Traits\Web\Yard\ReceiptTruck\QueryReceiptTruck;
 use Carbon\Carbon;
 use DB;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -34,11 +34,21 @@ class RegisterOutPutController extends BaseController
         DB::beginTransaction();
         try {
             if (empty($request['folionumber'])) {
-                return $this->errorResponse('El número de folio es obligatorio!!');
+                if ($request->ajax() || $request->wantsJson()) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'El número de folio es obligatorio!!',
+                    ], 422);
+                }
             }
             $receiptunit = ReceiptUnit::searchForId($request['folionumber']);
             if (empty($receiptunit)) {
-                return $this->errorResponse('El número de folio no existe!!');
+                if ($request->ajax() || $request->wantsJson()) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'El número de folio no existe!!',
+                    ], 422);
+                }
             }
             $parameter = $this->getParametersOfWarehouse($receiptunit->warehouseid);
             $tracto = ReceiptTruck::controlAccessUser()->where('id', $receiptunit->foliotruck)->first();
@@ -54,16 +64,27 @@ class RegisterOutPutController extends BaseController
             StorageComment::createCommentary('ReceiptUnits', $receiptunit->id, $request);
             DB::commit();
 
-            return $this->redirectBackSuccessMessage('Ajuste realizado correctamente');
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Ajuste realizado correctamente',
+                ], 200);
+            }
+
         } catch (Exception $e) {
             $error = $e->getMessage();
             DB::rollback();
 
-            return $this->errorResponse($error);
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Error al procesar la solicitud: ' . $error,
+                ], 500);
+            }
         }
     }
 
-    public function updateReceiptUnit(ReceiptUnit $receiptunit): void
+    private function updateReceiptUnit(ReceiptUnit $receiptunit): void
     {
         $receiptunit->update([
             'statusid' => 'TR',

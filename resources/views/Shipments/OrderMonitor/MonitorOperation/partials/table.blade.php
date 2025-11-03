@@ -13,7 +13,7 @@
         "ajax": {
             url: 'getdataoperationmonitor',
             data: function (d) {
-                d.statusid = $('select[name=statusid]').val();
+                d.statusid = $('select[name="statusid[]"]').val();
                 d.warehouseid = $('select[name=warehouseid]').val();
                 d.turnid = $('select[name=turnid]').val();
                 d.shipmentid = $('input[name=shipmentid]').val();

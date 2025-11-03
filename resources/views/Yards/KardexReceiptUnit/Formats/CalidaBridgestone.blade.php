@@ -146,7 +146,7 @@
     </div>
     <div class="row">
         <table class="border-none">
-            <th width="40%" style="background-color: #D5D5D5">EN CASO DE CONTENEDOR, PESECIFICAR LA MEDIDA:</th>
+            <th width="40%" style="background-color: #D5D5D5">EN CASO DE CONTENEDOR, ESPECIFICAR LA MEDIDA:</th>
             <th width="15%">
                 <table class="border-none">
                     <th class="border-none">
@@ -229,6 +229,8 @@
                     </table>
                 </div>
             </th>
+
+            @if($receiptunit->truck?->auxiliary01 == 'CJ-40' || $receiptunit->truck?->auxiliary01 == 'CJ-20')
             <th WIDTH="10%">
                 <div class="row">
                     <table>
@@ -284,6 +286,9 @@
                     </table>
                 </div>
             </th>
+            @endif
+
+            @if($receiptunit->truck?->auxiliary01 == 'CJ-48')
             <th width="10%">
                 <div class="row">
                     <table>
@@ -320,25 +325,34 @@
                 <div class="row">
                     <table>
                         <tr>
-                            <th style="text-align: center;height: 30px"></th>
+                            <th style="text-align: center;height: 30px">
+                                {{ $receiptunit->unitdata->tolerance[0] ?? '' }}
+                            </th>
                         </tr>
                     </table>
                 </div>
                 <div class="row">
                     <table>
                         <tr>
-                            <th style="text-align: center;height: 30px"></th>
+                            <th style="text-align: center;height: 30px">
+                                {{ $receiptunit->unitdata->tolerance[1] ?? '' }}
+                            </th>
                         </tr>
                     </table>
                 </div>
                 <div class="row">
                     <table>
                         <tr>
-                            <th STYLE="text-align: center;height: 30px"></th>
+                            <th STYLE="text-align: center;height: 30px">
+                                {{ $receiptunit->unitdata->tolerance[2] ?? '' }}
+                            </th>
                         </tr>
                     </table>
                 </div>
             </th>
+            @endif
+
+            @if($receiptunit->truck?->auxiliary01 == 'CJ-53')
             <th width="10%">
                 <div class="row">
                     <table>
@@ -375,25 +389,33 @@
                 <div class="row">
                     <table>
                         <tr>
-                            <th style="text-align: center;height: 30px"></th>
+                            <th style="text-align: center;height: 30px">
+                                {{ $receiptunit->unitdata->tolerance[0] ?? '' }}
+                            </th>
                         </tr>
                     </table>
                 </div>
                 <div class="row">
                     <table>
                         <tr>
-                            <th style="text-align: center;height: 30px"></th>
+                            <th style="text-align: center;height: 30px">
+                                {{ $receiptunit->unitdata->tolerance[1] ?? '' }}
+                            </th>
                         </tr>
                     </table>
                 </div>
                 <div class="row">
                     <table>
                         <tr>
-                            <th STYLE="text-align: center;height: 30px"></th>
+                            <th STYLE="text-align: center;height: 30px">
+                                {{ $receiptunit->unitdata->tolerance[2] ?? '' }}
+                            </th>
                         </tr>
                     </table>
                 </div>
             </th>
+            @endif
+
         </table>
     </div>
     <!--    &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->

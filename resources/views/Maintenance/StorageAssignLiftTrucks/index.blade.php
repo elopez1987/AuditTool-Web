@@ -12,7 +12,7 @@
                         <div class="row">
                             <div class="col-lg-6 col-xs-12">
                                 <table id="table-typelifts"
-                                       class="table table-bordered table-striped table-condensed table-hover">
+                                       class="table table-bordered table-condensed table-hover">
                                     <thead>
                                     <tr>
                                         <th class="bg-inverse text-white">Tipo de equipo</th>

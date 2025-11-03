@@ -7,7 +7,7 @@
                 <div class="card-header">
                     Autoriza la salida de la unidad del patio.
                 </div>
-                <form method="POST" action="{{url('registermovementbox')}}" enctype="multipart/form-data">
+                <form id="autorizeOutputForm" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
                         <div class="row">
@@ -91,13 +91,13 @@
                                                     <div class="col-lg-4 col-md-6  col-xs-12 mt-2">
                                                         <div class="form-group">
                                                             <label for="zoneid">Zonas<span
-                                                                    style="color: red">*</span></label>
+                                                                        style="color: red">*</span></label>
                                                             <select name="zoneid" id='zoneid'
                                                                     class="form-control select2">
                                                                 <option value="" selected>Seleccione una opción</option>
                                                                 @foreach($zones as $model)
                                                                     <option
-                                                                        value="{{$model->id}}" {{ old('zoneid') == $model->id ? 'selected' : '' }}> {{$model->name}} </option>
+                                                                            value="{{$model->id}}" {{ old('zoneid') == $model->id ? 'selected' : '' }}> {{$model->name}} </option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
@@ -105,33 +105,16 @@
                                                     <div class="col-lg-4 col-md-6  col-xs-12 mt-2">
                                                         <div class="form-group">
                                                             <label for="locationid">Ubicación<span
-                                                                    style="color: red">*</span></label>
+                                                                        style="color: red">*</span></label>
                                                             <select name="locationid" id='locationid'
                                                                     class="form-control select2">
                                                                 <option value="" selected>Seleccione una opción</option>
                                                                 @foreach($locations as $model)
                                                                     <option
-                                                                        value="{{$model->id}}" {{ old('locationid') == $model->id ? 'selected' : '' }}> {{$model->name}} </option>
+                                                                            value="{{$model->id}}" {{ old('locationid') == $model->id ? 'selected' : '' }}> {{$model->name}} </option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-lg-4 col-md-6  col-xs-12 mt-2">
-                                                        <div class="form-group">
-                                                            <label for="unitstatusid">Estatus de la unidad<span
-                                                                    style="color: red">*</span></label>
-                                                            <select name="unitstatusid" id="unitstatusid"
-                                                                    class="form-control select2">
-                                                                <option value="" selected>Seleccione una opción</option>
-                                                                @foreach($unitstatus as $model)
-                                                                    <option
-                                                                        value="{{$model->id}}" {{ old('unitstatusid') == $model->id ? 'selected' : '' }}> {{$model->name}} </option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-
                                                     </div>
                                                 </div>
                                             </div>
@@ -148,34 +131,33 @@
                             <div class="row mt-4">
                                 <div class="col-lg-6">
                                     <div class="card-input">
-                                        <table
-                                            class="table table-condensed table-hover table-striped table-bordered">
+                                        <table class="table table-condensed table-hover  table-bordered">
                                             <thead>
                                             <th>Descripción</th>
                                             <th>SI</th>
                                             <th>NO</th>
                                             </thead>
-                                            <thead>
-                                            @foreach($checkAS as $item)
-                                                <tr>
-                                                    <td class="hide"><input type="text"
-                                                                            value="{{$item->checklistid}}"
-                                                                            id="checklistid[]" name="checklistid[]"
-                                                                            class="hide"></td>
-                                                    <td class="hide"><input type="text" value="{{$item->id}}"
-                                                                            id="checklitsdetailid[]"
-                                                                            name="checklitsdetailid[]" class="hide">
-                                                    </td>
-                                                    <td>{{$item->description}}</td>
-                                                    <td><input type="radio" id="response[]" @if($exists) required
-                                                               @endif value="1" name="response[]-{{$item->id}}">
-                                                    </td>
-                                                    <td><input type="radio" id="response[]" @if($exists) required
-                                                               @endif value="0" name="response[]-{{$item->id}}">
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                            </thead>
+                                            <tbody>
+                                                @foreach($checkAS as $item)
+                                                    <tr>
+                                                        <td class="hide"><input type="text"
+                                                                                value="{{$item->checklistid}}"
+                                                                                id="checklistid[]" name="checklistid[]"
+                                                                                class="hide"></td>
+                                                        <td class="hide"><input type="text" value="{{$item->id}}"
+                                                                                id="checklitsdetailid[]"
+                                                                                name="checklitsdetailid[]" class="hide">
+                                                        </td>
+                                                        <td>{{$item->description}}</td>
+                                                        <td><input type="radio" id="response[]" @if($exists) required
+                                                                   @endif value="1" name="response[]-{{$item->id}}">
+                                                        </td>
+                                                        <td><input type="radio" id="response[]" @if($exists) required
+                                                                   @endif value="0" name="response[]-{{$item->id}}">
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
                                         </table>
                                     </div>
                                 </div>
@@ -194,40 +176,43 @@
                     </div>
                     <div class="card-footer">
                         <div class="row">
-                            <div class="col-lg-1 col-md-4 col-sm-12 col-xs-12">
-                                <input type="submit" value="Autorizar Salida" name="btn" id="2"
-                                       class="btn btn-block btn-block btn-outline-success">
-                            </div>
-                            <div class="col-lg-1 col-md-4 col-sm-12 col-xs-12">
-                                <a href="{{url('menuyard')}}">
-                                    <input type="button" value="Cancelar"
-                                           class="btn btn-block btn-block btn-outline-danger">
-                                </a>
+                            <div class="row">
+                                <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
+                                    <button type="button" class="btn btn-block btn-block btn-outline-success btn-block"
+                                            id="submitBtn">
+                                        <i class="ti ti-check mr-2 "></i> Guardar
+                                    </button>
+                                </div>
+                                <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+                                    <a href="{{route('home')}}" class="btn btn-block btn-block btn-outline-danger"
+                                       style="margin-left: 10px">
+                                        <i class="fas fa-times mr-2"></i> Cancelar
+                                    </a>
+                                </div>
                             </div>
                         </div>
-
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    @include('layouts.Partials.Errors')
 @endsection
 
 @section('css')
-    <link rel="stylesheet" href="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.min.css')}}">
     <link rel="stylesheet" href="{{asset('/theme/assets/libs/quill/dist/quill.snow.css')}}">
 @endsection
 
 
 @section('script')
-    <script src="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.all.min.js')}}"></script>
     <script src="{{asset('/theme/assets/libs/quill/dist/quill.min.js')}}"></script>
-    {{--    <script>--}}
-    {{--        var quill = new Quill('#comment', {--}}
-    {{--            theme: 'snow'--}}
-    {{--        });--}}
-    {{--    </script>--}}
+    <script>
+        // Configurar CSRF token para todas las peticiones AJAX
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    </script>
     <script>
         $("#zoneid").change(event => {
             $.get(`./getLocationForZone/${event.target.value}`, function (res) {
@@ -239,31 +224,155 @@
         });
     </script>
     <script>
-        $("#folionumber").blur(function () {
-            if ($("#folionumber").val().length === 0) {
-                Swal.fire({
-                    type: 'error',
-                    title: 'Error...',
-                    text: 'Ingrese el código de barra!',
-                })
-            } else {
-                $.getJSON('./getDataInvoiceForFolio/' + $("#folionumber").val(), function (values) {
-                    if (0 === values.length) {
-                        Swal.fire({
-                            type: 'error',
-                            title: 'Oops...',
-                            text: 'No se encuentran registros del folio!',
-                        })
-                    } else {
-                        $("#boxnumber").attr("value", values[0].boxnumber);
-                        $("#folionumber").attr("value", values[0].folio);
-                        $("#shipmentid").attr("value", values[0].shipmentid);
-                        $("#econumber").attr("value", values[0].econumber);
-                        $("#linea").attr("value", values[0].linea);
-                        $("#barcode").attr("value", values[0].barcode);
-                    }
-                });
+        // Variable para controlar si debemos validar el blur
+        var shouldValidateBlur = true;
+
+        // Función para buscar datos del folio
+        function searchFolioData() {
+            var folioValue = $("#folionumber").val().trim();
+            
+            if (folioValue.length === 0) {
+                // Solo mostrar error si debemos validar
+                if (shouldValidateBlur) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error...',
+                        text: 'Ingrese el código de barra!',
+                    });
+                }
+                return;
             }
+            
+            $.getJSON('./getDataInvoiceForFolio/' + folioValue, function (values) {
+                if (0 === values.length) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'No se encuentran registros del folio!',
+                    });
+                    // Limpiar campos si no se encuentra
+                    $("#boxnumber").val('');
+                    $("#shipmentid").val('');
+                    $("#econumber").val('');
+                    $("#linea").val('');
+                    $("#barcode").val('');
+                } else {
+                    // Usar .val() en lugar de .attr("value") para actualizar correctamente
+                    $("#boxnumber").val(values[0].boxnumber);
+                    $("#folionumber").val(values[0].folio);
+                    $("#shipmentid").val(values[0].shipmentid);
+                    $("#econumber").val(values[0].econumber);
+                    $("#linea").val(values[0].linea);
+                    $("#barcode").val(values[0].barcode);
+                }
+            }).fail(function() {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Error al consultar los datos del folio',
+                });
+            });
+        }
+        
+        // Vincular evento blur al campo folionumber
+        $(document).on('blur', '#folionumber', function() {
+            searchFolioData();
+        });
+
+        $("#submitBtn").click(function(e) {
+            e.preventDefault();
+            
+            // Validar formulario
+            let form = document.getElementById('autorizeOutputForm');
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            // Deshabilitar botón para evitar doble click
+            $("#submitBtn").prop('disabled', true);
+
+            // Preparar datos del formulario
+            let formData = new FormData(form);
+
+            $.ajax({
+                url: '{{url("registermovementbox")}}',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Éxito!',
+                        text: response.message || 'Datos guardados correctamente',
+                        showConfirmButton: true,
+                        timer: 3000
+                    }).then(() => {
+                        // Deshabilitar validación temporal
+                        shouldValidateBlur = false;
+                        
+                        // Limpiar todos los inputs del formulario
+                        $('#folionumber').val('');
+                        $('#barcode').val('');
+                        $('#linea').val('');
+                        $('#econumber').val('');
+                        $('#boxnumber').val('');
+                        $('#shipmentid').val('');
+                        $('textarea[name="comment"]').val('');
+                        
+                        // Limpiar radios buttons del checklist
+                        $('input[type="radio"][id="response[]"]').prop('checked', false);
+                        
+                        // Resetear select de zonas
+                        $('#zoneid').val('').trigger('change');
+                        
+                        // Resetear select de ubicaciones y limpiar opciones
+                        $('#locationid').empty();
+                        $('#locationid').append('<option value="" selected>Seleccione una opción</option>');
+                        @foreach($locations as $model)
+                            $('#locationid').append('<option value="{{$model->id}}">{{$model->name}}</option>');
+                        @endforeach
+                        $('#locationid').val('').trigger('change');
+                        
+                        // Enfocar el campo de folio para nueva captura
+                        $('#folionumber').focus();
+                        
+                        // Reactivar validación después de un momento
+                        setTimeout(function() {
+                            shouldValidateBlur = true;
+                        }, 100);
+                        
+                        // Habilitar botón de guardar
+                        $("#submitBtn").prop('disabled', false);
+                    });
+                },
+                error: function(xhr) {
+                    let errorMessage = 'Error al procesar la solicitud';
+                    
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        errorMessage = xhr.responseJSON.message;
+                    } else if (xhr.responseJSON && xhr.responseJSON.error) {
+                        errorMessage = xhr.responseJSON.error;
+                    } else if (xhr.responseText) {
+                        try {
+                            let response = JSON.parse(xhr.responseText);
+                            errorMessage = response.message || response.error || errorMessage;
+                        } catch(e) {
+                            errorMessage = xhr.statusText || errorMessage;
+                        }
+                    }
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: errorMessage,
+                        showConfirmButton: true
+                    });
+                    
+                    $("#submitBtn").prop('disabled', false);
+                }
+            });
         });
     </script>
 @endsection

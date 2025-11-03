@@ -73,7 +73,7 @@
                         </div>
                         <hr class="mb-3">
                         <div class="card-input">
-                            <table class="table table-bordered table-condensed table-striped table-hover">
+                            <table class="table table-bordered table-condensed table-hover">
                                 <thead>
                                 <tr>
                                     <th>Factura</th>

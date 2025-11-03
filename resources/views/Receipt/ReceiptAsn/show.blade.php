@@ -320,7 +320,7 @@
                                             <div class="row mt-3">
                                                 <div class="col-lg-12">
                                                     <table
-                                                        class="table table-bordered table-condensed table-striped tablegeneral ">
+                                                        class="table table-bordered table-condensed  tablegeneral ">
                                                         <thead>
                                                         <tr>
                                                             <th>Material</th>
@@ -446,7 +446,7 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <table id="table-incidencedetails"
-                                           class="table table-condensed table-bordered table-striped table-hover">
+                                           class="table table-condensed table-bordered  table-hover">
                                         <thead>
                                         <tr>
                                             <th>Número de parte</th>
@@ -494,7 +494,7 @@
                                                                             <div class="el-overlay">
                                                                                 <ul class="list-style-none el-info">
                                                                                     <li class="el-item">
-                                                                                        <a href="{{url('downloadphotocheckin/' . $photo->id)}}"
+                                                                                        <a href="{{url('downloadphoto/' . $photo->id)}}"
                                                                                            data-togggle="tooltip"
                                                                                            title="Descargar"
                                                                                            class="btn default btn-outline el-link">
@@ -556,7 +556,7 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <table
-                                                class="table table-condensed table-striped table-bordered table-hover">
+                                                class="table table-condensed  table-bordered table-hover">
                                                 <thead>
                                                 <tr>
                                                     <th>Número de parte</th>
@@ -674,7 +674,6 @@
     </style>
     <link rel="stylesheet" href="{{asset('/theme/assets/extra-libs/prism/prism.css')}}">
     <link rel="stylesheet" href="{{asset('/theme/assets/libs/magnific-popup/dist/magnific-popup.css')}}">
-    <link rel="stylesheet" href="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.min.css')}}">
 @endsection
 
 @section('script')
@@ -682,7 +681,6 @@
     <script src="{{asset('theme/assets/libs/magnific-popup/dist/jquery.magnific-popup.min.js')}}"></script>
     <script src="{{asset('theme/assets/libs/magnific-popup/meg.init.js')}}"></script>
 
-    <script src="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.all.min.js')}}"></script>
     <script>
         $(document).ready(function () {
             $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {

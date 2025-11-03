@@ -7,7 +7,7 @@
                 <div class="card-header">
                     Rechazar unidad.
                 </div>
-                <form method="POST" action="{{url('registerrefuseunit')}}" enctype="multipart/form-data">
+                <form id="refuseUnitForm" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
                         <div class="row">
@@ -84,9 +84,15 @@
                     </div>
                     <div class="card-footer">
                         <div class="row">
-                            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                                <input type="submit" value="Rechazar Unidad" name="btn" id="2"
-                                       class="btn btn-block btn-block btn-outline-info">
+                            <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
+                                <button type="button" id="submitBtn" class="btn btn-block btn-block btn-outline-success btn-block">
+                                    <i class="fa fa-check ml-2 mr-2"></i>Rechazar Unidad
+                                </button>
+                            </div>
+                            <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+                                <a href="{{route('home')}}" class="btn btn-block btn-block btn-outline-danger" style="margin-left: 10px">
+                                    <i class="fas fa-times ml-2 mr-2"></i> Cancelar
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -94,40 +100,159 @@
             </div>
         </div>
     </div>
-    @include('layouts.Partials.Errors')
 @endsection
 @section('css')
-    <link rel="stylesheet" href="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.min.css')}}">
 @endsection
 
 @section('script')
-    <script src="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.all.min.js')}}"></script>
     <script>
-        $("#folionumber").blur(function () {
-            if ($("#folionumber").val().length === 0) {
-                Swal.fire({
-                    type: 'error',
-                    title: 'Error...',
-                    text: 'Ingrese el código de barra!',
-                })
-            } else {
-                $.getJSON('./getDataInvoiceForFolio/' + $("#folionumber ").val(), function (values) {
-                    if (0 === values.length) {
-                        Swal.fire({
-                            type: 'error',
-                            title: 'Oops...',
-                            text: 'No se encuentran registros del folio!',
-                        })
-                    } else {
-                        $("#boxnumber").attr("value", values[0].boxnumber);
-                        $("#folionumber").attr("value", values[0].folio);
-                        $("#linea").attr("value", values[0].linea);
-                        $("#barcode").attr("value", values[0].barcode);
-                        $("#operatorname").attr("value", values[0].operatorname);
-                        $("#shipmentid").attr("value", values[0].shipmentid);
-                    }
-                });
+        // Configurar CSRF token para todas las peticiones AJAX
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
+        });
+
+        // Variable para controlar si debemos validar el blur
+        var shouldValidateBlur = true;
+
+        // Función para buscar datos del folio
+        function searchFolioData() {
+            var folioValue = $("#folionumber").val().trim();
+            
+            if (folioValue.length === 0) {
+                // Solo mostrar error si debemos validar
+                if (shouldValidateBlur) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error...',
+                        text: 'Ingrese el folio de la unidad!',
+                    });
+                }
+                return;
+            }
+            
+            $.getJSON('./getDataInvoiceForFolio/' + folioValue, function (values) {
+                if (0 === values.length) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'No se encuentran registros del folio!',
+                    });
+                    $("#boxnumber").val('');
+                    $("#linea").val('');
+                    $("#barcode").val('');
+                    $("#operatorname").val('');
+                    $("#shipmentid").val('');
+                } else {
+                    $("#boxnumber").val(values[0].boxnumber);
+                    $("#folionumber").val(values[0].folio);
+                    $("#linea").val(values[0].linea);
+                    $("#barcode").val(values[0].barcode);
+                    $("#operatorname").val(values[0].operatorname);
+                    $("#shipmentid").val(values[0].shipmentid);
+                }
+            }).fail(function() {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Error al consultar los datos del folio',
+                });
+            });
+        }
+
+        $(document).on('blur', '#folionumber', function() {
+            searchFolioData();
+        });
+
+        $("#submitBtn").click(function(e) {
+            e.preventDefault();
+            
+            // Validar formulario
+            let form = document.getElementById('refuseUnitForm');
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            // Confirmar acción
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "¿Deseas rechazar esta unidad?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, rechazar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $("#submitBtn").prop('disabled', true);
+
+                    let formData = new FormData(form);
+
+                    $.ajax({
+                        url: '{{url("registerrefuseunit")}}',
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(response) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: '¡Éxito!',
+                                text: response.message || 'Unidad rechazada correctamente',
+                                showConfirmButton: true,
+                                timer: 3000
+                            }).then(() => {
+                                // Deshabilitar validación temporal
+                                shouldValidateBlur = false;
+                                
+                                $('#folionumber').val('');
+                                $('#barcode').val('');
+                                $('#operatorname').val('');
+                                $('#shipmentid').val('');
+                                $('#boxnumber').val('');
+                                $('#linea').val('');
+                                
+                                $('#folionumber').focus();
+                                
+                                // Reactivar validación después de un momento
+                                setTimeout(function() {
+                                    shouldValidateBlur = true;
+                                }, 100);
+                                
+                                $("#submitBtn").prop('disabled', false);
+                            });
+                        },
+                        error: function(xhr) {
+                            let errorMessage = 'Error al procesar la solicitud';
+                            
+                            if (xhr.responseJSON && xhr.responseJSON.message) {
+                                errorMessage = xhr.responseJSON.message;
+                            } else if (xhr.responseJSON && xhr.responseJSON.error) {
+                                errorMessage = xhr.responseJSON.error;
+                            } else if (xhr.responseText) {
+                                try {
+                                    let response = JSON.parse(xhr.responseText);
+                                    errorMessage = response.message || response.error || errorMessage;
+                                } catch(e) {
+                                    errorMessage = xhr.statusText || errorMessage;
+                                }
+                            }
+
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: errorMessage,
+                                showConfirmButton: true
+                            });
+                            
+                            $("#submitBtn").prop('disabled', false);
+                        }
+                    });
+                }
+            });
         });
     </script>
 @endsection

@@ -116,7 +116,7 @@
                     <hr class="mt-3">
                     <div class="row mt-3">
                         <div class="col-lg-12">
-                            <table class="table table-condensed table-bordered table-striped table-list">
+                            <table class="table table-condensed table-bordered table-hover table-list">
                                 <thead>
                                 <tr>
                                     <th>Creado por</th>

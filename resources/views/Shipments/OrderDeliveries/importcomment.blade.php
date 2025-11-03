@@ -24,7 +24,7 @@
                     </div>
                     <div class="row mt-2">
                         <div class="col-lg-12">
-                            <table class="table table-bordered table-condensed table-striped">
+                            <table class="table table-bordered table-condensed table-hover">
                                     <thead>
                                         <tr>
                                             <th>Descripción</th>

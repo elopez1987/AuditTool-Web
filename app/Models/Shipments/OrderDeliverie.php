@@ -243,7 +243,9 @@ class OrderDeliverie extends Model
     //  -----------------------------  Scopes para filtros  ------------------------------------------
     public function scopeForStatus($query, $statusid)
     {
-        if (trim($statusid) !== '') {
+        if (is_array($statusid) && ! empty($statusid)) {
+            $query->whereIn('orderdeliveries.statusid', $statusid);
+        } elseif (trim($statusid) != '') {
             $query->where('orderdeliveries.statusid', '=', $statusid);
         }
     }

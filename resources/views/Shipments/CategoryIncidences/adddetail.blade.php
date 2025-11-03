@@ -78,7 +78,7 @@
                     <hr class="mt-3">
                     <div class="row">
                         <div class="col-lg-10">
-                            <table class="table table-hover table-striped table-condensed tablegeneral">
+                            <table class="table table-hover table-bordered table-condensed tablegeneral">
                                 <thead>
                                 <tr>
                                     <th>Categoria</th>

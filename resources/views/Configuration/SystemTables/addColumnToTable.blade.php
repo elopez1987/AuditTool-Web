@@ -66,7 +66,7 @@
 
                     <div class="row">
                         <div class="col-lg-6">
-                            <table class="table table-bordered table-condensed table-striped table-hover tablegeneral">
+                            <table class="table table-bordered table-condensed table-hover tablegeneral">
                                 <thead>
                                 <tr>
                                     <th>Tabla</th>

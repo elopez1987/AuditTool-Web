@@ -22,20 +22,6 @@
                                 </div>
                             </div>
                         </div>
-{{--                        <div class="col-lg-4 col-md-6 col-sm-12">--}}
-{{--                            <div id="categorydiv" class="">--}}
-{{--                                <label>Linea de transporte</label>--}}
-{{--                                <select name="carrierid" id="carrierid" class="form-control" multiple="multiple">--}}
-{{--                                </select>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                        <div class="col-lg-4 col-md-6 col-sm-12">--}}
-{{--                            <div id="statusdiv" class="">--}}
-{{--                                <label>Estatus</label>--}}
-{{--                                <select name="statusid" id="statusid" class="form-control" multiple="multiple">--}}
-{{--                                </select>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
                         <div class="col-lg-2 col- col-md-6 col-sm-12 align-self-center">
                             <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
                                 <button id="filterData"
@@ -149,7 +135,7 @@
                     <div class="row align-items-stretch">
                         <div class="c-dashboardInfo col-md-6">
                             <div class="wrap">
-                                <table class="table table-bordered table-striped table-vcenter js-dataTable-full">
+                                <table class="table table-bordered table-hover table-condensed table-vcenter js-dataTable-full">
                                     <thead>
                                     <tr>
                                         <th>Turno</th>
