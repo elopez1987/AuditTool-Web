@@ -22,18 +22,6 @@
                                 <a href="javascript:history.back()">
                                     @include('buttons.back')
                                 </a>
-                                @if($receiptasn->statusid != 'IG')
-                                    <a href="" data-target="#modal-uploaddata-{{$receiptasn->id}}" data-toggle="modal"
-                                       data-placement="top">
-                                        <button type="button"
-                                                class="btn waves-effect waves-light btn-outline-info btn-md"
-                                                data-toggle="tooltip" data-placement="top" title="Importar archivo">
-                                            <img src="{{asset('/ico/uploadcsv.png')}}" alt="" class="img-16">
-                                            <span class="text-button"> Importar datos </span>
-                                        </button>
-                                    </a>
-                                    @include('Receipt.ReceiptAsn.uploaddata')
-                                @endif
                             </div>
                         </div>
                         <hr class="mb-3">
@@ -66,6 +54,11 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-lg-2 col-md-6 col-sm-12">
+                                    <div class="d-flex flex-row comment-row m-t-0">
+                                        {!! DNS2D::getBarcodeHTML($receiptasn->shipmentid, 'QRCODE',4,4) !!}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="card-input">
@@ -74,6 +67,20 @@
                             @endif
                         </div>
                     </form>
+                </div>
+                <div class="card-footer">
+                    @if($receiptasn->statusid != 'IG')
+                        <a href="" data-target="#modal-uploaddata-{{$receiptasn->id}}" data-toggle="modal"
+                           data-placement="top">
+                            <button type="button"
+                                    class="btn waves-effect waves-light btn-outline-info btn-md"
+                                    data-toggle="tooltip" data-placement="top" title="Importar archivo">
+                                <img src="{{asset('/ico/uploadcsv.png')}}" alt="" class="img-16">
+                                <span class="text-button"> Importar datos </span>
+                            </button>
+                        </a>
+                        @include('Receipt.ReceiptAsn.uploaddata')
+                    @endif
                 </div>
             </div>
         </div>

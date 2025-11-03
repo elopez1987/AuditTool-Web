@@ -9,7 +9,9 @@ use App\Models\Receipt\ReceiptAsn;
 use App\Models\Receipt\ReceiptStock;
 use Carbon\Carbon;
 use DB;
+use Exception;
 use Illuminate\Http\Request;
+use Log;
 
 class ReceiptAsnStockController extends BaseController
 {
@@ -20,7 +22,7 @@ class ReceiptAsnStockController extends BaseController
 
         return view(
             'Receipt.ReceiptAsn.addStock',
-            compact('receiptasn', 'stocks')
+            compact('receiptasn', 'stocks'),
         );
     }
 
@@ -32,26 +34,25 @@ class ReceiptAsnStockController extends BaseController
             $receipt = ReceiptAsn::controlAccessUser()->findOrFail($id);
             $this->createReceiptStock($request, $receipt);
             DB::commit();
-            $success = true;
-        } catch (Exception $e) {
-            $success = false;
-            $error = $e->getMessage();
-            DB::rollback();
-        }
-        if ($success) {
-            return $this->redirectBackSuccess();
-        }
 
-        return redirect::back()->withInput()->with(session()->flash('error', 'No se pudieron guardar los datos!!' . $error));
+            return $this->redirectBackSuccessMessage('Stock agregado con exito.');
+        } catch (Exception $e) {
+            Log::info($e->getMessage());
+            DB::rollback();
+
+            return $this->errorResponse('No se pudo agregar el stock, favor de validar.' . $error);
+        }
     }
 
-    public function createReceiptStock($request, $receipt)
+    private function createReceiptStock($request, $receipt): void
     {
         $sku = InventoryPartnumber::controlAccessUser()->wherePrtnum($request['prtnum'])->first();
         if (empty($sku)) {
-            return $this->errorResponse('El número de parte no existe, favor de validar.');
+            $this->errorResponse('El número de parte no existe, favor de validar.');
+
+            return;
         }
-        $dias = Carbon::parse($request['productiondate'])->addDays($sku->shelflife)->format('Y-m-d');
+        $dias = Carbon::parse($request['productiondate'])->addDays((int) $sku->shelflife)->format('Y-m-d');
         ReceiptStock::create([
             'centerid' => $receipt->centerid,
             'warehouseid' => $receipt->warehouseid,
