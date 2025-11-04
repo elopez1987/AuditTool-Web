@@ -190,10 +190,4 @@
 
 @section('script')
     @include('layouts.Partials.DataTable')
-    {{--    @include('Maintenance.CheckListLiftTrucks.partials.table')--}}
-    {{--    <script>--}}
-    {{--        function reloadtable() {--}}
-    {{--            $('#table-checklisttruck').DataTable().ajax.reload();--}}
-    {{--        }--}}
-    {{--    </script>--}}
 @endsection

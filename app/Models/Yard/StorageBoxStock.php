@@ -162,13 +162,4 @@ class StorageBoxStock extends Model
             $query->where('receiptunits.razonstatusid', $razonstatusid);
         }
     }
-
-    public function scopeCarrier($query, $carrierid)
-    {
-        if (is_array($carrierid) && ! empty($carrierid)) {
-            $query->whereIn('receiptunits.carrierid', $carrierid);
-        } elseif (trim($carrierid) != '') {
-            $query->where('receiptunits.carrierid', '=', $carrierid);
-        }
-    }
 }
