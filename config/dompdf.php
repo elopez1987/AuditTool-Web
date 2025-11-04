@@ -239,10 +239,12 @@ return [
          * Use the more-than-experimental HTML5 Lib parser
          */
         'enable_html5_parser' => false,
+
     ],
     'cache_enabled' => false,
     'default_font' => 'DejaVu Sans',
     'isRemoteEnabled' => true,
     'isHtml5ParserEnabled' => true,
+    'remote_enable' => true,
 
 ];
