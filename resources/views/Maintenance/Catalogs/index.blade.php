@@ -184,8 +184,7 @@
                                                 <div class="row">
                                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                                         <div class="form-group">
-                                                            <label for="schemamodel">Esquema</span>
-                                                            </label>
+                                                            <label for="schemamodel">Esquema</label>
                                                             <input type="text" class="form-control" id="schemamodel" name="schemamodel" maxlength="10"
                                                                    aria-describedby="schemamodel" value="TPM" readonly>
                                                         </div>

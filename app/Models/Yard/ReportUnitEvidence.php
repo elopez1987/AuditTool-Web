@@ -77,4 +77,31 @@ class ReportUnitEvidence extends Model
 
         return ReportUnitEvidence::whereIn('vw_storageunitevidence.centerid', $centers);
     }
+
+    public function scopeRason($query, $rasonid)
+    {
+        if (is_array($rasonid) && ! empty($rasonid)) {
+            $query->whereIn('vw_storageunitevidence.razonstatusid', $rasonid);
+        } elseif (trim($rasonid) != '') {
+            $query->where('vw_storageunitevidence.razonstatusid', '=', $rasonid);
+        }
+    }
+
+    public function scopeUnitType($query, $unittypeid)
+    {
+        if (is_array($unittypeid) && ! empty($unittypeid)) {
+            $query->whereIn('vw_storageunitevidence.unittypeid', $unittypeid);
+        } elseif (trim($unittypeid) != '') {
+            $query->where('vw_storageunitevidence.unittypeid', '=', $unittypeid);
+        }
+    }
+
+    public function scopeCarrier($query, $carrierid)
+    {
+        if (is_array($carrierid) && ! empty($carrierid)) {
+            $query->whereIn('vw_storageunitevidence.carrierid', $carrierid);
+        } elseif (trim($carrierid) != '') {
+            $query->where('vw_storageunitevidence.carrierid', '=', $carrierid);
+        }
+    }
 }

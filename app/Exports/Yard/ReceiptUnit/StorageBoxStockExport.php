@@ -2,8 +2,9 @@
 
 namespace App\Exports\Yard\ReceiptUnit;
 
-use App\Models\Yard\StorageBoxStock;
+use App\Models\Yard\ReceiptUnit;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
@@ -19,14 +20,11 @@ class StorageBoxStockExport implements FromCollection, ShouldAutoSize, WithColum
 {
     use Exportable;
 
-    private $workdayin;
+    private $request;
 
-    private $workdayout;
-
-    public function __construct($workdayin, $workdayout)
+    public function __construct(Request $request)
     {
-        $this->workdayin = $workdayin;
-        $this->workdayout = $workdayout;
+        $this->request = $request;
     }
 
     public function columnFormats(): array
@@ -49,18 +47,14 @@ class StorageBoxStockExport implements FromCollection, ShouldAutoSize, WithColum
             'Placa de tracto',
             'Operador',
             'Concepto de entrada',
-            'Registro de llegada',
             'Origen',
+            'Registro de llegada',
             'Llegada a mesa de control',
             'Enrampe',
             'Inicio de proceso',
             'Fin de proceso',
             'Autorización de salida',
             'Salida de unidad',
-            'Tiempo para entrar',
-            'Tiempo para inicio de carga',
-            'Tiempo de carga',
-            'Tiempo de salida',
             'Ticket de peso',
             'Peso de entrada',
             'Peso de salida',
@@ -71,18 +65,22 @@ class StorageBoxStockExport implements FromCollection, ShouldAutoSize, WithColum
 
     public function collection()
     {
-        return StorageBoxStock::controlAccessUser()
-            ->where('vw_storageboxstock.registro', '>=', $this->workdayin)
-            ->where('vw_storageboxstock.registro', '<=', $this->workdayout)->get();
+        return ReceiptUnit::controlAccessUser()
+            ->with(['carrier:id,name', 'warehouse:warehouseid,name', 'unittype:id,description', 'reason:id,name', 'status:statusid,name', 'tiket'])
+            ->Carrier($this->request->carrierid)
+            ->Rason($this->request->reasonid)
+            ->UnitType($this->request->unittypeid)
+            ->where('receiptunits.entrydate', '>=', $this->request->workdayin)
+            ->where('receiptunits.entrydate', '<=', $this->request->workdayout)
+            ->get();
     }
 
-    public function map($shipments): array
+    public function map($unit): array
     {
         // Calcular diferencia entre entrada y salida
-        $diff = null;
-        if ($shipments->registro && $shipments->salida) {
-            $inicio = Carbon::parse($shipments->registro);
-            $fin = Carbon::parse($shipments->salida);
+        if ($unit->registro && $unit->salida) {
+            $inicio = Carbon::parse($unit->registro);
+            $fin = Carbon::parse($unit->salida);
             $diffInMinutes = $inicio->diffInMinutes($fin);
             $hours = floor($diffInMinutes / 60);
             $minutes = $diffInMinutes % 60;
@@ -92,33 +90,29 @@ class StorageBoxStockExport implements FromCollection, ShouldAutoSize, WithColum
         }
 
         return [
-            $shipments->warehouse,
-            Carbon::parse($shipments->registro)->format('d/m/Y'),
-            $shipments->id,
-            $shipments->barcode,
-            $shipments->shipmentid,
-            $shipments->linea,
-            $shipments->boxnumber,
-            $shipments->trucknumber,
-            $shipments->operatorname,
-            $shipments->unit->reason->name,
-            $shipments->unit->unittype->description,
-            $shipments->registro,
-            $shipments->llegadamesa,
-            $shipments->enrampe,
-            $shipments->inicioproceso,
-            $shipments->finproceso,
-            $shipments->autorizasalida,
-            $shipments->salida,
-            $shipments->tentrada,
-            $shipments->tiniciocarga,
-            $shipments->tcarga,
-            $shipments->tsalida,
-            $shipments->ticket,
-            $shipments->weightin,
-            $shipments->weightout,
+            $unit->warehouse->name,
+            Carbon::parse($unit->registro)->format('d/m/Y'),
+            $unit->id,
+            $unit->barcode,
+            $unit->shipmentid,
+            $unit->carrier ? $unit->carrier->name : '',
+            $unit->boxnumber,
+            $unit->trucknumber,
+            $unit->operatorname,
+            $unit->reason->name,
+            $unit->unittype->description,
+            $unit->entrydate,
+            $unit->deliverdate,
+            $unit->ensnare,
+            $unit->startdate,
+            $unit->finishdate,
+            $unit->autorizaoutputdate,
+            $unit->outputdate,
+            $unit->tiket ? $unit->tiket->ticket : '',
+            $unit->tiket ? $unit->tiket->weightin : '',
+            $unit->tiket ? $unit->tiket->weightout : '',
             $diff,
-            $shipments->status,
+            $unit->status->name,
         ];
     }
 

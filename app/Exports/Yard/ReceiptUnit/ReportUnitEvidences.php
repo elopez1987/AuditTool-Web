@@ -2,28 +2,26 @@
 
 namespace App\Exports\Yard\ReceiptUnit;
 
-use App\Exports\AfterSheet;
-use App\Exports\Fill;
 use App\Models\Yard\ReportUnitEvidence;
+use Illuminate\Http\Request;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
+use Maatwebsite\Excel\Events\AfterSheet;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
 
 class ReportUnitEvidences implements FromCollection, ShouldAutoSize, WithEvents, WithHeadings, WithMapping
 {
     use Exportable;
 
-    private $workdayin;
+    private $request;
 
-    private $workdayout;
-
-    public function __construct($workdayin, $workdayout)
+    public function __construct(Request $request)
     {
-        $this->workdayin = $workdayin;
-        $this->workdayout = $workdayout;
+        $this->request = $request;
     }
 
     public function headings(): array
@@ -33,7 +31,7 @@ class ReportUnitEvidences implements FromCollection, ShouldAutoSize, WithEvents,
             'Folio',
             'Embarque',
             'Placa de caja',
-            'Economico',
+            'Económico',
             'Linea de transporte',
             'Tipo de Unidad',
             'Fecha de entrada',
@@ -60,8 +58,12 @@ class ReportUnitEvidences implements FromCollection, ShouldAutoSize, WithEvents,
 
     public function collection()
     {
-        return ReportUnitEvidence::controlAccessUser()->where('entrydate', '>', $this->workdayin)
-            ->where('entrydate', '<', $this->workdayout)->get();
+        return ReportUnitEvidence::controlAccessUser()
+            ->Carrier($this->request->carrierid)
+            ->UnitType($this->request->unittypeid)
+            ->Rason($this->request->reasonid)
+            ->where('entrydate', '>', $this->request->workdayin)
+            ->where('entrydate', '<', $this->request->workdayout)->get();
     }
 
     public function map($units): array

@@ -370,8 +370,19 @@ class ReceiptUnit extends Model
 
     public function scopeRason($query, $rasonid)
     {
-        if (trim($rasonid) != '') {
+        if (is_array($rasonid) && ! empty($rasonid)) {
+            $query->whereIn('receiptunits.razonstatusid', $rasonid);
+        } elseif (trim($rasonid) != '') {
             $query->where('receiptunits.razonstatusid', '=', $rasonid);
+        }
+    }
+
+    public function scopeUnitType($query, $unittypeid)
+    {
+        if (is_array($unittypeid) && ! empty($unittypeid)) {
+            $query->whereIn('receiptunits.unittypeid', $unittypeid);
+        } elseif (trim($unittypeid) != '') {
+            $query->where('receiptunits.unittypeid', '=', $unittypeid);
         }
     }
 
