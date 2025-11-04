@@ -190,7 +190,11 @@
                         @if($image->auxiliary01 == 'IN')
                             <td class="border-none" style="text-align: center; padding: 10px;">
                                 <img src='{{ asset('storage/' . $image->path) }}' style="width: 300px; height: 200px; margin: 5px; border: 1px solid #e6ee9c;">
+                                <span>{{asset('storage/' . $image->path)}}</span>
                                 <img src="{{ public_path('storage/' . $image->path) }}" style="width: 300px; height: 200px; margin: 5px; border: 1px solid #e6ee9c;">
+                                <span>{{public_path('storage/' . $image->path)}}</span>
+                                <img src="{{ asset('public/storage/' . $image->path) }}" style="width: 300px; height: 200px; margin: 5px; border: 1px solid #e6ee9c;">
+                                <span>{{asset('public/storage/' . $image->path)}}</span>
                             </td>
                             @php
                                 $count++;
