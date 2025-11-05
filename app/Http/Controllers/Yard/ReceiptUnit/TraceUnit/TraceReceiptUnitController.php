@@ -50,9 +50,6 @@ class TraceReceiptUnitController extends BaseController
             ->leftJoin('systemstatus', 'storageevidencephotos.auxiliary04', '=', 'systemstatus.statusid')
             ->where('model_type', '=', 'ReceiptUnit')
             ->select(['storageevidencephotos.*', 'systemstatus.name as tipo'])->get();
-        foreach ($evidences as $evidence) {
-            \Log::info($evidence->path);
-        }
         $evidencesTiros = CheckListEvidenceProcessUnit::where('modelid', $receiptunit->id)
             ->whereNotNull('path')->where('modeltype', 'ReceiptUnits')->get();
         $checklisttransports = $this->getChecklistTransports($receiptunit);

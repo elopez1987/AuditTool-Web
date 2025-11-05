@@ -206,7 +206,8 @@
                 <th class="border-none"></th>
                 <th class="border-none"
                     style="height:15px;border-top: 0;border-left: 0;border-right: 0;text-align: left;padding: 0;border-bottom: 1px solid;font-size: 10px;width: 30%">
-                    CAJA: <span style="font-size: 14px;color: blue">{{$receiptunit->boxnumber}} </span>
+                    CAJA: <span
+                            style="font-size: 14px;color: blue">{{$receiptunit->boxnumber}} / {{$receiptunit->econumber}} </span>
                 </th>
             </tr>
         </table>
@@ -224,7 +225,7 @@
                 <th class="border-none" style="width: 5%"></th>
                 <th class="border-none"
                     style="height:15px;border-top: 0;border-left: 0;border-right: 0;text-align: left;padding: 0;border-bottom: 1px solid;font-size: 10px;width: 30%">
-                    NO.ECO: <span style="font-size: 14px;color: blue">{{$receiptunit->econumber}}  </span>
+                    TRACTO DE ENTRADA: <span style="font-size: 14px;color: blue">{{$receiptunit->tracto ? $receiptunit->tracto->trucknumber : ''}} / {{$receiptunit->tracto ? $receiptunit->tracto->econumber : ''}}  </span>
                 </th>
             </tr>
         </table>
@@ -243,8 +244,10 @@
                 <th class="border-none" style="width: 5%"></th>
                 <th class="border-none"
                     style="height:15px;border-top: 0;border-left: 0;border-right: 0;text-align: left;padding: 0;border-bottom: 1px solid;font-size: 10px;width: 30%">
-                    PLACAS: <span
-                            style="font-size: 14px;color: blue"> {{$receiptunit->tracto ? $receiptunit->tracto->trucknumber : ''}} </span>
+                    TRACTO DE SALIDA:
+                    @if($receiptunit->statusid == 'TR')
+                        <span style="font-size: 14px;color: blue"> {{$receiptunit->trucknumber}} </span>
+                    @endif
                 </th>
             </tr>
         </table>
