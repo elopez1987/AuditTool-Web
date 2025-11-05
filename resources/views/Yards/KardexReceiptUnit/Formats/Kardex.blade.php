@@ -189,11 +189,11 @@
                     @foreach($evidences as $image)
                         @if($image->auxiliary01 == 'IN')
                             <td class="border-none" style="text-align: center; padding: 10px;">
-                                <img src='{{ asset('storage/' . $image->path) }}' style="width: 300px; height: 200px; margin: 5px; border: 1px solid #e6ee9c;">
+                                <img src='{{ asset('storage/' . $image->path) }}' style="width: 300px; height: 200px; margin: 5px;">
                                 <span>{{asset('storage/' . $image->path)}}</span>
-                                <img src="{{ public_path('storage/' . $image->path) }}" style="width: 300px; height: 200px; margin: 5px; border: 1px solid #e6ee9c;">
+                                <img src="{{ public_path('storage/' . $image->path) }}" style="width: 300px; height: 200px; margin: 5px">
                                 <span>{{public_path('storage/' . $image->path)}}</span>
-                                <img src="{{ asset('public/storage/' . $image->path) }}" style="width: 300px; height: 200px; margin: 5px; border: 1px solid #e6ee9c;">
+                                <img src="{{ asset('public/storage/' . $image->path) }}" style="width: 300px; height: 200px; margin: 5px;">
                                 <span>{{asset('public/storage/' . $image->path)}}</span>
                             </td>
                             @php
@@ -231,8 +231,8 @@
                         @foreach($evidences as $image)
                             @if($image->auxiliary01 == 'IP')
                                 <td class="border-none" style="text-align: center; padding: 10px;">
-                                    <img src='{{ asset('storage/' . $image->path) }}' style="width: 300px; height: 200px; margin: 5px; border: 1px solid #e6ee9c;">
-                                    <img src="{{ public_path('storage/' . $image->path) }}" style="width: 300px; height: 200px; margin: 5px; border: 1px solid #e6ee9c;">
+                                    <img src='{{ asset('storage/' . $image->path) }}' style="width: 300px; height: 200px; margin: 5px;">
+                                    <img src="{{ public_path('storage/' . $image->path) }}" style="width: 300px; height: 200px; margin: 5px;">
                                 </td>
                                 @php
                                     $count++;
@@ -259,11 +259,11 @@
                         </tr>
                         <tr>
                             <td class="border-none">
-                                <img src='{{asset('storage/' . $image->path)}}' style="width: 500px;height:250px;margin-left: 10px; margin-right: 10px;border: 1px solid #e6ee9c !important">
+                                <img src='{{asset('storage/' . $image->path)}}' style="width: 500px;height:250px;margin-left: 10px; margin-right: 10px;">
                                 <span>{{asset('storage/' . $image->path)}}</span>
-                                <img src='{{public_path('storage/' . $image->path)}}' style="width: 500px;height:250px;margin-left: 10px; margin-right: 10px;border: 1px solid #e6ee9c !important">
+                                <img src='{{public_path('storage/' . $image->path)}}' style="width: 500px;height:250px;margin-left: 10px; margin-right: 10px;">
                                 <span>{{public_path('storage/' . $image->path)}}</span>
-                                <img src='{{asset('public/storage/' . $image->path)}}' style="width: 500px;height:250px;margin-left: 10px; margin-right: 10px;border: 1px solid #e6ee9c !important">
+                                <img src='{{asset('public/storage/' . $image->path)}}' style="width: 500px;height:250px;margin-left: 10px; margin-right: 10px;">
                                 <span>{{asset('public/storage/' . $image->path)}}</span>
                             </td>
                         </tr>
@@ -294,9 +294,9 @@
                         @if($image->auxiliary01 == 'OUT')
                             <td class="border-none" style="text-align: center; padding: 10px;">
                                 <img src='{{ asset('storage/' . $image->path) }}'
-                                     style="width: 300px; height: 200px; margin: 5px; border: 1px solid #e6ee9c;">
+                                     style="width: 300px; height: 200px; margin: 5px;;">
                                 <img src='{{ public_path('storage/' . $image->path) }}'
-                                     style="width: 300px; height: 200px; margin: 5px; border: 1px solid #e6ee9c;">
+                                     style="width: 300px; height: 200px; margin: 5px;">
                             </td>
                             @php
                                 $count++;
