@@ -115,7 +115,6 @@ class FinishGoodIssueController extends BaseController
             EnviarMensajaSorianaJob::dispatch($orderDelivery);
         }
         if (! empty($parameterWarehouse) && in_array('SWH-17', (array) $parameterWarehouse)) {
-            Log::info('Enviando mensaje a fin de facturacion.');
             EnviarMensajeFinFacturacionJob::dispatch($orderDelivery);
         }
     }
