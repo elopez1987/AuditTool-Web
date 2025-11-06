@@ -87,11 +87,9 @@ class TraceReceiptUnitController extends BaseController
         $evidences = EvidencePhoto::where('model_id', $id)
             ->where('model_type', '=', 'ReceiptUnit')
             ->leftJoin('systemstatus', 'storageevidencephotos.auxiliary04', '=', 'systemstatus.statusid')
-            ->select(['storageevidencephotos.*', 'systemstatus.name as tipo'])
-            ->get();
+            ->select(['storageevidencephotos.*', 'systemstatus.name as tipo'])->get();
         $evidencesTiros = CheckListEvidenceProcessUnit::where('modelid', $receiptunit->id)
-            ->whereNotNull('path')
-            ->where('modeltype', 'ReceiptUnits')->get();
+            ->whereNotNull('path')->where('modeltype', 'ReceiptUnits')->get();
         $comments = StorageComment::where('modeltype', 'ReceiptUnits')
             ->where('modelid', $id)->get();
         $traces = StorageUnitTrace::controlAccessUser()->where('receiptunitid', '=', $id)->get();
@@ -101,7 +99,8 @@ class TraceReceiptUnitController extends BaseController
             'evidences',
             'traces',
             'evidencesTiros',
-            'comments'
+            'comments',
+
         ));
 
         return $pdf->download('Kardex de unidad -' . $id . '.pdf');
