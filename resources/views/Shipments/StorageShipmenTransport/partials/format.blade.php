@@ -113,25 +113,31 @@
         </tr>
         <tr>
             <th class="w20" style="text-align: left;padding: 2px;background-color:#eeeeee">LICENCIA</th>
-            <th class="w30" style="text-align: left;padding: 2px;background-color:#ffffff"> {{$data->drivernumber}}</th>
-            <th class="w20" style="text-align: left;padding: 2px;background-color:#eeeeee">LINEA</th>
-            <th class="w30" style="text-align: left;padding: 2px;background-color:#ffffff"> {{$data->carriername}}
-            </th>
-        </tr>
-        <tr>
-            <th class="w20" style="text-align: left;padding: 2px;background-color:#eeeeee">PLACA DE CAJA</th>
-            <th class="w30" style="text-align: left;padding: 2px;background-color:#ffffff">{{$data->boxnumber}} </th>
-            <th class="w20" style="text-align: left;padding: 2px;background-color:#eeeeee">PLACA DE TRACTO</th>
-            <th class="w30" style="text-align: left;padding: 2px;background-color:#ffffff"> {{$data->trucknumber}}</th>
+            <th class="w30" style="text-align: left;padding: 2px;background-color:#ffffff" colspan="3"> {{$data->drivernumber}}</th>
         </tr>
         <tr>
             <th class="w20" style="text-align: left;padding: 2px;background-color:#eeeeee">EMBARQUE</th>
-            <th class="w30" style="text-align: left;padding: 2px;background-color:#ffffff"> {{$data->shipmentid}}
+            <th class="w30" style="text-align: left;padding: 2px;background-color:#ffffff;font-size: 16px !important;color: red"> {{$data->shipmentid}}
             </th>
             <th class="w20" style="text-align: left;padding: 2px;background-color:#eeeeee">N.CONFIRMACIÓN</th>
             <th class="w30"
                 style="text-align: left;padding: 2px;background-color:#ffffff"> {{$data->confirmation}}
             </th>
+        </tr>
+
+        <tr>
+            <th class="w20" style="text-align: left;padding: 2px;background-color:#eeeeee">CLIENTE / DESTINO</th>
+            <th class="w30" style="text-align: left;padding: 2px;background-color:#ffffff;font-size: 16px !important;color: red" colspan="3"> {{$data->customername}} / {{$data->city}}</th>
+        </tr>
+        <tr>
+            <th class="w20" style="text-align: left;padding: 2px;background-color:#eeeeee">LINEA</th>
+            <th style="text-align: left;padding: 2px;background-color:#ffffff" colspan="3"> {{$data->carriername}}</th>
+        </tr>
+        <tr>
+            <th class="w20" style="text-align: left;padding: 2px;background-color:#eeeeee">PLACA DE CAJA</th>
+            <th class="w30" style="text-align: left;padding: 2px;background-color:#ffffff;font-size: 14px;color: blue">{{$data->boxnumber}} </th>
+            <th class="w20" style="text-align: left;padding: 2px;background-color:#eeeeee">PLACA DE TRACTO</th>
+            <th class="w30" style="text-align: left;padding: 2px;background-color:#ffffff;font-size: 14px;color: blue"> {{$data->trucknumber}}</th>
         </tr>
         <tr>
             <th class="w20" style="text-align: left;padding: 2px;background-color:#eeeeee">F. de Carga</th>

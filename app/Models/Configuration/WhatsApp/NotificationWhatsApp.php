@@ -66,6 +66,10 @@ class NotificationWhatsApp extends Model
         'statusid' => 'E',
     ];
 
+    protected $casts = [
+        'configurationflag' => 'array',
+    ];
+
     public function status(): BelongsTo
     {
         return $this->belongsTo(SystemStatus::class, 'statusid', 'statusid');

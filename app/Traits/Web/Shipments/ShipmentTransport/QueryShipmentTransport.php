@@ -51,21 +51,4 @@ trait QueryShipmentTransport
                 'shipmenttransport.trucknumber', 'shipmenttransport.auxiliary03', 'shipmenttransport.auxiliary04',
             ])->first();
     }
-
-    public function getModelDeliveryForPrintFormat($id)
-    {
-        return OrderDeliverie::controlAccessUser()->where('orderdeliveries.id', '=', $id)
-            ->leftJoin('ordercustomers', 'orderdeliveries.customerid', '=', 'ordercustomers.id')
-            ->leftJoin('shipmenttransport', 'orderdeliveries.id', '=', 'shipmenttransport.orderid')
-            ->leftJoin('shipmentcarriers', 'orderdeliveries.carrierid', '=', 'shipmentcarriers.id')
-            ->select([
-                'orderdeliveries.id', 'orderdeliveries.shipmentid', 'orderdeliveries.loadingdate', 'orderdeliveries.downloaddate',
-                'orderdeliveries.confirmation', 'orderdeliveries.auxiliary05 as code', 'ordercustomers.name as customername',
-                'ordercustomers.city', 'shipmenttransport.operatorname', 'shipmenttransport.phone', 'shipmenttransport.drivernumber',
-                'shipmenttransport.boxnumber', 'shipmenttransport.trucknumber', 'shipmentcarriers.name as carriername',
-                'shipmentcarriers.auxiliary04 as qr',
-                'shipmentcarriers.auxiliary05 as logo',
-                'shipmenttransport.auxiliary02 as statustransport',
-            ])->first();
-    }
 }

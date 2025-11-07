@@ -40,21 +40,21 @@
                                 <div class="col-lg-2 col-md-6 col-sm-12">
                                     <div class="form-group">
                                         <label for="value01">Valor 01 </label>
-                                        <input type="text" class="form-control" id="value01" name="value01" maxlength="100"
+                                        <input type="text" class="form-control" id="value01" name="value01"
                                                aria-describedby="value01" value="{{old('value01')}}">
                                     </div>
                                 </div>
                                 <div class="col-lg-2 col-md-6 col-sm-12">
                                     <div class="form-group">
                                         <label for="value02">Valor 02 </label>
-                                        <input type="text" class="form-control" id="value02" name="value02" maxlength="100"
+                                        <input type="text" class="form-control" id="value02" name="value02"
                                                aria-describedby="value02" value="{{old('value02')}}">
                                     </div>
                                 </div>
                                 <div class="col-lg-2 col-md-6 col-sm-12">
                                     <div class="form-group">
                                         <label for="value03">Valor 03 </label>
-                                        <input type="text" class="form-control" id="value03" name="value03" maxlength="100"
+                                        <input type="text" class="form-control" id="value03" name="value03"
                                                aria-describedby="value03" value="{{old('value03')}}">
                                     </div>
                                 </div>
@@ -63,14 +63,14 @@
                                 <div class="col-lg-2 col-md-6 col-sm-12">
                                     <div class="form-group">
                                         <label for="value04">Valor 04 </label>
-                                        <input type="text" class="form-control" id="value04" name="value04" maxlength="100"
+                                        <input type="text" class="form-control" id="value04" name="value04"
                                                aria-describedby="value04" value="{{old('value04')}}">
                                     </div>
                                 </div>
                                 <div class="col-lg-2 col-md-6 col-sm-12">
                                     <div class="form-group">
                                         <label for="value05">Valor 05 </label>
-                                        <input type="text" class="form-control" id="value05" name="value05" maxlength="100"
+                                        <input type="text" class="form-control" id="value05" name="value05"
                                                aria-describedby="value05" value="{{old('value05')}}">
                                     </div>
                                 </div>
