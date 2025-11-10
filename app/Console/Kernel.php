@@ -7,8 +7,6 @@ use App\Console\Commands\General\CloseValidateQRReceipt;
 use App\Console\Commands\General\DeleteHistLogWebServiceIzel;
 use App\Console\Commands\General\DeleteLogWhatsApp;
 use App\Console\Commands\General\MensajeDeCapacidadDePatio;
-use App\Console\Commands\General\SendEmailForArriveUnitToReceipt;
-use App\Console\Commands\General\SendMessageForReceiptEntry;
 use App\Console\Commands\HENKELTOL01\ClearLocationCommand;
 use App\Console\Commands\HENKELTOL01\EnviaMensajeDeNuevaIncidenciaRegistrada;
 use App\Console\Commands\HENKELTOL01\TiempoExcedidoParaSalirDePatio;
@@ -33,8 +31,6 @@ class Kernel extends ConsoleKernel
         CloseValidateQRReceipt::class,
         DeleteLogWhatsApp::class,
         ClearReceiptAsnCommand::class,
-        SendMessageForReceiptEntry::class,
-        SendEmailForArriveUnitToReceipt::class,
 
         SendDataToWmsIzel::class,
 
@@ -66,19 +62,16 @@ class Kernel extends ConsoleKernel
         $schedule->command('whatsapp:deletelog')->daily();
         $schedule->command('clear:receiptasn')->dailyAt('01:00');
 
-        $schedule->command('app:send-message-for-receipt-entry')->everyFiveMinutes();
-        $schedule->command('app:send-email-for-arrive-unit-to-receipt')->everyFiveMinutes();
-
         //      Comandos para Kellogg Toluca
         $schedule->command('command:SendDataToWmsIzel')->everyTenMinutes();
 
         //      Comandos para Henkel One Roof HENKELTOL01
-        $schedule->command('command:TiempoExcedidoParaSalirDePatio')->everyTenMinutes();
+        $schedule->command('command:TiempoExcedidoParaSalirDePatio')->everyFifteenMinutes();
         //        Envia mensajes de a unidades sin llegada para embarques
-        $schedule->command('command:UnidadesSinLLegarEmbarques')->everyThirtyMinutes();
+        $schedule->command('command:UnidadesSinLLegarEmbarques')->everyMinute();
         //        Envío de mensajes de nuevas incidencias en embarques
         $schedule->command('command:EnviaMensajeDeNuevaIncidenciaRegistrada')->everyFiveMinutes();
-        //        Envia mensaje de capacidad de patio superada al parámetro maximo
+        //        Envia mensaje de capacidad de patio superada al parámetro máximo
         $schedule->command('whatsapp:patiolleno')->everyTwoHours();
         //        Envia el plan de carga a recurso confiable
         $schedule->command('rc:SendPlanForShipmentCommand')->everyTwoHours();

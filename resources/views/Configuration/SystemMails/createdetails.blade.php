@@ -28,7 +28,7 @@
                             <div class="col-lg-4 col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label for="namemail">Correo <span style="color: red">*</span></label>
-                                    <input type="text" class="form-control" readonly id="namemail" name="namemail" maxlength="15"
+                                    <input type="text" class="form-control" readonly id="namemail" name="namemail"
                                            aria-describedby="namemail" onKeyUp=this.value=this.value.toUpperCase();
                                            value="{{$systemmail->name}}">
                                 </div>
@@ -62,7 +62,7 @@
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label for="name">Nombre de Contacto <span style="color: red">*</span></label>
-                                    <input type="text" class="form-control" required id="name" name="name" maxlength="15"
+                                    <input type="text" class="form-control" required id="name" name="name"
                                            aria-describedby="name" onKeyUp=this.value=this.value.toUpperCase();
                                            value="{{old('name')}}">
                                 </div>
