@@ -116,6 +116,8 @@ Route::middleware(['auth'])->group(function () {
     //    ---------------------------------------------  Monitor de operaciones ---------------------------------------------
     Route::resource('monitoroperation', MonitorOperationController::class)->except('destroy', 'show', 'store');
     Route::get('getdataoperationmonitor', [MonitorOperationController::class, 'getDataOperationMonitor'])->name('getdataoperationmonitor');
+    Route::put('savepalletstoshipment/{id}', [MonitorOperationController::class, 'savepalletstoshipment'])->name('savepalletstoshipment');
+    Route::put('savecommentoperation/{id}', [MonitorOperationController::class, 'savecommentoperation'])->name('savecommentoperation');
 
     //    ---------------------------- Eventos de Embarques desde el monitor de operaciones---------------------------------
     //    Registrar el incio de armado o lanzamiento de ola

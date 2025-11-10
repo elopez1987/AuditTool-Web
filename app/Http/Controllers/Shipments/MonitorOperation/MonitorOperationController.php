@@ -10,8 +10,8 @@ use App\Models\Shipments\ShipmentDataOperation;
 use App\Models\Shipments\ShipmentPallet;
 use App\Models\Yard\StorageLocation;
 use Auth;
-use DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
 class MonitorOperationController extends BaseController
@@ -27,7 +27,7 @@ class MonitorOperationController extends BaseController
             ->groupBy('statusid')->orderByDesc('total')->get();
 
         return view('Shipments.OrderMonitor.MonitorOperation.index',
-            compact('status', 'turns', 'warehouses', 'statusQuantitys')
+            compact('status', 'turns', 'warehouses', 'statusQuantitys'),
         );
     }
 
@@ -83,23 +83,12 @@ class MonitorOperationController extends BaseController
     public function edit(OrderDeliverie $monitoroperation)
     {
         $materials = $this->getMaterials();
-        $locationsStages = self::getLocationsStagesForCenter();
         $locations = self::getLocations();
         $orderDelivery = $monitoroperation;
 
-        return view(
-            'Shipments.OrderMonitor.MonitorOperation.edit',
-            compact('orderDelivery', 'materials', 'locationsStages', 'locations')
+        return view('Shipments.OrderMonitor.MonitorOperation.edit',
+            compact('orderDelivery', 'materials', 'locations'),
         );
-    }
-
-    public function getLocationsStagesForCenter()
-    {
-        return StorageLocation::controlAccessUser()
-            ->join('storagezones', 'storagelocations.zoneid', '=', 'storagezones.id')
-            ->whereNotIn('storagelocations.name', ['DUMMY'])
-            ->where('storagezones.zoneid', '=', 'ST')
-            ->select(['storagelocations.name', 'storagelocations.id'])->get();
     }
 
     public function update(UpdateOperationRequest $request, OrderDeliverie $monitoroperation)
@@ -107,7 +96,6 @@ class MonitorOperationController extends BaseController
         $shipment = ShipmentDataOperation::controlAccessUser()->where('orderid', $monitoroperation->id)->first();
         $shipment->update($request->validated() + ['createuserid' => Auth::user()->id]);
         $this->updateBooleanAttributesFromRequest($request, $shipment, ['fullpallet', 'fullpicking']);
-        self::addTypesPalletsToShipment($request, $shipment);
 
         return $this->redirectBackSuccess();
     }
@@ -138,20 +126,47 @@ class MonitorOperationController extends BaseController
             })->select(['lngdsc', 'prtnum'])->get();
     }
 
-    private function addTypesPalletsToShipment($request, $orderDelivery): void
+    //	Agregar el sku y cantidad de pallets a la orden de entrega
+    public function savepalletstoshipment(Request $request, $id)
     {
-        $partnumbers = $request->input('prtnum');
-        $registros = count($partnumbers) - 1;
-        for ($i = 0; $i <= $registros; $i++) {
-            if ($request['quantity'][$i] !== '') {
-                ShipmentPallet::create([
+        $prtnums = $request->input('prtnum', []);
+        $quantities = $request->input('quantity', []);
+        $orderDelivery = OrderDeliverie::controlAccessUser()->where('id', $id)->first();
+        collect($prtnums)->each(function ($prtnum, $index) use ($quantities, $orderDelivery) {
+            $quantity = $quantities[$index] ?? null;
+            if (! is_numeric($quantity) || $quantity <= 0) {
+                return;
+            }
+            $pallet = ShipmentPallet::firstOrCreate(
+                [
                     'centerid' => $orderDelivery->centerid,
                     'warehouseid' => $orderDelivery->warehouseid,
-                    'orderid' => $orderDelivery->orderid,
-                    'prtnum' => $request['prtnum'][$i],
-                    'quantity' => $request['quantity'][$i],
-                ]);
-            }
+                    'orderid' => $orderDelivery->id,
+                    'prtnum' => $prtnum,
+                ],
+                [
+                    'quantity' => 0,
+                ],
+            );
+            $pallet->increment('quantity', (int) $quantity);
+        });
+
+        return $this->redirectBackSuccessMessage('Pallets agregados con exito.');
+    }
+
+    //	Agrega los comentarios el embarque
+    public function savecommentoperation(Request $request, $id)
+    {
+        $shipment = ShipmentDataOperation::controlAccessUser()->where('orderid', $id)->first();
+        if (empty($shipment)) {
+            return $this->errorResponse('No se encontró el embarque');
         }
+        $shipment->comment01 = $request->input('comment01');
+        $shipment->comment02 = $request->input('comment02');
+        $shipment->comment03 = $request->input('comment03');
+        $shipment->save();
+
+        return $this->redirectBackSuccessMessage('Comentarios agregados con exito.');
+
     }
 }
