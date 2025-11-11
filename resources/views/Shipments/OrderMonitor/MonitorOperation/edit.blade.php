@@ -235,11 +235,12 @@
 
                         <hr class="m-t-1">
                         <!-- Nav tabs -->
-                        <ul class="nav nav-tabs customtab" role="tablist">
-                            <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#view01"
-                                                    role="tab"><span
-                                            class="hidden-sm-up"><i class="ti-home font-12"></i></span> <span
-                                            class="hidden-xs-down ml-3 mr-3">Datos del embarque</span></a>
+                        <ul class="nav nav-tabs nav-tabs-custom nav-success nav-justified mb-3" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#view01" role="tab">
+                                    <span class="hidden-sm-up"><i class="ti-home font-12"></i></span> <span
+                                            class="hidden-xs-down ml-3 mr-3">Datos del embarque</span>
+                                </a>
                             </li>
                             <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view02" role="tab"><span
                                             class="hidden-sm-up"><i class="ti-comment font-12"></i></span> <span
@@ -543,9 +544,7 @@
 @endsection
 
 @section('css')
-
-    <link rel="stylesheet"
-          href="{{asset('/theme/assets/libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css')}}">
+    <link rel="stylesheet" href="{{asset('/theme/assets/libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css')}}">
 @endsection
 
 @section('script')
