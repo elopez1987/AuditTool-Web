@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Shipments\MonitorTraffic;
 use App\Http\Controllers\BaseController;
 use App\Models\General\StorageComment;
 use App\Models\Shipments\OrderDeliverie;
+use App\Models\Shipments\ShipmentHeader;
+use App\Models\Shipments\ShipmentSeal;
 use App\Traits\Web\Shipments\MonitorTraffic;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 
 class MonitorTrafficController extends BaseController
@@ -40,20 +43,46 @@ class MonitorTrafficController extends BaseController
     public function edit(OrderDeliverie $monitoranalistatrafico)
     {
         $orderDelivery = $monitoranalistatrafico;
-        $comments = StorageComment::where('modeltype', 'orderdeliveries')->where('modelid', $orderDelivery->id)->get();
+        $comments = StorageComment::where('modeltype', 'orderdeliveries')->where('modelid', $orderDelivery->id)
+            ->orderBy('id', 'desc')->get();
 
         return view('Shipments.OrderMonitor.AnalystTraffic.edit', compact('orderDelivery', 'comments'));
     }
 
-    public function update(Request $request, OrderDeliverie $monitoranalistatrafico)
+    public function update(Request $request, $id)
     {
-        $orderDelivery = $monitoranalistatrafico;
-        $this->updateHeaderToShipment($request, $orderDelivery);
-        $this->updateSealToShipment($orderDelivery, $request);
+        $shipmentheader = ShipmentHeader::controlAccessUser()->where('orderid', $id)->first();
+        if (empty($shipmentheader)) {
+            return redirect()->back()->with('error', 'No se encontró el registro de embarque');
+        }
+        $shipmentheader->totalpiecesfac = $request['totalpiecesfac'];
+        $shipmentheader->totalcontainersfac = $request['totalcontainersfac'];
+        $shipmentheader->createuserid = Auth::user()->id;
+        $shipmentheader->save();
 
+        return $this->redirectBackInfo();
+    }
+
+    public function savesealstoshipment(Request $request, $id)
+    {
+        $seal = ShipmentSeal::where('orderid', $id)->first();
+        if (empty($seal)) {
+            return redirect()->back()->with('error', 'No se encontró el registro de embarque');
+        }
+        $seal->containerseal01 = $request['containerseal01'];
+        $seal->containerseal02 = $request['containerseal02'];
+        $seal->containerseal03 = $request['containerseal03'];
+        $seal->receivername = $request['receivername'];
+        $seal->save();
+
+        return $this->redirectBackInfo();
+    }
+
+    public function savecommenttoshipment(Request $request, $id)
+    {
         if ($request->has('comment')) {
             if ($request['comment'] !== '') {
-                StorageComment::createCommentary('orderdeliveries', $orderDelivery->id, $request);
+                StorageComment::createCommentary('orderdeliveries', $id, $request);
             }
         }
 

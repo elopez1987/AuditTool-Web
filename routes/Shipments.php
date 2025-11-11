@@ -153,6 +153,11 @@ Route::middleware(['auth'])->group(function () {
     //    ---------------------------------------------  Monitor de trafico ---------------------------------------------
     Route::resource('monitoranalistatrafico', MonitorTrafficController::class)->except('destroy', 'show', 'create');
     Route::get('getdatamonitortraffic', [MonitorTrafficController::class, 'getDataMonitorTraffic'])->name('getdatamonitortraffic');
+    //	Guardar los sellos del embarque
+    Route::put('savesealstoshipment/{id}', [MonitorTrafficController::class, 'savesealstoshipment'])->name('savesealstoshipment');
+    //	Guardar comentarios de facturacion
+    Route::put('savecommenttoshipment/{id}', [MonitorTrafficController::class, 'savecommenttoshipment'])->name('savecommenttoshipment');
+
     //    Registro de incio de facturacion
     Route::put('addstartgoodissuedate/{id}', [StartGoogIssueController::class, 'index'])->name('addstartgoodissuedate');
     //    Finalizar el proceso de facturacion

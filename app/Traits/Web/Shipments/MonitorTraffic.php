@@ -3,11 +3,7 @@
 namespace App\Traits\Web\Shipments;
 
 use App\Models\Shipments\OrderDeliverie;
-use App\Models\Shipments\ShipmentHeader;
-use App\Models\Shipments\ShipmentSeal;
 use DB;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 trait MonitorTraffic
 {
@@ -46,25 +42,5 @@ trait MonitorTraffic
             ])
             ->addSelect(DB::raw('DATEDIFF(hour, GETDATE(), DATEADD(HH, - (o.timetransfer / 60), orderdeliveries.downloaddate))  as hrestante'))
             ->addSelect(DB::raw("CONCAT(orderdeliveries.shipmentid,'|',orderdeliveries.auxiliary03) as embarque"));
-    }
-
-    private function updateSealToShipment(OrderDeliverie $orderDelivery, Request $request)
-    {
-        $seal = ShipmentSeal::where('orderid', $orderDelivery->id)->first();
-        $seal->containerseal01 = $request['containerseal01'];
-        $seal->containerseal02 = $request['containerseal02'];
-        $seal->containerseal03 = $request['containerseal03'];
-        $seal->receivername = $request['receivername'];
-        $seal->save();
-    }
-
-    private function updateHeaderToShipment(Request $request, OrderDeliverie $orderDelivery)
-    {
-        $shipmentheader = ShipmentHeader::controlAccessUser()->where('orderid', $orderDelivery->id)->first();
-        $shipmentheader->totalpiecesfac = $request['totalpiecesfac'];
-        $shipmentheader->totalvolume = $request['totalvolume'];
-        $shipmentheader->totalcontainersfac = $request['totalcontainersfac'];
-        $shipmentheader->createuserid = Auth::user()->id;
-        $shipmentheader->save();
     }
 }
