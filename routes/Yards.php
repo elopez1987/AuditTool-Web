@@ -18,6 +18,7 @@ use App\Http\Controllers\Yard\ReceiptTruck\ClearTruckStockController;
 use App\Http\Controllers\Yard\ReceiptTruck\JoinTruckToBoxController;
 use App\Http\Controllers\Yard\ReceiptTruck\ReceiptTrucksController;
 use App\Http\Controllers\Yard\ReceiptTruck\ReceiptTruckTraceController;
+use App\Http\Controllers\Yard\ReceiptUnit\AssignResponsibleController;
 use App\Http\Controllers\Yard\ReceiptUnit\AssignShipmentController;
 use App\Http\Controllers\Yard\ReceiptUnit\AutorizeTransportController;
 use App\Http\Controllers\Yard\ReceiptUnit\CheckListCheckIn\AuthorizeTransportEntriesController;
@@ -90,7 +91,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('assignshipment', [AssignShipmentController::class, 'index'])->name('assignshipment');
     Route::get('getDataTransport', [AssignShipmentController::class, 'getDataTransport'])->name('getDataTransport');
     Route::put('updateShipmentiToReceiptUnit/{receiptunit}', [AssignShipmentController::class, 'updateShipmentToUnit'])->name('updateShipmentiToReceiptUnit');
-    Route::put('saveresponsibletounit/{receiptunit}', [AssignShipmentController::class, 'saveresponsibletounit'])->name('saveresponsibletounit');
+
+    Route::put('saveresponsibletounit/{receiptunit}', [AssignResponsibleController::class, 'index'])->name('saveresponsibletounit');
 
     //    **************************************************** EVENTOS DE UNIDAD ***********************************************************
     //  Check list de unidad en proceso de entrada

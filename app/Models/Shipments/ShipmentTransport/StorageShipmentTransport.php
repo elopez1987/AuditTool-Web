@@ -59,10 +59,10 @@ class StorageShipmentTransport extends Model
 
     public $timestamps = false;
 
-    //    Auxiliary01 == Ingreso de unidad en el moduo de patios (1 con transporte)
+    //    Auxiliary01 == Ingreso de unidad en el módulo de patios (1 con transporte)
     //    Auxiliary02 == Datos de transporte registrado en sistema por tráfico o registro de QR
-    //    Auxiliary03 == Número de economico de caja
-    //    Auxiliary04 == Número de economico de tracto
+    //    Auxiliary03 == Número de económico de caja
+    //    Auxiliary04 == Número de económico de tracto
 
     protected $table = 'shipmenttransport';
 

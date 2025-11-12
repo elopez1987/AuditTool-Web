@@ -726,17 +726,17 @@
                                                     <div class="row">
                                                         <div class="col-lg-4 col-md-6 col-sm-12">
                                                             <div class="form-group">
-                                                                <label for="shipmentid">Sobrante</label>
+                                                                <label for="shipmentid">Sobrante Izquierdo</label>
                                                                 <input type="text" class="form-control "
-                                                                       value="{{$conteo->sobranteizq}}"
+                                                                       value="{{$conteo->sobranteizq ?? 0}}"
                                                                        disabled>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-4 col-md-6 col-sm-12">
                                                             <div class="form-group">
-                                                                <label for="shipmentid">Llantas NC</label>
+                                                                <label for="shipmentid">Llantas NC Izquierdo</label>
                                                                 <input type="text" class="form-control "
-                                                                       value="{{$conteo->ncizq}}"
+                                                                       value="{{$conteo->ncizq ?? 0}}"
                                                                        disabled>
                                                             </div>
                                                         </div>
@@ -744,7 +744,7 @@
                                                             <div class="form-group">
                                                                 <label for="shipmentid">Total Izquierdo</label>
                                                                 <input type="text" class="form-control "
-                                                                       value="{{$conteo->totalIzquierdo}}"
+                                                                       value="{{$conteo->totalIzquierdo ?? 0}}"
                                                                        disabled>
                                                             </div>
                                                         </div>
@@ -754,15 +754,15 @@
                                                     <div class="row">
                                                         <div class="col-lg-4 col-md-6 col-sm-12">
                                                             <div class="form-group">
-                                                                <label for="shipmentid">Sobrante</label>
+                                                                <label for="shipmentid">Sobrante Derecho</label>
                                                                 <input type="text" class="form-control "
-                                                                       value="{{$conteo->sobranteder}}"
+                                                                       value="{{$conteo->sobranteder ?? 0}}"
                                                                        disabled>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-4 col-md-6 col-sm-12">
                                                             <div class="form-group">
-                                                                <label for="shipmentid">Llantas NC</label>
+                                                                <label for="shipmentid">Llantas NC Derecho</label>
                                                                 <input type="text" class="form-control "
                                                                        value="{{$conteo->ncder}}"
                                                                        disabled>
@@ -901,26 +901,24 @@
                                                     <div class="row">
                                                         <div class="col-lg-4 col-md-6 col-sm-12">
                                                             <div class="form-group">
-                                                                <label for="shipmentid">Sobrante</label>
+                                                                <label for="shipmentid">Sobrante Izquierdo</label>
                                                                 <input type="text" class="form-control "
-                                                                       value="{{$conteo->sobranteizq}}"
+                                                                       value="{{$conteo->sobranteizq ?? 0}}"
                                                                        disabled>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-4 col-md-6 col-sm-12">
                                                             <div class="form-group">
-                                                                <label for="shipmentid">Llantas NC</label>
+                                                                <label for="shipmentid">Llantas NC Izquierdo</label>
                                                                 <input type="text" class="form-control "
-                                                                       value="{{$conteo->ncizq}}"
+                                                                       value="{{$conteo->ncizq ?? 0}}"
                                                                        disabled>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-4 col-md-6 col-sm-12">
                                                             <div class="form-group">
                                                                 <label for="shipmentid">Total Izquierdo</label>
-                                                                <input type="text" class="form-control "
-                                                                       value="{{$conteo->totalIzquierdo}}"
-                                                                       disabled>
+                                                                <input type="text" class="form-control " value="{{$conteo->totalIzquierdo ?? 0 }}" disabled>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -929,17 +927,17 @@
                                                     <div class="row">
                                                         <div class="col-lg-4 col-md-6 col-sm-12">
                                                             <div class="form-group">
-                                                                <label for="shipmentid">Sobrante</label>
+                                                                <label for="shipmentid">Sobrante Derecho</label>
                                                                 <input type="text" class="form-control "
-                                                                       value="{{$conteo->sobranteder}}"
+                                                                       value="{{$conteo->sobranteder ?? 0}}"
                                                                        disabled>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-4 col-md-6 col-sm-12">
                                                             <div class="form-group">
-                                                                <label for="shipmentid">Llantas NC</label>
+                                                                <label for="shipmentid">Llantas NC Derecho</label>
                                                                 <input type="text" class="form-control "
-                                                                       value="{{$conteo->ncder}}"
+                                                                       value="{{$conteo->ncder ?? 0}}"
                                                                        disabled>
                                                             </div>
                                                         </div>
