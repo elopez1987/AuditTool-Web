@@ -12057,6 +12057,13 @@ a {
   background: #546e7a;
 }
 
+#main-wrapper[data-layout=vertical] .left-sidebar[data-sidebarbg=skin6] .sidebar-nav ul .sidebar-item .sidebar-link, #main-wrapper[data-layout=horizontal] .left-sidebar[data-sidebarbg=skin6] .sidebar-nav ul .sidebar-item .sidebar-link {
+  color: #212529;
+  font-size: 10px !important;
+  font-weight: 700;
+  font-family: sans-serif;
+}
+
 .box:hover {
   transform: scale(1.1);
   box-shadow: 0 0 30px -15px rgba(0, 0, 0, 0.5);
