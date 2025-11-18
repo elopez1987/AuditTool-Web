@@ -84,7 +84,6 @@
                                     <th class="text-white">Placas de caja</th>
                                     <th class="text-white">Eco. De caja</th>
                                     <th class="text-white">Operador</th>
-                                    <th class="text-white">Origen</th>
                                     <th class="text-white">Hora de llegada</th>
                                     <th class="text-white">R. mesa de control</th>
                                     <th class="text-white">Registro de llaves</th>

@@ -66,12 +66,12 @@ class StorageBoxStockExport implements FromCollection, ShouldAutoSize, WithColum
     public function collection()
     {
         return ReceiptUnit::controlAccessUser()
-            ->with(['carrier:id,name', 'warehouse:warehouseid,name', 'unittype:id,description', 'reason:id,name', 'status:statusid,name', 'tiket'])
+            ->with(['carrier:id,name', 'warehouse:warehouseid,name',
+                'unittype:id,description', 'reason:id,name', 'status:statusid,name', 'tiket'])
             ->Carrier($this->request->carrierid)
             ->Rason($this->request->reasonid)
             ->UnitType($this->request->unittypeid)
-            ->where('receiptunits.entrydate', '>=', $this->request->workdayin)
-            ->where('receiptunits.entrydate', '<=', $this->request->workdayout)
+            ->whereBetween('receiptunits.entrydate', [$this->request->workdayin, $this->request->workdayout])
             ->get();
     }
 

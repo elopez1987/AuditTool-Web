@@ -301,7 +301,7 @@
                                                                                     sello 01
                                                                                     <span
                                                                                             style="color: red">*</span></label>
-                                                                                <input type="text"
+                                                                                <input type="text" required
                                                                                        class="form-control"
                                                                                        id="containerseal01"
                                                                                        name="containerseal01"
@@ -350,7 +350,7 @@
                                                                                     a
                                                                                     <span
                                                                                             style="color: red">*</span></label>
-                                                                                <input type="text"
+                                                                                <input type="text" required
                                                                                        class="form-control"
                                                                                        id="receivername"
                                                                                        name="receivername"

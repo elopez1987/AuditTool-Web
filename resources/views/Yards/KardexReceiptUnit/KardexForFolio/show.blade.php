@@ -710,7 +710,7 @@
                                                                     <td>{{$peso->weightoutsap}} lbs</td> {{-- Peso de SAP libras--}}
                                                                     <td>{{$peso->userupdate ? $peso->userupdate->name : ''}}</td>
                                                                     <td>{{$peso->updateddate}}</td>
-                                                                    <td>{{$peso->value01}}</td>
+                                                                    <td>{{$peso->diferencia_porcentaje}}</td>
                                                                 </tr>
                                                             @endforeach
                                                         @endif

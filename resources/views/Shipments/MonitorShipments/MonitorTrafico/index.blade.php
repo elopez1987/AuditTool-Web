@@ -5,7 +5,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    Monitor de Operaciones.
+                    Monitor de ARRIBOS.
                 </div>
                 <div class="card-body">
                     <form method="GET" id="search" role="form">

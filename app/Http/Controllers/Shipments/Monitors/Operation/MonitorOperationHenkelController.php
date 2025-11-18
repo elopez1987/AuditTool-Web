@@ -44,6 +44,7 @@ class MonitorOperationHenkelController extends BaseController
                 DB::raw('UPPER(ordercustomers.city) as city'),
                 'shipmentcarriers.name as carrier',
                 'orderdeliveries.statusid as statusshipment',
+                'orderdeliveries.downloaddate',
                 'shipmentdataoperation.comment02 as comment',
                 'systemstatus.name as status',
                 'receiptunits.statusid as statustrans',

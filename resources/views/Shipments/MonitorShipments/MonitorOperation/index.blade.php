@@ -5,7 +5,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    Monitor de Arribos.
+                   MONITOR DE OPERACIONES.
                 </div>
                 <div class="card-body">
                     <form method="GET" id="search" role="form">
@@ -43,6 +43,7 @@
                                     <th class="bg-inverse text-white">Confirmación de Llaves</th>
                                     <th class="bg-inverse text-white">Estadia de Llaves</th>
                                     <th class="bg-inverse text-white">Estadia Total</th>
+                                    <th class="bg-inverse text-white">Cita de entrega</th>
                                     <th class="bg-inverse text-white">Maxima de Salida</th>
                                 </tr>
                                 </thead>
