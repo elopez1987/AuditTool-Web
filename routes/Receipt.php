@@ -79,7 +79,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('getDataSchedulleV2', [DownloadScheduleController::class, 'getDataSchedulleV2'])->name('getDataSchedulleV2');
 
     //    Agregar embarque al detalle del horario de descarga
-    Route::get('addShipmentToSchedule/{id}/edit', [DownloadScheduleController::class, 'addShipmentToSchedule'])->name('addShipmentToSchedule');
     Route::put('addShipmentToScheduleedit/{id}', [DownloadScheduleController::class, 'addShipmentToScheduleedit'])->name('addShipmentToScheduleedit');
 
     //	Bloquear modulo del horario de descarga v2

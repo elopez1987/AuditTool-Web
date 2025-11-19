@@ -45,6 +45,14 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="col-lg-1 col-md-6 col-sm-12" id="reset-filter">
+                                <div class="form-group">
+                                    <label>&nbsp;</label>
+                                    <button type="button" class="btn btn-outline-secondary btn-sm btn-block" id="btn-reset-filter">
+                                        <i class="fas fa-undo"></i> Limpiar Filtros
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </form>
 
@@ -120,6 +128,16 @@
         $(document).ready(function () {
             document.getElementById("shipmentid").value = sessionStorage.getItem('shipmentidop');
             document.getElementById("workday").value = sessionStorage.getItem('workdayop');
+            reloadtable();
+        });
+    </script>
+    <script>
+        $("#btn-reset-filter").click(function () {
+            document.getElementById("workday").value = '';
+            document.getElementById("shipmentid").value = '';
+            $('#statusid').val('').trigger('change');
+            sessionStorage.removeItem('workdayop');
+            sessionStorage.removeItem('shipmentidop');
             reloadtable();
         });
     </script>
