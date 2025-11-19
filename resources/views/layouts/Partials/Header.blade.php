@@ -7,8 +7,8 @@
                 {{--                <span class="logo-text font-weight-bold text-white font-20">--}}
                 {{--                    YardTrax--}}
                 {{--               </span>--}}
-                <link rel="icon" type="image/png" sizes="16x16" href=" {{asset('/img/negro.png')}}">
-                <img src="{{asset('img/negro.png')}}" alt="" style="width: 150px;height: 35px">
+                <link rel="icon" type="image/png" sizes="16x16" href=" {{asset('/img/verde.png')}}">
+                <img src="{{asset('img/verde.png')}}" alt="" style="width: 150px;height: 35px">
             </a>
             <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)"
                data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -63,12 +63,12 @@
                          @if(Auth::check())
                                 {{Auth::user()->name}}
                                 ||  {!! Auth::user()->access ? Auth::user()->access->center->name : '' !!}
-{{--                                ||--}}
-{{--                                @if(App::environment('production'))--}}
-{{--                                    PRODUCCION--}}
-{{--                                @else--}}
-{{--                                    DESARROLLO--}}
-{{--                                @endif--}}
+                                ||
+                                @if(App::environment('production'))
+                                    PRODUCCION
+                                @else
+                                    DESARROLLO
+                                @endif
                             @endif
                         </span>
                         <span class="d-block d-md-none"><i class="fa fa-plus"></i></span>

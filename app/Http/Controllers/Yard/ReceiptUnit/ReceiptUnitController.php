@@ -6,7 +6,6 @@ use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Yard\ReceiptUnit\CreateReceiptUnitRequest;
 use App\Http\Services\Receipt\ServiceReceiptUnit;
 use App\Models\Yard\ReceiptUnit;
-use App\Models\Yard\ReceiptUnitStock;
 use App\Models\Yard\StorageUnitTrace;
 use App\Traits\Web\Izel\RegisterEdiShipment;
 use App\Traits\Web\Receipt\ReceiptAsn\ValidateReceiptInCheckInProcess;
@@ -51,7 +50,24 @@ class ReceiptUnitController extends BaseController
 
     public function getDataReceipts(Request $request)
     {
-        $data = $this->getData($request);
+        $data = ReceiptUnit::controlAccessUser()
+            ->with(['carrier:id,carrierid,name', 'zone:id,name', 'location:id,name',
+                'warehouse:warehouseid,name', 'event:id,name',
+                'tracto:id,operatorname,phone,trucknumber,econumber', 'center:centerid,description',
+                'unittype:id,description', 'truckcategory:truckcategoryid,description', 'unitstatus:id,name', 'status:statusid,name,auxiliary01', 'truck:id,name'])
+            ->whereNotIn('statusid', ['TR'])
+            ->Folio($request->get('folionumber'))
+            ->Barcode($request->get('barcode'))
+            ->Location($request->get('location'))
+            ->BoxNumber($request->get('boxnumber'))
+            ->EcoNumber($request->get('econumber'))
+            ->TruckNumber($request->get('trucknumber'))
+            ->Rason($request->get('rasonid'))
+            ->Carrier($request->get('carrierid'))
+            ->Warehouse($request->get('warehouseid'))
+            ->Shipment($request->get('shipmentid'))
+            ->Status($request->get('statusid'))
+            ->get();
 
         return DataTables::of($data)
             ->addColumn('btn', "{$this->viewPath}.partials.buttons")->rawColumns(['btn'])->toJson();
@@ -159,21 +175,5 @@ class ReceiptUnitController extends BaseController
         StorageUnitTrace::createTraceUnit($receiptunit, '6');
 
         return $this->infoResponse("{$this->routePath}.index");
-    }
-
-    private function getData(Request $request)
-    {
-        return ReceiptUnitStock::controlAccessUser()
-            ->Folio($request->get('folionumber'))
-            ->Barcode($request->get('barcode'))
-            ->Location($request->get('location'))
-            ->BoxNumber($request->get('boxnumber'))
-            ->EcoNumber($request->get('econumber'))
-            ->TruckNumber($request->get('trucknumber'))
-            ->Rason($request->get('rasonid'))
-            ->Carrier($request->get('carrierid'))
-            ->Warehouse($request->get('warehouseid'))
-            ->Shipment($request->get('shipmentid'))
-            ->ForStatus($request->get('statusid'));
     }
 }

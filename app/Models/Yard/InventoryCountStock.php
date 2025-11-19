@@ -9,7 +9,6 @@ use App\Models\Yard\StorageZone\StorageZone;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -171,14 +170,5 @@ class InventoryCountStock extends Model
     {
         return InventoryCountStock::where('folionumber', '=', $id)
             ->where('countid', $inventory->id)->first();
-    }
-
-    public static function updateInventory($inventory, $request)
-    {
-        $inventory->newzoneid = $request['zoneid'];
-        $inventory->newlocationid = $request['locationid'];
-        $inventory->isupdate = 'Y';
-        $inventory->userid = Auth::user()->id;
-        $inventory->save();
     }
 }

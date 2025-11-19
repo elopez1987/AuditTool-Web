@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Yard\ReceiptUnit\Inventory;
 
 use App\Http\Controllers\BaseController;
-use App\Http\Controllers\Yard\Exception;
 use App\Http\Requests\Web\Yard\Inventory\CreateMovUnitForInventoryRequest;
 use App\Models\Configuration\Parameters\SystemDetailParameter;
 use App\Models\Yard\InventoryBox;
@@ -13,6 +12,8 @@ use App\Models\Yard\StorageLocation;
 use App\Models\Yard\StorageUnitTrace;
 use App\Models\Yard\StorageZone\StorageZone;
 use DB;
+use Exception;
+use Illuminate\Support\Facades\Auth;
 
 class InventoryCountStocksController extends BaseController
 {
@@ -45,20 +46,20 @@ class InventoryCountStocksController extends BaseController
                 return $this->errorResponse('No existe registro en el inventario creado');
             }
             if ($request['locationid'] !== $receiptunit->locationid) {
-                $receiptunitAct = ReceiptUnit::searchUnitForLocation($request['locationid']);
+                $receiptunitAct = self::searchUnitForLocation($request['locationid']);
                 if (! empty($receiptunitAct)) {
                     $locationlost = SystemDetailParameter::getDetailParameter('UBI-LOST', $receiptunit->centerid);
                     if (empty($locationlost)) {
-                        return $this->errorResponse('No existe ubicación LOST parametrizada, favor de validar el parametro UBI-LOST.!!');
+                        return $this->errorResponse('No existe ubicación LOST parametrizada, favor de validar el parámetro UBI-LOST.!!');
                     }
-                    ReceiptUnit::moveUnitToLostForInventory($receiptunitAct, $locationlost);
+                    $this->moveUnitToLostForInventory($receiptunitAct, $locationlost);
                     StorageUnitTrace::createTraceUnit($receiptunitAct, '24');
                 }
                 StorageLocation::updateLocation($receiptunit->locationid, 'E', '');
-                ReceiptUnit::updateUnitForInventory($receiptunit, $request);
+                $this->updateUnitForInventory($receiptunit, $request);
             }
             StorageLocation::updateLocation($request['locationid'], 'D', $receiptunit->boxnumber);
-            InventoryCountStock::updateInventory($inventoryBox, $request);
+            $this->updateInventory($inventoryBox, $request);
             StorageUnitTrace::createTraceUnit($receiptunit, '24');
 
             DB::commit();
@@ -73,5 +74,34 @@ class InventoryCountStocksController extends BaseController
         }
 
         return $this->errorResponse('Error el procesar la solicitud' . $error);
+    }
+
+    private function searchUnitForLocation($locationid)
+    {
+        return ReceiptUnit::controlAccessUser()->where('locationid', $locationid)->whereNotIn('statusid', ['TR'])->first();
+    }
+
+    private function moveUnitToLostForInventory($receiptunit, $location)
+    {
+        $receiptunit->zoneid = $location->value02;
+        $receiptunit->locationid = $location->value03;
+        $receiptunit->save();
+    }
+
+    private function updateUnitForInventory($receiptunit, $request)
+    {
+        $receiptunit->zoneid = $request['zoneid'];
+        $receiptunit->locationid = $request['locationid'];
+        $receiptunit->unitstatusid = $request['unitstatusid'];
+        $receiptunit->save();
+    }
+
+    private function updateInventory($inventory, $request)
+    {
+        $inventory->newzoneid = $request['zoneid'];
+        $inventory->newlocationid = $request['locationid'];
+        $inventory->isupdate = 'Y';
+        $inventory->userid = Auth::user()->id;
+        $inventory->save();
     }
 }

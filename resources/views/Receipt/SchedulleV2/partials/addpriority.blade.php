@@ -1,7 +1,6 @@
 <div class="modal fade bs-example-modal-lg" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true"
      style="display: none;" id="modal-addpriority-{{$receiptid}}">
-    <form method="POST" action="{{url('addpriority/' . $receiptid)}}" enctype="multipart/form-data">
-        {{ method_field('PUT') }}
+    <form id="form-addpriority-{{$receiptid}}" data-receipt-id="{{$receiptid}}">
         @csrf
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -22,7 +21,8 @@
                         <img src="{{asset('/pics/adcancelar.png')}}" alt="">
                         Cancelar
                     </button>
-                    <button type="submit" class="btn btn-outline-secondary btn-sm  waves-effect waves-light">
+                    <button type="submit" class="btn btn-outline-secondary btn-sm  waves-effect waves-light"
+                            id="btn-addpriority-{{$receiptid}}">
                         <img src="{{asset('/pics/adaceptar.png')}}" alt="">
                         Aceptar
                     </button>
@@ -31,3 +31,58 @@
         </div>
     </form>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $('#form-addpriority-{{$receiptid}}').on('submit', function(e) {
+            e.preventDefault();
+            
+            var receiptId = $(this).data('receipt-id');
+            
+            $.ajax({
+                url: '{{url('addpriorityreceipt')}}/' + receiptId,
+                type: 'PUT',
+                data: $(this).serialize(),
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                beforeSend: function() {
+                    $('#btn-addpriority-{{$receiptid}}').prop('disabled', true);
+                },
+                success: function(response) {
+                    $('#modal-addpriority-{{$receiptid}}').modal('hide');
+                    
+                    Swal.fire({
+                        icon: 'success',
+                        title: '\u00c9xito',
+                        text: response.message || 'Prioridad asignada con \u00e9xito',
+                        timer: 3000,
+                        showConfirmButton: false
+                    });
+                    
+                    // Recargar DataTable
+                    if (typeof reloadtable === 'function') {
+                        reloadtable();
+                    }
+                },
+                error: function(xhr) {
+                    var errorMessage = 'Ocurri\u00f3 un error al asignar la prioridad';
+                    
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        errorMessage = xhr.responseJSON.message;
+                    }
+                    
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: errorMessage,
+                        confirmButtonText: 'Aceptar'
+                    });
+                },
+                complete: function() {
+                    $('#btn-addpriority-{{$receiptid}}').prop('disabled', false);
+                }
+            });
+        });
+    });
+</script>

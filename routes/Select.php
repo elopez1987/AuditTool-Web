@@ -68,7 +68,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('getUsersForResponsable', [SelectController::class, 'getUserResponsible'])->name('getUsersForResponsable');
     Route::get('getAreasForResponsable', [SelectController::class, 'getAreasForResponsable'])->name('getAreasForResponsable');
 
-    //    Consulta de detale de embarque para módulo de saca cajas de pick
+    //    Consulta de detalle de embarque para módulo de saca cajas de pick
     Route::get('getLpnForShipment/{shipmentid}', 'General\SelectDynamicController@getLpnForShipment')->name('getLpnForShipment');
     Route::get('getSkuForLpn/{lpnid}', 'General\SelectDynamicController@getSkuForLpn')->name('getSkuForLpn');
     Route::get('getTotalForSku', 'General\SelectDynamicController@getTotalForSku')->name('getTotalForSku');

@@ -17,6 +17,7 @@ class SelectController extends Controller
 {
     use Responser;
 
+    //	Todas estas funciones validarlos por cada modulo y refactorizarlas
     public function getCarriersSelect()
     {
         $centers = SecurityAccessWarehouse::Centers();

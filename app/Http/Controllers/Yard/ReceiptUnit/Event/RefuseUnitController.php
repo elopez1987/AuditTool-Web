@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Yard\ReceiptUnit\Event;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Yard\RefuseUnit\RegisterRefuseUnitRequest;
 use App\Models\Yard\ReceiptUnit;
+use App\Models\Yard\StorageUnitTrace;
 use App\Traits\Web\General\GetParameters;
 use App\Traits\Web\Yard\ReceiptUnit\DeclineUnit\DeclineUnitForReceipt;
 use App\Traits\Web\Yard\ReceiptUnit\DeclineUnit\DeclineUnitForShipment;
@@ -37,7 +38,7 @@ class RefuseUnitController extends BaseController
                     ], 422);
                 }
             }
-            $receiptunit = ReceiptUnit::updateUnitForRefuse($folio->id);
+            $receiptunit = self::updateUnitForRefuse($folio->id);
             if ($receiptunit->razonstatusid === 1) {
                 $this->declineUnitForShipment($receiptunit);
             }
@@ -64,5 +65,18 @@ class RefuseUnitController extends BaseController
                 ], 500);
             }
         }
+    }
+
+    private function updateUnitForRefuse($folio)
+    {
+        $unit = ReceiptUnit::controlAccessUser()->where('id', '=', $folio)->whereNotIn('statusid', ['TR'])->first();
+        $unit->autorizaoutputdate = now();
+        $unit->statusid = 'OU';
+        $unit->shipmentid = '';
+        $unit->unitstatusid = '3';
+        $unit->save();
+        StorageUnitTrace::createTraceUnit($unit, '23');
+
+        return $unit;
     }
 }
