@@ -187,7 +187,6 @@
     <script type="text/javascript">
         $(".radio-switch input[type='radio']").bootstrapSwitch();
     </script>
-
     <script>
         $("#searchbarcode").click(function () {
 
@@ -198,7 +197,7 @@
                     width: '300px',
                 })
             } else {
-                $.getJSON('./getDataInvoice/' + $("#barcode").val(), function (values) {
+                    $.getJSON('./receipt-units/' + $("#barcode").val() + '/search', function (values) {
                     if (0 === values.length) {
                         Swal.fire({
                             title: 'Oops...',
@@ -217,7 +216,6 @@
 
         });
     </script>
-
     <script>
         $("#searchboxnumber").click(function () {
             if ($("#boxnumber").val().length === 0) {
@@ -248,15 +246,4 @@
         });
     </script>
 
-
-    <script>
-        $("#zoneid").change(event => {
-            $.get(`./getLocationForZoneUN/${event.target.value}`, function (res) {
-                $("#locationid").empty();
-                res.forEach(element => {
-                    $("#locationid").append(`<option value=${element.id}> ${element.name} </option>`);
-                });
-            });
-        });
-    </script>
 @endsection

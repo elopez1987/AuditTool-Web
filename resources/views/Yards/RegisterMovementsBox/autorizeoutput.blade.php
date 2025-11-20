@@ -242,8 +242,7 @@
                 }
                 return;
             }
-            
-            $.getJSON('./getDataInvoiceForFolio/' + folioValue, function (values) {
+            $.getJSON('./receipt-units/' + folioValue + '/search', function (values) {
                 if (0 === values.length) {
                     Swal.fire({
                         icon: 'error',
@@ -257,13 +256,13 @@
                     $("#linea").val('');
                     $("#barcode").val('');
                 } else {
-                    // Usar .val() en lugar de .attr("value") para actualizar correctamente
-                    $("#boxnumber").val(values[0].boxnumber);
-                    $("#folionumber").val(values[0].folio);
-                    $("#shipmentid").val(values[0].shipmentid);
-                    $("#econumber").val(values[0].econumber);
-                    $("#linea").val(values[0].linea);
-                    $("#barcode").val(values[0].barcode);
+
+                    $("#boxnumber").val(values.Data.boxnumber);
+                    $("#folionumber").val(values.Data.folionumber);
+                    $("#shipmentid").val(values.Data.shipmentid);
+                    $("#econumber").val(values.Data.econumberbox);
+                    $("#linea").val(values.Data.carriername);
+                    $("#barcode").val(values.Data.barcode);
                 }
             }).fail(function() {
                 Swal.fire({

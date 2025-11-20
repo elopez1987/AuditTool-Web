@@ -31,7 +31,7 @@
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label for="warehouseid">Bodega</label>
-                                    <select name="warehouseid" id='warehouseid'  class="form-control select2">
+                                    <select name="warehouseid" id='warehouseid' class="form-control select2">
                                         <option value="" selected>Seleccione una opción</option>
                                         @foreach($warehouses as $model)
                                             <option value="{{$model->warehouseid}}"> {{$model->name}} </option>
@@ -42,7 +42,7 @@
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label for="zoneid">Zonas<span style="color: red">*</span></label>
-                                    <select name="zoneid" id='zoneid'  class="form-control select2">
+                                    <select name="zoneid" id='zoneid' class="form-control select2">
                                         <option value="" selected>Seleccione una opción</option>
                                     </select>
                                 </div>
@@ -98,7 +98,7 @@
                                         <div class="d-flex no-block align-items-center">
                                             <div>
                                                 <h2>{{$location->total_locations}}</h2>
-                                                <h6 >{{$location->zone->name}}</h6>
+                                                <h6>{{$location->zone->name}}</h6>
                                             </div>
                                             <div class="ml-auto">
                                                 <span class="display-6"><i class="ti-location-pin"></i></span>
@@ -149,23 +149,17 @@
         });
     </script>
 
-    <script>
-        $("#warehouseid").change(event => {
-            $.get(`./getZoneForWarehouse/${event.target.value}`, function (res) {
-                $("#zoneid").empty();
-                res.forEach(element => {
-                    $("#zoneid").append(`<option value=${element.id}> ${element.name} </option>`);
-                });
-            });
-        });
+    <script type="module">
+        import {initializeZoneLookup} from "/js/selects/zone-for-warehouse.js";
+        initializeZoneLookup("warehouseid", "zoneid");
     </script>
 
     <script>
         // SweetAlert2 delete handler
-        $(document).on('click', '.btn-delete-location', function(e) {
+        $(document).on('click', '.btn-delete-location', function (e) {
             e.preventDefault();
             const locationId = $(this).data('id');
-            
+
             Swal.fire({
                 title: '¿Estás seguro?',
                 text: '¿Deseas eliminar este registro?',
@@ -193,7 +187,7 @@
                         data: {
                             _token: '{{csrf_token()}}'
                         },
-                        success: function(response) {
+                        success: function (response) {
                             Swal.fire({
                                 icon: 'success',
                                 title: '¡Eliminado!',
@@ -204,7 +198,7 @@
                             // Reload DataTable
                             $('#table-locations').DataTable().ajax.reload();
                         },
-                        error: function(xhr) {
+                        error: function (xhr) {
                             const message = xhr.responseJSON?.message || 'Error al eliminar el registro';
                             Swal.fire({
                                 icon: 'error',

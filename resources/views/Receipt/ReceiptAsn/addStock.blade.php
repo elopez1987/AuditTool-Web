@@ -156,38 +156,68 @@
 @section('script')
     @include('layouts.Partials.DataTable')
     <script src="{{asset('/theme/assets/libs/moment/moment.js')}}"></script>
-    <script
-        src="{{asset('/theme/assets/libs/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker-custom.js')}}"></script>
+    <script src="{{asset('/theme/assets/libs/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker-custom.js')}}"></script>
     <script src="{{asset('/theme/assets/libs/quill/dist/quill.min.js')}}"></script>
 
     <script>
         $('.date').bootstrapMaterialDatePicker({format: 'YYYY-MM-DD', weekStart: 1, time: false});
     </script>
 
-    <script>
-        $("#prtnum").blur(function () {
-            if ($("#prtnum").val().length === 0) {
-                Swal.fire({
-                    type: 'error',
-                    title: 'Error...',
-                    text: 'Ingrese el número de parte!',
-                })
-            } else {
-                $.getJSON('../../getDataSku/' + $("#prtnum").val(), function (values) {
-                    if (0 === values.length) {
+    <script type="module">
+        document.addEventListener("DOMContentLoaded", () => {
+
+            const prtnum = document.getElementById("prtnum");
+            const lngdsc = document.getElementById("lngdsc");
+            const untpal = document.getElementById("untpal");
+
+            prtnum.addEventListener("blur", async () => {
+
+                const code = prtnum.value.trim();
+
+                if (code === "") {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: "Ingrese el número de parte",
+                    });
+                    return;
+                }
+
+                try {
+                    const url = `../../inventory-partnumbers/${encodeURIComponent(code)}/search`;
+
+                    const response = await fetch(url);
+                    const data = await response.json();
+
+                    if (!data?.Data) {
                         Swal.fire({
-                            type: 'error',
-                            title: 'Oops...',
-                            text: 'No se encuentran registros del Sku!',
+                            icon: "error",
+                            title: "Oops...",
+                            text: "No se encuentran registros del Sku!",
                         });
-                        $('#prtnum').val('');
-                    } else {
-                        $("#lngdsc").attr("value", values[0].lngdsc);
-                        $("#untpal").attr("value", values[0].untpal);
+
+                        prtnum.value = "";
+                        lngdsc.value = "";
+                        untpal.value = "";
+                        return;
                     }
-                });
-            }
+
+                    // Llenar campos
+                    lngdsc.value = data.Data.lngdsc ?? "";
+                    untpal.value = data.Data.untpal ?? "";
+
+                } catch (error) {
+                    console.error("Error en la petición:", error);
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: "Ocurrió un error al consultar el SKU.",
+                    });
+                }
+            });
+
         });
     </script>
+
 
 @endsection

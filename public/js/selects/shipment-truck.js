@@ -1,0 +1,62 @@
+// public/js/selects/shipment-truck.js
+
+export function initShipmentTruckChange({
+                                            selectId = "truckid",
+                                            tractoSectionId = "tracto",
+                                            barcodeInputId = "barcodetruck",
+                                            truckNumberInputId = "trucknumber",
+                                            ecoNumberInputId = "ecotruck"
+                                        } = {}) {
+
+    // Verificar que jQuery esté disponible
+    if (typeof $ === 'undefined') {
+        console.error("jQuery no está disponible para initShipmentTruckChange");
+        return;
+    }
+    // Esperar a que el DOM esté listo
+    $(document).ready(function() {
+        const $selectTruck = $("#" + selectId);
+        const $tractoSection = $("#" + tractoSectionId);
+        const $inputBarcode = $("#" + barcodeInputId);
+        const $inputTruckNumber = $("#" + truckNumberInputId);
+        const $inputEcoNumber = $("#" + ecoNumberInputId);
+
+        if ($selectTruck.length === 0) {
+            return;
+        }
+        $selectTruck.on("change", async function() {
+            const truckId = $(this).val();
+            if (!truckId || truckId === "") {
+                return;
+            }
+            const url = `/shipment-truck/${encodeURIComponent(truckId)}/search`;
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    return;
+                }
+                const json = await response.json();
+                const isAuxN = json?.Data?.auxiliary02 === "N";
+                if (isAuxN) {
+                    // Ocultar sección de tracto usando jQuery
+                    $tractoSection.hide();
+                    // Establecer valores por defecto
+                    $inputBarcode.val("0");
+                    $inputTruckNumber.val("0");
+                    $inputEcoNumber.val("0");
+                } else {
+                    // Mostrar sección de tracto
+                    $tractoSection.show();
+                    
+                    // Limpiar valores
+                    $inputBarcode.val("");
+                    $inputTruckNumber.val("");
+                    $inputEcoNumber.val("");
+                }
+
+            } catch (err) {
+                console.error("Error consultando shipment-truck:", err);
+            }
+        });
+    });
+}

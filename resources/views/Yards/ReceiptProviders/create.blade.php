@@ -35,6 +35,6 @@
 @endsection
 
 @section('script')
-    @include('SelectDynamics.SelectWarehouseForCenterForCreate')
+    <script src="{{asset('js/selects/warehouse-for-center.js')}}"></script>
 @endsection
 

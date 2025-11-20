@@ -77,15 +77,10 @@ class ReceiptUnitController extends BaseController
     {
         $this->authorize('receiptunits.create');
         $centers = $this->getCenterForSelect();
-        $warehouses = $this->getWarehouseForSelect();
         $carriers = $this->getCarriersForSelect();
-        $providers = $this->getReceiptProviderForSelect();
         $unittypeid = $this->getUnitType();
-        $zones = $this->getZoneActiveIN();
-        $locations = $this->getLocationActiveIN();
         $movents = $this->typeReasonInActiveToSelect();
         $trucks = $this->shipmentTruckActiveToSelect();
-        $unitsstatus = $this->unitStatusActiveToSelect();
         $unittypes = $this->unitTypeActiveToSelect();
         $truckcategories = $this->getCateroriesTruckForSelects();
 
@@ -94,12 +89,7 @@ class ReceiptUnitController extends BaseController
             'movents',
             'trucks',
             'centers',
-            'warehouses',
-            'providers',
-            'unitsstatus',
             'unittypes',
-            'zones',
-            'locations',
             'truckcategories',
             'unittypeid',
         ));
@@ -111,21 +101,50 @@ class ReceiptUnitController extends BaseController
         try {
             $validateCapacity = $this->validateCapacityYard($request);
             if ($validateCapacity) {
+                // Si es JSON request, devolver JSON
+                if ($request->expectsJson() || $request->ajax()) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => $validateCapacity->getData()->message ?? 'Error en validación de capacidad',
+                    ], 422);
+                }
+
                 return $validateCapacity;
             }
+
             $parameter = $this->getParametersOfWarehouse($request['warehouseid']);
             $registerBox = ReceiptUnit::searchForBoxNumber($request['boxnumber']);
             if (! empty($registerBox)) {
-                return $this->errorResponse('La placa de la caja se encuentra en patio,favor de validar.');
+                if ($request->expectsJson() || $request->ajax()) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'La placa de la caja se encuentra en patio, favor de validar.',
+                    ], 422);
+                }
+                //                return $this->errorResponse('La placa de la caja se encuentra en patio,favor de validar.');
             }
+
             $registerCode = ReceiptUnit::searchForBarcode($request['barcodebox']);
             if (! empty($registerCode)) {
-                return $this->errorResponse('El código de barra se encuentra en patio,favor de validar.');
+                if ($request->expectsJson() || $request->ajax()) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'El código de barra se encuentra en patio, favor de validar.',
+                    ], 422);
+                }
+                //                return $this->errorResponse('El código de barra se encuentra en patio,favor de validar.');
             }
 
             if ($request['razonstatusid'] === '1' && ! empty($parameter) && in_array('SWH-01', (array) $parameter)) {
                 $resultCheckShiopment = $this->validateShipmentInCheckIn($request);
                 if ($resultCheckShiopment) {
+                    if ($request->expectsJson() || $request->ajax()) {
+                        return response()->json([
+                            'success' => false,
+                            'message' => $resultCheckShiopment->getData()->message ?? 'Error en validación de embarque',
+                        ], 422);
+                    }
+
                     return $resultCheckShiopment;
                 }
             }
@@ -133,6 +152,13 @@ class ReceiptUnitController extends BaseController
             if ($request['razonstatusid'] == '2' && ! empty($parameter) && in_array('SWH-02', (array) $parameter)) {
                 $resultCheckReceipt = $this->validateReceiptInCheckIn($request, $parameter);
                 if ($resultCheckReceipt) {
+                    if ($request->expectsJson() || $request->ajax()) {
+                        return response()->json([
+                            'success' => false,
+                            'message' => $resultCheckReceipt->getData()->message ?? 'Error en validación de recibo',
+                        ], 422);
+                    }
+
                     return $resultCheckReceipt;
                 }
             }
@@ -146,16 +172,41 @@ class ReceiptUnitController extends BaseController
             }
 
             DB::commit();
-            if (in_array('SWH-05', (array) $parameter)) {
-                return redirect('authorizetransportentry/' . $receiptunit->id . '/edit');
+
+            // Respuesta JSON para AJAX
+            if ($request->expectsJson() || $request->ajax()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Registro agregado con éxito, folio: ' . $receiptunit->id,
+                    'data' => [
+                        'id' => $receiptunit->id,
+                        'folionumber' => $receiptunit->folionumber ?? $receiptunit->id,
+                    ],
+                    'redirect' => in_array('SWH-05', (array) $parameter)
+                        ? url('authorizetransportentry/' . $receiptunit->id . '/edit')
+                        : null,
+                ], 201);
             }
 
-            return redirect()->back()->with(session()->flash('success', 'Registro agregado con éxito,folio :' . $receiptunit->id));
+            //            if (in_array('SWH-05', (array) $parameter)) {
+            //                return redirect('authorizetransportentry/' . $receiptunit->id . '/edit');
+            //            }
+
+            //            return redirect()->back()->with(session()->flash('success', 'Registro agregado con éxito,folio :' . $receiptunit->id));
         } catch (Exception $e) {
             $error = $e->getMessage();
             DB::rollback();
 
-            return redirect()->back()->withInput()->with(session()->flash('error', 'Error al registrar el folio :' . $error));
+            // Respuesta JSON para AJAX
+            if ($request->expectsJson() || $request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Error al registrar el folio',
+                    'error' => $error,
+                ], 500);
+            }
+
+            //            return redirect()->back()->withInput()->with(session()->flash('error', 'Error al registrar el folio :' . $error));
         }
     }
 

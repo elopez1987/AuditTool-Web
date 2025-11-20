@@ -14,21 +14,24 @@
                             <div class="col-lg-4 col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label for="folionumber">Número de folio<span style="color: red">*</span></label>
-                                    <input type="text" class="form-control" required  id="folionumber" name="folionumber">
+                                    <input type="text" class="form-control" required id="folionumber"
+                                           name="folionumber">
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-4 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="carriername">Linea de transporte<span style="color: red">*</span></label>
-                                    <input type="text" readonly class="form-control"  id="carriername" name="carriername">
+                                    <label for="carriername">Linea de transporte<span
+                                                style="color: red">*</span></label>
+                                    <input type="text" readonly class="form-control" id="carriername"
+                                           name="carriername">
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label for="statusid">Estatus de Caja<span style="color: red">*</span></label>
-                                    <input type="text" readonly class="form-control"  id="statusid" name="statusid">
+                                    <input type="text" readonly class="form-control" id="statusid" name="statusid">
                                 </div>
                             </div>
 
@@ -37,13 +40,13 @@
                             <div class="col-lg-4 col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label for="boxnumber">Placas de Caja<span style="color: red">*</span></label>
-                                    <input type="text" readonly class="form-control"  id="boxnumber" name="boxnumber">
+                                    <input type="text" readonly class="form-control" id="boxnumber" name="boxnumber">
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label for="econumber">Eco. de caja<span style="color: red">*</span></label>
-                                    <input type="text" readonly class="form-control"  id="econumber" name="econumber">
+                                    <input type="text" readonly class="form-control" id="econumber" name="econumber">
                                 </div>
                             </div>
                         </div>
@@ -51,21 +54,25 @@
                             <div class="col-lg-4 col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label for="trucknumber">Placas de tracto<span style="color: red">*</span></label>
-                                    <input type="text" readonly class="form-control"  id="trucknumber" name="trucknumber">
+                                    <input type="text" readonly class="form-control" id="trucknumber"
+                                           name="trucknumber">
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label for="barcodetruck">Código de barra de tracto<span style="color: red">*</span></label>
-                                    <input type="text" readonly class="form-control"  id="barcodetruck" name="barcodetruck">
+                                    <input type="text" readonly class="form-control" id="barcodetruck"
+                                           name="barcodetruck">
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-8 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="barcodetruck">Comentario del ajuste<span style="color: red">*</span></label>
-                                   <textarea id="comment" name="comment" required class="form-control" cols="100" rows="5"></textarea>
+                                    <label for="barcodetruck">Comentario del ajuste<span
+                                                style="color: red">*</span></label>
+                                    <textarea id="comment" name="comment" required class="form-control" cols="100"
+                                              rows="5"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -73,12 +80,14 @@
                     <div class="card-footer">
                         <div class="row">
                             <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-                                <button type="button" id="btnSave" class="btn btn-block btn-block btn-outline-success btn-block">
+                                <button type="button" id="btnSave"
+                                        class="btn btn-block btn-block btn-outline-success btn-block">
                                     <i class="fas fa-check mr-2"></i> Guardar
                                 </button>
                             </div>
                             <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-                                <a href="{{route('home')}}" class="btn btn-block btn-block btn-outline-danger" style="margin-left: 10px">
+                                <a href="{{route('home')}}" class="btn btn-block btn-block btn-outline-danger"
+                                   style="margin-left: 10px">
                                     <i class="fas fa-times mr-2"></i> Cancelar
                                 </a>
                             </div>
@@ -97,22 +106,17 @@
 
 @section('script')
     <script>
-        // Configurar CSRF token para todas las peticiones AJAX
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
 
-        // Variable para controlar si debemos validar el blur
         var shouldValidateBlur = true;
 
-        // Función para buscar datos del folio
         function searchFolioData() {
             var folioValue = $("#folionumber").val().trim();
-            
             if (folioValue.length === 0) {
-                // Solo mostrar error si debemos validar
                 if (shouldValidateBlur) {
                     Swal.fire({
                         icon: 'error',
@@ -123,8 +127,8 @@
                 }
                 return;
             }
-            
-            $.getJSON('./getDataInvoiceForFolio/' + folioValue, function (values) {
+
+            $.getJSON('./receipt-units/' + folioValue + '/search', function (values) {
                 if (0 === values.length) {
                     Swal.fire({
                         icon: 'error',
@@ -140,16 +144,15 @@
                     $("#carriername").val('');
                     $("#barcodetruck").val('');
                 } else {
-                    // Usar .val() en lugar de .attr("value") para actualizar correctamente
-                    $("#boxnumber").val(values[0].boxnumber);
-                    $("#trucknumber").val(values[0].trucknumber);
-                    $("#statusid").val(values[0].status);
-                    $("#econumber").val(values[0].econumber);
-                    $("#folionumber").val(values[0].folio);
-                    $("#carriername").val(values[0].linea);
-                    $("#barcodetruck").val(values[0].barcodetruck);
+                    $("#boxnumber").val(values.Data.boxnumber);
+                    $("#trucknumber").val(values.Data.trucknumber);
+                    $("#statusid").val(values.Data.statusname);
+                    $("#econumber").val(values.Data.econumberbox);
+                    $("#folionumber").val(values.Data.folionumber);
+                    $("#carriername").val(values.Data.carriername);
+                    $("#barcodetruck").val(values.Data.barcodetruck);
                 }
-            }).fail(function() {
+            }).fail(function () {
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
@@ -160,14 +163,14 @@
         }
 
         // Vincular evento blur al campo folionumber
-        $(document).on('blur', '#folionumber', function() {
+        $(document).on('blur', '#folionumber', function () {
             searchFolioData();
         });
 
         // Evento del botón de guardar
-        $("#btnSave").click(function(e) {
+        $("#btnSave").click(function (e) {
             e.preventDefault();
-            
+
             // Validar formulario
             let form = document.getElementById('adjustmentBoxForm');
             if (!form.checkValidity()) {
@@ -199,7 +202,7 @@
                         data: formData,
                         processData: false,
                         contentType: false,
-                        success: function(response) {
+                        success: function (response) {
                             Swal.fire({
                                 icon: 'success',
                                 title: '¡Éxito!',
@@ -209,7 +212,7 @@
                             }).then(() => {
                                 // Deshabilitar validación temporal
                                 shouldValidateBlur = false;
-                                
+
                                 // Limpiar todos los inputs del formulario
                                 $('#folionumber').val('');
                                 $('#carriername').val('');
@@ -219,22 +222,22 @@
                                 $('#trucknumber').val('');
                                 $('#barcodetruck').val('');
                                 $('#comment').val('');
-                                
+
                                 // Enfocar el campo de folio para nueva captura
                                 $('#folionumber').focus();
-                                
+
                                 // Reactivar validación después de un momento
-                                setTimeout(function() {
+                                setTimeout(function () {
                                     shouldValidateBlur = true;
                                 }, 100);
-                                
+
                                 // Habilitar botón de guardar
                                 $("#btnSave").prop('disabled', false);
                             });
                         },
-                        error: function(xhr) {
+                        error: function (xhr) {
                             let errorMessage = 'Error al procesar la solicitud';
-                            
+
                             if (xhr.responseJSON && xhr.responseJSON.message) {
                                 errorMessage = xhr.responseJSON.message;
                             } else if (xhr.responseJSON && xhr.responseJSON.error) {
@@ -243,7 +246,7 @@
                                 try {
                                     let response = JSON.parse(xhr.responseText);
                                     errorMessage = response.message || response.error || errorMessage;
-                                } catch(e) {
+                                } catch (e) {
                                     errorMessage = xhr.statusText || errorMessage;
                                 }
                             }
@@ -254,7 +257,7 @@
                                 text: errorMessage,
                                 showConfirmButton: true
                             });
-                            
+
                             $("#btnSave").prop('disabled', false);
                         }
                     });

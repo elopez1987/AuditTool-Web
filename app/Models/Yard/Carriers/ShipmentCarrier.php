@@ -131,21 +131,21 @@ class ShipmentCarrier extends Model
     //    ------------------------ Filtro de las consultas -------------------------------
     public function scopeName($query, $name)
     {
-        if (trim($name) !== '') {
+        if (trim($name) != '') {
             $query->where('shipmentcarriers.name', 'like', "%{$name}%");
         }
     }
 
     public function scopeCarrier($query, $carrierid)
     {
-        if (trim($carrierid) !== '') {
+        if (trim($carrierid) != '') {
             $query->where('shipmentcarriers.carrierid', '=', $carrierid);
         }
     }
 
     public function scopeStatus($query, $statusid)
     {
-        if (trim($statusid) !== '') {
+        if (trim($statusid) != '') {
             $query->where('shipmentcarriers.statusid', $statusid);
         }
     }

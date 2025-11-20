@@ -107,4 +107,11 @@ class StorageUnitStatus extends Model
             $query->where('storageunitstatus.statusid', '=', $statusid);
         }
     }
+
+    public function scopeRazon($query, $razonstatusid)
+    {
+        if (trim($razonstatusid) !== '') {
+            $query->where('storageunitstatus.auxiliary01', '=', $razonstatusid);
+        }
+    }
 }

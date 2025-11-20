@@ -167,7 +167,7 @@
                         confirmButtonText: 'Entendido'
                     });
                 } else {
-                    $.getJSON('./getDataInvoiceForFolio/' + folioValue, function (values) {
+                    $.getJSON('./receipt-units/' + folioValue + '/search', function (values) {
                         if (values.length === 0) {
                             Swal.fire({
                                 icon: 'warning',
@@ -186,13 +186,13 @@
                             $('#originlocationid').val('');
                         } else {
                             // Llenar los campos con los datos obtenidos
-                            $("#boxnumber").val(values[0].boxnumber);
-                            $("#containerseal").val(values[0].containerseal);
-                            $("#originzoneid").val(values[0].zona);
-                            $("#originlocationid").val(values[0].ubicacion);
-                            $("#statusid").val(values[0].status);
-                            $("#econumber").val(values[0].econumber);
-                            $("#barcode").val(values[0].barcode);
+                            $("#barcode").val(values.Data.barcode);
+                            $("#boxnumber").val(values.Data.boxnumber);
+                            $("#containerseal").val(values.Data.containerseal);
+                            $("#originzoneid").val(values.Data.zoneorg);
+                            $("#originlocationid").val(values.Data.locationorg);
+                            $("#statusid").val(values.Data.statusname);
+                            $("#econumber").val(values.Data.econumberbox);
                         }
                     }).fail(function() {
                         Swal.fire({

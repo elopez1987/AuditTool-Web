@@ -31,15 +31,26 @@
 @endsection
 
 @section('css')
-    <link rel="stylesheet" href="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.min.css')}}">
+
 @endsection
 
 
 @section('script')
-    <script src="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.all.min.js')}}"></script>
-    @include('SelectDynamics.SearchOperator')
-    @include('SelectDynamics.SelectWarehouseForCenterForCreate')
-    @include('SelectDynamics.SelectCarriersForCenterForCreate')
+    <script type="module">
+        import { initOperatorLookup } from "/js/selects/operator.js";
+
+        initOperatorLookup(
+            "searchOperator",
+            "barcodeoperator",
+            {
+                operatorname: "name",
+                drivernumber: "drivernumber",
+                phone: "phone"
+            }
+        );
+    </script>
+
+
     <script>
         $("#searchTruck").click(function () {
             if ($("#barcodetruck").val().length === 0) {

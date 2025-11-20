@@ -12,6 +12,13 @@
             "colReorder": true,
             "stateSave": true,
             "stateDuration": 0,
+            "autoWidth": true,
+            // "colResize": {
+            //     handleWidth: 10,
+            //     resizeCallback: function() {
+            //         console.log("Columna ajustada");
+            //     }
+            // },
             "ajax": {
                 url: 'getDataReceipts',
                 data: function (d) {

@@ -110,27 +110,12 @@
 @endsection
 
 @section('css')
-    <link rel="stylesheet" href="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.min.css')}}">
+
 @endsection
 
 @section('script')
-    <script src="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.all.min.js')}}"></script>
-    <script>
-        $("#truckid").change(event => {
-            $.get(`/ymskg/getShipmentTruck/${event.target.value}`, function (res) {
-                let valor = res.auxiliary01;
-                if (valor === 'N') {
-                    $("#tracto").hide();
-                    $("#trucknumber").attr("value", '0');
-                    $("#auxiliary04").attr("value", '0');
-                } else {
-                    $("#tracto").show();
-                    $("#trucknumber").attr("value", '');
-                    $("#auxiliary04").attr("value", '');
-                }
-            });
-        });
-    </script>
+
+
     <script>
         $('#searchOperatorInRC').click(function () {
             $.ajaxSetup({

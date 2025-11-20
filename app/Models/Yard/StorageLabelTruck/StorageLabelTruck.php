@@ -140,36 +140,31 @@ class StorageLabelTruck extends Model
         return $this->belongsTo(ShipmentTruck::class, 'truckid');
     }
 
-    public function unittype()
-    {
-        return $this->belongsTo(StorageUnitType::class, 'unittypeid');
-    }
-
     //    Filters to model
     public function scopeLabel($query, $label)
     {
-        if (trim($label) !== '') {
+        if (trim($label) != '') {
             $query->where('storagelabeltrucks.barcode', 'like', "%{$label}%");
         }
     }
 
     public function scopeBoxNumber($query, $boxnumber)
     {
-        if (trim($boxnumber) !== '') {
+        if (trim($boxnumber) != '') {
             $query->where('storagelabeltrucks.boxnumber', 'like', "%{$boxnumber}%");
         }
     }
 
     public function scopeType($query, $typeid)
     {
-        if (trim($typeid) !== '') {
+        if (trim($typeid) != '') {
             $query->where('storagelabeltrucks.typeid', $typeid);
         }
     }
 
     public function scopeCarrier($query, $carrierid)
     {
-        if ($carrierid !== '') {
+        if ($carrierid != '') {
             $query->where('storagelabeltrucks.carrierid', $carrierid);
         }
     }

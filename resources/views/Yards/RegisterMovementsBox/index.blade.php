@@ -16,7 +16,9 @@
                                     <label for="folionumber">Número de Folio
                                         <span style="color: red">*</span>
                                     </label>
-                                    <input type="text" class="form-control @error('folionumber') is-invalid @enderror"  required id="folionumber" name="folionumber" value="{{ old('folionumber') }}">
+                                    <input type="text" class="form-control @error('folionumber') is-invalid @enderror"
+                                           required id="folionumber" name="folionumber"
+                                           value="{{ old('folionumber') }}">
                                     @error('folionumber')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -26,7 +28,8 @@
                                 <div class="form-group">
                                     <label for="barcode">Código de barra de la caja</label>
                                     <div class="input-group">
-                                        <input type="number" readonly class="form-control numeric" id="barcode" name="barcode" autofocus value="{{ old('barcode') }}">
+                                        <input type="number" readonly class="form-control numeric" id="barcode"
+                                               name="barcode" autofocus value="{{ old('barcode') }}">
                                     </div>
                                 </div>
                             </div>
@@ -35,13 +38,15 @@
                             <div class="col-lg-4 col-md-6  col-xs-12">
                                 <div class="form-group">
                                     <label for="linea">Línea de Transporte</label>
-                                    <input type="text" class="form-control" readonly  id="linea" name="linea" value="{{ old('linea') }}">
+                                    <input type="text" class="form-control" readonly id="linea" name="linea"
+                                           value="{{ old('linea') }}">
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-6 col-xs-12">
                                 <div class="form-group">
                                     <label for="operatorname">Nombre de Operador</label>
-                                    <input type="text" class="form-control" readonly id="operatorname" name="operatorname" value="{{ old('operatorname') }}">
+                                    <input type="text" class="form-control" readonly id="operatorname"
+                                           name="operatorname" value="{{ old('operatorname') }}">
                                 </div>
                             </div>
                         </div>
@@ -49,13 +54,15 @@
                             <div class="col-lg-4 col-md-6  col-xs-12">
                                 <div class="form-group">
                                     <label for="boxnumber">Placa de caja</label>
-                                    <input type="text" class="form-control" readonly  id="boxnumber" name="boxnumber" value="{{ old('boxnumber') }}">
+                                    <input type="text" class="form-control" readonly id="boxnumber" name="boxnumber"
+                                           value="{{ old('boxnumber') }}">
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-6 col-xs-12">
                                 <div class="form-group">
                                     <label for="econumber">Eco. De caja</label>
-                                    <input type="text" class="form-control" readonly id="econumber" name="econumber" value="{{ old('econumber') }}">
+                                    <input type="text" class="form-control" readonly id="econumber" name="econumber"
+                                           value="{{ old('econumber') }}">
                                 </div>
                             </div>
                         </div>
@@ -63,12 +70,14 @@
                     <div class="card-footer">
                         <div class="row">
                             <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
-                                <button type="submit" class="btn btn-block btn-block btn-outline-success btn-block" id="submitBtn">
+                                <button type="submit" class="btn btn-block btn-block btn-outline-success btn-block"
+                                        id="submitBtn">
                                     <i class="ti ti-check mr-2 "></i> Guardar
                                 </button>
                             </div>
                             <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-                                <a href="{{route('home')}}" class="btn btn-block btn-block btn-outline-danger" style="margin-left: 10px">
+                                <a href="{{route('home')}}" class="btn btn-block btn-block btn-outline-danger"
+                                   style="margin-left: 10px">
                                     <i class="fas fa-times mr-2"></i> Cancelar
                                 </a>
                             </div>
@@ -94,7 +103,7 @@
                     text: 'Ingrese el código de barra!',
                 });
             } else {
-                $.getJSON('./getDataInvoiceForFolio/' + $("#folionumber").val(), function (values) {
+                $.getJSON('./receipt-units/' + $("#folionumber").val() + '/search', function (values) {
                     if (0 === values.length) {
                         Swal.fire({
                             icon: 'error',
@@ -102,12 +111,12 @@
                             text: 'No se encuentran registros del folio!',
                         });
                     } else {
-                        $("#boxnumber").attr("value", values[0].boxnumber);
-                        $("#folionumber").attr("value", values[0].folio);
-                        $("#econumber").attr("value", values[0].econumber);
-                        $("#barcode").attr("value", values[0].barcode);
-                        $("#linea").attr("value", values[0].linea);
-                        $("#operatorname").attr("value", values[0].operatorname);
+                        $("#boxnumber").val(values.Data.boxnumber);
+                        $("#folionumber").val(values.Data.folionumber);
+                        $("#econumber").val(values.Data.econumberbox);
+                        $("#barcode").val(values.Data.barcode);
+                        $("#linea").val(values.Data.carriername);
+                        $("#operatorname").val(values.Data.operatorname);
                     }
                 });
             }
@@ -115,9 +124,9 @@
 
         $("#arriveUnitForm").on('submit', function (e) {
             e.preventDefault();
-            
+
             const folionumber = $("#folionumber").val();
-            
+
             if (folionumber.length === 0) {
                 Swal.fire({
                     icon: 'error',
@@ -162,7 +171,7 @@
                 },
                 error: function (xhr) {
                     let errorMessage = 'Error al procesar la solicitud';
-                    
+
                     if (xhr.responseJSON && xhr.responseJSON.message) {
                         errorMessage = xhr.responseJSON.message;
                     } else if (xhr.responseJSON && xhr.responseJSON.errors) {
@@ -174,7 +183,7 @@
                         title: 'Error',
                         text: errorMessage,
                     });
-                    
+
                     $("#submitBtn").prop('disabled', false);
                 }
             });
