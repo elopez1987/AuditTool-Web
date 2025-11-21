@@ -28,6 +28,9 @@ use App\Http\Controllers\Shipments\Monitors\Traffic\MonitorShipmentController;
 use App\Http\Controllers\Shipments\Monitors\Transport\MonitorShipmentStatusController;
 use App\Http\Controllers\Shipments\Monitors\Verification\MonitorVerificationProcessController;
 use App\Http\Controllers\Shipments\MonitorTraffic\Events\FinishGoodIssueController;
+use App\Http\Controllers\Shipments\MonitorTraffic\Events\ReturnStartGoodIssueController;
+use App\Http\Controllers\Shipments\MonitorTraffic\Events\SaveCommentController;
+use App\Http\Controllers\Shipments\MonitorTraffic\Events\SaveSealController;
 use App\Http\Controllers\Shipments\MonitorTraffic\Events\StartGoogIssueController;
 use App\Http\Controllers\Shipments\MonitorTraffic\MonitorTrafficController;
 use App\Http\Controllers\Shipments\OrderDelivery\Bridgestone\ImprimirConteoAndenController;
@@ -120,13 +123,13 @@ Route::middleware(['auth'])->group(function () {
     Route::put('savecommentoperation/{id}', [MonitorOperationController::class, 'savecommentoperation'])->name('savecommentoperation');
 
     //    ---------------------------- Eventos de Embarques desde el monitor de operaciones---------------------------------
-    //    Registrar el incio de armado o lanzamiento de ola
+    //    Registrar el inicio de armado o lanzamiento de ola
     Route::put('addstartshipment/{id}', [StartOrderDeliveryController::class, 'index'])->name('addstartshipment');
     //  Registrar Preparado En Piso o Armando
     Route::put('addendchecker/{id}', [EndCheckOrderDeliveryController::class, 'index'])->name('shipmentoperation.addendchecker');
-    //  Regitro Por Cargar
+    //  Registro Por Cargar
     Route::put('addforload/{id}', [ForLoadOrderDeliveryController::class, 'index'])->name('shipmentoperation.addforload');
-    //  Registro de Inico de Carga
+    //  Registro de Inicio de Carga
     Route::put('addstartload/{id}', [StartLoadOrderDeliveryController::class, 'index'])->name('shipmentoperation.addstartload');
     //  Registro de Fin de Carga
     Route::put('addendload/{id}', [FinishLoadOrderDeliveryController::class, 'index'])->name('shipmentoperation.addendload');
@@ -134,7 +137,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('addsenddocument/{id}', [SendDocumentOrderDeliveryController::class, 'index'])->name('shipmentoperation.addsenddocument');
     //    Registrar solicitud de carta porte
     Route::put('requestletter/{id}', [RequestLetterController::class, 'requestletter'])->name('requestletter');
-    //    Registrar la recepcion de la carta porté
+    //    Registrar la recepción de la carta porté
     Route::put('responseletter/{id}', [RequestLetterController::class, 'responseletter'])->name('responseletter');
     //  -------------------------------- Eventos de Embarques desde el monitor de operaciones---------------------------------
     //    Monitor principal
@@ -154,14 +157,16 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('monitoranalistatrafico', MonitorTrafficController::class)->except('destroy', 'show', 'create');
     Route::get('getdatamonitortraffic', [MonitorTrafficController::class, 'getDataMonitorTraffic'])->name('getdatamonitortraffic');
     //	Guardar los sellos del embarque
-    Route::put('savesealstoshipment/{id}', [MonitorTrafficController::class, 'savesealstoshipment'])->name('savesealstoshipment');
+    Route::put('savesealstoshipment/{id}', [SaveSealController::class, 'index'])->name('savesealstoshipment');
     //	Guardar comentarios de facturacion
-    Route::put('savecommenttoshipment/{id}', [MonitorTrafficController::class, 'savecommenttoshipment'])->name('savecommenttoshipment');
+    Route::put('savecommenttoshipment/{id}', [SaveCommentController::class, 'index'])->name('savecommenttoshipment');
 
     //    Registro de incio de facturacion
     Route::put('addstartgoodissuedate/{id}', [StartGoogIssueController::class, 'index'])->name('addstartgoodissuedate');
     //    Finalizar el proceso de facturacion
     Route::put('addgoodissuedate/{id}', [FinishGoodIssueController::class, 'index'])->name('addgoodissuedate');
+    //	  Regresar la documentación al area de operaciones
+    Route::put('returnstartgoodissuedate/{id}', [ReturnStartGoodIssueController::class, 'index'])->name('returnstartgoodissuedate');
 
     //    ------------------------------  Monitor General de timpos de proceso calculado -------------------------------
     Route::resource('ordermonitor', OrderMonitorController::class)->except(['show', 'destroy']);

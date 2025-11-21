@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Shipments\MonitorOperation\Events;
 use App\Http\Controllers\BaseController;
 use App\Models\Shipments\EdiShipment;
 use App\Models\Shipments\OrderDeliverie;
+use App\Models\Shipments\OrderdeliveryTrace;
 use App\Models\Shipments\ShipmentDataOperation;
 use App\Models\Shipments\ShipmentHeader;
 use App\Models\Shipments\ShipmentSeal;
@@ -21,6 +22,7 @@ class FinishLoadOrderDeliveryController extends BaseController
         DB::beginTransaction();
         try {
             $orderDelivery = OrderDeliverie::controlAccessUser()->whereId($id)->first();
+            $statusold = $orderDelivery->statusid;
 
             $parameter = $this->getParametersOfWarehouse($orderDelivery->warehouseid);
             if (! empty($parameter) && in_array('SWH-32', (array) $parameter)) {
@@ -36,6 +38,8 @@ class FinishLoadOrderDeliveryController extends BaseController
             $this->updateOrderDelivery($orderDelivery);
             $this->updateShipmentSeal($orderDelivery);
             DB::commit();
+
+            OrderdeliveryTrace::saveEventShipment($orderDelivery, 'EEM-08', $statusold);
 
             return $this->redirectBackSuccess();
         } catch (Exception $e) {

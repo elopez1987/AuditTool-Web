@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Shipments\MonitorOperation\Events;
 use App\Http\Controllers\BaseController;
 use App\Jobs\Embarques\Mensajes\EnviarMensajeAFacturacionDocumentosEnviadosJob;
 use App\Models\Shipments\OrderDeliverie;
+use App\Models\Shipments\OrderdeliveryTrace;
 use App\Models\Shipments\ShipmentDataOperation;
 use App\Models\Shipments\ShipmentHeader;
 use App\Models\Shipments\ShipmentSeal;
@@ -21,6 +22,8 @@ class SendDocumentOrderDeliveryController extends BaseController
     {
         DB::beginTransaction();
         try {
+            $orderDeliveryOld = OrderDeliverie::controlAccessUser()->where('id', $id)->first();
+            $statusold = $orderDeliveryOld->statusid;
             $orderDelivery = $this->updateOrderDelivery($id);
             $this->updateShipmentDataOperation($orderDelivery);
             $this->updateShipmentHeader($orderDelivery);
@@ -31,6 +34,7 @@ class SendDocumentOrderDeliveryController extends BaseController
                 EnviarMensajeAFacturacionDocumentosEnviadosJob::dispatch($orderDelivery);
             }
 
+            OrderdeliveryTrace::saveEventShipment($orderDelivery, 'EEM-09', $statusold);
             DB::commit();
 
             return $this->redirectBackSuccess();

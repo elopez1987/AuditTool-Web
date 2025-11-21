@@ -6,6 +6,7 @@ use App\Http\Controllers\BaseController;
 use App\Http\Services\Yard\AssingDoorToUnitFromShipment;
 use App\Jobs\Embarques\Mensajes\EnviarMensajeOperadorPorAsignacionDeCortinaJob;
 use App\Models\Shipments\OrderDeliverie;
+use App\Models\Shipments\OrderdeliveryTrace;
 use App\Models\Shipments\ShipmentCheck;
 use App\Models\Shipments\ShipmentDataOperation;
 use App\Models\Shipments\ShipmentHeader;
@@ -25,6 +26,9 @@ class ForLoadOrderDeliveryController extends BaseController
     {
         DB::beginTransaction();
         try {
+            $orderDeliveryOld = OrderDeliverie::controlAccessUser()->where('id', $id)->first();
+            $statusold = $orderDeliveryOld->statusid;
+
             $this->updateShipmentDataOperation($id);
             $this->updateShipmentHeader($id);
             $this->updateShipmentSeal($id);
@@ -41,6 +45,8 @@ class ForLoadOrderDeliveryController extends BaseController
                     return $this->errorResponse('El embarque no se encuentra verificado.');
                 }
             }
+
+            OrderdeliveryTrace::saveEventShipment($orderDelivery, 'EEM-06', $statusold);
 
             DB::commit();
 

@@ -6,7 +6,6 @@ use App\Http\Controllers\BaseController;
 use App\Models\General\StorageComment;
 use App\Models\Shipments\OrderDeliverie;
 use App\Models\Shipments\ShipmentHeader;
-use App\Models\Shipments\ShipmentSeal;
 use App\Traits\Web\Shipments\MonitorTraffic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -76,32 +75,6 @@ class MonitorTrafficController extends BaseController
         $shipmentheader->totalcontainersfac = $request['totalcontainersfac'];
         $shipmentheader->createuserid = Auth::user()->id;
         $shipmentheader->save();
-
-        return $this->redirectBackInfo();
-    }
-
-    public function savesealstoshipment(Request $request, $id)
-    {
-        $seal = ShipmentSeal::where('orderid', $id)->first();
-        if (empty($seal)) {
-            return redirect()->back()->with('error', 'No se encontró el registro de embarque');
-        }
-        $seal->containerseal01 = $request['containerseal01'];
-        $seal->containerseal02 = $request['containerseal02'];
-        $seal->containerseal03 = $request['containerseal03'];
-        $seal->receivername = $request['receivername'];
-        $seal->save();
-
-        return $this->redirectBackInfo();
-    }
-
-    public function savecommenttoshipment(Request $request, $id)
-    {
-        if ($request->has('comment')) {
-            if ($request['comment'] !== '') {
-                StorageComment::createCommentary('orderdeliveries', $id, $request);
-            }
-        }
 
         return $this->redirectBackInfo();
     }

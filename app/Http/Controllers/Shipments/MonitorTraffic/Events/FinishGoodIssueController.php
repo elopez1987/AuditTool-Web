@@ -7,6 +7,7 @@ use App\Jobs\Embarques\Mensajes\EnviarMensajaSorianaJob;
 use App\Jobs\Embarques\Mensajes\EnviarMensajeAOperadorJob;
 use App\Jobs\Embarques\Mensajes\EnviarMensajeFinFacturacionJob;
 use App\Models\Shipments\OrderDeliverie;
+use App\Models\Shipments\OrderdeliveryTrace;
 use App\Models\Shipments\OrderMonitor;
 use App\Models\Shipments\ShipmentHeader;
 use App\Models\Shipments\ShipmentJourney\ShipmentJourney;
@@ -30,6 +31,7 @@ class FinishGoodIssueController extends BaseController
         try {
             $order = $id;
             $orderDelivery = OrderDeliverie::whereId($order->id)->first();
+            $statusold = $orderDelivery->statusid;
             $parameter = $this->getParametersOfCenter($orderDelivery->centerid);
             $parameterWarehouse = $this->getParametersOfWarehouse($orderDelivery->warehouseid);
 
@@ -48,6 +50,8 @@ class FinishGoodIssueController extends BaseController
             $this->updateShipmentSeal($orderDelivery);
             $this->updateOrderMonitor($orderDelivery);
             $this->createShipmentPod($orderDelivery);
+
+            OrderdeliveryTrace::saveEventShipment($orderDelivery, 'EEM-11', $statusold);
 
             DB::commit();
 

@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Shipments\MonitorOperation\Events;
 
 use App\Http\Controllers\BaseController;
 use App\Models\Shipments\OrderDeliverie;
+use App\Models\Shipments\OrderdeliveryTrace;
 use App\Models\Shipments\ShipmentDataOperation;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -14,8 +16,11 @@ class EndCheckOrderDeliveryController extends BaseController
     {
         DB::beginTransaction();
         try {
+            $orderdelivery = OrderDeliverie::controlAccessUser()->whereId($id)->first();
+            $statusold = $orderdelivery->statusid;
             $this->updateShipmentDataOperation($id);
             $this->updateStatusOrderDelivery($id);
+            OrderdeliveryTrace::saveEventShipment($orderdelivery, 'EEM-03', $statusold);
             DB::commit();
 
             return $this->redirectBackSuccess();

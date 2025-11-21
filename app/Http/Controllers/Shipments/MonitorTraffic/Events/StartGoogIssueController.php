@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Shipments\MonitorTraffic\Events;
 use App\Http\Controllers\BaseController;
 use App\Models\Shipments\EdiShipment;
 use App\Models\Shipments\OrderDeliverie;
+use App\Models\Shipments\OrderdeliveryTrace;
 use App\Models\Shipments\ShipmentHeader;
 use App\Models\Shipments\ShipmentSeal;
+use Exception;
 use Illuminate\Support\Facades\DB;
 use Log;
 
@@ -18,10 +20,14 @@ class StartGoogIssueController extends BaseController
         DB::beginTransaction();
         try {
             $orderDelivery = OrderDeliverie::controlAccessUser()->where('id', $order->id)->first();
+            $statusold = $orderDelivery->statusid;
             $this->updateShipmentHeader($orderDelivery);
             $this->updateShipmentSeal($orderDelivery);
             $this->updateOrderDelivery($orderDelivery);
             $this->SendEdiToRControl($orderDelivery);
+
+            OrderdeliveryTrace::saveEventShipment($orderDelivery, 'EEM-10', $statusold);
+
             DB::commit();
 
             return $this->redirectBackSuccessMessage('Datos agregados correctamente');

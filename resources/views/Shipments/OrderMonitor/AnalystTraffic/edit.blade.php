@@ -5,10 +5,14 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    Número de embarque: <span style="font-size: 16px;color:red;font-weight: 700;text-align: left;margin-right: 100px"> {{ $orderDelivery->shipmentid}}</span>
-                    Cliente: <span style="font-size: 13px;font-weight: 400;text-align: left;margin-right: 100px"> {{ $orderDelivery->customer ? $orderDelivery->customer->name : ''}}</span>
-                    Fecha de trabajo: <span style="font-size: 13px;font-weight: 400;text-align: left;margin-right: 100px"> {{ $orderDelivery->workday}}</span>
-                    Turno: <span style="font-size: 13px;font-weight: 400;text-align: left;margin-right: 100px"> {{ $orderDelivery->turns ? $orderDelivery->turns->name : ''}}</span>
+                    Número de embarque: <span
+                            style="font-size: 16px;color:red;font-weight: 700;text-align: left;margin-right: 100px"> {{ $orderDelivery->shipmentid}}</span>
+                    Cliente: <span
+                            style="font-size: 13px;font-weight: 400;text-align: left;margin-right: 100px"> {{ $orderDelivery->customer ? $orderDelivery->customer->name : ''}}</span>
+                    Fecha de trabajo: <span
+                            style="font-size: 13px;font-weight: 400;text-align: left;margin-right: 100px"> {{ $orderDelivery->workday}}</span>
+                    Turno: <span
+                            style="font-size: 13px;font-weight: 400;text-align: left;margin-right: 100px"> {{ $orderDelivery->turns ? $orderDelivery->turns->name : ''}}</span>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -56,10 +60,16 @@
                                                                             style="font-size: 0.675rem "> Iniciar</span>
                                                                 </button>
                                                             </a>
-                                                            @include('Shipments.OrderMonitor.AnalystTraffic.partials.startgoodissuedate')
+                                                            @include('Shipments.OrderMonitor.AnalystTraffic.Events.startgoodissuedate')
                                                         @else
-                                                            <span
-                                                                    style="font-size: 11px;">{{$orderDelivery->header->startgoodissuedate}}</span>
+                                                            <span style="font-size: 11px;">{{$orderDelivery->header->startgoodissuedate}}</span>
+                                                            <a href="" class="btn btn-outline-info btn-sm"
+                                                               style="margin-left: 10px"
+                                                               data-target="#modal-returnstartgoodissuedate-{{$orderDelivery->id}}"
+                                                               data-toggle="modal">
+                                                                Devolver a operaciones
+                                                            </a>
+                                                            @include('Shipments.OrderMonitor.AnalystTraffic.Events.returnstartgoodissuedate')
                                                         @endif
                                                     @endif
                                                 </td>
@@ -81,7 +91,7 @@
                                                                             style="font-size: 0.675rem "> Iniciar</span>
                                                                 </button>
                                                             </a>
-                                                            @include('Shipments.OrderMonitor.AnalystTraffic.partials.goodissuedate')
+                                                            @include('Shipments.OrderMonitor.AnalystTraffic.Events.goodissuedate')
                                                         @else
                                                             <span
                                                                     style="font-size: 11px "> {{$orderDelivery->header->goodissuedate}} </span>
@@ -93,7 +103,6 @@
                                                 <td style="font-size: 11px">Solicitud de Carta Porte
                                                 </td>
                                                 <td>
-                                                    @if($orderDelivery->header->startgoodissuedate != '')
                                                         @if ($orderDelivery->operation->requestletter == '')
                                                             <a href=""
                                                                data-target="#modal-requestletter-{{$orderDelivery->id}}"
@@ -106,12 +115,12 @@
                                                                             style="font-size: 0.675rem "> Iniciar</span>
                                                                 </button>
                                                             </a>
-                                                            @include('Shipments.OrderMonitor.MonitorOperation.Events.requestletter')
+                                                            @include('Shipments.OrderMonitor.AnalystTraffic.Events.requestletter')
                                                         @else
                                                             <span
                                                                     style="font-size: 11px;">{{$orderDelivery->operation->requestletter}}</span>
                                                         @endif
-                                                    @endif
+
                                                 </td>
                                             </tr>
                                             <tr>
@@ -131,7 +140,7 @@
                                                                             style="font-size: 0.675rem "> Iniciar</span>
                                                                 </button>
                                                             </a>
-                                                            @include('Shipments.OrderMonitor.MonitorOperation.Events.responseletter')
+                                                            @include('Shipments.OrderMonitor.AnalystTraffic.Events.responseletter')
                                                         @else
                                                             <span style="font-size: 11px;">{{$orderDelivery->operation->responseletter}}</span>
                                                         @endif
@@ -449,7 +458,8 @@
 @endsection
 
 @section('css')
-    <link rel="stylesheet" href="{{asset('/theme/assets/libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css')}}">
+    <link rel="stylesheet"
+          href="{{asset('/theme/assets/libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css')}}">
     <link rel="stylesheet" href="{{asset('/theme/assets/libs/quill/dist/quill.snow.css')}}">
 @endsection
 

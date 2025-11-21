@@ -122,6 +122,11 @@
                                 <img src="{{asset('ico/notepad_bloc_notes_15549.png')}}" alt=""
                                      class="img-16 ml-2 mr-2">
                                 </span> <span class="hidden-xs-down font-12 text-black">Comentarios</span></a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view05" role="tab"><span
+                                        class="hidden-sm-up">
+                                <img src="{{asset('ico/kardex.png')}}" alt=""
+                                     class="img-16 ml-2 mr-2">
+                                </span> <span class="hidden-xs-down font-12 text-black">Kardex</span></a></li>
                     </ul>
                     <!-- Tab panes -->
                     <div class="tab-content">
@@ -201,7 +206,8 @@
                                     <!-- col -->
                                     <div class="col-lg-3 col-md-6">
                                         <div class="d-flex align-items-center">
-                                            <div class="m-r-10"><span class="text-trax display-5"><i class="mdi mdi-clock"></i></span></div>
+                                            <div class="m-r-10"><span class="text-trax display-5"><i
+                                                            class="mdi mdi-clock"></i></span></div>
                                             <div><span class="font-14">Tiempo de estadia</span>
                                                 @php
                                                     $entryDate = optional($orderdelivery->folio)->entrydate
@@ -222,7 +228,8 @@
                                                 @endphp
 
                                                 @if(!is_null($hours))
-                                                    <p class="font-14 text-danger">{{ $hours }} horas y {{ $minutes }} minutos</p>
+                                                    <p class="font-14 text-danger">{{ $hours }} horas y {{ $minutes }}
+                                                        minutos</p>
                                                 @else
                                                     <p class="font-14 text-muted">Sin datos de tiempo</p>
                                                 @endif
@@ -918,7 +925,9 @@
                                                         <div class="col-lg-4 col-md-6 col-sm-12">
                                                             <div class="form-group">
                                                                 <label for="shipmentid">Total Izquierdo</label>
-                                                                <input type="text" class="form-control " value="{{$conteo->totalIzquierdo ?? 0 }}" disabled>
+                                                                <input type="text" class="form-control "
+                                                                       value="{{$conteo->totalIzquierdo ?? 0 }}"
+                                                                       disabled>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1057,7 +1066,7 @@
                                                 </td>
                                                 </tbody>
                                             </table>
-                                            <hr class="m-t-2 m-b-2" >
+                                            <hr class="m-t-2 m-b-2">
                                         @endforeach
                                     @endif
                                 </div>
@@ -1172,6 +1181,43 @@
                             </div>
                         </div>
 
+                        {{--                        Kardex--}}
+                        <div class="tab-pane  " id="view05" role="tabpanel">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <table class="table table-hover table-bordered table-condensed tablegeneral">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Evento</th>
+                                                                <th>Usuario</th>
+                                                                <th>Estatus inicial</th>
+                                                                <th>Estatus final</th>
+                                                                <th>F. Creación</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach($tracesShipment as $item)
+                                                                <tr>
+                                                                    <td>{{$item->event->name}}</td>
+                                                                    <td>{{$item->user->name}}</td>
+                                                                    <td>{{$item->statusold->name}}</td>
+                                                                    <td>{{$item->statusnew->name}}</td>
+                                                                    <td>{{$item->created_at}}</td>
+                                                                </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1186,49 +1232,5 @@
 
 @section('script')
     <script src="{{asset('theme/assets/extra-libs/prism/prism.js')}}"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $(".table-list").DataTable({
-                "paging": true,
-                "lengthChange": true,
-                "searching": true,
-                "ordering": true,
-                "sScrollY": "100px",
-                "dom": '<"top"B>lrt<"bottom"p><"clear"i>',
-                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
-                buttons: [
-                    {
-                        "extend": "copy",
-                        "text": "<i class='fa fa-copy bigger-110 text-blue'></i> <span  style='font-size: 10px'>Copiar</span>",
-                        "className": "btn btn-white btn-sm btn-bold"
-                    },
-                    {
-                        "extend": "excel",
-                        "text": "<i class='fa fa-file-excel-o text-green'></i> <span  style='font-size: 10px'> Excel</span>",
-                        "className": "btn btn-white btn-sm btn-bold"
-                    }
-                ],
-                language: {
-                    "decimal": "",
-                    "emptyTable": "No hay información",
-                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-                    "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-                    "infoPostFix": "",
-                    "thousands": ",",
-                    "lengthMenu": "Mostrar _MENU_ Entradas",
-                    "loadingRecords": "Cargando...",
-                    "processing": "Procesando...",
-                    "search": "Buscar:",
-                    "zeroRecords": "Sin resultados encontrados",
-                    "paginate": {
-                        "first": "Primero",
-                        "last": "Ultimo",
-                        "next": "Siguiente",
-                        "previous": "Anterior"
-                    }
-                },
-            });
-        })
-    </script>
+    @include('layouts.Partials.DataTable')
 @endsection

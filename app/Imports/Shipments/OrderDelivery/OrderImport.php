@@ -4,6 +4,7 @@ namespace App\Imports\Shipments\OrderDelivery;
 
 use App\Models\Shipments\OrderDeliverie;
 use App\Models\Shipments\OrderDelivery\LogImportFile;
+use App\Models\Shipments\OrderdeliveryTrace;
 use App\Models\Shipments\ShipmentHeader;
 use App\Models\Yard\Carriers\ShipmentCarrier;
 use App\Models\Yard\Customer\OrderCustomer;
@@ -106,6 +107,7 @@ class OrderImport implements ToCollection, WithHeadingRow, WithValidation
                 continue;
             }
             $shipment = self::createNewOrderDeliveryForPlan($row, $carrier, $customer);
+            OrderdeliveryTrace::saveEventShipment($shipment, 'EEM-01', 'AP');
             self::createNewRegisterHeaderForImport($shipment, $row);
             $this->createNewOrder($shipment, $row, '');
         }
