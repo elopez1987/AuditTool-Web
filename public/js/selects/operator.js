@@ -8,7 +8,6 @@ export function initOperatorLookup(buttonId, inputBarcodeId, fieldsMap = {}) {
         const barcodeInput = document.getElementById(inputBarcodeId);
 
         if (!btn || !barcodeInput) {
-            console.log("operator.js: Elementos no encontrados:", { buttonId, inputBarcodeId });
             return;
         }
 
@@ -58,7 +57,6 @@ export function initOperatorLookup(buttonId, inputBarcodeId, fieldsMap = {}) {
                 });
 
             } catch (error) {
-                console.error("Error buscando operador:", error);
                 Swal.fire({
                     icon: "error",
                     title: "Error",

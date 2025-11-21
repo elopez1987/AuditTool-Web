@@ -8,16 +8,26 @@
                     crear registro
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{{url('receipttrucks')}}" enctype="multipart/form-data">
+                    <form id="receiptTruckForm" method="POST" action="{{url('receipttrucks')}}" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
-                            <div class="col-12">
-                                <a href="">
-                                    @include('buttons.save')
-                                </a>
-                                <a href="{{route('receipttrucks.index')}}">
-                                    @include('buttons.back')
-                                </a>
+                            <div class="row button-group">
+                                <div class="col-lg-1 col-md-6 col-sm-6 col-xs-4">
+                                        <button type="submit" id="btnSaveReceipTruck"
+                                                class="btn waves-effect waves-light btn-outline-success btn-block btn-md">
+                                            <img src="{{asset('/pics/adaceptar.png')}}" alt="" class="img-16">
+                                            <span style="font-size: 11px;"> Guardar</span>
+                                        </button>
+                                </div>
+                                <div class="col-lg-1 col-md-6 col-sm-6 col-xs-4">
+                                    <a href="{{route('receipttrucks.index')}}">
+                                        <button type="button"
+                                                class="btn waves-effect waves-light btn-outline-danger btn-block btn-md">
+                                            <img src="{{asset('/ico/adcancelar.png')}}" alt="" class="img-16">
+                                            <span style="font-size: 11px;"> Cancelar</span>
+                                        </button>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                         <hr class="m-t-1">
@@ -37,7 +47,10 @@
 
 @section('script')
     <script type="module">
-        import { initOperatorLookup } from "/js/selects/operator.js";
+        import {initOperatorLookup} from "/js/selects/operator.js";
+        import {initializeWarehouseLookup} from "/js/selects/warehouse-for-center.js";
+        import {initTruckLookup} from "/js/selects/search-truck.js";
+        import {initCarrierSelector} from "/js/selects/carriers-for-center.js";
 
         initOperatorLookup(
             "searchOperator",
@@ -48,43 +61,102 @@
                 phone: "phone"
             }
         );
+        initCarrierSelector({
+            centerSelectId: "centerid",
+            carrierSelectId: "carrierid",
+        });
+        initTruckLookup({
+            searchBarcodeButtonId: "searchTruck",
+            searchTruckNumberButtonId: "searchTruckNumber",
+            barcodeInputId: "barcodetruck",
+            truckNumberInputId: "trucknumber",
+            ecoNumberInputId: "ecotruck"
+        });
+        initializeWarehouseLookup("centerid", "warehouseid");
     </script>
-
 
     <script>
-        $("#searchTruck").click(function () {
-            if ($("#barcodetruck").val().length === 0) {
-                Swal.fire({
-                    type: 'error',
-                    title: 'Error...',
-                    text: 'Ingrese el numero de tracto!',
-                })
-            } else {
-                $.getJSON('../getDataTruck/' + $("#barcodetruck").val(), function (values) {
-                    if (0 === values.length) {
+        $(document).ready(function () {
+
+            // Interceptar el submit del formulario
+            $("#receiptTruckForm").on("submit", function (e) {
+                e.preventDefault();
+
+                const $form = $(this);
+                const $submitButton = $("#btnSaveReceipTruck");
+                const formData = new FormData(this);
+                const url = $form.attr("action");
+
+                // Deshabilitar botón mientras se envía
+                $submitButton.prop("disabled", true);
+                $submitButton.find("span").text(" Guardando...");
+
+
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json'
+                    },
+                    success: function (response) {
+
+
                         Swal.fire({
-                            type: 'error',
-                            title: 'Oops...',
-                            text: 'No se encuentran registros de tracto!',
-                        })
-                    } else {
-                        $("#trucknumber").attr("value", values[0].boxnumber);
-                        $.getJSON('../getCarrierForBox/' + $("#barcodetruck").val(), function (res) {
-                            $("#carrierid").empty();
-                            res.forEach(element => {
-                                $("#carrierid").append(`<option value=${element.id}> ${element.name} </option>`);
-                            });
+                            icon: "success",
+                            title: "Éxito",
+                            text: response.message || "Registro guardado exitosamente",
+                            timer: 3000,
+                            showConfirmButton: true
+                        }).then(() => {
+                            // Si hay redirect, ir a esa URL
+                            if (response.redirect) {
+                                window.location.href = response.redirect;
+                            } else {
+                                // Limpiar el formulario
+                                $form[0].reset();
+                                // Reiniciar los selects de Select2
+                                $('.select2').val(null).trigger('change');
+                                // Opcionalmente redirigir al index
+                                // window.location.href = "{{ route('receipttrucks.index') }}";
+                            }
                         });
-                        $.getJSON('../getTypeUnitForBox/' + $("#barcodetruck").val(), function (res) {
-                            $("#unittypeid").empty();
-                            res.forEach(element => {
-                                $("#unittypeid").append(`<option value=${element.id}> ${element.description} </option>`);
-                            });
+                    },
+                    error: function (xhr) {
+
+                        let errorMessage = "Error al guardar el registro";
+
+                        if (xhr.responseJSON) {
+                            if (xhr.responseJSON.message) {
+                                errorMessage = xhr.responseJSON.message;
+                            } else if (xhr.responseJSON.errors) {
+                                // Errores de validación
+                                const errors = xhr.responseJSON.errors;
+                                errorMessage = Object.values(errors).flat().join("<br>");
+                            }
+                        } else if (xhr.responseText) {
+                            errorMessage = xhr.responseText;
+                        }
+
+                        Swal.fire({
+                            icon: "error",
+                            title: "Error",
+                            html: errorMessage,
+                            showConfirmButton: true
                         });
+                    },
+                    complete: function () {
+                        // Rehabilitar botón
+                        $submitButton.prop("disabled", false);
+                        $submitButton.find("span").text(" Guardar");
                     }
                 });
-            }
+            });
         });
     </script>
+
 @endsection
 

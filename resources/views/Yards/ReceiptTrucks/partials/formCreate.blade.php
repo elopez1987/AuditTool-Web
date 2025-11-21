@@ -3,6 +3,7 @@
         <div class="form-group">
             <label for="centerid">Centros de distribución <span style="color: red">*</span></label>
             <select name="centerid" id="centerid" required class="form-control select2">
+                <option value=""> -- Seleccionar centro --</option>
                 @foreach($centers as $center)
                     <option value="{{$center->centerid}}" {{ old('centerid') == $center->centerid ? 'selected' : '' }}> {{$center->name}} </option>
                 @endforeach
@@ -16,9 +17,7 @@
         <div class="form-group">
             <label for="warehouseid">Bodega <span style="color: red">*</span></label>
             <select name="warehouseid" id="warehouseid" required class="form-control select2">
-                @foreach($warehouses as $warehouse)
-                    <option value="{{$warehouse->warehouseid}}" {{ old('warehouseid') == $warehouse->warehouseid ? 'selected' : '' }}> {{$warehouse->name}} </option>
-                @endforeach
+                <option value=""> -- Bodegas --</option>
             </select>
             @error('warehouseid')
             <div class="invalid-feedback">{{ $message }}</div>
@@ -130,10 +129,8 @@
     <div class="col-lg-2 col-md-6 col-sm-12">
         <div class="form-group">
             <label for="carrierid">Linea de transporte<span style="color: red">*</span></label>
-            <select name="carrierid" class="form-control select2">
-                @foreach($carriers as $model)
-                    <option value="{{$model->id}}" {{ old('carrierid') == $model->id ? 'selected' : '' }}> {{$model->name}} </option>
-                @endforeach
+            <select name="carrierid" id="carrierid" class="form-control select2">
+                <option value=""> -- Seleccionar linea de transporte --</option>
             </select>
             @error('carrierid')
             <div class="invalid-feedback">{{ $message }}</div>

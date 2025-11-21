@@ -18,7 +18,8 @@ trait QueryReceiptTruck
     public function getDataAll(Request $request)
     {
         return ReceiptTruck::controlAccessUser()
-            ->with(['center', 'warehouse', 'carrier', 'status'])
+            ->with(['center:centerid,name,description', 'warehouse:warehouseid,name', 'carrier:id,name',
+                'status:statusid,name,auxiliary01'])
             ->Folio($request->get('folionumber'))
             ->TruckNumber($request->get('trucknumber'))
             ->EcoNumber($request->get('econumber'))

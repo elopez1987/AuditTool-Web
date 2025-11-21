@@ -10,13 +10,12 @@ export function initTruckLookup({
 
     // Verificar que jQuery esté disponible
     if (typeof $ === 'undefined') {
-        console.error("jQuery no está disponible para initTruckLookup");
         return;
     }
 
     // Función para realizar la búsqueda
     const searchTruck = async (searchValue, searchType) => {
-        console.log(`Buscando tracto por ${searchType}:`, searchValue);
+
         
         if (!searchValue || searchValue.trim() === "") {
             Swal.fire({
@@ -28,14 +27,11 @@ export function initTruckLookup({
         }
 
         const url = `/storage-label-truck/${encodeURIComponent(searchValue.trim())}/search`;
-        
-        console.log("Llamando a URL:", url);
 
         try {
             const response = await fetch(url);
 
             if (!response.ok) {
-                console.error("Respuesta no exitosa:", response.status);
                 Swal.fire({
                     icon: "error",
                     title: "Error",
@@ -45,8 +41,7 @@ export function initTruckLookup({
             }
 
             const json = await response.json();
-            
-            console.log("Respuesta del servidor:", json);
+
 
             if (!json?.Data) {
                 Swal.fire({
@@ -66,11 +61,8 @@ export function initTruckLookup({
             $("#" + barcodeInputId).val(json.Data.barcode ?? "");
             $("#" + truckNumberInputId).val(json.Data.boxnumber ?? "");
             $("#" + ecoNumberInputId).val(json.Data.econumber ?? "");
-            
-            console.log("Datos del tracto cargados correctamente");
 
         } catch (error) {
-            console.error("Error consultando tracto:", error);
             Swal.fire({
                 icon: "error",
                 title: "Error",
@@ -87,11 +79,9 @@ export function initTruckLookup({
         const $inputTruckNumber = $("#" + truckNumberInputId);
 
         if ($btnSearchBarcode.length === 0 && $btnSearchTruckNumber.length === 0) {
-            console.warn("initTruckLookup: No se encontraron los botones de búsqueda");
             return;
         }
-        
-        console.log("Inicializando truck lookup");
+
 
         // Botón de búsqueda por código de barras
         if ($btnSearchBarcode.length > 0) {

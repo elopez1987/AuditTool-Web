@@ -93,13 +93,11 @@
 
     <script>
         $(document).ready(function() {
-            console.log("Inicializando submit handler para receipt unit form");
-            
+
             // Interceptar el submit del formulario
             $("#receiptUnitForm").on("submit", function(e) {
                 e.preventDefault();
-                console.log("Form submit interceptado");
-                
+
                 const $form = $(this);
                 const $submitButton = $("#btnSaveReceiptUnit");
                 const formData = new FormData(this);
@@ -109,7 +107,7 @@
                 $submitButton.prop("disabled", true);
                 $submitButton.find("span").text(" Guardando...");
                 
-                console.log("Enviando datos a:", url);
+
                 
                 $.ajax({
                     url: url,
@@ -122,7 +120,7 @@
                         'Accept': 'application/json'
                     },
                     success: function(response) {
-                        console.log("Respuesta exitosa:", response);
+
                         
                         Swal.fire({
                             icon: "success",
@@ -145,7 +143,6 @@
                         });
                     },
                     error: function(xhr) {
-                        console.error("Error en la petición:", xhr);
                         
                         let errorMessage = "Error al guardar el registro";
                         

@@ -10,7 +10,6 @@ export function initShipmentTruckChange({
 
     // Verificar que jQuery esté disponible
     if (typeof $ === 'undefined') {
-        console.error("jQuery no está disponible para initShipmentTruckChange");
         return;
     }
     // Esperar a que el DOM esté listo

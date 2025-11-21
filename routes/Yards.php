@@ -15,6 +15,7 @@ use App\Http\Controllers\Yard\RControl\SearchOperatorInRC;
 use App\Http\Controllers\Yard\ReceiptProviders\ImportProvidersController;
 use App\Http\Controllers\Yard\ReceiptProviders\ReceiptProvidersController;
 use App\Http\Controllers\Yard\ReceiptTruck\ClearTruckStockController;
+use App\Http\Controllers\Yard\ReceiptTruck\EventTruckController;
 use App\Http\Controllers\Yard\ReceiptTruck\JoinTruckToBoxController;
 use App\Http\Controllers\Yard\ReceiptTruck\ReceiptTrucksController;
 use App\Http\Controllers\Yard\ReceiptTruck\ReceiptTruckTraceController;
@@ -182,9 +183,9 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('receipttrucks', ReceiptTrucksController::class);
     Route::get('getDataReceiptTrucks', [ReceiptTrucksController::class, 'getDataReceiptTrucks'])->name('getDataReceiptTrucks');
     //   Imprimir formato de check list
-    Route::get('generateinvoicetransporttruck/{receipttruck}', [ReceiptTrucksController::class, 'generateinvoicetransporttruck'])->name('generateinvoicetransporttruck');
+    Route::get('generateinvoicetransporttruck/{receipttruck}', [EventTruckController::class, 'generateinvoicetransporttruck'])->name('generateinvoicetransporttruck');
     //    Salida directa de tracto
-    Route::put('registerOutPutTruck/{receipttruck}', [ReceiptTrucksController::class, 'registerOutPutTruck'])->name('registerOutPutTruck');
+    Route::put('registerOutPutTruck/{receipttruck}', [EventTruckController::class, 'registerOutPutTruck'])->name('registerOutPutTruck');
     //    Kardex de tracto
     Route::resource('receipttrucktrace', ReceiptTruckTraceController::class)->only('index');
     Route::get('getTruckTrace', [ReceiptTruckTraceController::class, 'getTruckTrace'])->name('getTruckTrace');

@@ -6,7 +6,6 @@ export function initializeWarehouseLookup(centerSelectId, warehouseSelectId) {
     const setupLookup = () => {
         // Verificar que jQuery esté disponible
         if (typeof $ === 'undefined') {
-            console.error("jQuery no está disponible para initializeWarehouseLookup");
             return;
         }
 

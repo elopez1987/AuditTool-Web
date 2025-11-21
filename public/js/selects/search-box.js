@@ -71,7 +71,6 @@ export function initBoxSearch() {
             }
 
         } catch (err) {
-            console.error("Error:", err);
             Swal.fire({
                 icon: "error",
                 title: "Error de conexión",

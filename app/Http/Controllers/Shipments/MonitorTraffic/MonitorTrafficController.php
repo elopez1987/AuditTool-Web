@@ -27,16 +27,33 @@ class MonitorTrafficController extends BaseController
 
     public function getdatamonitortraffic(Request $request)
     {
-        $data = $this->getDataMonitor($request);
+        $data = $this->getshipmentsformonitortraffic($request);
 
         return DataTables::of($data)
-            ->addColumn('statusunit', 'Shipments.OrderMonitor.AnalystTraffic.partials.statusunit')
             ->addColumn('btn', 'Shipments.OrderMonitor.AnalystTraffic.partials.btn')
-            ->addColumn('shipmentiactive', 'Shipments.OrderMonitor.AnalystTraffic.partials.shipment')
-            ->editColumn('statustransport', 'Shipments.OrderMonitor.AnalystTraffic.partials.statustransport')
-            ->addColumn('statusshipment', 'Shipments.OrderMonitor.MonitorOperation.partials.statusshipment')
-            ->addColumn('key', 'Shipments.OrderMonitor.MonitorOperation.partials.statuskey')
-            ->rawColumns(['statusunit', 'btn', 'statustransport', 'statusshipment', 'shipmentiactive', 'key'])
+            ->addColumn('statustransport', function ($row) {
+                return $row->transport?->auxiliary02 == '1'
+                    ? '<span class="label label-success" style="font-size: 0.655rem;padding: 3px">Con datos</span>'
+                    : '<span class="label label-danger" style="font-size: 0.655rem;color:white;padding: 3px">Sin datos</span>';
+            })
+            ->addColumn('key', function ($row) {
+                return $row->folio?->keydate
+                    ? '<span class="label label-success" style="font-size: 0.655rem;padding: 3px">Entregado</span>'
+                    : '<span class="label label-danger" style="font-size: 0.655rem;color:white;padding: 3px">Pendiente</span>';
+            })
+            ->addColumn('precarga', fn ($row) => $row->header->location->name ?? '')
+            ->addColumn('cortina', fn ($row) => $row->folio->location->name ?? '')
+            ->addColumn('statusunit', function ($row) {
+                if (! $row->folio?->entrydate) {
+                    return '<span class="label label-warning" 
+                        style="font-size: 0.675rem;color:black;padding: 3px">Sin reportarse</span>';
+                }
+
+                return $row->folio?->entrydate > $row->loadingdate
+                    ? '<span class="label label-danger" style="font-size: 0.675rem;padding: 3px">Fuera de tiempo</span>'
+                    : '<span class="label label-success" style="font-size: 0.675rem;padding: 3px">En tiempo</span>';
+            })
+            ->rawColumns(['statusunit', 'btn', 'statustransport', 'key'])
             ->toJson();
     }
 

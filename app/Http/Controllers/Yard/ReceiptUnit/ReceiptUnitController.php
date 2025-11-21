@@ -121,7 +121,6 @@ class ReceiptUnitController extends BaseController
                         'message' => 'La placa de la caja se encuentra en patio, favor de validar.',
                     ], 422);
                 }
-                //                return $this->errorResponse('La placa de la caja se encuentra en patio,favor de validar.');
             }
 
             $registerCode = ReceiptUnit::searchForBarcode($request['barcodebox']);
@@ -132,7 +131,6 @@ class ReceiptUnitController extends BaseController
                         'message' => 'El código de barra se encuentra en patio, favor de validar.',
                     ], 422);
                 }
-                //                return $this->errorResponse('El código de barra se encuentra en patio,favor de validar.');
             }
 
             if ($request['razonstatusid'] === '1' && ! empty($parameter) && in_array('SWH-01', (array) $parameter)) {
@@ -187,12 +185,6 @@ class ReceiptUnitController extends BaseController
                         : null,
                 ], 201);
             }
-
-            //            if (in_array('SWH-05', (array) $parameter)) {
-            //                return redirect('authorizetransportentry/' . $receiptunit->id . '/edit');
-            //            }
-
-            //            return redirect()->back()->with(session()->flash('success', 'Registro agregado con éxito,folio :' . $receiptunit->id));
         } catch (Exception $e) {
             $error = $e->getMessage();
             DB::rollback();
@@ -206,7 +198,6 @@ class ReceiptUnitController extends BaseController
                 ], 500);
             }
 
-            //            return redirect()->back()->withInput()->with(session()->flash('error', 'Error al registrar el folio :' . $error));
         }
     }
 

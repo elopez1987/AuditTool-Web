@@ -150,7 +150,9 @@ class ShipmentHeader extends Model
 
     public function location()
     {
-        return $this->belongsTo(StorageLocation::class, 'locationid', 'id');
+        return $this->belongsTo(StorageLocation::class, 'locationid', 'id')->withTrashed()->withDefault(
+            ['locationid' => '']
+        );
     }
 
     public function seal()

@@ -5,7 +5,6 @@ export function initializeZoneLookup(warehouseSelectId, zoneSelectId) {
     // Función para inicializar el lookup
     const setupLookup = () => {
         if (typeof $ === 'undefined') {
-            console.error("jQuery no está disponible para initializeZoneLookup");
             return;
         }
 

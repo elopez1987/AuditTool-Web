@@ -187,12 +187,24 @@ class OrderDeliverie extends Model
 
     public function folio()
     {
-        return $this->belongsTo(ReceiptUnit::class, 'folionumber', 'id');
+        return $this->belongsTo(ReceiptUnit::class, 'folionumber', 'id')->withDefault(
+            [
+                'id' => null,
+                'barcode' => '',
+                'boxnumber' => '',
+                'locationid' => null,
+                'keydate' => null,
+                'entrydate' => null,
+            ],
+        );
     }
 
     public function header()
     {
-        return $this->belongsTo(ShipmentHeader::class, 'id', 'orderid');
+        return $this->belongsTo(ShipmentHeader::class, 'id', 'orderid')
+            ->withDefault([
+                'locationid' => null,
+            ]);
     }
 
     public function check()
@@ -232,7 +244,9 @@ class OrderDeliverie extends Model
 
     public function monitor()
     {
-        return $this->belongsTo(OrderMonitor::class, 'id', 'orderid');
+        return $this->belongsTo(OrderMonitor::class, 'id', 'orderid')->withDefault(
+            ['outputdate' => null],
+        );
     }
 
     public function billings()
@@ -252,14 +266,14 @@ class OrderDeliverie extends Model
 
     public function scopeWarehouse($query, $warehouseid)
     {
-        if (trim($warehouseid) !== '') {
+        if (trim($warehouseid) != '') {
             $query->where('orderdeliveries.warehouseid', $warehouseid);
         }
     }
 
     public function scopeCarrier($query, $carrierid)
     {
-        if (trim($carrierid) !== '') {
+        if (trim($carrierid) != '') {
             $query->where('orderdeliveries.carrierid', $carrierid);
         }
     }
@@ -280,28 +294,28 @@ class OrderDeliverie extends Model
 
     public function scopeForCarrier($query, $carrierid)
     {
-        if (trim($carrierid) !== '') {
+        if (trim($carrierid) != '') {
             $query->where('orderdeliveries.carrierid', $carrierid);
         }
     }
 
     public function scopeShipmentid($query, $shipmentid)
     {
-        if (trim($shipmentid) !== '') {
+        if (trim($shipmentid) != '') {
             $query->where('orderdeliveries.shipmentid', 'like', "%{$shipmentid}%");
         }
     }
 
     public function scopeWorkday($query, $workday)
     {
-        if (trim($workday) !== '') {
+        if (trim($workday) != '') {
             $query->where('orderdeliveries.workday', '=', $workday);
         }
     }
 
     public function scopeTurn($query, $turnid)
     {
-        if (trim($turnid) !== '') {
+        if (trim($turnid) != '') {
             $query->where('orderdeliveries.turnid', '=', $turnid);
         }
     }
