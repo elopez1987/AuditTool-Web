@@ -96,30 +96,23 @@
                                 <thead>
                                 <tr>
                                     <th >Opciones</th>
-                                    <th >Cita de carga</th>
+                                    <th >F. de trabajo</th>
                                     <th >Turno</th>
+                                    <th >Prioridad</th>
                                     <th >Embarque</th>
                                     <th >Estatus</th>
-                                    <th >Pallets</th>
-                                    <th >Cajas</th>
-                                    <th >¿Enrampado?</th>
-                                    <th >¿Llaves?</th>
-                                    <th >Precarga</th>
-                                    <th >Cortina</th>
                                     <th >Cliente</th>
                                     <th >Destino</th>
-                                    <th >Max.Salida</th>
+                                    <th >Cortina</th>
+                                    <th >Precarga</th>
+                                    <th >¿Enrampado?</th>
+                                    <th >¿Llaves?</th>
+                                    <th >Cita de carga</th>
                                     <th >Cita con cliente</th>
-                                    <th >Prioridad</th>
-                                    <th >Ingreso de unidad</th>
-                                    <th >Enrampe</th>
-                                    <th >Peso total</th>
+                                    <th >Max.Salida</th>
                                     <th >% de armado</th>
-                                    <th >D.Negocio</th>
-                                    <th >Planeador</th>
-                                    <th >Comentario 01</th>
-                                    <th >Comentario 02</th>
-                                    <th >Comentario 03</th>
+                                    <th >Full pallet</th>
+                                    <th >Total de cajas</th>
                                 </tr>
                                 </thead>
                             </table>

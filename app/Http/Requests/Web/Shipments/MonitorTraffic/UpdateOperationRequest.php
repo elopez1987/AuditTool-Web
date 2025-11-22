@@ -17,9 +17,6 @@ class UpdateOperationRequest extends FormRequest
             'auxiliary03' => 'nullable|string|max:100',
             'auxiliary04' => 'nullable|string|max:100',
             'auxiliary05' => 'nullable|string|max:100',
-            //            'comment01' => 'nullable|string|max:255',
-            //            'comment02' => 'nullable|string|max:255',
-            //            'comment03' => 'nullable|string|max:255',
         ];
     }
 

@@ -71,7 +71,7 @@ class ShipmentPallet extends Model
 
     public function partnumber()
     {
-        return $this->belongsTo(InventoryPartnumber::class, 'prtnum', 'prtnum');
+        return $this->belongsTo(InventoryPartnumber::class, 'prtnum', 'id');
     }
 
     protected static function boot()

@@ -63,13 +63,15 @@
                                                             @include('Shipments.OrderMonitor.AnalystTraffic.Events.startgoodissuedate')
                                                         @else
                                                             <span style="font-size: 11px;">{{$orderDelivery->header->startgoodissuedate}}</span>
-                                                            <a href="" class="btn btn-outline-info btn-sm"
-                                                               style="margin-left: 10px"
-                                                               data-target="#modal-returnstartgoodissuedate-{{$orderDelivery->id}}"
-                                                               data-toggle="modal">
-                                                                Devolver a operaciones
-                                                            </a>
-                                                            @include('Shipments.OrderMonitor.AnalystTraffic.Events.returnstartgoodissuedate')
+                                                            @if ($orderDelivery->header->goodissuedate  == '')
+                                                                <a href="" class="btn btn-outline-info btn-sm"
+                                                                   style="margin-left: 10px"
+                                                                   data-target="#modal-returnstartgoodissuedate-{{$orderDelivery->id}}"
+                                                                   data-toggle="modal">
+                                                                    Devolver a operaciones
+                                                                </a>
+                                                                @include('Shipments.OrderMonitor.AnalystTraffic.Events.returnstartgoodissuedate')
+                                                            @endif
                                                         @endif
                                                     @endif
                                                 </td>
@@ -103,23 +105,23 @@
                                                 <td style="font-size: 11px">Solicitud de Carta Porte
                                                 </td>
                                                 <td>
-                                                        @if ($orderDelivery->operation->requestletter == '')
-                                                            <a href=""
-                                                               data-target="#modal-requestletter-{{$orderDelivery->id}}"
-                                                               data-toggle="modal">
-                                                                <button
-                                                                        class="btn waves-effect waves-light btn-outline-info btn-sm btn-block">
-                                                                    <img src="{{asset('/ico/priority.png')}}"
-                                                                         alt="" class="img-16 ml-2 mr-2">
-                                                                    <span
-                                                                            style="font-size: 0.675rem "> Iniciar</span>
-                                                                </button>
-                                                            </a>
-                                                            @include('Shipments.OrderMonitor.AnalystTraffic.Events.requestletter')
-                                                        @else
-                                                            <span
-                                                                    style="font-size: 11px;">{{$orderDelivery->operation->requestletter}}</span>
-                                                        @endif
+                                                    @if ($orderDelivery->operation->requestletter == '')
+                                                        <a href=""
+                                                           data-target="#modal-requestletter-{{$orderDelivery->id}}"
+                                                           data-toggle="modal">
+                                                            <button
+                                                                    class="btn waves-effect waves-light btn-outline-info btn-sm btn-block">
+                                                                <img src="{{asset('/ico/priority.png')}}"
+                                                                     alt="" class="img-16 ml-2 mr-2">
+                                                                <span
+                                                                        style="font-size: 0.675rem "> Iniciar</span>
+                                                            </button>
+                                                        </a>
+                                                        @include('Shipments.OrderMonitor.AnalystTraffic.Events.requestletter')
+                                                    @else
+                                                        <span
+                                                                style="font-size: 11px;">{{$orderDelivery->operation->requestletter}}</span>
+                                                    @endif
 
                                                 </td>
                                             </tr>
@@ -299,7 +301,6 @@
                                                                     </button>
                                                                 </div>
                                                             </div>
-
                                                             <div class="card">
                                                                 <div class="card-body">
                                                                     <div class="row">

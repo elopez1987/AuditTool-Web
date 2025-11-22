@@ -19,10 +19,11 @@ class InventoryPartnumbersController extends BaseController
 
     public function getDataInventoryNumbers(Request $request)
     {
-        $data = InventoryPartnumber::controlAccessUser()->with(['status', 'center', 'warehouse', 'category01', 'category02'])
+        $data = InventoryPartnumber::controlAccessUser()
+            ->with(['status:statusid,name', 'center:centerid,name,description',
+                'warehouse:warehouseid,name', 'category01:id,description', 'category02:id,description'])
             ->PartNumber($request->get('prtnum'))
-            ->Status($request->get('statusid'))
-            ->select(['inventorypartnumbers.*']);
+            ->Status($request->get('statusid'));
 
         return $this->showDataToView($data, 'Inventory.InventoryPartnumbers.partials.buttons');
     }
@@ -43,13 +44,7 @@ class InventoryPartnumbersController extends BaseController
     public function store(CreatePartNumberRequest $request)
     {
         $access = $this->getAccessForUser();
-        $sku = InventoryPartnumber::controlAccessUser()
-            ->where('prtnum', $request['prtnum'])->first();
-        if (! empty($sku)) {
-            return $this->errorResponse('El número de parte ya existe.');
-        }
-
-        $partnumber = new InventoryPartnumber($request->all() +
+        $partnumber = new InventoryPartnumber($request->validated() +
             ['centerid' => $access->centerid] +
             ['warehouseid' => $access->warehouseid]);
         $partnumber->save();

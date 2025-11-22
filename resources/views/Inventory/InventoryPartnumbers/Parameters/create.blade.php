@@ -25,6 +25,14 @@
                         <div class="row">
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
+                                    <label for="name">Esquema del parametro</label>
+                                    <input type="text" class="form-control" readonly value="PIV">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2 col-md-6 col-sm-12">
+                                <div class="form-group">
                                     <label for="name">Sku</label>
                                     <input type="text" class="form-control" readonly id="name" name="name"
                                            value="{{$model->prtnum}}">

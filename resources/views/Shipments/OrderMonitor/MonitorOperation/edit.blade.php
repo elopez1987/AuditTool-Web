@@ -300,13 +300,29 @@
                                                         </div>
                                                     </div>
                                                     <div class="row">
-                                                        <div class="col-lg-2 col-md-6 col-sm-12">
+                                                        <div class="col-lg-4 col-md-6 col-sm-12">
                                                             <div class="form-group">
                                                                 <label for="forklift">Montacarguista de carga </label>
                                                                 <input type="text" class="form-control" id="forklift"
                                                                        name="forklift" maxlength="100"
                                                                        aria-describedby="forklift"
                                                                        value="{{$orderDelivery->operation ? $orderDelivery->operation->forklift : ''}}"
+                                                                       onKeyUp=this.value=this.value.toUpperCase()
+                                                                >
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-2 col-md-6 col-sm-12">
+                                                            <div class="form-group">
+                                                                <label for="auxiliary02">% de Armado </label>
+                                                                <input type="text"
+                                                                       class="form-control  numeric"
+                                                                       id="auxiliary02"
+                                                                       name="auxiliary02" maxlength="100"
+                                                                       aria-describedby="auxiliary02"
+                                                                       value="{{$orderDelivery->operation ? $orderDelivery->operation->auxiliary02 : ''}}"
                                                                        onKeyUp=this.value=this.value.toUpperCase()
                                                                 >
                                                             </div>
@@ -325,22 +341,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="row">
-                                                        <div class="col-lg-2 col-md-6 col-sm-12">
-                                                            <div class="form-group">
-                                                                <label for="auxiliary02">% de Armado </label>
-                                                                <input type="text"
-                                                                       class="form-control  numeric"
-                                                                       id="auxiliary02"
-                                                                       name="auxiliary02" maxlength="100"
-                                                                       aria-describedby="auxiliary02"
-                                                                       value="{{$orderDelivery->operation ? $orderDelivery->operation->auxiliary02 : ''}}"
-                                                                       onKeyUp=this.value=this.value.toUpperCase()
-                                                                >
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-lg-6">
+                                                        <div class="col-lg-10">
                                                             <hr class="hr-line">
                                                             <div class="row">
                                                                 <div class="col-lg-6">
@@ -486,7 +487,7 @@
                                                                         <td>
                                                                             <input type="text" class="form-control"
                                                                                    name="prtnum[]"
-                                                                                   value="{{$material->prtnum}}"
+                                                                                   value="{{$material->id}}"
                                                                                    readonly>
                                                                         </td>
                                                                         <td>
@@ -544,7 +545,8 @@
 @endsection
 
 @section('css')
-    <link rel="stylesheet" href="{{asset('/theme/assets/libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css')}}">
+    <link rel="stylesheet"
+          href="{{asset('/theme/assets/libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css')}}">
 @endsection
 
 @section('script')
