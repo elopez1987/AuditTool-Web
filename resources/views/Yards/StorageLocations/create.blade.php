@@ -35,15 +35,10 @@
 @endsection
 
 @section('script')
-    <script>
-        $("#warehouseid").change(event => {
-            $.get(`../getZoneForWarehouse/${event.target.value}`, function (res) {
-                $("#zoneid").empty();
-                res.forEach(element => {
-                    $("#zoneid").append(`<option value=${element.id}> ${element.name} </option>`);
-                });
-            });
-        });
+
+    <script type="module">
+        import {initializeZoneLookup} from "/js/selects/zone-for-warehouse.js";
+        initializeZoneLookup("warehouseid", "zoneid");
     </script>
 @endsection
 

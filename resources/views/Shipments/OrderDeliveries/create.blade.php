@@ -8,7 +8,8 @@
                     Programar embarque
                 </div>
                 <div class="card-body">
-                    <form method="POST" id="createorderdelivery" action="{{url('orderdeliveries')}}" enctype="multipart/form-data">
+                    <form method="POST" id="createorderdelivery" action="{{url('orderdeliveries')}}"
+                          enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-12">
@@ -35,16 +36,19 @@
 @endsection
 
 @section('css')
-    <link rel="stylesheet" href="{{asset('/theme/assets/libs/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css')}}">
+    <link rel="stylesheet"
+          href="{{asset('/theme/assets/libs/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css')}}">
     <link rel="stylesheet" href="{{asset('/theme/assets/libs/quill/dist/quill.snow.css')}}">
 @endsection
 
 @section('script')
     <script src="{{asset('/theme/assets/libs/moment/moment.js')}}"></script>
-    <script
-        src="{{asset('/theme/assets/libs/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker-custom.js')}}"></script>
+    <script src="{{asset('/theme/assets/libs/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker-custom.js')}}"></script>
     <script src="{{asset('/theme/assets/libs/quill/dist/quill.min.js')}}"></script>
-    @include('SelectDynamics.SelectWarehouseForCenterForCreate')
+    <script src="{{asset('/js/selects/warehouse-for-center.js')}}"></script>
+
+
+
     <script>
         $('#workday').bootstrapMaterialDatePicker({format: 'YYYY-MM-DD', weekStart: 1, time: false});
         $('#loadingdate').bootstrapMaterialDatePicker({
@@ -65,13 +69,7 @@
             theme: 'snow'
         });
     </script>
-    <script type="text/javascript">
-        jQuery(document).ready(function () {
-            jQuery(".numeric").on('input', function (evt) {
-                jQuery(this).val(jQuery(this).val().replace(/[^0-9]/g, ''));
-            });
-        });
-    </script>
+
     <script>
         const form = document.getElementById('createorderdelivery');
         form.addEventListener('submit', function(event) {

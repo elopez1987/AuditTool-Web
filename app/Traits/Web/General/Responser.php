@@ -9,6 +9,7 @@ use App\Models\Configuration\Warehouses\SystemWarehouse;
 use App\Models\Inventory\Categories\InventoryPartNumberCategory01;
 use App\Models\Inventory\Categories\InventoryPartNumberCategory02;
 use App\Models\Inventory\Origin\InventoryStockCategory;
+use App\Models\Inventory\PartNumber\InventoryPartnumber;
 use App\Models\Receipt\ReceiptProvider;
 use App\Models\Security\Users\AccessCarrier;
 use App\Models\Security\Users\SecurityAccessCustomer;
@@ -78,6 +79,8 @@ trait Responser
             ->rawColumns(['btn'])
             ->toJson();
     }
+
+    //	-----------------------------------------------------------------------------
 
     /**
      * @return mixed|null
@@ -301,5 +304,23 @@ trait Responser
         }
 
         return $dates;
+    }
+
+    public function getLocations()
+    {
+        return StorageLocation::controlAccessUser()
+            ->join('storagezones', 'storagelocations.zoneid', '=', 'storagezones.id')
+            ->whereNotIn('storagelocations.name', ['DUMMY'])
+            ->whereIn('storagelocations.statusid', ['E'])
+            ->where('storagezones.zoneid', '=', 'ST')
+            ->select(['storagelocations.name', 'storagelocations.id'])->get();
+    }
+
+    public function getMaterialsTarima()
+    {
+        return InventoryPartnumber::controlAccessUser()
+            ->whereNotNull('configurationflag')
+            ->whereRaw("charindex('PIV-02', configurationflag) > 0")
+            ->select(['lngdsc', 'prtnum', 'id'])->get();
     }
 }

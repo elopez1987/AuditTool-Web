@@ -1,7 +1,6 @@
 <div class="modal fade bs-example-modal-lg" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true"
      style="display: none;" id="modal-blocked-{{$id}}">
-    <form method="POST" action="{{url('appointmentschedule/' . $id)}}" enctype="multipart/form-data">
-        {{ method_field('PUT') }}
+    <form id="form-blocked-{{$id}}" data-schedule-id="{{$id}}">
         @csrf
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -23,7 +22,7 @@
                         Cancelar
                     </button>
                     <button type="submit" class="btn btn-outline-secondary btn-sm  waves-effect waves-light"
-                            id="saveNewCommentToReceipt">
+                            id="btn-blocked-{{$id}}">
                         <img src="{{asset('/pics/adaceptar.png')}}" alt="">
                         Aceptar
                     </button>
@@ -32,3 +31,58 @@
         </div>
     </form>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $('#form-blocked-{{$id}}').on('submit', function(e) {
+            e.preventDefault();
+            
+            var scheduleId = $(this).data('schedule-id');
+            
+            $.ajax({
+                url: '{{url('appointmentschedule')}}/' + scheduleId,
+                type: 'PUT',
+                data: $(this).serialize(),
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                beforeSend: function() {
+                    $('#btn-blocked-{{$id}}').prop('disabled', true);
+                },
+                success: function(response) {
+                    $('#modal-blocked-{{$id}}').modal('hide');
+                    
+                    Swal.fire({
+                        icon: 'success',
+                        title: '\u00c9xito',
+                        text: response.message || 'Registro bloqueado con \u00e9xito',
+                        timer: 3000,
+                        showConfirmButton: false
+                    });
+                    
+                    // Recargar DataTable
+                    if (typeof reloadtable === 'function') {
+                        reloadtable();
+                    }
+                },
+                error: function(xhr) {
+                    var errorMessage = 'Ocurri\u00f3 un error al bloquear el registro';
+                    
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        errorMessage = xhr.responseJSON.message;
+                    }
+                    
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: errorMessage,
+                        confirmButtonText: 'Aceptar'
+                    });
+                },
+                complete: function() {
+                    $('#btn-blocked-{{$id}}').prop('disabled', false);
+                }
+            });
+        });
+    });
+</script>

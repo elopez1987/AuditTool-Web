@@ -201,14 +201,6 @@ class StorageLocation extends Model
         }
     }
 
-    //    Funciones auxiliares para otros modulos
-    public static function updateLocation($locationid, $statusid, $boxnumber)
-    {
-        StorageLocation::controlAccessUser()
-            ->where('id', $locationid)
-            ->update(['statusid' => $statusid, 'auxiliary01' => $boxnumber]);
-    }
-
     public static function activeLocationForZone()
     {
         $centers = SecurityAccessWarehouse::Centers();
@@ -219,5 +211,13 @@ class StorageLocation extends Model
             ->whereIn('storagelocations.warehouseid', $warehouses)
             ->whereNotIn('storagelocations.name', ['DUMMY'])
             ->select(['name', 'id'])->get();
+    }
+
+    //    Funciones auxiliares para otros modulos
+    public static function updateLocation($locationid, $statusid, $boxnumber)
+    {
+        StorageLocation::controlAccessUser()
+            ->where('id', $locationid)
+            ->update(['statusid' => $statusid, 'auxiliary01' => $boxnumber]);
     }
 }

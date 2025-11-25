@@ -38,8 +38,9 @@
     <script src="{{asset('/theme/assets/libs/moment/moment.js')}}"></script>
     <script src="{{asset('/theme/assets/libs/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker-custom.js')}}"></script>
     <script src="{{asset('/theme/assets/libs/quill/dist/quill.min.js')}}"></script>
+    <script src="{{asset('js/selects/warehouse-for-center.js')}}"></script>
 
-    @include('SelectDynamics.SelectWarehouseForCenterForCreate')
+
     @include('SelectDynamics.SelectProvidersForWarehouseForCreate')
 
     <script>

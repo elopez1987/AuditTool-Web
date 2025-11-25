@@ -10,7 +10,6 @@
                 @include('Receipt.SchedulleV2.partials.addpriority')
             @endif
         @else
-            {{--            <label class="label label-danger font-10 " style="color: white !important;width: 100%;display: block;text-align: center !important;">Prioridad</label>--}}
             <div class="etiqueta-flecha">
                 <span class="etiqueta-texto">Prioridad Alta</span>
             </div>

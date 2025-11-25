@@ -43,14 +43,17 @@
                             <table id="table-partnumber" class="table table-bordered table-condensed">
                                 <thead>
                                 <tr>
+                                    <th class="bg-inverse text-white">C.Distribución</th>
                                     <th class="bg-inverse text-white">Bodega</th>
                                     <th class="bg-inverse text-white">Sku</th>
                                     <th class="bg-inverse text-white">Descripción</th>
-                                    <th class="bg-inverse text-white">Estandar</th>
+                                    <th class="bg-inverse text-white">Cajas por pallet</th>
+                                    <th class="bg-inverse text-white">Piezas por caja</th>
                                     <th class="bg-inverse text-white">Tiempo de Vida</th>
-                                    <th class="bg-inverse text-white">Estatus</th>
+                                    <th class="bg-inverse text-white">C. de barra</th>
                                     <th class="bg-inverse text-white">Categoria 01</th>
                                     <th class="bg-inverse text-white">Categoria 02</th>
+                                    <th class="bg-inverse text-white">Estatus</th>
                                     <th class="bg-inverse text-white">Opciones</th>
                                 </tr>
                                 </thead>

@@ -93,6 +93,7 @@
                                 <thead>
                                 <tr>
                                     <th>Opciones</th>
+                                    <th>C.Distribución</th>
                                     <th>Bodega</th>
                                     <th>Folio</th>
                                     <th>Embarque/Recibo</th>
@@ -111,11 +112,9 @@
                                     <th>Categoria</th>
                                     <th>Concepto</th>
                                     <th>F.Ingreso</th>
-                                    <th>Comentario</th>
                                     <th>Origen</th>
-                                    {{--                                    <th>Tipo de entrada</th>--}}
-                                    {{--                                    <th>Folio de bascula</th>--}}
-                                    {{--                                    <th>Peso de entrada</th>--}}
+                                    <th>Estadia</th>
+                                    <th>Folio de tracto</th>
                                 </tr>
                                 </thead>
                             </table>

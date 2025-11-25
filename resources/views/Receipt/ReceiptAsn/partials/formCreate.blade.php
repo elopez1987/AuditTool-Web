@@ -10,7 +10,7 @@
                             <select name="centerid" id="centerid" required class="form-control select2">
                                 @foreach($centers as $center)
                                     <option
-                                        value="{{$center->centerid}}" {{ old('centerid') == $center->centerid ? 'selected' : '' }}> {{$center->name}} </option>
+                                            value="{{$center->centerid}}" {{ old('centerid') == $center->centerid ? 'selected' : '' }}> {{$center->name}} </option>
                                 @endforeach
                             </select>
                         </div>
@@ -21,42 +21,42 @@
                             <select name="warehouseid" id="warehouseid" required class="form-control select2">
                                 @foreach($warehouses as $warehouse)
                                     <option
-                                        value="{{$warehouse->warehouseid}}" {{ old('warehouseid') == $warehouse->warehouseid ? 'selected' : '' }}> {{$warehouse->name}} </option>
+                                            value="{{$warehouse->warehouseid}}" {{ old('warehouseid') == $warehouse->warehouseid ? 'selected' : '' }}> {{$warehouse->name}} </option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
-{{--                    <div class="col-lg-3 col-md-6 col-sm-12">--}}
-{{--                        <div class="form-group">--}}
-{{--                            <label for="addasndate">F. Cita de Descarga--}}
-{{--                                @error("addasndate")--}}
-{{--                                <span class="message-error">{{$message}}</span>--}}
-{{--                                @enderror--}}
-{{--                                <span style="color: red">*</span></label>--}}
-{{--                            <input type="text" class="form-control date @error('addasndate') is-invalid @enderror"--}}
-{{--                                   required id="addasndate" name="addasndate"--}}
-{{--                                   aria-describedby="inputname" onKeyUp=this.value=this.value.toUpperCase();--}}
-{{--                                   value="{{old('addasndate')}}"--}}
-{{--                            >--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                    <div class="col-lg-3 col-md-6 col-sm-12">--}}
-{{--                        <div class="form-group">--}}
-{{--                            <label for="turnid">Turno--}}
-{{--                                @error("turnid")--}}
-{{--                                <span class="message-error">{{$message}}</span>--}}
-{{--                                @enderror--}}
-{{--                                <span style="color: red">*</span>--}}
-{{--                            </label>--}}
-{{--                            <select name="turnid" required class="form-control select2">--}}
-{{--                                <option value="" selected>Seleccione una opción</option>--}}
-{{--                                @foreach($turns as $model)--}}
-{{--                                    <option--}}
-{{--                                        value="{{$model->id}}" {{ old('turnid') == $model->id ? 'selected' : '' }} > {{$model->name}} </option>--}}
-{{--                                @endforeach--}}
-{{--                            </select>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
+                    <div class="col-lg-3 col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label for="addasndate">F. Cita de Descarga
+                                @error("addasndate")
+                                <span class="message-error">{{$message}}</span>
+                                @enderror
+                                <span style="color: red">*</span></label>
+                            <input type="text" class="form-control date @error('addasndate') is-invalid @enderror"
+                                   required id="addasndate" name="addasndate"
+                                   aria-describedby="inputname" onKeyUp=this.value=this.value.toUpperCase();
+                                   value="{{old('addasndate')}}"
+                            >
+                        </div>
+                    </div>
+                    {{--                    <div class="col-lg-3 col-md-6 col-sm-12">--}}
+                    {{--                        <div class="form-group">--}}
+                    {{--                            <label for="turnid">Turno--}}
+                    {{--                                @error("turnid")--}}
+                    {{--                                <span class="message-error">{{$message}}</span>--}}
+                    {{--                                @enderror--}}
+                    {{--                                <span style="color: red">*</span>--}}
+                    {{--                            </label>--}}
+                    {{--                            <select name="turnid" required class="form-control select2">--}}
+                    {{--                                <option value="" selected>Seleccione una opción</option>--}}
+                    {{--                                @foreach($turns as $model)--}}
+                    {{--                                    <option--}}
+                    {{--                                        value="{{$model->id}}" {{ old('turnid') == $model->id ? 'selected' : '' }} > {{$model->name}} </option>--}}
+                    {{--                                @endforeach--}}
+                    {{--                            </select>--}}
+                    {{--                        </div>--}}
+                    {{--                    </div>--}}
                 </div>
             </div>
         </div>
@@ -81,7 +81,7 @@
                                 <option value="" selected>Seleccione una opción</option>
                                 @foreach($reasons as $model)
                                     <option
-                                        value="{{$model->id}}" {{ old('razonstatusid') == $model->id ? 'selected' : '' }}> {{$model->name}} </option>
+                                            value="{{$model->id}}" {{ old('razonstatusid') == $model->id ? 'selected' : '' }}> {{$model->name}} </option>
                                 @endforeach
                             </select>
                         </div>
@@ -97,7 +97,7 @@
                                 <option value="" selected>Seleccione una opción</option>
                                 @foreach($categorystocks as $model)
                                     <option
-                                        value="{{$model->id}}" {{ old('stockcategoryid') == $model->id ? 'selected' : '' }}> {{$model->description}} </option>
+                                            value="{{$model->id}}" {{ old('stockcategoryid') == $model->id ? 'selected' : '' }}> {{$model->description}} </option>
                                 @endforeach
                             </select>
                         </div>
@@ -114,7 +114,7 @@
                                 <option value="" selected>Seleccione una opción</option>
                                 @foreach($providers as $model)
                                     <option
-                                        value="{{$model->id}}" {{ old('providerid') == $model->id ? 'selected' : '' }}> {{$model->name}} </option>
+                                            value="{{$model->id}}" {{ old('providerid') == $model->id ? 'selected' : '' }}> {{$model->name}} </option>
                                 @endforeach
                             </select>
                         </div>
@@ -167,48 +167,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-lg-3 col-md-6 col-sm-12">
-                        <div class="form-group">
-                            <label for="partnumberid">Material
-                                @error("partnumberid")
-                                <span class="message-error">{{$message}}</span>
-                                @enderror
-                            </label>
-                            <input type="text"
-                                   class="form-control @error('partnumberid') is-invalid @enderror"
-                                   id="partnumberid"
-                                   name="partnumberid"
-                                   required
-                                   onKeyUp=this.value=this.value.toUpperCase();
-                                   value="{{old('partnumberid')}}"
-                            >
-                            @error('partnumberid')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-12">
-                        <div class="form-group">
-                            <label for="quantity">Cantidad
-                                @error("quantity")
-                                <span class="message-error">{{$message}}</span>
-                                @enderror
-                            </label>
-                            <input type="text"
-                                   class="form-control numeric @error('quantity') is-invalid @enderror"
-                                   id="quantity"
-                                   name="quantity"
-                                   required
-                                   onKeyUp=this.value=this.value.toUpperCase();
-                                   value="{{old('quantity')}}"
-                            >
-                            @error('quantity')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -246,7 +204,7 @@
                                 <option value="" selected>Seleccione una opción</option>
                                 @foreach($carriers as $model)
                                     <option
-                                        value="{{$model->id}}" {{ old('carrierid') == $model->id ? 'selected' : '' }} > {{$model->name}} </option>
+                                            value="{{$model->id}}" {{ old('carrierid') == $model->id ? 'selected' : '' }} > {{$model->name}} </option>
                                 @endforeach
                             </select>
                         </div>

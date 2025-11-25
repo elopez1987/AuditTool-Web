@@ -1,8 +1,9 @@
 @can('receiptasn.create')
     @if($shipmentid == null && $statusid != 'DPR-04')
-        <a href="{{url('addShipmentToSchedule/' . $id . '/edit')}}">
-            <img src="{{asset('/ico/adagregar1.png')}}" alt="" class="img-16 ml-2 mr-2">
+        <a href="" data-target="#modal-create-{{$id}}" data-toggle="modal" >
+            <img src="{{asset('/ico/addshipment.png')}}" alt="" class="img-16 text-center">
         </a>
+        @include('Receipt.SchedulleV2.partials.create')
     @endif
 @endcan
 

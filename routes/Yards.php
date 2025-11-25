@@ -15,9 +15,11 @@ use App\Http\Controllers\Yard\RControl\SearchOperatorInRC;
 use App\Http\Controllers\Yard\ReceiptProviders\ImportProvidersController;
 use App\Http\Controllers\Yard\ReceiptProviders\ReceiptProvidersController;
 use App\Http\Controllers\Yard\ReceiptTruck\ClearTruckStockController;
+use App\Http\Controllers\Yard\ReceiptTruck\EventTruckController;
 use App\Http\Controllers\Yard\ReceiptTruck\JoinTruckToBoxController;
 use App\Http\Controllers\Yard\ReceiptTruck\ReceiptTrucksController;
 use App\Http\Controllers\Yard\ReceiptTruck\ReceiptTruckTraceController;
+use App\Http\Controllers\Yard\ReceiptUnit\AssignResponsibleController;
 use App\Http\Controllers\Yard\ReceiptUnit\AssignShipmentController;
 use App\Http\Controllers\Yard\ReceiptUnit\AutorizeTransportController;
 use App\Http\Controllers\Yard\ReceiptUnit\CheckListCheckIn\AuthorizeTransportEntriesController;
@@ -90,7 +92,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('assignshipment', [AssignShipmentController::class, 'index'])->name('assignshipment');
     Route::get('getDataTransport', [AssignShipmentController::class, 'getDataTransport'])->name('getDataTransport');
     Route::put('updateShipmentiToReceiptUnit/{receiptunit}', [AssignShipmentController::class, 'updateShipmentToUnit'])->name('updateShipmentiToReceiptUnit');
-    Route::put('saveresponsibletounit/{receiptunit}', [AssignShipmentController::class, 'saveresponsibletounit'])->name('saveresponsibletounit');
+
+    Route::put('saveresponsibletounit/{receiptunit}', [AssignResponsibleController::class, 'index'])->name('saveresponsibletounit');
 
     //    **************************************************** EVENTOS DE UNIDAD ***********************************************************
     //  Check list de unidad en proceso de entrada
@@ -180,9 +183,9 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('receipttrucks', ReceiptTrucksController::class);
     Route::get('getDataReceiptTrucks', [ReceiptTrucksController::class, 'getDataReceiptTrucks'])->name('getDataReceiptTrucks');
     //   Imprimir formato de check list
-    Route::get('generateinvoicetransporttruck/{receipttruck}', [ReceiptTrucksController::class, 'generateinvoicetransporttruck'])->name('generateinvoicetransporttruck');
+    Route::get('generateinvoicetransporttruck/{receipttruck}', [EventTruckController::class, 'generateinvoicetransporttruck'])->name('generateinvoicetransporttruck');
     //    Salida directa de tracto
-    Route::put('registerOutPutTruck/{receipttruck}', [ReceiptTrucksController::class, 'registerOutPutTruck'])->name('registerOutPutTruck');
+    Route::put('registerOutPutTruck/{receipttruck}', [EventTruckController::class, 'registerOutPutTruck'])->name('registerOutPutTruck');
     //    Kardex de tracto
     Route::resource('receipttrucktrace', ReceiptTruckTraceController::class)->only('index');
     Route::get('getTruckTrace', [ReceiptTruckTraceController::class, 'getTruckTrace'])->name('getTruckTrace');
@@ -316,9 +319,12 @@ Route::middleware(['auth'])->group(function () {
     //  Patio de toluca one roof en 2d
     Route::get('vitualyard', [YardHenkelTolController::class, 'index'])->name('vitualyard');
     //  Vista de cortinas y stages
-    Route::get('layoutyard', [LayOutDoorAndStageController::class, 'index'])->name('layoutyard');
+    Route::get('layout-stages', [LayOutDoorAndStageController::class, 'index'])->name('layout-stages');
     //  Ticket de pesos de báscula
     Route::resource('receiptunitticket', ReceiptUnitTicketController::class);
     Route::get('getUnitTickets', [ReceiptUnitTicketController::class, 'getUnitTickets'])->name('getUnitTickets');
     Route::put('receiptunitticketstatus/{id}', [ReceiptUnitTicketController::class, 'updatestatus'])->name('receiptunitticketstatus.update');
+    //	Registrar el peso de producto y embalaje por operaciones
+    Route::put('saveweightforoperation/{id}', [ReceiptUnitTicketController::class, 'saveweightforoperation'])->name('saveweightforoperation');
+
 });

@@ -587,6 +587,7 @@
                                                                     <th>Tipo</th>
                                                                     <th>Sello 01</th>
                                                                     <th>Sello 02</th>
+                                                                    <th>Sello 03</th>
                                                                     <th>Fecha de creación</th>
                                                                     <th>Usuario</th>
                                                                 </tr>
@@ -597,6 +598,7 @@
                                                                         <td>{{$seal->value01}}</td>
                                                                         <td>{{$seal->seal01}}</td>
                                                                         <td>{{$seal->seal02}}</td>
+                                                                        <td>{{$seal->seal03}}</td>
                                                                         <td>{{$seal->created_at}}</td>
                                                                         <td>{{$seal->user->name}}</td>
                                                                     </tr>
@@ -704,28 +706,11 @@
                                                                     <td>{{$peso->weightout}} Kg</td>
                                                                     <td>{{ round($peso->weightout * 2.20462)}} lbs</td>
                                                                     <td>{{$peso->weightout - $peso->weightin}} Kg</td>
-                                                                    <td>{{ round( ($peso->weightout - $peso->weightin) * 2.20462)}}
-                                                                        lbs
-                                                                    </td>
-                                                                    <td>{{$peso->weightoutsap}}lbs
-                                                                    </td> {{-- Peso de SAP libras--}}
+                                                                    <td>{{ round( ($peso->weightout - $peso->weightin) * 2.20462)}} lbs </td>
+                                                                    <td>{{$peso->weightoutsap}} lbs</td> {{-- Peso de SAP libras--}}
                                                                     <td>{{$peso->userupdate ? $peso->userupdate->name : ''}}</td>
                                                                     <td>{{$peso->updateddate}}</td>
-                                                                    <td>
-                                                                        @php
-
-                                                                            $pesoCalculado = round(($peso->weightout - $peso->weightin) * 2.20462,2);
-                                                                            $pesoSap = $peso->weightoutsap;
-																			if ($pesoCalculado != 0){
-                                                                            $porcentaje = (float) $pesoSap != 0 ? round( (100 / $pesoCalculado ) *  (float) $pesoSap, 2) / 10: 0;
-																			}else{
-																				$porcentaje = 0;
-																			}
-                                                                        @endphp
-                                                                        <span class="{{ $porcentaje > 0 ? 'text-success' : ($porcentaje < 0 ? 'text-danger' : 'text-muted') }}">
-                                                                                {{ $porcentaje > 0 ? '+' : '' }}{{ number_format($porcentaje, 2) }} %
-                                                                            </span>
-                                                                    </td>
+                                                                    <td>{{$peso->diferencia_porcentaje}}</td>
                                                                 </tr>
                                                             @endforeach
                                                         @endif

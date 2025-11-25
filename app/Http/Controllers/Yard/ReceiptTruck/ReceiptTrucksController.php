@@ -5,13 +5,10 @@ namespace App\Http\Controllers\Yard\ReceiptTruck;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Yard\Truck\CreateTruckRequest;
 use App\Models\Yard\ReceiptTruck;
-use App\Models\Yard\ReceiptUnit;
 use App\Traits\Web\Yard\ReceiptTruck\QueryReceiptTruck;
 use DB;
 use Exception;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use PDF;
 use Yajra\DataTables\Facades\DataTables;
 
 class ReceiptTrucksController extends BaseController
@@ -40,10 +37,8 @@ class ReceiptTrucksController extends BaseController
     {
         $this->authorize('receipttrucks.create');
         $centers = $this->getCenterForSelect();
-        $warehouses = $this->getWarehouseForSelect();
-        $carriers = $this->getCarriersForSelect();
 
-        return view('Yards.ReceiptTrucks.create', compact('carriers', 'centers', 'warehouses'));
+        return view('Yards.ReceiptTrucks.create', compact('centers'));
     }
 
     public function store(CreateTruckRequest $request)
@@ -52,17 +47,33 @@ class ReceiptTrucksController extends BaseController
         try {
             $labelTruck = ReceiptTruck::searchTruckForTruckNumber($request['trucknumber']);
             if (! empty($labelTruck)) {
-                return $this->errorResponse('El tracto ya se encuentra registrado');
+                if ($request->expectsJson() || $request->ajax()) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'El tracto ya se encuentra registrado en el sistema, favor de validar.',
+                    ], 422);
+                }
             }
             $receiptTruck = $this->createNewTruck($request);
             DB::commit();
 
-            return $this->redirectBackSuccessMessage('Tracto registrado con exito,folio : ' . $receiptTruck->id);
+            if ($request->expectsJson() || $request->ajax()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Registro de tracto exitoso,folio :' . $receiptTruck->id,
+                ], 200);
+            }
+
         } catch (Exception $e) {
             $error = $e->getMessage();
             DB::rollback();
-
-            return $this->errorResponse('Error al procesar la solicitud : ' . $error);
+            if ($request->expectsJson() || $request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Error al registrar el folio',
+                    'error' => $error,
+                ], 500);
+            }
         }
     }
 
@@ -79,30 +90,5 @@ class ReceiptTrucksController extends BaseController
         $receipttruck->update($request->except('centerid', 'warehouseid'));
 
         return $this->redirectBackSuccessMessage('Registro actualizado con exito');
-    }
-
-    public function generateinvoicetransporttruck(ReceiptTruck $receipttruck)
-    {
-        $pdf = PDF::loadView('Yards.ReceiptTrucks.InvoiceFormats.Invoice', compact('receipttruck'));
-
-        return $pdf->download('Folio_De_Entrada_Tracto-' . $receipttruck->id . '.pdf');
-    }
-
-    public function registerOutPutTruck(ReceiptTruck $receipttruck): RedirectResponse
-    {
-        DB::beginTransaction();
-        try {
-            $this->generateOutTruck($receipttruck, 'Salida de tracto');
-            ReceiptUnit::controlAccessUser()->where('foliotruck', $receipttruck->id)
-                ->update(['foliotruck' => null]);
-            DB::commit();
-
-            return $this->redirectBackSuccessMessage('Salida con exito de tracto!!');
-        } catch (Exception $e) {
-            $error = $e->getMessage();
-            DB::rollback();
-
-            return $this->errorResponse('Error al procesa la solicitud : ' . $error);
-        }
     }
 }

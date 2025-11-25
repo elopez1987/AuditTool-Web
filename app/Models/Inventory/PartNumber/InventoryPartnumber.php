@@ -9,8 +9,6 @@ use App\Models\Inventory\Categories\InventoryPartNumberCategory01;
 use App\Models\Inventory\Categories\InventoryPartNumberCategory02;
 use App\Models\Inventory\UnitMeasure\InventoryUnitMeasure;
 use App\Models\Security\Users\SecurityAccessWarehouse;
-use Auth;
-use DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Activitylog\LogOptions;
@@ -112,22 +110,10 @@ class InventoryPartnumber extends Model
         'category02id',
         'prtnum',
         'lngdsc',
-        'abccod',
         'shelflife',
         'stkuom',
-        'palnetwgt',
-        'palgrswgt',
-        'caslvl',
         'untcas',
         'untpal',
-        'palwid',
-        'pallen',
-        'palhgt',
-        'auxiliary01',
-        'auxiliary02',
-        'auxiliary03',
-        'auxiliary04',
-        'auxiliary05',
         'barcode',
         'statusid',
         'codeean',
@@ -161,41 +147,17 @@ class InventoryPartnumber extends Model
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
 
-        return InventoryPartnumber::whereIn('inventorypartnumbers.warehouseid', $warehouses)
+        return static::whereIn('inventorypartnumbers.warehouseid', $warehouses)
             ->whereIn('inventorypartnumbers.centerid', $centers);
     }
 
-    public static function partnumberActiveToSelect()
+    protected static function boot()
     {
-        $centers = SecurityAccessWarehouse::Centers();
-        $warehouses = SecurityAccessWarehouse::Warehouses();
-
-        return InventoryPartnumber::whereStatusid('E')
-            ->whereIn('inventorypartnumbers.centerid', $centers)
-            ->whereIn('inventorypartnumbers.warehouseid', $warehouses)
-            ->pluck('prtnum', 'id')->toArray();
-    }
-
-    public function scopePartNumber($query, $prtnum)
-    {
-        if (trim($prtnum) !== '') {
-            $query->where('inventorypartnumbers.prtnum', '=', $prtnum);
-        }
-    }
-
-    public function scopeBarcode($query, $barcode)
-    {
-        if (trim($barcode) !== '') {
-            $query->where('inventorypartnumbers.barcode', '=', $barcode);
-        }
-    }
-
-    public function scopeStatus($query, $statusid)
-    {
-        if (empty($statusid)) {
-            $query->where('inventorypartnumbers.statusid', 'E');
-        } else {
-            $query->where('inventorypartnumbers.statusid', $statusid);
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (InventoryPartnumber $model) {
+                //				$model->auxiliary05 = Auth::user()->username;
+            });
         }
     }
 
@@ -229,22 +191,28 @@ class InventoryPartnumber extends Model
         return $this->belongsTo(InventoryUnitMeasure::class, 'stkuom', 'unitmeasureid');
     }
 
-    public static function searchPartNumber($request)
+    //	Filtros
+
+    public function scopePartNumber($query, $prtnum)
     {
-        return DB::table('inventorypartnumbers')
-            ->select('*')
-            ->where('prtnum', '=', $request['partnumberid'])
-            ->orWhere('barcode', '=', $request['partnumberid'])
-            ->first();
+        if (trim($prtnum) != '') {
+            $query->where('inventorypartnumbers.prtnum', '=', $prtnum);
+        }
     }
 
-    protected static function boot()
+    public function scopeBarcode($query, $barcode)
     {
-        parent::boot();
-        if (! app()->runningInConsole()) {
-            self::creating(function (InventoryPartnumber $model) {
-                $model->auxiliary05 = Auth::user()->username;
-            });
+        if (trim($barcode) != '') {
+            $query->where('inventorypartnumbers.barcode', '=', $barcode);
+        }
+    }
+
+    public function scopeStatus($query, $statusid)
+    {
+        if (empty($statusid)) {
+            $query->where('inventorypartnumbers.statusid', 'E');
+        } else {
+            $query->where('inventorypartnumbers.statusid', $statusid);
         }
     }
 }

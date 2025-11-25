@@ -100,7 +100,7 @@ class ReceiptUnitKey extends Model
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
 
-        return ReceiptUnitKey::whereIn('receiptunitkeys.warehouseid', $warehouses)
+        return static::whereIn('receiptunitkeys.warehouseid', $warehouses)
             ->where('receiptunitkeys.centerid', $centers);
     }
 }

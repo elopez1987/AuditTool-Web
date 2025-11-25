@@ -97,15 +97,14 @@
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label for="workdayin">F.Inicio</label>
-                                    <input type="text" class="form-control workday" required id="workdayin"
+                                    <input type="text" class="form-control date" required id="workdayin"
                                            name="workdayin">
                                 </div>
                             </div>
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label for="workdayout">F.Final</label>
-                                    <input type="text" class="form-control workday" required id="workdayout"
-                                           name="workdayout">
+                                    <input type="text" class="form-control date" required id="workdayout" name="workdayout">
                                 </div>
                             </div>
                         </div>

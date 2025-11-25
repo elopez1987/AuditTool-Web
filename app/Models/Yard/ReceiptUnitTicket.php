@@ -90,6 +90,7 @@ class ReceiptUnitTicket extends Model
         'weightdifferencelb',
         'boxnumber',
         'statusid',
+        'kgbruto', 'embalaje', 'kgneto',
     ];
 
     public function getActivitylogOptions(): LogOptions
@@ -100,6 +101,39 @@ class ReceiptUnitTicket extends Model
     protected $attributes = [
         'statusid' => 'E',
     ];
+
+    protected $appends = [
+        'diferencia_peso',
+        'diferencia_redondeada',
+        'diferencia_porcentaje',
+    ];
+
+    public function getDiferenciaPesoAttribute()
+    {
+        if (! empty($this->weightoutsap)) {
+            return $this->kgbruto - $this->weightoutsap;
+        }
+
+    }
+
+    public function getDiferenciaRedondeadaAttribute()
+    {
+        if (empty($this->weightoutsap) || $this->weightoutsap == 0) {
+            return;
+        }
+        $resultado = ($this->kgbruto / $this->weightoutsap) - 1;
+
+        return round($resultado, 4);
+    }
+
+    public function getDiferenciaPorcentajeAttribute()
+    {
+        if ($this->diferencia_redondeada === null) {
+            return;
+        }
+
+        return round($this->diferencia_redondeada * 100, 2) . '%';
+    }
 
     //  -----------------------  Relaciones entre modelos  ---------------------------------------------
     public function usercreate()

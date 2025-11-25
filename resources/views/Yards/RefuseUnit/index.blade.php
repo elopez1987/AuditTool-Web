@@ -106,22 +106,17 @@
 
 @section('script')
     <script>
-        // Configurar CSRF token para todas las peticiones AJAX
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-
-        // Variable para controlar si debemos validar el blur
         var shouldValidateBlur = true;
-
-        // Función para buscar datos del folio
         function searchFolioData() {
             var folioValue = $("#folionumber").val().trim();
             
             if (folioValue.length === 0) {
-                // Solo mostrar error si debemos validar
                 if (shouldValidateBlur) {
                     Swal.fire({
                         icon: 'error',
@@ -131,8 +126,7 @@
                 }
                 return;
             }
-            
-            $.getJSON('./getDataInvoiceForFolio/' + folioValue, function (values) {
+            $.getJSON('./receipt-units/' + folioValue + '/search', function (values) {
                 if (0 === values.length) {
                     Swal.fire({
                         icon: 'error',
@@ -145,12 +139,12 @@
                     $("#operatorname").val('');
                     $("#shipmentid").val('');
                 } else {
-                    $("#boxnumber").val(values[0].boxnumber);
-                    $("#folionumber").val(values[0].folio);
-                    $("#linea").val(values[0].linea);
-                    $("#barcode").val(values[0].barcode);
-                    $("#operatorname").val(values[0].operatorname);
-                    $("#shipmentid").val(values[0].shipmentid);
+                    $("#boxnumber").val(values.Data.boxnumber);
+                    $("#folionumber").val(values.Data.folionumber);
+                    $("#linea").val(values.Data.carriername);
+                    $("#barcode").val(values.Data.barcode);
+                    $("#operatorname").val(values.Data.operatorname);
+                    $("#shipmentid").val(values.Data.shipmentid);
                 }
             }).fail(function() {
                 Swal.fire({

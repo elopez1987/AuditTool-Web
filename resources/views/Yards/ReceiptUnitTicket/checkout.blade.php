@@ -13,7 +13,7 @@
                     <div class="row">
                         <div class="col-lg-12 col-md-6 col-sm-12">
                             <div class="form-group">
-                                <label for="weightout">Peso de salida
+                                <label for="weightout">Peso de salida (BASCULA)
                                     <span style="color: red">*</span></label>
                                 <input type="number" class="form-control numeric @error('weightout') is-invalid @enderror"
                                        required id="weightout" name="weightout" maxlength="20"

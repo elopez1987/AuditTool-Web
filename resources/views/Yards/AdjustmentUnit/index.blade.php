@@ -52,14 +52,14 @@
                         <div class="row">
                             <div class="col-lg-4 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="trucknumber">Placas de tracto<span style="color: red">*</span></label>
-                                    <input type="text" class="form-control" id="trucknumber" name="trucknumber">
+                                    <label for="foliotruck">Folio de tracto<span style="color: red">*</span></label>
+                                    <input type="text" class="form-control" id="foliotruck" name="foliotruck">
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="foliotruck">Folio de tracto<span style="color: red">*</span></label>
-                                    <input type="text" class="form-control" id="foliotruck" name="foliotruck">
+                                    <label for="trucknumber">Placas de tracto<span style="color: red">*</span></label>
+                                    <input type="text" class="form-control" id="trucknumber" name="trucknumber">
                                 </div>
                             </div>
                         </div>
@@ -85,7 +85,7 @@
                         <div class="row">
                             <div class="col-lg-4 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="statusidact">Estatus de Caja</label>
+                                    <label for="statusidact">Estatus de proceso</label>
                                     <input type="text" readonly class="form-control" id="statusidact"
                                            name="statusidact">
                                 </div>
@@ -187,8 +187,7 @@
                 }
                 return;
             }
-            
-            $.getJSON('./getDataInvoiceForFolio/' + folioValue, function (values) {
+            $.getJSON('./receipt-units/' + folioValue + '/search', function (values) {
                 if (0 === values.length) {
                     Swal.fire({
                         icon: 'error',
@@ -209,17 +208,17 @@
                     $("#shipmentid").val('');
                 } else {
                     // Usar .val() en lugar de .attr("value") para actualizar correctamente
-                    $("#boxnumber").val(values[0].boxnumber);
-                    $("#trucknumber").val(values[0].trucknumber);
-                    $("#statusidact").val(values[0].status);
-                    $("#econumber").val(values[0].econumber);
-                    $("#folionumber").val(values[0].folio);
-                    $("#carriername").val(values[0].linea);
-                    $("#foliotruck").val(values[0].foliotruck);
-                    $("#operatorname").val(values[0].operatorname);
-                    $("#razonid").val(values[0].razonid);
-                    $("#statusunit").val(values[0].statusunit);
-                    $("#shipmentid").val(values[0].shipmentid);
+                    $("#boxnumber").val(values.Data.boxnumber);
+                    $("#trucknumber").val(values.Data.trucknumber);
+                    $("#statusidact").val(values.Data.statusname);
+                    $("#econumber").val(values.Data.econumberbox);
+                    $("#folionumber").val(values.Data.folionumber);
+                    $("#carriername").val(values.Data.carriername);
+                    $("#foliotruck").val(values.Data.foliotruck);
+                    $("#operatorname").val(values.Data.operatorname);
+                    $("#razonid").val(values.Data.razonname);
+                    $("#statusunit").val(values.Data.unitstatusname);
+                    $("#shipmentid").val(values.Data.shipmentid);
                 }
             }).fail(function() {
                 Swal.fire({

@@ -20,7 +20,8 @@ class ReceiptUnitTicketController extends BaseController
 
     public function getUnitTickets(Request $request)
     {
-        $data = ReceiptUnitTicket::with(['folio', 'status'])->take(500)->orderBy('id', 'desc')->get();
+        $data = ReceiptUnitTicket::with(['folio', 'status'])->take(500)->orderBy('id', 'desc')
+            ->get();
 
         return DataTables::of($data)
             ->addColumn('btn', 'Yards.ReceiptUnitTicket.partials.buttons')
@@ -80,6 +81,7 @@ class ReceiptUnitTicketController extends BaseController
         $receiptunitticket->weightout = $request['weightout'];
         $receiptunitticket->weightoutlb = $request['weightout'] * 2.20462;
         $receiptunitticket->weightoutsap = $request['weightoutsap'];
+        $receiptunitticket->kgbruto = $request['weightout'] - $receiptunitticket->weightin;
         $receiptunitticket->statusid = 'D';
         $receiptunitticket->save();
 
@@ -95,12 +97,26 @@ class ReceiptUnitTicketController extends BaseController
 
     public function updatestatus($id)
     {
-        $ticket = REceiptUnitTicket::find($id);
+        $ticket = ReceiptUnitTicket::find($id);
         if ($ticket->statusid == 'E') {
             $ticket->statusid = 'D';
         } else {
             $ticket->statusid = 'E';
         }
+        $ticket->save();
+
+        return $this->redirectBackSuccessMessage('Registro actualizado con exito.');
+    }
+
+    public function saveweightforoperation(Request $request, $id)
+    {
+        $ticket = ReceiptUnitTicket::find($id);
+        if (empty($ticket)) {
+            return $this->errorResponse('No se encontró el registro solicitado.');
+        }
+        $ticket->kgneto = $request['kgneto'];
+        $ticket->embalaje = $request['embalaje'];
+        $ticket->weightoutsap = $request['kgneto'] + $request['embalaje'];
         $ticket->save();
 
         return $this->redirectBackSuccessMessage('Registro actualizado con exito.');

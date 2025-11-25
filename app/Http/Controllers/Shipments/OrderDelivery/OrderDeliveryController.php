@@ -9,6 +9,7 @@ use App\Models\General\StorageComment;
 use App\Models\Shipments\Bridgestone\Verificacion\Storagechecklocationbridg;
 use App\Models\Shipments\Bridgestone\Verificacion\StoragechecklocationbridgVig;
 use App\Models\Shipments\OrderDeliverie;
+use App\Models\Shipments\OrderdeliveryTrace;
 use App\Models\Shipments\ViewShipmentEvent;
 use App\Models\Yard\StorageUnitTrace;
 use App\Traits\Web\Shipments\OrderDelivery\CreateNewOrder;
@@ -89,6 +90,7 @@ class OrderDeliveryController extends BaseController
         try {
             $shipment = OrderDeliverie::create($request->validated());
             $this->createNewOrder($shipment, $request, 'Model');
+            OrderdeliveryTrace::saveEventShipment($shipment, 'EEM-01', 'AP');
             DB::commit();
 
             return $this->successResponse('orderdeliveries.index');
@@ -111,8 +113,13 @@ class OrderDeliveryController extends BaseController
         $conteosVig = StoragechecklocationbridgVig::controlAccessUser()->where('orderid', $orderdelivery->id)->get();
         $comments = StorageComment::where('modeltype', 'orderdeliveries')->where('modelid', $orderdelivery->id)->get();
         $events = ViewShipmentEvent::controlAccessUser()->where('embarque', $orderdelivery->shipmentid)->first();
+        $tracesShipment = OrderdeliveryTrace::with(['user:id,username,name', 'event:statusid,name',
+            'statusold:statusid,name', 'statusnew:statusid,name'])->where('orderid', $orderdelivery->id)
+            ->orderBy('created_at', 'desc')->get();
 
-        return view('Shipments.OrderDeliveries.show', compact('orderdelivery', 'evidences', 'traces', 'conteos', 'comments', 'conteosVig', 'events'));
+        return view('Shipments.OrderDeliveries.show',
+            compact('orderdelivery', 'evidences', 'traces',
+                'conteos', 'comments', 'conteosVig', 'events', 'tracesShipment'));
     }
 
     public function edit(OrderDeliverie $orderdelivery)

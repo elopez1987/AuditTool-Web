@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Receipt;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Receipt\ReceiptProcess\CreateReceiptPalletsRequest;
-use App\Models\Inventory\PartNumber\InventoryPartnumber;
 use App\Models\Receipt\ReceiptAsn;
 use App\Models\Receipt\ReceiptContainer;
 use App\Models\Receipt\StorageReceiptPallet;
@@ -16,11 +15,7 @@ class ReceiptContainersController extends BaseController
     public function addpallets($id)
     {
         $receipt = ReceiptAsn::findOrFail($id);
-        $materials = InventoryPartnumber::controlAccessUser()
-            ->whereHas('category01', function ($q) {
-                $q->where('description', 'TARIMA');
-            })->select('lngdsc', 'id')->get();
-
+        $materials = $this->getMaterialsTarima();
         $data = StorageReceiptPallet::controlAccessUser()
             ->leftJoin('inventorypartnumbers', 'storagereceiptpallets.partnumberid', '=', 'inventorypartnumbers.id')
             ->where('storagereceiptpallets.receiptid', '=', $id)

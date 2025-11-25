@@ -180,8 +180,8 @@
                     });
                     return;
                 }
-                
-                $.getJSON(`{{ url('getDataInvoiceForFolio') }}/${folio}`, function(values) {
+
+                $.getJSON('./receipt-units/' + folio + '/search', function (values) {
                     if (!values || values.length === 0) {
                         Swal.fire({
                             icon: 'error',
@@ -191,16 +191,16 @@
                         return;
                     }
                     
-                    const v = values[0];
+                    const v = values.Data;
                     $('#boxnumber_modal').val(v.boxnumber || '');
                     $('#containerseal_modal').val(v.containerseal || '');
-                    $('#originzoneid_modal').val(v.zona || '');
-                    $('#originlocationid_modal').val(v.ubicacion || '');
+                    $('#originzoneid_modal').val(v.zoneorg || '');
+                    $('#originlocationid_modal').val(v.locationorg || '');
                     $('#operatorname_modal').val(v.operatorname || '');
                     $('#phone_modal').val(v.phone || '');
-                    $('#econumber_modal').val(v.econumber || '');
+                    $('#econumber_modal').val(v.econumberbox || '');
                     $('#barcode_modal').val(v.barcode || '');
-                    $('#linea_modal').val(v.linea || '');
+                    $('#linea_modal').val(v.carriername || '');
                 }).fail(function() {
                     Swal.fire({
                         icon: 'error',

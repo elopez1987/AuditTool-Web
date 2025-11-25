@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Receipt\SchedulleV2;
 
 use App\Http\Controllers\BaseController;
-use App\Http\Requests\Web\Receipt\ReceiptAsn\CreateReceiptAsnRequest;
 use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Inventory\Origin\InventoryStockCategory;
 use App\Models\Receipt\ReceiptAsn;
@@ -90,33 +89,34 @@ class DownloadScheduleController extends BaseController
             ->leftJoin('systemwarehouses as sw', 'storageschedullereceipt.warehouseid', '=', 'sw.warehouseid')
             ->get();
 
+        // Obtener las variables necesarias para el modal
+        $providers = $this->getReceiptProviderForSelect();
+        $carriers = $this->getCarriersForSelect();
+        $categorystocks = InventoryStockCategory::select('description', 'id')->get();
+        $reasons = StorageReason::whereType('RE')->select('name', 'id')->get();
+
         return DataTables::of($data)
-            ->addColumn('btn', 'Receipt.SchedulleV2.partials.buttons')
+            ->addColumn('btn', function ($row) use ($providers, $carriers, $categorystocks, $reasons) {
+                return view('Receipt.SchedulleV2.partials.buttons', [
+                    'id' => $row->id,
+                    'shipmentid' => $row->shipmentid,
+                    'statusid' => $row->statusid,
+                    'receiptid' => $row->receiptid,
+                    'value01' => $row->value01,
+                    'providers' => $providers,
+                    'carriers' => $carriers,
+                    'categorystocks' => $categorystocks,
+                    'reasons' => $reasons,
+                ])->render();
+            })
             ->addColumn('prioridad', 'Receipt.SchedulleV2.addpriority')
             ->addColumn('po', 'Receipt.SchedulleV2.goodissuedate')
             ->rawColumns(['btn', 'prioridad', 'po'])
             ->toJson();
     }
 
-    public function addShipmentToSchedule($id)
-    {
-        $this->authorize('receiptasn.create');
-        $schedulleReceipt = StorageSchedulleReceipt::controlAccessUser()->findOrFail($id);
-        $centers = $this->getCenterForSelect();
-        $warehouses = $this->getWarehouseForSelect();
-        $providers = $this->getReceiptProviderForSelect();
-        $turns = $this->getTurns();
-        $carriers = $this->getCarriersForSelect();
-        $categorystocks = InventoryStockCategory::select('description', 'id')->get();
-        $reasons = StorageReason::whereType('RE')->select('name', 'id')->get();
-
-        return view(
-            'Receipt.SchedulleV2.edit',
-            compact('schedulleReceipt', 'carriers', 'providers', 'reasons', 'categorystocks', 'turns', 'centers', 'warehouses')
-        );
-    }
-
-    public function addShipmentToScheduleedit(CreateReceiptAsnRequest $request, $id)
+    //	Esta funcion edita el registro el recibo en el plan de entrega
+    public function addShipmentToScheduleedit(Request $request, $id)
     {
         $this->authorize('receiptasn.create');
         DB::beginTransaction();
@@ -126,12 +126,23 @@ class DownloadScheduleController extends BaseController
             $combinedDateTime = $schedulleReceipt->workday . ' ' . $hour->auxiliary04;
             $formattedDateTime = Carbon::createFromFormat('Y-m-d H:i', $combinedDateTime);
 
-            $receipt = new ReceiptAsn($request->validated());
-            $receipt->statusid = 'PG';
-            $receipt->addasndate = $formattedDateTime;
-            $receipt->workday = Carbon::parse($schedulleReceipt->workday)->format('Y-m-d');
-            $receipt->auxiliary01 = Auth::user()->name;  // Planeador del recibo
-            $receipt->save();
+            $receipt = ReceiptAsn::create([
+                'centerid' => $schedulleReceipt->centerid,
+                'warehouseid' => $schedulleReceipt->warehouseid,
+                'razonstatusid' => $request->razonstatusid,
+                'stockcategoryid' => $request->stockcategoryid,
+                'providerid' => $request->providerid,
+                'shipmentid' => $request->shipmentid,
+                'billoflading' => $request->billoflading,
+                'partnumberid' => $request->partnumberid,
+                'quantity' => $request->quantity,
+                'carrierid' => $request->carrierid,
+                'oc' => $request->oc,
+                'statusid' => 'PG',
+                'addasndate' => $formattedDateTime,
+                'workday' => Carbon::parse($schedulleReceipt->workday)->format('Y-m-d'),
+                'auxiliary01' => Auth::user()->name, // Planeador del recibo
+            ]);
 
             $schedulleReceipt->receiptid = $receipt->id;
             $schedulleReceipt->statusid = 'DPR-02';
@@ -139,11 +150,26 @@ class DownloadScheduleController extends BaseController
 
             DB::commit();
 
-            return $this->redirectBackSuccessMessage('Recibo agregado al plan de entrega');
+            // Respuesta para peticiones AJAX
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Recibo agregado al plan de entrega',
+                    'receipt_id' => $receipt->id,
+                ]);
+            }
+
         } catch (Exception $e) {
             DB::rollBack();
 
-            return $this->errorResponse($e->getMessage());
+            // Respuesta para peticiones AJAX
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => $e->getMessage(),
+                ], 500);
+            }
+
         }
     }
 }

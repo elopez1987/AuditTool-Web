@@ -10,20 +10,6 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-12">
-                            <div class="alert alert-info">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                                        aria-hidden="true">×</span></button>
-                                <h2 class="text-info font-12"><i class="fa fa-check-circle"></i> Aviso</h2>
-                                "¡Hola! Queremos informarles que hemos realizado algunos cambios en el formulario <b>Reutilizar
-                                    Folio</b>
-                                para hacerlo aún más fácil de usar. Los cambios realizados son : Cambio de <b>Código de
-                                    Caja por Número de Folio </b> como valor de búsqueda.
-                                ¡Esperamos que les guste la nueva versión!"
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
                             <div class="card-input">
                                 <div class="row">
                                     <div class="col-lg-3 col-md-6 col-sm-12">
@@ -139,27 +125,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row mt-2">
-                                    <div class="col-lg-3 col-md-6 col-sm-12">
-                                        <div class="form-group">
-                                            <label for="ticket">Ticket de bascula</label>
-                                            <input type="text" class="form-control" id="ticket" name="ticket">
-                                            @error('ticket')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 col-md-6 col-sm-12">
-                                        <div class="form-group">
-                                            <label for="weightout">Peso de salida</label>
-                                            <input type="text" class="form-control" id="weightout"
-                                                   name="weightout">
-                                            @error('weightout')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -206,7 +171,7 @@
                     text: 'Ingrese el numero de Folio o Etiqueta!',
                 })
             } else {
-                $.getJSON('./getDataInvoiceForFolio/' + $("#folionumber").val(), function (values) {
+                $.getJSON('./receipt-units/' + $("#folionumber").val() + '/search', function (values) {
                     if (0 === values.length) {
                         Swal.fire({
                             type: 'error',
@@ -214,12 +179,12 @@
                             text: 'No se encuentran registros del folio!',
                         })
                     } else {
-                        $("#folio").attr("value", values[0].folio);
-                        $("#operatorname").attr("value", values[0].operatorname);
-                        $("#boxnumber").attr("value", values[0].boxnumber);
-                        $("#linea").attr("value", values[0].linea);
-                        $("#barcode").attr("value", values[0].barcode);
-                        $("#razonid").attr("value", values[0].razonid);
+                        $("#folio").val(values.Data.folionumber);
+                        $("#operatorname").val(values.Data.operatorname);
+                        $("#boxnumber").val(values.Data.boxnumber);
+                        $("#linea").val(values.Data.carriername);
+                        $("#barcode").val(values.Data.barcode);
+                        $("#razonid").val(values.Data.razonname);
                     }
                 });
             }
@@ -235,7 +200,6 @@
             $('#saveFolio').click(function (e) {
                 e.preventDefault();
 
-                // Obtener los valores de los campos
                 const centerid = $("#centerid").val();
                 const folionumber = $("#folionumber").val();
                 const warehouseid = $("#warehouseid").val();
@@ -244,7 +208,6 @@
                 const weightout = $("#weightout").val();
                 const razonstatusid = $("#razonstatusid").val();
 
-                // Validar que los campos no estén vacíos
                 if (!centerid || !warehouseid || !folionumber || !razonstatusid) {
                     Swal.fire({
                         type: 'warning',
@@ -255,7 +218,6 @@
                     return;
                 }
 
-                // Realizar la petición AJAX si todos los campos están completos
                 $.ajax({
                     data: {
                         centerid: centerid,

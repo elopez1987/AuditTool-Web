@@ -13,7 +13,7 @@ class CreateReceiptAsnRequest extends FormRequest
             'warehouseid' => 'required|exists:systemwarehouses,warehouseid',
             'providerid' => 'required|exists:receiptproviders,id',
             'shipmentid' => 'required|max:20|unique:receiptasn,shipmentid|regex:/^[a-zA-Z0-9]+$/',
-            //            'addasndate' => 'required|date|after_or_equal:today',
+            'addasndate' => 'required|date|after_or_equal:today',
             'carrierid' => 'required|exists:shipmentcarriers,id',
             'stockcategoryid' => 'required|exists:inventorystockcategories,id',
             'razonstatusid' => 'required|exists:storagereasons,id',
@@ -21,8 +21,8 @@ class CreateReceiptAsnRequest extends FormRequest
             'oc' => 'nullable|required|regex:/^[a-zA-Z0-9]+$/',
             'billoflading' => 'nullable|regex:/^[a-zA-Z0-9]+$/',
             'folionumber' => 'nullable',
-            'partnumberid' => 'nullable|string|max:20|regex:/^[a-zA-Z0-9]+$/',
-            'quantity' => 'required|numeric|min:1|max_digits:4',
+            //			'partnumberid' => 'nullable|string|max:20|regex:/^[a-zA-Z0-9]+$/',
+            //			'quantity' => 'required|numeric|min:1|max_digits:4',
         ];
     }
 

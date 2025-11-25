@@ -9,16 +9,6 @@ use Illuminate\Http\JsonResponse;
 
 trait ResponseApi
 {
-    public function getCenterForUserForApi()
-    {
-        return SecurityAccessWarehouse::where('username', Auth::user()->username)->value('centerid');
-    }
-
-    public function getWarehouseForUserForApi()
-    {
-        return SecurityAccessWarehouse::where('username', Auth::user()->username)->value('warehouseid');
-    }
-
     public function showAll($service, $collection): JsonResponse
     {
         return $this->getResponseSuccess($service, $collection);
@@ -27,17 +17,6 @@ trait ResponseApi
     public function showOne($service, $model): JsonResponse
     {
         return $this->getResponseSuccess($service, $model);
-    }
-
-    public function getResponse($service, $code, $message, $data, $status): JsonResponse
-    {
-        return response()->json([
-            'ServiceName' => $service,
-            'ProcessDate' => Carbon::now()->format('Y-m-d H:m:s'),
-            'Code' => $code,
-            'Message' => $message,
-            'Data' => $data,
-        ], $status);
     }
 
     public function getResponseSuccess($service, $data): JsonResponse
@@ -49,6 +28,28 @@ trait ResponseApi
             'Message' => 'Proceso efectuado correctamente',
             'Data' => $data,
         ], '200');
+    }
+
+    //	---------------------------------------------------------------------------------------------------------------
+    public function getCenterForUserForApi()
+    {
+        return SecurityAccessWarehouse::where('username', Auth::user()->username)->value('centerid');
+    }
+
+    public function getWarehouseForUserForApi()
+    {
+        return SecurityAccessWarehouse::where('username', Auth::user()->username)->value('warehouseid');
+    }
+
+    public function getResponse($service, $code, $message, $data, $status): JsonResponse
+    {
+        return response()->json([
+            'ServiceName' => $service,
+            'ProcessDate' => Carbon::now()->format('Y-m-d H:m:s'),
+            'Code' => $code,
+            'Message' => $message,
+            'Data' => $data,
+        ], $status);
     }
 
     public function getResponseSuccessWithMessage($service, $data, $message, $code): JsonResponse

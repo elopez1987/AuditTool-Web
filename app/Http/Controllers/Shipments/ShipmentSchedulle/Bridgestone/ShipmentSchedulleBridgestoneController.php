@@ -85,7 +85,7 @@ class ShipmentSchedulleBridgestoneController extends BaseController
                 'se.auxiliary01 as color',
                 'ru.boxnumber',
                 'ru.econumber',
-                DB::raw('CAST(orderdeliveries.loadingdate AS TIME) as eta'), // Obtener solo la hora
+                DB::raw("FORMAT(orderdeliveries.loadingdate, 'HH:mm') as eta"),
                 'sh.totalpieces',
                 'ru.id as folionumber',
                 'sl2.name as stage',

@@ -46,7 +46,7 @@ class InventoryBoxesController extends BaseController
     public function store(CreateNewInventoryRequest $request)
     {
 
-        $total = ReceiptUnit::getCountUnit($request['centerid']);
+        $total = $this->getCountUnit($request['centerid']);
         $inventory = InventoryBox::createNewInventory($request, $total);
         DB::beginTransaction();
         try {
@@ -125,5 +125,10 @@ class InventoryBoxesController extends BaseController
         $inventorybox->save();
 
         return response()->json('Registro actualizado con exito.');
+    }
+
+    private function getCountUnit($centerid)
+    {
+        return ReceiptUnit::whereCenterid($centerid)->whereNotIn('statusid', ['TR'])->count();
     }
 }

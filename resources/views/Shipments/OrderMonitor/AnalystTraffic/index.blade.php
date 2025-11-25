@@ -82,31 +82,18 @@
                                     <th >Turno</th>
                                     <th >Embarque</th>
                                     <th >Estatus</th>
+                                    <th >Precarga</th>
                                     <th >Cortina</th>
                                     <th >¿Llaves?</th>
-                                    <th >Comentario</th>
-                                    <th >E.de llegada</th>
-                                    <th >Operador</th>
-                                    <th >Linea transportista</th>
-                                    <th >Placa de caja</th>
                                     <th >Cliente</th>
                                     <th >Destino</th>
                                     <th >Cita de carga</th>
-                                    <th >Cita con cliente</th>
-                                    <th >Hora de llegada</th>
-                                    <th >mesa de control</th>
-                                    <th >T. de transito</th>
-                                    <th >Aut. de salida</th>
-                                    <th >Salida maxima</th>
-                                    <th >Horas restantes</th>
-                                    <th >D.Negocio</th>
-                                    <th >Planeador</th>
-                                    <th >Precarga</th>
+                                    <th >E.de llegada</th>
                                     <th >F.Patios</th>
-                                    <th >% de armado</th>
-                                    <th >Cajas</th>
-                                    <th >Pallets</th>
-                                    <th>Peso Total</th>
+                                    <th >Linea transportista</th>
+                                    <th >Placa de caja</th>
+                                    <th >Cita con cliente</th>
+                                    <th >Salida maxima</th>
                                 </tr>
                                 </thead>
                             </table>

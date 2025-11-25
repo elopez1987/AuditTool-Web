@@ -43,7 +43,7 @@
 
 @section('script')
     <script src="{{asset('/theme/assets/libs/quill/dist/quill.min.js')}}"></script>
-    @include('SelectDynamics.SelectWarehouseForCenterForCreate')
+    <script src="{{asset('js/selects/warehouse-for-center.js')}}"></script>
     <script>
         var quill = new Quill('#comment', {
             theme: 'snow'
