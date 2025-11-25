@@ -238,7 +238,7 @@
                 </a>
             @endcan
             @can('layoutyard')
-                <a href="{{route('layoutyard')}}" target="_blank">
+                <a href="{{route('layout-stages')}}" target="_blank">
                     <div class="box" data-toggle="tooltip" data-placement="top" title="Muestra el plano digital del patio con información
                      de las unidades, estatus de la ubicación y capacidad de patio.">
                         <i class="lni lni-microsoft"></i>

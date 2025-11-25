@@ -319,7 +319,7 @@ Route::middleware(['auth'])->group(function () {
     //  Patio de toluca one roof en 2d
     Route::get('vitualyard', [YardHenkelTolController::class, 'index'])->name('vitualyard');
     //  Vista de cortinas y stages
-    Route::get('layoutyard', [LayOutDoorAndStageController::class, 'index'])->name('layoutyard');
+    Route::get('layout-stages', [LayOutDoorAndStageController::class, 'index'])->name('layout-stages');
     //  Ticket de pesos de báscula
     Route::resource('receiptunitticket', ReceiptUnitTicketController::class);
     Route::get('getUnitTickets', [ReceiptUnitTicketController::class, 'getUnitTickets'])->name('getUnitTickets');

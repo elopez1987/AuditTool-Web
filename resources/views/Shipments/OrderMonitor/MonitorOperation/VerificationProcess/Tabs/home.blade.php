@@ -65,7 +65,7 @@
     <hr class="mt-5">
     <div class="row mt-5">
         <div class="col-lg-8">
-            <table   class="table table-condensed table-bordered table-striped " style="width:100%">
+            <table   class="table table-condensed table-bordered table-striped  " style="width:100%">
                 <thead>
                 <tr>
                     <th>Número de parte</th>

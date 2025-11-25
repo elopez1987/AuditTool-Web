@@ -10,18 +10,18 @@ trait MonitorTraffic
     {
         return OrderDeliverie::controlAccessUser()
             ->select([
-                'id',
-                'statusid',
-                'shipmentid',
-                'warehouseid',
-                'centerid',
-                'customerid',
-                'carrierid',
-                'folionumber',
-                'turnid',
-                'workday',
-                'loadingdate',
-                'downloaddate',
+                'orderdeliveries.id',
+                'orderdeliveries.statusid',
+                'orderdeliveries.shipmentid',
+                'orderdeliveries.warehouseid',
+                'orderdeliveries.centerid',
+                'orderdeliveries.customerid',
+                'orderdeliveries.carrierid',
+                'orderdeliveries.folionumber',
+                'orderdeliveries.turnid',
+                'orderdeliveries.workday',
+                'orderdeliveries.loadingdate',
+                'orderdeliveries.downloaddate',
             ])
             ->with([
                 'center:centerid,name',

@@ -73,7 +73,7 @@ class RefuseUnitController extends BaseController
         $unit->autorizaoutputdate = now();
         $unit->statusid = 'OU';
         $unit->shipmentid = '';
-        $unit->unitstatusid = '3';
+        $unit->unitstatusid = '1';
         $unit->save();
         StorageUnitTrace::createTraceUnit($unit, '23');
 
