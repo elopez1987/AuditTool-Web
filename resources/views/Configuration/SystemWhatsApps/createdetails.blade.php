@@ -170,8 +170,6 @@
                     "className": "btn btn-outline-info btn-md  btn-bold",
                 }
             ],
-
-
             language: {
                 "decimal": "",
                 "emptyTable": "No hay información",

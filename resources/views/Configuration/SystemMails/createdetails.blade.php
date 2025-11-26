@@ -27,7 +27,7 @@
                         <div class="row">
                             <div class="col-lg-4 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="namemail">Correo <span style="color: red">*</span></label>
+                                    <label for="namemail">Correo </label>
                                     <input type="text" class="form-control" readonly id="namemail" name="namemail"
                                            aria-describedby="namemail" onKeyUp=this.value=this.value.toUpperCase();
                                            value="{{$systemmail->name}}">
@@ -38,7 +38,7 @@
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label for="centerid">Centros de distribución <span
-                                            style="color: red">*</span></label>
+                                                style="color: red">*</span></label>
                                     <select name="centerid" required class="form-control select2">
                                         @foreach($centers as $center)
                                             <option value="{{$center->centerid}}"> {{$center->name}} </option>
@@ -52,7 +52,7 @@
                                     <select name="warehouseid" required class="form-control select2">
                                         @foreach($warehouses as $warehouse)
                                             <option
-                                                value="{{$warehouse->warehouseid}}"> {{$warehouse->name}} </option>
+                                                    value="{{$warehouse->warehouseid}}"> {{$warehouse->name}} </option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -70,7 +70,8 @@
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label for="email">Correo <span style="color: red">*</span></label>
-                                    <input type="email" class="form-control" required id="email" name="email" maxlength="100"
+                                    <input type="email" class="form-control" required id="email" name="email"
+                                           maxlength="100"
                                            aria-describedby="email"
                                            value="{{old('email')}}">
                                 </div>
@@ -80,14 +81,14 @@
 
                     <div class="row">
                         <div class="col-10">
-                            <table class="table table-condensed table-bordered">
+                            <table class="table table-condensed table-bordered tablegeneral">
                                 <thead>
                                 <tr>
-                                    <th width="20%" class="bg-inverse text-white">C. Distribución</th>
-                                    <th width="20%" class="bg-inverse text-white">Bodega</th>
-                                    <th width="35" class="bg-inverse text-white">Nombre de Contacto</th>
-                                    <th width="20" class="bg-inverse text-white">Correo</th>
-                                    <th width="5%" class="bg-inverse text-white">Opciones</th>
+                                    <th width="20%">C. Distribución</th>
+                                    <th width="20%">Bodega</th>
+                                    <th width="35">Nombre de Contacto</th>
+                                    <th width="20">Correo</th>
+                                    <th width="5%">Opciones</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -112,13 +113,9 @@
                             </table>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection
 
 @section('script')
-    @include('SelectDynamics.SelectWarehouseForCenterForIndex')
+    @include('layouts.Partials.DataTable')
 @endsection
 

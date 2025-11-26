@@ -2,5 +2,5 @@
         data-toggle="tooltip" data-placement="top" title="Importar Embarques"
 >
     <img src="{{asset('/ico/import.png')}}" alt="" class="img-16">
-    <span style="font-size: 0.675rem "> Importar</span>
+    <span class="text-button"> Importar</span>
 </button>

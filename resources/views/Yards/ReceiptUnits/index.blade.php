@@ -26,7 +26,7 @@
                                 <a href="" data-target="#modal-filter" data-toggle="modal">
                                     <button type="submit" class="btn waves-effect waves-light btn-outline-info btn-md">
                                         <img src="{{asset('/ico/filter.png')}}" alt="" class="img-16 ml-1">
-                                        <span style="font-size: 0.675rem "> + Filtros</span>
+                                        <span class="text-button"> + Filtros</span>
                                     </button>
                                 </a>
                                 @include('Yards.ReceiptUnits.filters')
