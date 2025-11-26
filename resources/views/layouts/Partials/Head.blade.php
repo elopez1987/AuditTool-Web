@@ -13,9 +13,9 @@
 
     <link rel="stylesheet" href="{{asset('/theme/assets/libs/select2/dist/css/select2.min.css')}}">
     <link rel="stylesheet" href="{{asset('/theme/assets/libs/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css')}}">
-    @yield('css')
     <link rel="stylesheet" href="{{asset('/theme/dist/css/style.css')}}">
-    <link rel="stylesheet" href="{{asset('/css/app.css')}}">
     <link href="https://cdn.lineicons.com/3.0/lineicons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.26.3/dist/sweetalert2.min.css">
+    @yield('css')
+    <link rel="stylesheet" href="{{asset('/css/app.css')}}">
 </head>
