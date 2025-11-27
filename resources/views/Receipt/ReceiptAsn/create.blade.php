@@ -40,9 +40,6 @@
     <script src="{{asset('/theme/assets/libs/quill/dist/quill.min.js')}}"></script>
     <script src="{{asset('js/selects/warehouse-for-center.js')}}"></script>
 
-
-    @include('SelectDynamics.SelectProvidersForWarehouseForCreate')
-
     <script>
         $('.date').bootstrapMaterialDatePicker({
             format: 'YYYY-MM-DD HH:mm',

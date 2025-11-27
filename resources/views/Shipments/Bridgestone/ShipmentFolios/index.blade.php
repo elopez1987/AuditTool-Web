@@ -56,4 +56,74 @@
             $('#table-folios').DataTable().ajax.reload();
         }
     </script>
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", () => {
+
+            // Eliminar registro
+            document.addEventListener("click", async (e) => {
+
+                const btn = e.target.closest(".delete-folio");
+                if (!btn) return;
+
+                e.preventDefault();
+
+                const uuid = btn.dataset.uuid;
+
+                if (!uuid) {
+                    console.error("UUID no encontrado");
+                    return;
+                }
+
+                // Mostrar confirmación
+                const swal = await Swal.fire({
+                    title: "¿Estás seguro?",
+                    text: "Este registro será eliminado permanentemente.",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Sí, eliminar",
+                    cancelButtonText: "Cancelar",
+                    confirmButtonColor: "#d33",
+                });
+
+                if (!swal.isConfirmed) return;
+
+                try {
+                    const response = await fetch(`/storageshipmentfolios/${uuid}`, {
+                        method: "DELETE",
+                        headers: {
+                            "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content,
+                            "Accept": "application/json"
+                        }
+                    });
+
+                    const result = await response.json();
+
+                    if (response.ok) {
+                        await Swal.fire({
+                            title: "Eliminado",
+                            text: result.message || "El registro se eliminó correctamente.",
+                            icon: "success",
+                            timer: 1500,
+                            showConfirmButton: false
+                        });
+                        // Recargar DataTable
+                        $('#table-folios').DataTable().ajax.reload();
+                    } else {
+                        throw result;
+                    }
+
+                } catch (error) {
+                    console.error(error);
+
+                    Swal.fire({
+                        title: "Error",
+                        text: error.message || "No se pudo eliminar el registro.",
+                        icon: "error"
+                    });
+                }
+            });
+        });
+    </script>
 @endsection

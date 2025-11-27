@@ -12041,7 +12041,7 @@ textarea.form-control-lg {
 
 body {
   font-family: sans-serif !important;
-  font-size: 0.775rem !important;
+  font-size: 0.725rem !important;
   line-height: 1.5;
   color: black !important;
   margin: 0;
@@ -12148,7 +12148,7 @@ a {
 }
 label {
   color: black !important;
-  font-size: 0.875rem !important;
+  font-size: 0.755rem !important;
 }
 
 input[type=text], input[type=password], input[type=email], input[type=tel], input[type=number], input[type=select] {
@@ -12453,10 +12453,11 @@ span.select2-container {
 }
 
 .text-button {
-  font-size: 0.875rem !important;
+  font-size: 0.775rem !important;
   font-family: "Open Sans", sans-serif;
   padding-left: 3px;
   padding-right: 3px;
+  text-transform: capitalize;
 }
 
 .page-item.active .page-link {
