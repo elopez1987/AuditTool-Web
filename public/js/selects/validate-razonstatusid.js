@@ -6,7 +6,8 @@ export function initRazonStatusBehavior({
                                             proveedorDivId = "proveedor",
                                             selloDivId = "sello",
                                             containerSealId = "containerseal",
-                                            shipmentIdId = "shipmentid"
+                                            shipmentIdId = "shipmentid",
+                                            baseUrl = ""
                                         } = {}) {
 
     // Verificar que jQuery esté disponible
@@ -20,10 +21,10 @@ export function initRazonStatusBehavior({
         
         // Si razonstatusid es 1 o 2, consultar con parámetro
         if (razonstatusid === "1" || razonstatusid === "2") {
-            url = `/storage-unitstatus/${encodeURIComponent(razonstatusid)}/search`;
+            url = `${baseUrl}/storage-unitstatus/${encodeURIComponent(razonstatusid)}/search`;
         } else {
             // Para otros valores, consultar sin parámetro (0 significa todos)
-            url = `/storage-unitstatus-search`;
+            url = `${baseUrl}/storage-unitstatus-search`;
         }
 
 
