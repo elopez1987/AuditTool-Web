@@ -26,6 +26,8 @@ export function initRazonStatusBehavior({
             // Para otros valores, consultar sin parámetro (0 significa todos)
             url = `${baseUrl}/storage-unitstatus-search`;
         }
+        
+        console.log('Unit Status URL:', url); // Debug
 
 
         try {
@@ -44,10 +46,16 @@ export function initRazonStatusBehavior({
 
             // Limpiar y llenar el select
             $selectElement.empty();
+            $selectElement.append('<option value="">-- Estado de unidad --</option>');
             
             json.Data.forEach(item => {
                 $selectElement.append(`<option value="${item.id}">${item.name}</option>`);
             });
+            
+            // Actualizar Select2 si está inicializado
+            if ($selectElement.hasClass('select2-hidden-accessible')) {
+                $selectElement.trigger('change');
+            }
 
 
         } catch (error) {

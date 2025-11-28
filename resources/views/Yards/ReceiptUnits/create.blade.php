@@ -98,7 +98,7 @@
         initializeZoneLookup("warehouseid", "zoneid", baseUrl);
         initializeLocationLookup("zoneid", "locationid", baseUrl);
         initProviderSelector({ baseUrl: baseUrl });
-        initRazonStatusBehavior();
+        initRazonStatusBehavior({ baseUrl: baseUrl });
         initBoxSearch();
     </script>
 
