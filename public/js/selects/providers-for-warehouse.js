@@ -3,7 +3,7 @@
 export function initProviderSelector({
     warehouseSelectId = "warehouseid",
     providerSelectId = "providerid",
-    baseUrl = "/receipt-providers"
+    baseUrl = ""
 } = {}) {
 
 
@@ -26,10 +26,16 @@ export function initProviderSelector({
             if (!warehouseId) {
                 $providerSelect.empty();
                 $providerSelect.append('<option value="">Seleccione un proveedor</option>');
+                // Actualizar Select2
+                if ($providerSelect.hasClass('select2-hidden-accessible')) {
+                    $providerSelect.trigger('change');
+                }
                 return;
             }
 
-            const url = `${baseUrl}/${encodeURIComponent(warehouseId)}/search`;
+            // Construir URL completa
+            const url = `${baseUrl}/receipt-providers/${encodeURIComponent(warehouseId)}/search`;
+            // console.log('Provider URL:', url); // Debug
 
             try {
                 const response = await fetch(url);
@@ -45,14 +51,12 @@ export function initProviderSelector({
                 const result = await response.json();
 
                 if (!result.Data || !Array.isArray(result.Data) || result.Data.length === 0) {
-                    Swal.fire({
-                        icon: "info",
-                        title: "Sin proveedores",
-                        text: "No existen proveedores para este almacén.",
-                    });
-
                     $providerSelect.empty();
                     $providerSelect.append('<option value="">No hay proveedores</option>');
+                    // Actualizar Select2
+                    if ($providerSelect.hasClass('select2-hidden-accessible')) {
+                        $providerSelect.trigger('change');
+                    }
                     return;
                 }
 
@@ -65,13 +69,24 @@ export function initProviderSelector({
                         $('<option></option>').val(item.id).text(item.name)
                     );
                 });
+                
+                // Actualizar Select2
+                if ($providerSelect.hasClass('select2-hidden-accessible')) {
+                    $providerSelect.trigger('change');
+                }
 
             } catch (error) {
+                // console.error('Error al cargar proveedores:', error);
                 Swal.fire({
                     icon: "error",
                     title: "Error de conexión",
-                    text: "No se pudo obtener la información desde el servidor.",
+                    text: "No se pudo obtener los proveedores desde el servidor. " + error.message,
                 });
+                $providerSelect.empty();
+                $providerSelect.append('<option value="">Error al cargar</option>');
+                if ($providerSelect.hasClass('select2-hidden-accessible')) {
+                    $providerSelect.trigger('change');
+                }
             }
         });
     });

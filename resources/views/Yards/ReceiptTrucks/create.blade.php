@@ -47,6 +47,7 @@
 
 @section('script')
     <script type="module">
+        const baseUrl = "{{ config('app.url') }}";
         const operatorUrl = "{{ asset('js/selects/operator.js') }}";
         const warehouseUrl = "{{ asset('js/selects/warehouse-for-center.js') }}";
         const truckUrl = "{{ asset('js/selects/search-truck.js') }}";
@@ -77,7 +78,7 @@
             truckNumberInputId: "trucknumber",
             ecoNumberInputId: "ecotruck"
         });
-        initializeWarehouseLookup("centerid", "warehouseid");
+        initializeWarehouseLookup("centerid", "warehouseid", baseUrl);
     </script>
 
     <script>

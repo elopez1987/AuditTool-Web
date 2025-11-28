@@ -1,6 +1,6 @@
 // /js/selects/warehouse-for-center.js
 
-export function initializeWarehouseLookup(centerSelectId, warehouseSelectId) {
+export function initializeWarehouseLookup(centerSelectId, warehouseSelectId, baseUrl = '') {
     
     // Función para inicializar el lookup
     const setupLookup = () => {
@@ -34,7 +34,9 @@ export function initializeWarehouseLookup(centerSelectId, warehouseSelectId) {
             return;
         }
 
-        const url = `/system-warehouses/${encodeURIComponent(centerId)}/search`;
+        // Construir URL usando baseUrl si se proporciona
+        const url = `${baseUrl}/system-warehouses/${encodeURIComponent(centerId)}/search`;
+        // console.log('Warehouse URL:', url); // Debug
         
 
 

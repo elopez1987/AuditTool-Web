@@ -31,6 +31,7 @@ export function initializeZoneLookup(warehouseSelectId, zoneSelectId, baseUrl = 
 
             // Construir URL usando baseUrl si se proporciona
             const url = `${baseUrl}/storage-zones/${encodeURIComponent(warehouseId)}/search`;
+            // console.log('Zone URL:', url); // Debug
             try {
                 const response = await fetch(url);
 

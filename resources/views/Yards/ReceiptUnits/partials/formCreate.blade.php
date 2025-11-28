@@ -94,8 +94,7 @@
                             <label for="providerid">Proveedor</label>
                             <select name="providerid" id='providerid'
                                     class="form-control select2 @error('providerid') is-invalid @enderror">
-                                <option value="" selected>Seleccione una opción</option>
-                                <option value="">-- Proveedores --</option>
+                                <option value="">Seleccione un proveedor</option>
                             </select>
                             @error('providerid')
                             <div class="invalid-feedback">{{ $message }}</div>

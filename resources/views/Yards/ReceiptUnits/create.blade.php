@@ -94,10 +94,10 @@
             ecoNumberInputId: "ecotruck"
         });
 
-        initializeWarehouseLookup("centerid", "warehouseid");
+        initializeWarehouseLookup("centerid", "warehouseid", baseUrl);
         initializeZoneLookup("warehouseid", "zoneid", baseUrl);
-        initializeLocationLookup("zoneid", "locationid");
-        initProviderSelector();
+        initializeLocationLookup("zoneid", "locationid", baseUrl);
+        initProviderSelector({ baseUrl: baseUrl });
         initRazonStatusBehavior();
         initBoxSearch();
     </script>
