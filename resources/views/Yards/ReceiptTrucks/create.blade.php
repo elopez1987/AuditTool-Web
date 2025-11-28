@@ -47,10 +47,15 @@
 
 @section('script')
     <script type="module">
-        import {initOperatorLookup} from "/js/selects/operator.js";
-        import {initializeWarehouseLookup} from "/js/selects/warehouse-for-center.js";
-        import {initTruckLookup} from "/js/selects/search-truck.js";
-        import {initCarrierSelector} from "/js/selects/carriers-for-center.js";
+        const operatorUrl = "{{ asset('js/selects/operator.js') }}";
+        const warehouseUrl = "{{ asset('js/selects/warehouse-for-center.js') }}";
+        const truckUrl = "{{ asset('js/selects/search-truck.js') }}";
+        const carrierUrl = "{{ asset('js/selects/carriers-for-center.js') }}";
+        
+        const {initOperatorLookup} = await import(operatorUrl);
+        const {initializeWarehouseLookup} = await import(warehouseUrl);
+        const {initTruckLookup} = await import(truckUrl);
+        const {initCarrierSelector} = await import(carrierUrl);
 
         initOperatorLookup(
             "searchOperator",

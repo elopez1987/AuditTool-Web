@@ -43,7 +43,7 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
-                                                <div class="col-lg-8 col-md-6 col-sm-12">
+                                                <div class="col-lg-12 col-md-6 col-sm-12">
                                                     <table class="table table-condensed  table-bordered table-hover ">
                                                         <thead>
                                                         <tr>
@@ -276,7 +276,7 @@
                                                     </div>
                                                     <hr class="m-t-1">
                                                     <div class="row mt-3">
-                                                        <div class="col-lg-2 col-md-6 col-sm-12">
+                                                        <div class="col-lg-4 col-md-6 col-sm-12">
                                                             <div class="form-group">
                                                                 <label for="supervisor">Supervisor en turno</label>
                                                                 <input type="text" class="form-control" id="supervisor"
@@ -287,7 +287,7 @@
                                                                 >
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-2 col-md-6 col-sm-12">
+                                                        <div class="col-lg-4 col-md-6 col-sm-12">
                                                             <div class="form-group">
                                                                 <label for="checker">Verificador de embarque </label>
                                                                 <input type="text" class="form-control" id="checker"
@@ -314,7 +314,7 @@
 
                                                     </div>
                                                     <div class="row">
-                                                        <div class="col-lg-2 col-md-6 col-sm-12">
+                                                        <div class="col-lg-4 col-md-6 col-sm-12">
                                                             <div class="form-group">
                                                                 <label for="auxiliary02">% de Armado </label>
                                                                 <input type="text"
@@ -327,7 +327,7 @@
                                                                 >
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-2 col-md-6 col-sm-12">
+                                                        <div class="col-lg-4 col-md-6 col-sm-12">
                                                             <div class="form-group">
                                                                 <label for="auxiliary01">Prioridad de embarque </label>
                                                                 <input type="text" class="form-control numeric"
@@ -413,7 +413,7 @@
                                                     </div>
                                                     <hr class="m-t-1">
                                                     <div class="row mt-3 mt-3">
-                                                        <div class="col-lg-6 col-md-6 col-sm-12">
+                                                        <div class="col-lg-8 col-md-6 col-sm-12">
                                                             <label for="comment01" class="form-label">Comentario
                                                                 01</label>
                                                             <textarea class="form-control" id="comment01"
@@ -422,7 +422,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="row mt-3">
-                                                        <div class="col-lg-6 col-md-6 col-sm-12">
+                                                        <div class="col-lg-8 col-md-6 col-sm-12">
                                                             <label for="comment02" class="form-label">Comentario
                                                                 02</label>
                                                             <textarea class="form-control" id="comment02"
@@ -431,7 +431,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="row mt-3">
-                                                        <div class="col-lg-6 col-md-6 col-sm-12">
+                                                        <div class="col-lg-8 col-md-6 col-sm-12">
                                                             <label for="comment03" class="form-label">Comentario
                                                                 03</label>
                                                             <textarea class="form-control" id="comment03"
@@ -472,7 +472,7 @@
                                                     </div>
                                                     <hr class="m-t-1">
                                                     <div class="row mt-3">
-                                                        <div class="col-lg-6">
+                                                        <div class="col-lg-12">
                                                             <table class="table table-bordered table-condensed">
                                                                 <thead>
                                                                 <tr>
@@ -507,7 +507,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="row mt-2">
-                                                        <div class="col-lg-6">
+                                                        <div class="col-lg-12">
                                                             <table
                                                                     class="table table-bordered table-condensed tablegeneral">
                                                                 <thead>

@@ -109,7 +109,7 @@ Route::group(['middleware' => ['role:ADMINISTRADOR']], function () {
     //    Super Usuarios
     Route::resource('superusers', SuperUserController::class)->except(['show', 'edit', 'update']);
 
-    //	Logs de inicio de sesion
+    //	Logs de inicio de sesión
     Route::get('logauthentication', [LogsLoginController::class, 'logauthentication'])->name('logauthentication');
     Route::get('logsloginAuthentication', [LogsLoginController::class, 'logsloginAuthentication'])->name('logsloginAuthentication');
 

@@ -75,8 +75,7 @@
                     <div class="card-input">
                         <div class="row mt-3">
                             <div class="col-lg-12 ">
-                                <table id="table-users"
-                                       class="table table-bordered  table-condensed table-hover">
+                                <table id="table-users" class="table table-bordered  table-condensed table-hover" width="100%">
                                     <thead>
                                     <tr>
                                         <th class="bg-inverse text-white">Nombre</th>
@@ -129,12 +128,10 @@
 @endsection
 
 @section('css')
-    <link rel="stylesheet" href="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.min.css')}}">
 @endsection
 
 
 @section('script')
-    <script src="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.all.min.js')}}"></script>
     @include('Security.Users.partials.table')
     <script>
         function reloadtable() {

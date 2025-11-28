@@ -77,7 +77,15 @@ class ReceiptAsnsController extends BaseController
         $receipt->auxiliary01 = Auth::user()->name;
         $receipt->save();
 
+        if ($request->expectsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Registro de recibo exitoso,Recibo :' . $receipt->shipmentid,
+            ], 200);
+        }
+
         return $this->successResponse('receiptasn.index');
+
     }
 
     public function edit(ReceiptAsn $receiptasn)

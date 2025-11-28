@@ -208,7 +208,12 @@
                                                     @if($check->type == 'IN')
                                                         <tr>
                                                             <td>{{$check->checklistdetail ? $check->checklistdetail->description : ''}}</td>
-                                                            <td class="bg-{{$check->verified == 'NO' ? 'red text-white' : ''}}">{{$check->verified}}</td>
+                                                            <td class="bg
+                                                                {{ $check->verified == 'SI' ? 'bg-green' :
+                                                                   ($check->verified == 'NO' ? 'bg-red' :
+                                                                   ($check->verified == 'NA' ? 'bg-blue' : '')) }}">
+                                                                {{ $check->verified }}
+                                                            </td>
                                                         </tr>
                                                 @endif
                                                 @endforeach

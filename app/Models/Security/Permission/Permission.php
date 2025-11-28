@@ -74,11 +74,6 @@ class Permission extends Model
         return strtoupper($value);
     }
 
-    //    public function setNameAttribute($value)
-    //    {
-    //        $this->attributes['name'] = strtoupper($value);
-    //    }
-
     public function function()
     {
         return $this->belongsTo(SecurityFunction::class, 'functionid');
@@ -91,29 +86,33 @@ class Permission extends Model
 
     public function scopeName($query, $name)
     {
-        if (trim($name) !== '') {
-            $query->where('name', 'like', "%{$name}%");
+        // Avoid deprecated warning in PHP 8.1+: trim(null) is deprecated
+        $name = is_string($name) ? trim($name) : '';
+        if ($name !== '') {
+            $query->where('permissions.name', 'like', "%{$name}%");
         }
     }
 
     public function scopeForModule($query, $moduleid)
     {
-        if ($moduleid !== '') {
-            $query->where('moduleid', '=', $moduleid);
+        if ($moduleid !== null && $moduleid !== '') {
+            $query->where('permissions.moduleid', '=', $moduleid);
         }
     }
 
     public function scopeForFunction($query, $functionid)
     {
-        if ($functionid !== '') {
-            $query->where('functionid', $functionid);
+        if ($functionid !== null && $functionid !== '') {
+            $query->where('permissions.functionid', $functionid);
         }
     }
 
     public function scopeDescription($query, $description)
     {
-        if (trim($description) !== '') {
-            $query->where('description', 'like', "%{$description}%");
+        // Avoid deprecated warning in PHP 8.1+: trim(null) is deprecated
+        $description = is_string($description) ? trim($description) : '';
+        if ($description !== '') {
+            $query->where('permissions.description', 'like', "%{$description}%");
         }
     }
 }

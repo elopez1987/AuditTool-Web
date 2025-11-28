@@ -21,8 +21,8 @@
             }
         },
         "columns": [
-            {data: 'module.description', name: 'module.description'},
-            {data: 'function.description', name: 'function.description'},
+            {data: 'module', name: 'module'},
+            {data: 'function', name: 'function'},
             {data: 'name'},
             {data: 'description'},
             {data: 'guard_name'},

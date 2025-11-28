@@ -40,23 +40,23 @@
                             >
                         </div>
                     </div>
-                    {{--                    <div class="col-lg-3 col-md-6 col-sm-12">--}}
-                    {{--                        <div class="form-group">--}}
-                    {{--                            <label for="turnid">Turno--}}
-                    {{--                                @error("turnid")--}}
-                    {{--                                <span class="message-error">{{$message}}</span>--}}
-                    {{--                                @enderror--}}
-                    {{--                                <span style="color: red">*</span>--}}
-                    {{--                            </label>--}}
-                    {{--                            <select name="turnid" required class="form-control select2">--}}
-                    {{--                                <option value="" selected>Seleccione una opción</option>--}}
-                    {{--                                @foreach($turns as $model)--}}
-                    {{--                                    <option--}}
-                    {{--                                        value="{{$model->id}}" {{ old('turnid') == $model->id ? 'selected' : '' }} > {{$model->name}} </option>--}}
-                    {{--                                @endforeach--}}
-                    {{--                            </select>--}}
-                    {{--                        </div>--}}
-                    {{--                    </div>--}}
+                    <div class="col-lg-3 col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label for="turnid">Turno
+                                @error("turnid")
+                                <span class="message-error">{{$message}}</span>
+                                @enderror
+                                <span style="color: red">*</span>
+                            </label>
+                            <select name="turnid" required class="form-control select2">
+                                <option value="" selected>Seleccione una opción</option>
+                                @foreach($turns as $model)
+                                    <option
+                                            value="{{$model->id}}" {{ old('turnid') == $model->id ? 'selected' : '' }} > {{$model->name}} </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -140,8 +140,7 @@
                     </div>
                     <div class="col-lg-3 col-md-6 col-sm-12">
                         <div class="form-group">
-                            <label for="billoflading">Factura
-                                <span style="color: red">*</span></label>
+                            <label for="billoflading">Factura</label>
                             <input type="text" class="form-control @error('billoflading') is-invalid @enderror"
                                    id="billoflading" name="billoflading"
                                    aria-describedby="billoflading" onKeyUp=this.value=this.value.toUpperCase();
@@ -154,8 +153,7 @@
                     </div>
                     <div class="col-lg-3 col-md-6 col-sm-12">
                         <div class="form-group">
-                            <label for="oc">Orden de compra
-                                <span style="color: red">*</span></label>
+                            <label for="oc">Orden de compra</label>
                             <input type="text" class="form-control @error('oc') is-invalid @enderror"
                                    id="oc" name="oc"
                                    aria-describedby="oc" onKeyUp=this.value=this.value.toUpperCase();

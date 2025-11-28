@@ -35,9 +35,9 @@
 @endsection
 
 @section('script')
-
     <script type="module">
-        import {initializeZoneLookup} from "/js/selects/zone-for-warehouse.js";
+        const moduleUrl = "{{ asset('js/selects/zone-for-warehouse.js') }}";
+        const {initializeZoneLookup} = await import(moduleUrl);
         initializeZoneLookup("warehouseid", "zoneid");
     </script>
 @endsection

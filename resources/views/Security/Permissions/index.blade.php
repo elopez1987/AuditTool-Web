@@ -72,14 +72,14 @@
                             <table id="table-permission"
                                    class="table table-bordered table-condensed table-hover">
                                 <thead>
-                                <tr>
-                                    <th class="bg-inverse text-white">Modulo</th>
-                                    <th class="bg-inverse text-white">Función</th>
-                                    <th class="bg-inverse text-white">Nombre</th>
-                                    <th class="bg-inverse text-white">Descripción</th>
-                                    <th class="bg-inverse text-white">Guard</th>
-                                    <th width="5%" class="bg-inverse text-white">Opciones</th>
-                                </tr>
+                                    <tr>
+                                        <th class="bg-inverse text-white">Modulo</th>
+                                        <th class="bg-inverse text-white">Función</th>
+                                        <th class="bg-inverse text-white">Nombre</th>
+                                        <th class="bg-inverse text-white">Descripción</th>
+                                        <th class="bg-inverse text-white">Guard</th>
+                                        <th width="5%" class="bg-inverse text-white">Opciones</th>
+                                    </tr>
                                 </thead>
                             </table>
                         </div>
