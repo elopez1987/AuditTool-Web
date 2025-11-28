@@ -1,6 +1,6 @@
 // /js/selects/zone-for-warehouse.js
 
-export function initializeZoneLookup(warehouseSelectId, zoneSelectId) {
+export function initializeZoneLookup(warehouseSelectId, zoneSelectId, baseUrl = '') {
     
     // Función para inicializar el lookup
     const setupLookup = () => {
@@ -29,7 +29,8 @@ export function initializeZoneLookup(warehouseSelectId, zoneSelectId) {
                 return;
             }
 
-            const url = `/storage-zones/${encodeURIComponent(warehouseId)}/search`;
+            // Construir URL usando baseUrl si se proporciona
+            const url = `${baseUrl}/storage-zones/${encodeURIComponent(warehouseId)}/search`;
             try {
                 const response = await fetch(url);
 

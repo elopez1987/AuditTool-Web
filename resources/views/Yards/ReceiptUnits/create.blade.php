@@ -47,6 +47,7 @@
 @section('script')
 
     <script type="module">
+        const baseUrl = "{{ url('') }}";
         const operatorUrl = "{{ asset('js/selects/operator.js') }}";
         const warehouseUrl = "{{ asset('js/selects/warehouse-for-center.js') }}";
         const zoneUrl = "{{ asset('js/selects/zone-for-warehouse.js') }}";
@@ -94,7 +95,7 @@
         });
 
         initializeWarehouseLookup("centerid", "warehouseid");
-        initializeZoneLookup("warehouseid", "zoneid");
+        initializeZoneLookup("warehouseid", "zoneid", baseUrl);
         initializeLocationLookup("zoneid", "locationid");
         initProviderSelector();
         initRazonStatusBehavior();
