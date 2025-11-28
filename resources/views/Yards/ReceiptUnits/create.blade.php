@@ -47,7 +47,7 @@
 @section('script')
 
     <script type="module">
-        const baseUrl = "{{ url('') }}";
+        const baseUrl = "{{ config('app.url') }}";
         const operatorUrl = "{{ asset('js/selects/operator.js') }}";
         const warehouseUrl = "{{ asset('js/selects/warehouse-for-center.js') }}";
         const zoneUrl = "{{ asset('js/selects/zone-for-warehouse.js') }}";

@@ -37,7 +37,7 @@
 @section('script')
     <script type="module">
         const moduleUrl = "{{ asset('js/selects/zone-for-warehouse.js') }}";
-        const baseUrl = "{{ url('') }}";
+        const baseUrl = "{{ config('app.url') }}";
         const {initializeZoneLookup} = await import(moduleUrl);
         initializeZoneLookup("warehouseid", "zoneid", baseUrl);
     </script>
