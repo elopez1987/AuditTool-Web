@@ -1,5 +1,5 @@
 
-export function initBoxSearch() {
+export function initBoxSearch(baseUrl = '') {
 
     const btnSearch   = document.getElementById("searchBox");
     const inputBox    = document.getElementById("barcodebox");
@@ -24,7 +24,8 @@ export function initBoxSearch() {
             return;
         }
 
-        const url = `/storage-label-box/${encodeURIComponent(barcode)}/search`;
+        const url = `${baseUrl}/storage-label-box/${encodeURIComponent(barcode)}/search`;
+        console.log('Box URL:', url); // Debug
 
         try {
             const response = await fetch(url);

@@ -65,18 +65,21 @@
                 operatorname: "name",
                 drivernumber: "drivernumber",
                 phone: "phone"
-            }
+            },
+            baseUrl
         );
         initCarrierSelector({
             centerSelectId: "centerid",
             carrierSelectId: "carrierid",
+            baseUrl: baseUrl
         });
         initTruckLookup({
             searchBarcodeButtonId: "searchTruck",
             searchTruckNumberButtonId: "searchTruckNumber",
             barcodeInputId: "barcodetruck",
             truckNumberInputId: "trucknumber",
-            ecoNumberInputId: "ecotruck"
+            ecoNumberInputId: "ecotruck",
+            baseUrl: baseUrl
         });
         initializeWarehouseLookup("centerid", "warehouseid", baseUrl);
     </script>

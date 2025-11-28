@@ -75,7 +75,8 @@
                 operatorname: "name",
                 drivernumber: "drivernumber",
                 phone: "phone"
-            }
+            },
+            baseUrl
         );
 
         initTruckLookup({
@@ -83,7 +84,8 @@
             searchTruckNumberButtonId: "searchTruckNumber",
             barcodeInputId: "barcodetruck",
             truckNumberInputId: "trucknumber",
-            ecoNumberInputId: "ecotruck"
+            ecoNumberInputId: "ecotruck",
+            baseUrl: baseUrl
         });
 
         initShipmentTruckChange({
@@ -91,7 +93,8 @@
             tractoSectionId: "tracto",
             barcodeInputId: "barcodetruck",
             truckNumberInputId: "trucknumber",
-            ecoNumberInputId: "ecotruck"
+            ecoNumberInputId: "ecotruck",
+            baseUrl: baseUrl
         });
 
         initializeWarehouseLookup("centerid", "warehouseid", baseUrl);
@@ -99,7 +102,7 @@
         initializeLocationLookup("zoneid", "locationid", baseUrl);
         initProviderSelector({ baseUrl: baseUrl });
         initRazonStatusBehavior({ baseUrl: baseUrl });
-        initBoxSearch();
+        initBoxSearch(baseUrl);
     </script>
 
     <script>

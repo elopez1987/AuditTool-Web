@@ -1,6 +1,6 @@
 // public/js/selects/operator.js
 
-export function initOperatorLookup(buttonId, inputBarcodeId, fieldsMap = {}) {
+export function initOperatorLookup(buttonId, inputBarcodeId, fieldsMap = {}, baseUrl = '') {
 
     document.addEventListener("DOMContentLoaded", () => {
 
@@ -23,7 +23,8 @@ export function initOperatorLookup(buttonId, inputBarcodeId, fieldsMap = {}) {
                 return;
             }
 
-            const url = `/storage-operator/${encodeURIComponent(barcode)}/search`;
+            const url = `${baseUrl}/storage-operator/${encodeURIComponent(barcode)}/search`;
+            console.log('Operator URL:', url); // Debug
 
             try {
                 const response = await fetch(url);

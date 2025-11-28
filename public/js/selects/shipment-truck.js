@@ -5,7 +5,8 @@ export function initShipmentTruckChange({
                                             tractoSectionId = "tracto",
                                             barcodeInputId = "barcodetruck",
                                             truckNumberInputId = "trucknumber",
-                                            ecoNumberInputId = "ecotruck"
+                                            ecoNumberInputId = "ecotruck",
+                                            baseUrl = ""
                                         } = {}) {
 
     // Verificar que jQuery esté disponible
@@ -28,7 +29,9 @@ export function initShipmentTruckChange({
             if (!truckId || truckId === "") {
                 return;
             }
-            const url = `/shipment-truck/${encodeURIComponent(truckId)}/search`;
+            // Construir URL usando baseUrl
+            const url = `${baseUrl}/shipment-truck/${encodeURIComponent(truckId)}/search`;
+            console.log('Shipment Truck URL:', url); // Debug
             try {
                 const response = await fetch(url);
                 if (!response.ok) {
