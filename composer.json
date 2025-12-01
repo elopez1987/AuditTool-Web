@@ -64,7 +64,10 @@
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/"
-        }
+        },
+        "exclude-from-classmap": [
+            "app/vendor/_laravel_idea/"
+        ]
     },
     "minimum-stability": "dev",
     "prefer-stable": true,

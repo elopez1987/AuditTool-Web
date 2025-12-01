@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Jobs\Embarques;
+namespace App\Jobs\Embarques\Mensajes;
 
 use App\Models\Configuration\Parameters\SystemDetailParameter;
 use App\Models\Configuration\WhatsApp\SystemDetailWhatsApp;

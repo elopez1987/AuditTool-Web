@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Shipments\MonitorOperation\Events;
 
 use App\Http\Controllers\BaseController;
+use App\Jobs\Embarques\Correos\EnviarCorreoDocumentosEnviadosFacturacionJob;
 use App\Jobs\Embarques\Mensajes\EnviarMensajeAFacturacionDocumentosEnviadosJob;
 use App\Models\Shipments\OrderDeliverie;
 use App\Models\Shipments\OrderdeliveryTrace;
@@ -29,9 +30,12 @@ class SendDocumentOrderDeliveryController extends BaseController
             $this->updateShipmentHeader($orderDelivery);
             $this->updateShipmentSeal($orderDelivery);
 
-            $parameter = $this->getParametersOfWarehouse($orderDelivery->warehouseid);
-            if (! empty($parameter) && in_array('SWH-16', (array) $parameter)) {
+            $parameterNotificationWarehouse = $this->getParameterNotificacionWarehouse($orderDelivery->warehouseid);
+            if (! empty($parameterNotificationWarehouse) && in_array('MWH-02', (array) $parameterNotificationWarehouse)) {
                 EnviarMensajeAFacturacionDocumentosEnviadosJob::dispatch($orderDelivery);
+            }
+            if (! empty($parameterNotificationWarehouse) && in_array('MWH-09', (array) $parameterNotificationWarehouse)) {
+                EnviarCorreoDocumentosEnviadosFacturacionJob::dispatch($orderDelivery);
             }
 
             OrderdeliveryTrace::saveEventShipment($orderDelivery, 'EEM-09', $statusold);

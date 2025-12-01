@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Jobs\Embarques;
+namespace App\Jobs\Embarques\Correos;
 
 use App\Mail\Bridgestone\DifferenceWeightUnitMail;
 use App\Models\Configuration\Mails\SystemDetailMail;

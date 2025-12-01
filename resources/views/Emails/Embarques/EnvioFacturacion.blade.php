@@ -23,24 +23,18 @@
                         <table width="100%" style="font-size: 14px; color:#333;">
                             <tr>
                                 <td style="padding: 6px 0;">
-                                    <strong>Bodega:</strong> {{$shipment->warehouse ? $shipment->warehouse->name : ''}}
+                                    <strong>Bodega:</strong> {{$orderDeliverie->warehouse ? $orderDeliverie->warehouse->name : ''}}
                                 </td>
                             </tr>
                             <tr>
-                                <td style="padding: 6px 0;"><strong>Número de embarque:</strong> {{$shipment->shipmentid}}</td>
+                                <td style="padding: 6px 0;"><strong>Número de embarque:</strong> {{$orderDeliverie->shipmentid}}</td>
                             </tr>
                             <tr>
-                                <td style="padding: 6px 0;"><strong>Línea de transporte:</strong> {{$shipment->carrier ? $shipment->carrier->name : ''}}</td>
+                                <td style="padding: 6px 0;"><strong>Línea de transporte:</strong> {{$orderDeliverie->carrier ? $orderDeliverie->carrier->name : ''}}</td>
                             </tr>
                             <tr>
-                                <td style="padding: 6px 0;"><strong>Fecha y hora de registro:</strong> {{$shipment->operation ? $shipment->operation->senddocument : ''}}</td>
+                                <td style="padding: 6px 0;"><strong>Fecha y hora de registro:</strong> {{$orderDeliverie->operation ? $orderDeliverie->operation->senddocument : ''}}</td>
                             </tr>
-{{--                            <tr>--}}
-{{--                                <td style="padding: 6px 0;"><strong>Placa de caja:</strong> {{$shipment->boxnumber}}</td>--}}
-{{--                            </tr>--}}
-{{--                            <tr>--}}
-{{--                                <td style="padding: 6px 0;"><strong>Eco. de caja:</strong> {{$shipment->econumber }}</td>--}}
-{{--                            </tr>--}}
                         </table>
 
                         <hr style="border: 0; border-top: 1px solid #dcdcdc; margin:20px 0;">
