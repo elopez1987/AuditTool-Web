@@ -18,6 +18,7 @@ use App\Http\Controllers\Configuration\NameSystem\NameSystemController;
 use App\Http\Controllers\Configuration\Parameter\SystemDetailParametersController;
 use App\Http\Controllers\Configuration\Parameter\SystemParameterController;
 use App\Http\Controllers\Configuration\Printers\SystemPrintersController;
+use App\Http\Controllers\Configuration\Schemas\ImportStatusController;
 use App\Http\Controllers\Configuration\Schemas\SystemSchemaController;
 use App\Http\Controllers\Configuration\Schemas\SystemStatusController;
 use App\Http\Controllers\Configuration\StorageReason\StorageReasonController;
@@ -56,6 +57,8 @@ Route::middleware(['auth'])->group(function () {
     //    Actualizar estatus desde detalle de esquema
     Route::put('updatestatus/{id}', [SystemStatusController::class, 'updateStatus'])->name('updateStatus');
     Route::delete('deletestatus/{id}', [SystemStatusController::class, 'destroystatus'])->name('deletestatus');
+    //	Importar estatus
+    Route::put('import-status/{id}', [ImportStatusController::class, 'index'])->name('import-status');
 
     //    ---------------------------------------------------- Logs del sistema --------------------------------------------
     Route::resource('activitylog', ActivityLogController::class);
