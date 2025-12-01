@@ -9,18 +9,32 @@
             </select>
         </div>
     </div>
-    <div class="col-lg-3 col-md-6 col-sm-12">
-            <div class="form-group">
-                <label for="name">Nombre</label>
-                <input type="text" class="form-control @error('name') is-invalid @enderror"
-                       id="name" name="name" maxlength="50"
-                       aria-describedby="name" value="{{old('name')}}"
-                       onKeyUp=this.value=this.value.toUpperCase()
-                >
-            </div>
+    <div class="col-lg-2 col-md-6 col-sm-12">
+        <div class="form-group">
+            <label for="warehouseid">Bodega<span style="color: red">*</span></label>
+            <select name="warehouseid" id="warehouseid" class="form-control select2">
+                @foreach($warehouses as $model)
+                    <option value="{{$model->warehouseid}}"> {{$model->name}} </option>
+                @endforeach
+            </select>
+        </div>
     </div>
 </div>
 <div class="row">
+    <div class="col-lg-4 col-md-6 col-sm-12">
+        <div class="form-group">
+            <label for="name">Nombre</label>
+            <input type="text" class="form-control @error('name') is-invalid @enderror"
+                   id="name" name="name" maxlength="50"
+                   aria-describedby="name" value="{{old('name')}}"
+                   onKeyUp=this.value=this.value.toUpperCase()
+            >
+        </div>
+    </div>
+</div>
+
+<div class="row">
+
     <div class="col-lg-2 col-md-6 col-sm-12">
             <div class="form-group">
                 <label for="auxiliary01">Auxiliar 01</label>

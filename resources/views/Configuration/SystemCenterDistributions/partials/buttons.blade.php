@@ -26,3 +26,10 @@
         <img src="{{asset('/ico/phone.png')}}" alt="" class="img-16 ml-2">
     </a>
 @endcan
+@can('systemcenterdistributions.notification')
+    <a href="{{url('systemcenterdistributions/' . $centerid . '/notifications')}}" data-toggle="tooltip"
+       data-placement="top"
+       title="Notificaciones">
+        <img src="{{asset('/ico/telegram_icon_130816.png')}}" alt="" class="img-16 ml-2">
+    </a>
+@endcan

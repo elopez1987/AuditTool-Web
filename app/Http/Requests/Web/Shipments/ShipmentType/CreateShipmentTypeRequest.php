@@ -10,6 +10,7 @@ class CreateShipmentTypeRequest extends FormRequest
     {
         return [
             'centerid' => 'required|string|max:15|exists:systemcenterdistributions,centerid',
+            'warehouseid' => 'required|string|max:15|exists:systemwarehouses,warehouseid',
             'name' => 'required|string|max:50',
             'auxiliary01' => 'nullable|string|max:190',
             'auxiliary02' => 'nullable|string|max:190',

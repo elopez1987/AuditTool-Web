@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Configuration\Labels\PrinterLabelStockController;
+use App\Http\Controllers\Yard\Carriers\ContactsCarriersController;
 use App\Http\Controllers\Yard\Carriers\ImportCarriersController;
 use App\Http\Controllers\Yard\Carriers\ParameterCarrierController;
 use App\Http\Controllers\Yard\Carriers\ShipmentCarrierController;
@@ -210,9 +211,21 @@ Route::middleware(['auth'])->group(function () {
     //    ---------------------------------------------- Lineas de transporte ----------------------------------------------------
     Route::resource('shipmentcarriers', ShipmentCarrierController::class);
     Route::get('getDataCarriers', [ShipmentCarrierController::class, 'getDataCarriers'])->name('getDataCarriers');
+    //	Parametrizar líneas de transporte
     Route::get('shipmentcarriers/{id}/parameters', [ParameterCarrierController::class, 'parameters'])->name('shipmentcarriers.parameters');
     Route::put('addparameterscarrier/{id}', [ParameterCarrierController::class, 'addparameterscarrier'])->name('addparameterscarrier');
+    //	Subir logo y QR a línea de transporte
     Route::post('uploadfilecarriers', [ImportCarriersController::class, 'importcarriers'])->name('uploadfilecarriers');
+    //	Agregar contactos a las líneas de transporte
+
+    // //  Obtener listado de contactos PARA UN CARRIER específico (usa {id})
+    Route::get('shipmentcarriers/{id}/contacts', [ContactsCarriersController::class, 'index'])->name('shipmentcarriers.contacts');
+    // //  API para DataTables (AJAX) – recibe carrierid por request, NO por URL
+    Route::get('contacts-carriers', [ContactsCarriersController::class, 'ContactsForCarrier'])->name('contacts-carriers');
+    // //  Actualizar / crear contacto
+    Route::put('shipmentcarriers-contacts/{id}', [ContactsCarriersController::class, 'update'])->name('shipmentcarriers-contacts.update');
+    //	Eliminar contacto
+    Route::delete('contacts-carriers/{id}', [ContactsCarriersController::class, 'destroy'])->name('contacts-carriers.destroy');
 
     //    ---------------------------------------------------- Clientes ----------------------------------------------------
     Route::resource('ordercustomers', OrderCustomerController::class);

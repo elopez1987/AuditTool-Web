@@ -3,6 +3,7 @@
 namespace App\Models\Yard;
 
 use App\Models\Configuration\Schemas\SystemStatus;
+use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\User;
 use Auth;
 use Carbon\Carbon;
@@ -81,6 +82,7 @@ class ReceiptUnitTicket extends Model
     protected $table = 'storagereceiptunitticket';
 
     protected $fillable = [
+        'centerid', 'warehouseid',
         'folionumber', 'ticket', 'weightin',
         'weightout', 'createuser', 'updateuser',
         'responsibleid', 'areaid', 'contentid',
@@ -107,6 +109,15 @@ class ReceiptUnitTicket extends Model
         'diferencia_redondeada',
         'diferencia_porcentaje',
     ];
+
+    public static function controlAccessUser()
+    {
+        $warehouses = SecurityAccessWarehouse::Warehouses();
+        $centers = SecurityAccessWarehouse::Centers();
+
+        return static::whereIn('storagereceiptunitticket.warehouseid', $warehouses)
+            ->whereIn('storagereceiptunitticket.centerid', $centers);
+    }
 
     public function getDiferenciaPesoAttribute()
     {
@@ -197,6 +208,8 @@ class ReceiptUnitTicket extends Model
     public static function createNewTicketUnit(Request $request, $folionumber)
     {
         ReceiptUnitTicket::create([
+            'centerid' => $folionumber->centerid,
+            'warehouseid' => $folionumber->warehouseid,
             'folionumber' => $folionumber->id,
             'ticket' => $request['tiket'],
             'weightin' => $request['weightin'],

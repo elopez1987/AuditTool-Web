@@ -1,6 +1,47 @@
 <div class="row">
     <div class="col-lg-2 col-md-6 col-sm-12">
         <div class="form-group">
+            <label for="centerid">Centros de distribución <span style="color: red">*</span></label>
+            <select name="centerid" id="centerid"
+                    class="form-control select2 @error('centerid') is-invalid @enderror">
+                @foreach($centers as $center)
+                    <option value="{{$center->centerid}}"
+                            @if($center->centerid == $receiptunit->centerid)
+                                selected="selected"
+                            @endif>
+                        {{$center->name}}
+                    </option>
+                @endforeach
+            </select>
+            @error('centerid')
+            <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+    </div>
+    <div class="col-lg-2 col-md-6 col-sm-12">
+        <div class="form-group">
+            <label for="warehouseid">Bodega <span style="color: red">*</span></label>
+            <select name="warehouseid" id="warehouseid"
+                    class="form-control select2 @error('warehouseid') is-invalid @enderror">
+                @foreach($warehouses as $model)
+                    <option value="{{$model->warehouseid}}"
+                            @if($model->warehouseid == $receiptunit->warehouseid)
+                                selected="selected"
+                            @endif>
+                        {{$model->name}}
+                    </option>
+                @endforeach
+            </select>
+            @error('warehouseid')
+            <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-2 col-md-6 col-sm-12">
+        <div class="form-group">
             <label for="operatorname">Nombre de operador </label>
             <input type="text" class="form-control" id="operatorname" required name="operatorname" maxlength="100"
                    aria-describedby="auxiliary01" value="{{$receiptunit->operatorname}}"
@@ -35,7 +76,7 @@
                     <option value="{{$model->id}}"
                             @if($model->id == $receiptunit->carrierid)
                                 selected="selected"
-                        @endif>
+                            @endif>
                         {{$model->name}}
                     </option>
                 @endforeach

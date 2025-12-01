@@ -23,6 +23,7 @@
         },
         "columns": [
             {data: 'center.description', name: 'center.description'},
+            {data: 'warehouse.name', name: 'warehouse.name'},
             {data: 'name'},
             {data: 'carrierid'},
             {data: 'auxiliary01'},

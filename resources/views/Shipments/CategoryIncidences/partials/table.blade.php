@@ -19,6 +19,7 @@
         },
         "columns": [
             {data: 'center'},
+            {data: 'warehousename'},
             {data: 'description'},
             {data: 'auxiliary01'},
             {data: 'auxiliary02'},
@@ -29,8 +30,8 @@
             {data: 'btn'},
         ],
         "columnDefs": [
-            {"width": "100px", "targets": 0},
-            {"width": "550px", "targets": 1},
+            {"width": "250px", "targets": 0},
+            {"width": "250px", "targets": 1},
             {"width": "250px", "targets": 2},
             {"width": "320px", "targets": 3},
             {"width": "220px", "targets": 4},
@@ -38,6 +39,7 @@
             {"width": "220px", "targets": 6},
             {"width": "220px", "targets": 7},
             {"width": "220px", "targets": 8},
+            {"width": "220px", "targets": 9},
         ],
 
         "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',

@@ -42,7 +42,7 @@
                 {data: 'btn'},
             ],
             "columnDefs": [
-                {"width": "350px", "targets": 0},
+                {"width": "250px", "targets": 0},
                 {"width": "180px", "targets": 1},
                 {"width": "150px", "targets": 2},
                 {"width": "250px", "targets": 3},

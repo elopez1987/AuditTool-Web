@@ -9,6 +9,18 @@
             </select>
         </div>
     </div>
+    <div class="col-lg-2 col-md-6 col-sm-12">
+        <div class="form-group">
+            <label for="warehouseid">Bodega <span style="color: red">*</span></label>
+            <select name="warehouseid" id="warehouseid" class="form-control select2">
+                @foreach($warehouses as $model)
+                    <option value="{{$model->warehouseid}}"> {{$model->name}} </option>
+                @endforeach
+            </select>
+        </div>
+    </div>
+</div>
+<div class="row">
     <div class="col-lg-3 col-md-6 col-sm-12">
         <div class="form-group">
             <label for="description">Descripción <span style="color: red">*</span></label>

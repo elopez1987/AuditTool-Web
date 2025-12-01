@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Configuration\CenterDistribution\CenterParameterController;
+use App\Http\Controllers\Configuration\CenterDistribution\NotificationCenterController;
 use App\Http\Controllers\Configuration\CenterDistribution\SystemCenterDistributionController;
 use App\Http\Controllers\Configuration\CenterDistribution\SystemCenterDistributionFolderController;
 use App\Http\Controllers\Configuration\CommandJobs\CommandController;
@@ -24,6 +25,7 @@ use App\Http\Controllers\Configuration\StorageTaskMails\StorageTaskMailsControll
 use App\Http\Controllers\Configuration\StorageTaskWhatsapp\StorageTaskWhatsappController;
 use App\Http\Controllers\Configuration\TablesDataBase\DataBaseController;
 use App\Http\Controllers\Configuration\TablesDataBase\SystemTableController;
+use App\Http\Controllers\Configuration\Warehouses\NotificactionWarehouseController;
 use App\Http\Controllers\Configuration\Warehouses\ParameterWarehousesController;
 use App\Http\Controllers\Configuration\Warehouses\SetWarehouseController;
 use App\Http\Controllers\Configuration\Warehouses\SystemWarehouseController;
@@ -79,6 +81,9 @@ Route::middleware(['auth'])->group(function () {
     //    Creacion de directorios para el centro de distribucion
     Route::get('systemcenterdistributions/{id}/folder', [SystemCenterDistributionFolderController::class, 'index'])->name('systemcenterdistributions.folder');
     Route::put('systemcenterdistributionfolder/{id}', [SystemCenterDistributionFolderController::class, 'systemcenterdistributionfolder'])->name('systemcenterdistributionfolder');
+    //	Parametrizar mensajes de bodega
+    Route::get('systemcenterdistributions/{id}/notifications', [NotificationCenterController::class, 'index'])->name('systemwarehouses.notifications');
+    Route::put('systemcenternotifications/{id}', [NotificationCenterController::class, 'systemcenternotifications'])->name('systemcenternotifications');
 
     //    ---------------------------------------------------- Bodegas  ----------------------------------------------------
     Route::resource('systemwarehouses', SystemWarehouseController::class);
@@ -86,6 +91,10 @@ Route::middleware(['auth'])->group(function () {
     //    Parametros de bodegas
     Route::get('systemwarehouses/{id}/parameters', [ParameterWarehousesController::class, 'parameters'])->name('systemwarehouses.parameters');
     Route::put('systemwarehouseparameters/{id}', [ParameterWarehousesController::class, 'systemwarehouseparameters'])->name('systemwarehouseparameters');
+    //	Parametrizar mensajes de bodega
+    Route::get('systemwarehouses/{id}/notifications', [NotificactionWarehouseController::class, 'index'])->name('systemwarehouses.notifications');
+    Route::put('systemwarehousenotifications/{id}', [NotificactionWarehouseController::class, 'systemwarehousenotifications'])->name('systemwarehousenotifications');
+
     //    Seteo de bodega a usuario
     Route::get('setwarehouse', [SetWarehouseController::class, 'index'])->name('setwarehouse');
     Route::put('setwarehousestore/{username}', [SetWarehouseController::class, 'setwarehousestore'])->name('setwarehousestore');

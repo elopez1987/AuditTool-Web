@@ -207,8 +207,11 @@ class ReceiptUnitController extends BaseController
         $carriers = $this->getCarriersForSelect();
         $movents = $this->typeReasonInActiveToSelect();
         $unittypeid = $this->getUnitType();
+        $centers = $this->getCenterForSelect();
+        $warehouses = $this->getWarehouseForSelect();
 
-        return view("{$this->viewPath}.edit", compact('receiptunit', 'carriers', 'movents', 'unittypeid'));
+        return view("{$this->viewPath}.edit",
+            compact('receiptunit', 'carriers', 'movents', 'unittypeid', 'centers', 'warehouses'));
     }
 
     public function update(ReceiptUnit $receiptunit, Request $request): RedirectResponse

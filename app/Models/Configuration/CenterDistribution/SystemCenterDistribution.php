@@ -88,6 +88,7 @@ class SystemCenterDistribution extends Model
         'auxiliary04',
         'auxiliary05',
         'statusid',
+        'notificationsflags',
     ];
 
     protected $hidden = [
@@ -103,6 +104,7 @@ class SystemCenterDistribution extends Model
 
     protected $casts = [
         'configurationflag' => 'array',
+        'notificationsflags' => 'array',
         'auxiliary05' => 'array',
     ];
 

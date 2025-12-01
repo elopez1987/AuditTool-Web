@@ -20,8 +20,9 @@ class ReceiptUnitTicketController extends BaseController
 
     public function getUnitTickets(Request $request)
     {
-        $data = ReceiptUnitTicket::with(['folio', 'status'])->take(500)->orderBy('id', 'desc')
-            ->get();
+        $data = ReceiptUnitTicket::controlAccessUser()
+            ->with(['folio', 'status:statusid,name'])
+            ->take(500)->orderBy('id', 'desc');
 
         return DataTables::of($data)
             ->addColumn('btn', 'Yards.ReceiptUnitTicket.partials.buttons')
@@ -57,6 +58,8 @@ class ReceiptUnitTicketController extends BaseController
         try {
             $folio = SystemFolio::controlAccessUser()->where('statusid', '=', 'BAS')->first();
             ReceiptUnitTicket::create([
+                'centerid' => $receiptunit->centerid,
+                'warehouseid' => $receiptunit->warehouseid,
                 'folionumber' => $receiptunit->id,
                 'ticket' => $folio->folionumber,
                 'boxnumber' => $receiptunit->boxnumber,

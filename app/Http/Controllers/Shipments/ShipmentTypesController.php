@@ -19,7 +19,8 @@ class ShipmentTypesController extends BaseController
 
     public function getDataShipmentTypes(Request $request)
     {
-        $data = ShipmentType::controlAccessUser()->with('status', 'center')
+        $data = ShipmentType::controlAccessUser()
+            ->with(['status:statusid,name', 'center:centerid,name,description', 'warehouse:warehouseid,name'])
             ->Name($request->get('name'))->get();
 
         return $this->showDataToView($data, 'Shipments.ShipmentTypes.partials.buttons');
@@ -29,8 +30,9 @@ class ShipmentTypesController extends BaseController
     {
         $this->authorize('shipmenttypes.create');
         $centers = $this->getCenterForSelect();
+        $warehouses = $this->getWarehouseForSelect();
 
-        return view('Shipments.ShipmentTypes.create', compact('centers'));
+        return view('Shipments.ShipmentTypes.create', compact('centers', 'warehouses'));
     }
 
     public function store(CreateShipmentTypeRequest $request)

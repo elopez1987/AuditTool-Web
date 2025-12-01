@@ -2,9 +2,9 @@
 
 namespace App\Http\Services\Receipt;
 
-use App\Models\Configuration\Mails\StorageTaskMail;
+use App\Jobs\Recibos\CorreoLlegadaUnidadDeReciboJob;
+use App\Jobs\Recibos\MensajeLLegadaDeUnidadJob;
 use App\Models\Configuration\Parameters\SystemDetailParameter;
-use App\Models\Configuration\WhatsApp\StorageTaskWhatsapp;
 use App\Models\General\StorageComment;
 use App\Models\Receipt\ReceiptAsn;
 use App\Models\Receipt\ReceiptProvider;
@@ -109,6 +109,15 @@ class ServiceReceiptUnit
             }
         }
 
+        if ($request['razonstatusid'] == '1' || $request['razonstatusid'] == '2') {
+            if (! empty($parameter) && in_array('SWH-29', (array) $parameter)) {
+                MensajeLLegadaDeUnidadJob::dispatch($receiptunit);
+            }
+            if (! empty($parameter) && in_array('SWH-30', (array) $parameter)) {
+                CorreoLlegadaUnidadDeReciboJob::dispatch($receiptunit);
+            }
+        }
+
         if ($request['razonstatusid'] === '2') {
 
             $receipt = ReceiptAsn::searchReceiptInCheckIn($request['shipmentid']);
@@ -118,13 +127,6 @@ class ServiceReceiptUnit
 
             if (! empty($parameter) && in_array('SWH-07', (array) $parameter)) {
                 self::createNewReceiptAsnInCheckIn($request, $receiptunit);
-            }
-
-            if (! empty($parameter) && in_array('SWH-29', (array) $parameter)) {
-                StorageTaskWhatsapp::createNewTask($receiptunit, $receiptunit->id, 'WTH-INGREREC', $request['providerid']);
-            }
-            if (! empty($parameter) && in_array('SWH-30', (array) $parameter)) {
-                StorageTaskMail::createNewTaskMailReceipt($receiptunit);
             }
         }
 
