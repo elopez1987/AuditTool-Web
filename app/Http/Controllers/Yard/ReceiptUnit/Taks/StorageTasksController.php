@@ -91,9 +91,9 @@ class StorageTasksController extends BaseController
             $razonstatusid = $this->getRazonStatus($zone);
             $task = $this->createNewTask($receiptunit, $razonstatusid, $request);
             StorageUnitTrace::createTraceUnit($receiptunit, '4');
-            $parameter = $this->getParametersOfWarehouse($receiptunit->warehouseid);
+            $parameterNotificacionWarehouse = $this->getParameterNotificacionWarehouse($receiptunit->warehouseid);
 
-            if (! empty($parameter) && in_array('SWH-11', (array) $parameter)) {
+            if (! empty($parameterNotificacionWarehouse) && in_array('MWH-01', (array) $parameterNotificacionWarehouse)) {
                 $this->sendMessageNewTask($task);
             }
 

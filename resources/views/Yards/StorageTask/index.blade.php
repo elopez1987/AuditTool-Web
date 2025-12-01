@@ -161,10 +161,31 @@
                 
                 if (!zoneId) return;
                 
-                $.getJSON(`{{ url('getLocationForZone') }}/${zoneId}`, function(locs) {
-                    locs.forEach(l => $loc.append(`<option value="${l.id}">${l.name}</option>`));
-                }).fail(function() {
-                    console.error('Error loading locations');
+                const baseUrl = "{{ config('app.url') }}";
+                const url = `${baseUrl}/storage-locations/${zoneId}/search`;
+                console.log('Loading locations from:', url); // Debug
+                
+                $.ajax({
+                    url: url,
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.Data && Array.isArray(response.Data)) {
+                            response.Data.forEach(l => {
+                                $loc.append(`<option value="${l.id}">${l.name}</option>`);
+                            });
+                        }
+                        // Trigger change for Select2
+                        $loc.trigger('change');
+                    },
+                    error: function(xhr) {
+                        console.error('Error loading locations:', xhr);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'No se pudieron cargar las ubicaciones'
+                        });
+                    }
                 });
             });
 

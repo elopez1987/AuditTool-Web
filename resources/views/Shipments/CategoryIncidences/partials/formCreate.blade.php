@@ -34,11 +34,15 @@
 <div class="row">
     <div class="col-lg-2 col-md-6 col-sm-12">
         <div class="form-group">
-            <label for="auxiliary01">Auxiliar 01</label>
-            <input type="text" class="form-control @error('auxiliary01') is-invalid @enderror"
-                   id="auxiliary01" name="auxiliary01" maxlength="3"
-                   onKeyUp=this.value=this.value.toUpperCase()
-                   aria-describedby="auxiliary01" value="{{old('auxiliary01')}}">
+            <label for="auxiliary01">Tipo</label>
+            <select name="auxiliary01" id="auxiliary01" class="form-control select2">
+                <option value="REC">CATEGORIAS DE RECIBO</option>
+                <option value="SHP">CONCEPTOS DE INCIDENCIA DE EMBARQUES</option>
+                <option value="CFE">CONCEPTOS DE FALTANTES EN EMBARQUES</option>
+                <option value="KEY">CONCEPTOS PARA FIRMA DE INCIDENCIAS</option>
+                <option value="INC">CONCEPTOS DE INCIDENCIAS DE EMBARQUES EN LA ENTREGA TARDIA CON CLIENTE</option>
+                <option value="SAL">CONCEPTOS DE SALIDAS TARDE DE EMBARQUES</option>
+            </select>
         </div>
     </div>
     <div class="col-lg-2 col-md-6 col-sm-12">

@@ -35,6 +35,11 @@ trait GetParameters
             ->where('defaultlevel', 'S')->value('centerid');
     }
 
+    public function getParameterNotificacionWarehouse($warehouseid)
+    {
+        return SystemWarehouse::whereWarehouseid($warehouseid)->value('notificationsflags');
+    }
+
     public function getParametersOfWarehouse($warehouseid)
     {
         return SystemWarehouse::whereWarehouseid($warehouseid)->value('configurationflag');
