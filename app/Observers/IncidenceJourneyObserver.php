@@ -12,8 +12,8 @@ class IncidenceJourneyObserver
 
     public function created(StorageIncidenceJourney $storageIncidenceJourney)
     {
-        $parameter = $this->getParametersOfWarehouse($storageIncidenceJourney->warehouseid);
-        if (in_array('SWH-28', $parameter)) {
+        $parameter = $this->getParameterNotificacionWarehouse($storageIncidenceJourney->warehouseid);
+        if (in_array('MWH-05', $parameter)) {
             StorageTaskWhatsapp::create([
                 'centerid' => $storageIncidenceJourney->centerid,
                 'warehouseid' => $storageIncidenceJourney->warehouseid,

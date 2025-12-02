@@ -109,11 +109,12 @@ class ServiceReceiptUnit
             }
         }
 
+        $parameterNotificationWarehouse = $this->getParameterNotificacionWarehouse($receiptunit->warehouseid);
         if ($request['razonstatusid'] == '1' || $request['razonstatusid'] == '2') {
-            if (! empty($parameter) && in_array('SWH-29', (array) $parameter)) {
+            if (! empty($parameterNotificationWarehouse) && in_array('MWH-06', (array) $parameterNotificationWarehouse)) {
                 MensajeLLegadaDeUnidadJob::dispatch($receiptunit);
             }
-            if (! empty($parameter) && in_array('SWH-30', (array) $parameter)) {
+            if (! empty($parameterNotificationWarehouse) && in_array('MWH-07', (array) $parameterNotificationWarehouse)) {
                 CorreoLlegadaUnidadDeReciboJob::dispatch($receiptunit);
             }
         }

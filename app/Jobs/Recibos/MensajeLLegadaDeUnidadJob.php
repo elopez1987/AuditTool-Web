@@ -78,7 +78,7 @@ class MensajeLLegadaDeUnidadJob implements ShouldQueue
         return [
             'token' => $config->value01,
             'namespace' => $config->value02,
-            'template' => 'arribodedescargaacedis',
+            'template' => 'ingresodeunidad',
             'language' => [
                 'policy' => 'deterministic',
                 'code' => 'es_MX',

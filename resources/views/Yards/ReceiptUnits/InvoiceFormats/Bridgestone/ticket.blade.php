@@ -178,7 +178,7 @@
             <tr>
                 <th style="height:15px;border-top: 0;border-left: 0;border-right: 0;text-align: left;width: 50%;padding: 0;border-bottom: 1px solid;font-size: 10px;"
                     class="border-none">
-                    MERCANCÁ :
+                    MERCANCIA :
                 </th>
             </tr>
         </table>

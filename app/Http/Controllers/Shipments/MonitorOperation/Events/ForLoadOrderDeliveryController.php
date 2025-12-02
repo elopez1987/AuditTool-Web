@@ -36,7 +36,7 @@ class ForLoadOrderDeliveryController extends BaseController
             $parameterWarehouse = $this->getParametersOfWarehouse($orderDelivery->warehouseid);
             $parameterCustomer = $this->getParameterOfCustomer($orderDelivery->customerid);
             $this->createUnitVirtualForCustomer($parameterCustomer, $orderDelivery);
-            $this->sendMessageToOperator($parameterWarehouse, $orderDelivery);
+            $this->sendMessageToOperator($orderDelivery);
 
             //          Validamos el cierre del proceso de verificación
             if (! empty($parameterWarehouse) && in_array('SWH-34', (array) $parameterWarehouse)) {
@@ -99,10 +99,11 @@ class ForLoadOrderDeliveryController extends BaseController
         }
     }
 
-    private function sendMessageToOperator($parameterWarehouse, OrderDeliverie $orderDelivery): void
+    private function sendMessageToOperator(OrderDeliverie $orderDelivery): void
     {
         //     Proceso para enviar mensaje a operador que está en patio para enrampar
-        if (! empty($parameterWarehouse) && in_array('SWH-43', (array) $parameterWarehouse)) {
+        $parameterNotificationWarehouse = $this->getParameterNotificacionWarehouse($orderDelivery->warehouseid);
+        if (! empty($parameterNotificationWarehouse) && in_array('MWH-08', (array) $parameterNotificationWarehouse)) {
             $assingDoorService = new AssingDoorToUnitFromShipment;
             EnviarMensajeOperadorPorAsignacionDeCortinaJob::dispatch($orderDelivery, $assingDoorService);
         }
