@@ -28,7 +28,7 @@ class ShipmentCarrierController extends BaseController
             ->with(['center:centerid,name,description', 'status:statusid,name', 'warehouse:warehouseid,name'])
             ->Name($request->get('name'))
             ->Carrier($request->get('carrierid'))
-            ->Status($request->get('statusid'));
+            ->Status($request->get('statusid'))->get();
 
         return DataTables::of($data)
             ->addColumn('btn', 'Yards.ShipmentCarriers.partials.buttons')

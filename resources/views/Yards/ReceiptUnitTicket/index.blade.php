@@ -44,6 +44,7 @@
                                     <th class="text-white">Bodega</th>
                                     <th class="text-white">Folio</th>
                                     <th class="text-white">Ticket de báscula</th>
+                                    <th class="text-white">Fecha de entrada</th>
                                     <th class="text-white">Linea de transporte</th>
                                     <th class="text-white">Placa de caja</th>
                                     <th class="text-white">Nombre del operador</th>

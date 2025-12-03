@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Shipments\MonitorOperation\Events;
+namespace App\Http\Controllers\Shipments\MonitorTraffic\Events;
 
 use App\Http\Controllers\BaseController;
+use App\Jobs\Embarques\Correos\CorreoSolicitudCartaPorteJob;
 use App\Models\Shipments\OrderDeliverie;
 use App\Models\Shipments\OrderdeliveryTrace;
 use App\Models\Shipments\ShipmentDataOperation;
@@ -22,6 +23,12 @@ class RequestLetterController extends BaseController
             $shipment->save();
 
             OrderdeliveryTrace::saveEventShipment($orderDelivery, 'EEM-12', $statusold);
+
+            $parameterNotificationWarehouse = $this->getParameterNotificacionWarehouse($orderDelivery->warehouseid);
+            if (! empty($parameterNotificationWarehouse) && in_array('MWH-11', (array) $parameterNotificationWarehouse)) {
+                CorreoSolicitudCartaPorteJob::dispatch($orderDelivery);
+            }
+
             DB::commit();
 
             return $this->redirectBackSuccess();
