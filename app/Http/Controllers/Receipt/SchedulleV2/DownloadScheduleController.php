@@ -124,7 +124,24 @@ class DownloadScheduleController extends BaseController
             $schedulleReceipt = StorageSchedulleReceipt::controlAccessUser()->findOrFail($id);
             $hour = SystemStatus::where('statusid', $schedulleReceipt->secuence)->first();
             $combinedDateTime = $schedulleReceipt->workday . ' ' . $hour->auxiliary04;
+
             $formattedDateTime = Carbon::createFromFormat('Y-m-d H:i', $combinedDateTime);
+
+            // Validar que la fecha y hora seleccionadas no sean menores a la fecha y hora actual
+            if ($formattedDateTime->lt(Carbon::now())) {
+                DB::rollBack();
+
+                // Respuesta para peticiones AJAX / JSON
+                if ($request->ajax() || $request->wantsJson()) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'No se puede insertar un embarque menor a la fecha y hora actual',
+                    ], 422);
+                }
+
+                // En caso de petición normal
+                return back()->withErrors(['addasndate' => 'No se puede insertar un embarque menor a la fecha y hora actual']);
+            }
 
             $receipt = ReceiptAsn::create([
                 'centerid' => $schedulleReceipt->centerid,
