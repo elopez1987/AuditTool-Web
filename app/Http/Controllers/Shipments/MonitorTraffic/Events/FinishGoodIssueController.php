@@ -44,7 +44,7 @@ class FinishGoodIssueController extends BaseController
                 $this->createJourney($orderDelivery);
             }
 
-            $this->sendMessages($parameter, $orderDelivery, $parameterWarehouse);
+            $this->sendMessages($orderDelivery, $parameterWarehouse);
             $this->closeUnitForProcessAmazon($orderDelivery);
             $this->updateOrderDelivery($orderDelivery);
             $this->updateShipmentHeader($orderDelivery, $request['delivery']);
@@ -111,12 +111,12 @@ class FinishGoodIssueController extends BaseController
         }
     }
 
-    private function sendMessages($parameter, $orderDelivery, $parameterWarehouse): void
+    private function sendMessages($orderDelivery, $parameterWarehouse): void
     {
-        if (! empty($parameter) && in_array('SDC-09', (array) $parameter)) {
+        if (! empty($parameterWarehouse) && in_array('MWH-15', (array) $parameterWarehouse)) {
             EnviarMensajeAOperadorJob::dispatch($orderDelivery);
         }
-        if (! empty($parameter) && in_array('SDC-03', (array) $parameter)) {
+        if (! empty($parameterWarehouse) && in_array('MWH-13', (array) $parameterWarehouse)) {
             EnviarMensajaSorianaJob::dispatch($orderDelivery);
         }
 
