@@ -12,7 +12,7 @@
                     <div class="row mt-3">
                         <div class="col-lg-4 col-md-6 col-sm-12">
                             <div class="form-group">
-                                <label for="razonstatusid">Tipo de entrada
+                                <label for="razonstatusid"> {{ ui_label('receiptasn_razonstatusid_createhd','Tipo de entrada') }}
                                     @error("razonstatusid")
                                     <span class="message-error">{{$message}}</span>
                                     @enderror
@@ -29,7 +29,7 @@
                         </div>
                         <div class="col-lg-4 col-md-6 col-sm-12">
                             <div class="form-group">
-                                <label for="stockcategoryid">Origen
+                                <label for="stockcategoryid"> {{ ui_label('receiptasn_stockcategoryid_createhd','Origen de la descarga') }}
                                     @error("stockcategoryid")
                                     <span class="message-error">{{$message}}</span>
                                     @enderror
@@ -45,7 +45,7 @@
                         </div>
                         <div class="col-lg-4 col-md-6 col-sm-12">
                             <div class="form-group">
-                                <label for="providerid">Proveedor
+                                <label for="providerid"> {{ ui_label('receiptasn_providerid_createhd','Proveedor') }}
                                     @error("providerid")
                                     <span class="message-error">{{$message}}</span>
                                     @enderror
@@ -64,7 +64,7 @@
                     <div class="row">
                         <div class="col-lg-4 col-md-6 col-sm-12">
                             <div class="form-group">
-                                <label for="shipmentid">Embarque
+                                <label for="shipmentid"> {{ ui_label('receiptasn_shipmentid_createhd','Número de recibo') }}
                                     @error("shipmentid")
                                     <span class="message-error">{{$message}}</span>
                                     @enderror
@@ -81,7 +81,8 @@
                         </div>
                         <div class="col-lg-4 col-md-6 col-sm-12">
                             <div class="form-group">
-                                <label for="billoflading">Factura</label>
+                                <label for="billoflading"> {{ ui_label('receiptasn_billoflading_createhd','Factura') }}
+                                </label>
                                 <input type="text" class="form-control @error('billoflading') is-invalid @enderror"
                                        id="billoflading" name="billoflading"
                                        aria-describedby="billoflading" onKeyUp=this.value=this.value.toUpperCase();
@@ -94,7 +95,7 @@
                         </div>
                         <div class="col-lg-4 col-md-6 col-sm-12">
                             <div class="form-group">
-                                <label for="oc">Orden de compra</label>
+                                <label for="oc"> {{ ui_label('receiptasn_oc_createhd','Orde de compra') }} </label>
                                 <input type="text" class="form-control @error('oc') is-invalid @enderror"
                                        id="oc" name="oc"
                                        aria-describedby="oc" onKeyUp=this.value=this.value.toUpperCase();

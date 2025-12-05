@@ -102,7 +102,7 @@
         function editLabel(id) {
             $('#labelModalLabel').text('Editar Etiqueta');
             $.ajax({
-                url: '/label-dictionary/' + id + '/edit',
+                url: '{{ route('label-dictionary.index') }}' + '/' + id + '/edit',
                 type: 'GET',
                 success: function(response) {
                     $('#modal-body-content').html(response);
@@ -128,7 +128,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: '/label-dictionary/' + id,
+                        url: '{{ route('label-dictionary.index') }}' + '/' + id,
                         type: 'DELETE',
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -136,7 +136,7 @@
                         success: function(response) {
                             if (response.success) {
                                 Swal.fire('Eliminado', response.message, 'success');
-                                $('#table-label-dictionary').DataTable().ajax.reload();
+                                reloadtable();
                             } else {
                                 Swal.fire('Error', response.message, 'error');
                             }

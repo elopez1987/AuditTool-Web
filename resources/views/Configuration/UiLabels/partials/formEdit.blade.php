@@ -85,19 +85,28 @@ $('#formEditLabel').on('submit', function(e) {
     e.preventDefault();
     
     let id = $(this).find('input[name="id"]').val();
+    let formData = $(this).serializeArray();
+    let data = {};
+    
+    // Convertir a objeto sin _method y _token para enviar limpio
+    $.each(formData, function(i, field) {
+        if (field.name !== '_token' && field.name !== '_method') {
+            data[field.name] = field.value;
+        }
+    });
     
     $.ajax({
-        url: '/label-dictionary/' + id,
+        url: '{{ route('label-dictionary.index') }}' + '/' + id,
         type: 'PUT',
-        data: $(this).serialize(),
+        data: data,
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function(response) {
             if (response.success) {
                 $('#labelModal').modal('hide');
-                $('#table-label-dictionary').DataTable().ajax.reload();
                 Swal.fire('Actualizado', response.message, 'success');
+                reloadtable();
             }
         },
         error: function(xhr) {
