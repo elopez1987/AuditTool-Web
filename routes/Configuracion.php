@@ -26,6 +26,7 @@ use App\Http\Controllers\Configuration\StorageTaskMails\StorageTaskMailsControll
 use App\Http\Controllers\Configuration\StorageTaskWhatsapp\StorageTaskWhatsappController;
 use App\Http\Controllers\Configuration\TablesDataBase\DataBaseController;
 use App\Http\Controllers\Configuration\TablesDataBase\SystemTableController;
+use App\Http\Controllers\Configuration\UiLabels\UiLabelsController;
 use App\Http\Controllers\Configuration\Warehouses\NotificactionWarehouseController;
 use App\Http\Controllers\Configuration\Warehouses\ParameterWarehousesController;
 use App\Http\Controllers\Configuration\Warehouses\SetWarehouseController;
@@ -200,4 +201,7 @@ Route::group(['middleware' => ['role:ADMINISTRADOR']], function () {
     //  Lista de tareas de correo pendientes de ejecutar
     Route::resource('storagetaskmail', StorageTaskMailsController::class)->only(['index', 'destroy']);
     Route::get('taskmailslist', [StorageTaskMailsController::class, 'taskmailslist'])->name('taskmailslist');
+
+    // Diccionario de label
+    Route::resource('label-dictionary', UiLabelsController::class);
 });

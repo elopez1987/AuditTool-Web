@@ -159,7 +159,7 @@ label {
 input[type=text], input[type=password], input[type=email], input[type=tel], input[type=number], input[type=select] {
   height: 26px !important;
   border-radius: 3px;
-  font-size: 0.675rem !important;
+  font-size: 0.725rem !important;
   border-color: #c1d5e0;
 }
 
@@ -197,6 +197,7 @@ table tbody tr td {
 
 thead, tbody, tfoot, tr, td, th {
   border-style: none;
+  font-size: 0.755rem !important;
 }
 
 table.dataTable thead th {

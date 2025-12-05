@@ -7,7 +7,6 @@
                     Captura de recibo
                 </div>
                 <div class="card-body">
-                    {{--                    <form method="POST" action="{{url('receiptasn')}}" enctype="multipart/form-data">--}}
                     <form id="receiptForm" method="POST" action="{{url('receiptasn')}}"
                           enctype="multipart/form-data">
                         @csrf
