@@ -104,6 +104,7 @@ class EnviarMensajeAFacturacionDocumentosEnviadosJob implements ShouldQueue
                     'type' => 'body',
                     'parameters' => [
                         ['type' => 'text', 'text' => $shipment->shipmentid],
+                        ['type' => 'text', 'text' => $shipment->carrier->name],
                     ],
                 ],
             ],

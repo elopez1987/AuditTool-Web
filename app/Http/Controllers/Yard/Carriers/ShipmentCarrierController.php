@@ -25,11 +25,10 @@ class ShipmentCarrierController extends BaseController
     public function getDataCarriers(Request $request)
     {
         $data = ShipmentCarrier::controlAccessUser()
-            ->with(['center', 'status'])
+            ->with(['center:centerid,name,description', 'status:statusid,name', 'warehouse:warehouseid,name'])
             ->Name($request->get('name'))
             ->Carrier($request->get('carrierid'))
-            ->Status($request->get('statusid'))
-            ->get();
+            ->Status($request->get('statusid'))->get();
 
         return DataTables::of($data)
             ->addColumn('btn', 'Yards.ShipmentCarriers.partials.buttons')
@@ -41,8 +40,9 @@ class ShipmentCarrierController extends BaseController
     {
         $this->authorize('shipmentcarriers.create');
         $centers = $this->getCenterForSelect();
+        $warehouses = $this->getWarehouseForSelect();
 
-        return view('Yards.ShipmentCarriers.create', compact('centers'));
+        return view('Yards.ShipmentCarriers.create', compact('centers', 'warehouses'));
     }
 
     public function store(CreateCarrierRequest $request): RedirectResponse

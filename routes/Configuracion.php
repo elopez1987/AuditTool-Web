@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Configuration\CenterDistribution\CenterParameterController;
+use App\Http\Controllers\Configuration\CenterDistribution\NotificationCenterController;
 use App\Http\Controllers\Configuration\CenterDistribution\SystemCenterDistributionController;
 use App\Http\Controllers\Configuration\CenterDistribution\SystemCenterDistributionFolderController;
 use App\Http\Controllers\Configuration\CommandJobs\CommandController;
@@ -17,6 +18,7 @@ use App\Http\Controllers\Configuration\NameSystem\NameSystemController;
 use App\Http\Controllers\Configuration\Parameter\SystemDetailParametersController;
 use App\Http\Controllers\Configuration\Parameter\SystemParameterController;
 use App\Http\Controllers\Configuration\Printers\SystemPrintersController;
+use App\Http\Controllers\Configuration\Schemas\ImportStatusController;
 use App\Http\Controllers\Configuration\Schemas\SystemSchemaController;
 use App\Http\Controllers\Configuration\Schemas\SystemStatusController;
 use App\Http\Controllers\Configuration\StorageReason\StorageReasonController;
@@ -24,6 +26,8 @@ use App\Http\Controllers\Configuration\StorageTaskMails\StorageTaskMailsControll
 use App\Http\Controllers\Configuration\StorageTaskWhatsapp\StorageTaskWhatsappController;
 use App\Http\Controllers\Configuration\TablesDataBase\DataBaseController;
 use App\Http\Controllers\Configuration\TablesDataBase\SystemTableController;
+use App\Http\Controllers\Configuration\UiLabels\UiLabelsController;
+use App\Http\Controllers\Configuration\Warehouses\NotificactionWarehouseController;
 use App\Http\Controllers\Configuration\Warehouses\ParameterWarehousesController;
 use App\Http\Controllers\Configuration\Warehouses\SetWarehouseController;
 use App\Http\Controllers\Configuration\Warehouses\SystemWarehouseController;
@@ -54,6 +58,8 @@ Route::middleware(['auth'])->group(function () {
     //    Actualizar estatus desde detalle de esquema
     Route::put('updatestatus/{id}', [SystemStatusController::class, 'updateStatus'])->name('updateStatus');
     Route::delete('deletestatus/{id}', [SystemStatusController::class, 'destroystatus'])->name('deletestatus');
+    //	Importar estatus
+    Route::put('import-status/{id}', [ImportStatusController::class, 'index'])->name('import-status');
 
     //    ---------------------------------------------------- Logs del sistema --------------------------------------------
     Route::resource('activitylog', ActivityLogController::class);
@@ -79,6 +85,9 @@ Route::middleware(['auth'])->group(function () {
     //    Creacion de directorios para el centro de distribucion
     Route::get('systemcenterdistributions/{id}/folder', [SystemCenterDistributionFolderController::class, 'index'])->name('systemcenterdistributions.folder');
     Route::put('systemcenterdistributionfolder/{id}', [SystemCenterDistributionFolderController::class, 'systemcenterdistributionfolder'])->name('systemcenterdistributionfolder');
+    //	Parametrizar mensajes de bodega
+    Route::get('systemcenterdistributions/{id}/notifications', [NotificationCenterController::class, 'index'])->name('systemwarehouses.notifications');
+    Route::put('systemcenternotifications/{id}', [NotificationCenterController::class, 'systemcenternotifications'])->name('systemcenternotifications');
 
     //    ---------------------------------------------------- Bodegas  ----------------------------------------------------
     Route::resource('systemwarehouses', SystemWarehouseController::class);
@@ -86,6 +95,10 @@ Route::middleware(['auth'])->group(function () {
     //    Parametros de bodegas
     Route::get('systemwarehouses/{id}/parameters', [ParameterWarehousesController::class, 'parameters'])->name('systemwarehouses.parameters');
     Route::put('systemwarehouseparameters/{id}', [ParameterWarehousesController::class, 'systemwarehouseparameters'])->name('systemwarehouseparameters');
+    //	Parametrizar mensajes de bodega
+    Route::get('systemwarehouses/{id}/notifications', [NotificactionWarehouseController::class, 'index'])->name('systemwarehouses.notifications');
+    Route::put('systemwarehousenotifications/{id}', [NotificactionWarehouseController::class, 'systemwarehousenotifications'])->name('systemwarehousenotifications');
+
     //    Seteo de bodega a usuario
     Route::get('setwarehouse', [SetWarehouseController::class, 'index'])->name('setwarehouse');
     Route::put('setwarehousestore/{username}', [SetWarehouseController::class, 'setwarehousestore'])->name('setwarehousestore');
@@ -188,4 +201,7 @@ Route::group(['middleware' => ['role:ADMINISTRADOR']], function () {
     //  Lista de tareas de correo pendientes de ejecutar
     Route::resource('storagetaskmail', StorageTaskMailsController::class)->only(['index', 'destroy']);
     Route::get('taskmailslist', [StorageTaskMailsController::class, 'taskmailslist'])->name('taskmailslist');
+
+    // Diccionario de label
+    Route::resource('label-dictionary', UiLabelsController::class);
 });

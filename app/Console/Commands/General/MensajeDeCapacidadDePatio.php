@@ -38,10 +38,10 @@ class MensajeDeCapacidadDePatio extends Command
     {
         $url = 'https://api.1msg.io/HEI523482986/sendTemplate';
         $client = new Client;
-        $centers = SystemCenterDistribution::select(['centerid', 'configurationflag', 'capacityyard'])->get();
+        $centers = SystemCenterDistribution::select(['centerid', 'notificationsflags', 'capacityyard'])->get();
         foreach ($centers as $center) {
-            $parameter = SystemCenterDistribution::whereCenterid($center->centerid)->value('configurationflag');
-            if (! empty($parameter) && in_array('SDC-02', (array) $parameter)) {
+            $parameter = $center->notificationsflags;
+            if (! empty($parameter) && in_array('MCD-01', (array) $parameter)) {
                 $totalUnit = $this->getTotalUnitStock($center);
                 $totalCapacidad = $this->getTotalCapacity($center);
                 $capacidadUsada = $totalUnit / $totalCapacidad * 100;

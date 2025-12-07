@@ -11,3 +11,9 @@
     </a>
 @endcan
 
+@can('systemwarehouses.notifications')
+    <a href="{{url('systemwarehouses/' . $warehouseid . '/notifications')}}" data-toggle="tooltip" data-placement="top"
+       title="Agregar Notificaciones">
+        <img src="{{asset('/ico/telegram_icon_130816.png')}}" alt="" class="img-16 ml-2">
+    </a>
+@endcan

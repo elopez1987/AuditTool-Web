@@ -3,7 +3,7 @@
 export function initCarrierSelector({
                                         centerSelectId = "centerid",
                                         carrierSelectId = "carrierid",
-
+                                        baseUrl = ""
                                     } = {}) {
 
     $(document).ready(function () {
@@ -25,7 +25,8 @@ export function initCarrierSelector({
                 return;
             }
 
-            const url = `/shipment-carriers/${encodeURIComponent(centerId)}/search`;
+            const url = `${baseUrl}/shipment-carriers/${encodeURIComponent(centerId)}/search`;
+            console.log('Carrier URL:', url); // Debug
 
             try {
                 const response = await fetch(url);

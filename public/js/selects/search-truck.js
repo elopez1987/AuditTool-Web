@@ -5,7 +5,8 @@ export function initTruckLookup({
                                     searchTruckNumberButtonId = "searchTruckNumber",
                                     barcodeInputId = "barcodetruck",
                                     truckNumberInputId = "trucknumber",
-                                    ecoNumberInputId = "ecotruck"
+                                    ecoNumberInputId = "ecotruck",
+                                    baseUrl = ""
                                 } = {}) {
 
     // Verificar que jQuery esté disponible
@@ -26,7 +27,8 @@ export function initTruckLookup({
             return;
         }
 
-        const url = `/storage-label-truck/${encodeURIComponent(searchValue.trim())}/search`;
+        const url = `${baseUrl}/storage-label-truck/${encodeURIComponent(searchValue.trim())}/search`;
+        console.log('Truck URL:', url); // Debug
 
         try {
             const response = await fetch(url);

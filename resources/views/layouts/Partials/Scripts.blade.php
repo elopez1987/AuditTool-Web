@@ -21,6 +21,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.26.3/dist/sweetalert2.all.min.js"></script>
 
+{{--<script src="{{ URL::asset('build/js/datatables-global.js') }}"></script>--}}
+<script src="{{asset('js/datatables-global.js')}}"></script>
 <style>
     /* Ensure Select2 dropdowns appear above Bootstrap modals */
     .select2-container {

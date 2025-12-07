@@ -16,6 +16,7 @@ class CreateCarrierRequest extends FormRequest
     {
         return [
             'centerid' => 'required|string|exists:systemcenterdistributions,centerid',
+            'warehouseid' => 'required|string|exists:systemwarehouses,warehouseid',
             'name' => 'required|string|max:100',
             'carrierid' => [
                 'required',

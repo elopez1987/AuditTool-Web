@@ -22,11 +22,13 @@ class PermissionController extends BaseController
 
     public function getDataPermissions(Request $request)
     {
-        $data = Permission::with(['module:moduleid,description', 'function:functionid,description'])
+        $data = Permission::leftJoin('securityfunctions', 'securityfunctions.functionid', '=', 'permissions.functionid')
+            ->leftJoin('securitymodules', 'securitymodules.moduleid', '=', 'securityfunctions.moduleid')
             ->ForModule($request->get('moduleid'))
             ->ForFunction($request->get('functionid'))
             ->Name($request->get('name'))
-            ->Description($request->get('description'))->get();
+            ->Description($request->get('description'))
+            ->select(['permissions.*', 'securitymodules.description as module', 'securityfunctions.description as function']);
 
         return $this->showDataToView($data, 'Security.Permissions.partials.buttons2');
     }
@@ -54,7 +56,7 @@ class PermissionController extends BaseController
 
         return view(
             'Security.Permissions.edit',
-            compact('securitypermission', 'functions', 'modules')
+            compact('securitypermission', 'functions', 'modules'),
         );
     }
 
@@ -63,7 +65,6 @@ class PermissionController extends BaseController
         $securitypermission->update($request->all());
 
         return $this->redirectBackSuccess();
-        //        return redirect('securityfunctions/' . $securitypermission->functionid . '/edit');
     }
 
     public function destroy($id)

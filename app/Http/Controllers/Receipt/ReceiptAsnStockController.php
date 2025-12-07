@@ -59,8 +59,6 @@ class ReceiptAsnStockController extends BaseController
             'shipmentid' => $receipt->shipmentid,
             'receiptid' => $receipt->id,
             'partnumberid' => $sku->id,
-            'category01id' => $sku->category01id,
-            'category02id' => $sku->category02id,
             'stockcategoryid' => $receipt->stockcategoryid,
             'expirecode' => $request['batch'],
             'expiredate' => $dias,

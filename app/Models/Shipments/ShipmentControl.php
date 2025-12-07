@@ -54,8 +54,7 @@ class ShipmentControl extends Model
 
     protected $primaryKey = 'recordid';
 
-    protected $fillable = ['centerid', 'warehouseid', 'orderid', 'deliveryid',
-        'customerid', 'partnumberid', 'category1id', 'category2id', 'unitmeasureid',
+    protected $fillable = ['centerid', 'warehouseid', 'orderid',  'partnumberid', 'unitmeasureid',
         'quantityrequested', 'quantitytrue', 'quantityfail', 'missingconceptid',
     ];
 

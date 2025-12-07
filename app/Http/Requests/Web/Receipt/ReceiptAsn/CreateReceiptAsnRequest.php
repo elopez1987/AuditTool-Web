@@ -17,12 +17,10 @@ class CreateReceiptAsnRequest extends FormRequest
             'carrierid' => 'required|exists:shipmentcarriers,id',
             'stockcategoryid' => 'required|exists:inventorystockcategories,id',
             'razonstatusid' => 'required|exists:storagereasons,id',
-            //            'turnid' => 'required|exists:storageturns,id',
-            'oc' => 'nullable|required|regex:/^[a-zA-Z0-9]+$/',
+            'turnid' => 'required|exists:storageturns,id',
+            'oc' => 'nullable|regex:/^[a-zA-Z0-9]+$/',
             'billoflading' => 'nullable|regex:/^[a-zA-Z0-9]+$/',
             'folionumber' => 'nullable',
-            //			'partnumberid' => 'nullable|string|max:20|regex:/^[a-zA-Z0-9]+$/',
-            //			'quantity' => 'required|numeric|min:1|max_digits:4',
         ];
     }
 

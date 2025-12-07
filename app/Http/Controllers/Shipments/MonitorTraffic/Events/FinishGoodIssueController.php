@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Shipments\MonitorTraffic\Events;
 
 use App\Http\Controllers\BaseController;
+use App\Jobs\Embarques\Correos\EnviarCorreoFinDeFacturacionJob;
 use App\Jobs\Embarques\Mensajes\EnviarMensajaSorianaJob;
 use App\Jobs\Embarques\Mensajes\EnviarMensajeAOperadorJob;
 use App\Jobs\Embarques\Mensajes\EnviarMensajeFinFacturacionJob;
@@ -33,7 +34,7 @@ class FinishGoodIssueController extends BaseController
             $orderDelivery = OrderDeliverie::whereId($order->id)->first();
             $statusold = $orderDelivery->statusid;
             $parameter = $this->getParametersOfCenter($orderDelivery->centerid);
-            $parameterWarehouse = $this->getParametersOfWarehouse($orderDelivery->warehouseid);
+            $parameterWarehouse = $this->getParameterNotificacionWarehouse($orderDelivery->warehouseid);
 
             if (! empty($orderDelivery->folionumber)) {
                 $folio = ReceiptUnit::where('id', $orderDelivery->folionumber)->first();
@@ -43,7 +44,7 @@ class FinishGoodIssueController extends BaseController
                 $this->createJourney($orderDelivery);
             }
 
-            $this->sendMessages($parameter, $orderDelivery, $parameterWarehouse);
+            $this->sendMessages($orderDelivery, $parameterWarehouse);
             $this->closeUnitForProcessAmazon($orderDelivery);
             $this->updateOrderDelivery($orderDelivery);
             $this->updateShipmentHeader($orderDelivery, $request['delivery']);
@@ -110,17 +111,23 @@ class FinishGoodIssueController extends BaseController
         }
     }
 
-    private function sendMessages($parameter, $orderDelivery, $parameterWarehouse): void
+    private function sendMessages($orderDelivery, $parameterWarehouse): void
     {
-        if (! empty($parameter) && in_array('SDC-09', (array) $parameter)) {
+        if (! empty($parameterWarehouse) && in_array('MWH-15', (array) $parameterWarehouse)) {
             EnviarMensajeAOperadorJob::dispatch($orderDelivery);
         }
-        if (! empty($parameter) && in_array('SDC-03', (array) $parameter)) {
+        if (! empty($parameterWarehouse) && in_array('MWH-13', (array) $parameterWarehouse)) {
             EnviarMensajaSorianaJob::dispatch($orderDelivery);
         }
-        if (! empty($parameterWarehouse) && in_array('SWH-17', (array) $parameterWarehouse)) {
+
+        if (! empty($parameterWarehouse) && in_array('MWH-03', (array) $parameterWarehouse)) {
             EnviarMensajeFinFacturacionJob::dispatch($orderDelivery);
         }
+
+        if (! empty($parameterWarehouse) && in_array('MWH-10', (array) $parameterWarehouse)) {
+            EnviarCorreoFinDeFacturacionJob::dispatch($orderDelivery);
+        }
+
     }
 
     private function createShipmentPod($orderDelivery): void

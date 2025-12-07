@@ -14,6 +14,22 @@
     </div>
     <div class="col-lg-2 col-md-6 col-xs-12">
         <div class="form-group">
+            <label for="warehouseid">Bodega <span style="color: red">*</span></label>
+            <select name="warehouseid" id="warehouseid" class="form-control select2 @error('warehouseid') is-invalid @enderror">
+                @foreach($warehouses as $model)
+                    <option value="{{$model->warehouseid}}" {{ old('warehouseid') == $model->warehouseid ? 'selected' : '' }}> {{$model->name}} </option>
+                @endforeach
+            </select>
+            @error('warehouseid')
+            <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-2 col-md-6 col-xs-12">
+        <div class="form-group">
             <label for="name">Nombre de la línea de transporte
                 <span style="color: red">*</span>
             </label>
@@ -41,6 +57,7 @@
         </div>
     </div>
 </div>
+
 <div class="row">
     <div class="col-lg-2 col-md-6 col-sm-12">
         <div class="form-group">

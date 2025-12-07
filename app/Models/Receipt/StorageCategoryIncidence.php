@@ -4,8 +4,10 @@ namespace App\Models\Receipt;
 
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Configuration\Schemas\SystemStatus;
+use App\Models\Configuration\Warehouses\SystemWarehouse;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property string $centerid
@@ -48,6 +50,7 @@ class StorageCategoryIncidence extends Model
 
     protected $fillable = [
         'centerid',
+        'warehouseid',
         'description',
         'auxiliary01',
         'auxiliary02',
@@ -65,13 +68,20 @@ class StorageCategoryIncidence extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
+        $warehouses = SecurityAccessWarehouse::Warehouses();
 
-        return StorageCategoryIncidence::whereIn('storagecategoryincidences.centerid', $centers);
+        return StorageCategoryIncidence::whereIn('storagecategoryincidences.centerid', $centers)
+            ->whereIn('storagecategoryincidences.warehouseid', $warehouses);
     }
 
     public function center()
     {
         return $this->belongsTo(SystemCenterDistribution::class, 'centerid');
+    }
+
+    public function warehouse(): BelongsTo
+    {
+        return $this->belongsTo(SystemWarehouse::class, 'warehouseid', 'warehouseid');
     }
 
     public function status()
@@ -81,7 +91,7 @@ class StorageCategoryIncidence extends Model
 
     public function scopeForDescription($query, $description)
     {
-        if (trim($description) !== '') {
+        if (trim($description) != '') {
             $query->where('storagecategoryincidences.description', 'like', "%{$description}%");
         }
     }

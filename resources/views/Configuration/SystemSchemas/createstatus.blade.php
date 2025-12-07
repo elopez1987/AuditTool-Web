@@ -177,6 +177,16 @@
                         </div>
                     </div>
                 </div>
+                <div class="card-footer">
+                    <a href="" data-target="#modal-upload" data-toggle="modal" data-placement="top">
+                        <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md"
+                                data-toggle="tooltip" data-placement="top" title="Importar archivo">
+                            <img src="{{asset('/ico/uploadcsv.png')}}" alt="" class="img-16">
+                            <span style="font-size: 11px;"> Importar catalogo </span>
+                        </button>
+                    </a>
+                    @include('Configuration.SystemSchemas.uploadstatus')
+                </div>
             </div>
         </div>
     </div>

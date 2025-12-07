@@ -30,6 +30,18 @@
                                            aria-describedby="auxiliary05" value="{{$user->name}}" readonly>
                                 </div>
                             </div>
+                            <div class="col-lg-2 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="name">Parametro </label>
+                                    <input type="text" class="form-control" value="USR" readonly>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="name">Descripción </label>
+                                    <input type="text" class="form-control" value="PARAMETROS DE USUARIO" readonly>
+                                </div>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-md-10">
@@ -40,7 +52,7 @@
                                         <th width="10%">Activar/Desactivar</th>
                                         <th>Parametro</th>
                                         <th>Descripción</th>
-                                        <th width="20%">Comentario</th>
+                                        <th width="40%">Comentario</th>
                                     </tr>
                                     </thead>
                                     <tbody>

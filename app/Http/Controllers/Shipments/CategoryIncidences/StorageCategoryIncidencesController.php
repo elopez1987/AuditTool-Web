@@ -22,7 +22,8 @@ class StorageCategoryIncidencesController extends BaseController
             ->ForDescription($request->get('description'))
             ->leftJoin('systemstatus as se', 'storagecategoryincidences.statusid', '=', 'se.statusid')
             ->leftJoin('systemcenterdistributions as cd', 'storagecategoryincidences.centerid', '=', 'cd.centerid')
-            ->select(['se.name as status', 'cd.description as center', 'storagecategoryincidences.*'])->get();
+            ->leftjoin('systemwarehouses as sw', 'storagecategoryincidences.warehouseid', '=', 'sw.warehouseid')
+            ->select(['se.name as status', 'cd.description as center', 'sw.name as warehousename', 'storagecategoryincidences.*']);
 
         return $this->showDataToView($data, 'Shipments.CategoryIncidences.partials.buttons');
     }
@@ -31,8 +32,9 @@ class StorageCategoryIncidencesController extends BaseController
     {
         $this->authorize('storagecategoryincidences.create');
         $centers = $this->getCenterForSelect();
+        $warehouses = $this->getWarehouseForSelect();
 
-        return view('Shipments.CategoryIncidences.create', compact('centers'));
+        return view('Shipments.CategoryIncidences.create', compact('centers', 'warehouses'));
     }
 
     public function store(CreateCategoryIncidenceRequest $request)

@@ -66,6 +66,7 @@
                                     <thead>
                                     <tr>
                                         <th class="bg-inverse text-white">C.Distribución</th>
+                                        <th class="bg-inverse text-white">Bodega</th>
                                         <th class="bg-inverse text-white">Nombre</th>
                                         <th class="bg-inverse text-white">Vendor</th>
                                         <th class="bg-inverse text-white">Auxiliar 01</th>

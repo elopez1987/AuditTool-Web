@@ -6,18 +6,17 @@
                 <div class="row">
                     <div class="col-lg-3 col-md-6 col-sm-12">
                         <div class="form-group">
-                            <label for="centerid">Centros de distribución <span style="color: red">*</span></label>
+                            <label for="centerid">{{ ui_label('centerid_receiptasn_create','Centro de distribución') }}  <span style="color: red">*</span></label>
                             <select name="centerid" id="centerid" required class="form-control select2">
                                 @foreach($centers as $center)
-                                    <option
-                                            value="{{$center->centerid}}" {{ old('centerid') == $center->centerid ? 'selected' : '' }}> {{$center->name}} </option>
+                                    <option value="{{$center->centerid}}" {{ old('centerid') == $center->centerid ? 'selected' : '' }}> {{$center->name}} </option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6 col-sm-12">
                         <div class="form-group">
-                            <label for="warehouseid">Bodega <span style="color: red">*</span></label>
+                            <label for="warehouseid">{{ ui_label('warehouseid_receiptasn_create','Bodega') }} <span style="color: red">*</span></label>
                             <select name="warehouseid" id="warehouseid" required class="form-control select2">
                                 @foreach($warehouses as $warehouse)
                                     <option
@@ -28,7 +27,7 @@
                     </div>
                     <div class="col-lg-3 col-md-6 col-sm-12">
                         <div class="form-group">
-                            <label for="addasndate">F. Cita de Descarga
+                            <label for="addasndate">{{ ui_label('addasndate_receiptasn_create','Fecha de cita de descarga') }}
                                 @error("addasndate")
                                 <span class="message-error">{{$message}}</span>
                                 @enderror
@@ -40,23 +39,23 @@
                             >
                         </div>
                     </div>
-                    {{--                    <div class="col-lg-3 col-md-6 col-sm-12">--}}
-                    {{--                        <div class="form-group">--}}
-                    {{--                            <label for="turnid">Turno--}}
-                    {{--                                @error("turnid")--}}
-                    {{--                                <span class="message-error">{{$message}}</span>--}}
-                    {{--                                @enderror--}}
-                    {{--                                <span style="color: red">*</span>--}}
-                    {{--                            </label>--}}
-                    {{--                            <select name="turnid" required class="form-control select2">--}}
-                    {{--                                <option value="" selected>Seleccione una opción</option>--}}
-                    {{--                                @foreach($turns as $model)--}}
-                    {{--                                    <option--}}
-                    {{--                                        value="{{$model->id}}" {{ old('turnid') == $model->id ? 'selected' : '' }} > {{$model->name}} </option>--}}
-                    {{--                                @endforeach--}}
-                    {{--                            </select>--}}
-                    {{--                        </div>--}}
-                    {{--                    </div>--}}
+                    <div class="col-lg-3 col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label for="turnid">{{ ui_label('turnid_receiptasn_create','Turno de trabajo') }}
+                                @error("turnid")
+                                <span class="message-error">{{$message}}</span>
+                                @enderror
+                                <span style="color: red">*</span>
+                            </label>
+                            <select name="turnid" required class="form-control select2">
+                                <option value="" selected>Seleccione una opción</option>
+                                @foreach($turns as $model)
+                                    <option
+                                            value="{{$model->id}}" {{ old('turnid') == $model->id ? 'selected' : '' }} > {{$model->name}} </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -71,7 +70,7 @@
                 <div class="row mt-3">
                     <div class="col-lg-3 col-md-6 col-sm-12">
                         <div class="form-group">
-                            <label for="razonstatusid">Tipo de entrada
+                            <label for="razonstatusid">{{ ui_label('razonstatusid_receiptasn_create','Tipo de entrada') }}
                                 @error("razonstatusid")
                                 <span class="message-error">{{$message}}</span>
                                 @enderror
@@ -88,7 +87,7 @@
                     </div>
                     <div class="col-lg-3 col-md-6 col-sm-12">
                         <div class="form-group">
-                            <label for="stockcategoryid">Origen
+                            <label for="stockcategoryid">{{ ui_label('stockcategoryid_receiptasn_create','Origen de la descarga') }}
                                 @error("stockcategoryid")
                                 <span class="message-error">{{$message}}</span>
                                 @enderror
@@ -104,7 +103,7 @@
                     </div>
                     <div class="col-lg-3 col-md-6 col-sm-12">
                         <div class="form-group">
-                            <label for="providerid">Proveedor
+                            <label for="providerid">{{ ui_label('providerid_receiptasn_create','Proveedor') }}
                                 @error("providerid")
                                 <span class="message-error">{{$message}}</span>
                                 @enderror
@@ -123,7 +122,7 @@
                 <div class="row">
                     <div class="col-lg-3 col-md-6 col-sm-12">
                         <div class="form-group">
-                            <label for="shipmentid">Embarque
+                            <label for="shipmentid">{{ ui_label('shipmentid_receiptasn_create','Número de recibo') }}
                                 @error("shipmentid")
                                 <span class="message-error">{{$message}}</span>
                                 @enderror
@@ -140,8 +139,7 @@
                     </div>
                     <div class="col-lg-3 col-md-6 col-sm-12">
                         <div class="form-group">
-                            <label for="billoflading">Factura
-                                <span style="color: red">*</span></label>
+                            <label for="billoflading">{{ ui_label('billoflading_receiptasn_create','Factura') }}</label>
                             <input type="text" class="form-control @error('billoflading') is-invalid @enderror"
                                    id="billoflading" name="billoflading"
                                    aria-describedby="billoflading" onKeyUp=this.value=this.value.toUpperCase();
@@ -154,8 +152,7 @@
                     </div>
                     <div class="col-lg-3 col-md-6 col-sm-12">
                         <div class="form-group">
-                            <label for="oc">Orden de compra
-                                <span style="color: red">*</span></label>
+                            <label for="oc">{{ ui_label('oc_receiptasn_create','Orden de compra') }}</label>
                             <input type="text" class="form-control @error('oc') is-invalid @enderror"
                                    id="oc" name="oc"
                                    aria-describedby="oc" onKeyUp=this.value=this.value.toUpperCase();
@@ -180,7 +177,7 @@
                 <div class="row mt-3">
                     <div class="col-lg-3 col-md-6 col-sm-12">
                         <div class="form-group">
-                            <label for="folionumber">Folio de patios
+                            <label for="folionumber">{{ ui_label('folionumber_receiptasn_create','Folio de control de patios') }}
                                 @error("folionumber")
                                 <span class="message-error">{{$message}}</span>
                                 @enderror
@@ -194,7 +191,7 @@
                     </div>
                     <div class="col-lg-3 col-md-6 col-sm-12">
                         <div class="form-group">
-                            <label for="carrierid">Linea de transporte
+                            <label for="carrierid">{{ ui_label('carrierid_receiptasn_create','Linea de transporte') }}
                                 @error("carrierid")
                                 <span class="message-error">{{$message}}</span>
                                 @enderror
@@ -203,8 +200,7 @@
                             <select name="carrierid" class="form-control select2" required>
                                 <option value="" selected>Seleccione una opción</option>
                                 @foreach($carriers as $model)
-                                    <option
-                                            value="{{$model->id}}" {{ old('carrierid') == $model->id ? 'selected' : '' }} > {{$model->name}} </option>
+                                    <option value="{{$model->id}}" {{ old('carrierid') == $model->id ? 'selected' : '' }} > {{$model->name}} </option>
                                 @endforeach
                             </select>
                         </div>

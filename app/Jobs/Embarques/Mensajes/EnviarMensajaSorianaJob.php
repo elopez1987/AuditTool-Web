@@ -43,7 +43,7 @@ class EnviarMensajaSorianaJob implements ShouldQueue
                         $data = $this->getBodyData($order, $contact);
                         $response = $client->request('POST', $url, ['json' => $data, 'headers' => ['Content-Type' => 'application/json']]);
                         $respJson = $response->getBody();
-                        LogMessageWhatsApp::createLog($order, $contact, json_decode($respJson), 'WTH-SORIANA', 'Facturación de Saorina Terminada.');
+                        LogMessageWhatsApp::createLog($order, $contact, json_decode($respJson), 'WTH-SORIANA', 'Facturación de Soriana Terminada.');
                     } catch (Exception $e) {
                         Log::error('Error al enviar mensaje de nueva tarea de enrampe de unidad ' . $e->getMessage());
                     }

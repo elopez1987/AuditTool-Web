@@ -1188,7 +1188,7 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="row">
-                                                <div class="col-lg-6">
+                                                <div class="col-lg-12">
                                                     <table class="table table-hover table-bordered table-condensed tablegeneral">
                                                         <thead>
                                                             <tr>

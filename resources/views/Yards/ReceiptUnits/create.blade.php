@@ -47,15 +47,26 @@
 @section('script')
 
     <script type="module">
-        import {initOperatorLookup} from "/js/selects/operator.js";
-        import {initializeWarehouseLookup} from "/js/selects/warehouse-for-center.js";
-        import {initializeZoneLookup} from "/js/selects/zone-for-warehouse.js";
-        import {initializeLocationLookup} from "/js/selects/locations-for-zone.js";
-        import {initTruckLookup} from "/js/selects/search-truck.js";
-        import {initShipmentTruckChange} from "/js/selects/shipment-truck.js";
-        import {initRazonStatusBehavior} from "/js/selects/validate-razonstatusid.js";
-        import { initProviderSelector } from "/js/selects/providers-for-warehouse.js";
-        import { initBoxSearch } from "/js/selects/search-box.js";
+        const baseUrl = "{{ config('app.url') }}";
+        const operatorUrl = "{{ asset('js/selects/operator.js') }}";
+        const warehouseUrl = "{{ asset('js/selects/warehouse-for-center.js') }}";
+        const zoneUrl = "{{ asset('js/selects/zone-for-warehouse.js') }}";
+        const locationUrl = "{{ asset('js/selects/locations-for-zone.js') }}";
+        const truckUrl = "{{ asset('js/selects/search-truck.js') }}";
+        const shipmentUrl = "{{ asset('js/selects/shipment-truck.js') }}";
+        const razonUrl = "{{ asset('js/selects/validate-razonstatusid.js') }}";
+        const providerUrl = "{{ asset('js/selects/providers-for-warehouse.js') }}";
+        const boxUrl = "{{ asset('js/selects/search-box.js') }}";
+        
+        const {initOperatorLookup} = await import(operatorUrl);
+        const {initializeWarehouseLookup} = await import(warehouseUrl);
+        const {initializeZoneLookup} = await import(zoneUrl);
+        const {initializeLocationLookup} = await import(locationUrl);
+        const {initTruckLookup} = await import(truckUrl);
+        const {initShipmentTruckChange} = await import(shipmentUrl);
+        const {initRazonStatusBehavior} = await import(razonUrl);
+        const {initProviderSelector} = await import(providerUrl);
+        const {initBoxSearch} = await import(boxUrl);
 
         initOperatorLookup(
             "searchOperator",
@@ -64,7 +75,8 @@
                 operatorname: "name",
                 drivernumber: "drivernumber",
                 phone: "phone"
-            }
+            },
+            baseUrl
         );
 
         initTruckLookup({
@@ -72,7 +84,8 @@
             searchTruckNumberButtonId: "searchTruckNumber",
             barcodeInputId: "barcodetruck",
             truckNumberInputId: "trucknumber",
-            ecoNumberInputId: "ecotruck"
+            ecoNumberInputId: "ecotruck",
+            baseUrl: baseUrl
         });
 
         initShipmentTruckChange({
@@ -80,15 +93,16 @@
             tractoSectionId: "tracto",
             barcodeInputId: "barcodetruck",
             truckNumberInputId: "trucknumber",
-            ecoNumberInputId: "ecotruck"
+            ecoNumberInputId: "ecotruck",
+            baseUrl: baseUrl
         });
 
-        initializeWarehouseLookup("centerid", "warehouseid");
-        initializeZoneLookup("warehouseid", "zoneid");
-        initializeLocationLookup("zoneid", "locationid");
-        initProviderSelector();
-        initRazonStatusBehavior();
-        initBoxSearch();
+        initializeWarehouseLookup("centerid", "warehouseid", baseUrl);
+        initializeZoneLookup("warehouseid", "zoneid", baseUrl);
+        initializeLocationLookup("zoneid", "locationid", baseUrl);
+        initProviderSelector({ baseUrl: baseUrl });
+        initRazonStatusBehavior({ baseUrl: baseUrl });
+        initBoxSearch(baseUrl);
     </script>
 
     <script>

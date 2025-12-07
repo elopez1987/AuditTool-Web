@@ -2,9 +2,7 @@
 
 namespace App\Jobs\Embarques\Mensajes;
 
-use App\Models\Shipments\OrderDeliverie;
 use App\Models\Yard\ReceiptUnit;
-use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -29,23 +27,41 @@ class EnviarMensajeAOperadorJob implements ShouldQueue
 
     public function handle(): void
     {
-        $url = 'https://api.1msg.io/HEI523482986/sendTemplate';
+        $receiptUnit = ReceiptUnit::where('id', '=', $this->orderDelivery->folionumber)->first();
+        if (empty($receiptUnit) || ! $this->isValidPhone($receiptUnit->phone)) {
+            return;
+        }
+
+        $this->sendMessage($receiptUnit);
+    }
+
+    private function isValidPhone(?string $phone): bool
+    {
+        return ! empty($phone) && strlen($phone) === 10 && ctype_digit($phone);
+    }
+
+    private function sendMessage($receiptUnit): void
+    {
         $client = new Client;
-        $receiptunit = ReceiptUnit::searchForId($this->orderDelivery->folionumber);
-        $order = OrderDeliverie::where('id', '=', $this->orderDelivery->id)->first();
-        if (! empty($receiptunit)) {
-            if (! empty($receiptunit->phone) && strlen($receiptunit->phone) === 10 && ctype_digit($receiptunit->phone)) {
-                try {
-                    $data = $this->getBodyDataMessage($order, $receiptunit->phone);
-                    $client->request('POST', $url, ['json' => $data, 'headers' => ['Content-Type' => 'application/json']]);
-                } catch (Exception $e) {
-                    Log::error('Error al enviar mensaje al operador ' . $e->getMessage());
-                }
-            }
+        $url = 'https://api.1msg.io/HEI523482986/sendTemplate';
+
+        try {
+            $data = $this->getBodyDataMessage($receiptUnit);
+
+            $client->post($url, [
+                'json' => $data,
+                'headers' => ['Content-Type' => 'application/json'],
+            ]);
+
+        } catch (\Exception $e) {
+            Log::error('Error al enviar mensaje al operador', [
+                'error' => $e->getMessage(),
+                'receipt_unit' => $receiptUnit->id ?? null,
+            ]);
         }
     }
 
-    public function getBodyDataMessage($order, $contact)
+    public function getBodyDataMessage($receiptunit)
     {
         return [
             'token' => 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbnN0YW5jZUlkIjoiSEVJNTIzNDgyOTg2IiwidG9rZW4iOiJtaGVaTTh4cTQ2a2RadjZ0Q0NJeXZydGo4dkc3bnlOeCIsImlzcyI6IjFtc2cuaW8iLCJpYXQiOjE3NTU2MTU3NTZ9.PNJB7YjZbqerW-s-r8TOSTlPOS_6OddKHxVbwfsQ9GY',
@@ -59,11 +75,11 @@ class EnviarMensajeAOperadorJob implements ShouldQueue
                 [
                     'type' => 'body',
                     'parameters' => [
-                        ['type' => 'text', 'text' => $order->shipmentid],
+                        ['type' => 'text', 'text' => $receiptunit->shipmentid],
                     ],
                 ],
             ],
-            'phone' => '1' . $contact,
+            'phone' => '1' . $receiptunit->phone,
         ];
     }
 }

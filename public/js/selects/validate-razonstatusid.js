@@ -6,7 +6,8 @@ export function initRazonStatusBehavior({
                                             proveedorDivId = "proveedor",
                                             selloDivId = "sello",
                                             containerSealId = "containerseal",
-                                            shipmentIdId = "shipmentid"
+                                            shipmentIdId = "shipmentid",
+                                            baseUrl = ""
                                         } = {}) {
 
     // Verificar que jQuery esté disponible
@@ -20,11 +21,13 @@ export function initRazonStatusBehavior({
         
         // Si razonstatusid es 1 o 2, consultar con parámetro
         if (razonstatusid === "1" || razonstatusid === "2") {
-            url = `/storage-unitstatus/${encodeURIComponent(razonstatusid)}/search`;
+            url = `${baseUrl}/storage-unitstatus/${encodeURIComponent(razonstatusid)}/search`;
         } else {
             // Para otros valores, consultar sin parámetro (0 significa todos)
-            url = `/storage-unitstatus-search`;
+            url = `${baseUrl}/storage-unitstatus-search`;
         }
+        
+        console.log('Unit Status URL:', url); // Debug
 
 
         try {
@@ -43,10 +46,16 @@ export function initRazonStatusBehavior({
 
             // Limpiar y llenar el select
             $selectElement.empty();
+            $selectElement.append('<option value="">-- Estado de unidad --</option>');
             
             json.Data.forEach(item => {
                 $selectElement.append(`<option value="${item.id}">${item.name}</option>`);
             });
+            
+            // Actualizar Select2 si está inicializado
+            if ($selectElement.hasClass('select2-hidden-accessible')) {
+                $selectElement.trigger('change');
+            }
 
 
         } catch (error) {

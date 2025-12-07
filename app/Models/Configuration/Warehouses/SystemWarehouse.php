@@ -91,6 +91,7 @@ class SystemWarehouse extends Model
         'auxiliary09',
         'auxiliary10',
         'statusid',
+        'notificationsflags',
     ];
 
     protected $hidden = [
@@ -106,6 +107,7 @@ class SystemWarehouse extends Model
 
     protected $casts = [
         'configurationflag' => 'array',
+        'notificationsflags' => 'array',
         'center' => 'string',
     ];
 

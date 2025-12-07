@@ -41,6 +41,8 @@
                             <table id="table-types" class="table table-bordered table-hover table-condensed">
                                 <thead>
                                 <tr>
+                                    <th>C.Distribución</th>
+                                    <th>Bodega</th>
                                     <th>Nombre</th>
                                     <th>Auxiliar 01</th>
                                     <th>Auxiliar 02</th>
@@ -54,7 +56,6 @@
                             </table>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>

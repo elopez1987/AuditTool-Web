@@ -71,8 +71,6 @@ class ReceiptStock extends Model
         'shipmentid',
         'receiptid',
         'partnumberid',
-        'category01id',
-        'category02id',
         'stockcategoryid',
         'expirecode',
         'expiredate',
@@ -90,7 +88,7 @@ class ReceiptStock extends Model
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
 
-        return ReceiptStock::whereIn('receiptstock.warehouseid', $warehouses)
+        return static::whereIn('receiptstock.warehouseid', $warehouses)
             ->whereIn('receiptstock.centerid', $centers);
     }
 
@@ -108,15 +106,5 @@ class ReceiptStock extends Model
     public function partnumber()
     {
         return $this->belongsTo(InventoryPartnumber::class, 'partnumberid', 'id');
-    }
-
-    public function category01()
-    {
-        return $this->belongsTo(InventoryPartNumberCategory01::class, 'category01id', 'id');
-    }
-
-    public function category02()
-    {
-        return $this->belongsTo(InventoryPartNumberCategory02::class, 'category02id', 'id');
     }
 }

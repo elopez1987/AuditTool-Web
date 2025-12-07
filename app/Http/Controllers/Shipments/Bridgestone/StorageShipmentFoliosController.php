@@ -56,4 +56,18 @@ class StorageShipmentFoliosController extends BaseController
 
         return response($pdf->output(), 200)->header('Content-Type', 'application/pdf');
     }
+
+    public function destroy($id)
+    {
+        $folio = StorageShipmentFolios::controlAccessUser()->findOrFail($id);
+        if (! empty($folio)) {
+            $folio->statusid = 'FIR-03';
+            $folio->save();
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Folio cancelado correctamente ' . $id,
+        ], 200);
+    }
 }

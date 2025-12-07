@@ -203,6 +203,16 @@
                 </a>
             @endcan
 
+            @can('label-dictionary.index')
+                <a href="{{route('label-dictionary.index')}}">
+                    <div class="box">
+                        <i class="ti ti-book"></i>
+                        <h5>Diccionario de label</h5>
+                        <h4>Diccionario de label</h4>
+                    </div>
+                </a>
+            @endcan
+
             @endrole
         </div>
     </main>

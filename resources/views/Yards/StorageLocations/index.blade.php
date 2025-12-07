@@ -150,8 +150,10 @@
     </script>
 
     <script type="module">
-        import {initializeZoneLookup} from "/js/selects/zone-for-warehouse.js";
-        initializeZoneLookup("warehouseid", "zoneid");
+        const moduleUrl = "{{ asset('js/selects/zone-for-warehouse.js') }}";
+        const baseUrl = "{{ config('app.url') }}";
+        const {initializeZoneLookup} = await import(moduleUrl);
+        initializeZoneLookup("warehouseid", "zoneid", baseUrl);
     </script>
 
     <script>

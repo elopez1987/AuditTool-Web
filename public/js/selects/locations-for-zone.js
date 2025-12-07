@@ -1,6 +1,6 @@
 // /js/selects/locations-for-zone.js
 
-export function initializeLocationLookup(zoneSelectId, locationSelectId) {
+export function initializeLocationLookup(zoneSelectId, locationSelectId, baseUrl = '') {
     
     // Función para inicializar el lookup
     const setupLookup = () => {
@@ -35,7 +35,9 @@ export function initializeLocationLookup(zoneSelectId, locationSelectId) {
                 return;
             }
 
-            const url = `/storage-locations/${encodeURIComponent(zoneId)}/search`;
+            // Construir URL usando baseUrl si se proporciona
+            const url = `${baseUrl}/storage-locations/${encodeURIComponent(zoneId)}/search`;
+            // console.log('Location URL:', url); // Debug
 
 
             try {

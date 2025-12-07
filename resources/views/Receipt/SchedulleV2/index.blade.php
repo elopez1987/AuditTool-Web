@@ -24,19 +24,19 @@
                         <div class="row">
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="workday">Fecha de trabajo</label>
+                                    <label for="workday"> {{ ui_label('appointmentschedule_workday_index','Fecha de trabajo') }}</label>
                                     <input type="text" class="form-control" id="workday" name="workday">
                                 </div>
                             </div>
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="shipmentid">Embarque</label>
+                                    <label for="shipmentid"> {{ ui_label('appointmentschedule_shipmentid_index','Número de recibo') }}</label>
                                     <input type="text" class="form-control" id="shipmentid" name="shipmentid">
                                 </div>
                             </div>
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="statusid">Estatus <span style="color: red">*</span></label>
+                                    <label for="statusid"> {{ ui_label('appointmentschedule_statusid_index','Estatus') }}</label>
                                     <select name="statusid" id="statusid" class="form-control select2">
                                         <option value="" selected>Selecione una opción</option>
                                         @foreach($status as $model)
@@ -125,9 +125,32 @@
         });
     </script>
     <script>
+        function getWorkdayDate() {
+            const now = moment();
+            const currentHour = now.hour();
+            const currentMinute = now.minute();
+            
+            // Si la hora está entre 00:01 y 07:00 (12:01 AM a 7:00 AM)
+            if (currentHour < 7 || (currentHour === 0 && currentMinute >= 1)) {
+                // Restar 1 día
+                return now.subtract(1, 'days').format('YYYY-MM-DD');
+            }
+            
+            // Si la hora está entre 07:00 y 23:59
+            return now.format('YYYY-MM-DD');
+        }
+
         $(document).ready(function () {
             document.getElementById("shipmentid").value = sessionStorage.getItem('shipmentidop');
-            document.getElementById("workday").value = sessionStorage.getItem('workdayop');
+            
+            // Si no hay un valor guardado en sessionStorage, establecer la fecha automáticamente
+            const savedWorkday = sessionStorage.getItem('workdayop');
+            if (!savedWorkday) {
+                document.getElementById("workday").value = getWorkdayDate();
+            } else {
+                document.getElementById("workday").value = savedWorkday;
+            }
+            
             reloadtable();
         });
     </script>

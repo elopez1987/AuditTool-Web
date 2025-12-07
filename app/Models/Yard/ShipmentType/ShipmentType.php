@@ -4,6 +4,7 @@ namespace App\Models\Yard\ShipmentType;
 
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Configuration\Schemas\SystemStatus;
+use App\Models\Configuration\Warehouses\SystemWarehouse;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -60,6 +61,7 @@ class ShipmentType extends Model
 
     protected $fillable = [
         'centerid',
+        'warehouseid',
         'name',
         'auxiliary01',
         'auxiliary02',
@@ -88,8 +90,10 @@ class ShipmentType extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
+        $warehouses = SecurityAccessWarehouse::Warehouses();
 
-        return ShipmentType::whereIn('shipmenttypes.centerid', $centers);
+        return ShipmentType::whereIn('shipmenttypes.centerid', $centers)
+            ->whereIn('shipmenttypes.warehouseid', $warehouses);
     }
 
     public function status(): BelongsTo
@@ -100,6 +104,11 @@ class ShipmentType extends Model
     public function center()
     {
         return $this->belongsTo(SystemCenterDistribution::class, 'centerid');
+    }
+
+    public function warehouse(): BelongsTo
+    {
+        return $this->belongsTo(SystemWarehouse::class, 'warehouseid', 'warehouseid');
     }
 
     public function scopeName($query, $name)

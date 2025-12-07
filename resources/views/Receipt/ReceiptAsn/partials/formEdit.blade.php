@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-lg-2 col-md-6 col-sm-12">
         <div class="form-group">
-            <label for="razonstatusid">Tipo de entrada<span style="color: red">*</span></label>
+            <label for="razonstatusid">{{ ui_label('razonstatusid_receiptasn_edit','Tipo de entrada ') }} <span style="color: red">*</span></label>
             <select name="razonstatusid" required class="form-control select2">
                 @foreach($reasons as $model)
                     <option value="{{$model->id}}"
@@ -17,7 +17,7 @@
     </div>
     <div class="col-lg-2 col-md-6 col-sm-12">
         <div class="form-group">
-            <label for="stockcategoryid">Origen
+            <label for="stockcategoryid"> {{ ui_label('stockcategoryid_receiptasn_edit','Origen') }}
                 <span style="color: red">*</span>
             </label>
             <select name="stockcategoryid" required class="form-control select2">
@@ -35,7 +35,7 @@
     </div>
     <div class="col-lg-2 col-md-6 col-sm-12">
         <div class="form-group">
-            <label for="providerid">Proveedor<span style="color: red">*</span></label>
+            <label for="providerid"> {{ ui_label('providerid_receiptasn_edit','Proveedor') }} <span style="color: red">*</span></label>
             <select name="providerid" id='providerid' required class="form-control select2">
                 @foreach($providers as $model)
                     <option value="{{$model->id}}"
@@ -53,7 +53,7 @@
     </div>
     <div class="col-lg-2 col-md-6 col-sm-12">
         <div class="form-group">
-            <label for="turnid">Turno<span style="color: red">*</span></label>
+            <label for="turnid"> {{ ui_label('turnid_receiptasn_edit','Turno de trabajo') }} <span style="color: red">*</span></label>
             <select name="turnid" class="form-control select2">
                 @foreach($turns as $model)
                     <option value="{{$model->id}}"
@@ -73,7 +73,7 @@
 <div class="row">
     <div class="col-lg-2 col-md-6 col-sm-12">
         <div class="form-group">
-            <label for="shipmentid">Recibo
+            <label for="shipmentid"> {{ ui_label('shipmentid_receiptasn_edit','Número de recibo') }}
                 @error("shipmentid")
                 <span class="message-error">{{$message}}</span>
                 @enderror
@@ -91,7 +91,7 @@
     </div>
     <div class="col-lg-2 col-md-6 col-sm-12">
         <div class="form-group">
-            <label for="billoflading">Factura
+            <label for="billoflading"> {{ ui_label('billoflading_receiptasn_edit','Factura') }}
                 @error("billoflading")
                 <span class="message-error">{{$message}}</span>
                 @enderror
@@ -108,7 +108,7 @@
     </div>
     <div class="col-lg-2 col-md-6 col-sm-12">
         <div class="form-group">
-            <label for="oc">Orden de compra
+            <label for="oc"> {{ ui_label('oc_receiptasn_edit','Orden de compra') }}
                 @error("oc")
                 <span class="message-error">{{$message}}</span>
                 @enderror
@@ -128,7 +128,7 @@
 <div class="row">
     <div class="col-lg-2 col-md-6 col-sm-12">
         <div class="form-group">
-            <label for="folionumber">Folio de patios
+            <label for="folionumber"> {{ ui_label('folionumber_receiptasn_edit','Folio de patios') }}
                 @error("folionumber")
                 <span class="message-error">{{$message}}</span>
                 @enderror
@@ -144,7 +144,7 @@
     </div>
     <div class="col-lg-2 col-md-6 col-sm-12">
         <div class="form-group">
-            <label for="carrierid">Linea de transporte <span style="color: red">*</span></label>
+            <label for="carrierid">  {{ ui_label('carrierid_receiptasn_edit','Linea de transporte') }} <span style="color: red">*</span></label>
             <select name="carrierid" required class="form-control select2">
                 @foreach($carriers as $model)
                     <option value="{{$model->id}}"
@@ -162,7 +162,7 @@
     </div>
     <div class="col-lg-2 col-md-6 col-sm-12 ">
         <div class="form-group">
-            <label for="addasndate">F. Cita de Descarga
+            <label for="addasndate">{{ ui_label('addasndate_receiptasn_edit','F. Cita de Descarga ') }}
                 <span style="color: red">*</span>
             </label>
             <input type="text" class="form-control date @error('addasndate') is-invalid @enderror"
