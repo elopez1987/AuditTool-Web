@@ -30,9 +30,6 @@ class ShipmentCheckImport implements ToModel, WithBatchInserts, WithChunkReading
                     'partnumberid' => $sku->id,
                 ],
                 [
-                    'customerid' => $order->customerid,
-                    'category1id' => $sku->category01id,
-                    'category2id' => $sku->category02id,
                     'unitmeasureid' => $sku->stkuom ?? 'CS',
                     'quantityrequested' => (int) $row['quantity'],
                     'quantityfail' => (int) $row['quantity'],
