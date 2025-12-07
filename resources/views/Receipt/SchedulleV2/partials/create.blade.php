@@ -110,7 +110,7 @@
                     <div class="row">
                         <div class="col-lg-4 col-md-6 col-sm-12">
                             <div class="form-group">
-                                <label for="partnumberid">Material
+                                <label for="partnumberid">{{ ui_label('receiptasn_partnumberid_createhd','Sku') }}
                                     @error("partnumberid")
                                     <span class="message-error">{{$message}}</span>
                                     @enderror
@@ -130,7 +130,7 @@
                         </div>
                         <div class="col-lg-4 col-md-6 col-sm-12">
                             <div class="form-group">
-                                <label for="quantity">Cantidad
+                                <label for="quantity">{{ ui_label('receiptasn_quantity_createhd','Cantidad') }}
                                     @error("quantity")
                                     <span class="message-error">{{$message}}</span>
                                     @enderror
@@ -152,7 +152,7 @@
                     <div class="row">
                         <div class="col-lg-12 col-md-6 col-sm-12">
                             <div class="form-group">
-                                <label for="carrierid">Linea de transporte
+                                <label for="carrierid">{{ ui_label('receiptasn_carrierid_createhd','Línea de transporte ') }}
                                     @error("carrierid")
                                     <span class="message-error">{{$message}}</span>
                                     @enderror
@@ -162,7 +162,8 @@
                                     <option value="" selected>Seleccione una opción</option>
                                     @foreach($carriers as $model)
                                         <option
-                                                value="{{$model->id}}" {{ old('carrierid') == $model->id ? 'selected' : '' }} > {{$model->name}} </option>
+                                                value="{{$model->id}}" {{ old('carrierid') == $model->id ? 'selected' : '' }} > {{$model->name}}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>

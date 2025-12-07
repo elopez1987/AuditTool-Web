@@ -211,10 +211,9 @@
                                                                 <div class="row">
                                                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                                                         <div class="form-group">
-                                                                            <label for="totalpieces">Cajas
-                                                                                solicitadas
-                                                                                <span
-                                                                                        style="color: red">*</span></label>
+                                                                            <label for="totalpieces"> {{ui_label('monitoranalistatrafico_totalpieces_edit','Cajas solicitadas') }}
+                                                                                <span style="color: red">*</span>
+                                                                            </label>
                                                                             <input type="text"
                                                                                    readonly
                                                                                    class="form-control  numeric"
@@ -224,8 +223,7 @@
                                                                     </div>
                                                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                                                         <div class="form-group">
-                                                                            <label for="totalpiecesfac">Cajas
-                                                                                facturadas
+                                                                            <label for="totalpiecesfac"> {{ui_label('monitoranalistatrafico_totalpiecesfac_edit','Cajas facturadas') }}
                                                                                 <span
                                                                                         style="color: red">*</span></label>
                                                                             <input type="text"
@@ -239,35 +237,37 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="row">
-                                                                    <div class="col-lg-4 col-md-6 col-sm-12">
-                                                                        <div class="form-group">
-                                                                            <label for="totalcontainers">Pallets
-                                                                                solicitados
-                                                                                <span
-                                                                                        style="color: red">*</span></label>
-                                                                            <input type="text"
-                                                                                   readonly
-                                                                                   class="form-control numeric"
-                                                                                   value="{{$orderDelivery->header->totalcontainers}}"
-                                                                            >
+                                                                    @if(ui_visible('monitoranalistatrafico_totalcontainers_edit'))
+                                                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                                                            <div class="form-group">
+                                                                                <label for="totalcontainers"> {{ ui_label('monitoranalistatrafico_totalcontainers_edit','Pallets solicitados') }}
+                                                                                    <span
+                                                                                            style="color: red">*</span></label>
+                                                                                <input type="text"
+                                                                                       readonly
+                                                                                       class="form-control numeric"
+                                                                                       value="{{$orderDelivery->header->totalcontainers}}"
+                                                                                >
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
-                                                                    <div class="col-lg-4 col-md-6 col-sm-12">
-                                                                        <div class="form-group">
-                                                                            <label for="totalcontainersfac">Pallets
-                                                                                facturados
-                                                                                <span
-                                                                                        style="color: red">*</span></label>
-                                                                            <input type="text"
-                                                                                   required
-                                                                                   class="form-control numeric"
-                                                                                   id="totalcontainersfac"
-                                                                                   name="totalcontainersfac"
-                                                                                   value="{{$orderDelivery->header->totalcontainersfac}}"
-                                                                            >
+                                                                    @endif
+                                                                    @if(ui_visible('monitoranalistatrafico_totalcontainersfac_edit'))
+                                                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                                                            <div class="form-group">
+                                                                                <label for="totalcontainersfac"> {{ ui_label('monitoranalistatrafico_totalcontainersfac_edit','Pallets facturados') }}
+                                                                                    <span style="color: red">*</span></label>
+                                                                                <input type="text"
+                                                                                       required
+                                                                                       class="form-control numeric"
+                                                                                       id="totalcontainersfac"
+                                                                                       name="totalcontainersfac"
+                                                                                       value="{{$orderDelivery->header->totalcontainersfac}}"
+                                                                                >
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
+                                                                    @endif
                                                                 </div>
+
                                                             </div>
                                                         </div>
                                                     </div>

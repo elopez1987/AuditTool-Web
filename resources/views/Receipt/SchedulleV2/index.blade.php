@@ -24,19 +24,19 @@
                         <div class="row">
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="workday">Fecha de trabajo</label>
+                                    <label for="workday"> {{ ui_label('appointmentschedule_workday_index','Fecha de trabajo') }}</label>
                                     <input type="text" class="form-control" id="workday" name="workday">
                                 </div>
                             </div>
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="shipmentid">Embarque</label>
+                                    <label for="shipmentid"> {{ ui_label('appointmentschedule_shipmentid_index','Número de recibo') }}</label>
                                     <input type="text" class="form-control" id="shipmentid" name="shipmentid">
                                 </div>
                             </div>
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="statusid">Estatus <span style="color: red">*</span></label>
+                                    <label for="statusid"> {{ ui_label('appointmentschedule_statusid_index','Estatus') }}</label>
                                     <select name="statusid" id="statusid" class="form-control select2">
                                         <option value="" selected>Selecione una opción</option>
                                         @foreach($status as $model)
