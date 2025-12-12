@@ -25,6 +25,10 @@ class AssignShipmentController extends BaseController
     public function getDataTransport()
     {
         $data = ReceiptUnit::controlAccessUser()
+            ->Folio(request('folionumber'))
+            ->Shipment(request('shipmentid'))
+            ->Barcode(request('barcode'))
+            ->BoxNumber(request('boxnumber'))
             ->leftJoin('shipmentcarriers', 'receiptunits.carrierid', '=', 'shipmentcarriers.id')
             ->leftJoin('storagereceiptunitticket', 'receiptunits.id', '=', 'storagereceiptunitticket.folionumber')
             ->leftJoin('users', 'storagereceiptunitticket.responsibleid', '=', 'users.id')

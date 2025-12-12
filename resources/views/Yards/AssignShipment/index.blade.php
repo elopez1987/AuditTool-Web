@@ -12,7 +12,7 @@
                         {{csrf_field()}}
                         <div class="row">
                             <div class="col-lg-12">
-                                <a href="">
+                                <a>
                                     @include('buttons.search')
                                 </a>
                                 <a>
@@ -35,10 +35,20 @@
                             </div>
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
+                                    <label for="barcode">Código de barra</label>
+                                    <input type="text" class="form-control numeric"  id="barcode" name="barcode">
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-6 col-sm-12">
+                                <div class="form-group">
                                     <label for="boxnumber">Placa de caja</label>
-                                    <input type="text" class="form-control"  id="boxnumber" name="boxnumber"
-                                           onKeyUp=this.value=this.value.toUpperCase()
-                                    >
+                                    <input type="text" class="form-control"  id="boxnumber" name="boxnumber" onKeyUp=this.value=this.value.toUpperCase()>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="shipmentid">Embarque</label>
+                                    <input type="text" class="form-control"  id="shipmentid" name="shipmentid" onKeyUp=this.value=this.value.toUpperCase()>
                                 </div>
                             </div>
                         </div>
@@ -144,6 +154,4 @@
             $(this).find('#areaid').select2('destroy');
         });
     </script>
-
-
 @endsection

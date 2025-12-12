@@ -460,7 +460,7 @@
                         <div class="box" data-toggle="tooltip" data-placement="top"
                              title="Permite ver los ticket de pesos de unidad registrados en el sistema.">
                             <i class="lni lni-cloud-sync"></i>
-                            <h5>Tiket de báscula</h5>
+                            <h5>Ticket de báscula</h5>
                             <h4>Ticket de báscula</h4>
                         </div>
                     </a>

@@ -704,18 +704,18 @@
                                                                 <tr>
                                                                     <td>{{$peso->folionumber}}</td>
                                                                     <td>{{$peso->ticket}}</td>
-                                                                    <td>{{$peso->weightin}} Kg</td>
-                                                                    <td>{{ round($peso->weightin * 2.20462) }} lbs</td>
+                                                                    <td>{{number_format($peso->weightin,2)}} Kg</td>
+                                                                    <td>{{ number_format($peso->weightin * 2.20462,2) }} lbs</td>
                                                                     <td>{{$peso->usercreate ? $peso->usercreate->name : ''}}</td>
                                                                     <td>{{$peso->createddate}}</td>
-                                                                    <td>{{$peso->weightout}} Kg</td>
-                                                                    <td>{{ round($peso->weightout * 2.20462)}} lbs</td>
-                                                                    <td>{{$peso->weightout - $peso->weightin}} Kg</td>
-                                                                    <td>{{ round( ($peso->weightout - $peso->weightin) * 2.20462)}} lbs </td>
-                                                                    <td>{{$peso->weightoutsap}} lbs</td> {{-- Peso de SAP libras--}}
+                                                                    <td>{{number_format($peso->weightout,2)}} Kg</td>
+                                                                    <td>{{ number_format($peso->weightout * 2.20462,2)}} lbs</td>
+                                                                    <td>{{number_format( $peso->weightout - $peso->weightin,2)}} Kg</td>
+                                                                    <td>{{  number_format (($peso->weightout - $peso->weightin) * 2.20462,2) }} lbs </td>
+                                                                    <td>{{number_format($peso->weightoutsap,2)}} lbs</td> {{-- Peso de SAP libras--}}
                                                                     <td>{{$peso->userupdate ? $peso->userupdate->name : ''}}</td>
                                                                     <td>{{$peso->updateddate}}</td>
-                                                                    <td>{{$peso->diferencia_porcentaje}}</td>
+                                                                    <td>{{number_format( $peso->weightdifferencelb / $peso->weightoutsap,2)  }} %</td>
                                                                 </tr>
                                                             @endforeach
                                                         @endif

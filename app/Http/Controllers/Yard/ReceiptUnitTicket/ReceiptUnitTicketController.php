@@ -22,7 +22,7 @@ class ReceiptUnitTicketController extends BaseController
     {
         $data = ReceiptUnitTicket::controlAccessUser()
             ->with(['folio', 'status:statusid,name'])
-            ->take(500)->orderBy('id', 'desc');
+            ->where('statusid', 'E');
 
         return DataTables::of($data)
             ->addColumn('btn', 'Yards.ReceiptUnitTicket.partials.buttons')

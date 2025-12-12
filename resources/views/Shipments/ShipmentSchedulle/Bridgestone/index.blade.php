@@ -60,6 +60,14 @@
                                     <input type="text" class="form-control" id="workday" name="workday" >
                                 </div>
                             </div>
+                            <div class="col-lg-2" id="btn-reset-filter">
+                                <div class="form-group">
+                                    <label>&nbsp;</label>
+                                    <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md btn-block" id="btn-clear-filters">
+                                        <i class="fa fa-search"></i> <span class="text-button">Limpiar Filtros</span>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -89,7 +97,7 @@
                                     <th>Placa de caja</th>
                                     <th>Eco. de caja</th>
                                     <th>ETA</th>
-                                    <th>Cantidad de llantas</th>
+                                    <th>{{ ui_label('totalpieces_orderdelivery_create','Cantidad') }}</th>
                                 </tr>
                                 </thead>
                             </table>
@@ -139,8 +147,34 @@
     </script>
     <script>
         $(document).ready(function () {
-            document.getElementById("shipmentid").value = sessionStorage.getItem('shipmentidop');
-            document.getElementById("workday").value = sessionStorage.getItem('workdayop');
+            // Cargar valores guardados o establecer fecha actual
+            document.getElementById("shipmentid").value = sessionStorage.getItem('shipmentidop') || '';
+            
+            // Si no hay fecha guardada, establecer la fecha actual
+            let savedWorkday = sessionStorage.getItem('workdayop');
+            if (!savedWorkday) {
+                let today = moment().format('YYYY-MM-DD');
+                document.getElementById("workday").value = today;
+            } else {
+                document.getElementById("workday").value = savedWorkday;
+            }
+            
+            reloadtable();
+        });
+    </script>
+    <script>
+        // Botón limpiar filtros
+        $("#btn-clear-filters").click(function () {
+            // Limpiar campos
+            document.getElementById("shipmentid").value = '';
+            document.getElementById("workday").value = '';
+            $('#statusid').val('').trigger('change');
+            
+            // Limpiar sessionStorage
+            sessionStorage.removeItem('shipmentidop');
+            sessionStorage.removeItem('workdayop');
+            
+            // Recargar tabla
             reloadtable();
         });
     </script>

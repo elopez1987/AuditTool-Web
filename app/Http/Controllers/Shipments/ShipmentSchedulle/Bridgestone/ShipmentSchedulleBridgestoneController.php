@@ -16,10 +16,7 @@ class ShipmentSchedulleBridgestoneController extends BaseController
         $status = $this->getStatusForSchema('KLE');
         $warehouses = $this->getWarehouseForSelect();
 
-        return view(
-            'Shipments.ShipmentSchedulle.Bridgestone.index',
-            compact('status', 'warehouses')
-        );
+        return view('Shipments.ShipmentSchedulle.Bridgestone.index', compact('status', 'warehouses'));
     }
 
     public function getDataSchedulleShipmentBridgestone(Request $request)

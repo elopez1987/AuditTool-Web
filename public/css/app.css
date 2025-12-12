@@ -12040,7 +12040,7 @@ textarea.form-control-lg {
 }
 
 body {
-  font-family: sans-serif !important;
+  font-family: Sans-Serif !important;
   font-size: 0.725rem !important;
   line-height: 1.5;
   color: black !important;
@@ -12074,8 +12074,8 @@ a {
 
 #main-wrapper[data-layout=horizontal] .left-sidebar[data-sidebarbg=skin6] .sidebar-nav ul .sidebar-item .sidebar-link {
   color: #212529;
-  font-size: 0.875rem !important;
-  font-family: sans-serif;
+  font-size: 0.825rem !important;
+  font-family: Roboto !important;
 }
 
 #main-wrapper[data-layout=vertical] .left-sidebar[data-sidebarbg=skin6],
@@ -12148,13 +12148,13 @@ a {
 }
 label {
   color: black !important;
-  font-size: 0.755rem !important;
+  font-size: 0.785rem !important;
 }
 
 input[type=text], input[type=password], input[type=email], input[type=tel], input[type=number], input[type=select] {
   height: 26px !important;
   border-radius: 3px;
-  font-size: 0.725rem !important;
+  font-size: 0.785rem !important;
   border-color: #c1d5e0;
 }
 
@@ -12183,7 +12183,8 @@ div.dataTables_wrapper div.dataTables_length select {
 }
 
 table.dataTable tbody tr td {
-  border: 1px solid #c1d5e0;
+  border: 1px solid #c1d5e0 !important;
+  text-transform: uppercase !important;
 }
 
 table tbody tr td {
@@ -12201,6 +12202,7 @@ table.dataTable thead th {
   font-size: 0.755rem !important;
   background: #F5F5F5;
   border-color: #c1d5e0;
+  text-transform: uppercase !important;
 }
 
 table.table-striped > tbody > tr:nth-of-type(odd) > * {
@@ -12250,24 +12252,7 @@ span.select2-container {
 .table-condensed > thead > tr > td,
 .table-condensed > thead > tr > th {
   padding: 6px;
-  font-size: 0.675rem;
-}
-
-.dropdown-item-mod {
-  display: block;
-  width: 100%;
-  padding: 0.2rem 1rem;
-  clear: both;
-  color: #212529;
-  text-align: inherit;
-  white-space: nowrap;
-  background-color: transparent;
-  border: 0;
-}
-
-.dropdown-item {
   font-size: 0.775rem;
-  padding: 8px;
 }
 
 .mr-left {
@@ -12451,6 +12436,7 @@ span.select2-container {
   color: #1565c0 !important;
   background: rgba(255, 255, 255, 0.6);
   border-color: #b0bec5 !important;
+  font-size: 1rem !important;
 }
 
 .btn-outline-info:hover {
@@ -12459,11 +12445,11 @@ span.select2-container {
 }
 
 .text-button {
-  font-size: 0.775rem !important;
-  font-family: "Open Sans", sans-serif;
+  font-size: 0.915rem !important;
+  font-family: Roboto !important;
   padding-left: 3px;
   padding-right: 3px;
-  text-transform: capitalize;
+  text-transform: capitalize !important;
 }
 
 .page-item.active .page-link {
@@ -12543,11 +12529,29 @@ ul, #myUL {
   text-decoration: none;
   background-color: #cfd8dc;
   color: #0b0b0b;
+  font-size: 0.825rem !important;
 }
 
 .dropdown-item:hover, .dropdown-item:focus {
   text-decoration: none;
   background-color: #c8e6c9;
+}
+
+.dropdown-item-mod {
+  display: block;
+  width: 100%;
+  padding: 0.2rem 1rem;
+  clear: both;
+  color: #212529;
+  text-align: inherit;
+  white-space: nowrap;
+  background-color: transparent;
+  border: 0;
+}
+
+.dropdown-item {
+  font-size: 0.825rem !important;
+  padding: 12px !important;
 }
 
 .border-card-top {

@@ -16,6 +16,9 @@
                                     @include('buttons.add')
                                 </a>
                                 <a>
+                                    @include('buttons.search')
+                                </a>
+                                <a>
                                     @include('buttons.reloadajax')
                                 </a>
                                 <a href="{{route('menusecurity')}}">

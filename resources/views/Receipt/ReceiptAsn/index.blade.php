@@ -69,7 +69,6 @@
                                 <tr>
                                     <th class="bg-inverse text-white">C.Distribución</th>
                                     <th class="bg-inverse text-white">Bodega</th>
-{{--                                    <th class="bg-inverse text-white">Turno</th>--}}
                                     <th class="bg-inverse text-white">Folio</th>
                                     <th class="bg-inverse text-white">Recibo</th>
                                     <th class="bg-inverse text-white">Factura</th>
