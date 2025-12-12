@@ -54,8 +54,8 @@
                                     <th class="text-white">Kg Neto</th>
                                     <th class="text-white">Embalaje</th>
                                     <th class="text-white">Peso de material</th>
-                                    <th class="text-white">Diferencia Kg</th>
-                                    <th class="text-white">% de diferencia</th>
+{{--                                    <th class="text-white">Diferencia Kg</th>--}}
+{{--                                    <th class="text-white">% de diferencia</th>--}}
                                     <th class="text-white">Estatus</th>
                                     <th class="text-white">Opciones</th>
                                 </tr>

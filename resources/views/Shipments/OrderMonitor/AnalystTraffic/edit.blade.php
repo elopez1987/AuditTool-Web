@@ -193,6 +193,7 @@
                                                   enctype="multipart/form-data">
                                                 {{ method_field('PUT') }}
                                                 @csrf
+
                                                 <div class="row">
                                                     <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
                                                         <button type="submit"
@@ -202,6 +203,7 @@
                                                         </button>
                                                     </div>
                                                 </div>
+
 
                                                 <hr class="mt-3"></hr>
                                                 <div class="row">
