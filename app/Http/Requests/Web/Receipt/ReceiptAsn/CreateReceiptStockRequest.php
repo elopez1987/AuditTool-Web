@@ -9,10 +9,10 @@ class CreateReceiptStockRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'prtnum' => 'required|string|exists:inventorypartnumbers,prtnum',
             'quantity' => 'required|integer|min:1',
             'productiondate' => 'required|date',
             'batch' => 'required',
-            'prtnum' => 'required|string|exists:inventorypartnumbers,prtnum',
         ];
     }
 

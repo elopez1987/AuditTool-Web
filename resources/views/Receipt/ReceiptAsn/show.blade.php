@@ -326,8 +326,8 @@
                                                             <th>Material</th>
                                                             <th>Description</th>
                                                             <th>Lote</th>
-                                                            <th>Cantidad esperada (Piezas)</th>
-                                                            <th>Cantidad escaneada (Piezas)</th>
+                                                            <th>Cantidad esperada</th>
+                                                            <th>Cantidad escaneada</th>
                                                             <th>Opciones</th>
                                                         </tr>
                                                         </thead>
