@@ -63,7 +63,6 @@ class MensajeDiferenciaDePesoSalidaJob implements ShouldQueue
                     'Envío de mensaje de autorización de salida de unidad.',
                 );
 
-                Log::info("Mensaje de autorización de salida de unidad enviado a $contact->phonenumber");
             } catch (Exception $e) {
                 Log::error('Error al enviar mensaje  ' . $e->getMessage());
             }

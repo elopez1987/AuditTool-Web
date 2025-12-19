@@ -18,7 +18,8 @@ class InventoryUnitMeasureController extends BaseController
 
     public function getInventoryUnits(Request $request)
     {
-        $data = InventoryUnitMeasure::controlAccessUser()->with(['status', 'center'])
+        $data = InventoryUnitMeasure::controlAccessUser()
+            ->with(['status:statusid,name', 'center:centerid,name,description', 'warehouse:warehouseid,name'])
             ->Name($request->get('name'))->get();
 
         return DataTables::of($data)

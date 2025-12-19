@@ -20,7 +20,13 @@ class StartOrderDeliveryController extends BaseController
     {
         DB::beginTransaction();
         try {
-            $orderdelivery = OrderDeliverie::controlAccessUser()->whereId($id)->first();
+            $orderdelivery = OrderDeliverie::controlAccessUser()->whereId($id)->lockForUpdate()->first();
+            if ($orderdelivery->statusid === 'PR') {
+                DB::rollBack();
+
+                return $this->errorResponse('El evento ya fue ejecutado anteriormente.');
+            }
+
             $statusold = $orderdelivery->statusid;
             $this->updateOrderDelivery($id);
             $shipment = $this->updateShipmentDataOperation($id);

@@ -1,6 +1,6 @@
 <div class="modal fade bs-example-modal-lg" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true"
      style="display: none;" id="modal-goodissuedate-{{$orderDelivery->id}}">
-    <form method="POST" action="{{url('addgoodissuedate/' . $orderDelivery->id)}}" enctype="multipart/form-data">
+    <form method="POST" action="{{url('addgoodissuedate/' . $orderDelivery->id)}}" enctype="multipart/form-data" id="saveFormGoodIssueDate">
         {{ method_field('PUT') }}
         @csrf
         <div class="modal-dialog modal-lg">
@@ -31,7 +31,7 @@
                         <img src="{{asset('/ico/close.png')}}" alt="" class="img-16">
                         Cancelar
                     </button>
-                    <button type="submit" class="btn btn-outline-secondary btn-sm  waves-effect waves-light">
+                    <button type="submit" class="btn btn-outline-secondary btn-sm  waves-effect waves-light" id="submitBtnGoodIssueDate">
                         <img src="{{asset('/ico/accept.png')}}" alt="" class="img-16">
                         Aceptar
                     </button>

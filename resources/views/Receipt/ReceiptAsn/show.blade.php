@@ -224,8 +224,25 @@
                         <div class="col-lg-2 col-md-6 col-sm-12">
                             <div class="d-flex flex-row comment-row m-t-0">
                                 <div class="comment-text w-100">
-                                    <h6 class="font-weight-light">Inicio de verificación:</h6>
+                                    <h6 class="font-weight-light">Inicio de descarga:</h6>
                                     <span class="m-b-15 d-block font-12 font-12"> {{$receiptasn->unloadstartdate}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-6 col-sm-12">
+                            <div class="d-flex flex-row comment-row m-t-0">
+                                <div class="comment-text w-100">
+                                    <h6 class="font-weight-light">Fin de descarga:</h6>
+                                    <span
+                                        class="m-b-15 d-block font-12"> {{$receiptasn->unloadfinishdate}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-6 col-sm-12">
+                            <div class="d-flex flex-row comment-row m-t-0">
+                                <div class="comment-text w-100">
+                                    <h6 class="font-weight-light">Inicio de verificación:</h6>
+                                    <span class="m-b-15 d-block font-12 font-12"> {{$receiptasn->verifystartdate}}</span>
                                 </div>
                             </div>
                         </div>
@@ -234,10 +251,11 @@
                                 <div class="comment-text w-100">
                                     <h6 class="font-weight-light">Fin de verificación:</h6>
                                     <span
-                                        class="m-b-15 d-block font-12"> {{$receiptasn->unloadfinishdate}}</span>
+                                            class="m-b-15 d-block font-12"> {{$receiptasn->verifyfinishdate}}</span>
                                 </div>
                             </div>
                         </div>
+
 
                     </div>
 
@@ -325,9 +343,10 @@
                                                         <tr>
                                                             <th>Material</th>
                                                             <th>Description</th>
-                                                            <th>Lote</th>
+{{--                                                            <th>Lote</th>--}}
                                                             <th>Cantidad esperada</th>
                                                             <th>Cantidad escaneada</th>
+                                                            <th>Unidad de medida</th>
                                                             <th>Opciones</th>
                                                         </tr>
                                                         </thead>
@@ -336,7 +355,7 @@
                                                             <tr>
                                                                 <td>{{$stock->prtnum}}</td>
                                                                 <td>{{$stock->lngdsc}}</td>
-                                                                <td>{{$stock->expirecode}}</td>
+{{--                                                                <td>{{$stock->expirecode}}</td>--}}
                                                                 <td>{{$stock->quantitytrue}}</td>
                                                                 <td>
                                                                     @if(!empty($stock->totalescaneado))
@@ -353,6 +372,7 @@
                                                                         @endif
                                                                     @endif
                                                                 </td>
+                                                                <td>{{$stock->unidadmedida}}</td>
                                                                 <td>
                                                                     @if($receiptasn->statusid != 'IG')
                                                                         <a href=""
@@ -413,7 +433,7 @@
                                                                             <div class="el-overlay">
                                                                                 <ul class="list-style-none el-info">
                                                                                     <li class="el-item">
-                                                                                        <a href="{{url('downloadphotocheckin/' . $photo->id)}}"
+                                                                                        <a href="{{url('downloadphoto/' . $photo->id)}}"
                                                                                            data-togggle="tooltip"
                                                                                            title="Descargar"
                                                                                            class="btn default btn-outline el-link">
@@ -561,14 +581,13 @@
                                                 <tr>
                                                     <th>Número de parte</th>
                                                     <th>Descripción</th>
-                                                    <th>Cantidad cajas</th>
-                                                    <th>Cantidad piezas</th>
-                                                    <th>Lpn</th>
+                                                    <th>Cantidad</th>
                                                     <th>Lote</th>
                                                     <th>Fecha de caducidad</th>
-                                                    <th>¿Corresponde en EAN?</th>
-                                                    <th>¿Corresponde la F.Caducidad?</th>
-                                                    <th>Evidencia</th>
+                                                    <th>Lpn</th>
+{{--                                                    <th>¿Corresponde en EAN?</th>--}}
+{{--                                                    <th>¿Corresponde la F.Caducidad?</th>--}}
+{{--                                                    <th>Evidencia</th>--}}
                                                     <th>Usuario</th>
                                                     <th>Fecha de creación</th>
                                                     <th></th>
@@ -580,48 +599,47 @@
                                                         <td>{{$container->partnumber ? $container->partnumber->prtnum : ''}}</td>
                                                         <td>{{$container->partnumber ? $container->partnumber->lngdsc : ''}}</td>
                                                         <td>{{$container->quantity }}</td>
-                                                        <td>{{$container->quantity * $container->partnumber->untcas}}</td>
-                                                        <td>{{$container->lpnid}}</td>
                                                         <td>{{$container->batch}}</td>
                                                         <td>{{$container->expiredate}}</td>
-                                                        <td>
-                                                            @if($container->eanpz == $container->eanbox)
-                                                                <span class="badge badge-success"
-                                                                      style="padding: 5px 10px">SI</span>
-                                                            @else
-                                                                <span class="badge badge-danger"
-                                                                      style="padding: 5px 10px">NO</span>
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            @if($container->auxiliary01 == 'SI' )
-                                                                <span class="badge badge-success"
-                                                                      style="padding: 5px 10px">SI</span>
-                                                            @else
-                                                                <span class="badge badge-danger"
-                                                                      style="padding: 5px 10px">NO</span>
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            @if(!empty($container->photo))
-                                                                <div class="el-card-item">
-                                                                    <div class="el-card-avatar el-overlay-1">
-                                                                        <div class="el-overlay">
-                                                                            <ul class="list-style-none el-info">
-                                                                                <li class="el-item bg-grey">
-                                                                                    <a class="btn default btn-outline image-popup-vertical-fit el-link"
-                                                                                       href="{{asset('storage/' . $container->photo)}}">
-                                                                                        Ver
-                                                                                        <i class="icon-magnifier"></i>
-                                                                                    </a>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            @else
-                                                            @endif
-                                                        </td>
+                                                        <td>{{$container->lpnid}}</td>
+{{--                                                        <td>--}}
+{{--                                                            @if($container->eanpz == $container->eanbox)--}}
+{{--                                                                <span class="badge badge-success"--}}
+{{--                                                                      style="padding: 5px 10px">SI</span>--}}
+{{--                                                            @else--}}
+{{--                                                                <span class="badge badge-danger"--}}
+{{--                                                                      style="padding: 5px 10px">NO</span>--}}
+{{--                                                            @endif--}}
+{{--                                                        </td>--}}
+{{--                                                        <td>--}}
+{{--                                                            @if($container->auxiliary01 == 'SI' )--}}
+{{--                                                                <span class="badge badge-success"--}}
+{{--                                                                      style="padding: 5px 10px">SI</span>--}}
+{{--                                                            @else--}}
+{{--                                                                <span class="badge badge-danger"--}}
+{{--                                                                      style="padding: 5px 10px">NO</span>--}}
+{{--                                                            @endif--}}
+{{--                                                        </td>--}}
+{{--                                                        <td>--}}
+{{--                                                            @if(!empty($container->photo))--}}
+{{--                                                                <div class="el-card-item">--}}
+{{--                                                                    <div class="el-card-avatar el-overlay-1">--}}
+{{--                                                                        <div class="el-overlay">--}}
+{{--                                                                            <ul class="list-style-none el-info">--}}
+{{--                                                                                <li class="el-item bg-grey">--}}
+{{--                                                                                    <a class="btn default btn-outline image-popup-vertical-fit el-link"--}}
+{{--                                                                                       href="{{asset('storage/' . $container->photo)}}">--}}
+{{--                                                                                        Ver--}}
+{{--                                                                                        <i class="icon-magnifier"></i>--}}
+{{--                                                                                    </a>--}}
+{{--                                                                                </li>--}}
+{{--                                                                            </ul>--}}
+{{--                                                                        </div>--}}
+{{--                                                                    </div>--}}
+{{--                                                                </div>--}}
+{{--                                                            @else--}}
+{{--                                                            @endif--}}
+{{--                                                        </td>--}}
                                                         <td>{{$container->user ? $container->user->name : ''}}</td>
                                                         <td>{{$container->created_at}}</td>
                                                         <td>

@@ -55,7 +55,8 @@ class ReceiptAsnsController extends BaseController
         $providers = $this->getReceiptProviderForSelect();
         $turns = $this->getTurns();
         $carriers = $this->getCarriersForSelect();
-        $categorystocks = InventoryStockCategory::select('description', 'id')->get();
+        $categorystocks = InventoryStockCategory::select('description', 'id')
+            ->where('statusid', 'E')->get();
         $reasons = StorageReason::whereType('RE')->select('name', 'id')->get();
 
         return view('Receipt.ReceiptAsn.create', compact(
@@ -94,7 +95,9 @@ class ReceiptAsnsController extends BaseController
         $carriers = $this->getCarriersForSelect();
         $providers = $this->getReceiptProviderForSelect();
         $turns = StorageTurn::select('name', 'id')->get();
-        $categorystocks = InventoryStockCategory::select('description', 'id')->get();
+        $categorystocks = InventoryStockCategory::select('description', 'id')
+            ->where('statusid', 'E')
+            ->get();
         $reasons = StorageReason::whereType('RE')->select('name', 'id')->get();
 
         return view('Receipt.ReceiptAsn.edit', compact(
@@ -148,7 +151,8 @@ class ReceiptAsnsController extends BaseController
             'inventorypartnumbers.lngdsc',
             'receiptstock.expirecode',
             'receiptstock.quantitytrue',
-            DB::raw('(SUM(receiptcontainers.quantity) * inventorypartnumbers.untcas) as totalescaneado')
+            'inventoryunitsmeasure.description as unidadmedida',
+            DB::raw('(SUM(receiptcontainers.quantity)) as totalescaneado')
         )
             ->leftJoin('inventorypartnumbers', function ($join) {
                 $join->on('receiptstock.partnumberid', '=', 'inventorypartnumbers.id')
@@ -158,16 +162,18 @@ class ReceiptAsnsController extends BaseController
                 $join->on('receiptstock.receiptid', '=', 'receiptcontainers.receiptid')
                     ->on('receiptstock.centerid', '=', 'receiptcontainers.centerid')
                     ->on('receiptstock.warehouseid', '=', 'receiptcontainers.warehouseid')
-                    ->on('receiptstock.partnumberid', '=', 'receiptcontainers.partnumberid')
-                    ->on('receiptstock.expirecode', '=', 'receiptcontainers.batch');
+                    ->on('receiptstock.partnumberid', '=', 'receiptcontainers.partnumberid');
+                //                    ->on('receiptstock.expirecode', '=', 'receiptcontainers.batch');
             })
+            ->leftJoin('inventoryunitsmeasure', 'receiptstock.unitmeasureid', '=', 'inventoryunitsmeasure.id')
             ->where('receiptstock.receiptid', '=', $receiptid)
             ->groupBy(
                 'inventorypartnumbers.prtnum',
                 'inventorypartnumbers.lngdsc',
                 'receiptstock.expirecode',
                 'receiptstock.quantitytrue',
-                'inventorypartnumbers.untcas'
+                'inventorypartnumbers.untcas',
+                'inventoryunitsmeasure.description'
             )
             ->get();
     }

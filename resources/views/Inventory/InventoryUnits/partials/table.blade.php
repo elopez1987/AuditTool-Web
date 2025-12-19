@@ -19,6 +19,7 @@
         },
         "columns": [
             {data: 'center.description', name: 'center.description'},
+            {data: 'warehouse.name', name: 'warehouse.name'},
             {data: 'unitmeasureid'},
             {data: 'description'},
             {data: 'ediunitmeasurecode'},

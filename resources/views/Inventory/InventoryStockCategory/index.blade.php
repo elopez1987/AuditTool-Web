@@ -54,6 +54,8 @@
                             <table width="100%" id="table-categorystock" class="table table-bordered  table-condensed">
                                 <thead>
                                 <tr>
+                                    <th class="bg-inverse text-white">C.Distribución</th>
+                                    <th class="bg-inverse text-white">Bodega</th>
                                     <th class="bg-inverse text-white">Tipo</th>
                                     <th class="bg-inverse text-white">Descripción</th>
                                     <th class="bg-inverse text-white">Auxiliar 01</th>

@@ -69,7 +69,6 @@ class EnviarMensajeFinFacturacionJob implements ShouldQueue
                     'Envío de mensaje de fin de facturación.'
                 );
 
-                Log::info("Mensaje de facturación enviado a {$contact->phonenumber}");
             } catch (Exception $e) {
                 Log::error("Error al enviar mensaje de facturación a {$contact->phonenumber}: {$e->getMessage()}");
             }

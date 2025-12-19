@@ -17,6 +17,13 @@ class EndCheckOrderDeliveryController extends BaseController
         DB::beginTransaction();
         try {
             $orderdelivery = OrderDeliverie::controlAccessUser()->whereId($id)->first();
+            if (! $orderdelivery) {
+                return $this->errorResponse('El número de embarque no existe,favor de validar.');
+            }
+            if ($orderdelivery->statusid == 'IV') {
+                return $this->errorResponse('El evento ya fue ejecutado anteriormente.');
+            }
+
             $statusold = $orderdelivery->statusid;
             $this->updateShipmentDataOperation($id);
             $this->updateStatusOrderDelivery($id);

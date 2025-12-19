@@ -17,7 +17,7 @@ class ReturnStartGoodIssueController extends BaseController
     {
         DB::beginTransaction();
         try {
-            $orderDelivery = OrderDeliverie::controlAccessUser()
+            $orderDelivery = OrderDeliverie::controlAccessUser()->lockForUpdate()
                 ->with(['header', 'operation'])
                 ->where('id', $id)->first();
 

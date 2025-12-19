@@ -19,7 +19,7 @@ class InventoryPartNumberCategory02sController extends BaseController
     public function getDataCategory02(Request $request)
     {
         $data = InventoryPartNumberCategory02::controlAccessUser()
-            ->with(['status', 'center', 'warehouse'])
+            ->with(['status:statusid,name', 'center:centerid,name,description', 'warehouse:warehouseid,name'])
             ->Status($request->get('statusid'))
             ->Name($request->get('name'))->get();
 

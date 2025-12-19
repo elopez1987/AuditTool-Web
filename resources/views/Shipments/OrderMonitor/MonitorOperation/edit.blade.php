@@ -11,6 +11,8 @@
                         style="font-size: 13px;font-weight: 400;text-align: left;margin-right: 100px"> {{ $orderDelivery->customer ? $orderDelivery->customer->name : ''}}</span>
                 Estatus: <span
                         style="font-size: 13px;font-weight: 400;text-align: left;margin-right: 100px"> {{ $orderDelivery->status ? $orderDelivery->status->name : ''}}</span>
+
+                MODULO DE OPERACIONES
             </div>
             <div class="card-body">
                 <div class="row">
@@ -22,7 +24,7 @@
                             <a href="{{url('orderdeliveries/' . $orderDelivery->id)}}" target="_blank">
                                 <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
                                     <img src="{{asset('/ico/viewdetail.png')}}" alt="" class="img-16">
-                                    <span style="font-size: 0.675rem "> Ver Kardex</span>
+                                    <span style="font-size: 0.675rem "> Ver Kardex </span>
                                 </button>
                             </a>
                         @endcan
@@ -264,14 +266,18 @@
                                             <div class="card-body">
                                                 <form method="POST"
                                                       action="{{url('monitoroperation/' . $orderDelivery->id)}}"
-                                                      enctype="multipart/form-data">
+                                                      enctype="multipart/form-data" id="form-edit-save-operation">
                                                     {{ method_field('PUT') }}
                                                     @csrf
                                                     <div class="row">
                                                         <div class="col-lg-12">
-                                                            <a href="">
-                                                                @include('buttons.save')
-                                                            </a>
+                                                            <button type="submit"
+                                                                    class="btn waves-effect waves-light btn-outline-info btn-md"
+                                                                    id="submitBtnSaveOperation">
+                                                                <img src="{{asset('/ico/save02.png')}}" alt=""
+                                                                     class="img-16">
+                                                                <span class="text-button"> Guardar Datos</span>
+                                                            </button>
                                                         </div>
                                                     </div>
                                                     <hr class="m-t-1">
@@ -401,14 +407,19 @@
 
                                                 <form method="POST"
                                                       action="{{url('savecommentoperation/' . $orderDelivery->id)}}"
-                                                      enctype="multipart/form-data">
+                                                      enctype="multipart/form-data" id="form-edit-save-comment">
                                                     {{ method_field('PUT') }}
                                                     @csrf
                                                     <div class="row">
                                                         <div class="col-lg-12">
-                                                            <a href="">
-                                                                @include('buttons.save')
-                                                            </a>
+                                                            <button type="submit"
+                                                                    class="btn waves-effect waves-light btn-outline-info btn-md"
+                                                                    id="submitBtnSaveComment">
+                                                                <img src="{{asset('/ico/save02.png')}}" alt=""
+                                                                     class="img-16">
+                                                                <span class="text-button"> Guardar comentarios</span>
+                                                            </button>
+
                                                         </div>
                                                     </div>
                                                     <hr class="m-t-1">
@@ -460,14 +471,19 @@
 
                                                 <form method="POST"
                                                       action="{{url('savepalletstoshipment/' . $orderDelivery->id)}}"
-                                                      enctype="multipart/form-data">
+                                                      enctype="multipart/form-data" id="form-edit-save-pallets">
                                                     {{ method_field('PUT') }}
                                                     @csrf
                                                     <div class="row">
                                                         <div class="col-lg-12">
-                                                            <a href="">
-                                                                @include('buttons.save')
-                                                            </a>
+                                                            <button type="submit"
+                                                                    class="btn waves-effect waves-light btn-outline-info btn-md"
+                                                                    id="submitBtnSavePallet">
+                                                                <img src="{{asset('/ico/save02.png')}}" alt=""
+                                                                     class="img-16">
+                                                                <span class="text-button"> Guardar tarimas</span>
+                                                            </button>
+
                                                         </div>
                                                     </div>
                                                     <hr class="m-t-1">
@@ -541,15 +557,79 @@
             </div>
         </div>
     </div>
+
+    <!-- Loading Overlay -->
+    @include('layouts.Partials.Loading')
+
     @include('layouts.Partials.Errors')
 @endsection
 
 @section('css')
-    <link rel="stylesheet"
-          href="{{asset('/theme/assets/libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css')}}">
+    <link rel="stylesheet" href="{{asset('/theme/assets/libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css')}}">
 @endsection
 
 @section('script')
     <script src="{{asset('/theme/assets/libs/bootstrap-switch/dist/js/bootstrap-switch.min.js')}}"></script>
+
+    <script>
+        // Función para mostrar el loading
+        function showLoading() {
+            const overlay = document.getElementById('loading-overlay');
+            overlay.style.display = 'flex';
+            overlay.classList.add('show');
+        }
+
+        // Función para ocultar el loading (en caso de error)
+        function hideLoading() {
+            const overlay = document.getElementById('loading-overlay');
+            overlay.style.display = 'none';
+            overlay.classList.remove('show');
+        }
+
+        // Formulario de operaciones
+        document.getElementById('form-edit-save-operation').addEventListener('submit', function (e) {
+            const btn = document.getElementById('submitBtnSaveOperation');
+            btn.disabled = true;
+            showLoading();
+        });
+
+        // Formulario de comentarios
+        document.getElementById('form-edit-save-comment').addEventListener('submit', function (e) {
+            const btn = document.getElementById('submitBtnSaveComment');
+            btn.disabled = true;
+            showLoading();
+        });
+
+        // Formulario de tarimas
+        document.getElementById('form-edit-save-pallets').addEventListener('submit', function (e) {
+            const btn = document.getElementById('submitBtnSavePallet');
+            btn.disabled = true;
+            showLoading();
+        });
+
+        // Event listeners para modales
+        const modalForms = [
+            { formId: 'saveFormModalStartShipment', btnId: 'submitBtnStartShipment' },
+            { formId: 'saveFormAddendchecker', btnId: 'submitBtnEndCheck' },
+            { formId: 'saveFormForLoad', btnId: 'submitBtnForLoad' },
+            { formId: 'saveFormAddLoad', btnId: 'submitBtnStartLoad' },
+            { formId: 'saveFormEndLoad', btnId: 'submitBtnEndLoad' },
+            { formId: 'saveFormSendDocument', btnId: 'submitBtnSendDocument' }
+        ];
+
+        modalForms.forEach(function(modal) {
+            const form = document.getElementById(modal.formId);
+            if (form) {
+                form.addEventListener('submit', function() {
+                    const btn = document.getElementById(modal.btnId);
+                    if (btn) {
+                        btn.disabled = true;
+                    }
+                    showLoading();
+                });
+            }
+        });
+
+    </script>
 @endsection
 

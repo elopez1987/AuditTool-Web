@@ -100,7 +100,7 @@ class StorageAreas extends Model
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
 
-        return StorageAreas::whereIn('storageareas.warehouseid', $warehouses)
+        return static::whereIn('storageareas.warehouseid', $warehouses)
             ->whereIn('storageareas.centerid', $centers);
     }
 

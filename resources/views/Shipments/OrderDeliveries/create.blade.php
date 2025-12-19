@@ -8,8 +8,7 @@
                     Programar embarque
                 </div>
                 <div class="card-body">
-                    <form method="POST" id="createorderdelivery" action="{{url('orderdeliveries')}}"
-                          enctype="multipart/form-data">
+                    <form method="POST" id="createorderdelivery" action="{{url('orderdeliveries')}}" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-12">
@@ -47,7 +46,13 @@
     <script src="{{asset('/theme/assets/libs/quill/dist/quill.min.js')}}"></script>
     <script src="{{asset('/js/selects/warehouse-for-center.js')}}"></script>
 
-
+    <script>
+        document.getElementById('createorderdelivery').addEventListener('submit', function () {
+            const btn = document.getElementById('submitBtnSave');
+            btn.disabled = true;
+            btn.innerText = 'Enviando...';
+        });
+    </script>
 
     <script>
         $('#workday').bootstrapMaterialDatePicker({format: 'YYYY-MM-DD', weekStart: 1, time: false});

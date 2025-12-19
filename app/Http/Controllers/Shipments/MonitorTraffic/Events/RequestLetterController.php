@@ -16,9 +16,18 @@ class RequestLetterController extends BaseController
     {
         DB::beginTransaction();
         try {
-            $orderDelivery = OrderDeliverie::controlAccessUser()->where('id', $id)->first();
+            $orderDelivery = OrderDeliverie::controlAccessUser()->where('id', $id)->lockForUpdate()->first();
             $statusold = $orderDelivery->statusid;
-            $shipment = ShipmentDataOperation::controlAccessUser()->where('orderid', $orderDelivery->id)->first();
+            $shipment = ShipmentDataOperation::controlAccessUser()->where('orderid', $orderDelivery->id)->lockForUpdate()->first();
+
+            if (! $shipment) {
+                throw new \Exception('No existe información de operación para este envío.');
+            }
+
+            if (! is_null($shipment->requestletter)) {
+                throw new \Exception('El evento ya fue ejecutado anteriormente.');
+            }
+
             $shipment->requestletter = now();
             $shipment->save();
 
@@ -45,9 +54,9 @@ class RequestLetterController extends BaseController
     {
         DB::beginTransaction();
         try {
-            $orderDelivery = OrderDeliverie::controlAccessUser()->where('id', $id)->first();
+            $orderDelivery = OrderDeliverie::controlAccessUser()->where('id', $id)->lockForUpdate()->first();
             $statusold = $orderDelivery->statusid;
-            $shipment = ShipmentDataOperation::controlAccessUser()->where('orderid', $orderDelivery->id)->first();
+            $shipment = ShipmentDataOperation::controlAccessUser()->where('orderid', $orderDelivery->id)->lockForUpdate()->first();
             $shipment->responseletter = now();
             $shipment->save();
             OrderdeliveryTrace::saveEventShipment($orderDelivery, 'EEM-13', $statusold);

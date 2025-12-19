@@ -19,9 +19,21 @@ class StartGoogIssueController extends BaseController
         $order = $id;
         DB::beginTransaction();
         try {
-            $orderDelivery = OrderDeliverie::controlAccessUser()->where('id', $order->id)->first();
+            $orderDelivery = OrderDeliverie::controlAccessUser()->where('id', $order->id)
+                ->lockForUpdate()->first();
+
+            $shipmentheader = ShipmentHeader::whereOrderid($orderDelivery->id)->lockForUpdate()->first();
+            if (! empty($shipmentheader)) {
+                if ($shipmentheader->startgoodissuedate != null) {
+                    return $this->errorResponse('El embarque ya cuenta con inicio de facturación.');
+                }
+            }
+
+            $shipmentheader->statusid = 'IF';
+            $shipmentheader->startgoodissuedate = now();
+            $shipmentheader->save();
+
             $statusold = $orderDelivery->statusid;
-            $this->updateShipmentHeader($orderDelivery);
             $this->updateShipmentSeal($orderDelivery);
             $this->updateOrderDelivery($orderDelivery);
             $this->SendEdiToRControl($orderDelivery);
@@ -39,17 +51,9 @@ class StartGoogIssueController extends BaseController
         }
     }
 
-    public function updateShipmentHeader(OrderDeliverie $orderDelivery): void
-    {
-        $shipmentheader = ShipmentHeader::whereOrderid($orderDelivery->id)->first();
-        $shipmentheader->statusid = 'IF';
-        $shipmentheader->startgoodissuedate = now();
-        $shipmentheader->save();
-    }
-
     public function updateShipmentSeal(OrderDeliverie $orderDelivery): void
     {
-        $shipmentseal = ShipmentSeal::whereOrderid($orderDelivery->id)->first();
+        $shipmentseal = ShipmentSeal::whereOrderid($orderDelivery->id)->lockForUpdate()->first();
         $shipmentseal->statusorderid = 'IF';
         $shipmentseal->save();
     }

@@ -31,13 +31,20 @@ class FinishGoodIssueController extends BaseController
         DB::beginTransaction();
         try {
             $order = $id;
-            $orderDelivery = OrderDeliverie::whereId($order->id)->first();
+            $orderDelivery = OrderDeliverie::whereId($order->id)->lockForUpdate()->first();
+
+            if ($orderDelivery->statusid === 'EJ') {
+                DB::rollBack();
+
+                return $this->errorResponse('El evento ya fue ejecutado anteriormente.');
+            }
+
             $statusold = $orderDelivery->statusid;
             $parameter = $this->getParametersOfCenter($orderDelivery->centerid);
             $parameterWarehouse = $this->getParameterNotificacionWarehouse($orderDelivery->warehouseid);
 
             if (! empty($orderDelivery->folionumber)) {
-                $folio = ReceiptUnit::where('id', $orderDelivery->folionumber)->first();
+                $folio = ReceiptUnit::where('id', $orderDelivery->folionumber)->lockForUpdate()->first();
                 if (empty($folio)) {
                     return $this->errorResponse('El número de folio relacionado al embarque no se encuentra en patio, favor de validar.');
                 }
@@ -74,7 +81,7 @@ class FinishGoodIssueController extends BaseController
 
     private function updateShipmentHeader($orderDelivery, $delivery): void
     {
-        $shipmentheader = ShipmentHeader::controlAccessUser()->where('orderid', $orderDelivery->id)->first();
+        $shipmentheader = ShipmentHeader::controlAccessUser()->where('orderid', $orderDelivery->id)->lockForUpdate()->first();
         if (! empty($shipmentheader)) {
             $shipmentheader->delivery = $delivery;
             $shipmentheader->goodissuedate = now();
@@ -85,7 +92,7 @@ class FinishGoodIssueController extends BaseController
 
     private function updateShipmentSeal($orderDelivery): void
     {
-        $shipmentseal = ShipmentSeal::controlAccessUser()->whereOrderid($orderDelivery->id)->first();
+        $shipmentseal = ShipmentSeal::controlAccessUser()->whereOrderid($orderDelivery->id)->lockForUpdate()->first();
         if (! empty($shipmentseal)) {
             $shipmentseal->statusorderid = 'EJ';
             $shipmentseal->save();
@@ -94,7 +101,7 @@ class FinishGoodIssueController extends BaseController
 
     private function updateOrderMonitor($orderDelivery): void
     {
-        $ordermonitor = OrderMonitor::where('orderid', $orderDelivery->id)->first();
+        $ordermonitor = OrderMonitor::where('orderid', $orderDelivery->id)->lockForUpdate()->first();
         if (! empty($ordermonitor)) {
             $ordermonitor->statusid = 'TM';
             $ordermonitor->save();

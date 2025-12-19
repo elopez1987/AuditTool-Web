@@ -26,9 +26,7 @@ class CorreoDiscrepanciaEnPesoJob implements ShouldQueue
 
     public function handle(): void
     {
-        Log::info('Inicio del correo de peso', ['receiptUnitId' => $this->receiptunit->id]);
         $receiptunit = $this->receiptunit;
-        Log::info('La unidad a notificar es : ', ['receiptUnitId' => $receiptunit->id]);
         $contacts = SystemDetailMail::query()
             ->where('centerid', $receiptunit->centerid)
             ->where('warehouseid', $receiptunit->warehouseid)
@@ -36,8 +34,6 @@ class CorreoDiscrepanciaEnPesoJob implements ShouldQueue
             ->pluck('email')   // obtiene solo la columna "email"
             ->filter()         // elimina null o elementos vacíos
             ->toArray();
-
-        Log::info('Contactos para el envío de  correo de peso', ['emails' => $contacts]);
 
         if (empty($contacts)) {
             Log::error('No se encontraron contactos para el correo de peso con el Centro y Bodega seleccionado', [
@@ -48,7 +44,5 @@ class CorreoDiscrepanciaEnPesoJob implements ShouldQueue
         }
 
         Mail::to($contacts)->send(new DifferenceWeightUnitMail($receiptunit));
-
-        Log::info('Se enviaron los correos de peso a los contactos seleccionados');
     }
 }

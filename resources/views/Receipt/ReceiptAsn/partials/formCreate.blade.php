@@ -6,7 +6,8 @@
                 <div class="row">
                     <div class="col-lg-3 col-md-6 col-sm-12">
                         <div class="form-group">
-                            <label for="centerid">{{ ui_label('centerid_receiptasn_create','Centro de distribución') }}  <span style="color: red">*</span></label>
+                            <label for="centerid">{{ ui_label('centerid_receiptasn_create','Centro de distribución') }}
+                                <span style="color: red">*</span></label>
                             <select name="centerid" id="centerid" required class="form-control select2">
                                 @foreach($centers as $center)
                                     <option value="{{$center->centerid}}" {{ old('centerid') == $center->centerid ? 'selected' : '' }}> {{$center->name}} </option>
@@ -16,7 +17,8 @@
                     </div>
                     <div class="col-lg-3 col-md-6 col-sm-12">
                         <div class="form-group">
-                            <label for="warehouseid">{{ ui_label('warehouseid_receiptasn_create','Bodega') }} <span style="color: red">*</span></label>
+                            <label for="warehouseid">{{ ui_label('warehouseid_receiptasn_create','Bodega') }} <span
+                                        style="color: red">*</span></label>
                             <select name="warehouseid" id="warehouseid" required class="form-control select2">
                                 @foreach($warehouses as $warehouse)
                                     <option
@@ -175,36 +177,41 @@
             <div class="card-header">Datos del transporte</div>
             <div class="card-body">
                 <div class="row mt-3">
-                    <div class="col-lg-3 col-md-6 col-sm-12">
-                        <div class="form-group">
-                            <label for="folionumber">{{ ui_label('folionumber_receiptasn_create','Folio de control de patios') }}
-                                @error("folionumber")
-                                <span class="message-error">{{$message}}</span>
-                                @enderror
-                            </label>
-                            <input type="text" class="form-control @error('folionumber') is-invalid @enderror"
-                                   id="folionumber" name="folionumber"
-                                   aria-describedby="folionumber"
-                                   value="{{old('folionumber')}}"
-                            >
+                    @if(ui_visible('folionumber_receiptasn_create'))
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <label for="folionumber">{{ ui_label('folionumber_receiptasn_create','Folio de control de patios') }}
+                                    @error("folionumber")
+                                    <span class="message-error">{{$message}}</span>
+                                    @enderror
+                                </label>
+                                <input type="text" class="form-control @error('folionumber') is-invalid @enderror"
+                                       id="folionumber" name="folionumber"
+                                       aria-describedby="folionumber"
+                                       value="{{old('folionumber')}}"
+                                >
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-12">
-                        <div class="form-group">
-                            <label for="carrierid">{{ ui_label('carrierid_receiptasn_create','Linea de transporte') }}
-                                @error("carrierid")
-                                <span class="message-error">{{$message}}</span>
-                                @enderror
-                                <span style="color: red">*</span>
-                            </label>
-                            <select name="carrierid" class="form-control select2" required>
-                                <option value="" selected>Seleccione una opción</option>
-                                @foreach($carriers as $model)
-                                    <option value="{{$model->id}}" {{ old('carrierid') == $model->id ? 'selected' : '' }} > {{$model->name}} </option>
-                                @endforeach
-                            </select>
+                    @endif
+                    @if(ui_visible('carrierid_receiptasn_create'))
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <label for="carrierid">{{ ui_label('carrierid_receiptasn_create','Linea de transporte') }}
+                                    @error("carrierid")
+                                    <span class="message-error">{{$message}}</span>
+                                    @enderror
+                                    <span style="color: red">*</span>
+                                </label>
+                                <select name="carrierid" class="form-control select2"  @if(ui_required('carrierid_receiptasn_create')) required @endif>
+                                    <option value="" selected>Seleccione una opción</option>
+                                    @foreach($carriers as $model)
+                                        <option value="{{$model->id}}" {{ old('carrierid') == $model->id ? 'selected' : '' }} > {{$model->name}} </option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
-                    </div>
+                    @endif
+
                 </div>
             </div>
         </div>
