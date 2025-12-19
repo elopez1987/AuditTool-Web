@@ -86,7 +86,7 @@
     <div class="row">
         <table>
             <th style="width: 33%;">
-                <img src="img/henkel.png" alt="" style="height: 70px;" class="logo">
+                <img src="{{ public_path('img/henkel.png') }}" alt="" style="height: 70px;" class="logo">
             </th>
             <th style="width: 33%;">
                 <h3 class='formato'> CONTROL DE ACCESO CIRCUITO PLANTA</h3>
@@ -186,13 +186,13 @@
             <tr>
                 <th style="width: 50%">
                     @if($data->qr != null)
-                        <img src="{!! 'storage/' . $data->qr !!}" alt=""
+                        <img src="{{ storage_path('app/public/' . $data->qr) }}" alt=""
                              style="max-width: 150px;height: 150px">
                     @endif
                 </th>
                 <th style="width: 50%">
                     @if($data->logo != null)
-                        <img src="{!! 'storage/' . $data->logo !!}" alt=""
+                        <img src="{{ storage_path('app/public/' . $data->logo) }}" alt=""
                              style="height: 150px;max-width: 150px">
                     @endif
                 </th>

@@ -71,7 +71,7 @@
         <table class="border-none">
             <tr>
                 <th width="25%" class="border-none">
-                    <img src="img/Bridgestone.png" alt="" style="height: 25px;width: 100px">
+                    <img src="{{ public_path('img/Bridgestone.png') }}" alt="" style="height: 25px;width: 100px">
                 </th>
                 <th class="border-none">INSPECCION DEL TRACTOCAMION Y DEL SEMIREMOLQUE</th>
             </tr>
@@ -195,7 +195,7 @@
     <div class="row">
         <table class="border-none">
             <th width="30%" style="height: 40px">
-                <img src="img/A.png" alt="" style="width: 100%;height: 100px">
+                <img src="{{ public_path('img/A.png') }}" alt="" style="width: 100%;height: 100px">
             </th>
             <th width="10%">
                 <div class="row">
@@ -439,9 +439,9 @@
                 @foreach($verified as $item)
                     @if($item->idcheck == "32")
                         @if($item->verified == 'SI')
-                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                            <img src="{{ public_path('img/kraft/check-mark-icon.png') }}" alt="" style="width: 9px;height: 9px">
                         @elseif($item->verified == 'NO')
-                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                            <img src="{{ public_path('img/kraft/close-icon.png') }}" alt="" style="width: 9px;height: 9px">
                         @else
                             {{$item->verified}}
                         @endif
@@ -453,9 +453,9 @@
                 @foreach($verified as $item)
                     @if($item->idcheck == "33")
                         @if($item->verified == 'SI')
-                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                            <img src="{{ public_path('img/kraft/check-mark-icon.png') }}" alt="" style="width: 9px;height: 9px">
                         @elseif($item->verified == 'NO')
-                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                            <img src="{{ public_path('img/kraft/close-icon.png') }}" alt="" style="width: 9px;height: 9px">
                         @else
                             {{$item->verified}}
                         @endif
@@ -467,9 +467,9 @@
                 @foreach($verified as $item)
                     @if($item->idcheck == "34")
                         @if($item->verified == 'SI')
-                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                            <img src="{{ public_path('img/kraft/check-mark-icon.png') }}" alt="" style="width: 9px;height: 9px">
                         @elseif($item->verified == 'NO')
-                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                            <img src="{{ public_path('img/kraft/close-icon.png') }}" alt="" style="width: 9px;height: 9px">
                         @else
                             {{$item->verified}}
                         @endif
@@ -481,9 +481,9 @@
                 @foreach($verified as $item)
                     @if($item->idcheck == "35")
                         @if($item->verified == 'SI')
-                            <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                            <img src="{{ public_path('img/kraft/check-mark-icon.png') }}" alt="" style="width: 9px;height: 9px">
                         @elseif($item->verified == 'NO')
-                            <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                            <img src="{{ public_path('img/kraft/close-icon.png') }}" alt="" style="width: 9px;height: 9px">
                         @else
                             {{$item->verified}}
                         @endif
@@ -509,14 +509,14 @@
                 <th style="width: 300px;height: 100px;">
                     @foreach($photos as $photo)
                         @if($photo->auxiliary05 == '_floor')
-                            <img src="{{asset('storage/' . $photo->path)}}" alt="" style="width: 350px;height: 100px">
+                            <img src="{{ storage_path('app/public/' . $photo->path) }}" alt="" style="width: 350px;height: 100px">
                         @endif
                     @endforeach
                 </th>
                 <th style="width: 300px;height: 100px">
                     @foreach($photos as $photo)
                         @if($photo->auxiliary05 == '_roof')
-                            <img src="{{asset('storage/' . $photo->path)}}" alt="" style="width: 350px;height: 100px">
+                            <img src="{{ storage_path('app/public/' . $photo->path) }}" alt="" style="width: 350px;height: 100px">
                         @endif
                     @endforeach
                 </th>
@@ -525,14 +525,14 @@
                 <th style="width: 300px;height: 100px">
                     @foreach($photos as $photo)
                         @if($photo->auxiliary05 == 'background')
-                            <img src="{{asset('storage/' . $photo->path)}}" alt="" style="width: 350px;height: 100px">
+                            <img src="{{ storage_path('app/public/' . $photo->path) }}" alt="" style="width: 350px;height: 100px">
                         @endif
                     @endforeach
                 </th>
                 <th style="width: 300px;height: 100px">
                     @foreach($photos as $photo)
                         @if($photo->auxiliary05 == 'doors')
-                            <img src="{{asset('storage/' . $photo->path)}}" alt="" style="width: 350px;height: 100px">
+                            <img src="{{ storage_path('app/public/' . $photo->path) }}" alt="" style="width: 350px;height: 100px">
                         @endif
                     @endforeach
                 </th>
@@ -561,7 +561,7 @@
                                 @foreach($verified as $item)
                                     @if($item->idcheck == "1")
                                         @if($item->verified == '1')
-                                            <img src="img/kraft/check-mark-icon.png" alt=""
+                                            <img src="{{ public_path('img/kraft/check-mark-icon.png') }}" alt=""
                                                  style="width: 9px;height: 9px">
                                         @endif
                                     @endif
@@ -574,7 +574,7 @@
                                 @foreach($verified as $item)
                                     @if($item->idcheck == "1")
                                         @if($item->verified == '0')
-                                            <img src="img/kraft/check-mark-icon.png" alt=""
+                                            <img src="{{ public_path('img/kraft/check-mark-icon.png') }}" alt=""
                                                  style="width: 9px;height: 9px">
                                         @endif
                                     @endif
@@ -591,7 +591,7 @@
                                 @foreach($verified as $item)
                                     @if($item->idcheck == "2")
                                         @if($item->verified == '1')
-                                            <img src="img/kraft/check-mark-icon.png" alt=""
+                                            <img src="{{ public_path('img/kraft/check-mark-icon.png') }}" alt=""
                                                  style="width: 9px;height: 9px">
                                         @endif
                                     @endif
@@ -604,7 +604,7 @@
                                 @foreach($verified as $item)
                                     @if($item->idcheck == "2")
                                         @if($item->verified == '0')
-                                            <img src="img/kraft/check-mark-icon.png" alt=""
+                                            <img src="{{ public_path('img/kraft/check-mark-icon.png') }}" alt=""
                                                  style="width: 9px;height: 9px">
                                         @endif
                                     @endif
@@ -621,7 +621,7 @@
                                 @foreach($verified as $item)
                                     @if($item->idcheck == "3")
                                         @if($item->verified == '1')
-                                            <img src="img/kraft/check-mark-icon.png" alt=""
+                                            <img src="{{ public_path('img/kraft/check-mark-icon.png') }}" alt=""
                                                  style="width: 9px;height: 9px">
                                         @endif
                                     @endif
@@ -634,7 +634,7 @@
                                 @foreach($verified as $item)
                                     @if($item->idcheck == "3")
                                         @if($item->verified == '0')
-                                            <img src="img/kraft/check-mark-icon.png" alt=""
+                                            <img src="{{ public_path('img/kraft/check-mark-icon.png') }}" alt=""
                                                  style="width: 9px;height: 9px">
                                         @endif
                                     @endif
@@ -687,7 +687,7 @@
                 <th style="position: relative;">
                     <div style="position: absolute; left: 0;">
                         @if(!empty($receiptunit->key))
-                            <img src='{{asset('storage/' . $receiptunit->key->keyguard02 )}}' style="width: 50px;height:50px;">
+                            <img src="{{ storage_path('app/public/' . $receiptunit->key->keyguard02) }}" style="width: 50px;height:50px;">
                         @endif
                     </div>
                 </th>
@@ -698,7 +698,7 @@
                 <th>
                     @if(!empty($receiptunit->key))
                         <div style="position: absolute; right: 0;">
-                            <img src='{{asset('storage/' .  $receiptunit->key->supervisorkey )}}' style="position:absolute; width: 50px;height:50px; z-index: 999; top:-28px; right:0;">
+                            <img src="{{ storage_path('app/public/' . $receiptunit->key->supervisorkey) }}" style="position:absolute; width: 50px;height:50px; z-index: 999; top:-28px; right:0;">
                         </div>
                     @endif
                 </th>

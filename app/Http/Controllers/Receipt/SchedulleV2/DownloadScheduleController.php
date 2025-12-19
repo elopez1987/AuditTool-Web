@@ -92,7 +92,7 @@ class DownloadScheduleController extends BaseController
         // Obtener las variables necesarias para el modal
         $providers = $this->getReceiptProviderForSelect();
         $carriers = $this->getCarriersForSelect();
-        $categorystocks = InventoryStockCategory::select('description', 'id')->get();
+        $categorystocks = InventoryStockCategory::controlAccessUser()->select('description', 'id')->get();
         $reasons = StorageReason::whereType('RE')->select('name', 'id')->get();
 
         return DataTables::of($data)

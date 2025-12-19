@@ -32,14 +32,14 @@
     <div class="row">
         <table cellpadding="20">
             <th style="height: 70px;width: 33.3%;align-items: center">
-                <img src="{{asset('/img/logo.png')}}" alt="" class="logo">
+                <img src="{{ public_path('img/logo.png') }}" alt="" class="logo">
             </th>
             <th style="vertical-align: center;width: 33.3%">
                 <h3 class='formato' style="font-size: 15px;">FOLIO DE ENTRADA DE UNIDAD</h3>
             </th>
             <th style="width: 33.3%">
                 @if(!empty($logo->auxiliary09))
-                    <img src="{{asset('storage/' . $logo->auxiliary09)}}"
+                    <img src="{{ storage_path('app/public/' . $logo->auxiliary09) }}"
                          class="align-self-center img-responsive" alt="" style="height: 70px;width: 280px">
                 @endif
             </th>
@@ -206,7 +206,7 @@
     <table class="border-none">
         <tr>
             <td width="50%">
-                <img src="{{asset('/img/trailer.png')}}" alt=""
+                <img src="{{ public_path('img/trailer.png') }}" alt=""
                      style="width: 400px;height: 150px;margin-top: 20px;margin-left:50px ">
                 <br>
                 <div style="border: 1px dashed black;margin: auto;width: 250px;padding: 5px;text-align: center;">
@@ -291,10 +291,10 @@
 
         <table>
             <td class="border-none" style="text-align: center;font-size: 10px;">
-                <img src="{{asset('storage/' . $firma->keyguard01 )}}" alt="Firma" style="height: 100px;max-height: 200px"/>
+                <img src="{{ storage_path('app/public/' . $firma->keyguard01) }}" alt="Firma" style="height: 100px;max-height: 200px"/>
             </td>
             <td class="border-none" style="text-align: center;font-size: 10px">
-                <img src="{{asset('storage/' . $firma->keyoperator01)}}"
+                <img src="{{ storage_path('app/public/' . $firma->keyoperator01) }}"
                      alt="Firma"
                      style="height: 100px;max-height: 200px"/>
             </td>
@@ -302,12 +302,12 @@
 
             </td>
             <td class="border-none" style="text-align: center;font-size: 10px">
-                <img src="{{asset('storage/' . $firma->keyguard03)}}"
+                <img src="{{ storage_path('app/public/' . $firma->keyguard03) }}"
                      alt="Firma"
                      style="height: 100px;max-height: 200px"/>
             </td>
             <td class="border-none" style="text-align: center;font-size: 10px">
-                <img src="{{asset('storage/' . $firma->keyoperator03)}}"
+                <img src="{{ storage_path('app/public/' . $firma->keyoperator03) }}"
                      alt="Firma"
                      style="height: 100px;max-height: 200px"/>
             </td>
