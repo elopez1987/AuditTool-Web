@@ -107,7 +107,7 @@
                 ajax: {
                     url: '{{ url('getUsersForResponsable') }}',
                     dataType: 'json',
-                    delay: 250,
+                    delay: 50,
                     cache: true,
                     processResults: function (data) {
                         return {
@@ -129,7 +129,7 @@
                 ajax: {
                     url: '{{ url('getAreasForResponsable') }}',
                     dataType: 'json',
-                    delay: 250,
+                    delay: 50,
                     cache: true,
                     processResults: function (data) {
                         return {

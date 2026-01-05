@@ -68,7 +68,7 @@
 
     <div class="row">
         <table class="border-none">
-            <th class="border-none"><img src="img/Barry.png" alt="" style="width: 250px;height: 40px"></th>
+            <th class="border-none"><img src="{{ public_path('img/Barry.png') }}" alt="" style="width: 250px;height: 40px"></th>
         </table>
     </div>
 
@@ -169,7 +169,7 @@
     </div>
 
     <div class="row" style="margin-top: 30px">
-        <img src="img/Barry/unidad.png" alt="" style="width: 100%;height: 180px">
+        <img src="{{ public_path('img/Barry/unidad.png') }}" alt="" style="width: 100%;height: 180px">
     </div>
 
     <div class="row" style="margin-top: 20px">

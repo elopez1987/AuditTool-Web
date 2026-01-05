@@ -85,6 +85,10 @@ class StorageShipmentTransport extends Model
         'auxiliary03',
         'auxiliary04',
         'auxiliary05',
+        'ecobox',
+        'ecotruck',
+        'has_data',
+        'has_registered',
     ];
 
     public function getActivitylogOptions(): LogOptions

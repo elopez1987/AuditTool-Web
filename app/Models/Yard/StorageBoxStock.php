@@ -127,38 +127,38 @@ class StorageBoxStock extends Model
         return $this->belongsTo(ReceiptUnit::class, 'id', 'id');
     }
 
-    //	Filtros
+    //	Filtros de busqueda
     public function scopeFolio($query, $folionumber)
     {
-        if (trim($folionumber) !== '') {
+        if (trim($folionumber) != '') {
             $query->where('vw_storageboxstock.id', '=', $folionumber);
         }
     }
 
     public function scopeBarcode($query, $barcode)
     {
-        if (trim($barcode) !== '') {
+        if (trim($barcode) != '') {
             $query->where('vw_storageboxstock.barcode', 'like', "%{$barcode}%");
         }
     }
 
     public function scopeShipment($query, $shipmentid)
     {
-        if (trim($shipmentid) !== '') {
+        if (trim($shipmentid) != '') {
             $query->where('vw_storageboxstock.shipmentid', '=', $shipmentid);
         }
     }
 
     public function scopeBoxNumber($query, $boxnumber)
     {
-        if (trim($boxnumber) !== '') {
+        if (trim($boxnumber) != '') {
             $query->where('vw_storageboxstock.boxnumber', 'like', "%{$boxnumber}%");
         }
     }
 
     public function scopeReason($query, $razonstatusid)
     {
-        if (trim($razonstatusid) !== '') {
+        if (trim($razonstatusid) != '') {
             $query->where('receiptunits.razonstatusid', $razonstatusid);
         }
     }

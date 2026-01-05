@@ -22,7 +22,8 @@ class InventoryStockCategoriesController extends BaseController
 
     public function getDataStockCategory(Request $request)
     {
-        $data = InventoryStockCategory::with(['status'])
+        $data = InventoryStockCategory::controlAccessUser()
+            ->with(['status:statusid,name', 'center:centerid,name,description', 'warehouse:warehouseid,name'])
             ->Name($request->get('name'))->get();
 
         return $this->showDataToView(
@@ -40,7 +41,9 @@ class InventoryStockCategoriesController extends BaseController
 
     public function store(CreateStockCategoryRequest $request)
     {
-        $category = new InventoryStockCategory($request->validated());
+        $access = $this->getAccessForUser();
+        $category = new InventoryStockCategory($request->validated()
+        + ['centerid' => $access->centerid] + ['warehouseid' => $access->warehouseid]);
         $category->save();
 
         return $this->successResponse('inventorystockcategories.index');

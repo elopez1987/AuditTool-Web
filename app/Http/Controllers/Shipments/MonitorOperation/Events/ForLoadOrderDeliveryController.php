@@ -26,7 +26,15 @@ class ForLoadOrderDeliveryController extends BaseController
     {
         DB::beginTransaction();
         try {
-            $orderDeliveryOld = OrderDeliverie::controlAccessUser()->where('id', $id)->first();
+            $orderDeliveryOld = OrderDeliverie::controlAccessUser()->where('id', $id)->lockForUpdate()->first();
+            if (! $orderDeliveryOld) {
+                return redirect()->back()->with('error', 'No existe el número de orden de entrega');
+            }
+
+            if ($orderDeliveryOld->statusid == 'PC') {
+                return redirect()->back()->with('error', 'El evento ya fue ejecutado anteriormente.');
+            }
+
             $statusold = $orderDeliveryOld->statusid;
 
             $this->updateShipmentDataOperation($id);

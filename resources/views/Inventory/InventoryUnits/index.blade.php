@@ -44,6 +44,7 @@
                                 <thead>
                                 <tr>
                                     <th class="bg-inverse text-white">C.Distribución</th>
+                                    <th class="bg-inverse text-white">Bodega</th>
                                     <th class="bg-inverse text-white">Unidad</th>
                                     <th class="bg-inverse text-white">Descripción</th>
                                     <th class="bg-inverse text-white">Código EDI</th>

@@ -57,7 +57,7 @@
                                                                     <img src="{{asset('/ico/priority.png')}}"
                                                                          alt="" class="img-16 ml-2 mr-2">
                                                                     <span
-                                                                            style="font-size: 0.675rem "> Iniciar</span>
+                                                                            style="font-size: 0.675rem "> Iniciar facturación</span>
                                                                 </button>
                                                             </a>
                                                             @include('Shipments.OrderMonitor.AnalystTraffic.Events.startgoodissuedate')
@@ -190,14 +190,14 @@
                                         <div class="flex-grow-1 ms-2">
                                             <form method="POST"
                                                   action="{{url('monitoranalistatrafico/' . $orderDelivery->id)}}"
-                                                  enctype="multipart/form-data">
+                                                  enctype="multipart/form-data" id="form-save-analyst-data">
                                                 {{ method_field('PUT') }}
                                                 @csrf
 
                                                 <div class="row">
                                                     <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
                                                         <button type="submit"
-                                                                class="btn btn-block btn-block btn-outline-success btn-block">
+                                                                class="btn btn-block btn-block btn-outline-success btn-block" id="submitBtnAnalystData">
                                                             <i class="fas fa-check mr-2"></i>
                                                             Guardar datos
                                                         </button>
@@ -291,13 +291,13 @@
                                                     <div class="card-input">
                                                         <form method="POST"
                                                               action="{{url('savesealstoshipment/' . $orderDelivery->id)}}"
-                                                              enctype="multipart/form-data">
+                                                              enctype="multipart/form-data" id="form-save-seals">
                                                             {{ method_field('PUT') }}
                                                             @csrf
                                                             <div class="row mt-3 mb-3">
                                                                 <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
                                                                     <button type="submit"
-                                                                            class="btn btn-block btn-block btn-outline-success btn-block">
+                                                                            class="btn btn-block btn-block btn-outline-success btn-block" id="submitBtnSeals">
                                                                         <i class="fas fa-check mr-2"></i>
                                                                         Guardar sellos
                                                                     </button>
@@ -394,7 +394,7 @@
                                                     <div class="card-input">
                                                         <form method="POST"
                                                               action="{{url('savecommenttoshipment/' . $orderDelivery->id)}}"
-                                                              enctype="multipart/form-data">
+                                                              enctype="multipart/form-data" id="form-save-comment">
                                                             {{ method_field('PUT') }}
                                                             @csrf
                                                             <div class="form-group">
@@ -409,7 +409,7 @@
                                                             <div class="row">
                                                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                                                     <button type="submit"
-                                                                            class="btn btn-block btn-block btn-outline-success btn-block">
+                                                                            class="btn btn-block btn-block btn-outline-success btn-block" id="submitBtnComment">
                                                                         <i class="fas fa-check mr-2 text-button"></i>
                                                                         Guardar
                                                                         comentario
@@ -457,6 +457,10 @@
             </div>
         </div>
     </div>
+
+    <!-- Loading Overlay -->
+    @include('layouts.Partials.Loading')
+
     @include('layouts.Partials.Errors')
 @endsection
 
@@ -475,6 +479,63 @@
     <script>
         var quill = new Quill('#comment', {
             theme: 'snow'
+        });
+    </script>
+
+    <script>
+        // Función para mostrar el loading
+        function showLoading() {
+            const overlay = document.getElementById('loading-overlay');
+            overlay.style.display = 'flex';
+            overlay.classList.add('show');
+        }
+
+        // Función para ocultar el loading (en caso de error)
+        function hideLoading() {
+            const overlay = document.getElementById('loading-overlay');
+            overlay.style.display = 'none';
+            overlay.classList.remove('show');
+        }
+
+        // Formularios del tab-content
+        document.getElementById('form-save-analyst-data').addEventListener('submit', function (e) {
+            const btn = document.getElementById('submitBtnAnalystData');
+            btn.disabled = true;
+            showLoading();
+        });
+
+        document.getElementById('form-save-seals').addEventListener('submit', function (e) {
+            const btn = document.getElementById('submitBtnSeals');
+            btn.disabled = true;
+            showLoading();
+        });
+
+        document.getElementById('form-save-comment').addEventListener('submit', function (e) {
+            const btn = document.getElementById('submitBtnComment');
+            btn.disabled = true;
+            showLoading();
+        });
+
+        // Event listeners para modales
+        const modalForms = [
+            { formId: 'saveFormStartGoodIssueDate', btnId: 'submitBtnStartGoodIssueDate' },
+            { formId: 'saveFormReturnStartGoodIssueDate', btnId: 'submitBtnReturnStartGoodIssueDate' },
+            { formId: 'saveFormGoodIssueDate', btnId: 'submitBtnGoodIssueDate' },
+            { formId: 'saveFormRequestLetter', btnId: 'submitBtnRequestLetter' },
+            { formId: 'saveFormResponseLetter', btnId: 'submitBtnResponseLetter' }
+        ];
+
+        modalForms.forEach(function(modal) {
+            const form = document.getElementById(modal.formId);
+            if (form) {
+                form.addEventListener('submit', function() {
+                    const btn = document.getElementById(modal.btnId);
+                    if (btn) {
+                        btn.disabled = true;
+                    }
+                    showLoading();
+                });
+            }
         });
     </script>
 @endsection

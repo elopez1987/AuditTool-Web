@@ -49,7 +49,7 @@
                                 <div class="form-group">
                                     <label>&nbsp;</label>
                                     <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md btn-block" id="btn-reset-filter">
-                                        <i class="fas fa-undo text-button"></i> <span class="text-button">Limpiar Filtros</span>
+                                        <i class="ti ti-reload"></i> <span class="text-button">Limpiar Filtros</span>
                                     </button>
                                 </div>
                             </div>

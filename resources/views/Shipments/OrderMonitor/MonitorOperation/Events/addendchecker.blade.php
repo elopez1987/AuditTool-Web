@@ -1,6 +1,5 @@
-<div class="modal fade bs-example-modal-lg" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true"
-     style="display: none;" id="modal-addendchecker-{{$orderDelivery->id}}">
-    <form method="POST" action="{{url('addendchecker/' . $orderDelivery->id)}}" enctype="multipart/form-data">
+<div class="modal fade bs-example-modal-lg" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;" id="modal-addendchecker-{{$orderDelivery->id}}">
+    <form method="POST" action="{{url('addendchecker/' . $orderDelivery->id)}}" enctype="multipart/form-data" id="saveFormAddendchecker">
         {{ method_field('PUT') }}
         @csrf
         <div class="modal-dialog modal-lg">
@@ -23,7 +22,7 @@
                         <img src="{{asset('/pics/adcancelar.png')}}" alt="">
                         Cancelar
                     </button>
-                    <button type="submit" class="btn btn-outline-secondary btn-sm  waves-effect waves-light">
+                    <button type="submit" class="btn btn-outline-secondary btn-sm  waves-effect waves-light" id="submitBtnEndCheck">
                         <img src="{{asset('/pics/adaceptar.png')}}" alt="">
                         Aceptar
                     </button>
@@ -32,4 +31,4 @@
         </div>
     </form>
 </div>
-<?php
+

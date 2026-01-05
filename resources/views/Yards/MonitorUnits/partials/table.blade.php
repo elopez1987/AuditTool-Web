@@ -15,6 +15,7 @@
             url: 'getDataStockBox',
             data: function (d) {
                 d.folionumber = $('input[name=folionumber]').val();
+                d.boxnumber = $('input[name=boxnumber]').val();
                 d.barcode = $('input[name=barcode]').val();
                 d.shipmentid = $('input[name=shipmentid]').val();
                 d.razonstatusid = $('select[name=razonstatusid]').val();

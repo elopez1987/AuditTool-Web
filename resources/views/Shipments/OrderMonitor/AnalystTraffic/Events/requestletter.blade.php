@@ -1,6 +1,6 @@
 <div class="modal fade bs-example-modal-lg" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true"
      style="display: none;" id="modal-requestletter-{{$orderDelivery->id}}">
-    <form method="POST" action="{{url('requestletter/' . $orderDelivery->id)}}" enctype="multipart/form-data">
+    <form method="POST" action="{{url('requestletter/' . $orderDelivery->id)}}" enctype="multipart/form-data" id="saveFormRequestLetter">
         {{ method_field('PUT') }}
         @csrf
         <div class="modal-dialog modal-lg">
@@ -22,7 +22,7 @@
                         <img src="{{asset('/pics/adcancelar.png')}}" alt="">
                         Cancelar
                     </button>
-                    <button type="submit" class="btn btn-outline-secondary btn-sm  waves-effect waves-light">
+                    <button type="submit" class="btn btn-outline-secondary btn-sm  waves-effect waves-light" id="submitBtnRequestLetter">
                         <img src="{{asset('/pics/adaceptar.png')}}" alt="">
                         Aceptar
                     </button>

@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-12">
+        <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
                     Catalogo de clientes
@@ -57,17 +57,17 @@
                     </form>
                     <div class="row">
                         <div class="col-lg-12">
-                            <table id="table-trucks" class="table table-bordered  table-condensed">
+                            <table id="table-trucks" class="table table-bordered  table-condensed" width="100%">
                                 <thead>
                                 <tr>
-                                    <th class="bg-inverse text-white">C.Distribución</th>
-                                    <th class="bg-inverse text-white">Bodega</th>
-                                    <th class="bg-inverse text-white">Nombre</th>
-                                    <th class="bg-inverse text-white">Embarcar a</th>
-                                    <th class="bg-inverse text-white">Ciudad</th>
-                                    <th class="bg-inverse text-white">T.Tránsito</th>
-                                    <th class="bg-inverse text-white">Estatus</th>
-                                    <th class="bg-inverse text-white">Opciones</th>
+                                    <th>C.Distribución</th>
+                                    <th>Bodega</th>
+                                    <th>Nombre</th>
+                                    <th>Embarcar a</th>
+                                    <th>Ciudad</th>
+                                    <th>T.Tránsito</th>
+                                    <th>Estatus</th>
+                                    <th>Opciones</th>
                                 </tr>
                                 </thead>
                             </table>

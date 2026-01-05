@@ -27,9 +27,10 @@
             </div>
         </div>
     </div>
+    @include('layouts.Partials.Errors')
 @endsection
 
 @section('script')
-    <script src="{{asset('js/selects/warehouse-for-center.js')}}"></script>
+
 @endsection
 

@@ -91,14 +91,14 @@
     <div class="row" style="margin-top: 5px">
         <table class="border-none">
             <th style="height: 20px;width: 25%;">
-                <img src="img/taxion-logistic.png" alt="" style="height: 60px;width: 180px;">
+                <img src="{{ public_path('img/taxion-logistic.png') }}" alt="" style="height: 60px;width: 180px;">
             </th>
             <th style="height: 20px;width: 50%;text-align: center;font-size: 14px;">
                 KARDEX DE UNIDAD - {{$receiptunit->id}}
             </th>
             <th style="height: 20px;width: 25%;text-align: left;font-size: 9px !important;">
                 @if(!empty($receiptunit->warehouse->auxiliary09))
-                    <img src="{{asset('storage/' . $receiptunit->warehouse->auxiliary09)}}"
+                    <img src="{{ storage_path('app/public/' . $receiptunit->warehouse->auxiliary09) }}"
                          class="align-self-center img-responsive" alt="" style="height: 60px;max-width: 180px">
                 @endif
             </th>
@@ -189,12 +189,7 @@
                     @foreach($evidences as $image)
                         @if($image->auxiliary01 == 'IN')
                             <td class="border-none" style="text-align: center; padding: 10px;">
-                                <img src='{{ asset('storage/' . $image->path) }}' style="width: 300px; height: 200px; margin: 5px;">
-                                <span>{{asset('storage/' . $image->path)}}</span>
-                                <img src="{{ public_path('storage/' . $image->path) }}" style="width: 300px; height: 200px; margin: 5px">
-                                <span>{{public_path('storage/' . $image->path)}}</span>
-                                <img src="{{ asset('public/storage/' . $image->path) }}" style="width: 300px; height: 200px; margin: 5px;">
-                                <span>{{asset('public/storage/' . $image->path)}}</span>
+                                <img src="{{ storage_path('app/public/' . $image->path) }}" style="width: 300px; height: 200px; margin: 5px;">
                             </td>
                             @php
                                 $count++;
@@ -231,8 +226,7 @@
                         @foreach($evidences as $image)
                             @if($image->auxiliary01 == 'IP')
                                 <td class="border-none" style="text-align: center; padding: 10px;">
-                                    <img src='{{ asset('storage/' . $image->path) }}' style="width: 300px; height: 200px; margin: 5px;">
-                                    <img src="{{ public_path('storage/' . $image->path) }}" style="width: 300px; height: 200px; margin: 5px;">
+                                    <img src="{{ storage_path('app/public/' . $image->path) }}" style="width: 300px; height: 200px; margin: 5px;">
                                 </td>
                                 @php
                                     $count++;
@@ -259,12 +253,7 @@
                         </tr>
                         <tr>
                             <td class="border-none">
-                                <img src='{{asset('storage/' . $image->path)}}' style="width: 500px;height:250px;margin-left: 10px; margin-right: 10px;">
-                                <span>{{asset('storage/' . $image->path)}}</span>
-                                <img src='{{public_path('storage/' . $image->path)}}' style="width: 500px;height:250px;margin-left: 10px; margin-right: 10px;">
-                                <span>{{public_path('storage/' . $image->path)}}</span>
-                                <img src='{{asset('public/storage/' . $image->path)}}' style="width: 500px;height:250px;margin-left: 10px; margin-right: 10px;">
-                                <span>{{asset('public/storage/' . $image->path)}}</span>
+                                <img src="{{ storage_path('app/public/' . $image->path) }}" style="width: 500px;height:250px;margin-left: 10px; margin-right: 10px;">
                             </td>
                         </tr>
                     </table>
@@ -293,10 +282,7 @@
                     @foreach($evidences as $image)
                         @if($image->auxiliary01 == 'OUT')
                             <td class="border-none" style="text-align: center; padding: 10px;">
-                                <img src='{{ asset('storage/' . $image->path) }}'
-                                     style="width: 300px; height: 200px; margin: 5px;;">
-                                <img src='{{ public_path('storage/' . $image->path) }}'
-                                     style="width: 300px; height: 200px; margin: 5px;">
+                                <img src="{{ storage_path('app/public/' . $image->path) }}" style="width: 300px; height: 200px; margin: 5px;">
                             </td>
                             @php
                                 $count++;

@@ -94,8 +94,8 @@ class InventoryPartNumberCategory01 extends Model
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
 
-        return InventoryPartNumberCategory01::whereIn('warehouseid', $warehouses)
-            ->whereIn('centerid', $centers);
+        return static::whereIn('inventorypartnumbercategory01.warehouseid', $warehouses)
+            ->whereIn('inventorypartnumbercategory01.centerid', $centers);
     }
 
     public static function category01ActiveToSelect()
@@ -111,7 +111,7 @@ class InventoryPartNumberCategory01 extends Model
 
     public function scopeName($query, $name)
     {
-        if (trim($name) !== '') {
+        if (trim($name) != '') {
             $query->where('description', 'like', "%{$name}%");
         }
     }

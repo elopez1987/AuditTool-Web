@@ -19,6 +19,8 @@
             }
         },
         "columns": [
+            {data: 'center.description',name: 'center.description'},
+            {data: 'warehouse.name',name: 'warehouse.name'},
             {data: 'stockcategoryid'},
             {data: 'description'},
             {data: 'auxiliary01'},

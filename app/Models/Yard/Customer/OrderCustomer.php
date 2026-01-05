@@ -162,21 +162,21 @@ class OrderCustomer extends Model
 
     public function scopeName($query, $name)
     {
-        if (trim($name) !== '') {
+        if (trim($name) != '') {
             $query->where('ordercustomers.name', 'like', "%{$name}%");
         }
     }
 
     public function scopeShipto($query, $shiptoid)
     {
-        if (trim($shiptoid) !== '') {
+        if (trim($shiptoid) != '') {
             $query->where('ordercustomers.shiptoid', 'like', "%{$shiptoid}%");
         }
     }
 
     public function scopeWarehouse($query, $warehouseid)
     {
-        if (trim($warehouseid) !== '') {
+        if (trim($warehouseid) != '') {
             $query->where('ordercustomers.warehouseid', '=', $warehouseid);
         }
     }

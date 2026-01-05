@@ -4,6 +4,7 @@ namespace App\Models\Inventory\UnitMeasure;
 
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Configuration\Schemas\SystemStatus;
+use App\Models\Configuration\Warehouses\SystemWarehouse;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -43,6 +44,7 @@ class InventoryUnitMeasure extends Model
 
     protected $fillable = [
         'centerid',
+        'warehouseid',
         'unitmeasureid',
         'description',
         'ediunitmeasurecode',
@@ -58,8 +60,10 @@ class InventoryUnitMeasure extends Model
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
+        $warehouses = SecurityAccessWarehouse::Warehouses();
 
-        return InventoryUnitMeasure::whereIn('inventoryunitsmeasure.centerid', $centers);
+        return static::whereIn('inventoryunitsmeasure.centerid', $centers)
+            ->whereIn('inventoryunitsmeasure.warehouseid', $warehouses);
     }
 
     public function status(): BelongsTo
@@ -70,6 +74,11 @@ class InventoryUnitMeasure extends Model
     public function center(): BelongsTo
     {
         return $this->belongsTo(SystemCenterDistribution::class, 'centerid');
+    }
+
+    public function warehouse(): BelongsTo
+    {
+        return $this->belongsTo(SystemWarehouse::class, 'warehouseid', 'warehouseid');
     }
 
     public function scopeName($query, $name)

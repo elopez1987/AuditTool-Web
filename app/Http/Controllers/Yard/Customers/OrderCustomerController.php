@@ -19,7 +19,7 @@ class OrderCustomerController extends BaseController
         $this->authorize('ordercustomers.index');
         $warehouses = $this->getWarehouseForSelect();
 
-        return view("{$this->viewPath}.index", compact('warehouses'));
+        return view('Yards.OrderCustomers.index', compact('warehouses'));
     }
 
     public function getDataCustomers(Request $request)

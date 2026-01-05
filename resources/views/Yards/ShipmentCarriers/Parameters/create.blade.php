@@ -34,41 +34,41 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-10">
                                     <table class="table  table-bordered table-condensed tablegeneral">
                                         <thead>
-                                        <tr>
-                                            <th width="5%">Secuencia</th>
-                                            <th ></th>
-                                            <th >Parametro</th>
-                                            <th >Descripción</th>
-                                        </tr>
+                                            <tr>
+                                                <th>Secuencia</th>
+                                                <th ></th>
+                                                <th >Parametro</th>
+                                                <th>Descripción</th>
+                                            </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($parameters as $parameter)
-                                            <tr>
-                                                <td>{{$loop->iteration}}</td>
-                                                <td style="width: 70px;" class="switch">
-                                                    <input
-                                                        type="checkbox"
-                                                        value="{{$parameter->statusid}}"
-                                                        @if(!empty($model->configurationflag))
-                                                            @foreach ($model->configurationflag as $check)
-                                                                @if ($check == $parameter->statusid)
-                                                                    checked
-                                                        @endif
-                                                        @endforeach
-                                                        @endif
-                                                        name="parameter[]"
-                                                        data-size="mini" data-on-color="success" data-off-color="danger"
-                                                        data-on-text="<i class='ti ti-check'></i>"
-                                                        data-off-text="<i class='ti ti-close'></i>"
-                                                    >
-                                                </td>
-                                                <td>{{$parameter->statusid}}</td>
-                                                <td>{{$parameter->name}}</td>
-                                            </tr>
-                                        @endforeach
+                                            @foreach($parameters as $parameter)
+                                                <tr>
+                                                    <td>{{$loop->iteration}}</td>
+                                                    <td style="width: 70px;" class="switch">
+                                                        <input
+                                                            type="checkbox"
+                                                            value="{{$parameter->statusid}}"
+                                                            @if(!empty($model->configurationflag))
+                                                                @foreach ($model->configurationflag as $check)
+                                                                    @if ($check == $parameter->statusid)
+                                                                        checked
+                                                            @endif
+                                                            @endforeach
+                                                            @endif
+                                                            name="parameter[]"
+                                                            data-size="mini" data-on-color="success" data-off-color="danger"
+                                                            data-on-text="<i class='ti ti-check'></i>"
+                                                            data-off-text="<i class='ti ti-close'></i>"
+                                                        >
+                                                    </td>
+                                                    <td>{{$parameter->statusid}}</td>
+                                                    <td>{{$parameter->name}}</td>
+                                                </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>

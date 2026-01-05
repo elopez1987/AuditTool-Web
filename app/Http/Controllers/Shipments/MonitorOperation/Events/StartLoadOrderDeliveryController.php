@@ -20,7 +20,15 @@ class StartLoadOrderDeliveryController extends BaseController
     {
         DB::beginTransaction();
         try {
-            $orderDelivery = OrderDeliverie::controlAccessUser()->whereId($id)->first();
+            $orderDelivery = OrderDeliverie::controlAccessUser()->whereId($id)->lockForUpdate()->first();
+            if (! $orderDelivery) {
+                return $this->errorResponse('El embarque no existe');
+            }
+
+            if ($orderDelivery->statusid === 'IP') {
+                return redirect()->back()->with('error', 'El evento ya fue ejecutado anteriormente.');
+            }
+
             $statusold = $orderDelivery->statusid;
 
             $parameter = $this->getParametersOfWarehouse($orderDelivery->warehouseid);

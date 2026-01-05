@@ -22,6 +22,10 @@ class FinishLoadOrderDeliveryController extends BaseController
         DB::beginTransaction();
         try {
             $orderDelivery = OrderDeliverie::controlAccessUser()->whereId($id)->first();
+            if (! $orderDelivery) {
+                return $this->errorResponse('El embarque no existe');
+            }
+
             $statusold = $orderDelivery->statusid;
 
             $parameter = $this->getParametersOfWarehouse($orderDelivery->warehouseid);

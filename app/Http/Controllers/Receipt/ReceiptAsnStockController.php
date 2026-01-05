@@ -52,16 +52,14 @@ class ReceiptAsnStockController extends BaseController
 
             return;
         }
-        $dias = Carbon::parse($request['productiondate'])->addDays((int) $sku->shelflife)->format('Y-m-d');
+        $expiredate = Carbon::parse($request['productiondate'])->addDays((int) $sku->shelflife)->format('Y-m-d');
         ReceiptStock::create([
             'centerid' => $receipt->centerid,
             'warehouseid' => $receipt->warehouseid,
-            'shipmentid' => $receipt->shipmentid,
             'receiptid' => $receipt->id,
             'partnumberid' => $sku->id,
-            'stockcategoryid' => $receipt->stockcategoryid,
             'expirecode' => $request['batch'],
-            'expiredate' => $dias,
+            'expiredate' => $expiredate,
             'productiondate' => $request['productiondate'],
             'quantitytrue' => $request['quantity'],
         ]);

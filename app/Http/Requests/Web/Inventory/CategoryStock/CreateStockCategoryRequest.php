@@ -10,6 +10,12 @@ class CreateStockCategoryRequest extends FormRequest
     {
         return [
             'description' => 'required|string|max:30',
+            'stockcategoryid' => 'nullable|string|max:30',
+            'auxiliary01' => 'nullable|string|max:100',
+            'auxiliary02' => 'nullable|string|max:100',
+            'auxiliary03' => 'nullable|string|max:100',
+            'auxiliary04' => 'nullable|string|max:100',
+            'auxiliary05' => 'nullable|string|max:100',
         ];
     }
 

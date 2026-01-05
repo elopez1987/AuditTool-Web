@@ -201,17 +201,18 @@ class ReceiptUnitController extends BaseController
         }
     }
 
-    public function edit(ReceiptUnit $receiptunit)
+    public function edit($id)
     {
         $this->authorize('receiptunits.edit');
+        $receiptunit = ReceiptUnit::with('tracto')->findOrFail($id);
         $carriers = $this->getCarriersForSelect();
         $movents = $this->typeReasonInActiveToSelect();
-        $unittypeid = $this->getUnitType();
+        $unittypes = $this->getUnitType();
         $centers = $this->getCenterForSelect();
         $warehouses = $this->getWarehouseForSelect();
 
         return view("{$this->viewPath}.edit",
-            compact('receiptunit', 'carriers', 'movents', 'unittypeid', 'centers', 'warehouses'));
+            compact('receiptunit', 'carriers', 'movents', 'unittypes', 'centers', 'warehouses'));
     }
 
     public function update(ReceiptUnit $receiptunit, Request $request): RedirectResponse

@@ -10,7 +10,7 @@ class SaveSealController extends BaseController
 {
     public function index(Request $request, $id)
     {
-        $seal = ShipmentSeal::where('orderid', $id)->first();
+        $seal = ShipmentSeal::where('orderid', $id)->lockForUpdate()->first();
         if (empty($seal)) {
             return redirect()->back()->with('error', 'No se encontró el registro de embarque');
         }

@@ -275,7 +275,8 @@ class SelectController extends Controller
     public function getAreasForResponsable()
     {
         $areas = StorageAreas::controlAccessUser()
-            ->where('statusid', 'E')->select(['name', 'id'])->get();
+            ->where('statusid', 'E')
+            ->select(['name', 'id'])->get();
 
         return response()->json($areas);
     }

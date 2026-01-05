@@ -38,7 +38,7 @@
 
                     <div class="row">
                         <div class="col-lg-12">
-                            <table id="table-types" class="table table-bordered table-hover table-condensed">
+                            <table id="table-types" class="table table-bordered table-hover table-condensed" width="100%">
                                 <thead>
                                 <tr>
                                     <th>C.Distribución</th>

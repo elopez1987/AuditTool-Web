@@ -69,7 +69,7 @@
     <div class="row">
         <table>
             <th style="width: 120px;text-align: center">
-                <img src="img/kraft/logo.png" alt="" style="width: 80px;height: 40px">
+                <img src="{{ public_path('img/kraft/logo.png') }}" alt="" style="width: 80px;height: 40px">
             </th>
             <th>
                 <p style="font-size: 18px;font-weight: 700;text-align: center">
@@ -126,7 +126,7 @@
         <table class="border-none">
             <tr class="border-none">
                 <th style="height: 15px;text-align: center;font-size: 12px;border: 0;font-style: oblique"
-                    class="border-none">Marque con una  <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px"> o una <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px"> conforme aplique.
+                    class="border-none">Marque con una  <img src="{{ public_path('img/kraft/check-mark-icon.png') }}" alt="" style="width: 9px;height: 9px"> o una <img src="{{ public_path('img/kraft/close-icon.png') }}" alt="" style="width: 9px;height: 9px"> conforme aplique.
                 </th>
             </tr>
         </table>
@@ -158,9 +158,9 @@
                     @foreach($verified as $model)
                         @if($model->idcheck == '1')
                             @if($model->verified == 'SI')
-                                <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                <img src="{{ public_path('img/kraft/check-mark-icon.png') }}" alt="" style="width: 9px;height: 9px">
                             @else
-                                <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                <img src="{{ public_path('img/kraft/close-icon.png') }}" alt="" style="width: 9px;height: 9px">
                             @endif
                         @endif
                     @endforeach
@@ -176,9 +176,9 @@
                     @foreach($verified as $model)
                         @if($model->idcheck == '2')
                             @if($model->verified == 'SI')
-                                <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                <img src="{{ public_path('img/kraft/check-mark-icon.png') }}" alt="" style="width: 9px;height: 9px">
                             @else
-                                <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                <img src="{{ public_path('img/kraft/close-icon.png') }}" alt="" style="width: 9px;height: 9px">
                             @endif
                         @endif
                     @endforeach
@@ -194,9 +194,9 @@
                     @foreach($verified as $model)
                         @if($model->idcheck == '3')
                             @if($model->verified == 'SI')
-                                <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                <img src="{{ public_path('img/kraft/check-mark-icon.png') }}" alt="" style="width: 9px;height: 9px">
                             @else
-                                <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                <img src="{{ public_path('img/kraft/close-icon.png') }}" alt="" style="width: 9px;height: 9px">
                             @endif
                         @endif
                     @endforeach
@@ -210,9 +210,9 @@
                     @foreach($verified as $model)
                         @if($model->idcheck == '4')
                             @if($model->verified == 'SI')
-                                <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                <img src="{{ public_path('img/kraft/check-mark-icon.png') }}" alt="" style="width: 9px;height: 9px">
                             @else
-                                <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                <img src="{{ public_path('img/kraft/close-icon.png') }}" alt="" style="width: 9px;height: 9px">
                             @endif
                         @endif
                     @endforeach
@@ -228,9 +228,9 @@
                     @foreach($verified as $model)
                         @if($model->idcheck == '5')
                             @if($model->verified == 'SI')
-                                <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                <img src="{{ public_path('img/kraft/check-mark-icon.png') }}" alt="" style="width: 9px;height: 9px">
                             @else
-                                <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                <img src="{{ public_path('img/kraft/close-icon.png') }}" alt="" style="width: 9px;height: 9px">
                             @endif
                         @endif
                     @endforeach
@@ -244,9 +244,9 @@
                     @foreach($verified as $model)
                         @if($model->idcheck == '6')
                             @if($model->verified == 'SI')
-                                <img src="img/kraft/check-mark-icon.png" alt="" style="width: 9px;height: 9px">
+                                <img src="{{ public_path('img/kraft/check-mark-icon.png') }}" alt="" style="width: 9px;height: 9px">
                             @else
-                                <img src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px">
+                                <img src="{{ public_path('img/kraft/close-icon.png') }}" alt="" style="width: 9px;height: 9px">
                             @endif
                         @endif
                     @endforeach
@@ -302,24 +302,24 @@
             </tr>
             <tr>
                 <th style="width: 33%;height: 60px">
-                    <img src="img/kraft/filtracionluz.png" alt="" style="width: 200px;height: 100px">
+                    <img src="{{ public_path('img/kraft/filtracionluz.png') }}" alt="" style="width: 200px;height: 100px">
                 </th>
                 <th style="width: 33%;height: 60px">
-                    <img src="img/kraft/limpieza.png" alt="" style="width: 200px;height: 100px">
+                    <img src="{{ public_path('img/kraft/limpieza.png') }}" alt="" style="width: 200px;height: 100px">
                 </th>
                 <th style="width: 33%;height: 60px">
-                    <img src="img/kraft/marcaje.png" alt="" style="width: 200px;height: 100px">
+                    <img src="{{ public_path('img/kraft/marcaje.png') }}" alt="" style="width: 200px;height: 100px">
                 </th>
             </tr>
             <tr>
                 <th style="width: 33%;height: 60px">
-                    <img src="img/kraft/olor.png" alt="" style="width: 200px;height: 100px">
+                    <img src="{{ public_path('img/kraft/olor.png') }}" alt="" style="width: 200px;height: 100px">
                 </th>
                 <th style="width: 33%;height: 60px">
-                    <img src="img/kraft/contaminacion.png" alt="" style="width: 200px;height: 100px">
+                    <img src="{{ public_path('img/kraft/contaminacion.png') }}" alt="" style="width: 200px;height: 100px">
                 </th>
                 <th style="width: 33%;height: 60px">
-                    <img src="img/kraft/sellado.png" alt="" style="width: 200px;height: 100px">
+                    <img src="{{ public_path('img/kraft/sellado.png') }}" alt="" style="width: 200px;height: 100px">
                 </th>
             </tr>
         </table>

@@ -42,8 +42,6 @@ class EnviarMensajeAFacturacionDocumentosEnviadosJob implements ShouldQueue
             return;
         }
 
-        Log::info("El número de embarque es: {$shipment->shipmentid}");
-
         $contacts = $this->getPhones($shipment);
 
         if (empty($contacts)) {
@@ -53,7 +51,6 @@ class EnviarMensajeAFacturacionDocumentosEnviadosJob implements ShouldQueue
         }
 
         foreach ($contacts as $contact) {
-            Log::info("El contacto es: {$contact->phonenumber}");
 
             try {
                 $data = $this->getBodyData($shipment, $contact);
@@ -66,7 +63,6 @@ class EnviarMensajeAFacturacionDocumentosEnviadosJob implements ShouldQueue
                 $respJson = json_decode($response->getBody(), true);
 
                 $description = $respJson['description'] ?? json_encode($respJson);
-                Log::info("La respuesta es: {$description}");
 
                 LogMessageWhatsApp::createLog(
                     $shipment,

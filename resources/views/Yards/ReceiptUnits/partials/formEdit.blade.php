@@ -44,7 +44,7 @@
         <div class="form-group">
             <label for="operatorname">Nombre de operador </label>
             <input type="text" class="form-control" id="operatorname" required name="operatorname" maxlength="100"
-                   aria-describedby="auxiliary01" value="{{$receiptunit->operatorname}}"
+                   aria-describedby="auxiliary01" value="{{$receiptunit->tracto ? $receiptunit->tracto->operatorname : ''}}"
                    onKeyUp=this.value=this.value.toUpperCase()
             >
         </div>
@@ -53,7 +53,7 @@
         <div class="form-group">
             <label for="drivernumber">Número de licencia </label>
             <input type="text" class="form-control" id="drivernumber" required name="drivernumber" maxlength="19"
-                   aria-describedby="auxiliary01" value="{{$receiptunit->drivernumber}}" minlength="1"
+                   aria-describedby="auxiliary01" value="{{$receiptunit->tracto ? $receiptunit->tracto->drivernumber : ''}}" minlength="1"
                    onKeyUp=this.value=this.value.toUpperCase()>
         </div>
     </div>
@@ -61,8 +61,7 @@
         <div class="form-group">
             <label for="phone">Número de celular </label>
             <input type="text" class="form-control numeric" required id="phone" name="phone" maxlength="10"
-                   aria-describedby="auxiliary01" value="{{$receiptunit->phone}}" minlength="1"
-                   onKeyUp=this.value=this.value.toUpperCase()>
+                   aria-describedby="auxiliary01" value="{{$receiptunit->tracto ? $receiptunit->tracto->phone : ''}}" minlength="1">
         </div>
     </div>
 </div>
@@ -103,7 +102,7 @@
         <div class="form-group">
             <label for="trucknumber">Placa de tracto </label>
             <input type="text" class="form-control " required id="trucknumber" name="trucknumber" maxlength="10"
-                   aria-describedby="auxiliary01" value="{{$receiptunit->trucknumber}}"
+                   aria-describedby="auxiliary01" value="{{$receiptunit->tracto ? $receiptunit->tracto->trucknumber : ''}}"
                    onKeyUp=this.value=this.value.toUpperCase()>
         </div>
     </div>
@@ -114,9 +113,14 @@
             <label for="razonstatusid">Tipo de entrada<span style="color: red">*</span></label>
             <select name="razonstatusid" id="razonstatusid"
                     class="form-control select2 @error('razonstatusid') is-invalid @enderror">
-                @foreach($movents as $model)
-                    <option value="{{$model->id}}" {{ old('razonstatusid') == $model->id ? 'selected' : '' }}> {{$model->name}} </option>
-                @endforeach
+                    @foreach($movents as $model)
+                        <option value="{{$model->id}}"
+                                @if($model->id == $receiptunit->razonstatusid)
+                                    selected="selected"
+                                @endif>
+                            {{$model->name}}
+                        </option>
+                    @endforeach
             </select>
             @error('razonstatusid')
             <div class="invalid-feedback">{{ $message }}</div>
@@ -128,9 +132,14 @@
             <label for="unittypeid">Origen<span style="color: red">*</span></label>
             <select name="unittypeid" id="unittypeid"
                     class="form-control select2 @error('unittypeid') is-invalid @enderror">
-                @foreach($unittypeid as $model)
-                    <option value="{{$model->id}}" {{ old('unittypeid') == $model->id ? 'selected' : '' }}> {{$model->description}} </option>
-                @endforeach
+                    @foreach($unittypes as $model)
+                        <option value="{{$model->id}}"
+                                @if($model->id == $receiptunit->unittypeid)
+                                    selected="selected"
+                                @endif>
+                            {{$model->description}}
+                        </option>
+                    @endforeach
             </select>
             @error('unittypeid')
             <div class="invalid-feedback">{{ $message }}</div>
