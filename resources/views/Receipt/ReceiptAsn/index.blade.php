@@ -32,25 +32,25 @@
                         <div class="row">
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="shipmentid">Recibo</label>
+                                    <label for="shipmentid">{{ ui_label('receiptasn_shipmentid_index','Recibo') }} </label>
                                     <input type="text" class="form-control"  id="shipmentid" name="shipmentid">
                                 </div>
                             </div>
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="oc">Orden de compra</label>
+                                    <label for="oc"> {{ ui_label('receiptasn_oc_index','Orden de compra') }}  </label>
                                     <input type="text" class="form-control"  id="oc" name="oc">
                                 </div>
                             </div>
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="folionumber">Folio</label>
+                                    <label for="folionumber">{{ ui_label('receiptasn_folionumber_index','Número de folio') }}</label>
                                     <input type="text" class="form-control"  id="folionumber" name="folionumber">
                                 </div>
                             </div>
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="statusid">Estatus <span style="color: red">*</span></label>
+                                    <label for="statusid">{{ ui_label('receiptasn_statusid_index','Estatus') }} </label>
                                     <select name="statusid" id="statusid"  class="form-control select2">
                                         <option value="" selected>Selecione una opción</option>
                                         @foreach($status as $model)
@@ -67,24 +67,24 @@
                                    class="table table-bordered  table-condensed table-hover">
                                 <thead>
                                 <tr>
-                                    <th class="bg-inverse text-white">C.Distribución</th>
-                                    <th class="bg-inverse text-white">Bodega</th>
-                                    <th class="bg-inverse text-white">Folio</th>
-                                    <th class="bg-inverse text-white">Recibo</th>
-                                    <th class="bg-inverse text-white">Factura</th>
-                                    <th class="bg-inverse text-white">O. de Compra</th>
-                                    <th class="bg-inverse text-white">Proveedor</th>
-                                    <th class="bg-inverse text-white">Tipo de entrada</th>
-                                    <th class="bg-inverse text-white">Origen</th>
-                                    <th class="bg-inverse text-white">Linea</th>
-                                    <th class="bg-inverse text-white">Creado por</th>
-                                    <th class="bg-inverse text-white">Cita de descarga</th>
-                                    <th class="bg-inverse text-white">Inicia Descarga</th>
-                                    <th class="bg-inverse text-white">Termina Descarga</th>
-                                    <th class="bg-inverse text-white">F.Creación</th>
-                                    <th class="bg-inverse text-white">F.Ingreso en SAP</th>
-                                    <th class="bg-inverse text-white">F.Cancelación</th>
-                                    <th class="bg-inverse text-white">Estatus</th>
+                                    <th class="bg-inverse text-white">{{ ui_label('receiptasn_cdistribucion_index','C.Distribución') }}</th>
+                                    <th class="bg-inverse text-white">{{ ui_label('receiptasn_warehouse_index','Bodega') }}</th>
+                                    <th class="bg-inverse text-white">{{ ui_label('receiptasn_folionumber_index','Folio') }}</th>
+                                    <th class="bg-inverse text-white">{{ ui_label('receiptasn_shipmentid_index','Recibo') }}</th>
+                                    <th class="bg-inverse text-white">{{ ui_label('receiptasn_delivery_index','Factura') }}</th>
+                                    <th class="bg-inverse text-white">{{ ui_label('receiptasn_oc_index','O. de Compra') }}</th>
+                                    <th class="bg-inverse text-white">{{ ui_label('receiptasn_provider_index','Proveedor') }}</th>
+                                    <th class="bg-inverse text-white">{{ ui_label('receiptasn_typeentry_index','Tipo de entrada') }}</th>
+                                    <th class="bg-inverse text-white">{{ ui_label('receiptasn_origin_index','Origen') }}</th>
+                                    <th class="bg-inverse text-white">{{ ui_label('receiptasn_carrier_index','Linea') }}</th>
+                                    <th class="bg-inverse text-white">{{ ui_label('receiptasn_created_by_index','Creado por') }}</th>
+                                    <th class="bg-inverse text-white">{{ ui_label('receiptasn_cita_index','Cita de descarga') }}</th>
+                                    <th class="bg-inverse text-white">{{ ui_label('receiptasn_start_index','Inicia Descarga') }}</th>
+                                    <th class="bg-inverse text-white">{{ ui_label('receiptasn_finish_index','Termina Descarga') }}</th>
+                                    <th class="bg-inverse text-white">{{ ui_label('receiptasn_created_index','F.Creación') }}</th>
+                                    <th class="bg-inverse text-white">{{ ui_label('receiptasn_goodreceipt_index','F.Ingreso en SAP') }}</th>
+                                    <th class="bg-inverse text-white">{{ ui_label('receiptasn_cancelation_index','F.Cancelación') }}</th>
+                                    <th class="bg-inverse text-white">{{ ui_label('receiptasn_statusid_index','Estatus') }}</th>
                                     <th class="bg-inverse text-white">Opciones</th>
                                 </tr>
                                 </thead>

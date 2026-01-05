@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Yard\ReceiptUnit;
 use App\Http\Controllers\BaseController;
 use App\Models\Shipments\OrderDeliverie;
 use App\Models\Shipments\ShipmentTransport\StorageShipmentTransport;
+use App\Models\Yard\Customer\OrderCustomer;
 use App\Models\Yard\ReceiptUnit;
+use App\Models\Yard\ReceiptUnitData;
 use App\Models\Yard\StorageUnitTrace;
 use DB;
 use Exception;
@@ -95,12 +97,12 @@ class AssignShipmentController extends BaseController
                 }
 
                 // Si todo está correcto, actualiza todo lo relacionado al embarque
-                self::updateOrderForAssingShipmentToUnit($shipment, $receiptunit);
-                self::updateTransportForAssignShipmentToUnit($shipmenttransport, $receiptunit);
+                $this->updateOrderForAssingShipmentToUnit($shipment, $receiptunit);
+                $this->updateTransportForAssignShipmentToUnit($shipmenttransport, $receiptunit);
             }
 
             // Siempre actualizar la unidad independientemente del SWH-26
-            self::updateUnitForAssignShipment($receiptunit, $request);
+            $this->updateUnitForAssignShipment($receiptunit, $request);
 
             // Crear bitácora / traza
             StorageUnitTrace::createTraceUnit($receiptunit, '6');
@@ -136,5 +138,13 @@ class AssignShipmentController extends BaseController
     {
         $shipment->folionumber = $receiptunit->id;
         $shipment->save();
+
+        $receiptData = ReceiptUnitData::where('folionumber', $receiptunit->id)->first();
+        if (! empty($receiptData)) {
+            $customer = OrderCustomer::where('id', $shipment->customerid)->first();
+            $receiptData->customername = $customer->name;
+            $receiptData->save();
+        }
+
     }
 }

@@ -11,18 +11,18 @@
         buttons: [
             {
                 "extend": "colvis",
-                "text": "<img src=\"{{asset('/pics/adbuscar.png')}}\"  alt=''><span  style='font-size: 0.675rem !important;'> Mostar/Ocultar</span>",
+                "text": "<img src=\"{{asset('/pics/adbuscar.png')}}\"  alt=''><span  style='font-size: 0.775rem !important;'> Mostar/Ocultar</span>",
                 "className": "btn btn-outline-info btn-md  btn-bold",
                 columns: ':not(:first):not(:last)'
             },
             {
                 "extend": "csv",
-                "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16'><span  style='font-size: 0.675rem !important;'> Csv</span>",
+                "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16'><span  style='font-size: 0.775rem !important;'> Csv</span>",
                 "className": "btn btn-outline-info btn-md  btn-bold",
             },
             {
                 "extend": "excel",
-                "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt=''><span  style='font-size: 0.675rem !important;'> Excel</span>",
+                "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt=''><span  style='font-size: 0.775rem !important;'> Excel</span>",
                 "className": "btn btn-outline-info btn-md  btn-bold",
             }
         ],
