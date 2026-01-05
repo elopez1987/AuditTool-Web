@@ -30,6 +30,7 @@ trait QueryReceiptUnits
     public function getDataMonitorUnit($request)
     {
         return StorageBoxStock::controlAccessUser()
+            ->leftJoin('receiptunits', 'vw_storageboxstock.id', '=', 'receiptunits.id')
             ->Folio($request->get('folionumber'))
             ->Shipment($request->get('shipmentid'))
             ->Barcode($request->get('barcode'))

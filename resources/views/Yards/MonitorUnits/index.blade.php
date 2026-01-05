@@ -36,7 +36,7 @@
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label for="boxnumber">Placa de caja</label>
-                                    <input type="text" class="form-control numeric" id="boxnumber" name="boxnumber"
+                                    <input type="text" class="form-control " id="boxnumber" name="boxnumber"
                                            onKeyUp=this.value=this.value.toUpperCase()
                                     >
                                 </div>
