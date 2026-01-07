@@ -1793,9 +1793,9 @@
                 </div>
                 <div class="row" style="position:relative; z-index: 1">
                     @if(!empty($receiptunit->key))
-                        <img src='{{asset('storage/' . $receiptunit->key->keyguard01 )}}'
+                        <img src='{{storage_path('app/' . $receiptunit->key->keyguard01 )}}'
                              style="position:absolute; width: 50px;height:50px; z-index: 999; top:0; left:0;">
-                        <img src='{{asset('storage/' .  $receiptunit->key->keyoperator01 )}}'
+                        <img src='{{storage_path('app/' .  $receiptunit->key->keyoperator01 )}}'
                              style="position:absolute; width: 50px;height:50px; z-index: 999; top:0; right:0;">
                     @endif
                     <table>
@@ -2367,10 +2367,8 @@
                 </div>
                 <div class="row" style="position:relative; z-index: 1">
                     @if(!empty($receiptunit->key))
-                        <img src='{{asset('storage/' . $receiptunit->key->keyguard03 )}}'
-                             style="position:absolute; width: 50px;height:50px; z-index: 999; top:0; left:0;">
-                        <img src='{{asset('storage/' .  $receiptunit->key->keyoperator03 )}}'
-                             style="position:absolute; width: 50px;height:50px; z-index: 999; top:0; right:0;">
+                        <img src='{{storage_path('app/' . $receiptunit->key->keyguard03 )}}' style="position:absolute; width: 50px;height:50px; z-index: 999; top:0; left:0;">
+                        <img src='{{storage_path('app/' .  $receiptunit->key->keyoperator03 )}}' style="position:absolute; width: 50px;height:50px; z-index: 999; top:0; right:0;">
                     @endif
                     <table>
                         <tr>

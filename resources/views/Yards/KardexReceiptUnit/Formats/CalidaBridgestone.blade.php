@@ -509,14 +509,14 @@
                 <th style="width: 300px;height: 100px;">
                     @foreach($photos as $photo)
                         @if($photo->auxiliary05 == '_floor')
-                            <img src="{{ storage_path('app/public/' . $photo->path) }}" alt="" style="width: 350px;height: 100px">
+                            <img src="{{ storage_path('app/' . $photo->path) }}" alt="" style="width: 350px;height: 100px">
                         @endif
                     @endforeach
                 </th>
                 <th style="width: 300px;height: 100px">
                     @foreach($photos as $photo)
                         @if($photo->auxiliary05 == '_roof')
-                            <img src="{{ storage_path('app/public/' . $photo->path) }}" alt="" style="width: 350px;height: 100px">
+                            <img src="{{ storage_path('app/' . $photo->path) }}" alt="" style="width: 350px;height: 100px">
                         @endif
                     @endforeach
                 </th>
@@ -525,14 +525,14 @@
                 <th style="width: 300px;height: 100px">
                     @foreach($photos as $photo)
                         @if($photo->auxiliary05 == 'background')
-                            <img src="{{ storage_path('app/public/' . $photo->path) }}" alt="" style="width: 350px;height: 100px">
+                            <img src="{{ storage_path('app/' . $photo->path) }}" alt="" style="width: 350px;height: 100px">
                         @endif
                     @endforeach
                 </th>
                 <th style="width: 300px;height: 100px">
                     @foreach($photos as $photo)
                         @if($photo->auxiliary05 == 'doors')
-                            <img src="{{ storage_path('app/public/' . $photo->path) }}" alt="" style="width: 350px;height: 100px">
+                            <img src="{{ storage_path('app/' . $photo->path) }}" alt="" style="width: 350px;height: 100px">
                         @endif
                     @endforeach
                 </th>
@@ -687,7 +687,7 @@
                 <th style="position: relative;">
                     <div style="position: absolute; left: 0;">
                         @if(!empty($receiptunit->key))
-                            <img src="{{ storage_path('app/public/' . $receiptunit->key->keyguard02) }}" style="width: 50px;height:50px;">
+                            <img src="{{ storage_path('app/' . $receiptunit->key->keyguard02) }}" style="width: 50px;height:50px;">
                         @endif
                     </div>
                 </th>
@@ -698,7 +698,7 @@
                 <th>
                     @if(!empty($receiptunit->key))
                         <div style="position: absolute; right: 0;">
-                            <img src="{{ storage_path('app/public/' . $receiptunit->key->supervisorkey) }}" style="position:absolute; width: 50px;height:50px; z-index: 999; top:-28px; right:0;">
+                            <img src="{{ storage_path('app/' . $receiptunit->key->supervisorkey) }}" style="position:absolute; width: 50px;height:50px; z-index: 999; top:-28px; right:0;">
                         </div>
                     @endif
                 </th>
