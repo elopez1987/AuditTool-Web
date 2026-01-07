@@ -715,7 +715,13 @@
                                                                     <td>{{number_format($peso->weightoutsap,2)}} lbs</td> {{-- Peso de SAP libras--}}
                                                                     <td>{{$peso->userupdate ? $peso->userupdate->name : ''}}</td>
                                                                     <td>{{$peso->updateddate}}</td>
-                                                                    <td>{{number_format( $peso->weightdifferencelb / $peso->weightoutsap,2)  }} %</td>
+                                                                    <td>
+                                                                        @if($receiptunit->statusid == 'TR' && !empty($peso->weightoutsap) && $peso->weightoutsap > 0)
+                                                                            {{ number_format(($peso->weightdifferencelb / $peso->weightoutsap) * 100, 2) }} %
+                                                                        @else
+                                                                            0 %
+                                                                        @endif
+                                                                    </td>
                                                                 </tr>
                                                             @endforeach
                                                         @endif

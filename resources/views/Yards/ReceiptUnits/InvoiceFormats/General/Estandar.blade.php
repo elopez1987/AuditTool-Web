@@ -79,7 +79,7 @@
         <table>
             <th style="width: 120px;">
                 @if(!empty($logo->auxiliary09))
-                    <img src="{{ storage_path('app/public/' . $logo->auxiliary09) }}"
+                    <img src="{{ storage_path('app/' . $logo->auxiliary09) }}"
                          class="align-self-center img-responsive" alt="" style="height: 70px;width: 280px">
                 @endif
             </th>
@@ -302,15 +302,14 @@
             <table class="border-none">
                 <th class="border-none"></th>
                 <th style="border-top: 0;text-align: center;width: 25%;" class="border-none">
-                    <img src="{{ storage_path('app/public/' . $firma->keyguard01) }}" alt="Firma"
+                    <img src="{{ storage_path('app/' . $firma->keyguard01) }}" alt="Firma"
                          style="height: 70px;max-height: 70px"/>
                 </th>
                 <th style="border-top: 0;text-align: center;width: 25%;" class="border-none">
 
                 </th>
                 <th style="border-top: 0;text-align: center;" class="border-none">
-                    <img src="{{ storage_path('app/public/' . $firma->keyoperator01) }}" alt="Firma"
-                         style="height: 70px;max-height: 70px"/>
+                    <img src="{{ storage_path('app/' . $firma->keyoperator01) }}" alt="Firma" style="height: 70px;max-height: 70px"/>
                 </th>
             </table>
         </div>

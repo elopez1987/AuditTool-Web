@@ -291,10 +291,10 @@
 
         <table>
             <td class="border-none" style="text-align: center;font-size: 10px;">
-                <img src="{{ storage_path('app/public/' . $firma->keyguard01) }}" alt="Firma" style="height: 100px;max-height: 200px"/>
+                <img src="{{ storage_path('app/' . $firma->keyguard01) }}" alt="Firma" style="height: 100px;max-height: 200px"/>
             </td>
             <td class="border-none" style="text-align: center;font-size: 10px">
-                <img src="{{ storage_path('app/public/' . $firma->keyoperator01) }}"
+                <img src="{{ storage_path('app/' . $firma->keyoperator01) }}"
                      alt="Firma"
                      style="height: 100px;max-height: 200px"/>
             </td>
@@ -302,12 +302,12 @@
 
             </td>
             <td class="border-none" style="text-align: center;font-size: 10px">
-                <img src="{{ storage_path('app/public/' . $firma->keyguard03) }}"
+                <img src="{{ storage_path('app/' . $firma->keyguard03) }}"
                      alt="Firma"
                      style="height: 100px;max-height: 200px"/>
             </td>
             <td class="border-none" style="text-align: center;font-size: 10px">
-                <img src="{{ storage_path('app/public/' . $firma->keyoperator03) }}"
+                <img src="{{ storage_path('app/' . $firma->keyoperator03) }}"
                      alt="Firma"
                      style="height: 100px;max-height: 200px"/>
             </td>
