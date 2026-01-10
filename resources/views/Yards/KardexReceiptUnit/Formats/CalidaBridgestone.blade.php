@@ -688,6 +688,8 @@
                     <div style="position: absolute; left: 0;">
                         @if(!empty($receiptunit->key))
                             <img src="{{ storage_path('app/' . $receiptunit->key->keyguard02) }}" style="width: 50px;height:50px;">
+                            <img src="{{ storage_path('app/public/' . str_replace('public/', '', $receiptunit->key->keyguard02)) }}"
+                                 style="position:absolute; width: 50px;height:50px; z-index: 999; top:-28px; right:0;">
                         @endif
                     </div>
                 </th>
@@ -698,13 +700,31 @@
                 <th>
                     @if(!empty($receiptunit->key))
                         <div style="position: absolute; right: 0;">
-                            <img src="{{ storage_path('app/' . $receiptunit->key->supervisorkey) }}" style="position:absolute; width: 50px;height:50px; z-index: 999; top:-28px; right:0;">
+                            <img src="{{ storage_path('app/' . $receiptunit->key->supervisorkey) }}" alt="Firma - 1"
+                                 style="position:absolute; width: 50px;height:50px; z-index: 999; top:-28px; right:0;">
+
+
+                            <img src="{{ storage_path('app/' . str_replace('public/', '', $receiptunit->key->supervisorkey)) }}"
+                                 alt="Firma - 2"
+                                 style="position:absolute; width: 50px;height:50px; z-index: 999; top:-28px; right:0;">
+
+                            <img
+                                    src="{{asset('storage/' . $receiptunit->key->supervisorkey)}}"
+                                    alt="Firma - 3"
+                                    style="height: 100px;max-height: 200px"/>
+
                         </div>
                     @endif
+
                 </th>
             </tr>
         </table>
     </div>
+
+    <p> 01 -{{storage_path('app/' . $receiptunit->key->supervisorkey)}}</p>
+    <p>02 - {{ storage_path('app/' . str_replace('public/', '', $receiptunit->key->supervisorkey)) }}</p>
+    <p>03 - {{asset('storage/' . $receiptunit->key->supervisorkey)}}</p>
+
 </div>
 
 </body>

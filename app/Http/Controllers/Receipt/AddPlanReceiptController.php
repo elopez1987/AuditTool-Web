@@ -24,7 +24,6 @@ class AddPlanReceiptController extends BaseController
             'razonstatusid' => $request['razonstatusid'],
             'stockcategoryid' => '1',
             'auxiliary01' => Auth::user()->name,
-            'schemaid' => 'SRE',
             'statusid' => 'PG',
         ]);
 

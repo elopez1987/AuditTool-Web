@@ -47,6 +47,17 @@
                                     <div class="row">
                                         <div class="col-lg-2 col-md-6 col-sm-12">
                                             <div class="form-group">
+                                                <label for="warehouseid">Bodega </label>
+                                                <select name="warehouseid" id="warehouseid" class="form-control select2">
+                                                    <option value="" selected>Seleccione un valor</option>
+                                                    @foreach($warehouses as $model)
+                                                        <option value="{{$model->warehouseid}}"> {{$model->name}} </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2 col-md-6 col-sm-12">
+                                            <div class="form-group">
                                                 <label for="shipmentid">Recibo</label>
                                                 <input type="text" class="form-control"  id="shipmentid" name="shipmentid">
                                             </div>
@@ -65,7 +76,7 @@
                                         </div>
                                         <div class="col-lg-2 col-md-6 col-sm-12">
                                             <div class="form-group">
-                                                <label for="statusid">Estatus <span style="color: red">*</span></label>
+                                                <label for="statusid">Estatus </label>
                                                 <select name="statusid" class="form-control select2">
                                                     <option value="" selected>Seleccione un valor</option>
                                                     @foreach($status as $model)
@@ -76,7 +87,7 @@
                                         </div>
                                         <div class="col-lg-2 col-md-6 col-sm-12">
                                             <div class="form-group">
-                                                <label for="providerid">Proveedor<span style="color: red">*</span></label>
+                                                <label for="providerid">Proveedor</label>
                                                 <select name="providerid" id='providerid'  class="form-control select2">
                                                     <option value="" selected>Seleccione un valor</option>
                                                     @foreach($providers as $model)
@@ -104,6 +115,7 @@
                             <thead>
                             <tr>
                                 <th>Opciones</th>
+                                <th>Bodega</th>
                                 <th>Embarque</th>
                                 <th>Factura</th>
                                 <th>Proveedor</th>
@@ -135,11 +147,11 @@
 @endsection
 
 @section('css')
-    <link rel="stylesheet" href="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.min.css')}}">
+
 @endsection
 
 @section('script')
-    <script src="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.all.min.js')}}"></script>
+
     @include('Receipt.ScheduleReceipt.partials.table')
     <script>
         function reloadtable() {
@@ -147,7 +159,7 @@
         }
     </script>
     <script>
-        $("#providerid,#statusid").change(function () {
+        $("#providerid,#statusid,#warehouseid").change(function () {
             reloadtable();
         });
     </script>

@@ -5,7 +5,8 @@
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="" style="font-size: 14px;font-style: normal;font-weight: 400;">Agregar recibo.</h5>
+                    <h5 class="modal-title" id="" style="font-size: 14px;font-style: normal;font-weight: 400;">Agregar
+                        recibo.</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
                 <div class="modal-body">
@@ -62,23 +63,25 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-4 col-md-6 col-sm-12">
-                            <div class="form-group">
-                                <label for="shipmentid"> {{ ui_label('receiptasn_shipmentid_createhd','Número de recibo') }}
-                                    @error("shipmentid")
-                                    <span class="message-error">{{$message}}</span>
+                        @if(ui_visible('receiptasn_shipmentid_createhd'))
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="shipmentid"> {{ ui_label('receiptasn_shipmentid_createhd','Número de recibo') }}
+                                        @error("shipmentid")
+                                        <span class="message-error">{{$message}}</span>
+                                        @enderror
+                                        <span style="color: red">*</span></label>
+                                    <input type="text" class="form-control @error('shipmentid') is-invalid @enderror"
+                                           id="shipmentid" name="shipmentid"
+                                           aria-describedby="shipmentid" onKeyUp=this.value=this.value.toUpperCase();
+                                           value="{{old('shipmentid')}}"
+                                    >
+                                    @error('shipmentid')
+                                    <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
-                                    <span style="color: red">*</span></label>
-                                <input type="text" class="form-control @error('shipmentid') is-invalid @enderror"
-                                       id="shipmentid" name="shipmentid"
-                                       aria-describedby="shipmentid" onKeyUp=this.value=this.value.toUpperCase();
-                                       value="{{old('shipmentid')}}"
-                                >
-                                @error('shipmentid')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
+                                </div>
                             </div>
-                        </div>
+                        @endif
                         <div class="col-lg-4 col-md-6 col-sm-12">
                             <div class="form-group">
                                 <label for="billoflading"> {{ ui_label('receiptasn_billoflading_createhd','Factura') }}
@@ -95,7 +98,7 @@
                         </div>
                         <div class="col-lg-4 col-md-6 col-sm-12">
                             <div class="form-group">
-                                <label for="oc"> {{ ui_label('receiptasn_oc_createhd','Orde de compra') }} </label>
+                                <label for="oc"> {{ ui_label('receiptasn_oc_createhd','Orden de compra') }} </label>
                                 <input type="text" class="form-control @error('oc') is-invalid @enderror"
                                        id="oc" name="oc"
                                        aria-describedby="oc" onKeyUp=this.value=this.value.toUpperCase();
@@ -150,24 +153,26 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-12 col-md-6 col-sm-12">
-                            <div class="form-group">
-                                <label for="carrierid">{{ ui_label('receiptasn_carrierid_createhd','Línea de transporte ') }}
-                                    @error("carrierid")
-                                    <span class="message-error">{{$message}}</span>
-                                    @enderror
-                                    <span style="color: red">*</span>
-                                </label>
-                                <select name="carrierid" class="form-control select2" required>
-                                    <option value="" selected>Seleccione una opción</option>
-                                    @foreach($carriers as $model)
-                                        <option
-                                                value="{{$model->id}}" {{ old('carrierid') == $model->id ? 'selected' : '' }} > {{$model->name}}
-                                        </option>
-                                    @endforeach
-                                </select>
+                        @if(ui_visible('receiptasn_carrierid_createhd'))
+                            <div class="col-lg-12 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="carrierid">{{ ui_label('receiptasn_carrierid_createhd','Línea de transporte ') }}
+                                        @error("carrierid")
+                                        <span class="message-error">{{$message}}</span>
+                                        @enderror
+                                        <span style="color: red">*</span>
+                                    </label>
+                                    <select name="carrierid" class="form-control select2" required>
+                                        <option value="" selected>Seleccione una opción</option>
+                                        @foreach($carriers as $model)
+                                            <option
+                                                    value="{{$model->id}}" {{ old('carrierid') == $model->id ? 'selected' : '' }} > {{$model->name}}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
-                        </div>
+                        @endif
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -188,13 +193,13 @@
 </div>
 
 <script>
-    $(document).ready(function() {
-        $('#form-add-shipment-{{$id}}').on('submit', function(e) {
+    $(document).ready(function () {
+        $('#form-add-shipment-{{$id}}').on('submit', function (e) {
             e.preventDefault();
-            
+
             var scheduleId = $(this).data('schedule-id');
             var formData = $(this).serialize();
-            
+
             $.ajax({
                 url: '{{url('addShipmentToScheduleedit')}}/' + scheduleId,
                 type: 'PUT',
@@ -202,12 +207,12 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                beforeSend: function() {
+                beforeSend: function () {
                     $('#btn-save-shipment-{{$id}}').prop('disabled', true);
                 },
-                success: function(response) {
+                success: function (response) {
                     $('#modal-create-{{$id}}').modal('hide');
-                    
+
                     Swal.fire({
                         icon: 'success',
                         title: 'Éxito',
@@ -215,19 +220,19 @@
                         timer: 3000,
                         showConfirmButton: false
                     });
-                    
+
                     // Limpiar formulario
                     $('#form-add-shipment-{{$id}}')[0].reset();
                     $('.select2').val('').trigger('change');
-                    
+
                     // Recargar DataTable
                     if (typeof reloadtable === 'function') {
                         reloadtable();
                     }
                 },
-                error: function(xhr) {
+                error: function (xhr) {
                     var errorMessage = 'Ocurrió un error al procesar la solicitud';
-                    
+
                     if (xhr.responseJSON) {
                         if (xhr.responseJSON.message) {
                             errorMessage = xhr.responseJSON.message;
@@ -235,13 +240,13 @@
                             // Errores de validación
                             var errors = xhr.responseJSON.errors;
                             errorMessage = '<ul style="text-align: left;">';
-                            $.each(errors, function(key, value) {
+                            $.each(errors, function (key, value) {
                                 errorMessage += '<li>' + value[0] + '</li>';
                             });
                             errorMessage += '</ul>';
                         }
                     }
-                    
+
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
@@ -249,7 +254,7 @@
                         confirmButtonText: 'Aceptar'
                     });
                 },
-                complete: function() {
+                complete: function () {
                     $('#btn-save-shipment-{{$id}}').prop('disabled', false);
                 }
             });

@@ -31,6 +31,7 @@ class ScheduleReceiptController extends BaseController
     public function getDataReceipt(Request $request)
     {
         $data = ReceiptAsn::controlAccessUser()->with(['status', 'provider', 'folio', 'carrier', 'turn'])
+            ->leftjoin('systemwarehouses', 'receiptasn.warehouseid', '=', 'systemwarehouses.warehouseid')
             ->leftJoin('receiptunits', 'receiptasn.folionumber', '=', 'receiptunits.id')
             ->leftJoin('receiptproviders', 'receiptasn.providerid', '=', 'receiptproviders.id')
             ->leftJoin('shipmentcarriers', 'receiptasn.carrierid', '=', 'shipmentcarriers.id')
@@ -42,6 +43,7 @@ class ScheduleReceiptController extends BaseController
             ->Status($request->get('statusid'))
             ->Provider($request->get('providerid'))
             ->FolioNumber($request->get('folionumber'))
+            ->ForWarehouse($request->get('warehouseid'))
             ->select([
                 'receiptasn.id', 'receiptasn.workday', 'receiptasn.shipmentid', 'receiptasn.addasndate',
                 'receiptasn.billoflading', 'receiptproviders.name as providername', 'receiptunits.containerseal',
@@ -51,6 +53,7 @@ class ScheduleReceiptController extends BaseController
                 'receiptasn.unloadstartdate', 'receiptasn.unloadfinishdate', 'receiptasn.cancellationdate',
                 'receiptasn.goodissuedate', 'receiptasn.statusid', 'receiptunits.statusid as statusunit',
                 'receiptunits.deliverdate', 'receiptunits.autorizaoutputdate', 'receiptunits.ensnare',
+                'systemwarehouses.name as warehouse',
             ]);
 
         return DataTables::of($data)
