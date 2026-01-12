@@ -126,7 +126,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="font-size: 11px">Receipción de Carta Porte
+                                                <td style="font-size: 11px">Recepción de Carta Porte
                                                 </td>
                                                 <td>
                                                     @if ($orderDelivery->operation->requestletter != null)

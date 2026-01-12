@@ -39,18 +39,20 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>{{$peso->folionumber}}</td>
-                        <td>{{$peso->ticket}}</td>
-                        <td>{{number_format($peso->weightin,2)}} Kg</td>
-                        <td>{{ number_format($peso->weightinlb,2) }} lbs</td>
-                        <td>{{number_format($peso->weightout,2)}} Kg</td>
-                        <td>{{ number_format($peso->weightoutlb,2)}} lbs</td>
-                        <td>{{number_format( $peso->weightout - $peso->weightin,2)}} Kg</td>
-                        <td>{{  number_format ($peso->weightoutlb - $peso->weightinlb,2) }} lbs</td>
-                        <td>{{number_format($peso->weightoutsap,2)}} lbs</td>
-                        <td>{{number_format($peso->value01,2)}} %</td>
-                    </tr>
+                    @if($peso)
+                        <tr>
+                            <td>{{$peso->folionumber}}</td>
+                            <td>{{$peso->ticket}}</td>
+                            <td>{{number_format($peso->weightin,2)}} Kg</td>
+                            <td>{{ number_format($peso->weightinlb,2) }} lbs</td>
+                            <td>{{number_format($peso->weightout,2)}} Kg</td>
+                            <td>{{ number_format($peso->weightoutlb,2)}} lbs</td>
+                            <td>{{number_format( $peso->weightout - $peso->weightin,2)}} Kg</td>
+                            <td>{{  number_format ($peso->weightoutlb - $peso->weightinlb,2) }} lbs</td>
+                            <td>{{number_format($peso->weightoutsap,2)}} lbs</td>
+                            <td>{{number_format($peso->value01,2)}} %</td>
+                        </tr>
+                    @endif
                     </tbody>
                 </table>
             </div>
