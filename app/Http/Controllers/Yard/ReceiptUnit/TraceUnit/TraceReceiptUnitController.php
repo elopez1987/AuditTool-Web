@@ -56,7 +56,7 @@ class TraceReceiptUnitController extends BaseController
         $comments = StorageComment::where('modeltype', 'ReceiptUnits')
             ->where('modelid', $id)->get();
         $seals = ReceiptUnitSeal::controlAccessUser()->where('folionumber', '=', $id)->get();
-        $pesos = ReceiptUnitTicket::where('folionumber', '=', $id)->get();
+        $peso = ReceiptUnitTicket::where('folionumber', '=', $id)->first();
         $lotos = StorageTraceLoto::controlAccessUser()->where('folionumber', '=', $id)->get();
 
         return view(
@@ -69,7 +69,7 @@ class TraceReceiptUnitController extends BaseController
                 'receiptunit',
                 'evidencesTiros',
                 'seals',
-                'pesos',
+                'peso',
                 'lotos'
             )
         );

@@ -194,7 +194,7 @@ class DownloadScheduleController extends BaseController
             if ($request->ajax() || $request->wantsJson()) {
                 return response()->json([
                     'success' => false,
-                    'message' => $e->getMessage(),
+                    'message' => 'Error al agregar recibo, por favor intente nuevamente o informe al administrador.',
                 ], 500);
             }
 

@@ -675,72 +675,10 @@
                                 </div>
                                 <div class="tab-pane " id="view08" role="tabpanel">
                                     @if($receiptunit->warehouse->auxiliary01 == 'PT')
-                                     <div class="row mt-3">
-                                        <div class="col-lg-12">
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <table width="100%"
-                                                           class="table table-condensed table-bordered  table-hover">
-                                                        <thead>
-                                                        <tr>
-                                                            <th style="background-color: #0b0b0b !important;color: white !important;text-transform: uppercase">Folio</th>
-                                                            <th style="background-color: #0b0b0b !important;color: white !important;text-transform: uppercase">Número de ticket</th>
-                                                            <th style="background-color: #0b0b0b !important;color: white !important;text-transform: uppercase">Peso de entrada kilogramos</th>
-                                                            <th style="background-color: #0b0b0b !important;color: white !important;text-transform: uppercase">Peso de entrada libras</th>
-                                                            <th style="background-color: #0b0b0b !important;color: white !important;text-transform: uppercase">Peso de salida kilogramos</th>
-                                                            <th style="background-color: #0b0b0b !important;color: white !important;text-transform: uppercase">Peso de salida libras</th>
-                                                            <th style="background-color: #2196f3 !important;color: white !important;text-transform: uppercase">Peso de material kilogramos</th>
-                                                            <th style="background-color: #66bb6a !important;color: white !important;text-transform: uppercase">Peso de material libras</th>
-                                                            <th style="background-color: #673ab7 !important;color: white !important;text-transform: uppercase">Peso de SAP libras</th>
-                                                            <th style="background-color: #e53935 !important;color: white !important;text-transform: uppercase">% de diferencia</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        @if(!empty($pesos))
-                                                            @foreach($pesos as $peso)
-                                                                <tr>
-                                                                    <td>{{$peso->folionumber}}</td>
-                                                                    <td>{{$peso->ticket}}</td>
-                                                                    <td>{{number_format($peso->weightin,2)}} Kg</td>
-                                                                    <td>{{ number_format($peso->weightinlb,2) }} lbs</td>
-{{--                                                                    <td>{{$peso->usercreate ? $peso->usercreate->name : ''}}</td>--}}
-{{--                                                                    <td>{{$peso->createddate}}</td>--}}
-                                                                    <td>{{number_format($peso->weightout,2)}} Kg</td>
-                                                                    <td>{{ number_format($peso->weightoutlb,2)}} lbs</td>
-                                                                    <td>{{number_format( $peso->weightout - $peso->weightin,2)}} Kg</td>
-                                                                    <td>{{  number_format ($peso->weightoutlb - $peso->weightinlb,2) }} lbs </td>
-                                                                    <td>{{number_format($peso->weightoutsap,2)}} lbs</td> {{-- Peso de SAP libras--}}
-{{--                                                                    <td>{{$peso->userupdate ? $peso->userupdate->name : ''}}</td>--}}
-{{--                                                                    <td>{{$peso->updateddate}}</td>--}}
-                                                                    <td>
-                                                                        @if(!empty($peso->weightout)  && !empty($peso->weightoutsap) && $peso->weightoutsap > 0)
-                                                                            @php
-                                                                                $pesoMaterialKg = $peso->weightout - $peso->weightin;
-                                                                                $pesoSAPKg = $peso->weightoutsap / 2.2046;
-
-                                                                                if ($pesoMaterialKg != 0) {
-                                                                                    $diferenciaBasculaSAP = $pesoMaterialKg - $pesoSAPKg;
-                                                                                    $diferenciaFinal = ($diferenciaBasculaSAP / $pesoMaterialKg) * 100;
-                                                                                } else {
-                                                                                    $diferenciaFinal = 0;
-                                                                                }
-                                                                            @endphp
-
-                                                                            {{ number_format($diferenciaFinal, 2) }} %
-                                                                        @else
-                                                                            0 %
-                                                                        @endif
-
-                                                                    </td>
-                                                                </tr>
-                                                            @endforeach
-                                                        @endif
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                        @include('Yards.KardexReceiptUnit.Pesos.pt')
+                                    @endif
+                                    @if($receiptunit->warehouse->auxiliary01 == 'MP')
+                                        @include('Yards.KardexReceiptUnit.Pesos.mp')
                                     @endif
                                 </div>
                                 <div class="tab-pane " id="view09" role="tabpanel">

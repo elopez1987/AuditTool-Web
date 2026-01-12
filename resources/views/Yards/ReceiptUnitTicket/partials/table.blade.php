@@ -1,7 +1,7 @@
 <script>
     let oTable;
     $(document).ready(function () {
-        oTable = $("#table-tickets").DataTable({
+        oTable = $("#table-ticketspt").DataTable({
             "paging": true,
             "searching": true,
             "ordering": true,
@@ -14,7 +14,7 @@
             "stateSave": true,
             "stateDuration": 0,
             "ajax": {
-                url: 'getUnitTickets',
+                url: 'getUnitTicketsPT',
                 data: function (d) {
                     d.warehouseid = $('select[name=warehouseid]').val();
                     d.folionumber = $('input[name=folionumber]').val();
@@ -24,27 +24,21 @@
                 }
             },
             "columns": [
-                {data: 'warehousename'},
                 {data: 'folionumber'},
                 {data: 'ticket'},
-                {data: 'folio.entrydate',name:'folio.entrydate'},
-                {data: 'carriername'},
-                {data: 'boxnumber'},
-                {data: 'operatorname'},
                 {data: 'weightin'},
+                {data: 'weightinlb'},
                 {data: 'weightout'},
-                {data: 'kgbruto'},
-                {data: 'kgneto'},
-                {data: 'embalaje'},
+                {data: 'weightoutlb'},
+                {data: 'diferencia_kg'},
+                {data: 'diferencia_lbs'},
                 {data: 'weightoutsap'},
-                // {data: 'diferencia_peso'},
-                // {data: 'diferencia_porcentaje'},
-                {data: 'status.name', name: 'status.name'},
+                {data: 'value01'},
                 {data: 'btn'},
             ],
             "columnDefs": [
-                {"width": "250px", "targets": 0},
-                {"width": "180px", "targets": 1},
+                {"width": "150px", "targets": 0},
+                {"width": "150px", "targets": 1},
                 {"width": "150px", "targets": 2},
                 {"width": "250px", "targets": 3},
                 {"width": "250px", "targets": 4},
@@ -54,12 +48,10 @@
                 {"width": "250px", "targets": 8},
                 {"width": "250px", "targets": 9},
                 {"width": "250px", "targets": 10},
-                {"width": "250px", "targets": 11},
-                {"width": "250px", "targets": 12},
-                {"width": "250px", "targets": 13},
-                {"width": "250px", "targets": 14},
-                // {"width": "250px", "targets": 15},
-                // {"width": "250px", "targets": 16},
+                // {"width": "250px", "targets": 11},
+                // {"width": "250px", "targets": 12},
+                // {"width": "250px", "targets": 13},
+                // {"width": "250px", "targets": 14},
             ],
             "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
             "lengthMenu": [[5, 10, 30, 50, 100, 150, 200, 250, -1], [5, 10, 30, 50, 100, 150, 200, 250, "Todos"]],

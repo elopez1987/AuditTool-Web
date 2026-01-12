@@ -3,6 +3,7 @@
 namespace App\Models\Yard;
 
 use App\Models\Configuration\Schemas\SystemStatus;
+use App\Models\Configuration\Warehouses\SystemWarehouse;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\User;
 use Auth;
@@ -165,6 +166,11 @@ class ReceiptUnitTicket extends Model
     public function status()
     {
         return $this->belongsTo(SystemStatus::class, 'statusid', 'statusid');
+    }
+
+    public function warehouse()
+    {
+        return $this->belongsTo(SystemWarehouse::class, 'warehouseid');
     }
 
     //  -----------------------  Scopes para filtros ---------------------------------------------
