@@ -81,6 +81,6 @@ class YardHenkelTolController extends BaseController
             ->whereNotIn('receiptunits.statusid', ['TR'])
             ->get();
 
-        return view('Yards.LayOutYard.Yards.HenkelTolucaOneRoof.index', compact('result', 'receiptUnits', 'receiptUnitsOU', 'receiptUnitsRes', 'unitsDummy'));
+        return view('Yards.LayOutYard.index', compact('result', 'receiptUnits', 'receiptUnitsOU', 'receiptUnitsRes', 'unitsDummy'));
     }
 }
