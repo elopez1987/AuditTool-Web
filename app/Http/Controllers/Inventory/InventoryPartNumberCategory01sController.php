@@ -31,18 +31,15 @@ class InventoryPartNumberCategory01sController extends BaseController
     public function create()
     {
         $this->authorize('inventorypartnumbercategory01.create');
+        $centers = $this->getCenterForSelect();
+        $warehouses = $this->getWarehouseForSelect();
 
-        return view('Inventory.InventoryPartNumberCategory01.create');
+        return view('Inventory.InventoryPartNumberCategory01.create', compact('centers', 'warehouses'));
     }
 
     public function store(CreateCategoryInventory01 $request)
     {
-        $access = $this->getAccessForUser();
-        $category01 = new InventoryPartNumberCategory01(
-            $request->all() +
-            ['centerid' => $access->centerid] +
-            ['warehouseid' => $access->warehouseid]
-        );
+        $category01 = new InventoryPartNumberCategory01($request->all());
         $category01->save();
 
         return $this->successResponse('inventorypartnumbercategory01.index');

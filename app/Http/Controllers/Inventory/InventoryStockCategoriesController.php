@@ -35,8 +35,10 @@ class InventoryStockCategoriesController extends BaseController
     public function create()
     {
         $this->authorize('inventorystockcategories.create');
+        $centers = $this->getCenterForSelect();
+        $warehouses = $this->getWarehouseForSelect();
 
-        return view('Inventory.InventoryStockCategory.create');
+        return view('Inventory.InventoryStockCategory.create', compact('centers', 'warehouses'));
     }
 
     public function store(CreateStockCategoryRequest $request)

@@ -674,63 +674,12 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane " id="view08" role="tabpanel">
-                                    <div class="row mt-3">
-                                        <div class="col-lg-12">
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <table width="100%"
-                                                           class="table table-condensed table-bordered  table-hover">
-                                                        <thead>
-                                                        <tr>
-                                                            <th>Folio</th>
-                                                            <th>Número de ticket</th>
-                                                            <th>Peso de entrada kilogramos</th>
-                                                            <th>Peso de entrada libras</th>
-                                                            <th>Usuario de entrada</th>
-                                                            <th>Fecha de entrada</th>
-                                                            <th>Peso de salida kilogramos</th>
-                                                            <th>Peso de salida libras</th>
-                                                            <th>Peso de material kilogramos</th>
-                                                            <th>Peso de material libras</th>
-                                                            <th>Peso de SAP libras</th>
-                                                            <th>Usuario de salida</th>
-                                                            <th>Fecha de salida</th>
-                                                            <th>% de diferencia</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        @if(!empty($pesos))
-                                                            @foreach($pesos as $peso)
-                                                                <tr>
-                                                                    <td>{{$peso->folionumber}}</td>
-                                                                    <td>{{$peso->ticket}}</td>
-                                                                    <td>{{number_format($peso->weightin,2)}} Kg</td>
-                                                                    <td>{{ number_format($peso->weightin * 2.20462,2) }} lbs</td>
-                                                                    <td>{{$peso->usercreate ? $peso->usercreate->name : ''}}</td>
-                                                                    <td>{{$peso->createddate}}</td>
-                                                                    <td>{{number_format($peso->weightout,2)}} Kg</td>
-                                                                    <td>{{ number_format($peso->weightout * 2.20462,2)}} lbs</td>
-                                                                    <td>{{number_format( $peso->weightout - $peso->weightin,2)}} Kg</td>
-                                                                    <td>{{  number_format (($peso->weightout - $peso->weightin) * 2.20462,2) }} lbs </td>
-                                                                    <td>{{number_format($peso->weightoutsap,2)}} lbs</td> {{-- Peso de SAP libras--}}
-                                                                    <td>{{$peso->userupdate ? $peso->userupdate->name : ''}}</td>
-                                                                    <td>{{$peso->updateddate}}</td>
-                                                                    <td>
-                                                                        @if($receiptunit->statusid == 'TR' && !empty($peso->weightoutsap) && $peso->weightoutsap > 0)
-                                                                            {{ number_format(($peso->weightdifferencelb / $peso->weightoutsap) * 100, 2) }} %
-                                                                        @else
-                                                                            0 %
-                                                                        @endif
-                                                                    </td>
-                                                                </tr>
-                                                            @endforeach
-                                                        @endif
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    @if($receiptunit->warehouse->auxiliary01 == 'PT')
+                                        @include('Yards.KardexReceiptUnit.Pesos.pt')
+                                    @endif
+                                    @if($receiptunit->warehouse->auxiliary01 == 'MP')
+                                        @include('Yards.KardexReceiptUnit.Pesos.mp')
+                                    @endif
                                 </div>
                                 <div class="tab-pane " id="view09" role="tabpanel">
                                     <div class="row mt-3">
@@ -788,6 +737,7 @@
                                                                             src="{{asset('storage/' . $receiptunit->key->keyguard01)}}"
                                                                             alt="Firma"
                                                                             style="height: 100px;max-height: 200px"/>
+
                                                                 </td>
                                                                 <td>
                                                                     <img
@@ -865,77 +815,6 @@
 
 @section('script')
     <script src="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.all.min.js')}}"></script>
-    {{--    <script>--}}
-    {{--        let oTable = $("#table-detailkardex").DataTable({--}}
-    {{--            bDestroy: true,--}}
-    {{--            "paging": true,--}}
-    {{--            "searching": true,--}}
-    {{--            "ordering": true,--}}
-    {{--            "sScrollY": "350px",--}}
-    {{--            "sScrollX": true,--}}
-    {{--            "processing": true,--}}
-    {{--            "responsive": true,--}}
-    {{--            "colReorder": true,--}}
-    {{--            "stateSave": true,--}}
-    {{--            "stateDuration": 0,--}}
-    {{--            "columnDefs": [--}}
-    {{--                {"width": "100px", "targets": 0},--}}
-    {{--                {"width": "280px", "targets": 1},--}}
-    {{--                {"width": "120px", "targets": 2},--}}
-    {{--                {"width": "150px", "targets": 3},--}}
-    {{--                {"width": "150px", "targets": 4},--}}
-    {{--                {"width": "150px", "targets": 5},--}}
-    {{--                {"width": "250px", "targets": 6},--}}
-    {{--                {"width": "100px", "targets": 7},--}}
-    {{--                {"width": "100px", "targets": 8},--}}
-    {{--                {"width": "120px", "targets": 9},--}}
-    {{--                {"width": "120px", "targets": 10},--}}
-    {{--                {"width": "280px", "targets": 11},--}}
-    {{--                {"width": "120px", "targets": 12},--}}
-    {{--                {"width": "280px", "targets": 13},--}}
-    {{--            ],--}}
-    {{--            "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',--}}
-    {{--            "lengthMenu": [[1, 5, 10, 30, 50, 100, 150, 200, 250, -1], [1, 5, 10, 30, 50, 100, 150, 200, 250, "Todos"]],--}}
-    {{--            buttons: [--}}
-    {{--                {--}}
-    {{--                    "extend": "colvis",--}}
-    {{--                    "text": "<img src=\"{{asset('/pics/adbuscar.png')}}\"  alt=''><span  style='font-size: 11px;'> Mostar/Ocultar</span>",--}}
-    {{--                    "className": "btn btn-outline-info btn-md  btn-bold",--}}
-    {{--                    columns: ':not(:first):not(:last)'--}}
-    {{--                },--}}
-    {{--                {--}}
-    {{--                    "extend": "csv",--}}
-    {{--                    "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16'><span  style='font-size: 11px;'> Csv</span>",--}}
-    {{--                    "className": "btn btn-outline-info btn-md  btn-bold",--}}
-    {{--                },--}}
-    {{--                {--}}
-    {{--                    "extend": "excel",--}}
-    {{--                    "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt=''><span  style='font-size: 11px;'> Excel</span>",--}}
-    {{--                    "className": "btn btn-outline-info btn-md  btn-bold",--}}
-    {{--                }--}}
-    {{--            ],--}}
-    {{--            language: {--}}
-    {{--                "decimal": "",--}}
-    {{--                "emptyTable": "No hay información",--}}
-    {{--                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",--}}
-    {{--                "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",--}}
-    {{--                "infoFiltered": "(Filtrado de _MAX_ total entradas)",--}}
-    {{--                "infoPostFix": "",--}}
-    {{--                "thousands": ",",--}}
-    {{--                "lengthMenu": "Mostrar _MENU_ Entradas",--}}
-    {{--                "loadingRecords": "Cargando...",--}}
-    {{--                "processing": '<i class="fa fa-spinner fa-spin fa-4x fa-fw text-info"></i><span class="sr-only">Loading...</span> ',--}}
-    {{--                "search": "Buscar:",--}}
-    {{--                "zeroRecords": "Sin resultados encontrados",--}}
-    {{--                "paginate": {--}}
-    {{--                    "first": "Primero",--}}
-    {{--                    "last": "Ultimo",--}}
-    {{--                    "next": "Siguiente",--}}
-    {{--                    "previous": "Anterior"--}}
-    {{--                }--}}
-    {{--            },--}}
-    {{--        });--}}
-    {{--    </script>--}}
 
     <script>
         $(document).ready(function () {

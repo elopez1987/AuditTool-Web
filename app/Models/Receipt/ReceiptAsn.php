@@ -291,6 +291,13 @@ class ReceiptAsn extends Model
         }
     }
 
+    public function scopeForWarehouse($query, $warehouseid)
+    {
+        if (trim($warehouseid) != '') {
+            $query->where('receiptasn.warehouseid', '=', $warehouseid);
+        }
+    }
+
     //    ---------------- Consultas del modelo ------------------------------------
     public static function searchReceiptForUnit($folioid)
     {

@@ -44,7 +44,7 @@ class TraceReceiptUnitController extends BaseController
 
     public function show($id)
     {
-        $receiptunit = ReceiptUnit::findOrFail($id);
+        $receiptunit = ReceiptUnit::with('warehouse')->findOrFail($id);
         $traces = StorageUnitTrace::controlAccessUser()->where('receiptunitid', '=', $id)->get();
         $evidences = EvidencePhoto::where('model_id', $id)
             ->leftJoin('systemstatus', 'storageevidencephotos.auxiliary04', '=', 'systemstatus.statusid')
@@ -56,7 +56,7 @@ class TraceReceiptUnitController extends BaseController
         $comments = StorageComment::where('modeltype', 'ReceiptUnits')
             ->where('modelid', $id)->get();
         $seals = ReceiptUnitSeal::controlAccessUser()->where('folionumber', '=', $id)->get();
-        $pesos = ReceiptUnitTicket::where('folionumber', '=', $id)->get();
+        $peso = ReceiptUnitTicket::where('folionumber', '=', $id)->first();
         $lotos = StorageTraceLoto::controlAccessUser()->where('folionumber', '=', $id)->get();
 
         return view(
@@ -69,13 +69,13 @@ class TraceReceiptUnitController extends BaseController
                 'receiptunit',
                 'evidencesTiros',
                 'seals',
-                'pesos',
+                'peso',
                 'lotos'
             )
         );
     }
 
-    public function getChecklistTransports($receiptunit)
+    private function getChecklistTransports($receiptunit)
     {
         return CheckListTransport::where('receiptunitid', $receiptunit->id)
             ->where('centerid', $receiptunit->centerid)->get();
@@ -94,7 +94,10 @@ class TraceReceiptUnitController extends BaseController
             ->where('modelid', $id)->get();
         $traces = StorageUnitTrace::controlAccessUser()->where('receiptunitid', '=', $id)->get();
         $fortmat = 'Yards.KardexReceiptUnit.Formats.Kardex';
-        $pdf = PDF::loadView($fortmat, compact(
+        $pdf = PDF::setOptions([
+            'isRemoteEnabled' => true,
+            'chroot' => storage_path('app'),
+        ])->loadView($fortmat, compact(
             'receiptunit',
             'evidences',
             'traces',
@@ -148,7 +151,10 @@ class TraceReceiptUnitController extends BaseController
             ->where('s.receiptunitid', $receiptunit->id)
             ->whereIn('s.type', ['OUT'])->get();
         $fortmat = 'Yards.ReceiptUnits.InvoiceFormats.InvoiceBridgestonePT';
-        $pdf = PDF::loadView($fortmat, compact('receiptunit', 'verified', 'tracto', 'verifiedOut'));
+        $pdf = PDF::setOptions([
+            'isRemoteEnabled' => true,
+            'chroot' => storage_path('app'),
+        ])->loadView($fortmat, compact('receiptunit', 'verified', 'tracto', 'verifiedOut'));
 
         return $pdf->download('Folio_De_Entrada-' . $receiptunit->id . '.pdf');
     }
@@ -178,7 +184,10 @@ class TraceReceiptUnitController extends BaseController
         $photos = EvidencePhoto::where('model_id', $id)
             ->where('model_type', 'ReceiptUnit')->where('auxiliary01', 'QI')->get();
         $fortmat = 'Yards.KardexReceiptUnit.Formats.CalidaBridgestone';
-        $pdf = PDF::loadView($fortmat, compact('receiptunit', 'comments', 'verified', 'photos'));
+        $pdf = PDF::setOptions([
+            'isRemoteEnabled' => true,
+            'chroot' => storage_path('app'),
+        ])->loadView($fortmat, compact('receiptunit', 'comments', 'verified', 'photos'));
 
         return $pdf->download('Folio_De_Calidad-' . $receiptunit->id . '.pdf');
     }

@@ -25,6 +25,7 @@ use App\Models\Yard\StorageUnitType;
 use App\Models\Yard\StorageZone\StorageZone;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 trait GetParameters
 {
@@ -144,18 +145,20 @@ trait GetParameters
         return $barcode;
     }
 
-    public function getFolioReceipt($centerid)
+    public function getFolioReceipt(string $centerid): int
     {
-        $folio = SystemFolio::where('schemaid', '=', 'FOL')
-            ->where('centerid', $centerid)
-            ->where('statusid', '=', 'REC')
-            ->first(['id', 'folionumber']);
-        $valor = $folio->folionumber;
-        $receiptnumber = $valor + 1;
-        $folio->folionumber = $receiptnumber;
-        $folio->update();
+        return DB::transaction(function () use ($centerid) {
 
-        return $receiptnumber;
+            $folio = SystemFolio::where('schemaid', 'FOL')
+                ->where('centerid', $centerid)
+                ->where('statusid', 'REC')
+                ->lockForUpdate()
+                ->firstOrFail(['id', 'folionumber']);
+
+            $folio->increment('folionumber');
+
+            return $folio->folionumber;
+        });
     }
 
     public function getFolioClient($centerid, $folionumber, $type)

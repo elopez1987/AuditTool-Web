@@ -31,42 +31,113 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-12">
-                            <table id="table-tickets"
-                                   class="table table-bordered  table-condensed table-hover table-uppercase">
-                                <thead>
-                                <tr>
-                                    <th class="text-white">Bodega</th>
-                                    <th class="text-white">Folio</th>
-                                    <th class="text-white">Ticket de báscula</th>
-                                    <th class="text-white">Fecha de entrada</th>
-                                    <th class="text-white">Linea de transporte</th>
-                                    <th class="text-white">Placa de caja</th>
-                                    <th class="text-white">Nombre del operador</th>
-                                    <th class="text-white">Peso de entrada KG</th>
-                                    <th class="text-white">Peso de salida KG</th>
-                                    <th class="text-white">Peso Bruto</th>
-                                    <th class="text-white">Kg Neto</th>
-                                    <th class="text-white">Embalaje</th>
-                                    <th class="text-white">Peso de material</th>
-{{--                                    <th class="text-white">Diferencia Kg</th>--}}
-{{--                                    <th class="text-white">% de diferencia</th>--}}
-                                    <th class="text-white">Estatus</th>
-                                    <th class="text-white">Opciones</th>
-                                </tr>
-                                </thead>
-                            </table>
+
+    @if(Auth::user()->access->warehouse->auxiliary01 == 'PT' )
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <table id="table-ticketspt"
+                                       class="table table-bordered  table-condensed table-hover table-uppercase">
+                                    <thead>
+                                    <tr>
+                                        <th style="background-color: #0b0b0b !important;color: white !important;text-transform: uppercase">
+                                            Folio
+                                        </th>
+                                        <th style="background-color: #0b0b0b !important;color: white !important;text-transform: uppercase">
+                                            Número de ticket
+                                        </th>
+                                        <th style="background-color: #0b0b0b !important;color: white !important;text-transform: uppercase">
+                                            Peso de entrada kilogramos
+                                        </th>
+                                        <th style="background-color: #0b0b0b !important;color: white !important;text-transform: uppercase">
+                                            Peso de entrada libras
+                                        </th>
+                                        <th style="background-color: #0b0b0b !important;color: white !important;text-transform: uppercase">
+                                            Peso de salida kilogramos
+                                        </th>
+                                        <th style="background-color: #0b0b0b !important;color: white !important;text-transform: uppercase">
+                                            Peso de salida libras
+                                        </th>
+                                        <th style="background-color: #2196f3 !important;color: white !important;text-transform: uppercase">
+                                            Peso de material kilogramos
+                                        </th>
+                                        <th style="background-color: #66bb6a !important;color: white !important;text-transform: uppercase">
+                                            Peso de material libras
+                                        </th>
+                                        <th style="background-color: #673ab7 !important;color: white !important;text-transform: uppercase">
+                                            Peso de SAP libras
+                                        </th>
+                                        <th style="background-color: #e53935 !important;color: white !important;text-transform: uppercase">
+                                            % de diferencia
+                                        </th>
+                                        <th>Opciones</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endif
+
+    @if(Auth::user()->access->warehouse->auxiliary01 == 'MP' )
+        <div class="row mt-3">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <table width="100%" id="table-mp" class="table table-condensed table-bordered  table-hover">
+                            <thead>
+                            <tr>
+                                <th style="background-color: #0b0b0b !important;color: white !important;text-transform: uppercase">
+                                    Folio
+                                </th>
+                                <th style="background-color: #0b0b0b !important;color: white !important;text-transform: uppercase">
+                                    Número de ticket
+                                </th>
+                                <th style="background-color: #0b0b0b !important;color: white !important;text-transform: uppercase">
+                                    KG ENTRADA
+                                </th>
+                                <th style="background-color: #0b0b0b !important;color: white !important;text-transform: uppercase">
+                                    KG SALIDA
+                                </th>
+                                <th style="background-color: #2196f3 !important;color: white !important;text-transform: uppercase">
+                                    KG MATERIAL BRUTO
+                                </th>
+                                <th style="background-color: #673ab7 !important;color: white !important;text-transform: uppercase">
+                                    KG NETO
+                                </th>
+                                <th style="background-color: #673ab7 !important;color: white !important;text-transform: uppercase">
+                                    EMBALAJE
+                                </th>
+                                <th style="background-color: #2196f3 !important;color: white !important;text-transform: uppercase">
+                                    TOTAL
+                                </th>
+                                <th style="background-color: #e53935 !important;color: white !important;text-transform: uppercase">
+                                    DIF. KILOGRAMOS
+                                </th>
+                                <th style="background-color: #00e676 !important;color: black !important;text-transform: uppercase">
+                                    ESTATUS
+                                </th>
+                                <th style="background-color: #00e676 !important;color: black !important;text-transform: uppercase">
+                                    % VAR
+                                </th>
+                                <th>OPCIONES</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
 @endsection
 
 @section('css')
@@ -75,7 +146,13 @@
 
 
 @section('script')
-    @include('Yards.ReceiptUnitTicket.partials.table')
+    @if(Auth::user()->access->warehouse->auxiliary01 == 'MP' )
+        @include('Yards.ReceiptUnitTicket.partials.table-mp')
+    @endif
+    @if(Auth::user()->access->warehouse->auxiliary01 == 'PT' )
+        @include('Yards.ReceiptUnitTicket.partials.table')
+    @endif
+
     <script>
         $("#carrierid,#warehouseid").change(function () {
             reloadtable();

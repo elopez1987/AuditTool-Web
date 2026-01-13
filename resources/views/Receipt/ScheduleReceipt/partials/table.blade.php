@@ -18,11 +18,13 @@
                 d.folionumber = $('input[name=folionumber]').val();
                 d.delivery = $('input[name=delivery]').val();
                 d.statusid = $('select[name=statusid]').val();
+                d.warehouseid = $('select[name=warehouseid]').val();
                 d.providerid = $('select[name=providerid]').val();
             }
         },
         "columns": [
             {data: 'btn', "orderable": false},
+            {data: 'warehouse'},
             {data: 'shipmentid'},
             {data: 'billoflading'},
             {data: 'providername',name: 'providername'},
@@ -56,10 +58,10 @@
             {"width": "130px", "targets": 1},
             {"width": "130px", "targets": 2},
             {"width": "150px", "targets": 3},
-            {"width": "120px", "targets": 4},
+            {"width": "220px", "targets": 4},
             {"width": "120px", "targets": 5},
             {"width": "250px", "targets": 6},
-            {"width": "150px", "targets": 7},
+            {"width": "250px", "targets": 7},
             {"width": "150px", "targets": 8},
             {"width": "150px", "targets": 9},
             {"width": "150px", "targets": 10},
@@ -71,7 +73,8 @@
             {"width": "180px", "targets": 16},
             {"width": "180px", "targets": 17},
             {"width": "180px", "targets": 18},
-            {"width": "180px", "targets": 19, "defaultContent": "-"},
+            {"width": "180px", "targets": 19},
+            {"width": "180px", "targets": 20, "defaultContent": "-"},
         ],
         "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
         "lengthMenu": [[1,5,10, 30, 50, 100, 150, 200, 250, -1], [1,5,10, 30, 50, 100, 150, 200, 250, "Todos"]],

@@ -34,19 +34,19 @@ class InventoryPartnumbersController extends BaseController
         $category01 = $this->getCategoryInv01();
         $category02 = $this->getCategoryInv02();
         $units = InventoryUnitMeasure::controlAccessUser()->where('statusid', 'E')->get();
+        $centers = $this->getCenterForSelect();
+        $warehouses = $this->getWarehouseForSelect();
 
         return view(
             'Inventory.InventoryPartnumbers.create',
-            compact('category01', 'category02', 'units')
+            compact('category01', 'category02', 'units', 'centers', 'warehouses')
         );
     }
 
     public function store(CreatePartNumberRequest $request)
     {
         $access = $this->getAccessForUser();
-        $partnumber = new InventoryPartnumber($request->validated() +
-            ['centerid' => $access->centerid] +
-            ['warehouseid' => $access->warehouseid]);
+        $partnumber = new InventoryPartnumber($request->validated());
         $partnumber->save();
 
         return $this->redirectBackSuccess();

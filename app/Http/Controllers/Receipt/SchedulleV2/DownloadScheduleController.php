@@ -4,15 +4,18 @@ namespace App\Http\Controllers\Receipt\SchedulleV2;
 
 use App\Http\Controllers\BaseController;
 use App\Models\Configuration\Schemas\SystemStatus;
+use App\Models\Configuration\Warehouses\SystemWarehouse;
 use App\Models\Inventory\Origin\InventoryStockCategory;
 use App\Models\Receipt\ReceiptAsn;
 use App\Models\Receipt\StorageSchedulleReceipt;
+use App\Models\Yard\Carriers\ShipmentCarrier;
 use App\Models\Yard\StorageReason;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Facades\DataTables;
 
 class DownloadScheduleController extends BaseController
@@ -127,7 +130,7 @@ class DownloadScheduleController extends BaseController
 
             $formattedDateTime = Carbon::createFromFormat('Y-m-d H:i', $combinedDateTime);
 
-            // Validar que la fecha y hora seleccionadas no sean menores a la fecha y hora actual
+            // Validar que la fecha y hora seleccionada no sean menores a la fecha y hora actual
             if ($formattedDateTime->lt(Carbon::now())) {
                 DB::rollBack();
 
@@ -143,17 +146,26 @@ class DownloadScheduleController extends BaseController
                 return back()->withErrors(['addasndate' => 'No se puede insertar un embarque menor a la fecha y hora actual']);
             }
 
+            $parameterWarehouse = SystemWarehouse::whereWarehouseid($schedulleReceipt->warehouseid)->value('configurationflag');
+            if (! empty($parameterWarehouse) && in_array('SWH-16', (array) $parameterWarehouse)) {
+                $shipment = $this->getFolioReceipt($schedulleReceipt->centerid);
+            } else {
+                $shipment = $request['shipmentid'];
+            }
+
+            $defaultCarrier = ShipmentCarrier::controlAccessUser()->whereRaw("charindex('SCR-04', configurationflag) > 0")->first();
+
             $receipt = ReceiptAsn::create([
                 'centerid' => $schedulleReceipt->centerid,
                 'warehouseid' => $schedulleReceipt->warehouseid,
                 'razonstatusid' => $request->razonstatusid,
                 'stockcategoryid' => $request->stockcategoryid,
                 'providerid' => $request->providerid,
-                'shipmentid' => $request->shipmentid,
+                'shipmentid' => $shipment,
                 'billoflading' => $request->billoflading,
                 'partnumberid' => $request->partnumberid,
                 'quantity' => $request->quantity,
-                'carrierid' => $request->carrierid,
+                'carrierid' => $defaultCarrier->id,
                 'oc' => $request->oc,
                 'statusid' => 'PG',
                 'addasndate' => $formattedDateTime,
@@ -178,12 +190,13 @@ class DownloadScheduleController extends BaseController
 
         } catch (Exception $e) {
             DB::rollBack();
+            Log::error($e->getMessage());
 
             // Respuesta para peticiones AJAX
             if ($request->ajax() || $request->wantsJson()) {
                 return response()->json([
                     'success' => false,
-                    'message' => $e->getMessage(),
+                    'message' => 'Error al agregar recibo, por favor intente nuevamente o informe al administrador.',
                 ], 500);
             }
 

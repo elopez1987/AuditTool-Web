@@ -32,8 +32,10 @@ class InventoryPartNumberCategory02sController extends BaseController
     public function create()
     {
         $this->authorize('inventorypartnumbercategory02.create');
+        $centers = $this->getCenterForSelect();
+        $warehouses = $this->getWarehouseForSelect();
 
-        return view('Inventory.InventoryPartNumberCategory02.create');
+        return view('Inventory.InventoryPartNumberCategory02.create', compact('centers', 'warehouses'));
     }
 
     public function store(CreateCategoryInventory01 $request)

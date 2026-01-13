@@ -9,6 +9,8 @@ class CreateStockCategoryRequest extends FormRequest
     public function rules()
     {
         return [
+            'centerid' => 'required|exists:systemcenterdistributions,centerid',
+            'warehouseid' => 'required|exists:systemwarehouses,warehouseid',
             'description' => 'required|string|max:30',
             'stockcategoryid' => 'nullable|string|max:30',
             'auxiliary01' => 'nullable|string|max:100',

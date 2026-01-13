@@ -54,8 +54,6 @@ class UnidadesSinLLegarEmbarques extends Command
     {
         $flags = (array) $warehouse->notificationsflags;
 
-        Log::info($flags);
-
         return ! empty($flags) && in_array('MWH-14', $flags);
     }
 

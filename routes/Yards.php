@@ -336,6 +336,7 @@ Route::middleware(['auth'])->group(function () {
     //  Ticket de pesos de báscula
     Route::resource('receiptunitticket', ReceiptUnitTicketController::class);
     Route::get('getUnitTickets', [ReceiptUnitTicketController::class, 'getUnitTickets'])->name('getUnitTickets');
+    Route::get('getUnitTicketsPT', [ReceiptUnitTicketController::class, 'getUnitTicketsPT'])->name('getUnitTicketsPT');
     Route::put('receiptunitticketstatus/{id}', [ReceiptUnitTicketController::class, 'updatestatus'])->name('receiptunitticketstatus.update');
     //	Registrar el peso de producto y embalaje por operaciones
     Route::put('saveweightforoperation/{id}', [ReceiptUnitTicketController::class, 'saveweightforoperation'])->name('saveweightforoperation');

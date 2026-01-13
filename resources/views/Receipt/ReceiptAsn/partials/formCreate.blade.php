@@ -122,15 +122,15 @@
                     </div>
                 </div>
                 <div class="row">
+                    @if(ui_visible('shipmentid_receiptasn_create'))
                     <div class="col-lg-3 col-md-6 col-sm-12">
                         <div class="form-group">
                             <label for="shipmentid">{{ ui_label('shipmentid_receiptasn_create','Número de recibo') }}
                                 @error("shipmentid")
                                 <span class="message-error">{{$message}}</span>
                                 @enderror
-                                <span style="color: red">*</span></label>
-                            <input type="text" class="form-control @error('shipmentid') is-invalid @enderror"
-                                   id="shipmentid" name="shipmentid"
+                                </label>
+                            <input type="text" class="form-control @error('shipmentid') is-invalid @enderror" id="shipmentid" name="shipmentid"
                                    aria-describedby="shipmentid" onKeyUp=this.value=this.value.toUpperCase();
                                    value="{{old('shipmentid')}}"
                             >
@@ -139,6 +139,7 @@
                             @enderror
                         </div>
                     </div>
+                    @endif
                     <div class="col-lg-3 col-md-6 col-sm-12">
                         <div class="form-group">
                             <label for="billoflading">{{ ui_label('billoflading_receiptasn_create','Factura') }}</label>
@@ -211,7 +212,6 @@
                             </div>
                         </div>
                     @endif
-
                 </div>
             </div>
         </div>

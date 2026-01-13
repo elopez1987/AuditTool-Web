@@ -10,6 +10,9 @@
                         @if(Auth::user()->access->center->centerid == 'HENKELTOL01')
                             @include('Yards.LayOutYard.Yards.HenkelTolucaOneRoof.HenkelTol')
                         @endif
+                        @if(Auth::user()->access->center->centerid == 'BRIDCUE')
+                            @include('Yards.LayOutYard.Yards.BridgestoneCva.index')
+                        @endif
 
                     </div>
                 </div>

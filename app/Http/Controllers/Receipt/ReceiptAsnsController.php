@@ -66,7 +66,7 @@ class ReceiptAsnsController extends BaseController
             'reasons',
             'categorystocks',
             'turns',
-            'carriers'
+            'carriers',
         ));
     }
 
@@ -106,7 +106,7 @@ class ReceiptAsnsController extends BaseController
             'carriers',
             'reasons',
             'categorystocks',
-            'turns'
+            'turns',
         ));
     }
 
@@ -128,7 +128,7 @@ class ReceiptAsnsController extends BaseController
 
         return view(
             'Receipt.ReceiptAsn.show',
-            compact('receiptasn', 'stocks', 'coments', 'evidences', 'incidences', 'totalContainers')
+            compact('receiptasn', 'stocks', 'coments', 'evidences', 'incidences', 'totalContainers'),
         );
     }
 
@@ -152,7 +152,7 @@ class ReceiptAsnsController extends BaseController
             'receiptstock.expirecode',
             'receiptstock.quantitytrue',
             'inventoryunitsmeasure.description as unidadmedida',
-            DB::raw('(SUM(receiptcontainers.quantity)) as totalescaneado')
+            DB::raw('(SUM(receiptcontainers.quantity)) as totalescaneado'),
         )
             ->leftJoin('inventorypartnumbers', function ($join) {
                 $join->on('receiptstock.partnumberid', '=', 'inventorypartnumbers.id')
@@ -173,7 +173,7 @@ class ReceiptAsnsController extends BaseController
                 'receiptstock.expirecode',
                 'receiptstock.quantitytrue',
                 'inventorypartnumbers.untcas',
-                'inventoryunitsmeasure.description'
+                'inventoryunitsmeasure.description',
             )
             ->get();
     }

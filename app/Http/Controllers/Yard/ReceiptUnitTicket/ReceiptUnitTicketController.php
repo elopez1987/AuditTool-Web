@@ -21,21 +21,81 @@ class ReceiptUnitTicketController extends BaseController
     public function getUnitTickets(Request $request)
     {
         $data = ReceiptUnitTicket::controlAccessUser()
-            ->with(['folio', 'status:statusid,name'])
-            ->where('statusid', 'E');
+            ->with(['status:statusid,name', 'warehouse:warehouseid,name'])->take(100);
 
         return DataTables::of($data)
             ->addColumn('btn', 'Yards.ReceiptUnitTicket.partials.buttons')
             ->addColumn('warehousename', function ($row) {
-                return $row->folio ? $row->folio->warehouse->name : '';
+                return $row->warehouse ? $row->warehouse->name : '';
             })
-            ->addColumn('carriername', function ($row) {
-                return $row->folio ? $row->folio->carrier->name : '';
+            ->addColumn('peso_material_bruto', function ($row) {
+                return number_format($row->weightin - $row->weightout, 2);
             })
-            ->addColumn('operatorname', function ($row) {
-                return $row->folio ? $row->folio->operatorname : '';
+            ->addColumn('peso_total_material', function ($row) {
+                return number_format($row->kgneto + $row->embalaje, 2);
             })
-            ->rawColumns(['btn', 'warehousename', 'carriername', 'operatorname'])
+            ->addColumn('diferencia_peso', function ($row) {
+                $pesoMaterialBruto = $row->weightin - $row->weightout;
+                $pesoTotalMaterial = $row->kgneto + $row->embalaje;
+
+                return number_format($pesoMaterialBruto - $pesoTotalMaterial, 2);
+            })
+            ->addColumn('variacion_porcentaje', function ($row) {
+                $pesoMaterialBruto = $row->weightin - $row->weightout;
+                $pesoTotalMaterial = $row->kgneto + $row->embalaje;
+                $variacionPeso = $pesoTotalMaterial != 0 ? round(($pesoMaterialBruto / $pesoTotalMaterial) - 1, 4) : 0;
+
+                return number_format($variacionPeso * 100, 2) . '%';
+            })
+            ->addColumn('status_peso', function ($row) {
+                $pesoMaterialBruto = $row->weightin - $row->weightout;
+                $pesoTotalMaterial = $row->kgneto + $row->embalaje;
+                $variacionPeso = $pesoTotalMaterial != 0 ? round(($pesoMaterialBruto / $pesoTotalMaterial) - 1, 4) : 0;
+                $pesoABS = abs($variacionPeso);
+                $status = ($pesoABS <= 0.01) ? 'OK' : 'REVISAR PESO';
+                $color = $pesoABS <= 0.01 ? '#00e676' : '#ff1744';
+
+                return '<span style="background-color: ' . $color . '; padding: 5px 10px; border-radius: 3px; color: white; font-weight: bold;">' . $status . '</span>';
+            })
+            ->rawColumns(['btn', 'warehousename', 'status_peso'])
+            ->toJson();
+    }
+
+    public function getUnitTicketsPT(Request $request)
+    {
+        $data = ReceiptUnitTicket::controlAccessUser()
+            ->with(['status:statusid,name', 'warehouse:warehouseid,name'])->take(100);
+
+        return DataTables::of($data)
+            ->addColumn('btn', 'Yards.ReceiptUnitTicket.partials.buttons')
+            ->addColumn('warehousename', function ($row) {
+                return $row->warehouse ? $row->warehouse->name : '';
+            })
+            ->editColumn('weightin', function ($row) {
+                return number_format($row->weightin, 2) . ' Kg';
+            })
+            ->editColumn('weightinlb', function ($row) {
+                return number_format($row->weightinlb, 2) . ' lbs';
+            })
+            ->editColumn('weightout', function ($row) {
+                return number_format($row->weightout, 2) . ' Kg';
+            })
+            ->editColumn('weightoutlb', function ($row) {
+                return number_format($row->weightoutlb, 2) . ' lbs';
+            })
+            ->addColumn('diferencia_kg', function ($row) {
+                return number_format($row->weightout - $row->weightin, 2) . ' Kg';
+            })
+            ->addColumn('diferencia_lbs', function ($row) {
+                return number_format($row->weightoutlb - $row->weightinlb, 2) . ' lbs';
+            })
+            ->editColumn('weightoutsap', function ($row) {
+                return number_format($row->weightoutsap, 2) . ' lbs';
+            })
+            ->editColumn('value01', function ($row) {
+                return number_format($row->value01, 2) . ' %';
+            })
+            ->rawColumns(['btn', 'warehousename'])
             ->toJson();
     }
 

@@ -27,7 +27,7 @@ trait AuthorizeProcessExit
     public function authorizeProcess($receiptunit, $request)
     {
         $parameter = $this->getParametersOfWarehouse($receiptunit->warehouseid);
-        if ($receiptunit->razonstatusid !== 3) {
+        if ($receiptunit->razonstatusid != 3) {
             if (! empty($parameter) && in_array('SWH-39', $parameter)) {
                 if ($receiptunit->finishdate === null) {
                     return $this->errorResponse('La unidad no cuenta con fin de proceso, favor de validar. (SWH-39)');
@@ -36,7 +36,7 @@ trait AuthorizeProcessExit
         }
 
         if (in_array('SWH-24', $parameter)) {
-            if ($request['locationid'] === null) {
+            if ($request['locationid'] == null) {
                 return $this->errorResponse('La ubicación es un valor obligatorio (SWH-24)');
             }
             $location = $this->getStorageLocation($request['locationid']);
@@ -50,11 +50,12 @@ trait AuthorizeProcessExit
         }
 
         StorageLocation::updateLocation($receiptunit->locationid, 'E', '');
-        if ($receiptunit->razonstatusid === 1) {
+
+        if ($receiptunit->razonstatusid == 1) {
             $shipment = OrderDeliverie::searchForUnit($receiptunit->id);
             if (! empty($shipment)) {
                 if (! empty($parameter) && in_array('SWH-19', (array) $parameter)) {
-                    if ($shipment->statusid !== 'EJ') {
+                    if ($shipment->statusid != 'EJ') {
                         return $this->errorResponse('El numero de embarque no se encuentra facturado (SWH-19)');
                     } else {
                         $shipment->statusid = 'DT';
@@ -67,7 +68,7 @@ trait AuthorizeProcessExit
             }
         }
 
-        if ($receiptunit->razonstatusid === 2) {
+        if ($receiptunit->razonstatusid == 2) {
             if (in_array('SWH-31', (array) $parameter)) {
                 $shipmentReceipt = ReceiptAsn::searchReceiptForUnit($receiptunit->id);
                 if (! empty($shipmentReceipt) && $shipmentReceipt->unloadfinishdate === null) {
