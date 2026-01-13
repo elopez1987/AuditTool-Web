@@ -15,6 +15,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Facades\DataTables;
 
 class DownloadScheduleController extends BaseController
@@ -189,6 +190,7 @@ class DownloadScheduleController extends BaseController
 
         } catch (Exception $e) {
             DB::rollBack();
+            Log::error($e->getMessage());
 
             // Respuesta para peticiones AJAX
             if ($request->ajax() || $request->wantsJson()) {
