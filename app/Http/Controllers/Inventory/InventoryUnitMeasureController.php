@@ -30,18 +30,16 @@ class InventoryUnitMeasureController extends BaseController
     public function create()
     {
         $this->authorize('inventoryunitmeasure.index');
+        $centers = $this->getCenterForSelect();
+        $warehouses = $this->getWarehouseForSelect();
 
-        return view('Inventory.InventoryUnits.create');
+        return view('Inventory.InventoryUnits.create', compact('centers', 'warehouses'));
     }
 
     public function store(Request $request)
     {
         $access = $this->getAccessForUser();
-        $category01 = new InventoryUnitMeasure(
-            $request->all() +
-            ['centerid' => $access->centerid] +
-            ['warehouseid' => $access->warehouseid]
-        );
+        $category01 = new InventoryUnitMeasure($request->all());
         $category01->save();
 
         return $this->successResponse('inventoryunitmeasure.index');

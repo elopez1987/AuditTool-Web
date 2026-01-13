@@ -18,8 +18,8 @@
                 <a href="{{route('schedulereceipt.index')}}">
                     <div class="box">
                         <i class="lni lni-timer"></i>
-                        <h5>Horario</h5>
-                        <h4>Horario</h4>
+                        <h5>Horario V1</h5>
+                        <h4>Horario V1</h4>
                     </div>
                 </a>
             @endcan
@@ -54,8 +54,8 @@
                     <a href="{{route('appointmentschedule')}}">
                         <div class="box">
                             <i class="lni lni-calendar"></i>
-                            <h5>Horario</h5>
-                            <h4>Horario</h4>
+                            <h5>Horario V2</h5>
+                            <h4>Horario V2</h4>
                         </div>
                     </a>
                 @endcan

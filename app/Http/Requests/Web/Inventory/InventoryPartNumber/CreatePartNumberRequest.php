@@ -9,6 +9,8 @@ class CreatePartNumberRequest extends FormRequest
     public function rules()
     {
         return [
+            'centerid' => 'required|exists:systemcenterdistributions,centerid',
+            'warehouseid' => 'required|exists:systemwarehouses,warehouseid',
             'category01id' => 'required|exists:inventorypartnumbercategory01,id',
             'category02id' => 'required|exists:inventorypartnumbercategory02,id',
             'prtnum' => 'required|string|unique:inventorypartnumbers,prtnum|max:25',
