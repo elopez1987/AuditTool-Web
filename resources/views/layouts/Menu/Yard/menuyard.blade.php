@@ -91,7 +91,7 @@
                     </div>
                 </a>
             @endcan
-            @can('patiohenkeltoluca')
+            @can('vitualyard')
                 <a href="{{route('vitualyard')}}">
                     <div class="box" data-toggle="tooltip" data-placement="top"
                          title="Visualice el uso de su patio.">
