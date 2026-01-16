@@ -226,7 +226,6 @@
                         });
                     }
                 }).fail(function(error) {
-                    console.error('Error al cargar ubicaciones:', error);
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',

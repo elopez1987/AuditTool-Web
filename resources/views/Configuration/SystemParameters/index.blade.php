@@ -50,7 +50,7 @@
                     </form>
 
                     <div class="row">
-                        <div class="col-12">
+                        <div class="col-lg-8 col-md-12">
                             <table id="table-parameters" class="table table-bordered table-condensed table-hover">
                                 <thead>
                                     <tr>
@@ -59,8 +59,8 @@
                                         <th class="bg-inverse text-white">Auxiliar 01</th>
                                         <th class="bg-inverse text-white">Auxiliar 02</th>
                                         <th class="bg-inverse text-white">Auxiliar 03</th>
-                                        <th class="bg-inverse text-white">Auxiliar 04</th>
-                                        <th class="bg-inverse text-white">Auxiliar 05</th>
+{{--                                        <th class="bg-inverse text-white">Auxiliar 04</th>--}}
+{{--                                        <th class="bg-inverse text-white">Auxiliar 05</th>--}}
                                         <th class="bg-inverse text-white">Estatus</th>
                                         <th class="bg-inverse text-white">Opciones</th>
                                     </tr>

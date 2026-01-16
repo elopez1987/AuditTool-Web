@@ -35,9 +35,11 @@
             {data: 'carrier.name', name: 'carrier.name'},
             {data: 'auxiliary01'},
             {data: 'addasndate'},
+            {data: 'arriveddate'},
             {data: 'unloadstartdate'},
             {data: 'unloadfinishdate'},
-            {data: 'addasndate'},
+            {data: 'unload_duration'},
+            {data: 'stay_duration'},
             {data: 'goodissuedate'},
             {data: 'cancellationdate'},
             {
@@ -71,7 +73,8 @@
             {"width": "180px", "targets": 16},
             {"width": "180px", "targets": 17},
             {"width": "180px", "targets": 18},
-            // {"width": "180px", "targets": 19},
+            {"width": "180px", "targets": 19},
+            {"width": "180px", "targets": 20},
         ],
 
         "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',

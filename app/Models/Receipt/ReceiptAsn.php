@@ -217,7 +217,13 @@ class ReceiptAsn extends Model
 
     public function folio()
     {
-        return $this->belongsTo(ReceiptUnit::class, 'folionumber', 'id');
+        return $this->belongsTo(ReceiptUnit::class, 'folionumber', 'id')
+            ->withDefault([
+                'id' => null,
+                'entrydate' => null,
+                'startdate' => null,
+                'finishdate' => null,
+            ]);
     }
 
     public function turn()

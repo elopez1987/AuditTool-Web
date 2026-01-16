@@ -42,7 +42,7 @@
                     </form>
                     <hr class="mt-2">
                     <div class="row">
-                        <div class="col-lg-12 col-xs-12">
+                        <div class="col-lg-8 col-md-12">
                             <table id="table-printer"
                                    class="table table-bordered table-condensed table-hover">
                                 <thead>
@@ -53,9 +53,9 @@
                                     <th>Comando</th>
                                     <th>Auxiliar 01</th>
                                     <th>Auxiliar 02</th>
-                                    <th>Auxiliar 03</th>
-                                    <th>Auxiliar 04</th>
-                                    <th>Auxiliar 05</th>
+{{--                                    <th>Auxiliar 03</th>--}}
+{{--                                    <th>Auxiliar 04</th>--}}
+{{--                                    <th>Auxiliar 05</th>--}}
                                     <th>Estatus</th>
                                     <th>Opciones</th>
                                 </tr>
