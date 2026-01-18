@@ -96,7 +96,14 @@ class TraceReceiptUnitController extends BaseController
         $fortmat = 'Yards.KardexReceiptUnit.Formats.Kardex';
         $pdf = PDF::setOptions([
             'isRemoteEnabled' => true,
-            'chroot' => storage_path('app'),
+            'chroot' => realpath(base_path()),
+            'httpContext' => stream_context_create([
+                'ssl' => [
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                    'allow_self_signed' => true,
+                ],
+            ]),
         ])->loadView($fortmat, compact(
             'receiptunit',
             'evidences',
@@ -153,7 +160,14 @@ class TraceReceiptUnitController extends BaseController
         $fortmat = 'Yards.ReceiptUnits.InvoiceFormats.InvoiceBridgestonePT';
         $pdf = PDF::setOptions([
             'isRemoteEnabled' => true,
-            'chroot' => storage_path('app'),
+            'chroot' => realpath(base_path()),
+            'httpContext' => stream_context_create([
+                'ssl' => [
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                    'allow_self_signed' => true,
+                ],
+            ]),
         ])->loadView($fortmat, compact('receiptunit', 'verified', 'tracto', 'verifiedOut'));
 
         return $pdf->download('Folio_De_Entrada-' . $receiptunit->id . '.pdf');
@@ -186,7 +200,14 @@ class TraceReceiptUnitController extends BaseController
         $fortmat = 'Yards.KardexReceiptUnit.Formats.CalidaBridgestone';
         $pdf = PDF::setOptions([
             'isRemoteEnabled' => true,
-            'chroot' => storage_path('app'),
+            'chroot' => realpath(base_path()),
+            'httpContext' => stream_context_create([
+                'ssl' => [
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                    'allow_self_signed' => true,
+                ],
+            ]),
         ])->loadView($fortmat, compact('receiptunit', 'comments', 'verified', 'photos'));
 
         return $pdf->download('Folio_De_Calidad-' . $receiptunit->id . '.pdf');
