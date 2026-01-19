@@ -17,17 +17,11 @@ class ReportCheckInverse implements FromCollection, ShouldAutoSize, WithColumnFo
 {
     use Exportable;
 
-    private $workdayin;
+    private $request;
 
-    private $workdayout;
-
-    private $centerid;
-
-    public function __construct($workdayin, $workdayout, $centerid)
+    public function __construct($request)
     {
-        $this->workdayin = $workdayin;
-        $this->workdayout = $workdayout;
-        $this->centerid = $centerid;
+        $this->request = $request;
     }
 
     public function columnFormats(): array
@@ -70,7 +64,7 @@ class ReportCheckInverse implements FromCollection, ShouldAutoSize, WithColumnFo
                 'storagescheduleinverseoperation.finishdate as fin',
                 'users.name as verificador',
                 'storagescheduleinverseoperationdetails.created_at as registrada',
-                'storagescheduleinverseoperationdetails.value01 as location'
+                'storagescheduleinverseoperationdetails.value01 as location',
             )
             ->join('orderdeliveries', 'storageincidencejourneydetails.orderid', '=', 'orderdeliveries.id')
             ->join('storagescheduleinverse', function ($join) {
@@ -91,8 +85,9 @@ class ReportCheckInverse implements FromCollection, ShouldAutoSize, WithColumnFo
                     ->on('storageincidencejourneydetails.delivery', '=', 'storagescheduleinverseoperationdetails.delivery')
                     ->on('storageincidencejourneydetails.partnumberid', '=', 'storagescheduleinverseoperationdetails.partnumberid');
             })
-            ->where('storageincidencejourneydetails.centerid', '=', $this->centerid)
-            ->whereBetween('storagescheduleinverse.created_at', [$this->workdayin, $this->workdayout])
+            ->where('storageincidencejourneydetails.centerid', '=', $this->request->centerid)
+            ->where('storageincidencejourneydetails.warehouseid', '=', $this->request->warehouseid)
+            ->whereBetween('storagescheduleinverse.created_at', [$this->request->workdayin, $this->request->workdayout])
             ->groupBy(
                 'storageincidencejourneydetails.folioid',
                 'orderdeliveries.shipmentid',
@@ -104,7 +99,7 @@ class ReportCheckInverse implements FromCollection, ShouldAutoSize, WithColumnFo
                 'storagescheduleinverseoperation.finishdate',
                 'users.name',
                 'storagescheduleinverseoperationdetails.created_at',
-                'storagescheduleinverseoperationdetails.value01'
+                'storagescheduleinverseoperationdetails.value01',
             )
             ->orderBy('orderdeliveries.shipmentid', 'asc')
             ->get();

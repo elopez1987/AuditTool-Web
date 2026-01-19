@@ -17,14 +17,11 @@ class GeneralReportShipment implements FromCollection, ShouldAutoSize, WithColum
 {
     use Exportable;
 
-    private $workdayin;
+    private $request;
 
-    private $workdayout;
-
-    public function __construct($workdayin, $workdayout)
+    public function __construct($request)
     {
-        $this->workdayin = $workdayin;
-        $this->workdayout = $workdayout;
+        $this->request = $request;
     }
 
     public function columnFormats(): array
@@ -69,7 +66,8 @@ class GeneralReportShipment implements FromCollection, ShouldAutoSize, WithColum
 
     public function collection()
     {
-        return OrderDeliverie::controlAccessUser()
+        return OrderDeliverie::where('orderdeliveries.centerid', '=', $this->request->centerid)
+            ->where('orderdeliveries.warehouseid', '=', $this->request->warehouseid)
             ->leftjoin('storageturns as s', 'orderdeliveries.turnid', '=', 's.id')
             ->leftjoin('systemstatus as s2', 'orderdeliveries.statusid', '=', 's2.statusid')
             ->leftjoin('shipmentheader as s3', 'orderdeliveries.id', '=', 's3.orderid')
@@ -89,7 +87,7 @@ class GeneralReportShipment implements FromCollection, ShouldAutoSize, WithColum
                 'sh.name as carriername', 'r2.boxnumber', 'o.timetransfer', 'r2.autorizaoutputdate', 's3.totalcontainers', 's3.totalpieces',
                 's3.totalweight', 's3.totalvolume', 's3.totalcontainersfac', 's3.totalpiecesfac', 's6.auxiliary02 as avance',
             ])
-            ->whereBetween('orderdeliveries.workday', [$this->workdayin, $this->workdayout])
+            ->whereBetween('orderdeliveries.workday', [$this->request->workdayin, $this->request->workdayout])
             ->addSelect(DB::raw('DATEADD(HH, - (o.timetransfer / 60), orderdeliveries.downloaddate)  as maxoutputtransport'))
             ->get();
     }

@@ -2,7 +2,6 @@
 
 namespace App\Exports\Shipment\PODS;
 
-use App\Models\Security\Users\SecurityAccessWarehouse;
 use DB;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
@@ -17,14 +16,11 @@ class ExportReportShipmentPODs implements FromCollection, ShouldAutoSize, WithEv
 {
     use Exportable;
 
-    private $workdayin;
+    private $request;
 
-    private $workdayout;
-
-    public function __construct($workdayin, $workdayout)
+    public function __construct($request)
     {
-        $this->workdayin = $workdayin;
-        $this->workdayout = $workdayout;
+        $this->request = $request;
     }
 
     public function headings(): array
@@ -46,7 +42,6 @@ class ExportReportShipmentPODs implements FromCollection, ShouldAutoSize, WithEv
 
     public function collection()
     {
-        $centers = SecurityAccessWarehouse::Centers();
 
         return DB::table('orderdeliveries')
             ->select(
@@ -60,14 +55,15 @@ class ExportReportShipmentPODs implements FromCollection, ShouldAutoSize, WithEv
                 'orderdeliveries.downloaddate as fechacita',
                 'orderdeliveries.confirmation',
                 DB::raw('count(storageshipmentspods.orderid) as totalpods'),
-                'systemstatus.name as estatus'
+                'systemstatus.name as estatus',
             )
             ->leftJoin('shipmentcarriers', 'orderdeliveries.carrierid', '=', 'shipmentcarriers.id')
             ->leftJoin('ordercustomers', 'orderdeliveries.customerid', '=', 'ordercustomers.id')
             ->leftJoin('storageshipmentspods', 'orderdeliveries.id', '=', 'storageshipmentspods.orderid')
             ->leftJoin('systemstatus', 'storageshipmentspods.statusid', '=', 'systemstatus.statusid')
             ->where('orderdeliveries.statusid', '=', 'DH')
-            ->whereIn('orderdeliveries.centerid', $centers)
+            ->where('orderdeliveries.centerid', $this->request->centerid)
+            ->where('orderdeliveries.warehouseid', $this->request->warehouseid)
             ->whereBetween('orderdeliveries.workday', [$this->workdayin, $this->workdayout])
             ->groupBy(
                 'orderdeliveries.centerid',
@@ -79,7 +75,7 @@ class ExportReportShipmentPODs implements FromCollection, ShouldAutoSize, WithEv
                 'orderdeliveries.loadingdate',
                 'orderdeliveries.downloaddate',
                 'orderdeliveries.confirmation',
-                'systemstatus.name'
+                'systemstatus.name',
             )
             ->get();
     }

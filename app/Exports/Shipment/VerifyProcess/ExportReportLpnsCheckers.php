@@ -17,17 +17,11 @@ class ExportReportLpnsCheckers implements FromCollection, ShouldAutoSize, WithCo
 {
     use Exportable;
 
-    private $workdayin;
+    private $request;
 
-    private $workdayout;
-
-    private $centerid;
-
-    public function __construct($workdayin, $workdayout, $centerid)
+    public function __construct($request)
     {
-        $this->workdayin = $workdayin;
-        $this->workdayout = $workdayout;
-        $this->centerid = $centerid;
+        $this->request = $request;
     }
 
     public function columnFormats(): array
@@ -70,7 +64,7 @@ class ExportReportLpnsCheckers implements FromCollection, ShouldAutoSize, WithCo
                 'ordercustomers.name as customername',
                 'shipmentcontainers.lpnid',
                 'shipmentcontainers.scandate',
-                'users.name as verificador'
+                'users.name as verificador',
             )
             ->join('orderdeliveries', function ($join) {
                 $join->on('shipmentcontainers.orderid', '=', 'orderdeliveries.id')
@@ -80,8 +74,9 @@ class ExportReportLpnsCheckers implements FromCollection, ShouldAutoSize, WithCo
             ->join('users', function ($join) {
                 $join->on('shipmentcontainers.scanuser', '=', 'users.username');
             })
-            ->where('orderdeliveries.centerid', $this->centerid)
-            ->whereBetween('shipmentcontainers.scandate', [$this->workdayin, $this->workdayout])
+            ->where('orderdeliveries.centerid', $this->request->centerid)
+            ->where('orderdeliveries.warehouseid', $this->request->warehouseid)
+            ->whereBetween('shipmentcontainers.scandate', [$this->request->workdayin, $this->request->workdayout])
             ->get();
     }
 

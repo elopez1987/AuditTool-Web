@@ -272,7 +272,7 @@ Route::middleware(['auth'])->group(function () {
 
     //    ****************************************************** INICIO DE REPORTES   ********************************************************
     Route::get('reporteshipments', [ReportShipmentController::class, 'index'])->name('reporteshipments');
-    Route::get('exportreportshipments', [ReportShipmentController::class, 'exportreportshipments'])->name('exportreportshipments');
+    Route::post('exportreportshipments', [ReportShipmentController::class, 'exportreportshipments'])->name('exportreportshipments');
     //    ****************************************************** FIN DE REPORTES   ********************************************************
 
     //    ****************************************************** INICIO DE LOGISTICA INVERSA   ********************************************************

@@ -17,14 +17,11 @@ class ExportReportPhotosForShipment implements FromCollection, ShouldAutoSize, W
 {
     use Exportable;
 
-    private $workdayin;
+    private $request;
 
-    private $workdayout;
-
-    public function __construct($workdayin, $workdayout)
+    public function __construct($request)
     {
-        $this->workdayin = $workdayin;
-        $this->workdayout = $workdayout;
+        $this->request = $request;
     }
 
     public function columnFormats(): array
@@ -76,7 +73,7 @@ class ExportReportPhotosForShipment implements FromCollection, ShouldAutoSize, W
                 'shipmentdataoperation.checker',
                 'shipmentdataoperation.forklift',
                 'shipmentdataoperation.startload',
-                'shipmentdataoperation.endload'
+                'shipmentdataoperation.endload',
             )
             ->leftJoin('ordercustomers', function ($join) {
                 $join->on('orderdeliveries.customerid', '=', 'ordercustomers.id')
@@ -90,7 +87,9 @@ class ExportReportPhotosForShipment implements FromCollection, ShouldAutoSize, W
                 $join->on('orderdeliveries.id', '=', 'shipmentdataoperation.orderid')
                     ->on('orderdeliveries.centerid', '=', 'shipmentdataoperation.centerid');
             })
-            ->whereBetween('shipmentdataoperation.startload', [$this->workdayin, $this->workdayout])
+            ->where('orderdeliveries.centerid', $this->request->centerid)
+            ->where('orderdeliveries.warehouseid', $this->request->warehouseid)
+            ->whereBetween('shipmentdataoperation.startload', [$this->request->workdayin, $this->request->workdayout])
             ->groupBy(
                 'orderdeliveries.workday',
                 'orderdeliveries.shipmentid',
@@ -99,7 +98,7 @@ class ExportReportPhotosForShipment implements FromCollection, ShouldAutoSize, W
                 'shipmentdataoperation.checker',
                 'shipmentdataoperation.forklift',
                 'shipmentdataoperation.startload',
-                'shipmentdataoperation.endload'
+                'shipmentdataoperation.endload',
             )
             ->orderBy('orderdeliveries.workday', 'asc')
             ->get();
