@@ -313,7 +313,7 @@ Route::middleware(['auth'])->group(function () {
     //    **************************************************** REPORTES  ***********************************************************
     //    Reportes de control de patios para exportar a excel
     Route::get('reportsyards', [ReportYardController::class, 'index'])->name('reportsyards');
-    Route::get('exportreportyards', [ReportYardController::class, 'exportreportyards'])->name('exportreportyards');
+    Route::post('exportreportyards', [ReportYardController::class, 'exportreportyards'])->name('exportreportyards');
     //    Reporte de unidades con salida autorizada
     Route::get('reportauthorizedoutputs', [AuthorizeOutPutController::class, 'reportauthorizedoutputs'])->name('reportauthorizedoutputs');
     Route::get('getDataAuthorized', [AuthorizeOutPutController::class, 'getDataAuthorized'])->name('getDataAuthorized');

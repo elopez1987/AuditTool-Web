@@ -8,7 +8,7 @@
                     Reportes del módulo de patios
                 </div>
                 <div class="card-body">
-                    <form method="GET" action="{{url('exportreportyards')}}">
+                    <form method="POST" action="{{url('exportreportyards')}}">
                         @csrf
                         <div class="row mb-2">
                             <div class="col-md-12">
@@ -41,6 +41,19 @@
                             </div>
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
+                                    <label for="warehouseid">Bodega<span style="color: red">*</span></label>
+                                    <select name="warehouseid" id="warehouseid" class="form-control select2">
+                                        @foreach($warehouses as $warehouse)
+                                            <option value="{{$warehouse->warehouseid}}"> {{$warehouse->name}} </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="form-group">
                                     <label for="type">Seleccione reporte a exportar:</label>
                                     <select name="type" class="form-control select2" required>
                                         <option value="" selected></option>
@@ -64,7 +77,7 @@
                         <div class="row mt-3">
                             <div class="col-lg-4">
                                <span class="font-12">Lineas de transporte</span>
-                                <select multiple="multiple" size="15" class="duallistbox-with-filter" name="carrierid[]" required>
+                                <select multiple="multiple" size="15" class="duallistbox-with-filter" name="carrierid[]" id="carrierid" required>
                                     @foreach($carriers as $carrier)
                                         <option value="{{$carrier->id}}"> {{$carrier->name}}</option>
                                     @endforeach
@@ -75,7 +88,7 @@
                         <div class="row mt-3">
                             <div class="col-lg-4">
                                 <span class="font-12">Conceptos de entrada</span>
-                                <select multiple="multiple" size="15" class="duallistbox-with-filter" name="reasonid[]" required>
+                                <select multiple="multiple" size="15" class="duallistbox-with-filter" name="reasonid[]" id="reasonid" required>
                                     @foreach($reasons as $model)
                                         <option value="{{$model->id}}"> {{$model->name}}</option>
                                     @endforeach
@@ -85,7 +98,7 @@
                         <div class="row mt-3">
                             <div class="col-lg-4">
                                 <span class="font-12">Origen de entrada</span>
-                                <select multiple="multiple" size="15" class="duallistbox-with-filter" name="unittypeid[]" required>
+                                <select multiple="multiple" size="15" class="duallistbox-with-filter" name="unittypeid[]" id="unittypeid" required>
                                     @foreach($origins as $model)
                                         <option value="{{$model->id}}"> {{$model->description}}</option>
                                     @endforeach
