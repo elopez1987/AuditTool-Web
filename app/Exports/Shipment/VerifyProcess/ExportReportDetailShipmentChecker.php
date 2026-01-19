@@ -17,17 +17,11 @@ class ExportReportDetailShipmentChecker implements FromCollection, ShouldAutoSiz
 {
     use Exportable;
 
-    private $workdayin;
+    private $request;
 
-    private $workdayout;
-
-    private $centerid;
-
-    public function __construct($workdayin, $workdayout, $centerid)
+    public function __construct($request)
     {
-        $this->workdayin = $workdayin;
-        $this->workdayout = $workdayout;
-        $this->centerid = $centerid;
+        $this->request = $request;
     }
 
     public function columnFormats(): array
@@ -79,7 +73,7 @@ class ExportReportDetailShipmentChecker implements FromCollection, ShouldAutoSiz
                 'shipmentstock.quantity',
                 'shipmentstock.lpnid',
                 'users.name as checker',
-                'shipmentstock.created_at as scandate'
+                'shipmentstock.created_at as scandate',
             )
             ->join('orderdeliveries', function ($join) {
                 $join->on('shipmentstock.orderid', '=', 'orderdeliveries.id')
@@ -94,8 +88,9 @@ class ExportReportDetailShipmentChecker implements FromCollection, ShouldAutoSiz
                     ->on('shipmentstock.centerid', '=', 'inventorypartnumbers.centerid');
             })
             ->join('users', 'shipmentstock.createuser', '=', 'users.username')
-            ->where('orderdeliveries.centerid', $this->centerid)
-            ->whereBetween('shipmentstock.created_at', [$this->workdayin, $this->workdayout])
+            ->where('orderdeliveries.centerid', $this->request->centerid)
+            ->where('orderdeliveries.warehouseid', $this->request->warehouseid)
+            ->whereBetween('shipmentstock.created_at', [$this->request->workdayin, $this->request->workdayout])
             ->get();
     }
 

@@ -33,7 +33,10 @@ class ReceiptAsnsController extends BaseController
     public function getDataAsns(Request $request)
     {
         $data = ReceiptAsn::controlAccessUser()
-            ->with(['status', 'center', 'warehouse', 'carrier', 'provider', 'turn', 'reason', 'inventorystock'])
+            ->with(['status:statusid,name', 'center:centerid,name,description', 'warehouse:warehouseid,name',
+                'carrier:carrierid,name,id', 'provider:id,providerid,name',
+                'turn:id,name', 'reason:id,name', 'inventorystock:id,description',
+            ])
             ->Name($request->get('name'))
             ->Shipment($request->get('shipmentid'))
             ->FolioNumber($request->get('folionumber'))
@@ -43,6 +46,28 @@ class ReceiptAsnsController extends BaseController
 
         return DataTables::of($data)
             ->addColumn('btn', 'Receipt.ReceiptAsn.partials.buttons')
+            ->addColumn('unload_duration', function ($row) {
+                if ($row->unloadstartdate && $row->unloadfinishdate) {
+                    $start = Carbon::parse($row->unloadstartdate);
+                    $finish = Carbon::parse($row->unloadfinishdate);
+                    $diff = $start->diff($finish);
+
+                    return sprintf('%d hrs %d min', $diff->h + ($diff->days * 24), $diff->i);
+                }
+
+                return '-';
+            })
+            ->addColumn('stay_duration', function ($row) {
+                if ($row->arriveddate && $row->unloadfinishdate) {
+                    $start = Carbon::parse($row->arriveddate);
+                    $finish = Carbon::parse($row->unloadfinishdate);
+                    $diff = $start->diff($finish);
+
+                    return sprintf('%d hrs %d min', $diff->h + ($diff->days * 24), $diff->i);
+                }
+
+                return '-';
+            })
             ->rawColumns(['btn'])
             ->toJson();
     }

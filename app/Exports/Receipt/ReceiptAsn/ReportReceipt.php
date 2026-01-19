@@ -2,6 +2,7 @@
 
 namespace App\Exports\Receipt\ReceiptAsn;
 
+use Carbon\Carbon;
 use DB;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
@@ -58,6 +59,8 @@ class ReportReceipt implements FromCollection, ShouldAutoSize, WithColumnFormatt
             'Analista',
             'F.Inicia Descarga',
             'F.Fin Descarga',
+            'Tiempo de descarga',
+            'Estadia de descarga',
             'Montacarguista',
             'F.Autoriza Salida',
             'F.Salida de Unidad',
@@ -74,6 +77,24 @@ class ReportReceipt implements FromCollection, ShouldAutoSize, WithColumnFormatt
 
     public function map($receipts): array
     {
+        $duration_unload = '-';
+        if ($receipts->unloadstartdate && $receipts->unloadfinishdate) {
+            $start = Carbon::parse($receipts->unloadstartdate);
+            $finish = Carbon::parse($receipts->unloadfinishdate);
+            $diff = $start->diff($finish);
+
+            $duration_unload = sprintf('%d hrs %d min', $diff->h + ($diff->days * 24), $diff->i);
+        }
+
+        $stay_duration = '-';
+        if ($receipts->entrydate && $receipts->unloadfinishdate) {
+            $start = Carbon::parse($receipts->entrydate);
+            $finish = Carbon::parse($receipts->unloadfinishdate);
+            $diff = $start->diff($finish);
+
+            $stay_duration = sprintf('%d hrs %d min', $diff->h + ($diff->days * 24), $diff->i);
+        }
+
         return [
             $receipts->workday,
             $receipts->turnid,
@@ -92,6 +113,8 @@ class ReportReceipt implements FromCollection, ShouldAutoSize, WithColumnFormatt
             $receipts->analyst,
             $receipts->unloadstartdate,
             $receipts->unloadfinishdate,
+            $duration_unload,
+            $stay_duration,
             $receipts->forklift,
             $receipts->autorizaoutputdate,
             $receipts->outputdate,
@@ -105,7 +128,7 @@ class ReportReceipt implements FromCollection, ShouldAutoSize, WithColumnFormatt
     {
         return [
             AfterSheet::class => function (AfterSheet $event) {
-                $event->sheet->getDelegate()->getStyle('A1:W1')->getFill()
+                $event->sheet->getDelegate()->getStyle('A1:Y1')->getFill()
                     ->applyFromArray(['fillType' => Fill::FILL_SOLID,
                         'rotation' => 0, 'startColor' => ['rgb' => '64b5f6'],
                     ]);

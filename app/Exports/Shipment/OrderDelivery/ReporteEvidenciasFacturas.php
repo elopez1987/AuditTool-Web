@@ -17,17 +17,11 @@ class ReporteEvidenciasFacturas implements FromCollection, ShouldAutoSize, WithC
 {
     use Exportable;
 
-    private $workdayin;
+    private $request;
 
-    private $workdayout;
-
-    private $centerid;
-
-    public function __construct($workdayin, $workdayout, $centerid)
+    public function __construct($request)
     {
-        $this->workdayin = $workdayin;
-        $this->workdayout = $workdayout;
-        $this->centerid = $centerid;
+        $this->request = $request;
     }
 
     public function columnFormats(): array
@@ -63,10 +57,11 @@ class ReporteEvidenciasFacturas implements FromCollection, ShouldAutoSize, WithC
 
     public function collection()
     {
-        return OrderDeliverie::controlAccessUser()
+        return OrderDeliverie::where('warehouseid', '=', $this->request->warehouse)
+            ->where('centerid', '=', $this->request->centerid)
             ->where('statusid', '=', 'DH')
             ->whereNull('evidencefile')
-            ->whereBetween('loadingdate', [$this->workdayin, $this->workdayout])
+            ->whereBetween('loadingdate', [$this->request->workdayin, $this->request->workdayout])
             ->get();
     }
 

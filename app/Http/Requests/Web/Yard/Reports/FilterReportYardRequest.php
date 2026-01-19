@@ -13,6 +13,9 @@ class FilterReportYardRequest extends FormRequest
             'type' => 'required|string',
             'workdayin' => 'required',
             'workdayout' => 'required',
+            'carrierid' => 'nullable',
+            'reasonid' => 'nullable',
+            'unittypeid' => 'nullable',
         ];
     }
 

@@ -8,7 +8,7 @@
                     Reportes del módulo de embarques
                 </div>
                 <div class="card-body">
-                    <form method="GET" action="{{url('exportreportshipments')}}">
+                    <form method="POST" action="{{url('exportreportshipments')}}">
                         @csrf
                         <div class="row mb-2">
                             <div class="col-md-12">
@@ -18,7 +18,7 @@
                                             title="Regresar a la pagina principal"
                                     >
                                         <img src="{{asset('/ico/adexportar.png')}}" alt="" class="img-16">
-                                        <span style="font-size: 0.675rem  !important;"> Exportar</span>
+                                        <span style="font-size: 0.675rem  !important;"> Exportar Reporte</span>
                                     </button>
                                 </a>
                                 <a href="{{route('menushipment')}}" class=" m-1">
@@ -40,6 +40,18 @@
                                 </div>
                             </div>
                             <div class="col-lg-2 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="warehouseid">Bodeaga <span style="color: red">*</span></label>
+                                    <select name="warehouseid" id="warehouseid" class="form-control select2">
+                                        @foreach($warehouses as $warehouse)
+                                            <option value="{{$warehouse->warehouseid}}"> {{$warehouse->name}} </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label for="type">Seleccione reporte a exportar:</label>
                                     <select name="type" class="form-control select2" required>
@@ -92,13 +104,13 @@
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label for="workdayin">F.Inicio</label>
-                                    <input type="text" class="form-control" id="workdayin" name="workdayin">
+                                    <input type="text" class="form-control" id="workdayin" name="workdayin" required>
                                 </div>
                             </div>
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label for="workdayout">F.Final</label>
-                                    <input type="text" class="form-control" id="workdayout" name="workdayout">
+                                    <input type="text" class="form-control" id="workdayout" name="workdayout" required>
                                 </div>
                             </div>
                         </div>

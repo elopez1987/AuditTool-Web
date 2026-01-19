@@ -17,17 +17,11 @@ class ReportCheckForShipments implements FromCollection, ShouldAutoSize, WithCol
 {
     use Exportable;
 
-    private $workdayin;
+    private $request;
 
-    private $workdayout;
-
-    private $centerid;
-
-    public function __construct($workdayin, $workdayout, $centerid)
+    public function __construct($request)
     {
-        $this->workdayin = $workdayin;
-        $this->workdayout = $workdayout;
-        $this->centerid = $centerid;
+        $this->request = $request;
     }
 
     public function columnFormats(): array
@@ -75,9 +69,6 @@ class ReportCheckForShipments implements FromCollection, ShouldAutoSize, WithCol
 
     public function collection()
     {
-        $startDate = $this->workdayin;
-        $endDate = $this->workdayout;
-
         return DB::table('shipmentcheck as s')
             ->select(
                 's.centerid',
@@ -92,7 +83,7 @@ class ReportCheckForShipments implements FromCollection, ShouldAutoSize, WithCol
                 's2.totalcontainers as totalpallets',
                 's2.totalpieces as totalcajas',
                 's.startdate',
-                's.finishdate',
+                's.finishdate'
             )
             ->leftJoin('users as u', function ($join) {
                 $join->on('s.createuser', '=', 'u.username');
@@ -109,10 +100,12 @@ class ReportCheckForShipments implements FromCollection, ShouldAutoSize, WithCol
                 $join->on('o.customerid', '=', 'o2.id');
                 $join->on('o.centerid', '=', 'o2.centerid');
             })
-            ->whereNotNull('s.startdate')
-            ->whereNotNull('s.finishdate')
-            ->where($startDate <= 's.startdate')
-            ->where($endDate >= 's.finishdate')
+            ->where('shipmentcheck.centerid', $this->request->centerid)
+            ->where('shipmentcheck.warehouseid', $this->request->warehouseid)
+//            ->whereNotNull('s.startdate')
+//            ->whereNotNull('s.finishdate')
+            ->where($this->request->workdayin <= 's.startdate')
+            ->where($this->request->workdayout >= 's.finishdate')
             ->get();
     }
 

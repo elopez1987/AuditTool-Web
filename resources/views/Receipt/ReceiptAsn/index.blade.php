@@ -79,9 +79,11 @@
                                     <th class="bg-inverse text-white">{{ ui_label('receiptasn_carrier_index','Linea') }}</th>
                                     <th class="bg-inverse text-white">{{ ui_label('receiptasn_created_by_index','Creado por') }}</th>
                                     <th class="bg-inverse text-white">{{ ui_label('receiptasn_cita_index','Cita de descarga') }}</th>
+                                    <th class="bg-inverse text-white">{{ ui_label('receiptasn_arrive_index','Llegada de unidad') }}</th>
                                     <th class="bg-inverse text-white">{{ ui_label('receiptasn_start_index','Inicia Descarga') }}</th>
                                     <th class="bg-inverse text-white">{{ ui_label('receiptasn_finish_index','Termina Descarga') }}</th>
-                                    <th class="bg-inverse text-white">{{ ui_label('receiptasn_created_index','F.Creación') }}</th>
+                                    <th class="bg-inverse text-white">{{ ui_label('receiptasn_unload_duration_index','Tiempo de Descarga') }}</th>
+                                    <th class="bg-inverse text-white">{{ ui_label('receiptasn_stay_duration_index','Estadia de Descarga') }}</th>
                                     <th class="bg-inverse text-white">{{ ui_label('receiptasn_goodreceipt_index','F.Ingreso en SAP') }}</th>
                                     <th class="bg-inverse text-white">{{ ui_label('receiptasn_cancelation_index','F.Cancelación') }}</th>
                                     <th class="bg-inverse text-white">{{ ui_label('receiptasn_statusid_index','Estatus') }}</th>

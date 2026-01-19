@@ -17,14 +17,11 @@ class ReportShipmentSeals implements FromCollection, ShouldAutoSize, WithColumnF
 {
     use Exportable;
 
-    private $workdayin;
+    private $request;
 
-    private $workdayout;
-
-    public function __construct($workdayin, $workdayout)
+    public function __construct($request)
     {
-        $this->workdayin = $workdayin;
-        $this->workdayout = $workdayout;
+        $this->request = $request;
     }
 
     public function columnFormats(): array
@@ -51,7 +48,8 @@ class ReportShipmentSeals implements FromCollection, ShouldAutoSize, WithColumnF
 
     public function collection()
     {
-        return OrderDeliverie::controlAccessUser()
+        return OrderDeliverie::where('orderdeliveries.centerid', '=', $this->request->centerid)
+            ->where('orderdeliveries.warehouseid', '=', $this->request->warehouseid)
             ->leftjoin('shipmentheader as sh', 'orderdeliveries.id', '=', 'sh.orderid')
             ->leftjoin('ordercustomers as oc', 'orderdeliveries.customerid', '=', 'oc.id')
             ->leftjoin('shipmentseals as sl', 'orderdeliveries.id', '=', 'sl.orderid')
@@ -61,7 +59,7 @@ class ReportShipmentSeals implements FromCollection, ShouldAutoSize, WithColumnF
                 'oc.name as cliente',
                 'sh.totalcontainersfac as pallets', 'sl.containerseal01', 'sl.containerseal02', 'sl.containerseal03',
             ])
-            ->whereBetween('orderdeliveries.workday', [$this->workdayin, $this->workdayout])
+            ->whereBetween('orderdeliveries.workday', [$this->request->workdayin, $this->request->workdayout])
             ->get();
     }
 

@@ -313,7 +313,7 @@ Route::middleware(['auth'])->group(function () {
     //    **************************************************** REPORTES  ***********************************************************
     //    Reportes de control de patios para exportar a excel
     Route::get('reportsyards', [ReportYardController::class, 'index'])->name('reportsyards');
-    Route::get('exportreportyards', [ReportYardController::class, 'exportreportyards'])->name('exportreportyards');
+    Route::post('exportreportyards', [ReportYardController::class, 'exportreportyards'])->name('exportreportyards');
     //    Reporte de unidades con salida autorizada
     Route::get('reportauthorizedoutputs', [AuthorizeOutPutController::class, 'reportauthorizedoutputs'])->name('reportauthorizedoutputs');
     Route::get('getDataAuthorized', [AuthorizeOutPutController::class, 'getDataAuthorized'])->name('getDataAuthorized');
@@ -329,7 +329,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('layoutinventoryforzone', [CapacityYardController::class, 'layoutinventoryforzone'])->name('layoutinventoryforzone');
     //  Exportar el detalle de la zona consultada
     Route::get('exportDataLocationsForStatus', [CapacityYardController::class, 'exportDataLocationsForStatus'])->name('exportDataLocationsForStatus');
-    //  Patio de toluca one roof en 2d
+    //  Patio de virtual
     Route::get('vitualyard', [YardHenkelTolController::class, 'index'])->name('vitualyard');
     //  Vista de cortinas y stages
     Route::get('layout-stages', [LayOutDoorAndStageController::class, 'index'])->name('layout-stages');

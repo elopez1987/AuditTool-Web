@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Yard\ReceiptUnit\TraceUnit;
 
 use App\Http\Controllers\BaseController;
+use App\Models\Configuration\Parameters\SystemDetailParameter;
 use App\Models\General\EvidencePhoto;
 use App\Models\General\StorageComment;
 use App\Models\Shipments\OrderDeliverie;
@@ -83,6 +84,7 @@ class TraceReceiptUnitController extends BaseController
 
     public function generateinvoicekardex($id)
     {
+        $pathImage = SystemDetailParameter::where('parameterid', '=', 'PARAM-IMG')->first();
         $receiptunit = ReceiptUnit::controlAccessUser()->where('id', $id)->first();
         $evidences = EvidencePhoto::where('model_id', $id)
             ->where('model_type', '=', 'ReceiptUnit')
@@ -96,7 +98,17 @@ class TraceReceiptUnitController extends BaseController
         $fortmat = 'Yards.KardexReceiptUnit.Formats.Kardex';
         $pdf = PDF::setOptions([
             'isRemoteEnabled' => true,
-            'chroot' => storage_path('app'),
+            'chroot' => [
+                realpath(base_path()),
+                realpath($pathImage->value01),
+            ],
+            'httpContext' => stream_context_create([
+                'ssl' => [
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                    'allow_self_signed' => true,
+                ],
+            ]),
         ])->loadView($fortmat, compact(
             'receiptunit',
             'evidences',
@@ -113,7 +125,7 @@ class TraceReceiptUnitController extends BaseController
     {
         $receiptunit = ReceiptUnit::controlAccessUser()->where('id', $id)->first();
         $tracto = ReceiptTruck::controlAccessUser()->where('id', $receiptunit->foliotruck)->first();
-
+        $pathImage = SystemDetailParameter::where('parameterid', '=', 'PARAM-IMG')->first();
         $verified = DB::table('storagechecklisttransports as s')
             ->select(
                 's.id',
@@ -153,7 +165,17 @@ class TraceReceiptUnitController extends BaseController
         $fortmat = 'Yards.ReceiptUnits.InvoiceFormats.InvoiceBridgestonePT';
         $pdf = PDF::setOptions([
             'isRemoteEnabled' => true,
-            'chroot' => storage_path('app'),
+            'chroot' => [
+                realpath(base_path()),
+                realpath($pathImage->value01),
+            ],
+            'httpContext' => stream_context_create([
+                'ssl' => [
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                    'allow_self_signed' => true,
+                ],
+            ]),
         ])->loadView($fortmat, compact('receiptunit', 'verified', 'tracto', 'verifiedOut'));
 
         return $pdf->download('Folio_De_Entrada-' . $receiptunit->id . '.pdf');
@@ -163,6 +185,7 @@ class TraceReceiptUnitController extends BaseController
     {
         $receiptunit = ReceiptUnit::controlAccessUser()->where('id', $id)->first();
         $comments = StorageComment::where('modeltype', 'ReceiptUnits')->where('modelid', $id)->get();
+        $pathImage = SystemDetailParameter::where('parameterid', '=', 'PARAM-IMG')->first();
         $verified = DB::table('storagechecklisttransports as s')
             ->select(
                 's.id',
@@ -186,7 +209,17 @@ class TraceReceiptUnitController extends BaseController
         $fortmat = 'Yards.KardexReceiptUnit.Formats.CalidaBridgestone';
         $pdf = PDF::setOptions([
             'isRemoteEnabled' => true,
-            'chroot' => storage_path('app'),
+            'chroot' => [
+                realpath(base_path()),
+                realpath($pathImage->value01),
+            ],
+            'httpContext' => stream_context_create([
+                'ssl' => [
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                    'allow_self_signed' => true,
+                ],
+            ]),
         ])->loadView($fortmat, compact('receiptunit', 'comments', 'verified', 'photos'));
 
         return $pdf->download('Folio_De_Calidad-' . $receiptunit->id . '.pdf');

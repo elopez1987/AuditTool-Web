@@ -90,8 +90,7 @@
 <div class="container">
     <div class="row" style="margin-top: 5px">
         <table class="border-none">
-            <th style="height: 20px;width: 25%;">
-                <img src="{{ public_path('img/taxion-logistic.png') }}" alt="" style="height: 60px;width: 180px;">
+            <th style="height: 20px;width: 25%;"><img src="img/taxion-logistic.png" alt="" style="height: 60px;width: 180px;">
             </th>
             <th style="height: 20px;width: 50%;text-align: center;font-size: 14px;">
                 KARDEX DE UNIDAD - {{$receiptunit->id}}
@@ -189,7 +188,14 @@
                     @foreach($evidences as $image)
                         @if($image->auxiliary01 == 'IN')
                             <td class="border-none" style="text-align: center; padding: 10px;">
-                                <img src="{{ storage_path('app/' . $image->path) }}" style="width: 300px; height: 200px; margin: 5px;">
+                                @php
+                                    $doorsPhotoPath = str_starts_with($image->path, 'public/')
+                                        ? storage_path('app/' . $image->path)
+                                        : storage_path('app/public/' . $image->path);
+                                @endphp
+                                @if(file_exists($doorsPhotoPath))
+                                    <img src="{{ $doorsPhotoPath }}" alt="" style="width: 350px;height: 100px">
+                                @endif
                             </td>
                             @php
                                 $count++;
@@ -226,7 +232,14 @@
                         @foreach($evidences as $image)
                             @if($image->auxiliary01 == 'IP')
                                 <td class="border-none" style="text-align: center; padding: 10px;">
-                                    <img src="{{ storage_path('app/' . $image->path) }}" style="width: 300px; height: 200px; margin: 5px;">
+                                    @php
+                                        $ipPhotoPath = str_starts_with($image->path, 'public/')
+                                            ? storage_path('app/' . $image->path)
+                                            : storage_path('app/public/' . $image->path);
+                                    @endphp
+                                    @if(file_exists($ipPhotoPath))
+                                        <img src="{{ $ipPhotoPath }}" style="width: 300px; height: 200px; margin: 5px;">
+                                    @endif
                                 </td>
                                 @php
                                     $count++;
@@ -253,7 +266,14 @@
                         </tr>
                         <tr>
                             <td class="border-none">
-                                <img src="{{ storage_path('app/' . $image->path) }}" style="width: 500px;height:250px;margin-left: 10px; margin-right: 10px;">
+                                @php
+                                    $tirosPhotoPath = str_starts_with($image->path, 'public/')
+                                        ? storage_path('app/' . $image->path)
+                                        : storage_path('app/public/' . $image->path);
+                                @endphp
+                                @if(file_exists($tirosPhotoPath))
+                                    <img src="{{ $tirosPhotoPath }}" style="width: 500px;height:250px;margin-left: 10px; margin-right: 10px;">
+                                @endif
                             </td>
                         </tr>
                     </table>
@@ -282,7 +302,14 @@
                     @foreach($evidences as $image)
                         @if($image->auxiliary01 == 'OUT')
                             <td class="border-none" style="text-align: center; padding: 10px;">
-                                <img src="{{ storage_path('app/' . $image->path) }}" style="width: 300px; height: 200px; margin: 5px;">
+                                @php
+                                    $outPhotoPath = str_starts_with($image->path, 'public/')
+                                        ? storage_path('app/' . $image->path)
+                                        : storage_path('app/public/' . $image->path);
+                                @endphp
+                                @if(file_exists($outPhotoPath))
+                                    <img src="{{ $outPhotoPath }}" style="width: 300px; height: 200px; margin: 5px;">
+                                @endif
                             </td>
                             @php
                                 $count++;

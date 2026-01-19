@@ -900,7 +900,7 @@
                                         @foreach($conteosVig as $conteo)
                                             <div class="row">
                                                 <div class="col-lg-12">
-                                                    <span class="badge bg-warning font-14 font-bold text-black mt-2 mb-2 padding-3">Conteo vigilancia</span>
+                                                    <span class="badge bg-warning font-14 font-bold text-black mt-2 mb-2 padding-3">Conteo vigilancia - {{ $conteo->id }}</span>
                                                 </div>
                                             </div>
                                             <div class="row">

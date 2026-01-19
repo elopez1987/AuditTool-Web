@@ -214,13 +214,30 @@
         });
     </script>
     <script>
-        $("#zoneid").change(event => {
-            $.get(`./getLocationForZone/${event.target.value}`, function (res) {
-                $("#locationid").empty();
-                res.forEach(element => {
-                    $("#locationid").append(`<option value=${element.id}> ${element.name} </option>`);
+        $(document).on('change', '#zoneid', function(event) {
+            const zoneid = event.target.value;
+            if (zoneid) {
+                $.get(`{{ url('storage-locations') }}/${zoneid}/search`, function (res) {
+                    $("#locationid").empty();
+                    $("#locationid").append('<option value="">Seleccione una opción</option>');
+                    if (res.Data && Array.isArray(res.Data)) {
+                        res.Data.forEach(element => {
+                            $("#locationid").append(`<option value=${element.id}> ${element.name} </option>`);
+                        });
+                    }
+                }).fail(function(error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Error al cargar las ubicaciones',
+                        width: '400px',
+                        confirmButtonText: 'Entendido'
+                    });
                 });
-            });
+            } else {
+                $("#locationid").empty();
+                $("#locationid").append('<option value="">Seleccione una opción</option>');
+            }
         });
     </script>
     <script>

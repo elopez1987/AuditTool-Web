@@ -17,17 +17,11 @@ class ExportReportBitacoraLogInverse implements FromCollection, ShouldAutoSize, 
 {
     use Exportable;
 
-    private $workdayin;
+    private $request;
 
-    private $workdayout;
-
-    private $centerid;
-
-    public function __construct($workdayin, $workdayout, $centerid)
+    public function __construct($request)
     {
-        $this->workdayin = $workdayin;
-        $this->workdayout = $workdayout;
-        $this->centerid = $centerid;
+        $this->request = $request;
     }
 
     public function columnFormats(): array
@@ -86,7 +80,7 @@ class ExportReportBitacoraLogInverse implements FromCollection, ShouldAutoSize, 
 
     public function collection()
     {
-        return collect(DB::select('exec getDataScheduleInverse "' . $this->centerid . '" ,   "' . $this->workdayin . '" , "' . $this->workdayout . '"  '));
+        return collect(DB::select('exec getDataScheduleInverse "' . $this->request->centerid . '" ,   "' . $this->request->workdayin . '" , "' . $this->request->workdayout . '"  '));
     }
 
     public function map($shipments): array

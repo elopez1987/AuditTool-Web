@@ -17,11 +17,13 @@ class ReportYardController extends BaseController
     public function index()
     {
         $centers = $this->getCenterForSelect();
+        $warehouses = $this->getWarehouseForSelect();
         $carriers = $this->getCarriersForSelect();
         $reasons = StorageReason::where('type', 'IN')->select(['id', 'name'])->get();
         $origins = StorageUnitType::controlAccessUser()->where('statusid', 'E')->select(['id', 'description'])->get();
 
-        return view('Yards.Reports.index', compact('centers', 'carriers', 'reasons', 'origins'));
+        return view('Yards.Reports.index',
+            compact('centers', 'carriers', 'reasons', 'origins', 'warehouses'));
     }
 
     public function exportreportyards(FilterReportYardRequest $request)

@@ -302,14 +302,13 @@
             <table class="border-none">
                 <th class="border-none"></th>
                 <th style="border-top: 0;text-align: center;width: 25%;" class="border-none">
-                    <img src="{{ storage_path('app/' . $firma->keyguard01) }}" alt="Firma"
-                         style="height: 70px;max-height: 70px"/>
+                    <img src="{{asset('storage/' . $firma->keyguard01 )}}" alt="Firma" style="height: 70px;max-height: 70px"/>
                 </th>
                 <th style="border-top: 0;text-align: center;width: 25%;" class="border-none">
 
                 </th>
                 <th style="border-top: 0;text-align: center;" class="border-none">
-                    <img src="{{ storage_path('app/' . $firma->keyoperator01) }}" alt="Firma" style="height: 70px;max-height: 70px"/>
+                    <img src="{{asset('storage/' . $firma->keyoperator01)}}" alt="Firma" style="height: 70px;max-height: 70px"/>
                 </th>
             </table>
         </div>
