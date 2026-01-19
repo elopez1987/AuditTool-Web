@@ -196,7 +196,6 @@
                                 @if(file_exists($doorsPhotoPath))
                                     <img src="{{ $doorsPhotoPath }}" alt="" style="width: 350px;height: 100px">
                                 @endif
-{{--                                <img src="{{ storage_path('app/' . $image->path) }}" style="width: 300px; height: 200px; margin: 5px;">--}}
                             </td>
                             @php
                                 $count++;

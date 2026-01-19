@@ -185,6 +185,7 @@ class TraceReceiptUnitController extends BaseController
     {
         $receiptunit = ReceiptUnit::controlAccessUser()->where('id', $id)->first();
         $comments = StorageComment::where('modeltype', 'ReceiptUnits')->where('modelid', $id)->get();
+        $pathImage = SystemDetailParameter::where('parameterid', '=', 'PARAM-IMG')->first();
         $verified = DB::table('storagechecklisttransports as s')
             ->select(
                 's.id',
@@ -210,7 +211,7 @@ class TraceReceiptUnitController extends BaseController
             'isRemoteEnabled' => true,
             'chroot' => [
                 realpath(base_path()),
-                realpath('/Users/elopez/Herd/yms-api'),
+                realpath($pathImage->value01),
             ],
             'httpContext' => stream_context_create([
                 'ssl' => [
