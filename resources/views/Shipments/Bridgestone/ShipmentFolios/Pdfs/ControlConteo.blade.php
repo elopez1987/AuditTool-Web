@@ -164,11 +164,11 @@
                                          style="height: 40px;max-height: 40px"/>
                                 </th>
                                 <th>
-                                    <img src="{{asset('storage/' . $controlCount->keyoperator )}}" alt="Firma"
+                                    <img src="{{storage_path('app/' . $controlCount->keyoperator )}}" alt="Firma"
                                          style="height: 40px;max-height: 40px"/>
                                 </th>
                                 <th>
-                                    <img src="{{asset('storage/' . $controlCount->keyguard )}}" alt="Firma"
+                                    <img src="{{storage_path('app/' . $controlCount->keyguard )}}" alt="Firma"
                                          style="height: 40px;max-height: 40px"/>
                                 </th>
                             </tr>
@@ -182,7 +182,7 @@
                         <tr>
                             <td class="border-none"></td>
                             <td class="border-none">{{$folio->namesupervisor}} <img
-                                    src="{{asset('storage/' . $folio->keysupervisor )}}" alt="Firma"
+                                        src="{{asset('storage/' . $folio->keysupervisor )}}" alt="Firma"
                                     style="height: 70px;max-height: 70px"/></td>
                             <td align="right" class="border-none"></td>
                         </tr>
