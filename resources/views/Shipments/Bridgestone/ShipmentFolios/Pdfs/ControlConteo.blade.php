@@ -179,7 +179,7 @@
                         <tr>
                             <td class="border-none"></td>
                             <td class="border-none">{{$folio->namesupervisor}} <img
-                                        src="{{asset('storage/' . $folio->keysupervisor )}}" alt="Firma"
+                                        src="{{storage_path('app/' . $folio->keysupervisor )}}" alt="Firma"
                                     style="height: 70px;max-height: 70px"/></td>
                             <td align="right" class="border-none"></td>
                         </tr>
