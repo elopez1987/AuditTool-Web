@@ -68,10 +68,7 @@ class ReportShipmentController extends BaseController
             return Excel::download(new ReportCheckForShipments($request), 'Reporte de verificación por embarques.xlsx')->deleteFileAfterSend();
         }
         if ($request['type'] === 'PLT') {
-            return Excel::download(
-                new ExportReportPallets($request['workdayin'], $request['workdayout'], $request['centerid']),
-                'Reporte de pallets embarcados.xlsx'
-            )->deleteFileAfterSend();
+            return Excel::download(new ExportReportPallets($request), 'Reporte de pallets embarcados.xlsx')->deleteFileAfterSend();
         }
     }
 }

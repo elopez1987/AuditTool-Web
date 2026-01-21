@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Shipments\Bridgestone;
 
 use App\Http\Controllers\BaseController;
+use App\Models\Configuration\Parameters\SystemDetailParameter;
 use App\Models\Shipments\Bridgestone\Verificacion\StorageShipmentCheckTotal;
 use App\Models\Shipments\Bridgestone\Verificacion\StorageShipmentFolios;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -38,6 +39,7 @@ class StorageShipmentFoliosController extends BaseController
 
     public function storageshipmentfoliospdf(string $id)
     {
+        $pathImage = SystemDetailParameter::where('parameterid', '=', 'PARAM-IMG')->first();
         $folio = StorageShipmentFolios::controlAccessUser()
             ->with(['center:centerid,name,description', 'warehouse:warehouseid,name',
                 'user:id,name', 'statuskey:statusid,name', 'status:statusid,name',
@@ -52,7 +54,20 @@ class StorageShipmentFoliosController extends BaseController
             ->where('folioid', $folio->id)->get();
 
         $fortmat = 'Shipments.Bridgestone.ShipmentFolios.Pdfs.ControlConteo';
-        $pdf = Pdf::loadView($fortmat, compact('folio', 'detalleFolio'))->setPaper('A4', 'landscape');
+        $pdf = Pdf::setOptions([
+            'isRemoteEnabled' => true,
+            'chroot' => [
+                realpath(base_path()),
+                realpath($pathImage->value01),
+            ],
+            'httpContext' => stream_context_create([
+                'ssl' => [
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                    'allow_self_signed' => true,
+                ],
+            ]),
+        ])->loadView($fortmat, compact('folio', 'detalleFolio'))->setPaper('A4', 'landscape');
 
         return response($pdf->output(), 200)->header('Content-Type', 'application/pdf');
     }

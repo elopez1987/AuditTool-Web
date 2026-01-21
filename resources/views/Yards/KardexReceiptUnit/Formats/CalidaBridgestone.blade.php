@@ -509,9 +509,7 @@
                     @foreach($photos as $photo)
                         @if($photo->auxiliary05 == '_floor')
                             @php
-                                $floorPhotoPath = str_starts_with($photo->path, 'public/') 
-                                    ? storage_path('app/' . $photo->path)
-                                    : storage_path('app/public/' . $photo->path);
+                                $floorPhotoPath = str_starts_with($photo->path, 'public/')  ? storage_path('app/' . $photo->path) : storage_path('app/public/' . $photo->path);
                             @endphp
                             @if(file_exists($floorPhotoPath))
                                 <img src="{{ $floorPhotoPath }}" alt="" style="width: 350px;height: 100px">

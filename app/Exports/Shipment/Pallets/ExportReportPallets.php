@@ -17,17 +17,11 @@ class ExportReportPallets implements FromCollection, ShouldAutoSize, WithColumnF
 {
     use Exportable;
 
-    private $workdayin;
+    private $request;
 
-    private $workdayout;
-
-    private $centerid;
-
-    public function __construct($workdayin, $workdayout, $centerid)
+    public function __construct($request)
     {
-        $this->workdayin = $workdayin;
-        $this->workdayout = $workdayout;
-        $this->centerid = $centerid;
+        $this->request = $request;
     }
 
     public function columnFormats(): array
@@ -75,8 +69,8 @@ class ExportReportPallets implements FromCollection, ShouldAutoSize, WithColumnF
 
     public function collection()
     {
-        $startDate = $this->workdayin;
-        $endDate = $this->workdayout;
+        $startDate = $this->request->workdayin;
+        $endDate = $this->request->workdayout;
 
         return DB::table('orderdeliveries as o')
             ->leftJoin('ordercustomers as o2', 'o.customerid', '=', 'o2.id')
@@ -90,6 +84,8 @@ class ExportReportPallets implements FromCollection, ShouldAutoSize, WithColumnF
                 'i.lngdsc',
                 's.quantity'
             )
+            ->where('o.centerid', $this->request->centerid)
+            ->where('o.warehouseid', $this->request->warehouseid)
             ->whereBetween('o.workday', [$startDate, $endDate])
             ->orderBy('o.workday', 'asc')
             ->get();

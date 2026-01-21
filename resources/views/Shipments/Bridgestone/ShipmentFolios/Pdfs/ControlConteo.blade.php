@@ -160,16 +160,13 @@
                                 <th>{{$controlCount->order ? $controlCount->order->shipmentid : ''}}</th>
                                 <th>{{$controlCount->quantity}}</th>
                                 <th>
-                                    <img src="{{asset('storage/' . $controlCount->keysupervisor )}}" alt="Firma"
-                                         style="height: 40px;max-height: 40px"/>
+                                    <img src="{{storage_path('app/' . $controlCount->keysupervisor )}}" alt="Firma" style="height: 40px;max-height: 40px"/>
                                 </th>
                                 <th>
-                                    <img src="{{asset('storage/' . $controlCount->keyoperator )}}" alt="Firma"
-                                         style="height: 40px;max-height: 40px"/>
+                                    <img src="{{storage_path('app/' . $controlCount->keyoperator )}}" alt="Firma" style="height: 40px;max-height: 40px"/>
                                 </th>
                                 <th>
-                                    <img src="{{asset('storage/' . $controlCount->keyguard )}}" alt="Firma"
-                                         style="height: 40px;max-height: 40px"/>
+                                    <img src="{{storage_path('app/' . $controlCount->keyguard )}}" alt="Firma" style="height: 40px;max-height: 40px"/>
                                 </th>
                             </tr>
                         @endforeach
@@ -182,7 +179,7 @@
                         <tr>
                             <td class="border-none"></td>
                             <td class="border-none">{{$folio->namesupervisor}} <img
-                                    src="{{asset('storage/' . $folio->keysupervisor )}}" alt="Firma"
+                                        src="{{storage_path('app/' . $folio->keysupervisor )}}" alt="Firma"
                                     style="height: 70px;max-height: 70px"/></td>
                             <td align="right" class="border-none"></td>
                         </tr>

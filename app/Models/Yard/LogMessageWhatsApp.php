@@ -81,7 +81,7 @@ class LogMessageWhatsApp extends Model
     ];
 
     protected $casts = [
-        'created_at' => 'datetime:d/m/Y H:s',
+        //        'created_at' => 'datetime:d/m/Y H:s',
     ];
 
     protected $dates = ['value01'];

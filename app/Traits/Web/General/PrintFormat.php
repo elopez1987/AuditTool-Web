@@ -2,6 +2,7 @@
 
 namespace App\Traits\Web\General;
 
+use App\Models\Configuration\Parameters\SystemDetailParameter;
 use App\Models\Configuration\Warehouses\SystemWarehouse;
 use App\Models\General\StorageComment;
 use App\Models\Yard\GenerateAccessWarehouse;
@@ -9,7 +10,6 @@ use App\Models\Yard\ReceiptUnitKey;
 use App\Models\Yard\StorageFolioClient;
 use App\Traits\ResponseApi;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 use PDF;
 
 trait PrintFormat
@@ -18,6 +18,7 @@ trait PrintFormat
 
     public function printFormatInvoice($receiptunit)
     {
+        $pathImage = SystemDetailParameter::where('parameterid', '=', 'PARAM-IMG')->first();
         $verified = DB::table('storagechecklisttransports as s')
             ->select(
                 's.id',
@@ -46,7 +47,20 @@ trait PrintFormat
             } else {
                 $fortmat = 'Yards.ReceiptUnits.InvoiceFormats.Henkel.InvoiceHenkelReceipt';
             }
-            $pdf = PDF::loadView($fortmat, compact('receiptunit', 'verified', 'folio'));
+            $pdf = PDF::setOptions([
+                'isRemoteEnabled' => true,
+                'chroot' => [
+                    realpath(base_path()),
+                    realpath($pathImage->value01),
+                ],
+                'httpContext' => stream_context_create([
+                    'ssl' => [
+                        'verify_peer' => false,
+                        'verify_peer_name' => false,
+                        'allow_self_signed' => true,
+                    ],
+                ]),
+            ])->loadView($fortmat, compact('receiptunit', 'verified', 'folio'));
 
             return $this->printFormat($receiptunit, $pdf);
         }
@@ -54,7 +68,20 @@ trait PrintFormat
         //  Planta Henkel
         if ($receiptunit->centerid === 'PLANHENKTOL') {
             $fortmat = 'Yards.ReceiptUnits.InvoiceFormats.Henkel.InvoicePlantHenkel';
-            $pdf = PDF::loadView($fortmat, compact('receiptunit', 'verified'));
+            $pdf = PDF::setOptions([
+                'isRemoteEnabled' => true,
+                'chroot' => [
+                    realpath(base_path()),
+                    realpath($pathImage->value01),
+                ],
+                'httpContext' => stream_context_create([
+                    'ssl' => [
+                        'verify_peer' => false,
+                        'verify_peer_name' => false,
+                        'allow_self_signed' => true,
+                    ],
+                ]),
+            ])->loadView($fortmat, compact('receiptunit', 'verified'));
 
             return $this->printFormat($receiptunit, $pdf);
         }
@@ -67,7 +94,20 @@ trait PrintFormat
             if ($receiptunit->unittype->auxiliary01 === 'EXP') {
                 $fortmat = 'Yards.ReceiptUnits.InvoiceFormats.Kraft.Exportacion';
             }
-            $pdf = PDF::loadView($fortmat, compact('receiptunit', 'verified'));
+            $pdf = PDF::setOptions([
+                'isRemoteEnabled' => true,
+                'chroot' => [
+                    realpath(base_path()),
+                    realpath($pathImage->value01),
+                ],
+                'httpContext' => stream_context_create([
+                    'ssl' => [
+                        'verify_peer' => false,
+                        'verify_peer_name' => false,
+                        'allow_self_signed' => true,
+                    ],
+                ]),
+            ])->loadView($fortmat, compact('receiptunit', 'verified'));
 
             return $this->printFormat($receiptunit, $pdf);
         }
@@ -75,7 +115,20 @@ trait PrintFormat
         // Barry
         if ($receiptunit->centerid == 'BARRYTOL') {
             $fortmat = 'Yards.ReceiptUnits.InvoiceFormats.Barry.InvoiceBarry';
-            $pdf = PDF::loadView($fortmat, compact('receiptunit', 'verified', 'comment'));
+            $pdf = PDF::setOptions([
+                'isRemoteEnabled' => true,
+                'chroot' => [
+                    realpath(base_path()),
+                    realpath($pathImage->value01),
+                ],
+                'httpContext' => stream_context_create([
+                    'ssl' => [
+                        'verify_peer' => false,
+                        'verify_peer_name' => false,
+                        'allow_self_signed' => true,
+                    ],
+                ]),
+            ])->loadView($fortmat, compact('receiptunit', 'verified', 'comment'));
 
             return $this->printFormat($receiptunit, $pdf);
 
@@ -84,10 +137,36 @@ trait PrintFormat
         //  Impresiones Estandar
         if ($receiptunit->center->formatinvoice === 'Estandar') {
             $fortmat = 'Yards.ReceiptUnits.InvoiceFormats.General.Estandar';
-            $pdf = PDF::loadView($fortmat, compact('receiptunit', 'verified', 'logo', 'comment', 'firma'));
+            $pdf = PDF::setOptions([
+                'isRemoteEnabled' => true,
+                'chroot' => [
+                    realpath(base_path()),
+                    realpath($pathImage->value01),
+                ],
+                'httpContext' => stream_context_create([
+                    'ssl' => [
+                        'verify_peer' => false,
+                        'verify_peer_name' => false,
+                        'allow_self_signed' => true,
+                    ],
+                ]),
+            ])->loadView($fortmat, compact('receiptunit', 'verified', 'logo', 'comment', 'firma'));
         } else {
             $fortmat = 'Yards.ReceiptUnits.InvoiceFormats.General.Invoice';
-            $pdf = PDF::loadView($fortmat, compact('receiptunit', 'verified', 'logo', 'comment', 'firma'));
+            $pdf = PDF::setOptions([
+                'isRemoteEnabled' => true,
+                'chroot' => [
+                    realpath(base_path()),
+                    realpath($pathImage->value01),
+                ],
+                'httpContext' => stream_context_create([
+                    'ssl' => [
+                        'verify_peer' => false,
+                        'verify_peer_name' => false,
+                        'allow_self_signed' => true,
+                    ],
+                ]),
+            ])->loadView($fortmat, compact('receiptunit', 'verified', 'logo', 'comment', 'firma'));
             $pdf->setPaper('A4', 'landscape');
         }
 
@@ -97,16 +176,6 @@ trait PrintFormat
     private function printFormat($receiptunit, $pdf)
     {
         return $pdf->download('Folio_De_Entrada-' . $receiptunit->id . '.pdf');
-    }
-
-    private function createDirectoryPath($centerId): string
-    {
-        $directory = 'public/' . $centerId . '/Formats';
-        if (! Storage::exists($directory)) {
-            Storage::makeDirectory($directory, 0775, true);
-        }
-
-        return $directory;
     }
 
     //    Genera el formato para el QR de  planta en el modulo de circuito
