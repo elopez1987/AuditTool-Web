@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Yard\StorageUnitTypes;
 
 use App\Http\Controllers\BaseController;
-use App\Http\Resources\Yard\StorageUnitTypesRequest;
 use App\Models\Yard\StorageUnitType;
 use Illuminate\Http\Request;
 
@@ -33,9 +32,9 @@ class StorageUnitTypesController extends BaseController
         return view('Yards.StorageUnitTypes.create', compact('centers'));
     }
 
-    public function store(StorageUnitTypesRequest $request)
+    public function store(Request $request)
     {
-        StorageUnitType::create($request->validated());
+        StorageUnitType::create($request->all());
 
         return $this->successResponse('storageunittypes.index');
     }

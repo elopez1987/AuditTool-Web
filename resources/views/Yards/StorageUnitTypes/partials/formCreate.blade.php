@@ -35,7 +35,7 @@
                 @enderror
                 <span style="color: red">*</span></label>
             <input type="text" class="form-control @error('unittypeid') is-invalid @enderror"
-                   required id="unittypeid" name="unittypeid"
+                   required id="unittypeid" name="unittypeid" maxlength="9"
                    onKeyUp=this.value=this.value.toUpperCase();
                    value="{{old('unittypeid')}}"
             >
