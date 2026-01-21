@@ -160,16 +160,13 @@
                                 <th>{{$controlCount->order ? $controlCount->order->shipmentid : ''}}</th>
                                 <th>{{$controlCount->quantity}}</th>
                                 <th>
-                                    <img src="{{asset('storage/' . $controlCount->keysupervisor )}}" alt="Firma"
-                                         style="height: 40px;max-height: 40px"/>
+                                    <img src="{{storage_path('app/' . $controlCount->keysupervisor )}}" alt="Firma" style="height: 40px;max-height: 40px"/>
                                 </th>
                                 <th>
-                                    <img src="{{storage_path('app/' . $controlCount->keyoperator )}}" alt="Firma"
-                                         style="height: 40px;max-height: 40px"/>
+                                    <img src="{{storage_path('app/' . $controlCount->keyoperator )}}" alt="Firma" style="height: 40px;max-height: 40px"/>
                                 </th>
                                 <th>
-                                    <img src="{{storage_path('app/' . $controlCount->keyguard )}}" alt="Firma"
-                                         style="height: 40px;max-height: 40px"/>
+                                    <img src="{{storage_path('app/' . $controlCount->keyguard )}}" alt="Firma" style="height: 40px;max-height: 40px"/>
                                 </th>
                             </tr>
                         @endforeach
