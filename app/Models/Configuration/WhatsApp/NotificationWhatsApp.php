@@ -82,14 +82,14 @@ class NotificationWhatsApp extends Model
 
     public function scopeWhatsAppId($query, $whatsappid)
     {
-        if (trim($whatsappid) !== '') {
+        if (trim($whatsappid) != '') {
             $query->where('systemwhatsapps.whatsappid', 'like', "%{$whatsappid}%");
         }
     }
 
     public function scopeName($query, $name)
     {
-        if (trim($name) !== '') {
+        if (trim($name) != '') {
             $query->where('systemwhatsapps.description', 'like', "%{$name}%");
         }
     }

@@ -68,7 +68,7 @@
 
     <div class="row">
         <table class="border-none">
-            <th class="border-none"><img src="{{ public_path('img/Barry.png') }}" alt="" style="width: 250px;height: 40px"></th>
+            <th class="border-none"><img src="img/Barry.png" alt="" style="width: 250px;height: 40px"></th>
         </table>
     </div>
 
@@ -169,7 +169,7 @@
     </div>
 
     <div class="row" style="margin-top: 30px">
-        <img src="{{ public_path('img/Barry/unidad.png') }}" alt="" style="width: 100%;height: 180px">
+        <img src="img/Barry/unidad.png" alt="" style="width: 100%;height: 180px">
     </div>
 
     <div class="row" style="margin-top: 20px">
@@ -261,7 +261,7 @@
             </tr>
             <tr>
                 <p style="border-bottom: 1px solid;padding-left: 20px">
-                    {{$comment->comment}}
+                    {{--                    {{$comment->comment}}--}}
                 </p>
             </tr>
         </table>
@@ -274,7 +274,7 @@
                 <td class="border-none">Como resultado de la inspección, la unidad es apta :</td>
                 <td style="border-bottom: 1px solid">SI</td>
                 <td class="border-none"></td>
-{{--                <td style="border-bottom: 1px solid">MO</td>--}}
+                {{--                <td style="border-bottom: 1px solid">MO</td>--}}
             </tr>
             </tbody>
         </table>
@@ -284,8 +284,23 @@
         <table class="border-none">
             <tbody>
             <tr>
-                <td class="border-none" >
+                <td class="border-none">
                     En caso de contestar NO, suspender el embarque o recepción e informar a Aseguramiento de Calidad
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="row">
+        <table class="border-none">
+            <tbody>
+            <tr>
+                <td style="width: 70%" class="border-none"></td>
+                <td style="width: 30%" class="border-none">
+                    <p style="text-align: left;font-size: 11px">Folio : <span style="font-size: 14px;">{{$receiptunit->id}}<</span></p>
+                    <p> {!! DNS2D::getBarcodeHTML($receiptunit->barcode, 'QRCODE',3,3) !!}</p>
+                    <p style="text-align: left;font-size: 11px">Etiqueta : <span style="font-size: 14px"> {{$receiptunit->barcode}} </span>    </p>
                 </td>
             </tr>
             </tbody>
