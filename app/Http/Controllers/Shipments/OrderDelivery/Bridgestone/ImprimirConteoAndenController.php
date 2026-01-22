@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Shipments\OrderDelivery\Bridgestone;
 
 use App\Http\Controllers\BaseController;
+use App\Models\Receipt\ReceiptAsn;
 use App\Models\Shipments\Bridgestone\Verificacion\Storagechecklocationbridg;
 use App\Models\Shipments\Bridgestone\Verificacion\StoragechecklocationbridgVig;
 use App\Models\Shipments\OrderDeliverie;
@@ -11,15 +12,21 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class ImprimirConteoAndenController extends BaseController
 {
-    //    Exporta el reporte de conteo de andenes del supervisor
+    //    Exporta el reporte de conteo de andenes del supervisor para embarques
     public function index($id)
     {
         $orderDelivery = OrderDeliverie::controlAccessUser()->where('id', $id)->first();
         if (empty($orderDelivery)) {
             return $this->errorResponse('No se encontró el registro solicitado.');
         }
-        $conteos = Storagechecklocationbridg::controlAccessUser()->where('orderid', $orderDelivery->id)->get();
-        $total = Storagechecklocationbridg::controlAccessUser()->where('orderid', $orderDelivery->id)->select('totalfinal')->get()->sum('totalfinal');
+        $conteos = Storagechecklocationbridg::controlAccessUser()
+            ->where('orderid', $orderDelivery->id)
+            ->where('model_type', 'OrderDelivery')
+            ->get();
+        $total = Storagechecklocationbridg::controlAccessUser()
+            ->where('orderid', $orderDelivery->id)
+            ->where('model_type', 'OrderDelivery')
+            ->select('totalfinal')->get()->sum('totalfinal');
         if (empty($conteos)) {
             return $this->errorResponse('No se encontró el registro solicitado.');
         }
@@ -29,21 +36,71 @@ class ImprimirConteoAndenController extends BaseController
         return response($pdf->output(), 200)->header('Content-Type', 'application/pdf');
     }
 
-    //    Exporta el conteo de andenes del vigilante
+    //  Exporta el reporte de conteo de andenes del supervisor para recibos
+    public function printformatcountbridgestonesupervisorreceipt($id)
+    {
+        $receiptasn = ReceiptAsn::findOrFail($id);
+        if (empty($receiptasn)) {
+            return $this->errorResponse('No se encontró el registro solicitado.');
+        }
+        $conteos = Storagechecklocationbridg::controlAccessUser()
+            ->where('orderid', $receiptasn->id)
+            ->where('model_type', 'ReceiptAsn')
+            ->get();
+        $total = Storagechecklocationbridg::controlAccessUser()
+            ->where('orderid', $receiptasn->id)
+            ->where('model_type', 'ReceiptAsn')
+            ->select('totalfinal')->get()->sum('totalfinal');
+        if (empty($conteos)) {
+            return $this->errorResponse('No se encontró el registro solicitado.');
+        }
+        $fortmat = 'Receipt.ReceiptAsn.Bridgestone.ConteoAndenes';
+        $pdf = Pdf::loadView($fortmat, compact('receiptasn', 'conteos', 'total'))->setPaper('A4', 'landscape');
 
+        return response($pdf->output(), 200)->header('Content-Type', 'application/pdf');
+    }
+
+    //    Exporta el conteo de andenes del vigilante
     public function printformatcountbridgestonevig($id)
     {
         $orderDelivery = OrderDeliverie::controlAccessUser()->where('id', $id)->first();
         if (empty($orderDelivery)) {
             return $this->errorResponse('No se encontró el registro solicitado.');
         }
-        $conteos = StoragechecklocationbridgVig::controlAccessUser()->where('orderid', $orderDelivery->id)->get();
-        $total = StoragechecklocationbridgVig::controlAccessUser()->where('orderid', $orderDelivery->id)->select('totalfinal')->get()->sum('totalfinal');
+        $conteos = StoragechecklocationbridgVig::controlAccessUser()
+            ->where('orderid', $orderDelivery->id)
+            ->where('model_type', 'OrderDelivery')
+            ->get();
+        $total = StoragechecklocationbridgVig::controlAccessUser()
+            ->where('orderid', $orderDelivery->id)
+            ->where('model_type', 'OrderDelivery')
+            ->select('totalfinal')->get()->sum('totalfinal');
         if (empty($conteos)) {
             return $this->errorResponse('No se encontró el registro solicitado.');
         }
         $fortmat = 'Shipments.OrderDeliveries.Formats.Bridgestone.ConteoAndenesVig';
         $pdf = Pdf::loadView($fortmat, compact('orderDelivery', 'conteos', 'total'))->setPaper('A4', 'landscape');
+
+        return response($pdf->output(), 200)->header('Content-Type', 'application/pdf');
+    }
+
+    //	Exporta el conteo de vigilancia para recibos
+    public function printformatcountbridgestonevigreceipt($id)
+    {
+        $receiptasn = ReceiptAsn::findOrFail($id);
+        if (empty($receiptasn)) {
+            return $this->errorResponse('No se encontró el registro solicitado.');
+        }
+        $conteos = StoragechecklocationbridgVig::controlAccessUser()
+            ->where('orderid', $receiptasn->id)
+            ->where('model_type', 'ReceiptAsn')->get();
+        $total = StoragechecklocationbridgVig::controlAccessUser()
+            ->where('orderid', $receiptasn->id)
+            ->where('model_type', 'ReceiptAsn')
+            ->select('totalfinal')->get()->sum('totalfinal');
+
+        $fortmat = 'Receipt.ReceiptAsn.Bridgestone.ConteoAndenesVig';
+        $pdf = Pdf::loadView($fortmat, compact('receiptasn', 'conteos', 'total'))->setPaper('A4', 'landscape');
 
         return response($pdf->output(), 200)->header('Content-Type', 'application/pdf');
     }

@@ -109,13 +109,21 @@ class OrderDeliveryController extends BaseController
             ->where('model_type', '=', 'OrderDelivery')
             ->where('auxiliary01', '=', 'SH')->get();
         $traces = StorageUnitTrace::controlAccessUser()->where('receiptunitid', $orderdelivery->folionumber)->get();
-        $conteos = Storagechecklocationbridg::controlAccessUser()->where('orderid', $orderdelivery->id)->get();
-        $conteosVig = StoragechecklocationbridgVig::controlAccessUser()->where('orderid', $orderdelivery->id)->get();
+
         $comments = StorageComment::where('modeltype', 'orderdeliveries')->where('modelid', $orderdelivery->id)->get();
         $events = ViewShipmentEvent::controlAccessUser()->where('embarque', $orderdelivery->shipmentid)->first();
         $tracesShipment = OrderdeliveryTrace::with(['user:id,username,name', 'event:statusid,name',
             'statusold:statusid,name', 'statusnew:statusid,name'])->where('orderid', $orderdelivery->id)
             ->orderBy('created_at', 'desc')->get();
+
+        $conteos = Storagechecklocationbridg::controlAccessUser()
+            ->where('orderid', $orderdelivery->id)
+            ->where('model_type', 'OrderDelivery')
+            ->get();
+        $conteosVig = StoragechecklocationbridgVig::controlAccessUser()
+            ->where('orderid', $orderdelivery->id)
+            ->where('model_type', 'OrderDelivery')
+            ->get();
 
         return view('Shipments.OrderDeliveries.show',
             compact('orderdelivery', 'evidences', 'traces',

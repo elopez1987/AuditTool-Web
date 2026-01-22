@@ -99,6 +99,7 @@ class Storagechecklocationbridg extends Model
         'value02',
         'value03',
         'team',
+        'model_type',
     ];
 
     protected $casts = [

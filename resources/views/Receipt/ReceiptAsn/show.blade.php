@@ -111,19 +111,17 @@
                                     @endif
                                 @endif
 
-
                             @endcan
                             @if($receiptasn->folionumber != null)
                                 <a href="{{url('tracereceiptunit/' . $receiptasn->folionumber)}}" target="_blank">
                                     <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
                                         <img
-                                            src="{{asset('/ico/data_hosting_information_internet_security_server_storage_icon_127051.png')}}"
-                                            alt="" class="img-16 ml-2 mr-2">
+                                                src="{{asset('/ico/data_hosting_information_internet_security_server_storage_icon_127051.png')}}"
+                                                alt="" class="img-16 ml-2 mr-2">
                                         <span class="text-button"> Karde de Folio</span>
                                     </button>
                                 </a>
                             @endif
-
 
 
                         </div>
@@ -136,7 +134,7 @@
                                 <div class="comment-text w-100">
                                     <h6 class="font-weight-light">Centro de distribución:</h6>
                                     <span
-                                        class="m-b-15 d-block font-12"> {{$receiptasn->center ? $receiptasn->center->description :''}}</span>
+                                            class="m-b-15 d-block font-12"> {{$receiptasn->center ? $receiptasn->center->description :''}}</span>
                                 </div>
                             </div>
                         </div>
@@ -145,7 +143,7 @@
                                 <div class="comment-text w-100">
                                     <h6 class="font-weight-light">Bodega:</h6>
                                     <span
-                                        class="m-b-15 d-block font-12"> {{$receiptasn->warehouse ? $receiptasn->warehouse->name : ''}}</span>
+                                            class="m-b-15 d-block font-12"> {{$receiptasn->warehouse ? $receiptasn->warehouse->name : ''}}</span>
                                 </div>
                             </div>
                         </div>
@@ -154,7 +152,7 @@
                                 <div class="comment-text w-100">
                                     <h6 class="font-weight-light">Categoría:</h6>
                                     <span
-                                        class="m-b-15 d-block font-12"> {{$receiptasn->inventorystock ? $receiptasn->inventorystock->description : ''}}</span>
+                                            class="m-b-15 d-block font-12"> {{$receiptasn->inventorystock ? $receiptasn->inventorystock->description : ''}}</span>
                                 </div>
                             </div>
                         </div>
@@ -163,7 +161,7 @@
                                 <div class="comment-text w-100">
                                     <h6 class="font-weight-light">Evento:</h6>
                                     <span
-                                        class="m-b-15 d-block font-12"> {{$receiptasn->reason ? $receiptasn->reason->name : ''}}</span>
+                                            class="m-b-15 d-block font-12"> {{$receiptasn->reason ? $receiptasn->reason->name : ''}}</span>
                                 </div>
                             </div>
                         </div>
@@ -207,7 +205,7 @@
                                 <div class="comment-text w-100">
                                     <h6 class="font-weight-light">Proveedor:</h6>
                                     <span
-                                        class="m-b-15 d-block font-12"> {{$receiptasn->provider ? $receiptasn->provider->name : ''}}</span>
+                                            class="m-b-15 d-block font-12"> {{$receiptasn->provider ? $receiptasn->provider->name : ''}}</span>
                                 </div>
                             </div>
                         </div>
@@ -234,7 +232,7 @@
                                 <div class="comment-text w-100">
                                     <h6 class="font-weight-light">Fin de descarga:</h6>
                                     <span
-                                        class="m-b-15 d-block font-12"> {{$receiptasn->unloadfinishdate}}</span>
+                                            class="m-b-15 d-block font-12"> {{$receiptasn->unloadfinishdate}}</span>
                                 </div>
                             </div>
                         </div>
@@ -273,7 +271,7 @@
                                 <div class="comment-text w-100">
                                     <h6 class="font-weight-light">Línea de transporte:</h6>
                                     <span
-                                        class="m-b-15 d-block font-12"> {{$receiptasn->folio ? $receiptasn->carrier->name : ''}}</span>
+                                            class="m-b-15 d-block font-12"> {{$receiptasn->folio ? $receiptasn->carrier->name : ''}}</span>
                                 </div>
                             </div>
                         </div>
@@ -282,7 +280,7 @@
                                 <div class="comment-text w-100">
                                     <h6 class="font-weight-light">Placa de caja:</h6>
                                     <span
-                                        class="m-b-15 d-block font-12"> {{$receiptasn->folio ? $receiptasn->folio->boxnumber : ''}}</span>
+                                            class="m-b-15 d-block font-12"> {{$receiptasn->folio ? $receiptasn->folio->boxnumber : ''}}</span>
                                 </div>
                             </div>
                         </div>
@@ -291,7 +289,7 @@
                                 <div class="comment-text w-100">
                                     <h6 class="font-weight-light">Operador:</h6>
                                     <span
-                                        class="m-b-15 d-block font-12"> {{$receiptasn->folio ? $receiptasn->folio->tracto->operatorname : ''}}</span>
+                                            class="m-b-15 d-block font-12"> {{$receiptasn->folio ? $receiptasn->folio->tracto->operatorname : ''}}</span>
                                 </div>
                             </div>
                         </div>
@@ -308,21 +306,31 @@
                     <ul class="nav nav-tabs customtab" role="tablist">
                         <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#view01"
                                                 role="tab"><span
-                                    class="hidden-sm-up"><i class="ti-home"></i></span> <span class="hidden-xs-down">Detalle</span></a>
+                                        class="hidden-sm-up"><i class="ti-home"></i></span> <span
+                                        class="hidden-xs-down">Detalle</span></a>
                         </li>
                         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view02" role="tab"><span
-                                    class="hidden-sm-up"><i class="ti-camera"></i></span> <span class="hidden-xs-down">Evidencia</span></a>
+                                        class="hidden-sm-up"><i class="ti-camera"></i></span> <span
+                                        class="hidden-xs-down">Evidencia</span></a>
                         </li>
                         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view03" role="tab"><span
-                                    class="hidden-sm-up"><i class="ti-list"></i></span> <span class="hidden-xs-down">Incidencias</span></a>
+                                        class="hidden-sm-up"><i class="ti-list"></i></span> <span
+                                        class="hidden-xs-down">Incidencias</span></a>
                         </li>
                         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view04" role="tab"><span
-                                    class="hidden-sm-up"><i class="ti-comment"></i></span> <span class="hidden-xs-down">Comentarios</span></a>
+                                        class="hidden-sm-up"><i class="ti-comment"></i></span> <span
+                                        class="hidden-xs-down">Comentarios</span></a>
                         </li>
                         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view05" role="tab"><span
-                                    class="hidden-sm-up"><i class="ti-comment"></i></span> <span class="hidden-xs-down">Detalle de contenedores</span></a>
+                                        class="hidden-sm-up"><i class="ti-comment"></i></span> <span
+                                        class="hidden-xs-down">Detalle de contenedores</span></a>
                         </li>
-
+                        @can('checkbridgestonereceipt')
+                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view06" role="tab"><span
+                                            class="hidden-sm-up"><i class="ti-comment"></i></span> <span
+                                            class="hidden-xs-down">Verificacion bridgestone</span></a>
+                            </li>
+                        @endcan
                     </ul>
                     <!-- Tab panes -->
                     <div class="tab-content">
@@ -338,12 +346,12 @@
                                             <div class="row mt-3">
                                                 <div class="col-lg-12">
                                                     <table
-                                                        class="table table-bordered table-condensed  tablegeneral ">
+                                                            class="table table-bordered table-condensed  tablegeneral ">
                                                         <thead>
                                                         <tr>
                                                             <th>Material</th>
                                                             <th>Description</th>
-{{--                                                            <th>Lote</th>--}}
+                                                            {{--                                                            <th>Lote</th>--}}
                                                             <th>Cantidad esperada</th>
                                                             <th>Cantidad escaneada</th>
                                                             <th>Unidad de medida</th>
@@ -355,7 +363,7 @@
                                                             <tr>
                                                                 <td>{{$stock->prtnum}}</td>
                                                                 <td>{{$stock->lngdsc}}</td>
-{{--                                                                <td>{{$stock->expirecode}}</td>--}}
+                                                                {{--                                                                <td>{{$stock->expirecode}}</td>--}}
                                                                 <td>{{$stock->quantitytrue}}</td>
                                                                 <td>
                                                                     @if(!empty($stock->totalescaneado))
@@ -392,9 +400,9 @@
                                                                             <button type="button"
                                                                                     class="btn waves-effect waves-light btn-outline-info btn-sm">
                                                                                 <img
-                                                                                    src="{{asset('/ico/closemodal.png')}}"
-                                                                                    alt=""
-                                                                                    class="img-16">
+                                                                                        src="{{asset('/ico/closemodal.png')}}"
+                                                                                        alt=""
+                                                                                        class="img-16">
                                                                             </button>
                                                                         </a>
                                                                         @include('Receipt.ReceiptAsn.deletestock')
@@ -425,11 +433,11 @@
                                                                 <div class="card">
                                                                     <div class="el-card-item">
                                                                         <div
-                                                                            class="el-card-avatar el-overlay-1">
+                                                                                class="el-card-avatar el-overlay-1">
                                                                             <img
-                                                                                src="{{asset('storage/' . $photo->path)}}"
-                                                                                alt="Evidencia"
-                                                                                style="height: 200px;max-height: 200px"/>
+                                                                                    src="{{asset('storage/' . $photo->path)}}"
+                                                                                    alt="Evidencia"
+                                                                                    style="height: 200px;max-height: 200px"/>
                                                                             <div class="el-overlay">
                                                                                 <ul class="list-style-none el-info">
                                                                                     <li class="el-item">
@@ -444,10 +452,10 @@
                                                                             </div>
                                                                         </div>
                                                                         <div
-                                                                            class="el-card-content">
+                                                                                class="el-card-content">
                                                                             <h4 class="m-b-0 font-10 font-weight-light"> {{$photo->user->name}} </h4>
                                                                             <span
-                                                                                class="text-muted">{{$photo->created_at}}
+                                                                                    class="text-muted">{{$photo->created_at}}
                                                                         </span>
                                                                         </div>
                                                                     </div>
@@ -506,11 +514,11 @@
                                                                 <div class="card">
                                                                     <div class="el-card-item">
                                                                         <div
-                                                                            class="el-card-avatar el-overlay-1">
+                                                                                class="el-card-avatar el-overlay-1">
                                                                             <img
-                                                                                src="{{asset('storage/' . $photo->path)}}"
-                                                                                alt="Evidencia"
-                                                                                style="height: 200px;max-height: 200px"/>
+                                                                                    src="{{asset('storage/' . $photo->path)}}"
+                                                                                    alt="Evidencia"
+                                                                                    style="height: 200px;max-height: 200px"/>
                                                                             <div class="el-overlay">
                                                                                 <ul class="list-style-none el-info">
                                                                                     <li class="el-item">
@@ -525,10 +533,10 @@
                                                                             </div>
                                                                         </div>
                                                                         <div
-                                                                            class="el-card-content">
+                                                                                class="el-card-content">
                                                                             <h4 class="m-b-0 font-10 font-weight-light"> {{$photo->user->name}} </h4>
                                                                             <span
-                                                                                class="text-muted">{{$photo->created_at}}
+                                                                                    class="text-muted">{{$photo->created_at}}
                                                                         </span>
                                                                         </div>
                                                                     </div>
@@ -555,7 +563,7 @@
                                                             {{$item->user->name}}
                                                         </h6>
                                                         <span
-                                                            class="text-muted float-right">{{$item->created_at}}</span>
+                                                                class="text-muted float-right">{{$item->created_at}}</span>
                                                         <span class="m-b-15 d-block">
                                                             {{$item->comment}}
                                                         </span>
@@ -576,7 +584,7 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <table
-                                                class="table table-condensed  table-bordered table-hover">
+                                                    class="table table-condensed  table-bordered table-hover">
                                                 <thead>
                                                 <tr>
                                                     <th>Número de parte</th>
@@ -585,9 +593,9 @@
                                                     <th>Lote</th>
                                                     <th>Fecha de caducidad</th>
                                                     <th>Lpn</th>
-{{--                                                    <th>¿Corresponde en EAN?</th>--}}
-{{--                                                    <th>¿Corresponde la F.Caducidad?</th>--}}
-{{--                                                    <th>Evidencia</th>--}}
+                                                    {{--                                                    <th>¿Corresponde en EAN?</th>--}}
+                                                    {{--                                                    <th>¿Corresponde la F.Caducidad?</th>--}}
+                                                    {{--                                                    <th>Evidencia</th>--}}
                                                     <th>Usuario</th>
                                                     <th>Fecha de creación</th>
                                                     <th></th>
@@ -602,44 +610,44 @@
                                                         <td>{{$container->batch}}</td>
                                                         <td>{{$container->expiredate}}</td>
                                                         <td>{{$container->lpnid}}</td>
-{{--                                                        <td>--}}
-{{--                                                            @if($container->eanpz == $container->eanbox)--}}
-{{--                                                                <span class="badge badge-success"--}}
-{{--                                                                      style="padding: 5px 10px">SI</span>--}}
-{{--                                                            @else--}}
-{{--                                                                <span class="badge badge-danger"--}}
-{{--                                                                      style="padding: 5px 10px">NO</span>--}}
-{{--                                                            @endif--}}
-{{--                                                        </td>--}}
-{{--                                                        <td>--}}
-{{--                                                            @if($container->auxiliary01 == 'SI' )--}}
-{{--                                                                <span class="badge badge-success"--}}
-{{--                                                                      style="padding: 5px 10px">SI</span>--}}
-{{--                                                            @else--}}
-{{--                                                                <span class="badge badge-danger"--}}
-{{--                                                                      style="padding: 5px 10px">NO</span>--}}
-{{--                                                            @endif--}}
-{{--                                                        </td>--}}
-{{--                                                        <td>--}}
-{{--                                                            @if(!empty($container->photo))--}}
-{{--                                                                <div class="el-card-item">--}}
-{{--                                                                    <div class="el-card-avatar el-overlay-1">--}}
-{{--                                                                        <div class="el-overlay">--}}
-{{--                                                                            <ul class="list-style-none el-info">--}}
-{{--                                                                                <li class="el-item bg-grey">--}}
-{{--                                                                                    <a class="btn default btn-outline image-popup-vertical-fit el-link"--}}
-{{--                                                                                       href="{{asset('storage/' . $container->photo)}}">--}}
-{{--                                                                                        Ver--}}
-{{--                                                                                        <i class="icon-magnifier"></i>--}}
-{{--                                                                                    </a>--}}
-{{--                                                                                </li>--}}
-{{--                                                                            </ul>--}}
-{{--                                                                        </div>--}}
-{{--                                                                    </div>--}}
-{{--                                                                </div>--}}
-{{--                                                            @else--}}
-{{--                                                            @endif--}}
-{{--                                                        </td>--}}
+                                                        {{--                                                        <td>--}}
+                                                        {{--                                                            @if($container->eanpz == $container->eanbox)--}}
+                                                        {{--                                                                <span class="badge badge-success"--}}
+                                                        {{--                                                                      style="padding: 5px 10px">SI</span>--}}
+                                                        {{--                                                            @else--}}
+                                                        {{--                                                                <span class="badge badge-danger"--}}
+                                                        {{--                                                                      style="padding: 5px 10px">NO</span>--}}
+                                                        {{--                                                            @endif--}}
+                                                        {{--                                                        </td>--}}
+                                                        {{--                                                        <td>--}}
+                                                        {{--                                                            @if($container->auxiliary01 == 'SI' )--}}
+                                                        {{--                                                                <span class="badge badge-success"--}}
+                                                        {{--                                                                      style="padding: 5px 10px">SI</span>--}}
+                                                        {{--                                                            @else--}}
+                                                        {{--                                                                <span class="badge badge-danger"--}}
+                                                        {{--                                                                      style="padding: 5px 10px">NO</span>--}}
+                                                        {{--                                                            @endif--}}
+                                                        {{--                                                        </td>--}}
+                                                        {{--                                                        <td>--}}
+                                                        {{--                                                            @if(!empty($container->photo))--}}
+                                                        {{--                                                                <div class="el-card-item">--}}
+                                                        {{--                                                                    <div class="el-card-avatar el-overlay-1">--}}
+                                                        {{--                                                                        <div class="el-overlay">--}}
+                                                        {{--                                                                            <ul class="list-style-none el-info">--}}
+                                                        {{--                                                                                <li class="el-item bg-grey">--}}
+                                                        {{--                                                                                    <a class="btn default btn-outline image-popup-vertical-fit el-link"--}}
+                                                        {{--                                                                                       href="{{asset('storage/' . $container->photo)}}">--}}
+                                                        {{--                                                                                        Ver--}}
+                                                        {{--                                                                                        <i class="icon-magnifier"></i>--}}
+                                                        {{--                                                                                    </a>--}}
+                                                        {{--                                                                                </li>--}}
+                                                        {{--                                                                            </ul>--}}
+                                                        {{--                                                                        </div>--}}
+                                                        {{--                                                                    </div>--}}
+                                                        {{--                                                                </div>--}}
+                                                        {{--                                                            @else--}}
+                                                        {{--                                                            @endif--}}
+                                                        {{--                                                        </td>--}}
                                                         <td>{{$container->user ? $container->user->name : ''}}</td>
                                                         <td>{{$container->created_at}}</td>
                                                         <td>
@@ -670,6 +678,387 @@
                                 </div>
                             </div>
                         </div>
+                        @can('checkbridgestonereceipt')
+                            <div class="tab-pane " id="view06" role="tabpanel">
+                                <hr class="m-t-1">
+                                <div class="row mt-3">
+                                    <div class="col-lg-12">
+                                        <a href="{{url('printformatcountbridgestonesupervisorreceipt/' . $receiptasn->id)}}"
+                                           target="_blank">
+                                            <button type="button"
+                                                    class="btn waves-effect waves-light btn-outline-info btn-md text-button"
+                                                    style="padding-right: 3px;">
+                                                <img src="{{asset('/ico/papeleta.png')}}" alt="" class="img-16">
+                                                Imprimir Conteo Operaciones
+                                            </button>
+                                        </a>
+                                        <a href="{{url('printformatcountbridgestonevigreceipt/' . $receiptasn->id)}}"
+                                           target="_blank">
+                                            <button type="button"
+                                                    class="btn waves-effect waves-light btn-outline-info btn-md text-button"
+                                                    style="padding-right: 3px;">
+                                                <img src="{{asset('/ico/papeleta.png')}}" alt="" class="img-16">
+                                                Imprimir Conteo Vigilancia
+                                            </button>
+                                        </a>
+                                    </div>
+                                </div>
+                                <hr class="m-t-1">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        @if(!empty($conteos))
+                                            @foreach($conteos as $conteo)
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <span class="badge bg-info text-black mt-2 mb-2 padding-3"
+                                                              style="font-size: 14px !important;font-weight: lighter;">Conteo operaciones-  {{$conteo->id}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="row">
+                                                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label for="shipmentid">Sobrante Izquierdo</label>
+                                                                    <input type="text" class="form-control "
+                                                                           value="{{$conteo->sobranteizq ?? 0}}"
+                                                                           disabled>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label for="shipmentid">Llantas NC Izquierdo</label>
+                                                                    <input type="text" class="form-control "
+                                                                           value="{{$conteo->ncizq ?? 0}}"
+                                                                           disabled>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label for="shipmentid">Total Izquierdo</label>
+                                                                    <input type="text" class="form-control "
+                                                                           value="{{$conteo->totalIzquierdo ?? 0}}"
+                                                                           disabled>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="row">
+                                                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label for="shipmentid">Sobrante Derecho</label>
+                                                                    <input type="text" class="form-control "
+                                                                           value="{{$conteo->sobranteder ?? 0}}"
+                                                                           disabled>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label for="shipmentid">Llantas NC Derecho</label>
+                                                                    <input type="text" class="form-control "
+                                                                           value="{{$conteo->ncder}}"
+                                                                           disabled>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label for="shipmentid">Total Derecho</label>
+                                                                    <input type="text" class="form-control "
+                                                                           value="{{$conteo->totalderecho}}"
+                                                                           disabled>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-2 col-md-6 col-sm-12">
+                                                        <div class="form-group">
+                                                            <label for="shipmentid">Total</label>
+                                                            <input type="text" class="form-control "
+                                                                   value="{{$conteo->totalfinal}}"
+                                                                   disabled>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-2 col-md-6 col-sm-12">
+                                                        <div class="form-group">
+                                                            <label for="shipmentid">Contador</label>
+                                                            <input type="text" class="form-control "
+                                                                   value="{{$conteo->name}}"
+                                                                   disabled>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <table class="table table-bordered  table-condensed ">
+                                                    <thead>
+                                                    <th class="text-center font-16">Lado Izquierdo</th>
+                                                    <th class="text-center font-16">Lado Derecho</th>
+                                                    </thead>
+                                                    <tbody>
+                                                    <td width="50%">
+                                                        <table class="table table-bordered  table-condensed">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>Rack</th>
+                                                                <th>Código</th>
+                                                                <th>Canal</th>
+                                                                <th>Cantidad</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            @if(isset($conteo->detalleizquierdo))
+                                                                @foreach($conteo->detalleizquierdo as $detalle)
+                                                                    <tr>
+                                                                        @php
+                                                                            $codigo = '';
+                                                                            $canal = '';
+                                                                            $cantidad = '';
+                                                                            foreach($detalle as $key => $value) {
+                                                                                if(strpos($key, 'codigoIzq_') !== false) {
+                                                                                    $codigo = $value;
+                                                                                } elseif(strpos($key, 'canalIzq_') !== false) {
+                                                                                    $canal = $value;
+                                                                                } elseif(strpos($key, 'cantidadIzq_') !== false) {
+                                                                                    $cantidad = $value;
+                                                                                }
+                                                                            }
+                                                                        @endphp
+                                                                        <td>
+                                                                            Rack-{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</td>
+                                                                        <td>{{ $codigo }}</td>
+                                                                        <td>{{ $canal }}</td>
+                                                                        <td>{{ $cantidad }}</td>
+                                                                    </tr>
+                                                                @endforeach
+                                                            @endif
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                    <td width="50%">
+                                                        <table class="table table-bordered  table-condensed">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>Rack</th>
+                                                                <th>Código</th>
+                                                                <th>Canal</th>
+                                                                <th>Cantidad</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            @if(isset($conteo->detallederecho))
+                                                                @foreach($conteo->detallederecho as $detalle)
+                                                                    <tr>
+                                                                        @php
+                                                                            $codigo = '';
+                                                                            $canal = '';
+                                                                            $cantidad = '';
+                                                                            foreach($detalle as $key => $value) {
+                                                                                if(strpos($key, 'codigoDer_') !== false) {
+                                                                                    $codigo = $value;
+                                                                                } elseif(strpos($key, 'canalDer_') !== false) {
+                                                                                    $canal = $value;
+                                                                                } elseif(strpos($key, 'cantidadDer_') !== false) {
+                                                                                    $cantidad = $value;
+                                                                                }
+                                                                            }
+                                                                        @endphp
+                                                                        <td>
+                                                                            Rack-{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</td>
+                                                                        <td>{{ $codigo }}</td>
+                                                                        <td>{{ $canal }}</td>
+                                                                        <td>{{ $cantidad }}</td>
+                                                                    </tr>
+                                                                @endforeach
+                                                            @endif
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                    </tbody>
+                                                </table>
+                                                <hr class="m-t-2 m-b-2" style="border-color:2px solid #607d8b;">
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                    <div class="col-lg-6" style="border-left:  2px solid #b0bec5">
+                                        @if(!empty($conteosVig))
+                                            @foreach($conteosVig as $conteo)
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <span class="badge bg-warning text-black mt-2 mb-2 padding-3"
+                                                              style="font-size: 14px !important;font-weight: lighter;">Conteo vigilancia - {{ $conteo->id }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="row">
+                                                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label for="shipmentid">Sobrante Izquierdo</label>
+                                                                    <input type="text" class="form-control "
+                                                                           value="{{$conteo->sobranteizq ?? 0}}"
+                                                                           disabled>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label for="shipmentid">Llantas NC Izquierdo</label>
+                                                                    <input type="text" class="form-control "
+                                                                           value="{{$conteo->ncizq ?? 0}}"
+                                                                           disabled>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label for="shipmentid">Total Izquierdo</label>
+                                                                    <input type="text" class="form-control "
+                                                                           value="{{$conteo->totalIzquierdo ?? 0 }}"
+                                                                           disabled>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="row">
+                                                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label for="shipmentid">Sobrante Derecho</label>
+                                                                    <input type="text" class="form-control "
+                                                                           value="{{$conteo->sobranteder ?? 0}}"
+                                                                           disabled>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label for="shipmentid">Llantas NC Derecho</label>
+                                                                    <input type="text" class="form-control "
+                                                                           value="{{$conteo->ncder ?? 0}}"
+                                                                           disabled>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label for="shipmentid">Total Derecho</label>
+                                                                    <input type="text" class="form-control "
+                                                                           value="{{$conteo->totalderecho}}"
+                                                                           disabled>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-2 col-md-6 col-sm-12">
+                                                        <div class="form-group">
+                                                            <label for="shipmentid">Total</label>
+                                                            <input type="text" class="form-control "
+                                                                   value="{{$conteo->totalfinal}}"
+                                                                   disabled>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-2 col-md-6 col-sm-12">
+                                                        <div class="form-group">
+                                                            <label for="shipmentid">Contador</label>
+                                                            <input type="text" class="form-control "
+                                                                   value="{{$conteo->name}}"
+                                                                   disabled>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <table class="table table-bordered  table-condensed table-hover">
+                                                    <thead>
+                                                    <th class="text-center font-16">Lado Izquierdo</th>
+                                                    <th class="text-center font-16">Lado Derecho</th>
+                                                    </thead>
+                                                    <tbody>
+                                                    <td width="50%">
+                                                        <table class="table table-bordered  table-condensed">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>Rack</th>
+                                                                <th>Código</th>
+                                                                <th>Canal</th>
+                                                                <th>Cantidad</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            @if(isset($conteo->detalleizquierdo))
+                                                                @foreach($conteo->detalleizquierdo as $detalle)
+                                                                    <tr>
+                                                                        @php
+                                                                            $codigo = '';
+                                                                            $canal = '';
+                                                                            $cantidad = '';
+                                                                            foreach($detalle as $key => $value) {
+                                                                                if(strpos($key, 'codigoIzq_') !== false) {
+                                                                                    $codigo = $value;
+                                                                                } elseif(strpos($key, 'canalIzq_') !== false) {
+                                                                                    $canal = $value;
+                                                                                } elseif(strpos($key, 'cantidadIzq_') !== false) {
+                                                                                    $cantidad = $value;
+                                                                                }
+                                                                            }
+
+                                                                        @endphp
+                                                                        <td>
+                                                                            Rack-{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</td>
+                                                                        <td>{{ $codigo }}</td>
+                                                                        <td>{{ $canal }}</td>
+                                                                        <td>{{ $cantidad }}</td>
+                                                                    </tr>
+                                                                @endforeach
+                                                            @endif
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                    <td width="50%">
+                                                        <table class="table table-bordered  table-condensed table-hover">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>Rack</th>
+                                                                <th>Código</th>
+                                                                <th>Canal</th>
+                                                                <th>Cantidad</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            @if(isset($conteo->detallederecho))
+                                                                @foreach($conteo->detallederecho as $detalle)
+                                                                    <tr>
+                                                                        @php
+                                                                            $codigo = '';
+                                                                            $canal = '';
+                                                                            $cantidad = '';
+                                                                            foreach($detalle as $key => $value) {
+                                                                                if(strpos($key, 'codigoDer_') !== false) {
+                                                                                    $codigo = $value;
+                                                                                } elseif(strpos($key, 'canalDer_') !== false) {
+                                                                                    $canal = $value;
+                                                                                } elseif(strpos($key, 'cantidadDer_') !== false) {
+                                                                                    $cantidad = $value;
+                                                                                }
+                                                                            }
+                                                                        @endphp
+                                                                        <td>
+                                                                            Rack-{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</td>
+                                                                        <td>{{ $codigo }}</td>
+                                                                        <td>{{ $canal }}</td>
+                                                                        <td>{{ $cantidad }}</td>
+                                                                    </tr>
+                                                                @endforeach
+                                                            @endif
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                    </tbody>
+                                                </table>
+                                                <hr class="m-t-2 m-b-2">
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        @endcan
                     </div>
                 </div>
             </div>

@@ -90,8 +90,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('loadevidenceorder/{id}/upload', [EvidenceOrderDeliveryController::class, 'loadevidenceorder'])->name('loadevidenceorder');
     //    Imprimir formato de conteo de anden de bridgestone
     Route::get('printformatcountbridgestone/{id}', [ImprimirConteoAndenController::class, 'index'])->name('printformatcountbridgestone');
-    //    Imprimir conteo de vigilante
+    //	  Imprimir conteo de supervisores para recibos
+    Route::get('printformatcountbridgestonesupervisorreceipt/{id}', [ImprimirConteoAndenController::class, 'printformatcountbridgestonesupervisorreceipt'])->name('printformatcountbridgestonesupervisorreceipt');
+    //    Imprimir conteo de vigilante para embarques
     Route::get('printformatcountbridgestonevig/{id}', [ImprimirConteoAndenController::class, 'printformatcountbridgestonevig'])->name('printformatcountbridgestonevig');
+    //	  Imprimir conteo de vigilante para recibos
+    Route::get('printformatcountbridgestonevigreceipt/{id}', [ImprimirConteoAndenController::class, 'printformatcountbridgestonevigreceipt'])->name('printformatcountbridgestonevigreceipt');
     //    Imprimir formato de conteo APT Bridgestone
     Route::get('printformatcountaptbridgestone/{id}', [ImprimirConteoAndenController::class, 'printformatcountaptbridgestone'])->name('printformatcountaptbridgestone');
 
