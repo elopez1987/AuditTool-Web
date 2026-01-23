@@ -9,6 +9,7 @@ use App\Models\Security\Modules\SecurityModule;
 use App\Models\Security\Permission\Permission;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class PermissionController extends BaseController
 {
@@ -22,15 +23,42 @@ class PermissionController extends BaseController
 
     public function getDataPermissions(Request $request)
     {
-        $data = Permission::leftJoin('securityfunctions', 'securityfunctions.functionid', '=', 'permissions.functionid')
-            ->leftJoin('securitymodules', 'securitymodules.moduleid', '=', 'securityfunctions.moduleid')
-            ->ForModule($request->get('moduleid'))
-            ->ForFunction($request->get('functionid'))
-            ->Name($request->get('name'))
-            ->Description($request->get('description'))
-            ->select(['permissions.*', 'securitymodules.description as module', 'securityfunctions.description as function']);
+        // Generar clave única basada en los parámetros de filtrado
+        $cacheKey = 'permissions_data_' . md5(json_encode([
+            'moduleid' => $request->get('moduleid'),
+            'functionid' => $request->get('functionid'),
+            'name' => $request->get('name'),
+            'description' => $request->get('description'),
+        ]));
 
-        return $this->showDataToView($data, 'Security.Permissions.partials.buttons2');
+        // Cache por 1 hora (3600 segundos)
+        // Con serverSide: false, cacheamos toda la colección
+        $data = Cache::tags(['permissions'])->remember($cacheKey, 3600, function () use ($request) {
+            return Permission::leftJoin('securityfunctions', 'securityfunctions.functionid', '=', 'permissions.functionid')
+                ->leftJoin('securitymodules', 'securitymodules.moduleid', '=', 'securityfunctions.moduleid')
+                ->ForModule($request->get('moduleid'))
+                ->ForFunction($request->get('functionid'))
+                ->Name($request->get('name'))
+                ->Description($request->get('description'))
+                ->select([
+                    'permissions.*',
+                    'securitymodules.description as module',
+                    'securityfunctions.description as function',
+                ])
+                ->get()
+                ->map(function ($permission) {
+                    // Agregar botón de acciones a cada registro
+                    // Extraer variables que espera la vista de botones
+                    $id = $permission->id;
+                    $name = $permission->name;
+                    $permission->btn = view('Security.Permissions.partials.buttons2', compact('id', 'name'))->render();
+
+                    return $permission;
+                });
+        });
+
+        // Devolver JSON simple para DataTables con serverSide: false
+        return response()->json(['data' => $data]);
     }
 
     public function create()
