@@ -33,29 +33,17 @@ class PermissionController extends BaseController
 
         // Cache por 1 hora (3600 segundos)
         // Con serverSide: false, cacheamos toda la colección
-        $data = Cache::tags(['permissions'])->remember($cacheKey, 3600, function () use ($request) {
-            return Permission::leftJoin('securityfunctions', 'securityfunctions.functionid', '=', 'permissions.functionid')
-                ->leftJoin('securitymodules', 'securitymodules.moduleid', '=', 'securityfunctions.moduleid')
-                ->ForModule($request->get('moduleid'))
-                ->ForFunction($request->get('functionid'))
-                ->Name($request->get('name'))
-                ->Description($request->get('description'))
-                ->select([
-                    'permissions.*',
-                    'securitymodules.description as module',
-                    'securityfunctions.description as function',
-                ])
-                ->get()
-                ->map(function ($permission) {
-                    // Agregar botón de acciones a cada registro
-                    // Extraer variables que espera la vista de botones
-                    $id = $permission->id;
-                    $name = $permission->name;
-                    $permission->btn = view('Security.Permissions.partials.buttons2', compact('id', 'name'))->render();
+        $cacheDriver = config('cache.default');
 
-                    return $permission;
-                });
-        });
+        // Usar tags solo si el driver lo soporta (Redis/Memcached)
+        // Para file/database cache, usar remember simple sin tags
+        $data = in_array($cacheDriver, ['redis', 'memcached'])
+            ? Cache::tags(['permissions'])->remember($cacheKey, 3600, function () use ($request) {
+                return $this->getPermissionsData($request);
+            })
+            : Cache::remember($cacheKey, 3600, function () use ($request) {
+                return $this->getPermissionsData($request);
+            });
 
         // Devolver JSON simple para DataTables con serverSide: false
         return response()->json(['data' => $data]);
@@ -101,5 +89,32 @@ class PermissionController extends BaseController
         Permission::destroy($id);
 
         return $this->redirectBackSuccessMessage('Registro eliminado con exito!!');
+    }
+
+    /**
+     * Get permissions data with joins and button rendering
+     */
+    private function getPermissionsData(Request $request)
+    {
+        return Permission::leftJoin('securityfunctions', 'securityfunctions.functionid', '=', 'permissions.functionid')
+            ->leftJoin('securitymodules', 'securitymodules.moduleid', '=', 'securityfunctions.moduleid')
+            ->ForModule($request->get('moduleid'))
+            ->ForFunction($request->get('functionid'))
+            ->Name($request->get('name'))
+            ->Description($request->get('description'))
+            ->select([
+                'permissions.*',
+                'securitymodules.description as module',
+                'securityfunctions.description as function',
+            ])
+            ->get()
+            ->map(function ($permission) {
+                // Agregar botón de acciones a cada registro
+                $id = $permission->id;
+                $name = $permission->name;
+                $permission->btn = view('Security.Permissions.partials.buttons2', compact('id', 'name'))->render();
+
+                return $permission;
+            });
     }
 }

@@ -54,13 +54,29 @@ $("#table-permission").DataTable({
 
 ## Configuración Requerida
 
-### 1. Verificar Redis en .env
+### 1. Configurar Cache Driver en .env
+
+**Opción A: Redis (Recomendado para producción)**
 ```env
 CACHE_DRIVER=redis
 REDIS_HOST=127.0.0.1
 REDIS_PASSWORD=null
 REDIS_PORT=6379
 ```
+
+**Opción B: File Cache (Fallback si Redis no está disponible)**
+```env
+CACHE_DRIVER=file
+```
+
+**Opción C: Database Cache**
+```env
+CACHE_DRIVER=database
+```
+
+**Nota**: El sistema detecta automáticamente el driver configurado y ajusta su comportamiento:
+- **Redis/Memcached**: Usa cache tags para invalidación eficiente
+- **File/Database**: Usa invalidación por patrón de claves
 
 ### 2. Verificar configuración de cache
 En `config/cache.php`, asegurarse que el driver de Redis esté configurado:
