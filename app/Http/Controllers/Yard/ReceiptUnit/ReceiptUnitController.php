@@ -54,7 +54,8 @@ class ReceiptUnitController extends BaseController
             ->with(['carrier:id,carrierid,name', 'zone:id,name', 'location:id,name',
                 'warehouse:warehouseid,name', 'event:id,name',
                 'tracto:id,operatorname,phone,trucknumber,econumber', 'center:centerid,description',
-                'unittype:id,description', 'truckcategory:truckcategoryid,description', 'unitstatus:id,name', 'status:statusid,name,auxiliary01', 'truck:id,name'])
+                'unittype:id,description', 'truckcategory:truckcategoryid,description',
+                'unitstatus:id,name', 'status:statusid,name,auxiliary01', 'truck:id,name'])
             ->whereNotIn('statusid', ['TR'])
             ->Folio($request->get('folionumber'))
             ->Barcode($request->get('barcode'))
@@ -70,7 +71,7 @@ class ReceiptUnitController extends BaseController
             ->get();
 
         return DataTables::of($data)
-            ->addColumn('btn', "{$this->viewPath}.partials.buttons")->rawColumns(['btn'])->toJson();
+            ->addColumn('btn', 'Yards.ReceiptUnits.partials.buttons')->rawColumns(['btn'])->toJson();
     }
 
     public function create()

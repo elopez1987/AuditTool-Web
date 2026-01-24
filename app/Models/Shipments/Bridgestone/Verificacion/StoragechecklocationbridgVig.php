@@ -96,6 +96,7 @@ class StoragechecklocationbridgVig extends Model
         'sobranteizq',
         'sobranteder',
         'ncder',
+        'model_type',
     ];
 
     protected $casts = [

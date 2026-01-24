@@ -720,12 +720,11 @@
                             <hr class="m-t-1">
                             <div class="row">
                                 <div class="col-lg-6">
-
                                     @if(!empty($conteos))
                                         @foreach($conteos as $conteo)
                                             <div class="row">
-                                                <div class="col-lg-12" style="align-content: center">
-                                                    <span class="badge bg-info  font-14 font-bold text-white mt-2 mb-2 padding-3">Conteo operaciones</span>
+                                                <div class="col-lg-12" >
+                                                    <span class="badge bg-info text-black mt-2 mb-2 padding-3" style="font-size: 14px !important;font-weight: lighter;">Conteo operaciones-  {{$conteo->id}}</span>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -895,12 +894,11 @@
                                     @endif
                                 </div>
                                 <div class="col-lg-6" style="border-left:  2px solid #b0bec5">
-
                                     @if(!empty($conteosVig))
                                         @foreach($conteosVig as $conteo)
                                             <div class="row">
                                                 <div class="col-lg-12">
-                                                    <span class="badge bg-warning font-14 font-bold text-black mt-2 mb-2 padding-3">Conteo vigilancia - {{ $conteo->id }}</span>
+                                                    <span class="badge bg-warning text-black mt-2 mb-2 padding-3" style="font-size: 14px !important;font-weight: lighter;">Conteo vigilancia - {{ $conteo->id }}</span>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -1071,7 +1069,6 @@
                                     @endif
                                 </div>
                             </div>
-
                         </div>
 
                         {{--                        Fotos--}}

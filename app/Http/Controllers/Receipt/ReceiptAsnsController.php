@@ -13,6 +13,8 @@ use App\Models\Receipt\ReceiptContainer;
 use App\Models\Receipt\ReceiptIncidenceStock;
 use App\Models\Receipt\ReceiptStock;
 use App\Models\Receipt\StorageSchedulleReceipt;
+use App\Models\Shipments\Bridgestone\Verificacion\Storagechecklocationbridg;
+use App\Models\Shipments\Bridgestone\Verificacion\StoragechecklocationbridgVig;
 use App\Models\Yard\StorageReason;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -151,9 +153,19 @@ class ReceiptAsnsController extends BaseController
             ->where('receiptid', $receiptasn->id)->get();
         $totalContainers = ReceiptContainer::getContainersForReceipt($receiptasn->id);
 
+        $conteos = Storagechecklocationbridg::controlAccessUser()
+            ->where('orderid', $receiptasn->id)
+            ->where('model_type', 'ReceiptAsn')
+            ->get();
+        $conteosVig = StoragechecklocationbridgVig::controlAccessUser()
+            ->where('orderid', $receiptasn->id)
+            ->where('model_type', 'ReceiptAsn')
+            ->get();
+
         return view(
             'Receipt.ReceiptAsn.show',
-            compact('receiptasn', 'stocks', 'coments', 'evidences', 'incidences', 'totalContainers'),
+            compact('receiptasn', 'stocks', 'coments',
+                'evidences', 'incidences', 'totalContainers', 'conteos', 'conteosVig'),
         );
     }
 
