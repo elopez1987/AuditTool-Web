@@ -75,6 +75,8 @@ class SendDataToWmsIzel extends Command
     public function getShipments()
     {
         return EdiShipment::where('type', '=', 'IZEL')
-            ->select(['centerid', 'shipmentid', 'auxiliary01 as typeMovement', 'quantity', 'message', 'id'])->get();
+            ->select(['centerid',
+                'shipmentid', 'auxiliary01 as typeMovement',
+                'quantity', 'message', 'id'])->get();
     }
 }
