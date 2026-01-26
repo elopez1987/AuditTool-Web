@@ -52,6 +52,8 @@ class SecurityFunction extends Model
 
     protected $primaryKey = 'functionid';
 
+    protected $keyType = 'integer';
+
     protected $fillable = [
         'moduleid',
         'description',

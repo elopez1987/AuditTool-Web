@@ -56,8 +56,6 @@
                     </div>
                 </a>
             @endcan
-
-
             @can('monitorunitsyard')
                 <a href="{{route('monitorunitsyard')}}">
                     <div class="box" data-toggle="tooltip" data-placement="top"
@@ -78,9 +76,6 @@
                     </div>
                 </a>
             @endcan
-        </div>
-
-        <div class="container__box mt-4">
             @can('dashboardyard')
                 <a href="{{route('dashboardyard')}}">
                     <div class="box" data-toggle="tooltip" data-placement="top"
@@ -131,7 +126,6 @@
                     </div>
                 </a>
             @endcan
-
             @can('reportstays')
                 <a href="{{route('reportstays')}}">
                     <div class="box" data-toggle="tooltip" data-placement="top"
@@ -152,9 +146,6 @@
                     </div>
                 </a>
             @endcan
-        </div>
-
-        <div class="container__box mt-4">
             @can('assignshipment')
                 <a href="{{route('assignshipment')}}">
                     <div class="box" data-toggle="tooltip" data-placement="top"
@@ -215,9 +206,6 @@
                     </div>
                 </a>
             @endcan
-        </div>
-
-        <div class="container__box mt-4">
             @can('movebox')
                 <a href="{{route('movebox')}}">
                     <div class="box" data-toggle="tooltip" data-placement="top"
@@ -258,26 +246,26 @@
                     </div>
                 </a>
             @endcan
-{{--            @can('registercheckout')--}}
-{{--                <a href="{{route('registercheckout')}}">--}}
-{{--                    <div class="box" data-toggle="tooltip" data-placement="top"--}}
-{{--                         title="Registre su salida de unidad realizando un check list de la documentación y evidencia fotografica.">--}}
-{{--                        <i class="lni lni-pointer"></i>--}}
-{{--                        <h5>Salida de caja <span style="color: red">*</span></h5>--}}
-{{--                        <h4>Salida de caja </h4>--}}
-{{--                    </div>--}}
-{{--                </a>--}}
-{{--            @endcan--}}
-{{--            @can('inventoryboxcount.index')--}}
-{{--                <a href="{{route('inventoryboxcount.index')}}">--}}
-{{--                    <div class="box" data-toggle="tooltip" data-placement="top"--}}
-{{--                         title="Modulo para la ejecución del inventario de cajas desde el dispositivo movil.">--}}
-{{--                        <i class="lni lni-laptop-phone"></i>--}}
-{{--                        <h5>Inventario <span style="color: red">*</span></h5>--}}
-{{--                        <h4>Inventario</h4>--}}
-{{--                    </div>--}}
-{{--                </a>--}}
-{{--            @endcan--}}
+            {{--            @can('registercheckout')--}}
+            {{--                <a href="{{route('registercheckout')}}">--}}
+            {{--                    <div class="box" data-toggle="tooltip" data-placement="top"--}}
+            {{--                         title="Registre su salida de unidad realizando un check list de la documentación y evidencia fotografica.">--}}
+            {{--                        <i class="lni lni-pointer"></i>--}}
+            {{--                        <h5>Salida de caja <span style="color: red">*</span></h5>--}}
+            {{--                        <h4>Salida de caja </h4>--}}
+            {{--                    </div>--}}
+            {{--                </a>--}}
+            {{--            @endcan--}}
+            {{--            @can('inventoryboxcount.index')--}}
+            {{--                <a href="{{route('inventoryboxcount.index')}}">--}}
+            {{--                    <div class="box" data-toggle="tooltip" data-placement="top"--}}
+            {{--                         title="Modulo para la ejecución del inventario de cajas desde el dispositivo movil.">--}}
+            {{--                        <i class="lni lni-laptop-phone"></i>--}}
+            {{--                        <h5>Inventario <span style="color: red">*</span></h5>--}}
+            {{--                        <h4>Inventario</h4>--}}
+            {{--                    </div>--}}
+            {{--                </a>--}}
+            {{--            @endcan--}}
             @can('adjustmentbox')
                 <a href="{{route('adjustmentbox')}}">
                     <div class="box" data-toggle="tooltip" data-placement="top"
@@ -298,9 +286,6 @@
                     </div>
                 </a>
             @endcan
-        </div>
-
-        <div class="container__box mt-4">
             @can('shipmentcarriers.index')
                 <a href="{{route('shipmentcarriers.index')}}">
                     <div class="box" data-toggle="tooltip" data-placement="top"
@@ -401,16 +386,16 @@
                     </div>
                 </a>
             @endcan
-{{--            @can('printerlabel')--}}
-{{--                <a href="{{route('printlabelstock')}}">--}}
-{{--                    <div class="box" data-toggle="tooltip" data-placement="top"--}}
-{{--                         title="Catalogo de los diferentes tipos de check list que se usan en los diferentes modulos del sistema.">--}}
-{{--                        <i class="lni lni-text-align-left"></i>--}}
-{{--                        <h5>Generar Etiquetas</h5>--}}
-{{--                        <h4>Generar Etiquetas</h4>--}}
-{{--                    </div>--}}
-{{--                </a>--}}
-{{--            @endcan--}}
+            @can('printerlabel')
+                <a href="{{route('printlabelstock')}}">
+                    <div class="box" data-toggle="tooltip" data-placement="top"
+                         title="Catalogo de los diferentes tipos de check list que se usan en los diferentes modulos del sistema.">
+                        <i class="lni lni-text-align-left"></i>
+                        <h5>Generar Etiquetas</h5>
+                        <h4>Generar Etiquetas</h4>
+                    </div>
+                </a>
+            @endcan
             @can('storageareas.index')
                 <a href="{{route('storageareas.index')}}">
                     <div class="box" data-toggle="tooltip" data-placement="top"
@@ -421,7 +406,7 @@
                     </div>
                 </a>
             @endcan
-                @can('storageunittypes.index')
+            @can('storageunittypes.index')
                 <a href="{{route('storageunittypes.index')}}">
                     <div class="box" data-toggle="tooltip" data-placement="top"
                          title="Catalogo de los diferentes tipos de check list que se usan en los diferentes modulos del sistema.">
@@ -431,40 +416,16 @@
                     </div>
                 </a>
             @endcan
-        </div>
-
-        <div class="container__box mt-4">
-            @can('webservicelog')
-                <a href="{{route('webservicelog')}}">
+            @can('receiptunitticket.index')
+                <a href="{{route('receiptunitticket.index')}}">
                     <div class="box" data-toggle="tooltip" data-placement="top"
-                         title="Muestra la información de los eventos de conexión con otros sistemas externos.">
-                        <i class="lni lni-website"></i>
-                        <h5>Web Services</h5>
-                        <h4>Web Services</h4>
-                    </div>
-                </a>
-            @endcan
-            @can('edishipments.index')
-                <a href="{{route('edishipments.index')}}">
-                    <div class="box" data-toggle="tooltip" data-placement="top" title="Permite ver las interfaces que se encuentran pendientes
-                    de enviar a sistemas externos o los errores que estos
-                    tienen al momento de realizar la conexión.">
+                         title="Permite ver los ticket de pesos de unidad registrados en el sistema.">
                         <i class="lni lni-cloud-sync"></i>
-                        <h5>Monit. Interfaces</h5>
-                        <h4>Monit. Interfaces</h4>
+                        <h5>Ticket de báscula</h5>
+                        <h4>Ticket de báscula</h4>
                     </div>
                 </a>
             @endcan
-                @can('receiptunitticket.index')
-                    <a href="{{route('receiptunitticket.index')}}">
-                        <div class="box" data-toggle="tooltip" data-placement="top"
-                             title="Permite ver los ticket de pesos de unidad registrados en el sistema.">
-                            <i class="lni lni-cloud-sync"></i>
-                            <h5>Ticket de báscula</h5>
-                            <h4>Ticket de báscula</h4>
-                        </div>
-                    </a>
-                @endcan
         </div>
 
     </main>

@@ -85,7 +85,6 @@
                     </div>
                 </a>
             @endcan
-
             @can('storagedoorstage.index')
                 <a href="{{route('storagedoorstage.index')}}">
                     <div class="box" data-toggle="tooltip" data-placement="top"
@@ -96,7 +95,6 @@
                     </div>
                 </a>
             @endcan
-
             @can('edilogs.index')
                 <a href="{{route('edilogs.index')}}">
                     <div class="box" data-toggle="tooltip" data-placement="top"
@@ -107,9 +105,6 @@
                     </div>
                 </a>
             @endcan
-        </div>
-
-        <div class="container__box">
             @can('storageincidencesjourneys.index')
                 <a href="{{route('storageincidencesjourneys.index')}}">
                     <div class="box" data-toggle="tooltip" data-placement="top" title="Módulo para registrar las incidencias en sus entregas y
@@ -170,10 +165,6 @@
                     </div>
                 </a>
             @endcan
-
-        </div>
-
-        <div class="container__box">
             @can('scheduleinverse.index')
                 <a href="{{route('scheduleinverse.index')}}">
                     <div class="box" data-toggle="tooltip" data-placement="top"
@@ -194,9 +185,6 @@
                     </div>
                 </a>
             @endcan
-        </div>
-
-        <div class="container__box">
             @can('shipmentstatustransport')
                 <a href="{{route('shipmentstatustransport')}}">
                     <div class="box" data-toggle="tooltip" data-placement="top"
@@ -256,9 +244,6 @@
                         </div>
                     </a>
                 @endcan
-        </div>
-
-        <div class="container__box">
             @can('ordercustomers.index')
                 <a href="{{route('ordercustomers.index')}}">
                     <div class="box" data-toggle="tooltip" data-placement="top"

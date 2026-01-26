@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Security\Fuctions\SecurityFunction;
 use App\Models\Security\Permission\Permission;
 use App\Observers\PermissionObserver;
+use App\Observers\SecurityFunctionObserver;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -26,6 +28,7 @@ class AppServiceProvider extends ServiceProvider
 
         // Register observers
         Permission::observe(PermissionObserver::class);
+        SecurityFunction::observe(SecurityFunctionObserver::class);
 
         //        $this->registerPolicies();
     }

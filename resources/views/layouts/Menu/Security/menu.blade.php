@@ -109,6 +109,8 @@
                 </a>
             @endcan
 
+
+
             @role('ADMINISTRADOR')
 
             @can('systemfolios.index')
@@ -120,15 +122,7 @@
                     </div>
                 </a>
             @endcan
-            @can('editokens.index')
-                <a href="{{route('editokens.index')}}">
-                    <div class="box">
-                        <i class="lni lni-agenda"></i>
-                        <h5>Edi Token</h5>
-                        <h4>Edi Token</h4>
-                    </div>
-                </a>
-            @endcan
+
             @can('databaseupdate')
                 <a href="{{route('databaseupdate.index')}}">
                     <div class="box">
@@ -214,6 +208,39 @@
             @endcan
 
             @endrole
+        </div>
+
+        <div class="container__box">
+            @can('webservicelog')
+                <a href="{{route('webservicelog')}}">
+                    <div class="box" data-toggle="tooltip" data-placement="top"
+                         title="Muestra la información de los eventos de conexión con otros sistemas externos.">
+                        <i class="lni lni-website"></i>
+                        <h5>Web Services</h5>
+                        <h4>Web Services</h4>
+                    </div>
+                </a>
+            @endcan
+            @can('edishipments.index')
+                <a href="{{route('edishipments.index')}}">
+                    <div class="box" data-toggle="tooltip" data-placement="top" title="Permite ver las interfaces que se encuentran pendientes
+                    de enviar a sistemas externos o los errores que estos
+                    tienen al momento de realizar la conexión.">
+                        <i class="lni lni-cloud-sync"></i>
+                        <h5>Monit. Interfaces</h5>
+                        <h4>Monit. Interfaces</h4>
+                    </div>
+                </a>
+            @endcan
+            @can('editokens.index')
+                <a href="{{route('editokens.index')}}">
+                    <div class="box">
+                        <i class="lni lni-agenda"></i>
+                        <h5>Edi Token</h5>
+                        <h4>Edi Token</h4>
+                    </div>
+                </a>
+            @endcan
         </div>
     </main>
 

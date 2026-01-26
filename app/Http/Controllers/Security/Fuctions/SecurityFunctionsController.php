@@ -9,10 +9,12 @@ use App\Models\Security\Fuctions\SecurityFunctionsMenuStructure;
 use App\Models\Security\Modules\SecurityModule;
 use App\Models\Security\Permission\Permission;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+use Yajra\DataTables\DataTables;
 
 class SecurityFunctionsController extends BaseController
 {
-    public function index()
+    public function index(Request $request)
     {
         $this->authorize('securityfunctions.index');
         $modules = SecurityModule::select(['description', 'moduleid'])->get();
@@ -22,11 +24,34 @@ class SecurityFunctionsController extends BaseController
 
     public function getDataFunctions(Request $request)
     {
-        $data = SecurityFunction::with('module')
-            ->Description($request->get('description'))
-            ->Module($request->get('moduleid'));
+        $cacheKey = 'security_functions_ids_' . md5(json_encode([
+            'moduleid' => $request->moduleid,
+            'description' => $request->description,
+        ]));
+        $ids = Cache::remember($cacheKey, 28800, function () use ($request) {
+            return SecurityFunction::query()
+                ->when($request->description, fn ($q) => $q->Description($request->description),
+                )
+                ->when($request->moduleid, fn ($q) => $q->Module($request->moduleid),
+                )
+                ->pluck('functionid');
+        });
+        $query = SecurityFunction::with('module:moduleid,description')
+            ->whereIn('functionid', $ids)
+            ->select(['functionid', 'description', 'moduleid']);
 
-        return $this->showDataToView($data, 'Security.SecurtiyFunctions.partials.buttons');
+        return DataTables::of($query)
+            ->addColumn('btn', function ($row) {
+                return view(
+                    'Security.SecurtiyFunctions.partials.buttons',
+                    [
+                        'functionid' => $row->functionid,
+                        'name' => $row->description,
+                    ],
+                )->render();
+            })
+            ->rawColumns(['btn'])
+            ->make(true);
     }
 
     public function create()
@@ -54,7 +79,7 @@ class SecurityFunctionsController extends BaseController
 
         return view(
             'Security.SecurtiyFunctions.edit',
-            compact('securityfunction', 'modules', 'permissions')
+            compact('securityfunction', 'modules', 'permissions'),
         );
     }
 
