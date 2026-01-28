@@ -112,10 +112,10 @@ class ServiceReceiptUnit
         $parameterNotificationWarehouse = $this->getParameterNotificacionWarehouse($receiptunit->warehouseid);
         if ($request['razonstatusid'] == '1' || $request['razonstatusid'] == '2') {
             if (! empty($parameterNotificationWarehouse) && in_array('MWH-06', (array) $parameterNotificationWarehouse)) {
-                MensajeLLegadaDeUnidadJob::dispatch($receiptunit);
+                MensajeLLegadaDeUnidadJob::dispatch($receiptunit->id)->onQueue('yms-web');
             }
             if (! empty($parameterNotificationWarehouse) && in_array('MWH-07', (array) $parameterNotificationWarehouse)) {
-                CorreoLlegadaUnidadDeReciboJob::dispatch($receiptunit);
+                CorreoLlegadaUnidadDeReciboJob::dispatch($receiptunit->id)->onQueue('yms-web');
             }
         }
 

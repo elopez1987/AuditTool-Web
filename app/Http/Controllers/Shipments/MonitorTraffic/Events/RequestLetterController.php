@@ -35,7 +35,7 @@ class RequestLetterController extends BaseController
 
             $parameterNotificationWarehouse = $this->getParameterNotificacionWarehouse($orderDelivery->warehouseid);
             if (! empty($parameterNotificationWarehouse) && in_array('MWH-11', (array) $parameterNotificationWarehouse)) {
-                CorreoSolicitudCartaPorteJob::dispatch($orderDelivery);
+                CorreoSolicitudCartaPorteJob::dispatch($orderDelivery->id)->onQueue('yms-web');
             }
 
             DB::commit();

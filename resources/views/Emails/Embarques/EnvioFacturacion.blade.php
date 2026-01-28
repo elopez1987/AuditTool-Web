@@ -27,7 +27,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td style="padding: 6px 0;"><strong>Número de embarque:</strong> {{$orderDeliverie->shipmentid}}</td>
+                                <td style="padding: 6px 0;"><strong>Número de embarque:</strong> {{$orderDeliverie->shipmentid ?? ''}}</td>
                             </tr>
                             <tr>
                                 <td style="padding: 6px 0;"><strong>Línea de transporte:</strong> {{$orderDeliverie->carrier ? $orderDeliverie->carrier->name : ''}}</td>

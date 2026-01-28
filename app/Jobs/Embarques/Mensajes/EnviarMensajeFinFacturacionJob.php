@@ -33,8 +33,8 @@ class EnviarMensajeFinFacturacionJob implements ShouldQueue
         $url = 'https://api.1msg.io/HEI523482986/sendTemplate';
         $client = new Client;
 
-        $orderId = $this->orderDelivery->id;
-        $shipment = OrderDeliverie::find($orderId);
+        $shipment = OrderDeliverie::where('id', $this->orderDelivery)
+            ->select(['centerid', 'warehouseid', 'shipmentid'])->first();
 
         if (! $shipment) {
             Log::error("No se encontró el embarque con ID: {$orderId}");

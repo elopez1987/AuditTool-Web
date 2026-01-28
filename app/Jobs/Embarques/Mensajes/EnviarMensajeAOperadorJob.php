@@ -2,6 +2,7 @@
 
 namespace App\Jobs\Embarques\Mensajes;
 
+use App\Models\Shipments\OrderDeliverie;
 use App\Models\Yard\ReceiptUnit;
 use GuzzleHttp\Client;
 use Illuminate\Bus\Queueable;
@@ -27,17 +28,21 @@ class EnviarMensajeAOperadorJob implements ShouldQueue
 
     public function handle(): void
     {
-        $receiptUnit = ReceiptUnit::where('id', '=', $this->orderDelivery->folionumber)->first();
+        $orderDelivery = OrderDeliverie::where('id', $this->orderDelivery)->select(['id', 'folionumber'])->first();
+        if (! $orderDelivery) {
+            Log::error('No existe el número de embarque solicitado.');
+
+            return;
+        }
+
+        $receiptUnit = ReceiptUnit::where('id', '=', $orderDelivery->folionumber)->first();
         if (empty($receiptUnit) || ! $this->isValidPhone($receiptUnit->phone)) {
+            Log::error('No existe el número de folio solicitado.');
+
             return;
         }
 
         $this->sendMessage($receiptUnit);
-    }
-
-    private function isValidPhone(?string $phone): bool
-    {
-        return ! empty($phone) && strlen($phone) === 10 && ctype_digit($phone);
     }
 
     private function sendMessage($receiptUnit): void
@@ -59,6 +64,11 @@ class EnviarMensajeAOperadorJob implements ShouldQueue
                 'receipt_unit' => $receiptUnit->id ?? null,
             ]);
         }
+    }
+
+    private function isValidPhone(?string $phone): bool
+    {
+        return ! empty($phone) && strlen($phone) === 10 && ctype_digit($phone);
     }
 
     public function getBodyDataMessage($receiptunit)

@@ -41,10 +41,10 @@ class SendDocumentOrderDeliveryController extends BaseController
 
             $parameterNotificationWarehouse = $this->getParameterNotificacionWarehouse($orderDelivery->warehouseid);
             if (! empty($parameterNotificationWarehouse) && in_array('MWH-02', (array) $parameterNotificationWarehouse)) {
-                EnviarMensajeAFacturacionDocumentosEnviadosJob::dispatch($orderDelivery);
+                EnviarMensajeAFacturacionDocumentosEnviadosJob::dispatch($orderDelivery->id)->onQueue('yms-web');
             }
             if (! empty($parameterNotificationWarehouse) && in_array('MWH-09', (array) $parameterNotificationWarehouse)) {
-                EnviarCorreoDocumentosEnviadosFacturacionJob::dispatch($orderDelivery);
+                EnviarCorreoDocumentosEnviadosFacturacionJob::dispatch($orderDelivery->id)->onQueue('yms-web');
             }
 
             OrderdeliveryTrace::saveEventShipment($orderDelivery, 'EEM-09', $statusold);

@@ -113,7 +113,7 @@ class ForLoadOrderDeliveryController extends BaseController
         $parameterNotificationWarehouse = $this->getParameterNotificacionWarehouse($orderDelivery->warehouseid);
         if (! empty($parameterNotificationWarehouse) && in_array('MWH-08', (array) $parameterNotificationWarehouse)) {
             $assingDoorService = new AssingDoorToUnitFromShipment;
-            EnviarMensajeOperadorPorAsignacionDeCortinaJob::dispatch($orderDelivery, $assingDoorService);
+            EnviarMensajeOperadorPorAsignacionDeCortinaJob::dispatch($orderDelivery->id, $assingDoorService)->onQueue('yms-web');
         }
     }
 }

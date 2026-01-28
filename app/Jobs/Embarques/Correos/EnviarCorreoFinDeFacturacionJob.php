@@ -17,7 +17,7 @@ class EnviarCorreoFinDeFacturacionJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public OrderDeliverie $orderDeliverie;
+    public $orderDeliverie;
 
     public function __construct($orderDeliverie)
     {
@@ -26,7 +26,13 @@ class EnviarCorreoFinDeFacturacionJob implements ShouldQueue
 
     public function handle(): void
     {
-        $orderDelivery = $this->orderDeliverie;
+        $orderDelivery = OrderDeliverie::with(['carrier:id,name', 'warehouse:warehouseid,name', 'header'])
+            ->where('id', $this->orderDeliverie)->first();
+        if (! $orderDelivery) {
+            Log::error('No existe el numero de embarque solicitado' . $this->orderDeliverie);
+
+            return;
+        }
 
         $contacts = SystemDetailMail::query()
             ->where('centerid', $orderDelivery->centerid)
