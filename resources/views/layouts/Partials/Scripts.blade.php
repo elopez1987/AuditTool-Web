@@ -101,3 +101,42 @@
         });
     });
 </script>
+
+<script type="text/javascript">
+    // Custom sidebar toggle for tablets
+    jQuery(document).ready(function () {
+        // Function to check if device is tablet
+        function isTablet() {
+            var width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+            return width >= 768 && width <= 1024;
+        }
+
+        // Handle sidebar toggle click
+        jQuery('.sidebartoggler').on('click', function(e) {
+            if (isTablet()) {
+                e.preventDefault();
+                jQuery('#main-wrapper').toggleClass('show-sidebar');
+            }
+        });
+
+        // Close sidebar when clicking outside on tablets
+        jQuery(document).on('click', function(e) {
+            if (isTablet() && jQuery('#main-wrapper').hasClass('show-sidebar')) {
+                var $sidebar = jQuery('.left-sidebar');
+                var $toggler = jQuery('.sidebartoggler');
+                
+                if (!$sidebar.is(e.target) && $sidebar.has(e.target).length === 0 && 
+                    !$toggler.is(e.target) && $toggler.has(e.target).length === 0) {
+                    jQuery('#main-wrapper').removeClass('show-sidebar');
+                }
+            }
+        });
+
+        // Handle window resize
+        jQuery(window).on('resize', function() {
+            if (!isTablet() && jQuery('#main-wrapper').hasClass('show-sidebar')) {
+                jQuery('#main-wrapper').removeClass('show-sidebar');
+            }
+        });
+    });
+</script>
