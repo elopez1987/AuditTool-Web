@@ -16,7 +16,7 @@ class EventTruckController extends BaseController
 
     public function generateinvoicetransporttruck(ReceiptTruck $receipttruck)
     {
-        $pdf = PDF::loadView('Yards.ReceiptTrucks.InvoiceFormats.Invoice', compact('receipttruck'));
+        $pdf = \PDF::loadView('Yards.ReceiptTrucks.InvoiceFormats.Invoice', compact('receipttruck'));
 
         return $pdf->download('Folio_De_Entrada_Tracto-' . $receipttruck->id . '.pdf');
     }
