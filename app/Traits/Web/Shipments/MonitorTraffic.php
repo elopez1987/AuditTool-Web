@@ -32,7 +32,7 @@ trait MonitorTraffic
                 'customer:id,name,city',
                 'carrier:id,name',
                 'monitor:id,outputdate,orderid',
-                'transport:id,auxiliary02,orderid',
+                'transport:id,has_data,orderid',
                 'status:statusid,name,auxiliary01',
             ])
             ->when($request->statusid, fn ($q) => $q->ForStatus($request->statusid))

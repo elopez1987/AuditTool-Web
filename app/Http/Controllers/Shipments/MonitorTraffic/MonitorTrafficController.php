@@ -31,7 +31,7 @@ class MonitorTrafficController extends BaseController
         return DataTables::of($data)
             ->addColumn('btn', 'Shipments.OrderMonitor.AnalystTraffic.partials.btn')
             ->addColumn('statustransport', function ($row) {
-                return $row->transport?->auxiliary02 == '1'
+                return $row->transport?->has_data == 1
                     ? '<span class="label label-success" style="font-size: 0.655rem;padding: 3px">Con datos</span>'
                     : '<span class="label label-danger" style="font-size: 0.655rem;color:white;padding: 3px">Sin datos</span>';
             })

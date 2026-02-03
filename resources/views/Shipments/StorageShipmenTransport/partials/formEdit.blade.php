@@ -172,15 +172,15 @@
                         </div>
                         <div class="col-lg-4 col-md-6 col-sm-12">
                             <div class="form-group">
-                                <label for="auxiliary03">Eco. De Caja
-                                    @error("auxiliary03")
+                                <label for="ecobox">Eco. De Caja
+                                    @error("ecobox")
                                     <span class="message-error">{{$message}}</span>
                                     @enderror
                                     <span style="color: red">*</span></label>
-                                <input type="text" class="form-control @error('auxiliary03') is-invalid @enderror"
-                                       required id="auxiliary03" name="auxiliary03" maxlength="9"
-                                       aria-describedby="auxiliary03" onKeyUp=this.value=this.value.toUpperCase();
-                                       value="{{$transport->auxiliary03}}"
+                                <input type="text" class="form-control @error('ecobox') is-invalid @enderror"
+                                       required id="ecobox" name="ecobox" maxlength="9"
+                                       aria-describedby="ecobox" onKeyUp=this.value=this.value.toUpperCase();
+                                       value="{{$transport->ecobox}}"
                                 >
                             </div>
                         </div>
@@ -203,15 +203,15 @@
                             </div>
                             <div class="col-lg-4 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="auxiliary04">Eco. De tracto
-                                        @error("auxiliary04")
+                                    <label for="ecotruck">Eco. De tracto
+                                        @error("ecotruck")
                                         <span class="message-error">{{$message}}</span>
                                         @enderror
                                         <span style="color: red">*</span></label>
-                                    <input type="text" class="form-control @error('auxiliary04') is-invalid @enderror"
-                                           required id="auxiliary04" name="auxiliary04" maxlength="9"
-                                           aria-describedby="auxiliary04" onKeyUp=this.value=this.value.toUpperCase();
-                                           value="{{$transport->auxiliary04}}"
+                                    <input type="text" class="form-control @error('ecotruck') is-invalid @enderror"
+                                           required id="ecotruck" name="ecotruck" maxlength="9"
+                                           aria-describedby="ecotruck" onKeyUp=this.value=this.value.toUpperCase();
+                                           value="{{$transport->ecotruck}}"
                                     >
                                 </div>
                             </div>

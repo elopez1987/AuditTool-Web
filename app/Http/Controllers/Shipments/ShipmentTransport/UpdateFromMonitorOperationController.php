@@ -21,7 +21,6 @@ class UpdateFromMonitorOperationController extends BaseController
         $transport->boxnumber = $request->boxnumber;
         $transport->ecobox = $request->ecobox;
         $transport->ecotruck = $request->ecotruck;
-        $transport->auxiliary02 = '1';
         $transport->has_data = '1';
 
         $transport->save();

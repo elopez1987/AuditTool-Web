@@ -232,9 +232,8 @@
                                                                             <div class="el-card-item">
                                                                                 <div
                                                                                         class="el-card-avatar el-overlay-1">
-                                                                                    <img
-                                                                                            src="{{asset('storage/' . $photo->path)}}"
-                                                                                            alt="user"
+                                                                                    <img src="{{asset('storage/' . $photo->path)}}"
+                                                                                         alt="user"
                                                                                             style="height: 300px;max-height: 400px"/>
                                                                                     <div class="el-overlay">
                                                                                         <ul class="list-style-none el-info">

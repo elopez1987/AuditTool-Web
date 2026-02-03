@@ -48,10 +48,9 @@ class StorageShipmentTransportsController extends BaseController
             'drivernumber',
             'truckid',
             'boxnumber',
-            'auxiliary03',
-            'auxiliary04',
-            'trucknumber'
-        ) + ['auxiliary02' => '1']);
+            'trucknumber',
+            'ecobox', 'ecotruck',
+        ) + ['has_data' => '1']);
         if ($request['validateoperator'] === 'on') {
             StorageValidateOperator::create([
                 'centerid' => $transport->centerid,

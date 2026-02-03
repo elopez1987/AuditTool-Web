@@ -24,26 +24,6 @@
                             </div>
                         </div>
                         <hr class="mb-3">
-                        <div class="row">
-                            <div class="col-lg-2 col-md-6 col-sm-12">
-                                <div class="form-group">
-                                    <label for="shipmentid">{{ ui_label('receiptasn_shipmentid_index','Recibo') }} </label>
-                                    <input type="text" class="form-control" id="shipmentid" name="shipmentid">
-                                </div>
-                            </div>
-                            <div class="col-lg-2 col-md-6 col-sm-12">
-                                <div class="form-group">
-                                    <label for="oc"> {{ ui_label('receiptasn_oc_index','Orden de compra') }}  </label>
-                                    <input type="text" class="form-control" id="oc" name="oc">
-                                </div>
-                            </div>
-                            <div class="col-lg-2 col-md-6 col-sm-12">
-                                <div class="form-group">
-                                    <label for="folionumber">{{ ui_label('receiptasn_folionumber_index','Número de folio') }}</label>
-                                    <input type="text" class="form-control" id="folionumber" name="folionumber">
-                                </div>
-                            </div>
-                        </div>
                     </form>
                     <hr class="mb-3">
                     <div class="row">

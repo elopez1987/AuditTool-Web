@@ -185,27 +185,7 @@
             </th>
         </table>
     </div>
-    @if($data->transport)
-        <div class="row">
-            <table style="border: 1px solid black">
-                <tbody>
-                <tr>
-                    <th style="width: 50%">
-                        @if($data->transport->carrier->qr != null)
-                            <img src='{{asset('storage/' . $data->qr)}}' alt="" style="max-width: 200px;height: 200px">
-                        @endif
-                    </th>
-                    <th style="width: 50%">
-                        @if($data->transport->carrier->logo != null)
-                            <img src='{{asset('storage/' . $data->logo)}}' alt=""
-                                 style="height: 200px;max-width: 200px">
-                        @endif
-                    </th>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    @endif
+
     <h5 class='nota' style="margin-top:50px">
         La información registrada en este documento es responsabilidad de la linea de transporte y quien la comparta.
     </h5>
