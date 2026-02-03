@@ -16,6 +16,7 @@ class MonitorTransportReceiptController extends BaseController
             'provider:id,name',
             'center:centerid,name,description',
             'warehouse:warehouseid,name',
+            'transport:id,orderid,has_data',
         ])
             ->where('statusid', 'PG')
             ->whereIn('providerid', function ($query) {
