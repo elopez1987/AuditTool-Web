@@ -5,10 +5,10 @@
                         class="ti-menu ti-close"></i></a>
             <a class="navbar-brand" href="{{route('home')}}">
                                 <span class="logo-text font-weight-bold text-white font-18">
-                                    SGIO
+{{--                                    SGIO--}}
                                </span>
                 <link rel="icon" type="image/png" sizes="16x16" href=" {{asset('/img/verde.png')}}">
-                {{--                <img src="{{asset('img/verde.png')}}" alt="" style="width: 150px;height: 35px">--}}
+                                <img src="{{asset('img/verde.png')}}" alt="" style="width: 150px;height: 35px">
             </a>
             <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)"
                data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -75,12 +75,13 @@
                     </a>
                 </li>
 
-                <li class="nav-item dropdown d-none d-lg-block" style="position: absolute;left: 50%;transform: translateX(-50%);">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="text-white font-12" style="text-transform: uppercase;font-style: italic"> Sistema de Gestión Integral de Operaciones </span>
-                    </a>
-                </li>
+{{--                <li class="nav-item dropdown d-none d-lg-block" style="position: absolute;left: 50%;transform: translateX(-50%);">--}}
+{{--                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"--}}
+{{--                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
+{{--                        <span class="text-white font-12" style="text-transform: uppercase;font-style: italic"> Sistema de Gestión Integral de Operaciones </span>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
+
             </ul>
             <ul class="navbar-nav float-right">
                 <li class="nav-item dropdown">

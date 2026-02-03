@@ -142,7 +142,7 @@ trait Responser
         return (new ReceiptProvider)->whereStatusid('E')
             ->whereIn('centerid', $centers)
             ->whereIn('warehouseid', $warehouses)
-            ->select(['name', 'id'])->get();
+            ->select(['name', 'id', 'providerid'])->get();
     }
 
     public function getOrderCustomerForSelect()

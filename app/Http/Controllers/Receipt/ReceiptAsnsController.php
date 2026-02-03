@@ -15,6 +15,7 @@ use App\Models\Receipt\ReceiptStock;
 use App\Models\Receipt\StorageSchedulleReceipt;
 use App\Models\Shipments\Bridgestone\Verificacion\Storagechecklocationbridg;
 use App\Models\Shipments\Bridgestone\Verificacion\StoragechecklocationbridgVig;
+use App\Models\Shipments\ShipmentTransport\StorageShipmentTransport;
 use App\Models\Yard\StorageReason;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -105,6 +106,13 @@ class ReceiptAsnsController extends BaseController
         $receipt->auxiliary01 = Auth::user()->name;
         $receipt->save();
 
+        StorageShipmentTransport::create([
+            'centerid' => $receipt->centerid,
+            'warehouseid' => $receipt->warehouseid,
+            'orderid' => $receipt->id,
+            'auxiliary04' => 'ReceiptAsn',
+        ]);
+
         if ($request->expectsJson() || $request->ajax()) {
             return response()->json([
                 'success' => true,
@@ -123,8 +131,7 @@ class ReceiptAsnsController extends BaseController
         $providers = $this->getReceiptProviderForSelect();
         $turns = StorageTurn::select('name', 'id')->get();
         $categorystocks = InventoryStockCategory::select('description', 'id')
-            ->where('statusid', 'E')
-            ->get();
+            ->where('statusid', 'E')->get();
         $reasons = StorageReason::whereType('RE')->select('name', 'id')->get();
 
         return view('Receipt.ReceiptAsn.edit', compact(

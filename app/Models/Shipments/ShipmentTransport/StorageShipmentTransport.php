@@ -4,7 +4,10 @@ namespace App\Models\Shipments\ShipmentTransport;
 
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\Models\Yard\Carriers\ShipmentCarrier;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
+use Ramsey\Uuid\Uuid;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -61,8 +64,8 @@ class StorageShipmentTransport extends Model
 
     //    Auxiliary01 == Ingreso de unidad en el módulo de patios (1 con transporte)
     //    Auxiliary02 == Datos de transporte registrado en sistema por tráfico o registro de QR
-    //    Auxiliary03 == Número de económico de caja
-    //    Auxiliary04 == Número de económico de tracto
+    //    Auxiliary03 == ''
+    //    Auxiliary04 == 'Modelo ReceiptAsn o OrderDelivery'
 
     protected $table = 'shipmenttransport';
 
@@ -89,11 +92,24 @@ class StorageShipmentTransport extends Model
         'ecotruck',
         'has_data',
         'has_registered',
+        'createddate',
     ];
 
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()->logFillable();
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (StorageShipmentTransport $model) {
+                $model->createuser = Auth::user()->id;
+                $model->auxiliary05 = Uuid::uuid4()->toString();
+                $model->createdate = Carbon::now();
+            });
+        }
     }
 
     public function carrier()

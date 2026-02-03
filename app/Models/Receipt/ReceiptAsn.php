@@ -8,6 +8,7 @@ use App\Models\Configuration\Turns\StorageTurn;
 use App\Models\Configuration\Warehouses\SystemWarehouse;
 use App\Models\Inventory\Origin\InventoryStockCategory;
 use App\Models\Security\Users\SecurityAccessWarehouse;
+use App\Models\Shipments\ShipmentTransport\StorageShipmentTransport;
 use App\Models\Yard\Carriers\ShipmentCarrier;
 use App\Models\Yard\ReceiptUnit;
 use App\Models\Yard\StorageReason;
@@ -157,7 +158,7 @@ class ReceiptAsn extends Model
     //    auxiliary01 = 'Planeador';
     //    auxiliary02 = 'Posteo SAP';
     //    auxiliary03 = 'Categoria de material';
-    //    auxiliary04 =
+    //    auxiliary04 = '';
     //    auxiliary05 = '';
     //    auxiliary06 = 'Numero de folio de planta para el monitor de transitos planta';
     //    auxiliary07 = '';
@@ -229,6 +230,11 @@ class ReceiptAsn extends Model
     public function turn()
     {
         return $this->belongsTo(StorageTurn::class, 'turnid');
+    }
+
+    public function transport()
+    {
+        return $this->belongsTo(StorageShipmentTransport::class, 'id', 'orderid');
     }
 
     //   ---------------------------------- Filtros de consulta  --------------------------------------

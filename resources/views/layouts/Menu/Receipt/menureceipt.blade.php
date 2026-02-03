@@ -14,6 +14,15 @@
                     </div>
                 </a>
             @endcan
+            @can('monitortransportreceipt')
+                <a href="{{route('monitortransportreceipt')}}">
+                    <div class="box">
+                        <i class="fa fa-qrcode"></i>
+                        <h5>Generar QR</h5>
+                        <h4>Generar QR</h4>
+                    </div>
+                </a>
+            @endcan
             @can('schedulereceipt.index')
                 <a href="{{route('schedulereceipt.index')}}">
                     <div class="box">
@@ -50,15 +59,15 @@
                     </div>
                 </a>
             @endcan
-                @can('appointmentschedule')
-                    <a href="{{route('appointmentschedule')}}">
-                        <div class="box">
-                            <i class="lni lni-calendar"></i>
-                            <h5>Horario V2</h5>
-                            <h4>Horario V2</h4>
-                        </div>
-                    </a>
-                @endcan
+            @can('appointmentschedule')
+                <a href="{{route('appointmentschedule')}}">
+                    <div class="box">
+                        <i class="lni lni-calendar"></i>
+                        <h5>Horario V2</h5>
+                        <h4>Horario V2</h4>
+                    </div>
+                </a>
+            @endcan
         </div>
     </main>
 

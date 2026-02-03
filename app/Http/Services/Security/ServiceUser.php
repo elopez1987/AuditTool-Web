@@ -3,6 +3,7 @@
 namespace App\Http\Services\Security;
 
 use App\Models\Security\Users\AccessCarrier;
+use App\Models\Security\Users\AccessProvider;
 use App\Models\Security\Users\SecurityAccessCustomer;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\User;
@@ -47,6 +48,15 @@ class ServiceUser
             'centerid' => $centerid,
             'username' => $request['username'],
             'customerid' => $request['customerid'],
+        ]);
+    }
+
+    public function assignProviderToUser($request, $centerid)
+    {
+        AccessProvider::create([
+            'centerid' => $centerid,
+            'providerid' => $request->input('providerid'),
+            'username' => $request->input('username'),
         ]);
     }
 }

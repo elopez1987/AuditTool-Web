@@ -8,7 +8,7 @@
                     Modificar Centro de distribución
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{{url('systemcenterdistributions/' . $systemcenterdistribution->centerid)}}">
+                    <form method="POST" action="{{url('systemcenterdistributions/' . $systemcenterdistribution->centerid)}}" enctype="multipart/form-data">
                         {{ method_field('PUT') }}
                         @csrf
                         <div class="row">
@@ -25,6 +25,11 @@
                         <div class="row">
                             <div class="col-lg-8">
                                 @include('Configuration.SystemCenterDistributions.partials.formEdit')
+                            </div>
+                            <div class="col-lg-4">
+                                <img src="{{asset('storage/' . $systemcenterdistribution->auxiliary04)}}"
+                                        alt="Logo"
+                                        style="height: 300px;max-height: 400px"/>
                             </div>
                         </div>
                     </form>

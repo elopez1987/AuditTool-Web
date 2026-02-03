@@ -2,6 +2,7 @@
 
 namespace App\Traits\Web\Security;
 
+use App\Models\Receipt\ReceiptProvider;
 use App\Models\Security\Roles\Role;
 use App\Models\Security\Users\AccessCarrier;
 use App\Models\Security\Users\SecurityAccessWarehouse;
@@ -60,6 +61,11 @@ trait QueryUser
     public function getCenterForCustomer($customerid)
     {
         return OrderCustomer::controlAccessUser()->where('id', '=', $customerid)->value('centerid');
+    }
+
+    public function getCenterForProvider($providerid)
+    {
+        return ReceiptProvider::controlAccessUser()->where('id', '=', $providerid)->value('centerid');
     }
 
     private function getCentersForUser(): array

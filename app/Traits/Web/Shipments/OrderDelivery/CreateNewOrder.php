@@ -87,6 +87,7 @@ trait CreateNewOrder
             [
                 'carrierid' => $shipment->carrierid,
                 'createdate' => $shipment->created_at,
+                'auxiliary04' => 'OrderDelivery',
                 'auxiliary05' => Uuid::uuid4(),
                 'createuser' => Auth::user()->id,
             ],
