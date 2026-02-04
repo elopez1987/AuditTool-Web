@@ -165,11 +165,11 @@ class EnviarDatosIzelWmsCommand extends Command
         try {
             $url = rtrim($config->url, '/') . '/gettoken';
             $credentials = [
-                'userid' => $config->user,
+                'userid' => $config->userid,
                 'password' => $config->password,
             ];
 
-            $userEncode = base64_encode("{$config->user} {$config->password}");
+            $userEncode = base64_encode("{$config->userid} {$config->password}");
 
             $response = Http::timeout(30)
                 ->withHeaders([
@@ -196,7 +196,7 @@ class EnviarDatosIzelWmsCommand extends Command
                 return null;
             }
 
-            return base64_encode("{$config->user} {$config->password} {$token}");
+            return base64_encode("{$config->userid} {$config->password} {$token}");
 
         } catch (Exception $e) {
             Log::error('Excepción obteniendo token WMS', [

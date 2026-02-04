@@ -92,9 +92,9 @@
     </div>
     <div class="col-lg-2 col-md-6 col-sm-12">
         <div class="form-group">
-            <label for="user">Usuario </label>
-            <input type="text" class="form-control" id="user" name="user"
-                   aria-describedby="user" value="{{old('user')}}">
+            <label for="userid">Usuario </label>
+            <input type="text" class="form-control" id="userid" name="userid"
+                   aria-describedby="userid" value="{{old('userid')}}">
         </div>
     </div>
     <div class="col-lg-2 col-md-6 col-sm-12">

@@ -67,7 +67,7 @@
                                                 <td>{{$item->centerrecipient}}</td>
                                                 <td>{{$item->warehouserecipient}}</td>
                                                 <td>{{$item->url}}</td>
-                                                <td>{{$item->user}}</td>
+                                                <td>{{$item->userid}}</td>
                                                 <td>{{$item->password}}</td>
                                                 <td>{{$item->version}}</td>
                                                 <td>{{$item->enviroment}}</td>
