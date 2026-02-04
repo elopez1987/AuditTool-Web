@@ -16,6 +16,8 @@ trait RegisterEdiShipment
                 'shipmentid' => $receiptunit->id,
                 'type' => 'IZEL',
                 'auxiliary01' => $type,
+                'client' => 'WMS - IZEL',
+                'auxiliary05' => 'Pending',
             ]);
         }
     }
@@ -30,6 +32,7 @@ trait RegisterEdiShipment
             'type' => 'EVENT',
             'auxiliary01' => $event,
             'client' => 'RCONTROL',
+            'auxiliary05' => 'Pending',
         ]);
     }
 
@@ -43,6 +46,7 @@ trait RegisterEdiShipment
             'type' => 'PLAN',
             'client' => 'RCONTROL',
             'auxiliary01' => 'PLAN',
+            'auxiliary05' => 'Pending',
         ]);
     }
 

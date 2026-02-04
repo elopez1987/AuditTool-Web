@@ -5,7 +5,6 @@ namespace App\Models\Configuration\EDI;
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Configuration\Warehouses\SystemWarehouse;
 use App\Models\Security\Users\SecurityAccessWarehouse;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -118,74 +117,16 @@ class SystemEventWebServiceIzel extends Model
             ->whereIn('systemeventwebserviceizel.warehouseid', $warehouses);
     }
 
-    public static function createRegisterLog($receiptunit, $statusService, $parameter)
-    {
-        if (in_array('SDC-07', (array) $parameter)) {
-            //            Version 4
-            $servicename = $statusService->Service_Name;
-            $processdate = $statusService->ProcessDate;
-            $code = $statusService->Code;
-            $message = $statusService->Message;
-        } else {
-            //            Version 3
-            $servicename = $statusService->{'Service_Name'};
-            $processdate = $statusService->{'ProcessDate'};
-            $code = $statusService->{'Code'};
-            $message = $statusService->{'Message'};
-        }
-
-        SystemEventWebServiceIzel::create([
-            'centerid' => $receiptunit->centerid,
-            'warehouseid' => $receiptunit->warehouseid,
-            'folionumber' => $receiptunit->id,
-            'boxnumber' => $receiptunit->boxnumber,
-            'servicename' => $servicename,
-            'processdate' => $processdate,
-            'code' => $code,
-            'type' => 'IZEL',
-            'message' => $message,
-        ]);
-    }
-
-    public static function createRegisterLogError($receiptunit, $statusService, $parameter)
-    {
-        if (in_array('SDC-07', (array) $parameter)) {
-            //            Version 4
-            $servicename = '';
-            $processdate = Carbon::now();
-            $code = $statusService->Code;
-            $message = $statusService->Description;
-        } else {
-            //            Version 3
-            $servicename = $statusService->{'Service_Name'};
-            $processdate = $statusService->{'ProcessDate'};
-            $code = $statusService->{'Code'};
-            $message = $statusService->{'Message'};
-        }
-
-        SystemEventWebServiceIzel::create([
-            'centerid' => $receiptunit->centerid,
-            'warehouseid' => $receiptunit->warehouseid,
-            'folionumber' => $receiptunit->id,
-            'boxnumber' => $receiptunit->boxnumber,
-            'servicename' => $servicename,
-            'processdate' => $processdate,
-            'code' => $code,
-            'type' => 'IZEL',
-            'message' => $message,
-        ]);
-    }
-
     public function scopeFolioNumber($query, $folionumber)
     {
-        if (trim($folionumber) !== '') {
+        if (trim($folionumber) != '') {
             $query->where('systemeventwebserviceizel.folionumber', 'like', "%{$folionumber}%");
         }
     }
 
     public function scopeBoxNumber($query, $boxnumber)
     {
-        if ($boxnumber !== '') {
+        if ($boxnumber != '') {
             $query->where('systemeventwebserviceizel.boxnumber', 'like', "%{$boxnumber}%");
         }
     }

@@ -112,6 +112,7 @@ class EdiShipment extends Model
             'type' => 'PLAN',
             'client' => 'RCONTROL',
             'auxiliary01' => 'PLAN',
+            'auxiliary05' => 'Pending',
         ]);
     }
 
@@ -125,6 +126,7 @@ class EdiShipment extends Model
             'type' => 'EVENT',
             'auxiliary01' => $event,
             'client' => 'RCONTROL',
+            'auxiliary05' => 'Pending',
         ]);
     }
 }

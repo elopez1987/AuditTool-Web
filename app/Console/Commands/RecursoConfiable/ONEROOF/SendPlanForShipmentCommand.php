@@ -24,7 +24,7 @@ class SendPlanForShipmentCommand extends Command
         $shipments = EdiShipment::select(['centerid', 'warehouseid', 'shipmentid', 'id', 'quantity'])
             ->where('type', '=', 'PLAN')
             ->where('client', 'RCONTROL')
-            ->where('centerid', 'HENKELTOL01')->get();
+            ->get();
         if ($shipments->isEmpty()) {
             return;
         }
@@ -126,7 +126,8 @@ class SendPlanForShipmentCommand extends Command
             $result = json_decode($response->getBody()->getContents());
             $this->createLogService($shipment, $result[0], 'load_appointments_rest_service', $contentBody, $result);
             if ($result[0]->status === 'SUCCESSFUL') {
-                EdiShipment::destroy($shipment->id);
+                $shipment->auxiliary05 = 'Completed';
+                $shipment->save();
             } else {
                 $this->updateUnsuccessfulShipment($shipment, $result[0]);
             }
@@ -139,7 +140,8 @@ class SendPlanForShipmentCommand extends Command
         $shipment->message = $result->{'error_message'};
         $shipment->save();
         if ($shipment->quantity > 15) {
-            EdiShipment::destroy($shipment->id);
+            $shipment->auxiliary05 = 'Error';
+            $shipment->save();
         }
     }
 
@@ -155,9 +157,9 @@ class SendPlanForShipmentCommand extends Command
             'code' => $result->status,
             'message' => $result->error_message,
             'messagejson' => $contentBody,
+            'messagejsonresponse' => $responseJson,
             'type' => 'RCONTROL',
             'value01' => 'PLAN',
-            'messagejsonresponse' => $responseJson,
         ]);
     }
 
@@ -180,6 +182,7 @@ class SendPlanForShipmentCommand extends Command
 
     private function getDataApi(): SystemDetailParameter
     {
-        return SystemDetailParameter::where('parameterid', '=', 'API-RC')->where('value01', 'HENKELTOL01')->first();
+        return SystemDetailParameter::where('parameterid', '=', 'API-RC')
+            ->where('value01', 'HENKELTOL01')->first();
     }
 }

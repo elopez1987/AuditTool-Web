@@ -212,7 +212,7 @@
 
         <div class="container__box">
             @can('webservicelog')
-                <a href="{{route('webservicelog')}}">
+                <a href="{{route('webservicelog.index')}}">
                     <div class="box" data-toggle="tooltip" data-placement="top"
                          title="Muestra la información de los eventos de conexión con otros sistemas externos.">
                         <i class="lni lni-website"></i>
@@ -238,6 +238,15 @@
                         <i class="lni lni-agenda"></i>
                         <h5>Edi Token</h5>
                         <h4>Edi Token</h4>
+                    </div>
+                </a>
+            @endcan
+                @can('edi-configurations.index')
+                <a href="{{route('edi-configurations.index')}}">
+                    <div class="box">
+                        <i class="lni lni-agenda"></i>
+                        <h5>Configuración de interfaces</h5>
+                        <h4>Configuración de interfaces</h4>
                     </div>
                 </a>
             @endcan
