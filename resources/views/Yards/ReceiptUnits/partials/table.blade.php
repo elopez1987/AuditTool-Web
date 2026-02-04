@@ -12,7 +12,7 @@
             "colReorder": true,
             "stateSave": true,
             "stateDuration": 0,
-            "autoWidth": true,
+            // "autoWidth": true,
             "ajax": {
                 url: 'getDataReceipts',
                 data: function (d) {
@@ -63,10 +63,10 @@
                 {data: 'staytime'},
                 {data: 'tracto.id','name':'tractos.id'},
             ],
-            fixedColumns: {
-                left: 6,   // columnas fijas a la izquierda
-                // right: 1   // opcional: fijas a la derecha
-            },
+            // fixedColumns: {
+            //     left: 6,   // columnas fijas a la izquierda
+            //     // right: 1   // opcional: fijas a la derecha
+            // },
             "order": [[2, 'desc']],
             "columnDefs": [
                 {"width": "100px", "targets": 0},

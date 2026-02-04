@@ -1,11 +1,11 @@
-<div class="btn-group">
+<div class="btn-group dropup">
     <button type="button" class="btn waves-effect waves-light btn-outline-info btn-sm dropdown-toggle"
             data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
         <i class="ti ti-settings font-12 mr-2"></i>
        Acciones
     </button>
-    <div class="dropdown-menu animated flipInX">
+    <div class="dropdown-menu animated flipInX" style="z-index: 9999;">
         @if ($statusid != 'OU')
             @can('receiptunits.edit')
                 <a href="{{url('receiptunits/' . $id. '/edit')}}" class="dropdown-item">
