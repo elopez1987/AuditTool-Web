@@ -11,7 +11,7 @@ use App\Console\Commands\General\TiempoExcedidoParaSalirDePatio;
 use App\Console\Commands\General\UnidadesSinLLegarEmbarques;
 use App\Console\Commands\HENKELTOL01\ClearLocationCommand;
 use App\Console\Commands\HENKELTOL01\EnviaMensajeDeNuevaIncidenciaRegistrada;
-use App\Console\Commands\Izel\SendDataToWmsIzel;
+use App\Console\Commands\Izel\EnviarDatosIzelWmsCommand;
 use App\Console\Commands\RecursoConfiable\ONEROOF\GetEvidenceFromRControl;
 use App\Console\Commands\RecursoConfiable\ONEROOF\ObtenerETAdeRecursoConfiable;
 use App\Console\Commands\RecursoConfiable\ONEROOF\SendEventForShipmentCommand;
@@ -32,8 +32,6 @@ class Kernel extends ConsoleKernel
         DeleteLogWhatsApp::class,
         ClearReceiptAsnCommand::class,
 
-        SendDataToWmsIzel::class,
-
         TiempoExcedidoParaSalirDePatio::class,
         ObtenerETAdeRecursoConfiable::class,
         UnidadesSinLLegarEmbarques::class,
@@ -46,6 +44,8 @@ class Kernel extends ConsoleKernel
         GetEvidenceFromRControl::class,
         ClearLocationCommand::class,
 
+        //		Interfaces a Wms Izel
+        EnviarDatosIzelWmsCommand::class,
     ];
 
     /**
@@ -62,10 +62,10 @@ class Kernel extends ConsoleKernel
         $schedule->command('whatsapp:deletelog')->daily();
         $schedule->command('clear:receiptasn')->dailyAt('01:00');
 
-        //      Comandos para Kellogg Toluca
-        $schedule->command('command:SendDataToWmsIzel')->everyTenMinutes();
+        //      Comandos para interfaces a WMS Izel
+        $schedule->command('izel:enviar-datos-izel-wms')->everyFiveMinutes();
 
-        //      Comandos para Henkel One Roof HENKELTOL01
+        //      Comandos del módulo de Control de Patios
         $schedule->command('command:TiempoExcedidoParaSalirDePatio')->everyFifteenMinutes();
         //        Envia mensajes de a unidades sin llegada para embarques
         $schedule->command('command:UnidadesSinLLegarEmbarques')->everyMinute();
@@ -73,7 +73,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('command:EnviaMensajeDeNuevaIncidenciaRegistrada')->everyFiveMinutes();
         //        Envia mensaje de capacidad de patio superada al parámetro máximo
         $schedule->command('whatsapp:patiolleno')->everyTwoHours();
-        //        Envia el plan de carga a recurso confiable
+
+        //        Interfaces a recurso confiable
         $schedule->command('rc:SendPlanForShipmentCommand')->everyTwoHours();
         //        Enviar los eventos logísticos de la unidad a recurso confiable
         $schedule->command('rc:SendEventForShipmentCommand')->everyTenMinutes();

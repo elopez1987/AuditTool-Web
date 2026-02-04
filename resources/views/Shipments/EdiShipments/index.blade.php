@@ -17,8 +17,8 @@
                                 <a href="{{url('senddatatorcontrol')}}">
                                     <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
                                         <img
-                                            src="{{asset('/ico/engine_gear_internet_option_security_setting_web_icon_127066.png')}}"
-                                            alt="" class="img-16">
+                                                src="{{asset('/ico/engine_gear_internet_option_security_setting_web_icon_127066.png')}}"
+                                                alt="" class="img-16">
                                         <span style="font-size: 0.675rem "> Procesar Interfaces RControl</span>
                                     </button>
                                 </a>
@@ -27,8 +27,8 @@
                                 <a href="{{url('senddatatoizel')}}">
                                     <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
                                         <img
-                                            src="{{asset('/ico/engine_gear_internet_option_security_setting_web_icon_127066.png')}}"
-                                            alt="" class="img-16">
+                                                src="{{asset('/ico/engine_gear_internet_option_security_setting_web_icon_127066.png')}}"
+                                                alt="" class="img-16">
                                         <span style="font-size: 0.675rem "> Procesar Interfaces Izel</span>
                                     </button>
                                 </a>
@@ -50,6 +50,7 @@
                                     <th class="bg-inverse text-white">Cantidad de envios</th>
                                     <th class="bg-inverse text-white">F.Alta</th>
                                     <th class="bg-inverse text-white">Mensaje</th>
+                                    <th class="bg-inverse text-white">Estatus</th>
                                     <th class="bg-inverse text-white">Eventos</th>
                                 </tr>
                                 </thead>
@@ -65,11 +66,17 @@
                                         <td>{{$item->quantity}}</td>
                                         <td>{{$item->created_at}}</td>
                                         <td>{{$item->message}}</td>
+                                        <td style="background-color: {{$item->auxiliary05 === 'Completed' ? '#00e676' : '#ffff00'}}">
+                                            {{$item->auxiliary05}}
+                                        </td>
                                         <td>
-                                            <a href="" data-target="#modal-delete-{{$item->id}}" data-toggle="modal">
-                                                <img src="{{asset('/ico/close.png')}}" alt="" class="img-16">
-                                            </a>
-                                            @include('Shipments.EdiShipments.partials.delete')
+                                            @if($item->auxiliary05 != 'Completed')
+                                                <a href="" data-target="#modal-delete-{{$item->id}}"
+                                                   data-toggle="modal">
+                                                    <img src="{{asset('/ico/close.png')}}" alt="" class="img-16">
+                                                </a>
+                                                @include('Shipments.EdiShipments.partials.delete')
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach
@@ -98,7 +105,7 @@
                 "sScrollY": "600px",
                 "serverSide": false,
                 "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
-                "lengthMenu": [[1,5,10, 20, 50, 100, -1], [1,5,10, 20, 50, 100, "Todos"]],
+                "lengthMenu": [[1, 5, 10, 20, 50, 100, -1], [1, 5, 10, 20, 50, 100, "Todos"]],
                 buttons: [
                     {
                         "extend": "colvis",
