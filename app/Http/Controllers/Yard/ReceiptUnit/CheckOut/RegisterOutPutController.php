@@ -61,7 +61,11 @@ class RegisterOutPutController extends BaseController
                 $this->addNewEdiForIzel($receiptunit, 'OUT');
             }
 
-            $this->sendDataToRControl($receiptunit, $parameter, 'EXIT');
+            if ($receiptunit->razonstatusid === 1) {
+                if (! empty($parameter) && in_array('SWH-21', (array) $parameter)) {
+                    $this->sendDataToRControl($receiptunit, 'EXIT', 'EVENT');
+                }
+            }
 
             StorageLocation::updateLocation($receiptunit->locationid, 'E', '');
             StorageUnitTrace::createTraceUnit($receiptunit, '22');

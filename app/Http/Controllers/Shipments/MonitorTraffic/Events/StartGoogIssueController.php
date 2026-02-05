@@ -3,17 +3,19 @@
 namespace App\Http\Controllers\Shipments\MonitorTraffic\Events;
 
 use App\Http\Controllers\BaseController;
-use App\Models\Shipments\EdiShipment;
 use App\Models\Shipments\OrderDeliverie;
 use App\Models\Shipments\OrderdeliveryTrace;
 use App\Models\Shipments\ShipmentHeader;
 use App\Models\Shipments\ShipmentSeal;
+use App\Traits\Web\EDI\RegisterEdiShipment;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Log;
 
 class StartGoogIssueController extends BaseController
 {
+    use RegisterEdiShipment;
+
     public function index(OrderDeliverie $id)
     {
         $order = $id;
@@ -67,8 +69,8 @@ class StartGoogIssueController extends BaseController
     public function SendEdiToRControl(OrderDeliverie $orderDelivery): void
     {
         $parameter = $this->getParametersOfWarehouse($orderDelivery->warehouseid);
-        if (in_array('SWH-21', (array) $parameter)) {
-            EdiShipment::createEDIForEventToShipment($orderDelivery, 'DOCUMENT');
+        if (! empty($parameter) && in_array('SWH-21', (array) $parameter)) {
+            $this->createEDIForEventToShipmentForRControl($orderDelivery, 'DOCUMENT', 'EVENT');
         }
     }
 }

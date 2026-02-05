@@ -21,7 +21,7 @@ class EdiConfig extends Model
         'centerrecipient',
         'warehouserecipient',
         'url',
-        'user',
+        'userid',
         'password',
         'version',
         'enviroment',

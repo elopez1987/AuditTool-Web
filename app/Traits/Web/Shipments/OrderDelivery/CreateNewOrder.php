@@ -3,12 +3,12 @@
 namespace App\Traits\Web\Shipments\OrderDelivery;
 
 use App\Models\General\StorageComment;
-use App\Models\Shipments\EdiShipment;
 use App\Models\Shipments\ShipmentCheck;
 use App\Models\Shipments\ShipmentDataOperation;
 use App\Models\Shipments\ShipmentHeader;
 use App\Models\Shipments\ShipmentSeal;
 use App\Models\Shipments\ShipmentTransport\StorageShipmentTransport;
+use App\Traits\Web\EDI\RegisterEdiShipment;
 use App\Traits\Web\Shipments\OrderMonitor\CreateNewOrderMonitorShipment;
 use Illuminate\Support\Facades\Auth;
 use Ramsey\Uuid\Uuid;
@@ -16,6 +16,7 @@ use Ramsey\Uuid\Uuid;
 trait CreateNewOrder
 {
     use CreateNewOrderMonitorShipment;
+    use RegisterEdiShipment;
 
     public function createNewOrder($shipment, $request, $type)
     {
@@ -40,8 +41,8 @@ trait CreateNewOrder
 
     private static function createEDIToRControl($shipment, $parameter)
     {
-        if (in_array('SWH-21', (array) $parameter)) {
-            EdiShipment::createEDIForPlanToShipment($shipment);
+        if (! empty($parameter) && in_array('SWH-21', (array) $parameter)) {
+            self::createEDIForEventToShipmentForRControl($shipment, 'PLAN', 'PLAN');
         }
     }
 

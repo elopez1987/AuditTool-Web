@@ -4,66 +4,62 @@ namespace App\Traits\Web\EDI;
 
 use App\Models\Shipments\EdiShipment;
 use App\Models\Shipments\OrderDeliverie;
+use Ramsey\Uuid\Uuid;
 
 trait RegisterEdiShipment
 {
-    //	Crear evento para Wms Izel
+    // ----------------------	Crear evento para Wms Izel ----------------------------------------------
     public function addNewEdiForIzel($receiptunit, $type)
     {
         EdiShipment::create([
             'centerid' => $receiptunit->centerid,
             'warehouseid' => $receiptunit->warehouseid,
             'shipmentid' => $receiptunit->id,
+            'reference_number' => $receiptunit->id,
             'type' => 'IZEL',
-            'client' => 'WMS - IZEL',
-            'auxiliary01' => $type,
-            'auxiliary02' => get_class($receiptunit),
-            'auxiliary03' => '', // Payload
-            'auxiliary05' => 'Pending',
+            'external_system' => 'IZEL',
+            'event_type' => $type,
+            'transaction_id' => Uuid::uuid4(),
+            'model_type' => get_class($receiptunit),
+            'request_payload' => '', // Payload
+            'document_type' => 'WebService',
+            'status' => 'Pending',
         ]);
     }
 
-    //    -----------Recurso confiable -----------------------------
-    private function sendDataToRControl($receiptunit, $parameter, $typeEvent): void
+    //   ------------------------------ Recurso confiable -------------------------------------------
+
+    // ENTRANCE => Ingreso de unidad
+    // START_LOAD => Inicio de carga
+    // END_LOAD => Fin de carga
+    // DOCUMENT => Inicio de facturacion
+    // EXIT => Salida de unidad
+
+    private function sendDataToRControl($receiptunit, $typeEvent, $type): void
     {
-        if ($receiptunit->razonstatusid === 1) {
-            if (in_array('SWH-21', (array) $parameter)) {
-                $shipment = OrderDeliverie::controlAccessUser()->where('folionumber', $receiptunit->id)
-                    ->whereNotIn('statusid', ['CA', 'DH'])->first();
-                if (! empty($shipment)) {
-                    self::createEDIForEventToShipmentForRControl($shipment, $typeEvent);
-                }
-            }
+        $shipment = OrderDeliverie::controlAccessUser()->where('folionumber', $receiptunit->id)
+            ->whereNotIn('statusid', ['CA', 'DH'])->first();
+        if (! empty($shipment)) {
+            self::createEDIForEventToShipmentForRControl($shipment, $typeEvent, $type);
         }
     }
 
-    //    Crea el registro de envío del evento del embarque (Entrada/Inicio y fin de proceso, facturacion y salida)
-    public static function createEDIForEventToShipmentForRControl($model, $event)
+    //    Crea el registro de envío del evento del embarque
+    public static function createEDIForEventToShipmentForRControl($model, $event, $type)
     {
         EdiShipment::updateOrCreate([
             'centerid' => $model->centerid,
             'warehouseid' => $model->warehouseid,
             'shipmentid' => $model->shipmentid,
-            'type' => 'EVENT',
-            'client' => 'RCONTROL',
-            'auxiliary01' => $event,
-            'auxiliary02' => get_class($model),
-            'auxiliary05' => 'Pending',
-        ]);
-    }
-
-    //    Crea el registro de envío de plan de carga del módulo de embarques
-    public static function createEDIForPlanToShipmentForRControl($model)
-    {
-        EdiShipment::updateOrCreate([
-            'centerid' => $model->centerid,
-            'warehouseid' => $model->warehouseid,
-            'shipmentid' => $model->shipmentid,
-            'type' => 'PLAN',
-            'client' => 'RCONTROL',
-            'auxiliary01' => 'PLAN',
-            'auxiliary02' => get_class($model),
-            'auxiliary05' => 'Pending',
+            'reference_number' => $model->id,
+            'type' => $type,
+            'external_system' => 'RCONTROL',
+            'event_type' => $event,
+            'transaction_id' => Uuid::uuid4(),
+            'model_type' => get_class($model),
+            'request_payload' => '', // Payload
+            'document_type' => 'WebService',
+            'status' => 'Pending',
         ]);
     }
 }

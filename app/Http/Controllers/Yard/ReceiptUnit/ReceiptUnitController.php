@@ -135,7 +135,7 @@ class ReceiptUnitController extends BaseController
                 }
             }
 
-            if ($request['razonstatusid'] === '1' && ! empty($parameter) && in_array('SWH-01', (array) $parameter)) {
+            if ($request['razonstatusid'] == '1' && ! empty($parameter) && in_array('SWH-01', (array) $parameter)) {
                 $resultCheckShiopment = $this->validateShipmentInCheckIn($request);
                 if ($resultCheckShiopment) {
                     if ($request->expectsJson() || $request->ajax()) {
@@ -170,7 +170,11 @@ class ReceiptUnitController extends BaseController
                 $this->addNewEdiForIzel($receiptunit, 'IN');
             }
 
-            $this->sendDataToRControl($receiptunit, $parameter, 'ENTRANCE');
+            if ($receiptunit->razonstatusid == 1) {
+                if (! empty($parameter) && in_array('SWH-21', (array) $parameter)) {
+                    $this->sendDataToRControl($receiptunit, 'ENTRANCE', 'EVENT');
+                }
+            }
 
             DB::commit();
 

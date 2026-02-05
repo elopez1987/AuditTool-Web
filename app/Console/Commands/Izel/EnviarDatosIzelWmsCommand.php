@@ -113,14 +113,17 @@ class EnviarDatosIzelWmsCommand extends Command
         $this->createRegisterLog($receiptUnit, $statusService, $data);
         Log::info('Registro de log en sistema', ['response' => $statusService->Code]);
         if ($statusService->Code === 0) {
-            $shipment->auxiliary05 = 'Completed';
+            $shipment->status = 'Completed';
+            $shipment->processed_at = now();
+            $shipment->error_message = $statusService->Message;
             $shipment->save();
         } else {
-            $shipment->quantity++;
-            $shipment->message = $statusService->Message;
+            $shipment->retry_count++;
+            $shipment->error_message = $statusService->Message;
             $shipment->save();
-            if ($shipment->quantity > 12) {
-                $shipment->auxiliary05 = 'Error';
+            if ($shipment->retry_count > 12) {
+                $shipment->last_retry_at = now();
+                $shipment->status = 'Error';
                 $shipment->save();
             }
         }
@@ -220,16 +223,18 @@ class EnviarDatosIzelWmsCommand extends Command
 
     private function getShipments()
     {
-        return EdiShipment::where('type', self::EDI_TYPE)
+        return EdiShipment::where('external_system', self::EDI_TYPE)
             ->select([
+                'id',
                 'centerid',
                 'shipmentid',
-                'auxiliary01 as typeMovement',
-                'quantity',
-                'message',
-                'id',
+                'reference_number',
+                'event_type as typeMovement',
+                'retry_count',
+                'error_message',
+                'error_code',
             ])
-            ->where('auxiliary05', 'Pending') // Descomentar si es necesario
+            ->where('status', 'Pending') // Descomentar si es necesario
             ->get();
     }
 

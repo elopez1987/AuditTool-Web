@@ -14,8 +14,8 @@ use App\Console\Commands\HENKELTOL01\EnviaMensajeDeNuevaIncidenciaRegistrada;
 use App\Console\Commands\Izel\EnviarDatosIzelWmsCommand;
 use App\Console\Commands\RecursoConfiable\ONEROOF\GetEvidenceFromRControl;
 use App\Console\Commands\RecursoConfiable\ONEROOF\ObtenerETAdeRecursoConfiable;
-use App\Console\Commands\RecursoConfiable\ONEROOF\SendEventForShipmentCommand;
-use App\Console\Commands\RecursoConfiable\ONEROOF\SendPlanForShipmentCommand;
+use App\Console\Commands\RecursoConfiable\SendEventForShipmentCommand;
+use App\Console\Commands\RecursoConfiable\SendPlanForShipmentCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 

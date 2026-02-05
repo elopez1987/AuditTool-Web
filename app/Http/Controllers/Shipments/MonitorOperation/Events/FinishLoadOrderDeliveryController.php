@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Shipments\MonitorOperation\Events;
 
 use App\Http\Controllers\BaseController;
-use App\Models\Shipments\EdiShipment;
 use App\Models\Shipments\OrderDeliverie;
 use App\Models\Shipments\OrderdeliveryTrace;
 use App\Models\Shipments\ShipmentDataOperation;
@@ -11,12 +10,15 @@ use App\Models\Shipments\ShipmentHeader;
 use App\Models\Shipments\ShipmentSeal;
 use App\Models\Yard\ReceiptUnit;
 use App\Models\Yard\StorageLocation;
+use App\Traits\Web\EDI\RegisterEdiShipment;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class FinishLoadOrderDeliveryController extends BaseController
 {
+    use RegisterEdiShipment;
+
     public function index($id)
     {
         DB::beginTransaction();
@@ -75,7 +77,7 @@ class FinishLoadOrderDeliveryController extends BaseController
     {
         $parameter = $this->getParametersOfWarehouse($orderDelivery->warehouseid);
         if (! empty($parameter) && in_array('SWH-21', (array) $parameter)) {
-            EdiShipment::createEDIForEventToShipment($orderDelivery, 'END_LOAD');
+            $this->createEDIForEventToShipmentForRControl($orderDelivery, 'END_LOAD', 'EVENT');
         }
     }
 
