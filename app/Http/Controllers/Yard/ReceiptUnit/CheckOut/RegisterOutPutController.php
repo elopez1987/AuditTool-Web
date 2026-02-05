@@ -8,7 +8,7 @@ use App\Models\Yard\ReceiptTruck;
 use App\Models\Yard\ReceiptUnit;
 use App\Models\Yard\StorageLocation;
 use App\Models\Yard\StorageUnitTrace;
-use App\Traits\Web\Izel\RegisterEdiShipment;
+use App\Traits\Web\EDI\RegisterEdiShipment;
 use App\Traits\Web\Yard\ReceiptTruck\QueryReceiptTruck;
 use Carbon\Carbon;
 use DB;
@@ -56,7 +56,11 @@ class RegisterOutPutController extends BaseController
                 $this->generateOutTruck($tracto, 'Salida por ajuste de inventario');
             }
             $this->updateReceiptUnit($receiptunit);
-            $this->addNewEdiForIzel($receiptunit, $parameter, 'OUT');
+
+            if (! empty($parameter) && in_array('SWH-08', (array) $parameter)) {
+                $this->addNewEdiForIzel($receiptunit, 'OUT');
+            }
+
             $this->sendDataToRControl($receiptunit, $parameter, 'EXIT');
 
             StorageLocation::updateLocation($receiptunit->locationid, 'E', '');

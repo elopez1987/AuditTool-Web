@@ -6,7 +6,7 @@ use App\Http\Controllers\BaseController;
 use App\Models\Yard\ReceiptTruck;
 use App\Models\Yard\ReceiptUnit;
 use App\Models\Yard\StorageUnitTrace;
-use App\Traits\Web\Izel\RegisterEdiShipment;
+use App\Traits\Web\EDI\RegisterEdiShipment;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -20,7 +20,9 @@ class EventReceiptUnitController extends BaseController
         $this->authorize('generateinterface');
         $receiptunit = ReceiptUnit::searchForId($id);
         $parameter = $this->getParametersOfWarehouse($receiptunit->warehouseid);
-        $this->addNewEdiForIzel($receiptunit, $parameter, 'IN');
+        if (! empty($parameter) && in_array('SWH-08', (array) $parameter)) {
+            $this->addNewEdiForIzel($receiptunit, 'IN');
+        }
 
         return $this->redirectBackSuccessMessage('Registro agregado al monitor de interface.');
     }

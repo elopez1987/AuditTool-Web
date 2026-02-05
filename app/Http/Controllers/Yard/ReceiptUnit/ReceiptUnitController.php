@@ -7,7 +7,7 @@ use App\Http\Requests\Web\Yard\ReceiptUnit\CreateReceiptUnitRequest;
 use App\Http\Services\Receipt\ServiceReceiptUnit;
 use App\Models\Yard\ReceiptUnit;
 use App\Models\Yard\StorageUnitTrace;
-use App\Traits\Web\Izel\RegisterEdiShipment;
+use App\Traits\Web\EDI\RegisterEdiShipment;
 use App\Traits\Web\Receipt\ReceiptAsn\ValidateReceiptInCheckInProcess;
 use App\Traits\Web\Shipments\OrderDelivery\ValidateShipmentInCheckInProcess;
 use App\Traits\Web\Yard\ReceiptTruck\QueryReceiptTruck;
@@ -16,6 +16,7 @@ use DB;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Facades\DataTables;
 
 class ReceiptUnitController extends BaseController
@@ -165,10 +166,11 @@ class ReceiptUnitController extends BaseController
             $truck = $this->createNewTruck($request);
             $receiptunit = $this->serviceReceiptUnit->createNewReceiptUnit($request, $truck);
 
-            if ($receiptunit->statusid === 'QI') {
-                $this->addNewEdiForIzel($receiptunit, $parameter, 'IN');
-                $this->sendDataToRControl($receiptunit, $parameter, 'ENTRANCE');
+            if (! empty($parameter) && in_array('SWH-08', (array) $parameter)) {
+                $this->addNewEdiForIzel($receiptunit, 'IN');
             }
+
+            $this->sendDataToRControl($receiptunit, $parameter, 'ENTRANCE');
 
             DB::commit();
 
@@ -187,7 +189,12 @@ class ReceiptUnitController extends BaseController
                 ], 201);
             }
         } catch (Exception $e) {
-            $error = $e->getMessage();
+            $error = Log::error('Error en receiptunits.store', [
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'trace' => $e->getTraceAsString(),
+            ]);
             DB::rollback();
 
             // Respuesta JSON para AJAX

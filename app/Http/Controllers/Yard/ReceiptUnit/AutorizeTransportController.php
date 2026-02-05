@@ -10,9 +10,9 @@ use App\Models\Yard\ReceiptUnit;
 use App\Models\Yard\ReceiptUnitTicket;
 use App\Models\Yard\StorageCheckListDetail;
 use App\Models\Yard\StorageUnitTrace;
+use App\Traits\Web\EDI\RegisterEdiShipment;
 use App\Traits\Web\General\GetParameters;
 use App\Traits\Web\General\Responser;
-use App\Traits\Web\Izel\RegisterEdiShipment;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -41,9 +41,16 @@ class AutorizeTransportController extends Controller
         }
         $parameter = $this->getParametersOfWarehouse($receiptunit->warehouseid);
         $receiptunit = $this->generateOutPutBox($receiptunit, '22');
-        $this->addNewEdiForIzel($receiptunit, $parameter, 'OUT');
+
+        if (! empty($parameter) && in_array('SWH-08', (array) $parameter)) {
+            $this->addNewEdiForIzel($receiptunit, 'OUT');
+        }
+
         $receiptunitNew = $this->getReceiptunitNew($request, $receiptunit);
-        $this->addNewEdiForIzel($receiptunitNew, $parameter, 'IN');
+        if (! empty($parameter) && in_array('SWH-08', (array) $parameter)) {
+            $this->addNewEdiForIzel($receiptunitNew, 'IN');
+        }
+
         $this->getFolioClient($receiptunitNew->centerid, $receiptunitNew->id, 'SHT');
         ReceiptUnitTicket::closeTicket($receiptunit->id, $request);
         StorageUnitTrace::createTraceUnit($receiptunitNew, '1');

@@ -8,7 +8,7 @@ use App\Models\Yard\ReceiptUnit;
 use App\Models\Yard\StorageCheckListDetail;
 use App\Models\Yard\StorageLocation;
 use App\Models\Yard\StorageUnitTrace;
-use App\Traits\Web\Izel\RegisterEdiShipment;
+use App\Traits\Web\EDI\RegisterEdiShipment;
 use App\Traits\Web\Yard\CheckList\CheckListTransportTrait;
 use App\Traits\Web\Yard\ReceiptTruck\QueryReceiptTruck;
 use Auth;
@@ -72,8 +72,11 @@ class TransportOutPutController extends BaseController
             StorageLocation::updateLocation($receiptunit->locationid, 'E', '');
             //          Generamos la salida del tracto
             $this->generateOutTruck($tracto, 'Salida de unidad desde Web');
+
             //          Enviamos los datos a WMS Izel
-            $this->addNewEdiForIzel($receiptunit, $parameter, 'OUT');
+            if (! empty($parameter) && in_array('SWH-08', (array) $parameter)) {
+                $this->addNewEdiForIzel($receiptunit, 'OUT');
+            }
 
             DB::commit();
 
