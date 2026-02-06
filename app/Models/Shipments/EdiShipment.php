@@ -56,6 +56,11 @@ class EdiShipment extends Model
 {
     use LogsActivity;
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
+
     protected $table = 'edishipments';
 
     protected $primaryKey = 'id';
@@ -85,11 +90,6 @@ class EdiShipment extends Model
         'last_retry_at',
         'status',
     ];
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
 
     public static function controlAccessUser()
     {
