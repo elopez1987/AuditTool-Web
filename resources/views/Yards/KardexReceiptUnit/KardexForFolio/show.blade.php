@@ -13,14 +13,14 @@
                             <a href="{{route('tracereceiptunit.index')}}">
                                 @include('buttons.cancel')
                             </a>
-                            <a href="{{url('generateinvoicekardex/' . $receiptunit->id)}}" >
+                            <a href="{{url('generateinvoicekardex/' . $receiptunit->id)}}">
                                 <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
                                     <img src="{{asset('/ico/papeleta.png')}}" alt="" class="img-16 ml-1">
                                     <span class="text-button"> Generar Kardex</span>
                                 </button>
                             </a>
                             @can('receiptunits.princhecklistbrid')
-                                <a href="{{url('printchecklistbrind/' . $receiptunit->id)}}" >
+                                <a href="{{url('printchecklistbrind/' . $receiptunit->id)}}">
                                     <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
                                         <img src="{{asset('/ico/papeleta.png')}}" alt="" class="img-16 ml-1">
                                         <span class="text-button"> Generar Check List Bridgestone</span>
@@ -28,7 +28,7 @@
                                 </a>
                             @endcan
                             @can('receiptunits.calidadbridgestone')
-                                <a href="{{url('printqualitybridge/' . $receiptunit->id)}}" >
+                                <a href="{{url('printqualitybridge/' . $receiptunit->id)}}">
                                     <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
                                         <img src="{{asset('/ico/papeleta.png')}}" alt="" class="img-16 ml-1">
                                         <span class="text-button"> Generar Check List Calidad</span>
@@ -47,7 +47,7 @@
                                 @endcan
                             @endif
                             @can('receiptunits.downloadfiles')
-                                <a href="{{url('downloadfilesunit/' . $receiptunit->id)}}" >
+                                <a href="{{url('downloadfilesunit/' . $receiptunit->id)}}">
                                     <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
                                         <img src="{{asset('/ico/galeria-de-fotos.png')}}" alt=""
                                              class="img-16 ml-1">
@@ -56,7 +56,7 @@
                                 </a>
                             @endcan
                             @can('receiptunits.ticket')
-                                <a href="{{url('downloadticket/' . $receiptunit->id)}}" >
+                                <a href="{{url('downloadticket/' . $receiptunit->id)}}">
                                     <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
                                         <img src="{{asset('/ico/papeleta.png')}}" alt=""
                                              class="img-16 ml-1">
@@ -65,7 +65,7 @@
                                 </a>
                             @endcan
                             @can('generateinvoicetransport')
-                                <a href="{{url('generateinvoicetransport/' . $receiptunit->id)}}" >
+                                <a href="{{url('generateinvoicetransport/' . $receiptunit->id)}}">
                                     <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
                                         <img src="{{asset('/ico/papeleta.png')}}" alt=""
                                              class="img-16 ml-1">
@@ -142,14 +142,19 @@
                                                         <div class="timeline-horizontal">
                                                             <ul class="list-unstyled d-flex flex-wrap justify-content-between align-items-start position-relative">
                                                                 @foreach($traces as $index => $trace)
-                                                                    <li class="timeline-item text-center" style="min-width: 150px; max-width: 200px; position: relative;">
-                                                                        <div class="timeline-badge bg-info rounded-circle mx-auto" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; z-index: 1;">
+                                                                    <li class="timeline-item text-center"
+                                                                        style="min-width: 150px; max-width: 200px; position: relative;">
+                                                                        <div class="timeline-badge bg-info rounded-circle mx-auto"
+                                                                             style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; z-index: 1;">
                                                                             <i class="mdi mdi-check text-white"></i>
                                                                         </div>
                                                                         <div class="timeline-panel mt-2">
-                                                                            <h6 class="mb-1 font-weight-bold" style="font-size: 11px;">{{ $trace->event ? $trace->event->name : 'Sin evento' }}</h6>
-                                                                            <p class="text-muted mb-0" style="font-size: 10px;">{{ \Carbon\Carbon::parse($trace->created_at)->format('d/m/Y') }}</p>
-                                                                            <p class="text-muted" style="font-size: 9px;">{{ \Carbon\Carbon::parse($trace->created_at)->format('H:i') }}</p>
+                                                                            <h6 class="mb-1 font-weight-bold"
+                                                                                style="font-size: 11px;">{{ $trace->event ? $trace->event->name : 'Sin evento' }}</h6>
+                                                                            <p class="text-muted mb-0"
+                                                                               style="font-size: 10px;">{{ \Carbon\Carbon::parse($trace->created_at)->format('d/m/Y') }}</p>
+                                                                            <p class="text-muted"
+                                                                               style="font-size: 9px;">{{ \Carbon\Carbon::parse($trace->created_at)->format('H:i') }}</p>
                                                                         </div>
                                                                         @if($index < count($traces) - 1)
                                                                             @php
@@ -159,7 +164,8 @@
                                                                                 $hours = $diff->h + ($diff->days * 24);
                                                                                 $minutes = $diff->i;
                                                                             @endphp
-                                                                            <div class="timeline-duration" style="position: absolute; top: -20px; left: 100%; width: 150px; text-align: center; font-size: 12px; color: #6c757d;">
+                                                                            <div class="timeline-duration"
+                                                                                 style="position: absolute; top: -20px; left: 100%; width: 150px; text-align: center; font-size: 12px; color: #6c757d;">
                                                                                 {{ $hours }}h {{ $minutes }}m
                                                                             </div>
                                                                         @endif
@@ -176,10 +182,15 @@
                                                                 @endphp
                                                                 <div class="row mt-4">
                                                                     <div class="col-12 d-flex justify-content-center">
-                                                                        <div class="card bg-cyan text-white" style="max-width: 300px;">
+                                                                        <div class="card bg-cyan text-white"
+                                                                             style="max-width: 300px;">
                                                                             <div class="card-body text-center py-3">
-                                                                                <h5 class="card-title mb-1" style="font-size: 13px; font-weight: bold;">Tiempo Total</h5>
-                                                                                <p class="card-text mb-0" style="font-size: 18px; font-weight: bold;">{{ $totalHours }}h {{ $totalMinutes }}m</p>
+                                                                                <h5 class="card-title mb-1"
+                                                                                    style="font-size: 13px; font-weight: bold;">
+                                                                                    Tiempo Total</h5>
+                                                                                <p class="card-text mb-0"
+                                                                                   style="font-size: 18px; font-weight: bold;">{{ $totalHours }}
+                                                                                    h {{ $totalMinutes }}m</p>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -219,19 +230,25 @@
                                                             </td>
                                                             <td>{{$check->observation}}</td>
                                                             <td>
-                                                                <img src="{{asset('storage/' . $check->photo_1)}}"
-                                                                     alt="user"
-                                                                     style="height: 100px;max-height: 100px"/>
+                                                                @if($check->photo_1)
+                                                                    <img src="{{asset('storage/' . $check->photo_1)}}"
+                                                                         alt="user"
+                                                                         style="height: 200px;max-height: 200px"/>
+                                                                @endif
                                                             </td>
                                                             <td>
-                                                                <img src="{{asset('storage/' . $check->photo_2)}}"
-                                                                     alt="user"
-                                                                     style="height: 100px;max-height: 100px"/>
+                                                                @if($check->photo_2)
+                                                                    <img src="{{asset('storage/' . $check->photo_2)}}"
+                                                                         alt="user"
+                                                                         style="height: 200px;max-height: 200px"/>
+                                                                @endif
                                                             </td>
                                                             <td>
-                                                                <img src="{{asset('storage/' . $check->photo_3)}}"
-                                                                     alt="user"
-                                                                     style="height: 100px;max-height: 100px"/>
+                                                                @if($check->photo_3)
+                                                                    <img src="{{asset('storage/' . $check->photo_3)}}"
+                                                                         alt="user"
+                                                                         style="height: 200px;max-height: 200px"/>
+                                                                @endif
                                                             </td>
                                                         </tr>
                                                 @endif
@@ -310,12 +327,10 @@
                                                                                 {{$photo->tipo}}
                                                                             </div>
                                                                             <div class="el-card-item">
-                                                                                <div
-                                                                                        class="el-card-avatar el-overlay-1">
-                                                                                    <img
-                                                                                            src="{{asset('storage/' . $photo->path)}}"
-                                                                                            alt="user"
-                                                                                            style="height: 300px;max-height: 400px"/>
+                                                                                <div class="el-card-avatar el-overlay-1">
+                                                                                    <img src="{{asset('storage/' . $photo->path)}}"
+                                                                                         alt="user"
+                                                                                         style="height: 300px;max-height: 400px"/>
                                                                                     <div class="el-overlay">
                                                                                         <ul class="list-style-none el-info">
                                                                                             <li class="el-item">
@@ -806,11 +821,13 @@
             overflow-x: auto;
             padding: 20px 0;
         }
+
         .timeline-horizontal ul {
             position: relative;
             margin: 0;
             padding: 0;
         }
+
         .timeline-horizontal ul::before {
             content: '';
             position: absolute;
@@ -821,12 +838,14 @@
             background: #e9ecef;
             z-index: 0;
         }
+
         .timeline-item {
             flex: 0 0 auto;
         }
+
         .timeline-badge {
             border: 3px solid #fff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
     </style>
 @endsection
