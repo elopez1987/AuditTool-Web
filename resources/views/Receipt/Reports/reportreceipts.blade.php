@@ -8,7 +8,7 @@
                     Reporte de descargas
                 </div>
                 <div class="card-body">
-                    <form method="GET" action="{{url('generateFileToExportReceipt')}}">
+                    <form method="POST" action="{{url('generateFileToExportReceipt')}}">
                         @csrf
                         <div class="row mb-2">
                             <div class="col-md-12">
@@ -30,8 +30,7 @@
                         <div class="row mt-4">
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="centerid">Centro de distribución <span
-                                            style="color: red">*</span></label>
+                                    <label for="centerid">Centro de distribución </label>
                                     <select name="centerid" class="form-control select2">
                                         @foreach($centers as $center)
                                             <option value="{{$center->centerid}}"> {{$center->name}} </option>
@@ -41,13 +40,25 @@
                             </div>
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
+                                    <label for="warehouseid">Bodega </label>
+                                    <select name="warehouseid" class="form-control select2">
+                                        @foreach($warehouses as $model)
+                                            <option value="{{$model->warehouseid}}"> {{$model->name}} </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="form-group">
                                     <label for="type">Nombre de reporte <span style="color: red">*</span></label>
                                     <select name="type" class="form-control select2">
-                                        <option value="RG">Reporte General</option>
-                                        <option value="IN">Reporte de incidencia</option>
-                                        <option value="PA">Reporte de Lpns</option>
-                                        <option value="PR">Reporte de Arribo</option>
-                                        <option value="TR">Reporte de Tarimas</option>
+                                        <option value="RG">Reporte general de descargas</option>
+                                        <option value="IN">Reporte de incidencia en descargas</option>
+                                        <option value="PA">Reporte de Lpns en recibo</option>
+                                        <option value="PR">Reporte de arribo de unidades</option>
+                                        <option value="TR">Reporte de tarimas</option>
                                     </select>
                                 </div>
                             </div>

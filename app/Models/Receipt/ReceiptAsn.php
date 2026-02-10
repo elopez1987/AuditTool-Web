@@ -160,7 +160,7 @@ class ReceiptAsn extends Model
 
     //    auxiliary01 = 'Planeador';
     //    auxiliary02 = 'Posteo SAP';
-    //    auxiliary03 = 'Categoria de material';
+    //    auxiliary03 = '';
     //    auxiliary04 = '';
     //    auxiliary05 = '';
     //    auxiliary06 = 'Numero de folio de planta para el monitor de transitos planta';

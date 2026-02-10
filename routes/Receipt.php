@@ -63,7 +63,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('receiptasn/{id}/kardex', [EventReceiptController::class, 'kardexpdf'])->name('kardexpdf');
     //    Exportar reporte de recibos
     Route::get('reportreceipts', [ReportReceiptsController::class, 'reportreceipts'])->name('reportreceipts');
-    Route::get('generateFileToExportReceipt', [ReportReceiptsController::class, 'generateFileToExportReceipt'])->name('generateFileToExportReceipt');
+    Route::post('generateFileToExportReceipt', [ReportReceiptsController::class, 'generateFileToExportReceipt'])->name('generateFileToExportReceipt');
     //    Programar descarga esperada
     Route::post('addReceiptToPlan', [AddPlanReceiptController::class, 'index'])->name('addReceiptToPlan');
     //    Monitos de arribos de planta

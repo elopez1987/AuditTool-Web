@@ -17,15 +17,16 @@ class ReportReceiptsController extends BaseController
     {
         $this->authorize('reportreceipts');
         $centers = $this->getCenterForSelect();
+        $warehouses = $this->getWarehouseForSelect();
 
-        return view('Receipt.Reports.reportreceipts', compact('centers'));
+        return view('Receipt.Reports.reportreceipts', compact('centers', 'warehouses'));
     }
 
     public function generateFileToExportReceipt(ReportReceiptRequest $request)
     {
         if ($request['type'] === 'RG') {
             return Excel::download(
-                new ReportReceipt($request['workdayin'], $request['workdayout'], $request['centerid']),
+                new ReportReceipt($request),
                 'Reporte de descargas.xlsx'
             )->deleteFileAfterSend();
         }
@@ -45,7 +46,7 @@ class ReportReceiptsController extends BaseController
 
         if ($request['type'] === 'PR') {
             return Excel::download(
-                new ExportPlanArriveReceipt($request['workdayin'], $request['workdayout'], $request['centerid']),
+                new ExportPlanArriveReceipt($request),
                 'Reporte de arribo de unidades.xlsx'
             )->deleteFileAfterSend();
         }

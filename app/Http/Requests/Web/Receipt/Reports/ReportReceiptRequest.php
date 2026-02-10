@@ -10,6 +10,7 @@ class ReportReceiptRequest extends FormRequest
     {
         return [
             'centerid' => 'required',
+            'warehouseid' => 'required',
             'type' => 'required',
             'workdayin' => 'required',
             'workdayout' => 'required',

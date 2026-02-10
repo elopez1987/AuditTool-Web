@@ -2,6 +2,7 @@
 
 namespace App\Exports\Receipt\ReceiptAsn;
 
+use App\Models\Receipt\ReceiptAsn;
 use Carbon\Carbon;
 use DB;
 use Maatwebsite\Excel\Concerns\Exportable;
@@ -19,17 +20,11 @@ class ReportReceipt implements FromCollection, ShouldAutoSize, WithColumnFormatt
 {
     use Exportable;
 
-    private $workdayin;
+    private $request;
 
-    private $workdayout;
-
-    private $centerid;
-
-    public function __construct($workdayin, $workdayout, $centerid)
+    public function __construct($request)
     {
-        $this->workdayin = $workdayin;
-        $this->workdayout = $workdayout;
-        $this->centerid = $centerid;
+        $this->request = $request;
     }
 
     public function columnFormats(): array
@@ -42,8 +37,9 @@ class ReportReceipt implements FromCollection, ShouldAutoSize, WithColumnFormatt
     public function headings(): array
     {
         return [
+            'C.Distribución',
+            'Bodega',
             'Fecha',
-            'Turno',
             'Recibo',
             'Factura',
             'O.Compra',
@@ -59,20 +55,72 @@ class ReportReceipt implements FromCollection, ShouldAutoSize, WithColumnFormatt
             'Analista',
             'F.Inicia Descarga',
             'F.Fin Descarga',
-            'Tiempo de descarga',
-            'Estadia de descarga',
             'Montacarguista',
             'F.Autoriza Salida',
             'F.Salida de Unidad',
-            'Estadia',
-            'Tipo de entrada',
+            'Estadia general',
+            'Tiempo de descarga',
             'Estatus',
         ];
     }
 
     public function collection()
     {
-        return collect(DB::select('exec getDataReceipts "' . $this->centerid . '" , "' . $this->workdayin . '" , "' . $this->workdayout . '"   '));
+        return ReceiptAsn::query()
+            ->select([
+                DB::raw('CONVERT(varchar, receiptunits.entrydate, 101) as fecha_trabajo'),
+                'systemcenterdistributions.description as centro_distribucion',
+                'systemwarehouses.name as bodega',
+                'receiptasn.shipmentid as recibo',
+                'receiptasn.billoflading as factura',
+                'receiptasn.oc as orden_de_compra',
+                'receiptproviders.name as proveedor',
+                'receiptasn.folionumber as folio_unidad',
+                'shipmentcarriers.name as linea_transporte',
+                'receiptunits.boxnumber as placa_de_caja',
+                'receiptunits.trucknumber as placa_de_tracto',
+                'receiptunits.operatorname as operador',
+                'receiptunits.containerseal as sello_unidad',
+                'receiptunits.entrydate as fecha_entrada',
+                'receiptunits.deliverdate as fecha_llegada_operacion',
+                DB::raw("(SELECT TOP 1 users.name
+                    FROM storageunittrace
+                    LEFT JOIN users ON storageunittrace.createuser = users.id
+                    WHERE receiptunitid = receiptunits.id
+                    AND razonstatusid = '10') as analista"),
+                'receiptasn.unloadstartdate as inicio_descarga',
+                'receiptasn.unloadfinishdate as fin_descarga',
+                DB::raw("(SELECT TOP 1 u.name
+                    FROM receiptasnchecklist rc
+                    LEFT JOIN users u ON rc.createuser = u.username
+                    WHERE rc.receiptid = receiptasn.id
+                    AND rc.typeid = 'MT') as montacarguista"),
+                'receiptunits.autorizaoutputdate as autorizacion_salida',
+                'receiptunits.outputdate as salida_unidad',
+                DB::raw('DATEDIFF(Minute, receiptunits.entrydate, receiptunits.outputdate) as estadia_total_minutos'),
+                DB::raw('DATEDIFF(minute, receiptasn.unloadstartdate, receiptasn.unloadfinishdate) as estadia_descarga'),
+                'systemstatus.name as estatus_unidad',
+            ])
+            ->leftJoin('receiptunits', function ($join) {
+                $join->on('receiptasn.folionumber', '=', 'receiptunits.id')
+                    ->on('receiptasn.centerid', '=', 'receiptunits.centerid')
+                    ->on('receiptasn.warehouseid', '=', 'receiptunits.warehouseid');
+            })
+            ->leftJoin('receiptproviders', function ($join) {
+                $join->on('receiptasn.providerid', '=', 'receiptproviders.id')
+                    ->on('receiptasn.centerid', '=', 'receiptproviders.centerid');
+            })
+            ->leftJoin('shipmentcarriers', 'receiptunits.carrierid', '=', 'shipmentcarriers.id')
+            ->leftJoin('systemstatus', function ($join) {
+                $join->on('receiptasn.statusid', '=', 'systemstatus.statusid')
+                    ->on('receiptasn.schemaid', '=', 'systemstatus.schemaid');
+            })
+            ->leftJoin('systemwarehouses', 'receiptasn.warehouseid', '=', 'systemwarehouses.warehouseid')
+            ->leftJoin('systemcenterdistributions', 'receiptasn.centerid', '=', 'systemcenterdistributions.centerid')
+            ->where('receiptasn.centerid', $this->request->centerid)
+            ->whereBetween('receiptasn.addasndate', [$this->request->workdayin, $this->request->workdayout])
+            ->where('receiptasn.warehouseid', $this->request->warehouseid)
+            ->get();
     }
 
     public function map($receipts): array
@@ -96,31 +144,30 @@ class ReportReceipt implements FromCollection, ShouldAutoSize, WithColumnFormatt
         }
 
         return [
-            $receipts->workday,
-            $receipts->turnid,
-            $receipts->shipmentid,
-            $receipts->billoflading,
-            $receipts->oc,
-            $receipts->provider,
-            $receipts->folionumber,
-            $receipts->carrier,
-            $receipts->boxnumber,
-            $receipts->trucknumber,
-            $receipts->operatorname,
-            $receipts->containerseal,
-            $receipts->entrydate,
-            $receipts->deliverdate,
-            $receipts->analyst,
-            $receipts->unloadstartdate,
-            $receipts->unloadfinishdate,
-            $duration_unload,
-            $stay_duration,
-            $receipts->forklift,
-            $receipts->autorizaoutputdate,
-            $receipts->outputdate,
-            $receipts->stay,
-            $receipts->type,
-            $receipts->status,
+            $receipts->centro_distribucion,
+            $receipts->bodega,
+            $receipts->fecha_trabajo,
+            $receipts->recibo,
+            $receipts->factura,
+            $receipts->orden_de_compra,
+            $receipts->proveedor,
+            $receipts->folio_unidad,
+            $receipts->linea_transporte,
+            $receipts->placa_de_caja,
+            $receipts->placa_de_tracto,
+            $receipts->operador,
+            $receipts->sello_unidad,
+            $receipts->fecha_entrada,
+            $receipts->fecha_llegada_operacion,
+            $receipts->analista,
+            $receipts->inicio_descarga,
+            $receipts->fin_descarga,
+            $receipts->montacarguista,
+            $receipts->autorizacion_salida,
+            $receipts->salida_unidad,
+            $receipts->estadia_total_minutos,
+            $receipts->estadia_descarga,
+            $receipts->estatus_unidad,
         ];
     }
 
