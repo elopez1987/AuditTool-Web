@@ -32,14 +32,14 @@ class ReportReceiptsController extends BaseController
         }
         if ($request['type'] === 'IN') {
             return Excel::download(
-                new ReportIncidenceReceiptExport($request['workdayin'], $request['workdayout'], $request['centerid']),
+                new ReportIncidenceReceiptExport($request),
                 'Reporte de incidencias en descargar.xlsx'
             )->deleteFileAfterSend();
         }
 
         if ($request['type'] === 'PA') {
             return Excel::download(
-                new ExportReportOfLpnReceipt($request['workdayin'], $request['workdayout'], $request['centerid']),
+                new ExportReportOfLpnReceipt($request),
                 'Reporte de lpns en recibo.xlsx'
             )->deleteFileAfterSend();
         }
@@ -53,7 +53,7 @@ class ReportReceiptsController extends BaseController
 
         if ($request['type'] === 'TR') {
             return Excel::download(
-                new ExportReceiptPallets($request['workdayin'], $request['workdayout'], $request['centerid']),
+                new ExportReceiptPallets($request),
                 'Reporte de tarimas.xlsx'
             )->deleteFileAfterSend();
         }
