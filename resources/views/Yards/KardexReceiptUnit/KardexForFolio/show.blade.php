@@ -194,13 +194,16 @@
                                 </div>
                                 <div class="tab-pane" id="view02" role="tabpanel">
                                     <div class="row mt-3">
-                                        <div class="col-lg-6">
-                                            <table width="100%"
-                                                   class="table table-condensed table-bordered ">
+                                        <div class="col-lg-12">
+                                            <table width="100%" class="table table-condensed table-bordered ">
                                                 <thead>
                                                 <tr>
                                                     <th>Concepto</th>
                                                     <th>Estatus</th>
+                                                    <th>Comentario</th>
+                                                    <th>Foto 01</th>
+                                                    <th>Foto 02</th>
+                                                    <th>Foto 03</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -214,12 +217,30 @@
                                                                    ($check->verified == 'NA' ? 'bg-blue' : '')) }}">
                                                                 {{ $check->verified }}
                                                             </td>
+                                                            <td>{{$check->observation}}</td>
+                                                            <td>
+                                                                <img src="{{asset('storage/' . $check->photo_1)}}"
+                                                                     alt="user"
+                                                                     style="height: 100px;max-height: 100px"/>
+                                                            </td>
+                                                            <td>
+                                                                <img src="{{asset('storage/' . $check->photo_2)}}"
+                                                                     alt="user"
+                                                                     style="height: 100px;max-height: 100px"/>
+                                                            </td>
+                                                            <td>
+                                                                <img src="{{asset('storage/' . $check->photo_3)}}"
+                                                                     alt="user"
+                                                                     style="height: 100px;max-height: 100px"/>
+                                                            </td>
                                                         </tr>
                                                 @endif
                                                 @endforeach
                                             </table>
                                         </div>
-                                        <div class="col-lg-6">
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
                                             <div class="card">
                                                 <div class="card-header"></div>
                                                 <div class="card-body">
@@ -234,7 +255,7 @@
                                                                                         class="el-card-avatar el-overlay-1">
                                                                                     <img src="{{asset('storage/' . $photo->path)}}"
                                                                                          alt="user"
-                                                                                            style="height: 300px;max-height: 400px"/>
+                                                                                         style="height: 300px;max-height: 400px"/>
                                                                                     <div class="el-overlay">
                                                                                         <ul class="list-style-none el-info">
                                                                                             <li class="el-item">
