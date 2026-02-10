@@ -231,27 +231,21 @@
                                                             <td>{{$check->observation}}</td>
                                                             <td>
                                                                 @if($check->photo_1)
-                                                                    <img src="{{asset('storage/' . $check->photo_1)}}"
-                                                                         alt="user"
-                                                                         style="height: 200px;max-height: 200px"/>
+                                                                    <img src="{{asset('storage/' . $check->photo_1)}}" alt="user" style="height: 200px;max-height: 200px;width: 100%"/>
                                                                 @endif
                                                             </td>
                                                             <td>
                                                                 @if($check->photo_2)
-                                                                    <img src="{{asset('storage/' . $check->photo_2)}}"
-                                                                         alt="user"
-                                                                         style="height: 200px;max-height: 200px"/>
+                                                                    <img src="{{asset('storage/' . $check->photo_2)}}" alt="user" style="height: 200px;max-height: 200px;width: 100%"/>
                                                                 @endif
                                                             </td>
                                                             <td>
                                                                 @if($check->photo_3)
-                                                                    <img src="{{asset('storage/' . $check->photo_3)}}"
-                                                                         alt="user"
-                                                                         style="height: 200px;max-height: 200px"/>
+                                                                    <img src="{{asset('storage/' . $check->photo_3)}}" alt="user" style="height: 200px;max-height: 200px;width: 100%"/>
                                                                 @endif
                                                             </td>
                                                         </tr>
-                                                @endif
+                                                      @endif
                                                 @endforeach
                                             </table>
                                         </div>
@@ -768,29 +762,24 @@
                                                         <tr>
                                                             @if($receiptunit->key)
                                                                 <td style="height: 150px">
-                                                                    <img
-                                                                            src="{{asset('storage/' . $receiptunit->key->keyguard01)}}"
-                                                                            alt="Firma"
-                                                                            style="height: 100px;max-height: 200px"/>
-
+                                                                    @if($receiptunit->key->keyguard01)
+                                                                        <img src="{{asset('storage/' . $receiptunit->key->keyguard01)}}" alt="Firma" style="height: 100px;max-height: 200px"/>
+                                                                    @endif
                                                                 </td>
                                                                 <td>
-                                                                    <img
-                                                                            src="{{asset('storage/' . $receiptunit->key->keyoperator01 )}}"
-                                                                            alt="Firma"
-                                                                            style="height: 100px;max-height: 200px"/>
+                                                                    @if($receiptunit->key->keyoperator01)
+                                                                        <img src="{{asset('storage/' . $receiptunit->key->keyoperator01 )}}" alt="Firma" style="height: 100px;max-height: 200px"/>
+                                                                    @endif
                                                                 </td>
                                                                 <td>
-                                                                    <img
-                                                                            src="{{asset('storage/' . $receiptunit->key->keyguard03 )}}"
-                                                                            alt="Firma"
-                                                                            style="height: 100px;max-height: 200px"/>
+                                                                    @if($receiptunit->key->keyguard03)
+                                                                        <img src="{{asset('storage/' . $receiptunit->key->keyguard03 )}}" alt="Firma" style="height: 100px;max-height: 200px"/>
+                                                                    @endif
                                                                 </td>
                                                                 <td>
-                                                                    <img
-                                                                            src="{{asset('storage/' . $receiptunit->key->keyoperator03)}}"
-                                                                            alt="Firma"
-                                                                            style="height: 100px;max-height: 200px"/>
+                                                                    @if($receiptunit->key->keyoperator03)
+                                                                    <img src="{{asset('storage/' . $receiptunit->key->keyoperator03)}}" alt="Firma" style="height: 100px;max-height: 200px"/>
+                                                                        @endif
                                                                 </td>
                                                             @endif
                                                         </tr>
@@ -864,7 +853,7 @@
                 "paging": true,
                 "searching": true,
                 "ordering": true,
-                "sScrollY": "250px",
+                "sScrollY": "550px",
                 "sScrollX": true,
                 "processing": true,
                 "serverSide": false,
