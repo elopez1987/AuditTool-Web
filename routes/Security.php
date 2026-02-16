@@ -15,6 +15,7 @@ use App\Http\Controllers\Security\Roles\RoleController;
 use App\Http\Controllers\Security\Roles\StorageCategoryRoleController;
 use App\Http\Controllers\Security\Users\AccessWarehouse\AccessCarrierController;
 use App\Http\Controllers\Security\Users\AccessWarehouse\AccessCustomerController;
+use App\Http\Controllers\Security\Users\AccessWarehouse\AccessProviderController;
 use App\Http\Controllers\Security\Users\AccessWarehouse\LevelWarehouseController;
 use App\Http\Controllers\Security\Users\Eventos\EventUserController;
 use App\Http\Controllers\Security\Users\SuperUserController;
@@ -54,16 +55,24 @@ Route::middleware(['auth'])->group(function () {
     //    Asignacion de bodegas para acceso
     Route::get('securityusers/{id}/securityaccesswarehouse', [LevelWarehouseController::class, 'createaccess'])->name('securityusers.createaccess');
     Route::put('storeLevelWarehouse/{id}', [LevelWarehouseController::class, 'storeLevelWarehouse'])->name('storeLevelWarehouse');
+
     //    Acceso por líneas de transporte
     Route::get('securityusers/{id}/securityaccesscarriers', [AccessCarrierController::class, 'index'])->name('securityusers.accesscarriers');
     Route::put('securityuseraddcarrier/{id}', [AccessCarrierController::class, 'update'])->name('securityuseraddcarrier');
     //    Borrar asignacion de línea de transporte
     Route::delete('deleteaccesscarrier/{id}', [AccessCarrierController::class, 'destroy'])->name('deleteaccesscarrier');
+
     //    Acceso para filtro por clientes
     Route::get('securityusers/{id}/securityaccesscustomer', [AccessCustomerController::class, 'index'])->name('securityuser.securityaccesscustomer');
     Route::put('securityaccesscustomer/{id}', [AccessCustomerController::class, 'update'])->name('securityaccesscustomer');
     //    Borrar asignacion de clientes a usuarios
     Route::delete('deleteaccesscustomer/{id}', [AccessCustomerController::class, 'destroy'])->name('deleteaccesscustomer');
+
+    //    Acceso para filtro por proveedores
+    Route::get('securityusers/{id}/providers', [AccessProviderController::class, 'index'])->name('securityuser.providers');
+    Route::put('securityaccess-providers/{id}', [AccessProviderController::class, 'update'])->name('securityaccess-providers');
+    //    Borrar asignacion de clientes a usuarios
+    Route::delete('deleteaccess-providers/{id}', [AccessProviderController::class, 'destroy'])->name('deleteaccess-providers');
 
     //    ----------------------------------------------- Roles---------------------------------------------------------------------
     //    Perfiles de usuario

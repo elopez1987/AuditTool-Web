@@ -38,13 +38,14 @@ class RefuseUnitController extends BaseController
                     ], 422);
                 }
             }
-            $receiptunit = self::updateUnitForRefuse($folio->id);
-            if ($receiptunit->razonstatusid === 1) {
-                $this->declineUnitForShipment($receiptunit);
+            if ($folio->razonstatusid == 1) {
+                $this->declineUnitForShipment($folio);
             }
-            if ($receiptunit->razonstatusid === 2) {
-                $this->declineUnitForReceipt($receiptunit->id);
+            if ($folio->razonstatusid == 2) {
+                $this->declineUnitForReceipt($folio->id);
             }
+
+            self::updateUnitForRefuse($folio->id);
             DB::commit();
 
             if ($request->ajax() || $request->wantsJson()) {
@@ -72,7 +73,7 @@ class RefuseUnitController extends BaseController
         $unit = ReceiptUnit::controlAccessUser()->where('id', '=', $folio)->whereNotIn('statusid', ['TR'])->first();
         $unit->autorizaoutputdate = now();
         $unit->statusid = 'OU';
-        $unit->shipmentid = '';
+        $unit->shipmentid = null;
         $unit->unitstatusid = '1';
         $unit->save();
         StorageUnitTrace::createTraceUnit($unit, '23');

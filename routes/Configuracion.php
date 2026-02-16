@@ -5,6 +5,7 @@ use App\Http\Controllers\Configuration\CenterDistribution\NotificationCenterCont
 use App\Http\Controllers\Configuration\CenterDistribution\SystemCenterDistributionController;
 use App\Http\Controllers\Configuration\CenterDistribution\SystemCenterDistributionFolderController;
 use App\Http\Controllers\Configuration\CommandJobs\CommandController;
+use App\Http\Controllers\Configuration\EdiConfig\EdiConfigController;
 use App\Http\Controllers\Configuration\EdiToken\EdiTokenController;
 use App\Http\Controllers\Configuration\Folios\SystemFoliosController;
 use App\Http\Controllers\Configuration\Labels\InventoryLabelDetailsController;
@@ -111,12 +112,8 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('deletedetailmail/{id}', [SystemDetailMailController::class, 'destroy'])->name('deletedetailmail');
 
     //    ---------------------------------------------------- Web Service  ----------------------------------------------------
-    Route::get('webservicelog', [WebServiceLogController::class, 'index'])->name('webservicelog');
+    Route::resource('webservicelog', WebServiceLogController::class);
     Route::get('getDataLogsWs', [WebServiceLogController::class, 'getDataLogsWs'])->name('getDataLogsWs');
-    //    Reprocesar interface de izel
-    Route::put('reprocessizel/{receiptunit}', [WebServiceLogController::class, 'reprocessizel'])->name('reprocessizel');
-    //    Reprocesar la interface de RControl
-    Route::put('reporcesswebservicercontrol/{id}', [WebServiceLogController::class, 'reporcesswebservicercontrol'])->name('reporcesswebservicercontrol');
 
     //    ---------------------------------------------------- WhatsApp  ----------------------------------------------------
     Route::resource('systemwhatsapps', NotificationWhatsAppController::class)->except('destroy');
@@ -141,6 +138,11 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('edilogs', EdiLogsController::class);
     Route::get('getdatalogs', [EdiLogsController::class, 'getDataLogs'])->name('getDataLogs');
     //    ---------------------------------------------------- Impresoras  ----------------------------------------------------
+
+    //    ---------------------------------------------------- Edi Config  ----------------------------------------------------
+    Route::resource('edi-configurations', EdiConfigController::class);
+    //    ---------------------------------------------------- Impresoras  ----------------------------------------------------
+
     //    Catalogos de impresoras
     Route::resource('systemprinters', SystemPrintersController::class)->except(['show', 'destroy']);
     Route::get('getDataPrinters', [SystemPrintersController::class, 'getDataPrinters'])->name('getDataPrinters');

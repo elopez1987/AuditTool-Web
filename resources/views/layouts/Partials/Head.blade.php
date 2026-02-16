@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" type="image/png" sizes="16x16" href=" {{asset('/img/negro.png')}}">
-    {{--    <link rel="icon" type="image/png" sizes="16x16" href=" {{asset('/img/logo.png')}}">--}}
-    <title class="text-white"> YardTrax </title>
+    <link rel="icon" type="image/png" sizes="16x16" href=" {{asset('/img/verde.png')}}">
+{{--        <link rel="icon" type="image/png" sizes="16x16" href=" {{asset('/img/logo.png')}}">--}}
+    <title class="text-white"> SGIO </title>
     <link rel="stylesheet" href="{{asset('theme/assets/extra-libs/toastr/dist/build/toastr.min.css')}}">
     <link rel="stylesheet" href="https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.11.4/b-2.2.2/b-colvis-2.2.2/b-html5-2.2.2/b-print-2.2.2/cr-1.5.5/fc-4.0.2/fh-3.2.2/r-2.2.9/rg-1.1.4/rr-1.2.8/sc-2.0.5/sr-1.1.0/datatables.min.css"/>
 

@@ -14,16 +14,16 @@ class UpdateFromMonitorOperationController extends BaseController
     public function updateDataTransportToShipment(RegisterTransportRequest $request, $id)
     {
         $transport = StorageShipmentTransport::where('orderid', $id)->first();
-        $transport->update($request->only(
-            'operatorname',
-            'phone',
-            'drivernumber',
-            'truckid',
-            'boxnumber',
-            'auxiliary03',
-            'auxiliary04',
-            'trucknumber'
-        ) + ['auxiliary02' => '1']);
+        $transport->operatorname = $request->operatorname;
+        $transport->phone = $request->phone;
+        $transport->drivernumber = $request->drivernumber;
+        $transport->trucknumber = $request->trucknumber;
+        $transport->boxnumber = $request->boxnumber;
+        $transport->ecobox = $request->ecobox;
+        $transport->ecotruck = $request->ecotruck;
+        $transport->has_data = '1';
+
+        $transport->save();
 
         return $this->redirectBackSuccess();
     }

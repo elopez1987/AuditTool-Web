@@ -16,17 +16,11 @@ class ExportReceiptPallets implements FromCollection, ShouldAutoSize, WithEvents
 {
     use Exportable;
 
-    private $workdayin;
+    private $request;
 
-    private $workdayout;
-
-    private $centerid;
-
-    public function __construct($workdayin, $workdayout, $centerid)
+    public function __construct($request)
     {
-        $this->workdayin = $workdayin;
-        $this->workdayout = $workdayout;
-        $this->centerid = $centerid;
+        $this->request = $request;
     }
 
     public function collection()
@@ -46,15 +40,16 @@ class ExportReceiptPallets implements FromCollection, ShouldAutoSize, WithEvents
                 'receiptunits.trucknumber',
                 'receiptunits.operatorname',
                 'receiptunits.id as folio',
-                'shipmentcarriers.name as carrier'
+                'shipmentcarriers.name as carrier',
             )
             ->leftJoin('receiptproviders', 'receiptasn.providerid', '=', 'receiptproviders.id')
             ->leftJoin('storagereceiptpallets', 'receiptasn.id', '=', 'storagereceiptpallets.receiptid')
             ->leftJoin('inventorypartnumbers', 'storagereceiptpallets.partnumberid', '=', 'inventorypartnumbers.id')
             ->leftJoin('receiptunits', 'receiptasn.folionumber', '=', 'receiptunits.id')
             ->leftJoin('shipmentcarriers', 'receiptunits.carrierid', '=', 'shipmentcarriers.id')
-            ->where('receiptasn.centerid', '=', $this->centerid)
-            ->whereBetween('receiptasn.addasndate', [$this->workdayin, $this->workdayout])
+            ->where('receiptasn.centerid', '=', $this->request->centerid)
+            ->where('receiptasn.warehouseid', '=', $this->request->warehouseid)
+            ->whereBetween('receiptasn.addasndate', [$this->request->workdayin, $this->request->workdayout])
             ->get();
     }
 

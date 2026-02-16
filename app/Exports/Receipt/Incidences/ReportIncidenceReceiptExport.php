@@ -18,17 +18,11 @@ class ReportIncidenceReceiptExport implements FromCollection, ShouldAutoSize, Wi
 {
     use Exportable;
 
-    private $workdayin;
+    private $request;
 
-    private $workdayout;
-
-    private $centerid;
-
-    public function __construct($workdayin, $workdayout, $centerid)
+    public function __construct($request)
     {
-        $this->workdayin = $workdayin;
-        $this->workdayout = $workdayout;
-        $this->centerid = $centerid;
+        $this->request = $request;
     }
 
     public function columnFormats(): array
@@ -75,7 +69,7 @@ class ReportIncidenceReceiptExport implements FromCollection, ShouldAutoSize, Wi
                 'receiptincidencestock.quantity as danos',
                 'inventoryunitsmeasure.description as unitmeasure',
                 'storagecategoryincidences.description as categoria',
-                'storagecategoryincidencedetails.description as subcategoria'
+                'storagecategoryincidencedetails.description as subcategoria',
             )
             ->leftJoin('receiptincidencestock', 'receiptasn.id', '=', 'receiptincidencestock.receiptid')
             ->leftJoin('inventorypartnumbers', 'receiptincidencestock.partnumberid', '=', 'inventorypartnumbers.id')
@@ -91,8 +85,9 @@ class ReportIncidenceReceiptExport implements FromCollection, ShouldAutoSize, Wi
                     ->on('inventoryunitsmeasure.centerid', '=', 'receiptincidencestock.centerid');
             })
             ->where('receiptasn.statusid', '=', 'IG')
-            ->whereBetween('receiptasn.addasndate', [$this->workdayin, $this->workdayout])
-            ->where('receiptasn.centerid', '=', $this->centerid)
+            ->whereBetween('receiptasn.addasndate', [$this->request->workdayin, $this->request->workdayout])
+            ->where('receiptasn.centerid', '=', $this->request->centerid)
+            ->where('receiptasn.warehouseid', '=', $this->request->warehouseid)
             ->where('receiptincidencestock.quantity', '>', 0)->get();
     }
 

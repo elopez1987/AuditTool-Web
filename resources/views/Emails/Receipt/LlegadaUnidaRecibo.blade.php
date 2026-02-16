@@ -27,7 +27,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td style="padding: 6px 0;"><strong>Número de embarque:</strong> {{$receipt->shipmentid}}</td>
+                                <td style="padding: 6px 0;"><strong>Número de embarque:</strong> {{$receipt->shipmentid ?? ''}}</td>
                             </tr>
                             <tr>
                                 <td style="padding: 6px 0;"><strong>Línea de transporte:</strong> {{$receipt->carrier ? $receipt->carrier->name : ''}}</td>
@@ -36,10 +36,10 @@
                                 <td style="padding: 6px 0;"><strong>Fecha y hora de registro:</strong> {{$receipt->entrydate}}</td>
                             </tr>
                             <tr>
-                                <td style="padding: 6px 0;"><strong>Placa de caja:</strong> {{$receipt->boxnumber}}</td>
+                                <td style="padding: 6px 0;"><strong>Placa de caja:</strong> {{$receipt->boxnumber ?? ''}}</td>
                             </tr>
                             <tr>
-                                <td style="padding: 6px 0;"><strong>Eco. de caja:</strong> {{$receipt->econumber }}</td>
+                                <td style="padding: 6px 0;"><strong>Eco. de caja:</strong> {{$receipt->econumber ?? '' }}</td>
                             </tr>
                         </table>
 

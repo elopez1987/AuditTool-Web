@@ -12,13 +12,7 @@
             "colReorder": true,
             "stateSave": true,
             "stateDuration": 0,
-            "autoWidth": true,
-            // "colResize": {
-            //     handleWidth: 10,
-            //     resizeCallback: function() {
-            //         console.log("Columna ajustada");
-            //     }
-            // },
+            // "autoWidth": true,
             "ajax": {
                 url: 'getDataReceipts',
                 data: function (d) {
@@ -42,13 +36,13 @@
                 {data: 'warehouse.name','name':'warehouses.name'},
                 {data: 'id'},
                 {data: 'shipmentid'},
+                {data: 'barcode'},
                 {data: 'carrier.name','name':'carriers.name'},
                 {data: 'boxnumber'},
                 {data: 'econumber'},
                 {data: 'tracto.trucknumber','name':'tractos.trucknumber'},
                 {data: 'tracto.operatorname','name':'tractos.operatorname'},
                 {data: 'tracto.phone','name':'tractos.phone'},
-                {data: 'barcode'},
                 {data: 'zone.name','name':'zones.name'},
                 {data: 'location.name','name':'locations.name'},
                 {data: 'unitstatus.name','name':'unitstatuses.name'},
@@ -69,15 +63,19 @@
                 {data: 'staytime'},
                 {data: 'tracto.id','name':'tractos.id'},
             ],
+            // fixedColumns: {
+            //     left: 6,   // columnas fijas a la izquierda
+            //     // right: 1   // opcional: fijas a la derecha
+            // },
             "order": [[2, 'desc']],
             "columnDefs": [
                 {"width": "100px", "targets": 0},
-                {"width": "250px", "targets": 1},
+                {"width": "200px", "targets": 1},
                 {"width": "200px", "targets": 2},
-                {"width": "150px", "targets": 3},
-                {"width": "250px", "targets": 4},
-                {"width": "280px", "targets": 5},
-                {"width": "150px", "targets": 6},
+                {"width": "100px", "targets": 3},
+                {"width": "150px", "targets": 4},
+                {"width": "100px", "targets": 5},
+                {"width": "280px", "targets": 6},
                 {"width": "150px", "targets": 7},
                 {"width": "250px", "targets": 8},
                 {"width": "250px", "targets": 9},
@@ -95,6 +93,7 @@
                 {"width": "180px", "targets": 21},
                 {"width": "180px", "targets": 22},
             ],
+
             "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
             "lengthMenu": [[1,5,10, 30, 50, 100, 150, 200, 250, -1], [1,5,10, 30, 50, 100, 150, 200, 250, "Todos"]],
             buttons: [

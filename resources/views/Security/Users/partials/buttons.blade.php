@@ -11,35 +11,41 @@
         @can('securityusers.edit')
             <a href="{{url('securityusers/' . $uuiduser. '/edit')}}" class="dropdown-item">
                 <img src="{{asset('/ico/edituser.png')}}" alt="" class="img-16 ml-2">
-                <span style="text-transform: capitalize;font-size: 0.675rem !important">Modificar registro</span>
+                <span style="text-transform: capitalize;">Modificar registro</span>
             </a>
         @endcan
 
         <a href="{{url('securityusers/' . $uuiduser . '/securityaccesswarehouse')}}" class="dropdown-item">
             <img src="{{asset('/ico/systemcenterdistribution.png')}}" alt="" class="img-16 ml-2">
-            <span style="text-transform: capitalize;font-size: 0.675rem !important">Registrar acceso a bodegas</span>
+            <span style="text-transform: capitalize;">Registrar acceso a bodegas</span>
         </a>
-
-
         @can('securityusers.accesscarriers')
             <a href="{{url('securityusers/' . $uuiduser . '/securityaccesscarriers')}}" class="dropdown-item">
                 <img src="{{asset('/ico/receiptunits.png')}}" alt="" class="img-16 ml-2">
-                <span style="text-transform: capitalize;font-size: 0.675rem !important">Vincular Lineas de Transporte</span>
+                <span style="text-transform: capitalize;">Vincular Lineas de Transporte</span>
             </a>
         @endcan
 
         @can('securityusers.accesscustomer')
             <a href="{{url('securityusers/' . $uuiduser . '/securityaccesscustomer')}}" class="dropdown-item">
                 <img src="{{asset('/ico/storageproviders.png')}}" alt="" class="img-16 ml-2">
-                <span style="text-transform: capitalize;font-size:0.675rem !important">Vincular Clientes</span>
+                <span style="text-transform: capitalize;">Vincular Clientes</span>
             </a>
         @endcan
+
+        @can('securityusers.accessproviders')
+            <a href="{{url('securityusers/' . $uuiduser . '/providers')}}" class="dropdown-item">
+                <img src="{{asset('/ico/storageproviders.png')}}" alt="" class="img-16 ml-2">
+                <span style="text-transform: capitalize;">Vincular Proveedores</span>
+            </a>
+        @endcan
+
         @can('securityusers.parameter')
             <a href="{{url('securityusers/' . $uuiduser. '/parameter')}}" class="dropdown-item">
                 <img src="{{asset('/ico/systemparameters.png')}}" alt="" class="img-16 ml-2">
-                <span style="text-transform: capitalize;font-size: 0.675rem !important">Parametrizar usuario</span>
+                <span style="text-transform: capitalize;">Parametrizar usuario</span>
             </a>
         @endcan
-        
+
     </div>
 </div>

@@ -56,6 +56,11 @@ class EdiShipment extends Model
 {
     use LogsActivity;
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
+
     protected $table = 'edishipments';
 
     protected $primaryKey = 'id';
@@ -70,15 +75,21 @@ class EdiShipment extends Model
         'auxiliary04',
         'auxiliary05',
         'type',
-        'message',
-        'quantity',
-        'client',
+        'reference_number',
+        'external_system',
+        'retry_count',
+        'transaction_id',
+        'document_type',
+        'event_type',
+        'model_type',
+        'request_payload',
+        'response_payload',
+        'error_message',
+        'error_code',
+        'processed_at',
+        'last_retry_at',
+        'status',
     ];
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
 
     public static function controlAccessUser()
     {
@@ -100,31 +111,5 @@ class EdiShipment extends Model
     public function shipment()
     {
         return $this->belongsTo(OrderDeliverie::class, 'shipmentid', 'shipmentid');
-    }
-
-    //    Crea el registro de envío de plan de carga del módulo de embarques
-    public static function createEDIForPlanToShipment($shipment)
-    {
-        EdiShipment::updateOrCreate([
-            'centerid' => $shipment->centerid,
-            'warehouseid' => $shipment->warehouseid,
-            'shipmentid' => $shipment->shipmentid,
-            'type' => 'PLAN',
-            'client' => 'RCONTROL',
-            'auxiliary01' => 'PLAN',
-        ]);
-    }
-
-    //    Crea el registro de envío del evento del embarque (Entrada/Inicio y fin de proceso, facturación y salida)
-    public static function createEDIForEventToShipment($shipment, $event)
-    {
-        EdiShipment::updateOrCreate([
-            'centerid' => $shipment->centerid,
-            'warehouseid' => $shipment->warehouseid,
-            'shipmentid' => $shipment->shipmentid,
-            'type' => 'EVENT',
-            'auxiliary01' => $event,
-            'client' => 'RCONTROL',
-        ]);
     }
 }

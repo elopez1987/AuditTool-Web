@@ -14,6 +14,8 @@ class RegisterTransportRequest extends FormRequest
             'trucknumber' => 'required|string|max:20',
             'phone' => 'required|numeric|max_digits:10',
             'drivernumber' => 'required|string|max:30',
+            'ecobox' => 'required|string|max:20',
+            'ecotruck' => 'required|string|max:20',
         ];
     }
 

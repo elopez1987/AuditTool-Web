@@ -95,7 +95,7 @@
                         <th
                                 style="height:15px;border-top: 0;border-left: 0;border-right: 0;
                         align-content: center;text-align: center;width: 100%;padding: 0;border-bottom: 0;font-size: 18px;">
-                            Conteo de Embarques de Supervisor
+                            Conteo de recibo de Supervisor
                         </th>
                         <br>
                     </table>

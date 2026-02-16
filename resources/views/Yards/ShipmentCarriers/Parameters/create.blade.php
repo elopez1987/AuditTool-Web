@@ -33,23 +33,24 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="row">
                                 <div class="col-md-10">
                                     <table class="table  table-bordered table-condensed tablegeneral">
                                         <thead>
-                                            <tr>
-                                                <th>Secuencia</th>
-                                                <th ></th>
-                                                <th >Parametro</th>
-                                                <th>Descripción</th>
-                                            </tr>
+                                        <tr>
+                                            <th style="width: 10% !important;">Secuencia</th>
+                                            <th></th>
+                                            <th>Parametro</th>
+                                            <th>Descripción</th>
+                                        </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach($parameters as $parameter)
-                                                <tr>
-                                                    <td>{{$loop->iteration}}</td>
-                                                    <td style="width: 70px;" class="switch">
-                                                        <input
+                                        @foreach($parameters as $parameter)
+                                            <tr>
+                                                <td>{{$loop->iteration}}</td>
+                                                <td class="switch">
+                                                    <input
                                                             type="checkbox"
                                                             value="{{$parameter->statusid}}"
                                                             @if(!empty($model->configurationflag))
@@ -60,15 +61,16 @@
                                                             @endforeach
                                                             @endif
                                                             name="parameter[]"
-                                                            data-size="mini" data-on-color="success" data-off-color="danger"
+                                                            data-size="mini" data-on-color="success"
+                                                            data-off-color="danger"
                                                             data-on-text="<i class='ti ti-check'></i>"
                                                             data-off-text="<i class='ti ti-close'></i>"
-                                                        >
-                                                    </td>
-                                                    <td>{{$parameter->statusid}}</td>
-                                                    <td>{{$parameter->name}}</td>
-                                                </tr>
-                                            @endforeach
+                                                    >
+                                                </td>
+                                                <td>{{$parameter->statusid}}</td>
+                                                <td>{{$parameter->name}}</td>
+                                            </tr>
+                                        @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -85,7 +87,8 @@
 @endsection
 
 @section('css')
-    <link rel="stylesheet" href="{{asset('/theme/assets/libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css')}}">
+    <link rel="stylesheet"
+          href="{{asset('/theme/assets/libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css')}}">
 @endsection
 
 @section('script')

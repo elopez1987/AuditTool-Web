@@ -35,7 +35,7 @@ trait QueryShipmentTransport
                 'shipmenttransport.operatorname',
                 'shipmenttransport.boxnumber',
                 'shipmenttransport.trucknumber',
-                'shipmenttransport.auxiliary02 as statustransport',
+                'shipmenttransport.has_data as statustransport',
             ]);
     }
 
@@ -48,7 +48,7 @@ trait QueryShipmentTransport
                 'orderdeliveries.downloaddate', 'orderdeliveries.id',
                 'shipmenttransport.operatorname', 'shipmenttransport.drivernumber',
                 'shipmenttransport.phone', 'shipmenttransport.boxnumber',
-                'shipmenttransport.trucknumber', 'shipmenttransport.auxiliary03', 'shipmenttransport.auxiliary04',
+                'shipmenttransport.trucknumber', 'shipmenttransport.ecobox', 'shipmenttransport.ecotruck',
             ])->first();
     }
 }

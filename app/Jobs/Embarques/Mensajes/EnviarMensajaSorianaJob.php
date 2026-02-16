@@ -33,8 +33,19 @@ class EnviarMensajaSorianaJob implements ShouldQueue
     {
         $url = 'https://api.1msg.io/HEI523482986/sendTemplate';
         $client = new Client;
-        $order = OrderDeliverie::where('id', '=', $this->orderDelivery->id)->first();
+        $order = OrderDeliverie::with(['customer:id,name,city'])
+            ->where('id', '=', $this->orderDelivery)->first();
+        if (! $order) {
+            Log::error('No existe el número de embarque solicitado : ' . $this->orderDelivery);
+
+            return;
+        }
         $customer = OrderCustomer::where('id', $order->customerid)->select(['auxiliary02'])->first();
+        if (! $customer) {
+            Log::error('El cliente no se encuentra parametrizado para esta notificacion :' . $customer->id);
+
+            return;
+        }
         if ($customer->auxiliary02 === 'S') {
             $contacts = $this->getPhones($order);
             if (! empty($contacts)) {
@@ -73,10 +84,10 @@ class EnviarMensajaSorianaJob implements ShouldQueue
                 [
                     'type' => 'body',
                     'parameters' => [
-                        ['type' => 'text', 'text' => $order->shipmentid],
-                        ['type' => 'text', 'text' => $order->customer->name],
-                        ['type' => 'text', 'text' => $order->customer->city],
-                        ['type' => 'text', 'text' => $order->downloaddate],
+                        ['type' => 'text', 'text' => $order->shipmentid ?? '_ShipmentID'],
+                        ['type' => 'text', 'text' => $order->customer ? $order->customer->name : '_Customer'],
+                        ['type' => 'text', 'text' => $order->customer ? $order->customer->city : '_City'],
+                        ['type' => 'text', 'text' => $order->downloaddate ?? '_DownloadDate'],
                     ],
                 ],
             ],

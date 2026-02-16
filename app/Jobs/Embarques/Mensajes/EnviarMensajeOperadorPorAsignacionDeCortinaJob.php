@@ -34,15 +34,21 @@ class EnviarMensajeOperadorPorAsignacionDeCortinaJob implements ShouldQueue
 
     public function handle(): void
     {
-        $shipment = OrderDeliverie::where('id', '=', $this->orderDelivery->id)->first();
+        $shipment = OrderDeliverie::where('id', '=', $this->orderDelivery)->first();
+        if (! $shipment) {
+            Log::error('EnviarMensajeOperadorPorAsignacionDeCortinaJob : No existe el numero de embarque buscado.' . $this->orderDelivery);
+
+            return;
+        }
+
         if (! empty($shipment->folionumber)) {
-            $receiptunit = ReceiptUnit::controlAccessUser()->where('id', $shipment->folionumber)->first();
+            $receiptunit = ReceiptUnit::where('id', $shipment->folionumber)->first();
             if (! empty($receiptunit)) {
                 if ($receiptunit->zone->zoneid === 'PA') {
                     $locationAssingned = $this->serviceAssingDoorToUnit->addDoorToUnit($receiptunit);
                     if (! empty($locationAssingned->zone)) {
                         if ($locationAssingned->zone->zoneid === 'CO') {
-                            $location = StorageLocation::controlAccessUser()->where('id', $locationAssingned->locationid)->first();
+                            $location = StorageLocation::where('id', $locationAssingned->locationid)->first();
                             $this->sendMessage($location, $receiptunit);
                         }
                     }

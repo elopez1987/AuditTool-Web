@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="row">
-        <div class="col-lg-9">
+        <div class="col-lg-10">
             <div class="card" style="background-color: #0b0b0b">
                 <div class="card-body">
                     <div style="max-width: 100%;">
@@ -18,7 +18,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-3 col-md-6">
+        <div class="col-lg-2 col-md-6">
             @foreach($result as $item)
                 <div class="row">
                     <div class="col-lg-12">

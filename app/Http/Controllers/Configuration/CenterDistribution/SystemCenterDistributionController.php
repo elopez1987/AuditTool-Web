@@ -5,11 +5,15 @@ namespace App\Http\Controllers\Configuration\CenterDistribution;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Configuration\CenterDistribution\CreateCenterDistributionRequest;
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
+use App\Traits\Web\General\EvidencePhotoTrait;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class SystemCenterDistributionController extends BaseController
 {
+    use EvidencePhotoTrait;
+
     protected string $routePath = 'systemcenterdistributions';
 
     protected string $viewPath = 'Configuration.SystemCenterDistributions';
@@ -55,6 +59,14 @@ class SystemCenterDistributionController extends BaseController
     public function update(Request $request, SystemCenterDistribution $systemcenterdistribution): RedirectResponse
     {
         $systemcenterdistribution->update($request->all());
+        if ($request->hasFile('file')) {
+            if (Storage::exists('storage/' . $systemcenterdistribution->auxiliary04)) {
+                Storage::delete('storage/' . $systemcenterdistribution->auxiliary04);
+            }
+            $path = $this->addMediaToModel($request, 'ImageProfile');
+            $systemcenterdistribution->auxiliary04 = $path;
+            $systemcenterdistribution->save();
+        }
 
         return $this->successResponse("{$this->routePath}.index");
     }

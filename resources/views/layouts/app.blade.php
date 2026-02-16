@@ -10,21 +10,42 @@
 </div>
 <div id="main-wrapper">
     @include('layouts.Partials.Header')
+
     <aside class="left-sidebar">
         <div class="scroll-sidebar">
             <nav class="sidebar-nav">
                 <ul id="sidebarnav">
                     @can('CONTROL DE PATIOS')
-                        @include('layouts.Menu.Yard.Yard')
+                        <li class="sidebar-item">
+                            <a href="{{route('menuyard')}}" class="sidebar-link">
+                                <img src="{{asset('ico/storagezone.png')}}" alt="" class="img-16">
+                                <span class="hide-menu mr-left"> CONTROL DE PATIOS</span>
+                            </a>
+                        </li>
                     @endcan
                     @can('EMBARQUES')
-                        @include('layouts.Menu.Shipments.Shipments')
+                            <li class="sidebar-item">
+                                <a href="{{route('menushipment')}}" class="sidebar-link">
+                                    <img src="{{asset('ico/receiptunits.png')}}" alt="" class="img-16">
+                                    <span class="hide-menu mr-left"> EMBARQUES</span>
+                                </a>
+                            </li>
                     @endcan
                     @can('RECIBO')
-                        @include('layouts.Menu.Receipt.Receipt')
+                            <li class="sidebar-item">
+                                <a href="{{route('menureceipt')}}" class="sidebar-link">
+                                    <img src="{{asset('ico/semaforo.png')}}" alt="" class="img-16">
+                                    <span class="hide-menu mr-left"> RECIBO</span>
+                                </a>
+                            </li>
                     @endcan
                     @can('INVENTARIO')
-                        @include('layouts.Menu.Inventory.Inventory')
+                            <li class="sidebar-item">
+                                <a href="{{route('menuinventory')}}" class="sidebar-link">
+                                    <img src="{{asset('ico/pallets.png')}}" alt="" class="img-16">
+                                    <span class="hide-menu mr-left"> INVENTARIO</span>
+                                </a>
+                            </li>
                     @endcan
                     @can('MTNTRUCK')
                         <li class="sidebar-item">
@@ -43,15 +64,27 @@
                         </li>
                     @endcan
                     @can('security')
-                        @include('layouts.Menu.Security.Security')
+                            <li class="sidebar-item">
+                                <a href="{{route('menusecurity')}}" class="sidebar-link">
+                                    <img src="{{asset('ico/securityrole.png')}}" alt="" class="img-16">
+                                    <span class="hide-menu mr-left"> SEGURIDAD</span>
+                                </a>
+                            </li>
                     @endcan
                     @can('configuration')
-                        @include('layouts.Menu.Security.Configuration')
+                            <li class="sidebar-item">
+                                <a href="{{route('menuconfiguration')}}" class="sidebar-link">
+                                    <img src="{{asset('ico/engine_gear_internet_option_security_setting_web_icon_127066.png')}}" alt="" class="img-16">
+                                    <span class="hide-menu mr-left"> CONFIGURACION</span>
+                                </a>
+                            </li>
                     @endcan
                 </ul>
             </nav>
         </div>
     </aside>
+
+
     <div class="page-wrapper">
         <div class="container-fluid">
             @yield('content')
@@ -80,10 +113,11 @@
             </div>
         </footer>
     </div>
+
 </div>
 
 
-{{--<div class="chat-windows"></div>--}}
+<div class="chat-windows"></div>
 
 @include('layouts.Partials.Scripts')
 @include('layouts.Scripts.Messages')

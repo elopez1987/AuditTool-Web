@@ -14,6 +14,7 @@ use App\Http\Controllers\Yard\DoorAndStage\LayOutDoorAndStageController;
 use App\Http\Controllers\Yard\LabelTrucks\StorageLabelTrucksController;
 use App\Http\Controllers\Yard\RControl\SearchOperatorInRC;
 use App\Http\Controllers\Yard\ReceiptProviders\ImportProvidersController;
+use App\Http\Controllers\Yard\ReceiptProviders\ReceiptProviderContactsController;
 use App\Http\Controllers\Yard\ReceiptProviders\ReceiptProvidersController;
 use App\Http\Controllers\Yard\ReceiptTruck\ClearTruckStockController;
 use App\Http\Controllers\Yard\ReceiptTruck\EventTruckController;
@@ -280,7 +281,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('getDataProviders', [ReceiptProvidersController::class, 'getDataProviders']);
     //    Importar proveedores
     Route::post('uploadfileproviders', [ImportProvidersController::class, 'index'])->name('uploadfileproviders');
+    //	Contactos de proveedores
+    Route::get('receiptprovidercontacts/{id}/create', [ReceiptProviderContactsController::class, 'create']);
+    //  Crear contacto
+    Route::put('receiptproviders-contacts/{id}', [ReceiptProviderContactsController::class, 'update'])->name('receiptproviders-contacts.update');
+    //	Eliminar contacto
+    Route::delete('contacts-providers/{id}', [ReceiptProviderContactsController::class, 'destroy'])->name('contacts-carriers.destroy');
 
+    Route::get('contacts-providers', [ReceiptProviderContactsController::class, 'contactsForProviders'])->name('contacts-providers');
     //  --------------------------------------------  Catalogo de check list  -----------------------------------------------
     Route::resource('storagechecklists', StorageCheckListsController::class)->except(['destroy']);
     Route::get('getDataCheckList', [StorageCheckListsController::class, 'getDataCheckList'])->name('getDataCheckList');

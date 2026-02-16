@@ -95,13 +95,13 @@ class ServiceReceiptUnit
             StorageComment::createCommentary('ReceiptUnits', $receiptunit->id, $request);
         }
 
-        if ($request['razonstatusid'] === '1') {
+        if ($request['razonstatusid'] == '1') {
             $orderDelivery = OrderDeliverie::controlAccessUser()->where('shipmentid', $request['shipmentid'])
                 ->whereNotIn('statusid', ['DH', 'CA'])->first();
             if (! empty($orderDelivery)) {
                 $transport = StorageShipmentTransport::controlAccessUser()->where('orderid', $orderDelivery->id)->first();
                 if (! empty($transport)) {
-                    $transport->auxiliary01 = '1';
+                    $transport->has_registered = '1';
                     $transport->save();
                 }
                 $orderDelivery->folionumber = $receiptunit->id;
@@ -112,14 +112,14 @@ class ServiceReceiptUnit
         $parameterNotificationWarehouse = $this->getParameterNotificacionWarehouse($receiptunit->warehouseid);
         if ($request['razonstatusid'] == '1' || $request['razonstatusid'] == '2') {
             if (! empty($parameterNotificationWarehouse) && in_array('MWH-06', (array) $parameterNotificationWarehouse)) {
-                MensajeLLegadaDeUnidadJob::dispatch($receiptunit);
+                MensajeLLegadaDeUnidadJob::dispatch($receiptunit->id)->onQueue('yms-web');
             }
             if (! empty($parameterNotificationWarehouse) && in_array('MWH-07', (array) $parameterNotificationWarehouse)) {
-                CorreoLlegadaUnidadDeReciboJob::dispatch($receiptunit);
+                CorreoLlegadaUnidadDeReciboJob::dispatch($receiptunit->id)->onQueue('yms-web');
             }
         }
 
-        if ($request['razonstatusid'] === '2') {
+        if ($request['razonstatusid'] == '2') {
 
             $receipt = ReceiptAsn::searchReceiptInCheckIn($request['shipmentid']);
             if (! empty($receipt)) {
@@ -131,7 +131,7 @@ class ServiceReceiptUnit
             }
         }
 
-        if ($request['razonstatusid'] === '17') {
+        if ($request['razonstatusid'] == '17') {
             $parameterCenter = $this->getParametersOfCenter($receiptunit->centerid);
             if (! empty($parameterCenter) && in_array('SDC-10', (array) $parameterCenter)) {
                 $this->insertSchedulleInverse($request, $receiptunit);
@@ -146,9 +146,9 @@ class ServiceReceiptUnit
 
     public function getStatusUnit($razonstatusid): string
     {
-        if ($razonstatusid === 1) {
+        if ($razonstatusid == 1) {
             $unitstatus = '1';
-        } elseif ($razonstatusid === 2) {
+        } elseif ($razonstatusid == 2) {
             $unitstatus = '2';
         } else {
             $unitstatus = '1';

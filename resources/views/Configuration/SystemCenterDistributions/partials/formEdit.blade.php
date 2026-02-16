@@ -87,9 +87,9 @@
 <div class="row">
     <div class="col-lg-4 col-md-6 col-sm-12">
         <div class="form-group">
-            <label for="name">Auxiliar 04 </label>
-            <input type="text" class="form-control" id="auxiliary04" name="auxiliary04" maxlength="100"
-                   aria-describedby="auxiliary04" value="{{$systemcenterdistribution->auxiliary04}}">
+            <label for="name">Logo de la empresa</label>
+            <input type="file" class="form-control" id="file" name="file"
+                   value="{{$systemcenterdistribution->auxiliary04}}">
         </div>
     </div>
 </div>

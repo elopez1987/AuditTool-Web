@@ -21,16 +21,21 @@ class MensajeLLegadaDeUnidadJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     use GetParameters;
 
-    public $receiptunit;
+    public $receiptunitid;
 
-    public function __construct(ReceiptUnit $receiptunit)
+    public function __construct($receiptunitid)
     {
-        $this->receiptunit = $receiptunit;
+        $this->receiptunitid = $receiptunitid;
     }
 
     public function handle(): void
     {
-        $receiptunit = $this->receiptunit;
+        $receiptunit = ReceiptUnit::with(['carrier:id,name'])
+            ->where('id', $this->receiptunitid)->first();
+        if (! $receiptunit) {
+            Log::error('Número de folio no exist');
+        }
+
         $config = SystemDetailParameter::where('parameterid', '=', 'PARAM-WTH')->first();
         if (empty($config)) {
             Log::info('No se encontró la configuración de PARAM-WTH');
@@ -42,10 +47,6 @@ class MensajeLLegadaDeUnidadJob implements ShouldQueue
         $url = $config->value03;
 
         $contacts = $this->getContacts($receiptunit->warehouseid);
-        Log::info('Contactos obtenidos', [
-            'warehouseid' => $receiptunit->warehouseid,
-            'contacts_count' => count($contacts),
-        ]);
 
         foreach ($contacts as $contact) {
             try {
@@ -65,8 +66,6 @@ class MensajeLLegadaDeUnidadJob implements ShouldQueue
                     'WTH-INGREREC',
                     'Envío de mensaje de llegada de unidad  de unidad para descarga.',
                 );
-
-                Log::info("Mensaje de llegada de unidad  enviado a $contact->phonenumber");
             } catch (Exception $e) {
                 Log::error('Error al enviar mensaje  ' . $e->getMessage());
             }

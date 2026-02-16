@@ -17,18 +17,24 @@ class CorreoLlegadaUnidadDeReciboJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $receipt;
+    public $receiptunitid;
 
-    public function __construct(ReceiptUnit $receipt)
+    public function __construct($receiptunitid)
     {
-        $this->receipt = $receipt;
+        $this->receiptunitid = $receiptunitid;
     }
 
     public function handle(): void
     {
-        $receipt = $this->receipt;
+        $receipt = ReceiptUnit::with(['carrier:id,name', 'warehouse:warehouseid,name'])
+            ->where('id', $this->receiptunitid)->first();
+        if (! $receipt) {
+            Log::error('No existe el numero de folio solicitado' . $this->receiptunitid);
+
+            return;
+        }
+
         Log::info('La unidad a notificar es : ' . $receipt->shipmentid);
-        Log::info('Inicio del correo de llegada de unidad', ['receipt' => $receipt->shipmentid]);
 
         $contacts = SystemDetailMail::query()
             ->where('centerid', $receipt->centerid)
@@ -37,8 +43,6 @@ class CorreoLlegadaUnidadDeReciboJob implements ShouldQueue
             ->pluck('email')   // obtiene solo la columna "email"
             ->filter()         // elimina null o elementos vacíos
             ->toArray();
-
-        Log::info('Contactos para el envío de  correo de peso', ['emails' => $contacts]);
 
         if (empty($contacts)) {
             Log::error('No se encontraron contactos para el correo de peso con el Centro y Bodega seleccionado', [
@@ -50,6 +54,5 @@ class CorreoLlegadaUnidadDeReciboJob implements ShouldQueue
 
         Mail::to($contacts)->send(new LlegadaUnidadDeReciboMail($receipt));
 
-        Log::info('Se enviaron los correos de peso a los contactos seleccionados');
     }
 }

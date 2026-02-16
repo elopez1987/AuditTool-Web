@@ -8,10 +8,13 @@ use App\Models\Configuration\Turns\StorageTurn;
 use App\Models\Configuration\Warehouses\SystemWarehouse;
 use App\Models\Inventory\Origin\InventoryStockCategory;
 use App\Models\Security\Users\SecurityAccessWarehouse;
+use App\Models\Shipments\ShipmentTransport\StorageShipmentTransport;
 use App\Models\Yard\Carriers\ShipmentCarrier;
 use App\Models\Yard\ReceiptUnit;
 use App\Models\Yard\StorageReason;
+use App\Observers\ReceiptAsnObserver;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Auth;
@@ -132,6 +135,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  *
  * @mixin \Eloquent
  */
+#[ObservedBy([ReceiptAsnObserver::class])]
 class ReceiptAsn extends Model
 {
     use LogsActivity;
@@ -156,8 +160,8 @@ class ReceiptAsn extends Model
 
     //    auxiliary01 = 'Planeador';
     //    auxiliary02 = 'Posteo SAP';
-    //    auxiliary03 = 'Categoria de material';
-    //    auxiliary04 =
+    //    auxiliary03 = '';
+    //    auxiliary04 = '';
     //    auxiliary05 = '';
     //    auxiliary06 = 'Numero de folio de planta para el monitor de transitos planta';
     //    auxiliary07 = '';
@@ -229,6 +233,11 @@ class ReceiptAsn extends Model
     public function turn()
     {
         return $this->belongsTo(StorageTurn::class, 'turnid');
+    }
+
+    public function transport()
+    {
+        return $this->belongsTo(StorageShipmentTransport::class, 'id', 'orderid');
     }
 
     //   ---------------------------------- Filtros de consulta  --------------------------------------
@@ -320,7 +329,9 @@ class ReceiptAsn extends Model
     //  -----------------------------------------  Funciones auxiliares -------------------------------------------------
     public static function updateStatusForZone($receiptunit)
     {
-        $receiptAsn = ReceiptAsn::controlAccessUser()->where('folionumber', '=', $receiptunit)->select(['id', 'statusid'])->first();
+        $receiptAsn = ReceiptAsn::controlAccessUser()
+            ->where('folionumber', '=', $receiptunit)
+            ->select(['id', 'statusid'])->first();
         if (! empty($receiptAsn)) {
             $receiptAsn->statusid = 'ER';
             $receiptAsn->save();

@@ -121,18 +121,18 @@ class FinishGoodIssueController extends BaseController
     private function sendMessages($orderDelivery, $parameterWarehouse): void
     {
         if (! empty($parameterWarehouse) && in_array('MWH-15', (array) $parameterWarehouse)) {
-            EnviarMensajeAOperadorJob::dispatch($orderDelivery);
+            EnviarMensajeAOperadorJob::dispatch($orderDelivery->id)->onQueue('yms-web');
         }
         if (! empty($parameterWarehouse) && in_array('MWH-13', (array) $parameterWarehouse)) {
-            EnviarMensajaSorianaJob::dispatch($orderDelivery);
+            EnviarMensajaSorianaJob::dispatch($orderDelivery->id)->onQueue('yms-web');
         }
 
         if (! empty($parameterWarehouse) && in_array('MWH-03', (array) $parameterWarehouse)) {
-            EnviarMensajeFinFacturacionJob::dispatch($orderDelivery);
+            EnviarMensajeFinFacturacionJob::dispatch($orderDelivery->id)->onQueue('yms-web');
         }
 
         if (! empty($parameterWarehouse) && in_array('MWH-10', (array) $parameterWarehouse)) {
-            EnviarCorreoFinDeFacturacionJob::dispatch($orderDelivery);
+            EnviarCorreoFinDeFacturacionJob::dispatch($orderDelivery->id)->onQueue('yms-web');
         }
 
     }

@@ -17,17 +17,11 @@ class ExportReportOfLpnReceipt implements FromCollection, ShouldAutoSize, WithCo
 {
     use Exportable;
 
-    private $workdayin;
+    private $request;
 
-    private $workdayout;
-
-    private $centerid;
-
-    public function __construct($workdayin, $workdayout, $centerid)
+    public function __construct($request)
     {
-        $this->workdayin = $workdayin;
-        $this->workdayout = $workdayout;
-        $this->centerid = $centerid;
+        $this->request = $request;
     }
 
     public function columnFormats(): array
@@ -72,7 +66,7 @@ class ExportReportOfLpnReceipt implements FromCollection, ShouldAutoSize, WithCo
                 'receiptcontainers.quantity',
                 'receiptcontainers.lpnid',
                 'users.name as usuario',
-                'receiptcontainers.created_at as falta'
+                'receiptcontainers.created_at as falta',
             )
             ->leftJoin('receiptcontainers', 'receiptasn.id', '=', 'receiptcontainers.receiptid')
             ->leftJoin('inventorypartnumbers', 'receiptcontainers.partnumberid', '=', 'inventorypartnumbers.prtnum')
@@ -80,9 +74,10 @@ class ExportReportOfLpnReceipt implements FromCollection, ShouldAutoSize, WithCo
             ->leftJoin('receiptunits', 'receiptasn.folionumber', '=', 'receiptunits.id')
             ->leftJoin('shipmentcarriers', 'receiptunits.carrierid', '=', 'shipmentcarriers.id')
             ->leftJoin('users', 'receiptcontainers.createuser', '=', 'users.username')
-            ->where('receiptasn.centerid', '=', $this->centerid)
             ->where('receiptasn.statusid', '=', 'IG')
-            ->whereBetween('receiptasn.addasndate', [$this->workdayin, $this->workdayout])
+            ->where('receiptasn.centerid', '=', $this->request->centerid)
+            ->where('receiptasn.warehouseid', '=', $this->request->warehouseid)
+            ->whereBetween('receiptasn.addasndate', [$this->request->workdayin, $this->request->workdayout])
             ->get();
     }
 

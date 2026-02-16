@@ -5,6 +5,7 @@ use App\Http\Controllers\Receipt\AssignStageController;
 use App\Http\Controllers\Receipt\EventReceiptController;
 use App\Http\Controllers\Receipt\ImportDataReceiptController;
 use App\Http\Controllers\Receipt\MonitorReceiptPlantController;
+use App\Http\Controllers\Receipt\MonitorTransport\MonitorTransportReceiptController;
 use App\Http\Controllers\Receipt\ReceiptAsnsController;
 use App\Http\Controllers\Receipt\ReceiptAsnStockController;
 use App\Http\Controllers\Receipt\ReceiptContainersController;
@@ -62,7 +63,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('receiptasn/{id}/kardex', [EventReceiptController::class, 'kardexpdf'])->name('kardexpdf');
     //    Exportar reporte de recibos
     Route::get('reportreceipts', [ReportReceiptsController::class, 'reportreceipts'])->name('reportreceipts');
-    Route::get('generateFileToExportReceipt', [ReportReceiptsController::class, 'generateFileToExportReceipt'])->name('generateFileToExportReceipt');
+    Route::post('generateFileToExportReceipt', [ReportReceiptsController::class, 'generateFileToExportReceipt'])->name('generateFileToExportReceipt');
     //    Programar descarga esperada
     Route::post('addReceiptToPlan', [AddPlanReceiptController::class, 'index'])->name('addReceiptToPlan');
     //    Monitos de arribos de planta
@@ -86,5 +87,11 @@ Route::middleware(['auth'])->group(function () {
     Route::put('appointmentscheduleclear/{id}', [EventSchedulleController::class, 'clearBlocked'])->name('appointmentscheduleclear');
     //	Agregar como prioridad
     Route::put('addpriorityreceipt/{id}', [EventSchedulleController::class, 'addpriorityreceipt'])->name('addpriorityreceipt');
+
+    //   Monitor para registro de transporte por parte de proveedores
+    Route::get('monitor-transport-receipts', [MonitorTransportReceiptController::class, 'index'])->name('monitortransportreceipt');
+    Route::get('monitor-transport-receipt/{id}', [MonitorTransportReceiptController::class, 'edit'])->name('monitor-transport-receipt.edit');
+    Route::put('monitor-transport-receipt/{id}/create-qr', [MonitorTransportReceiptController::class, 'update'])->name('monitor-transport-receipt.update');
+    Route::get('printFormatQr/{id}', [MonitorTransportReceiptController::class, 'printFormatQr'])->name('printFormatQr');
 
 });

@@ -17,17 +17,12 @@ class ExportPlanArriveReceipt implements FromCollection, ShouldAutoSize, WithCol
 {
     use Exportable;
 
-    private $workdayin;
+    private $request;
 
-    private $workdayout;
-
-    private $centerid;
-
-    public function __construct($workdayin, $workdayout, $centerid)
+    public function __construct($request)
     {
-        $this->workdayin = $workdayin;
-        $this->workdayout = $workdayout;
-        $this->centerid = $centerid;
+        $this->request = $request;
+
     }
 
     public function columnFormats(): array
@@ -40,7 +35,7 @@ class ExportPlanArriveReceipt implements FromCollection, ShouldAutoSize, WithCol
     public function headings(): array
     {
         return [
-            'Embarque',
+            'Recibo',
             'Factura',
             'Proveedor',
             'Linea de transporte',
@@ -79,14 +74,14 @@ class ExportPlanArriveReceipt implements FromCollection, ShouldAutoSize, WithCol
                 'receiptunits.finishdate as findescarga',
                 'receiptunits.autorizaoutputdate as autorizacion',
                 'receiptunits.outputdate as salida',
-                'receiptasn.auxiliary01 as programador'
+                'receiptasn.auxiliary01 as programador',
             )
             ->leftJoin('receiptunits', 'receiptasn.folionumber', '=', 'receiptunits.id')
             ->leftJoin('receiptproviders', 'receiptasn.providerid', '=', 'receiptproviders.id')
             ->leftJoin('shipmentcarriers', 'receiptunits.carrierid', '=', 'shipmentcarriers.id')
-            ->where('receiptasn.auxiliary03', '=', 'PR')
-            ->where('receiptasn.centerid', '=', $this->centerid)
-            ->whereBetween('receiptasn.addasndate', [$this->workdayin, $this->workdayout])
+            ->where('receiptasn.centerid', '=', $this->request->centerid)
+            ->where('receiptasn.warehouseid', '=', $this->request->warehouseid)
+            ->whereBetween('receiptasn.addasndate', [$this->request->workdayin, $this->request->workdayout])
             ->get();
     }
 

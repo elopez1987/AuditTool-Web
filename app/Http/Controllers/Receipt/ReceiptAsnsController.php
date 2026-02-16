@@ -17,9 +17,10 @@ use App\Models\Shipments\Bridgestone\Verificacion\Storagechecklocationbridg;
 use App\Models\Shipments\Bridgestone\Verificacion\StoragechecklocationbridgVig;
 use App\Models\Yard\StorageReason;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Log;
 use Yajra\DataTables\Facades\DataTables;
 
 class ReceiptAsnsController extends BaseController
@@ -99,21 +100,31 @@ class ReceiptAsnsController extends BaseController
 
     public function store(CreateReceiptAsnRequest $request)
     {
-        $receipt = new ReceiptAsn($request->validated());
-        $receipt->statusid = 'RE';
-        $receipt->workday = Carbon::parse($request['addasndate'])->format('Y-m-d');
-        $receipt->auxiliary01 = Auth::user()->name;
-        $receipt->save();
+        try {
 
-        if ($request->expectsJson() || $request->ajax()) {
-            return response()->json([
-                'success' => true,
-                'message' => 'Registro de recibo exitoso,Recibo :' . $receipt->shipmentid,
-            ], 200);
+            $receipt = ReceiptAsn::create([
+                ...$request->validated(),
+                'statusid' => 'PG',
+                'workday' => Carbon::parse($request->validated('addasndate'))->format('Y-m-d'),
+            ]);
+
+            if ($request->expectsJson() || $request->ajax()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => "Registro de recibo exitoso, Recibo: {$receipt->shipmentid}",
+                ], 201); // Cambiar a 201 para creación exitosa
+            }
+
+        } catch (Exception $e) {
+            Log::error('Error creating receipt: ' . $e->getMessage());
+
+            if ($request->expectsJson() || $request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Error al crear el recibo.',
+                ], 500);
+            }
         }
-
-        return $this->successResponse('receiptasn.index');
-
     }
 
     public function edit(ReceiptAsn $receiptasn)
@@ -123,8 +134,7 @@ class ReceiptAsnsController extends BaseController
         $providers = $this->getReceiptProviderForSelect();
         $turns = StorageTurn::select('name', 'id')->get();
         $categorystocks = InventoryStockCategory::select('description', 'id')
-            ->where('statusid', 'E')
-            ->get();
+            ->where('statusid', 'E')->get();
         $reasons = StorageReason::whereType('RE')->select('name', 'id')->get();
 
         return view('Receipt.ReceiptAsn.edit', compact(
@@ -171,7 +181,8 @@ class ReceiptAsnsController extends BaseController
 
     public function destroy(ReceiptAsn $receiptasn)
     {
-        $schedulleReceipt = StorageSchedulleReceipt::controlAccessUser()->where('receiptid', $receiptasn->id)->first();
+        $schedulleReceipt = StorageSchedulleReceipt::controlAccessUser()
+            ->where('receiptid', $receiptasn->id)->first();
         if (! empty($schedulleReceipt)) {
             $schedulleReceipt->receiptid = null;
             $schedulleReceipt->save();

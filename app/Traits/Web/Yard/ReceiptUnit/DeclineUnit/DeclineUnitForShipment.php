@@ -7,6 +7,7 @@ use App\Models\Shipments\ShipmentDataOperation;
 use App\Models\Shipments\ShipmentHeader;
 use App\Models\Shipments\ShipmentStage;
 use App\Models\Shipments\ShipmentTransport\StorageShipmentTransport;
+use Ramsey\Uuid\Uuid;
 
 trait DeclineUnitForShipment
 {
@@ -18,7 +19,6 @@ trait DeclineUnitForShipment
                 self::updateForRefuseUnit($receiptunit->id);
             } else {
                 $shipment->folionumber = null;
-                $shipment->auxiliary05 = bin2hex(random_bytes(30));
                 $shipment->save();
                 self::updateForRefuseUnitTransport($shipment);
             }
@@ -30,7 +30,6 @@ trait DeclineUnitForShipment
         $shipment = OrderDeliverie::controlAccessUser()->where('folionumber', $folio)->first();
         if (! empty($shipment)) {
             $shipment->folionumber = '';
-            $shipment->auxiliary05 = bin2hex(random_bytes(30));
             $shipment->statusid = 'PC';
             $shipment->save();
 
@@ -64,6 +63,7 @@ trait DeclineUnitForShipment
             $transport->trucknumber = '';
             $transport->auxiliary01 = null;
             $transport->auxiliary02 = null;
+            $transport->auxiliary05 = Uuid::uuid4()->toString();
             $transport->save();
         }
     }

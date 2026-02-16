@@ -97,13 +97,13 @@
                                     <th>Bodega</th>
                                     <th>Folio</th>
                                     <th>Embarque/Recibo</th>
+                                    <th>C.Barra</th>
                                     <th>Linea de transporte</th>
                                     <th>Placas de caja</th>
                                     <th>Número de caja</th>
                                     <th>Placas de tracto</th>
                                     <th>Nombre del operador</th>
                                     <th>Celular</th>
-                                    <th>C.Barra</th>
                                     <th>Zona</th>
                                     <th>Ubicación</th>
                                     <th>E. de Caja</th>

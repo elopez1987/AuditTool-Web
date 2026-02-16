@@ -17,7 +17,7 @@ class CorreoSolicitudCartaPorteJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public OrderDeliverie $orderDeliverie;
+    public $orderDeliverie;
 
     public function __construct($orderDeliverie)
     {
@@ -26,7 +26,15 @@ class CorreoSolicitudCartaPorteJob implements ShouldQueue
 
     public function handle(): void
     {
-        $orderDelivery = $this->orderDeliverie;
+        $orderDelivery = OrderDeliverie::with(['warehouse:warehouseid,name', 'carrier:id,name', 'operation'])->where('id', $this->orderDeliverie)->first();
+        if (! $orderDelivery) {
+            Log::error('Error en CorreoSolicitudCartaPorteJob', [
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+        }
 
         $contacts = Shipmentcarrierscontact::query()
             ->where('centerid', $orderDelivery->centerid)

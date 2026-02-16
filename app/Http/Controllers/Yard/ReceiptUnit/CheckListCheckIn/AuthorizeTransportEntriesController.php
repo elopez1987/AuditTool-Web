@@ -10,8 +10,8 @@ use App\Models\Yard\ReceiptUnit;
 use App\Models\Yard\StorageCheckList;
 use App\Models\Yard\StorageCheckListDetail;
 use App\Models\Yard\StorageUnitTrace;
+use App\Traits\Web\EDI\RegisterEdiShipment;
 use App\Traits\Web\General\PrintFormat;
-use App\Traits\Web\Izel\RegisterEdiShipment;
 use App\Traits\Web\Yard\CheckList\CheckListTransportTrait;
 use App\Traits\Web\Yard\ReceiptTruck\QueryReceiptTruck;
 use App\Traits\Web\Yard\ReceiptUnit\DeclineUnit\DeclineUnitForReceipt;
@@ -86,8 +86,6 @@ class AuthorizeTransportEntriesController extends BaseController
             $this->clearCheckListTransport($id, 'IN');
             $this->createCheckListToUnitV2($request, $receiptunit, 'IN');
             $this->validateCheckListCheckInTransport($receiptunit, 'WEB');
-            $this->addNewEdiForIzel($receiptunit, $parameter, 'IN');
-            $this->sendDataToRControl($receiptunit, $parameter, 'ENTRANCE');
 
             $receiptunit->statusid = 'QI';
             $receiptunit->entrydate = Carbon::now();
