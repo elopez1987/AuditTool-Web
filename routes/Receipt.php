@@ -35,8 +35,13 @@ Route::middleware(['auth'])->group(function () {
     Route::put('goodissuedate/{id}', [EventReceiptController::class, 'goodissuedate'])->name('goodissuedate');
     Route::put('addNewCommentToReceipt/{id}', [EventReceiptController::class, 'addNewCommentToReceipt'])->name('addNewCommentToReceipt');
     Route::put('receiptasnclose/{id}', [EventReceiptController::class, 'receiptasnclose'])->name('receiptasnclose');
+
+    //	Eventos de recibo
     Route::put('startprocess/{id}', [EventReceiptController::class, 'startprocess'])->name('startprocess');
     Route::put('finishprocess/{id}', [EventReceiptController::class, 'finishprocess'])->name('finishprocess');
+    Route::put('send-to-billing/{id}', [EventReceiptController::class, 'sendToBilling'])->name('send-to-billing');
+    Route::put('start-billing/{id}', [EventReceiptController::class, 'startBilling'])->name('start-billing');
+    Route::put('finish-billing/{id}', [EventReceiptController::class, 'finishBilling'])->name('finish-billing');
 
     //  Agregar datos de producto esperado
     Route::get('receiptasn/{id}/addstock', [ReceiptAsnStockController::class, 'addstock'])->name('receiptasn.addstock');

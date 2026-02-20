@@ -240,6 +240,11 @@ class ReceiptAsn extends Model
         return $this->belongsTo(StorageShipmentTransport::class, 'id', 'orderid');
     }
 
+    public function timereceipt(): BelongsTo
+    {
+        return $this->belongsTo(ReceiptAsnTime::class, 'id', 'receiptid');
+    }
+
     //   ---------------------------------- Filtros de consulta  --------------------------------------
     public function scopeName($query, $name)
     {

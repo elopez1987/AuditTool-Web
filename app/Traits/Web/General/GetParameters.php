@@ -246,7 +246,7 @@ trait GetParameters
     {
         $centers = SecurityAccessWarehouse::Centers();
         $carrier = AccessCarrier::where('username', Auth::user()->username)->select('carrierid')->get()->toArray();
-        if ($carrier !== null) {
+        if ($carrier != null) {
             $carriers = ShipmentCarrier::whereIn('shipmentcarriers.centerid', $centers)
                 ->whereStatusid('E')
                 ->where('shipmentcarriers.id', $carrier)

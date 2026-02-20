@@ -16,7 +16,7 @@
                                     <button type="button" id="btnOpenModal"
                                             class="btn waves-effect waves-light btn-outline-info btn-md">
                                         <img src="{{asset('/ico/save02.png')}}" alt="" class="img-16">
-                                        <span style="font-size: 0.675rem"> Agregar</span>
+                                        <span > Agregar</span>
                                     </button>
                                 @endcan
                                 <a>
