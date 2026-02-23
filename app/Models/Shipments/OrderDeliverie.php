@@ -7,7 +7,7 @@ use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Configuration\Turns\StorageTurn;
 use App\Models\Configuration\Warehouses\SystemWarehouse;
 use App\Models\Security\Users\SecurityAccessWarehouse;
-use App\Models\Shipments\Bridgestone\Verificacion\StorageShipmentFolios;
+use App\Models\Shipments\Bridgestone\Verificacion\StorageShipmentCheckTotal;
 use App\Models\Shipments\ShipmentJourney\ShipmentJourney;
 use App\Models\Shipments\ShipmentTransport\StorageShipmentTransport;
 use App\Models\Yard\Carriers\ShipmentCarrier;
@@ -166,7 +166,7 @@ class OrderDeliverie extends Model
 
     public function folio_count(): BelongsTo
     {
-        return $this->belongsTo(StorageShipmentFolios::class, 'id', 'orderid');
+        return $this->belongsTo(StorageShipmentCheckTotal::class, 'id', 'orderid');
     }
 
     //  -----------------------------  Scopes para filtros  ------------------------------------------
