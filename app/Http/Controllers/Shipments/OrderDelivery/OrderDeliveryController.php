@@ -8,6 +8,7 @@ use App\Models\General\EvidencePhoto;
 use App\Models\General\StorageComment;
 use App\Models\Shipments\Bridgestone\Verificacion\Storagechecklocationbridg;
 use App\Models\Shipments\Bridgestone\Verificacion\StoragechecklocationbridgVig;
+use App\Models\Shipments\Bridgestone\Verificacion\Storageverificationpending;
 use App\Models\Shipments\OrderDeliverie;
 use App\Models\Shipments\OrderdeliveryTrace;
 use App\Models\Shipments\ViewShipmentEvent;
@@ -125,9 +126,12 @@ class OrderDeliveryController extends BaseController
             ->where('model_type', 'OrderDelivery')
             ->get();
 
+        $countsTotals = Storageverificationpending::with(['status:statusid,name'])
+            ->where('orderid', $orderdelivery->id)->get();
+
         return view('Shipments.OrderDeliveries.show',
             compact('orderdelivery', 'evidences', 'traces',
-                'conteos', 'comments', 'conteosVig', 'events', 'tracesShipment'));
+                'conteos', 'comments', 'conteosVig', 'events', 'tracesShipment', 'countsTotals'));
     }
 
     public function edit(OrderDeliverie $orderdelivery)

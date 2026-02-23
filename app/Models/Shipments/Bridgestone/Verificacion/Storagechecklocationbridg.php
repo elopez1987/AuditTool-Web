@@ -147,4 +147,9 @@ class Storagechecklocationbridg extends Model
     {
         return $this->belongsTo(StorageTurn::class, 'turnid', 'id');
     }
+
+    public function verification(): BelongsTo
+    {
+        return $this->belongsTo(Storageverificationpending::class, 'id', 'countoperid');
+    }
 }

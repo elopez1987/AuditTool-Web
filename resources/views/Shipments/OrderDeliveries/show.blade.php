@@ -718,13 +718,55 @@
                                 </div>
                             </div>
                             <hr class="m-t-1">
+                            @can('orderdelivery.opencount')
+                                <div class="row">
+                                <div class="col-lg-4">
+                                    <table class="table  table-bordered table-condensed tablegeneral">
+                                        <thead>
+                                        <tr>
+                                            <th>Conteo</th>
+                                            <th>Estatus</th>
+                                            <th>Conteo Supervisor</th>
+                                            <th>Conteo Vigilancia</th>
+                                            <th>Abrir</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($countsTotals as $item)
+                                            <tr>
+                                                <th>{{$item->id}}</th>
+                                                <th>{{$item->status ? $item->status->name : ''}}</th>
+                                                <th>{{$item->countoperid}}</th>
+                                                <th>{{$item->countvigid}}</th>
+                                                <th>
+                                                    @
+                                                    @if($item->statusid == 'CVB-02')
+                                                        <button type="button"
+                                                                class="btn btn-rounded btn-block btn-danger"
+                                                                data-toggle="modal"
+                                                                data-target="#modal-conteo-{{$item->id}}">
+                                                            <i class="mdi mdi-eye"></i>
+                                                            Abrir conteo
+                                                        </button>
+                                                        @include('Shipments.OrderDeliveries.partials.opencount')
+                                                    @endif
+                                                </th>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            @endcan
+                            <hr class="m-t-1">
                             <div class="row">
                                 <div class="col-lg-6">
                                     @if(!empty($conteos))
                                         @foreach($conteos as $conteo)
                                             <div class="row">
-                                                <div class="col-lg-12" >
-                                                    <span class="badge bg-info text-black mt-2 mb-2 padding-3" style="font-size: 14px !important;font-weight: lighter;">Conteo operaciones-  {{$conteo->id}}</span>
+                                                <div class="col-lg-2">
+                                                    <span class="badge bg-info text-black mt-2 mb-2 padding-3"
+                                                          style="font-size: 14px !important;font-weight: lighter;">Conteo operaciones-  {{$conteo->id}}</span>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -898,7 +940,8 @@
                                         @foreach($conteosVig as $conteo)
                                             <div class="row">
                                                 <div class="col-lg-12">
-                                                    <span class="badge bg-warning text-black mt-2 mb-2 padding-3" style="font-size: 14px !important;font-weight: lighter;">Conteo vigilancia - {{ $conteo->id }}</span>
+                                                    <span class="badge bg-warning text-black mt-2 mb-2 padding-3"
+                                                          style="font-size: 14px !important;font-weight: lighter;">Conteo vigilancia - {{ $conteo->id }}</span>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -977,7 +1020,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <table class="table table-bordered  table-condensed table-hover">
+                                            <table class="table table-bordered  table-condensed ">
                                                 <thead>
                                                 <th class="text-center font-16">Lado Izquierdo</th>
                                                 <th class="text-center font-16">Lado Derecho</th>
@@ -1188,24 +1231,24 @@
                                                 <div class="col-lg-12">
                                                     <table class="table table-hover table-bordered table-condensed tablegeneral">
                                                         <thead>
-                                                            <tr>
-                                                                <th>Evento</th>
-                                                                <th>Usuario</th>
-                                                                <th>Estatus inicial</th>
-                                                                <th>Estatus final</th>
-                                                                <th>F. Creación</th>
-                                                            </tr>
+                                                        <tr>
+                                                            <th>Evento</th>
+                                                            <th>Usuario</th>
+                                                            <th>Estatus inicial</th>
+                                                            <th>Estatus final</th>
+                                                            <th>F. Creación</th>
+                                                        </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @foreach($tracesShipment as $item)
-                                                                <tr>
-                                                                    <td>{{$item->event->name}}</td>
-                                                                    <td>{{$item->user->name}}</td>
-                                                                    <td>{{$item->statusold->name}}</td>
-                                                                    <td>{{$item->statusnew->name}}</td>
-                                                                    <td>{{$item->created_at}}</td>
-                                                                </tr>
-                                                            @endforeach
+                                                        @foreach($tracesShipment as $item)
+                                                            <tr>
+                                                                <td>{{$item->event->name}}</td>
+                                                                <td>{{$item->user->name}}</td>
+                                                                <td>{{$item->statusold->name}}</td>
+                                                                <td>{{$item->statusnew->name}}</td>
+                                                                <td>{{$item->created_at}}</td>
+                                                            </tr>
+                                                        @endforeach
                                                         </tbody>
                                                     </table>
                                                 </div>

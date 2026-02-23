@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Shipments\Bridgestone\StorageShipmentFoliosController;
+use App\Http\Controllers\Shipments\Bridgestone\StorageVerificationPendingController;
 use App\Http\Controllers\Shipments\CategoryIncidences\StorageCategoryIncidenceDetailController;
 use App\Http\Controllers\Shipments\CategoryIncidences\StorageCategoryIncidencesController;
 use App\Http\Controllers\Shipments\Dashboard\DashboardShipmentsController;
@@ -362,4 +363,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('storageshipmentfolios', StorageShipmentFoliosController::class)->except(['create', 'store']);
     Route::get('getDataShipmentFolios', [StorageShipmentFoliosController::class, 'getDataShipmentFolios'])->name('getDataShipmentFolios');
     Route::get('storageshipmentfoliospdf/{id}', [StorageShipmentFoliosController::class, 'storageshipmentfoliospdf'])->name('storageshipmentfoliospdf');
+
+    //	Reabrir conteo
+    Route::put('reopencount-orderdelivery/{id}', [StorageVerificationPendingController::class, 'update'])->name('reopencount-orderdelivery');
+
 });
