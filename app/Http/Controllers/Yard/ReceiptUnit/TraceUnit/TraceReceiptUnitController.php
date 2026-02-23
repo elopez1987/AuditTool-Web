@@ -228,7 +228,8 @@ class TraceReceiptUnitController extends BaseController
                     'allow_self_signed' => true,
                 ],
             ]),
-        ])->loadView($fortmat, compact('receiptunit', 'comments', 'verified', 'photos'));
+        ])
+            ->loadView($fortmat, compact('receiptunit', 'comments', 'verified', 'photos'));
 
         return $pdf->download('Folio_De_Calidad-' . $receiptunit->id . '.pdf');
     }

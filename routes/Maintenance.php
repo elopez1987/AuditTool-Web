@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Maintanance\StorageLiftTruckController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->group(function () {
@@ -7,12 +8,12 @@ Route::middleware(['auth'])->group(function () {
         return view('layouts.Menu.Maintenance.menu');
     })->name('menumaintenance');
 
-    Route::resource('storagelifttrucks', 'Maintanance\StorageLiftTruckController');
+    Route::resource('storagelifttrucks', StorageLiftTruckController::class);
     Route::get('getStorageLiftTrucks', 'Maintanance\StorageLiftTruckController@getStorageLiftTrucks')->name('getStorageLiftTrucks');
 
     Route::resource('storagechecklistlifttrucks', 'Maintanance\StorageCheckListLiftTruckController');
     Route::get('getDataCheckListLiftTrucks', 'Maintanance\StorageCheckListLiftTruckController@getDataCheckListLiftTrucks')->name('getDataCheckListLiftTrucks');
-    //    Detalle del check list
+    //    Detalle del check lists
     Route::get('addchecklistdetailslifttruck/{id}', 'Maintanance\StorageCheckListDetailLiftTruckController@index')->name('addchecklistdetailslifttruck');
     Route::put('storedetailslifttruck/{id}', 'Maintanance\StorageCheckListDetailLiftTruckController@store')->name('storedetailslifttruck.store');
     Route::put('updatestatusdetaillifttruck/{id}', 'Maintanance\StorageCheckListDetailLiftTruckController@updatestatusdetaillifttruck')->name('updatestatusdetaillifttruck');

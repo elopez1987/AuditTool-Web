@@ -69,24 +69,24 @@
                                                     <thead>
                                                     <tr>
                                                         <th class="text-white"
-                                                            style="font-size: 13px !important;font-weight: 600; background-color: #78909c">
+                                                            style="font-size: 13px !important;font-weight: 600; background-color: #78909c;color: #ffffff !important;">
                                                             C.Distribución
                                                         </th>
                                                         <th class="text-white"
-                                                            style="font-size: 13px !important;font-weight: 600; background-color: #78909c">Zona
+                                                            style="font-size: 13px !important;font-weight: 600; background-color: #78909c;color: #ffffff !important;">Zona
                                                         </th>
                                                         <th class="text-white"
-                                                            style="font-size: 13px !important;font-weight: 600; background-color: #00c853">
+                                                            style="font-size: 13px !important;font-weight: 600; background-color: #00c853;color: #ffffff !important;">
                                                             Capacidad
                                                         </th>
                                                         <th class="text-white"
-                                                            style="font-size: 13px !important;font-weight: 600; background-color: #ff1744">Ocupado
+                                                            style="font-size: 13px !important;font-weight: 600; background-color: #ff1744;color: #ffffff !important;">Ocupado
                                                         </th>
                                                         <th class="text-white"
                                                             style="font-size: 13px !important;font-weight: 600; background-color: #ffea00;color: black !important;">Libre
                                                         </th>
                                                         <th class="text-white"
-                                                            style="font-size: 13px !important;font-weight: 600; background-color: #3d5afe">Estatus
+                                                            style="font-size: 13px !important;font-weight: 600; background-color: #3d5afe;color: #ffffff !important;">Estatus
                                                         </th>
                                                     </tr>
                                                     </thead>

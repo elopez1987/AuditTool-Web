@@ -151,7 +151,7 @@
                 <table class="border-none">
                     <th class="border-none">
                         <div
-                            style="width: 10px;height: 10px;border: 1px solid #D5D5D5;align-items: center;;margin-left: 5px"></div>
+                                style="width: 10px;height: 10px;border: 1px solid #D5D5D5;align-items: center;;margin-left: 5px"></div>
                     </th>
                     <th class="border-none">20 FT</th>
                 </table>
@@ -160,7 +160,7 @@
                 <table class="border-none">
                     <th class="border-none">
                         <div
-                            style="width: 10px;height: 10px;border: 1px solid #D5D5D5;align-items: center;;margin-left: 5px">
+                                style="width: 10px;height: 10px;border: 1px solid #D5D5D5;align-items: center;;margin-left: 5px">
                             {{ $receiptunit->truck?->auxiliary01 == 'CJ-40' ? 'X' : '' }}
                         </div>
                     </th>
@@ -171,7 +171,7 @@
                 <table class="border-none">
                     <th class="border-none">
                         <div
-                            style="width: 10px;height: 10px;border: 1px solid #D5D5D5;align-items: center;;margin-left: 5px">
+                                style="width: 10px;height: 10px;border: 1px solid #D5D5D5;align-items: center;;margin-left: 5px">
                             {{ $receiptunit->truck?->auxiliary01 == 'CJ-48' ? 'X' : '' }}
                         </div>
                     </th>
@@ -182,7 +182,7 @@
                 <table class="border-none">
                     <th class="border-none">
                         <div
-                            style="width: 10px;height: 10px;border: 1px solid #D5D5D5;align-items: center;margin-left: 5px">
+                                style="width: 10px;height: 10px;border: 1px solid #D5D5D5;align-items: center;margin-left: 5px">
                             {{ $receiptunit->truck?->auxiliary01 == 'CJ-53' ? 'X' : '' }}
                         </div>
                     </th>
@@ -231,189 +231,189 @@
             </th>
 
             @if($receiptunit->truck?->auxiliary01 == 'CJ-40' || $receiptunit->truck?->auxiliary01 == 'CJ-20')
-            <th WIDTH="10%">
-                <div class="row">
-                    <table>
-                        <tr>
-                            <th style="text-align: center">2.38M</th>
-                        </tr>
-                        <tr>
-                            <th STYLE="text-align: center">+ 21 CM</th>
-                        </tr>
-                    </table>
-                </div>
-                <div class="row">
-                    <table>
-                        <tr>
-                            <th style="text-align: center">5.89M</th>
-                        </tr>
-                        <tr>
-                            <th style="text-align: center">+16CM</th>
-                        </tr>
-                    </table>
-                </div>
-                <div class="row">
-                    <table>
-                        <tr>
-                            <th STYLE="text-align: center">2.33M</th>
-                        </tr>
-                        <tr>
-                            <th style="text-align: center">+10CM</th>
-                        </tr>
-                    </table>
-                </div>
-            </th>
-            <th width="10%">
-                <div class="row">
-                    <table>
-                        <tr>
-                            <th style="text-align: center;height: 30px"></th>
-                        </tr>
-                    </table>
-                </div>
-                <div class="row">
-                    <table>
-                        <tr>
-                            <th style="text-align: center;height: 30px"></th>
-                        </tr>
-                    </table>
-                </div>
-                <div class="row">
-                    <table>
-                        <tr>
-                            <th STYLE="text-align: center;height: 30px"></th>
-                        </tr>
-                    </table>
-                </div>
-            </th>
+                <th WIDTH="10%">
+                    <div class="row">
+                        <table>
+                            <tr>
+                                <th style="text-align: center">2.38M</th>
+                            </tr>
+                            <tr>
+                                <th STYLE="text-align: center">+ 21 CM</th>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <table>
+                            <tr>
+                                <th style="text-align: center">5.89M</th>
+                            </tr>
+                            <tr>
+                                <th style="text-align: center">+16CM</th>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <table>
+                            <tr>
+                                <th STYLE="text-align: center">2.33M</th>
+                            </tr>
+                            <tr>
+                                <th style="text-align: center">+10CM</th>
+                            </tr>
+                        </table>
+                    </div>
+                </th>
+                <th width="10%">
+                    <div class="row">
+                        <table>
+                            <tr>
+                                <th style="text-align: center;height: 30px"></th>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <table>
+                            <tr>
+                                <th style="text-align: center;height: 30px"></th>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <table>
+                            <tr>
+                                <th STYLE="text-align: center;height: 30px"></th>
+                            </tr>
+                        </table>
+                    </div>
+                </th>
             @endif
 
             @if($receiptunit->truck?->auxiliary01 == 'CJ-48')
-            <th width="10%">
-                <div class="row">
-                    <table>
-                        <tr>
-                            <th style="text-align: center">2.38M</th>
-                        </tr>
-                        <tr>
-                            <th STYLE="text-align: center">+ 21 CM</th>
-                        </tr>
-                    </table>
-                </div>
-                <div class="row">
-                    <table>
-                        <tr>
-                            <th style="text-align: center">12.01M</th>
-                        </tr>
-                        <tr>
-                            <th style="text-align: center">+18CM</th>
-                        </tr>
-                    </table>
-                </div>
-                <div class="row">
-                    <table>
-                        <tr>
-                            <th STYLE="text-align: center">2.33M</th>
-                        </tr>
-                        <tr>
-                            <th style="text-align: center">+10CM</th>
-                        </tr>
-                    </table>
-                </div>
-            </th>
-            <th width="10%">
-                <div class="row">
-                    <table>
-                        <tr>
-                            <th style="text-align: center;height: 30px">
-                                {{ $receiptunit->unitdata->tolerance[0] ?? '' }}
-                            </th>
-                        </tr>
-                    </table>
-                </div>
-                <div class="row">
-                    <table>
-                        <tr>
-                            <th style="text-align: center;height: 30px">
-                                {{ $receiptunit->unitdata->tolerance[1] ?? '' }}
-                            </th>
-                        </tr>
-                    </table>
-                </div>
-                <div class="row">
-                    <table>
-                        <tr>
-                            <th STYLE="text-align: center;height: 30px">
-                                {{ $receiptunit->unitdata->tolerance[2] ?? '' }}
-                            </th>
-                        </tr>
-                    </table>
-                </div>
-            </th>
+                <th width="10%">
+                    <div class="row">
+                        <table>
+                            <tr>
+                                <th style="text-align: center">2.38M</th>
+                            </tr>
+                            <tr>
+                                <th STYLE="text-align: center">+ 21 CM</th>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <table>
+                            <tr>
+                                <th style="text-align: center">12.01M</th>
+                            </tr>
+                            <tr>
+                                <th style="text-align: center">+18CM</th>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <table>
+                            <tr>
+                                <th STYLE="text-align: center">2.33M</th>
+                            </tr>
+                            <tr>
+                                <th style="text-align: center">+10CM</th>
+                            </tr>
+                        </table>
+                    </div>
+                </th>
+                <th width="10%">
+                    <div class="row">
+                        <table>
+                            <tr>
+                                <th style="text-align: center;height: 30px">
+                                    {{ $receiptunit->unitdata->tolerance[0] ?? '' }}
+                                </th>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <table>
+                            <tr>
+                                <th style="text-align: center;height: 30px">
+                                    {{ $receiptunit->unitdata->tolerance[1] ?? '' }}
+                                </th>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <table>
+                            <tr>
+                                <th STYLE="text-align: center;height: 30px">
+                                    {{ $receiptunit->unitdata->tolerance[2] ?? '' }}
+                                </th>
+                            </tr>
+                        </table>
+                    </div>
+                </th>
             @endif
 
             @if($receiptunit->truck?->auxiliary01 == 'CJ-53')
-            <th width="10%">
-                <div class="row">
-                    <table>
-                        <tr>
-                            <th style="text-align: center">2.69M</th>
-                        </tr>
-                        <tr>
-                            <th STYLE="text-align: center">+ 20CM</th>
-                        </tr>
-                    </table>
-                </div>
-                <div class="row">
-                    <table>
-                        <tr>
-                            <th style="text-align: center">12.01M</th>
-                        </tr>
-                        <tr>
-                            <th style="text-align: center">+18CM</th>
-                        </tr>
-                    </table>
-                </div>
-                <div class="row">
-                    <table>
-                        <tr>
-                            <th STYLE="text-align: center">2.33M</th>
-                        </tr>
-                        <tr>
-                            <th style="text-align: center">+10CM</th>
-                        </tr>
-                    </table>
-                </div>
-            </th>
-            <th width="10%">
-                <div class="row">
-                    <table>
-                        <tr>
-                            <th style="text-align: center;height: 30px">
-                                {{ $receiptunit->unitdata->tolerance[0] ?? '' }}
-                            </th>
-                        </tr>
-                    </table>
-                </div>
-                <div class="row">
-                    <table>
-                        <tr>
-                            <th style="text-align: center;height: 30px">
-                                {{ $receiptunit->unitdata->tolerance[1] ?? '' }}
-                            </th>
-                        </tr>
-                    </table>
-                </div>
-                <div class="row">
-                    <table>
-                        <tr>
-                            <th STYLE="text-align: center;height: 30px">
-                                {{ $receiptunit->unitdata->tolerance[2] ?? '' }}
-                            </th>
-                        </tr>
-                    </table>
-                </div>
-            </th>
+                <th width="10%">
+                    <div class="row">
+                        <table>
+                            <tr>
+                                <th style="text-align: center">2.69M</th>
+                            </tr>
+                            <tr>
+                                <th STYLE="text-align: center">+ 20CM</th>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <table>
+                            <tr>
+                                <th style="text-align: center">12.01M</th>
+                            </tr>
+                            <tr>
+                                <th style="text-align: center">+18CM</th>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <table>
+                            <tr>
+                                <th STYLE="text-align: center">2.33M</th>
+                            </tr>
+                            <tr>
+                                <th style="text-align: center">+10CM</th>
+                            </tr>
+                        </table>
+                    </div>
+                </th>
+                <th width="10%">
+                    <div class="row">
+                        <table>
+                            <tr>
+                                <th style="text-align: center;height: 30px">
+                                    {{ $receiptunit->unitdata->tolerance[0] ?? '' }}
+                                </th>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <table>
+                            <tr>
+                                <th style="text-align: center;height: 30px">
+                                    {{ $receiptunit->unitdata->tolerance[1] ?? '' }}
+                                </th>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <table>
+                            <tr>
+                                <th STYLE="text-align: center;height: 30px">
+                                    {{ $receiptunit->unitdata->tolerance[2] ?? '' }}
+                                </th>
+                            </tr>
+                        </table>
+                    </div>
+                </th>
             @endif
 
         </table>
@@ -712,14 +712,13 @@
                 <th style="position: relative;">
                     <div style="position: absolute; left: 0;">
                         @if(!empty($receiptunit->key))
-                            @php
-                                $keyguard02Path = str_starts_with($receiptunit->key->keyguard02, 'public/') 
-                                    ? storage_path('app/' . $receiptunit->key->keyguard02)
-                                    : storage_path('app/public/' . $receiptunit->key->keyguard02);
-                            @endphp
-                            @if(file_exists($keyguard02Path))
-                                <img src="{{ $keyguard02Path }}" style="width: 50px;height:50px;">
-                            @endif
+                            <img src="{{storage_path('app/' . $receiptunit->key->keyguard02 )}}" alt="Firma"
+                                 style="height: 40px;max-height: 40px"/>
+                        @endif
+                        @if(!empty($receiptunit->order->folio_count->folio_detail))
+                            <img src="{{storage_path('app/' . $receiptunit->order->folio_count->folio_detail->keyguard )}}"
+                                 alt="Firma"
+                                 style="height: 40px;max-height: 40px"/>
                         @endif
                     </div>
                 </th>
@@ -729,17 +728,13 @@
                 <th style="width: 40%;text-align: left">{{$receiptunit->key ? $receiptunit->key->supervisorname : ''}}</th>
                 <th>
                     @if(!empty($receiptunit->key))
-                        @php
-                            $supervisorkeyPath = str_starts_with($receiptunit->key->supervisorkey, 'public/') 
-                                ? storage_path('app/' . $receiptunit->key->supervisorkey)
-                                : storage_path('app/public/' . $receiptunit->key->supervisorkey);
-                        @endphp
-                        <div style="position: absolute; right: 0;">
-                            @if(file_exists($supervisorkeyPath))
-                                <img src="{{ $supervisorkeyPath }}" alt="Firma"
-                                     style="position:absolute; width: 50px;height:50px; z-index: 999; top:-28px; right:0;">
-                            @endif
-                        </div>
+                        <img src="{{storage_path('app/' . $receiptunit->key->supervisorkey )}}" alt="Firma"
+                             style="height: 40px;max-height: 40px"/>
+                    @endif
+                    @if(!empty($receiptunit->order->folio_count->folio_detail))
+                        <img src="{{storage_path('app/' . $receiptunit->order->folio_count->folio_detail->keyoperator )}}"
+                             alt="Firma"
+                             style="height: 40px;max-height: 40px"/>
                     @endif
                 </th>
             </tr>

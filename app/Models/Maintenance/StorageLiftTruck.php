@@ -158,21 +158,21 @@ class StorageLiftTruck extends Model
 
     public function scopeSerialNumber($q, $serialnumber)
     {
-        if ($serialnumber !== '') {
+        if ($serialnumber != '') {
             $q->where('serialnumber', $serialnumber);
         }
     }
 
     public function scopeNumberTruck($q, $numbertruck)
     {
-        if ($numbertruck !== '') {
+        if ($numbertruck != '') {
             $q->where('numbertruck', $numbertruck);
         }
     }
 
     public function scopeStatus($q, $statusid)
     {
-        if ($statusid !== '') {
+        if ($statusid != '') {
             $q->where('storagelifttrucks.statusid', $statusid);
         }
     }

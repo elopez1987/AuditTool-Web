@@ -44,8 +44,7 @@
                                                 <div class="row">
                                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                                         <div class="form-group">
-                                                            <label for="schemaidmarca">Esquema</span>
-                                                            </label>
+                                                            <label for="schemaidmarca">Esquema</label>
                                                             <input type="text" class="form-control" id="schemaidmarca" name="schemaidmarca" maxlength="10"
                                                                    aria-describedby="schemaidmarca" value="MCM" readonly>
                                                         </div>
@@ -114,8 +113,7 @@
                                                 <div class="row">
                                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                                         <div class="form-group">
-                                                            <label for="schemamodel">Esquema</span>
-                                                            </label>
+                                                            <label for="schemamodel">Esquema</label>
                                                             <input type="text" class="form-control" id="schemamodel" name="schemamodel" maxlength="10"
                                                                    aria-describedby="schemamodel" value="MDM" readonly>
                                                         </div>
@@ -253,12 +251,12 @@
             buttons: [
                 {
                     "extend": "csv",
-                    "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16'><span  style='font-size: 0.675rem !important;'> Csv</span>",
+                    "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16'><span  style='font-size: 0.925rem !important;'> Csv</span>",
                     "className": "btn btn-outline-info btn-md  btn-bold",
                 },
                 {
                     "extend": "excel",
-                    "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt=''><span  style='font-size: 0.675rem !important;'> Excel</span>",
+                    "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt=''><span  style='font-size: 0.925rem !important;'> Excel</span>",
                     "className": "btn btn-outline-info btn-md  btn-bold",
                 }
             ],

@@ -10,6 +10,7 @@ use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -122,6 +123,11 @@ class StorageShipmentFolios extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'userid', 'id');
+    }
+
+    public function folio_detail(): BelongsTo
+    {
+        return $this->belongsTo(StorageShipmentCheckTotal::class, 'id', 'folioid')->withTrashed();
     }
 
     protected static function boot()

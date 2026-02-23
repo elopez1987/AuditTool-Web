@@ -482,20 +482,19 @@ span.select2-container {
 .btn-outline-info {
   color: #0091ea !important;
   background: rgba(255, 255, 255, 0.6);
-  border-color: #cfd8dc !important;
-  //font-size: 1rem !important;
+  border-color: #90a4ae !important;
 }
 
 .btn-outline-info:hover {
-  border-color: #b0bec5;
-  background: #cfd8dc;
+  border-color: #90a4ae;
+  background: #607d8b;
+  color: white !important;
 }
 
 .text-button {
   padding-left: 3px;
   padding-right: 3px;
   text-transform: capitalize !important;
-  //font-size: 1rem !important;
 }
 
 .page-item.active .page-link {

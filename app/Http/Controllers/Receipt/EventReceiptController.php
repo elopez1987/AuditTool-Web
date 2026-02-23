@@ -242,12 +242,31 @@ class EventReceiptController extends BaseController
 
     public function finishBilling($id)
     {
-        $receiptAsn = ReceiptAsn::findOrFail($id);
-        if (! $receiptAsn) {
-            return $this->errorResponse('No se encontro el registro solicitado.');
-        }
-        ReceiptAsnTime::where('receiptid', $receiptAsn->id)->update(['finish_billing' => now()]);
 
-        return $this->redirectBackSuccessMessage('Se envio a facturacion con exito.');
+        DB::beginTransaction();
+        try {
+            $receiptAsn = ReceiptAsn::findOrFail($id);
+            if (! $receiptAsn) {
+                return $this->errorResponse('No se encontro el registro solicitado.');
+            }
+            ReceiptAsnTime::where('receiptid', $receiptAsn->id)->update(['finish_billing' => now()]);
+            $receiptAsn->statusid = 'IG';
+            $receiptAsn->goodissuedate = now();
+            $receiptAsn->save();
+            DB::commit();
+
+            return $this->redirectBackSuccessMessage('Se envio a facturacion con exito.');
+        } catch (Exception $e) {
+            DB::rollback();
+            Log::error('Error en finishBilling', [
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            return $this->errorResponse('No se pudo registrar el fin de facturación, favor de intentar nuevamente.');
+        }
+
     }
 }

@@ -1,9 +1,8 @@
 <div class="btn-group dropup">
     <button type="button" class="btn waves-effect waves-light btn-outline-info btn-sm dropdown-toggle"
-            data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false">
-        <i class="ti ti-settings font-12 mr-2"></i>
-       Acciones
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="ti ti-settings  mr-2 "></i>
+      <spam class="font-12"> Acciones </spam>
     </button>
     <div class="dropdown-menu animated flipInX" style="z-index: 9999;">
         @if ($statusid != 'OU')

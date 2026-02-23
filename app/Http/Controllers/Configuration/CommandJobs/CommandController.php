@@ -12,12 +12,30 @@ class CommandController extends Controller
         return view('Configuration.Commands.index');
     }
 
+    public function clearJobs()
+    {
+        Artisan::call('queue:clear');
+        Artisan::call('queue:clear --queue=yms-app');
+        Artisan::call('queue:clear --queue=yms-web');
+        Artisan::call('queue:restart');
+
+        return redirect()->back()->with(session()->flash('success', 'Proceso de Jobs ejecutado con exito.'));
+    }
+
+    public function clear_failed_jobs()
+    {
+        Artisan::call('queue:flush');
+
+        return redirect()->back()->with(session()->flash('success', 'Proceso de Jobs ejecutado con exito.'));
+    }
+
     public function clearcachesystem()
     {
         Artisan::call('config:clear');
         Artisan::call('config:cache');
         Artisan::call('cache:clear');
         Artisan::call('optimize:clear');
+        Artisan::call('queue:restart');
 
         return redirect()->back()->with(session()->flash('success', 'Proceso de limpieza de sistema terminado con éxito.'));
     }

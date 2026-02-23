@@ -86,8 +86,9 @@ Route::middleware(['auth'])->group(function () {
     //    Creacion de directorios para el centro de distribucion
     Route::get('systemcenterdistributions/{id}/folder', [SystemCenterDistributionFolderController::class, 'index'])->name('systemcenterdistributions.folder');
     Route::put('systemcenterdistributionfolder/{id}', [SystemCenterDistributionFolderController::class, 'systemcenterdistributionfolder'])->name('systemcenterdistributionfolder');
+
     //	Parametrizar mensajes de bodega
-    Route::get('systemcenterdistributions/{id}/notifications', [NotificationCenterController::class, 'index'])->name('systemwarehouses.notifications');
+    Route::get('systemcenterdistributions/{id}/notifications', [NotificationCenterController::class, 'index'])->name('systemcenterdistributions.notifications');
     Route::put('systemcenternotifications/{id}', [NotificationCenterController::class, 'systemcenternotifications'])->name('systemcenternotifications');
 
     //    ---------------------------------------------------- Bodegas  ----------------------------------------------------
@@ -96,6 +97,7 @@ Route::middleware(['auth'])->group(function () {
     //    Parametros de bodegas
     Route::get('systemwarehouses/{id}/parameters', [ParameterWarehousesController::class, 'parameters'])->name('systemwarehouses.parameters');
     Route::put('systemwarehouseparameters/{id}', [ParameterWarehousesController::class, 'systemwarehouseparameters'])->name('systemwarehouseparameters');
+
     //	Parametrizar mensajes de bodega
     Route::get('systemwarehouses/{id}/notifications', [NotificactionWarehouseController::class, 'index'])->name('systemwarehouses.notifications');
     Route::put('systemwarehousenotifications/{id}', [NotificactionWarehouseController::class, 'systemwarehousenotifications'])->name('systemwarehousenotifications');
@@ -187,6 +189,10 @@ Route::group(['middleware' => ['role:ADMINISTRADOR']], function () {
     Route::get('sendmaiilfordifferenceweight', [CommandController::class, 'sendmaiilfordifferenceweight'])->name('sendmaiilfordifferenceweight');
     Route::get('sendmessagefordifferenceweight', [CommandController::class, 'sendmessagefordifferenceweight'])->name('sendmessagefordifferenceweight');
     Route::get('createuuidtouser', [CommandController::class, 'createuuidtouser'])->name('createuuidtouser');
+
+    //	Jobs
+    Route::get('clearJobs', [CommandController::class, 'clearJobs'])->name('clearJobs');
+    Route::get('clear-failed-jobs', [CommandController::class, 'clear_failed_jobs'])->name('clear-failed-jobs');
 
     //    -------------------------------------  Logs de inicio de sesion de dispositivos  ----------------------------------------------------
     Route::get('logdeviceforuser', [LogDeviceForUserController::class, 'index'])->name('logdeviceuser');

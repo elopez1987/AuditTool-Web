@@ -8,7 +8,6 @@
                     Horario de descarga
                 </div>
                 <div class="card-body">
-
                     <form method="GET" id="search" role="form">
                         {{csrf_field()}}
                         <div class="row">
@@ -45,57 +44,52 @@
                                 <hr class="mt-2">
                                 <div class="card-input">
                                     <div class="row">
-                                        <div class="col-lg-2 col-md-6 col-sm-12">
-                                            <div class="form-group">
-                                                <label for="warehouseid">Bodega </label>
-                                                <select name="warehouseid" id="warehouseid" class="form-control select2">
-                                                    <option value="" selected>Seleccione un valor</option>
-                                                    @foreach($warehouses as $model)
-                                                        <option value="{{$model->warehouseid}}"> {{$model->name}} </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-2 col-md-6 col-sm-12">
-                                            <div class="form-group">
-                                                <label for="shipmentid">Recibo</label>
-                                                <input type="text" class="form-control"  id="shipmentid" name="shipmentid">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-2 col-md-6 col-sm-12">
-                                            <div class="form-group">
-                                                <label for="delivery">Factura</label>
-                                                <input type="text" class="form-control"  id="delivery" name="delivery">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-2 col-md-6 col-sm-12">
-                                            <div class="form-group">
-                                                <label for="folionumber">Folio de patios</label>
-                                                <input type="text" class="form-control"  id="folionumber" name="folionumber">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-2 col-md-6 col-sm-12">
-                                            <div class="form-group">
-                                                <label for="statusid">Estatus </label>
-                                                <select name="statusid" class="form-control select2">
-                                                    <option value="" selected>Seleccione un valor</option>
-                                                    @foreach($status as $model)
-                                                        <option value="{{$model->statusid}}"> {{$model->name}} </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-2 col-md-6 col-sm-12">
-                                            <div class="form-group">
-                                                <label for="providerid">Proveedor</label>
-                                                <select name="providerid" id='providerid'  class="form-control select2">
-                                                    <option value="" selected>Seleccione un valor</option>
-                                                    @foreach($providers as $model)
-                                                        <option value="{{$model->id}}"> {{$model->name}} </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
+                                        <x-select2
+                                                name="warehouseid"
+                                                label="Bodega."
+                                                :options="$warehouses"
+                                                valueField="warehouseid"
+                                                textField="name"
+                                                placeholder="Seleccione una bodega"
+                                        />
+                                        <x-text-input
+                                                name="shipmentid"
+                                                label="Número de recibo."
+                                                type="text"
+                                                placeholder="Número de recibo o contenedor"
+                                                colClass="col-lg-2 col-md-4 col-md-12"
+                                        />
+                                        <x-text-input
+                                                name="delivery"
+                                                label="Factura"
+                                                type="text"
+                                                placeholder="Número de factura"
+                                                colClass="col-lg-2 col-md-4 col-md-12"
+                                        />
+                                        <x-text-input
+                                                name="folionumber"
+                                                label="Número de folio de control de patios."
+                                                type="text"
+                                                placeholder="Número de recibo o contenedor"
+                                                colClass="col-lg-2 col-md-4 col-md-12"
+                                        />
+                                        <x-select2
+                                                name="statusid"
+                                                label="Estatus del recibo."
+                                                :options="$status"
+                                                valueField="statusid"
+                                                textField="name"
+                                                placeholder="Seleccione una estatus"
+                                        />
+                                        <x-select2
+                                                name="providerid"
+                                                label="Proveedor."
+                                                :options="$providers"
+                                                valueField="providerid"
+                                                textField="name"
+                                                placeholder="Seleccione una proveedor"
+                                        />
+
                                     </div>
                                 </div>
                             </div>

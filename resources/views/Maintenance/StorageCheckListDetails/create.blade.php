@@ -26,19 +26,19 @@
                     </form>
                     <div class="row">
                         <div class="col-8">
-                            <table class="table table-condensed  table-bordered">
+                            <table class="table table-condensed  table-bordered tablegeneral">
                                 <thead>
                                 <tr>
-                                    <th class="bg-inverse text-white">Punto de revisión</th>
-                                    <th class="bg-inverse text-white">Nivel critico</th>
-                                    <th class="bg-inverse text-white">Tipo de revisión</th>
-                                    <th class="bg-inverse text-white">Auxiliar 02</th>
-                                    <th class="bg-inverse text-white">Auxiliar 03</th>
-                                    <th class="bg-inverse text-white">Auxiliar 04</th>
-                                    <th class="bg-inverse text-white">Auxiliar 05</th>
-                                    <th class="bg-inverse text-white">Estatus</th>
-                                    <th class="bg-inverse text-white">Cambiar estatus</th>
-                                    <th class="bg-inverse text-white">Modificar registro</th>
+                                    <th>Punto de revisión</th>
+                                    <th>Nivel critico</th>
+                                    <th>Tipo de revisión</th>
+                                    <th>Auxiliar 02</th>
+                                    <th>Auxiliar 03</th>
+                                    <th>Auxiliar 04</th>
+                                    <th>Auxiliar 05</th>
+                                    <th>Estatus</th>
+                                    <th>Cambiar estatus</th>
+                                    <th>Modificar registro</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -97,6 +97,6 @@
 @endsection
 
 @section('script')
-
+    @include('layouts.Partials.DataTable')
 @endsection
 
