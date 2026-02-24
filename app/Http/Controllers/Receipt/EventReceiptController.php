@@ -7,6 +7,7 @@ use App\Models\General\EvidencePhoto;
 use App\Models\General\StorageComment;
 use App\Models\Receipt\ReceiptAsn;
 use App\Models\Receipt\ReceiptAsnCheckList;
+use App\Models\Receipt\ReceiptAsnTime;
 use App\Models\Receipt\ReceiptContainer;
 use App\Models\Receipt\ReceiptIncidenceStock;
 use App\Models\Receipt\ReceiptStock;
@@ -94,7 +95,7 @@ class EventReceiptController extends BaseController
             'inventorypartnumbers.lngdsc',
             'receiptstock.expirecode',
             'receiptstock.quantitytrue',
-            DB::raw('(SUM(receiptcontainers.quantity) * inventorypartnumbers.untcas) as totalescaneado')
+            DB::raw('(SUM(receiptcontainers.quantity) * inventorypartnumbers.untcas) as totalescaneado'),
         )
             ->leftJoin('inventorypartnumbers', function ($join) {
                 $join->on('receiptstock.partnumberid', '=', 'inventorypartnumbers.id')
@@ -114,7 +115,7 @@ class EventReceiptController extends BaseController
                 'inventorypartnumbers.lngdsc',
                 'receiptstock.expirecode',
                 'receiptstock.quantitytrue',
-                'inventorypartnumbers.untcas'
+                'inventorypartnumbers.untcas',
             )
             ->get();
     }
@@ -211,5 +212,61 @@ class EventReceiptController extends BaseController
 
             return $this->errorResponse('No se pudo iniciar el proceso de descarga, favor de intentar nuevamente.');
         }
+    }
+
+    public function sendToBilling($id)
+    {
+        $receiptAsn = ReceiptAsn::findOrFail($id);
+        if (! $receiptAsn) {
+            return $this->errorResponse('No se encontro el registro solicitado.');
+        }
+        ReceiptAsnTime::updateOrCreate([
+            'receiptid' => $receiptAsn->id,
+            'send_to_billing' => now(),
+        ]);
+
+        return $this->redirectBackSuccessMessage('Se envio a facturacion con exito.');
+
+    }
+
+    public function startBilling($id)
+    {
+        $receiptAsn = ReceiptAsn::findOrFail($id);
+        if (! $receiptAsn) {
+            return $this->errorResponse('No se encontro el registro solicitado.');
+        }
+        ReceiptAsnTime::where('receiptid', $receiptAsn->id)->update(['start_billing' => now()]);
+
+        return $this->redirectBackSuccessMessage('Se envio a facturacion con exito.');
+    }
+
+    public function finishBilling($id)
+    {
+
+        DB::beginTransaction();
+        try {
+            $receiptAsn = ReceiptAsn::findOrFail($id);
+            if (! $receiptAsn) {
+                return $this->errorResponse('No se encontro el registro solicitado.');
+            }
+            ReceiptAsnTime::where('receiptid', $receiptAsn->id)->update(['finish_billing' => now()]);
+            $receiptAsn->statusid = 'IG';
+            $receiptAsn->goodissuedate = now();
+            $receiptAsn->save();
+            DB::commit();
+
+            return $this->redirectBackSuccessMessage('Se envio a facturacion con exito.');
+        } catch (Exception $e) {
+            DB::rollback();
+            Log::error('Error en finishBilling', [
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            return $this->errorResponse('No se pudo registrar el fin de facturación, favor de intentar nuevamente.');
+        }
+
     }
 }

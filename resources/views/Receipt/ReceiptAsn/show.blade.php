@@ -9,9 +9,11 @@
                 <div class="card-body">
                     <div class="row mb-1">
                         <div class="col-lg-12">
+
                             <a href="{{ url()->previous() }}">
                                 @include('buttons.back')
                             </a>
+
                             @if($receiptasn->statusid != 'IG')
                                 @if($receiptasn->statusid != 'CE')
                                     @can('cancellationReceipt')
@@ -67,6 +69,7 @@
                                     </a>
                                 @endcan
                             @endif
+
                             @if ($receiptasn->statusid != 'IG')
                                 <a href="" data-target="#modal-addnote-{{$receiptasn->id}}" data-toggle="modal">
                                     <button type="button"
@@ -76,8 +79,6 @@
                                     </button>
                                 </a>
                                 @include('Receipt.ScheduleReceipt.options.addnote')
-
-
                                 @if(!empty($receiptasn->folionumber))
                                     @if($receiptasn->unloadstartdate == null)
                                         @can('receiptasn.startprocess')
@@ -91,27 +92,81 @@
                                                 </button>
                                             </a>
                                             @include('Receipt.SchedulleV2.Events.startprocess')
-                                        @endif
+                                        @endcan
                                     @endif
                                 @endif
                                 @if(!empty($receiptasn->folionumber))
-                                    @if($receiptasn->unloadfinishdate == null)
-                                        @can('receiptasn.finishprocess')
-                                            <a href="" data-target="#modal-finishprocess-{{$receiptasn->id}}"
+                                    @if($receiptasn->unloadstartdate != null)
+                                        @if($receiptasn->unloadfinishdate == null)
+                                            @can('receiptasn.finishprocess')
+                                                <a href="" data-target="#modal-finishprocess-{{$receiptasn->id}}"
+                                                   data-toggle="modal">
+                                                    <button type="button"
+                                                            class="btn waves-effect waves-light btn-outline-info btn-md">
+                                                        <img src="{{asset('/ico/storageturns.png')}}" alt=""
+                                                             class="img-16 ml-1">
+                                                        <span class="text-button"> Finalizar Proceso</span>
+                                                    </button>
+                                                </a>
+                                                @include('Receipt.SchedulleV2.Events.finishprocess')
+                                            @endcan
+                                        @endif
+                                    @endif
+                                @endif
+
+                                @can('receiptasn.send_to_billing')
+                                    @if($receiptasn->unloadfinishdate != null)
+                                        @if($receiptasn->timereceipt?->send_to_billing == null)
+                                            <a href="" data-target="#modal-send-to-billing-{{$receiptasn->id}}"
                                                data-toggle="modal">
                                                 <button type="button"
                                                         class="btn waves-effect waves-light btn-outline-info btn-md">
                                                     <img src="{{asset('/ico/storageturns.png')}}" alt=""
                                                          class="img-16 ml-1">
-                                                    <span class="text-button"> Finalizar Proceso</span>
+                                                    <span class="text-button"> Enviar a facturación</span>
                                                 </button>
                                             </a>
-                                            @include('Receipt.SchedulleV2.Events.finishprocess')
+                                            @include('Receipt.SchedulleV2.Events.send-to-billing')
                                         @endif
                                     @endif
-                                @endif
+                                @endcan
 
-                            @endcan
+                                @can('receiptasn.start_billing')
+                                    @if($receiptasn->timereceipt?->send_to_billing != null)
+                                        @if($receiptasn->timereceipt?->start_billing == null)
+                                            <a href="" data-target="#modal-start-billing-{{$receiptasn->id}}"
+                                               data-toggle="modal">
+                                                <button type="button"
+                                                        class="btn waves-effect waves-light btn-outline-info btn-md">
+                                                    <img src="{{asset('/ico/storageturns.png')}}" alt=""
+                                                         class="img-16 ml-1">
+                                                    <span class="text-button"> Inicio de facturación</span>
+                                                </button>
+                                            </a>
+                                            @include('Receipt.SchedulleV2.Events.start-billing')
+                                        @endif
+                                    @endif
+                                @endcan
+
+                                @can('receiptasn.finish_billing')
+                                    @if($receiptasn->timereceipt?->start_billing != null)
+                                        @if($receiptasn->timereceipt?->finish_billing == null)
+                                            <a href="" data-target="#modal-finish-billing-{{$receiptasn->id}}"
+                                               data-toggle="modal">
+                                                <button type="button"
+                                                        class="btn waves-effect waves-light btn-outline-info btn-md">
+                                                    <img src="{{asset('/ico/storageturns.png')}}" alt=""
+                                                         class="img-16 ml-1">
+                                                    <span class="text-button"> Fin de facturación</span>
+                                                </button>
+                                            </a>
+                                            @include('Receipt.SchedulleV2.Events.finish-billing')
+                                        @endif
+                                    @endif
+                                @endcan
+
+                            @endif
+
                             @if($receiptasn->folionumber != null)
                                 <a href="{{url('tracereceiptunit/' . $receiptasn->folionumber)}}" target="_blank">
                                     <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
@@ -127,7 +182,6 @@
                         </div>
                     </div>
                     <hr class="m-t-1">
-
                     <div class="row">
                         <div class="col-lg-2 col-md-6 col-sm-12">
                             <div class="d-flex flex-row comment-row m-t-0">
@@ -166,7 +220,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-lg-2 col-md-6 col-sm-12">
                             <div class="d-flex flex-row comment-row m-t-0">
@@ -217,7 +270,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-lg-2 col-md-6 col-sm-12">
                             <div class="d-flex flex-row comment-row m-t-0">
@@ -256,7 +308,6 @@
 
 
                     </div>
-
                     <div class="row">
                         <div class="col-lg-2 col-md-6 col-sm-12">
                             <div class="d-flex flex-row comment-row m-t-0">
@@ -294,6 +345,32 @@
                             </div>
                         </div>
                     </div>
+                   <div class="row mt-3">
+                       <div class="col-lg-2 col-md-6 col-sm-12">
+                           <div class="d-flex flex-row comment-row m-t-0">
+                               <div class="comment-text w-100">
+                                   <h6 class="font-weight-light">Envio de documentos a facturación</h6>
+                                   <span class="m-b-15 d-block font-12"> {{$receiptasn->timereceipt ? $receiptasn->timereceipt->send_to_billing : ''}}</span>
+                               </div>
+                           </div>
+                       </div>
+                       <div class="col-lg-2 col-md-6 col-sm-12">
+                           <div class="d-flex flex-row comment-row m-t-0">
+                               <div class="comment-text w-100">
+                                   <h6 class="font-weight-light">Inicio de  facturación</h6>
+                                   <span class="m-b-15 d-block font-12"> {{$receiptasn->timereceipt ? $receiptasn->timereceipt->start_billing : ''}}</span>
+                               </div>
+                           </div>
+                       </div>
+                       <div class="col-lg-2 col-md-6 col-sm-12">
+                           <div class="d-flex flex-row comment-row m-t-0">
+                               <div class="comment-text w-100">
+                                   <h6 class="font-weight-light">Fin de facturación</h6>
+                                   <span class="m-b-15 d-block font-12"> {{$receiptasn->timereceipt ? $receiptasn->timereceipt->finish_billing : ''}}</span>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
 
                 </div>
             </div>

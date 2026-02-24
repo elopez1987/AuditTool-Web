@@ -231,7 +231,7 @@ Route::middleware(['auth'])->group(function () {
     //    ---------------------------------------------------- Clientes ----------------------------------------------------
     Route::resource('ordercustomers', OrderCustomerController::class);
     Route::get('getDataCustomers', [OrderCustomerController::class, 'getDataCustomers'])->name('getDataCustomers');
-    Route::get('ordercustomers/{id}/parameters', [ParameterCustomerController::class, 'parameters'])->name('shipmentcarriers.parameters');
+    Route::get('ordercustomers/{id}/parameters', [ParameterCustomerController::class, 'parameters'])->name('ordercustomers.parameters');
     Route::put('addparameters/{id}', [ParameterCustomerController::class, 'addparameters'])->name('addparameters');
     Route::post('uploadfileordercustomers', [ImportCustomerController::class, 'importcustomer'])->name('uploadfileordercustomers');
 
@@ -286,7 +286,7 @@ Route::middleware(['auth'])->group(function () {
     //  Crear contacto
     Route::put('receiptproviders-contacts/{id}', [ReceiptProviderContactsController::class, 'update'])->name('receiptproviders-contacts.update');
     //	Eliminar contacto
-    Route::delete('contacts-providers/{id}', [ReceiptProviderContactsController::class, 'destroy'])->name('contacts-carriers.destroy');
+    Route::delete('contacts-providers/{id}', [ReceiptProviderContactsController::class, 'destroy'])->name('contacts-providers.destroy');
 
     Route::get('contacts-providers', [ReceiptProviderContactsController::class, 'contactsForProviders'])->name('contacts-providers');
     //  --------------------------------------------  Catalogo de check list  -----------------------------------------------

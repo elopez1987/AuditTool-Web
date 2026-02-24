@@ -6,6 +6,7 @@ use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Configuration\Warehouses\SystemWarehouse;
 use App\Models\Security\Users\SecurityAccessWarehouse;
+use App\Models\Shipments\OrderDeliverie;
 use App\Models\Yard\Carriers\ShipmentCarrier;
 use App\Models\Yard\ShipmentTruck\ShipmentTruck;
 use App\Models\Yard\StorageZone\StorageZone;
@@ -392,6 +393,11 @@ class ReceiptUnit extends Model
     public function unitdata()
     {
         return $this->belongsTo(ReceiptUnitData::class, 'id', 'folionumber');
+    }
+
+    public function order(): BelongsTo
+    {
+        return $this->belongsTo(OrderDeliverie::class, 'id', 'folionumber');
     }
 
     //    ----------------------------------Scopes para filtros de tabla  ----------------------------------------

@@ -7,6 +7,8 @@ use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Configuration\Turns\StorageTurn;
 use App\Models\Configuration\Warehouses\SystemWarehouse;
 use App\Models\Security\Users\SecurityAccessWarehouse;
+use App\Models\Shipments\Bridgestone\Verificacion\StorageShipmentCheckTotal;
+use App\Models\Shipments\Bridgestone\Verificacion\Storageverificationpending;
 use App\Models\Shipments\ShipmentJourney\ShipmentJourney;
 use App\Models\Shipments\ShipmentTransport\StorageShipmentTransport;
 use App\Models\Yard\Carriers\ShipmentCarrier;
@@ -161,6 +163,16 @@ class OrderDeliverie extends Model
     public function billings()
     {
         return $this->hasMany(StorageShipmentBilling::class, 'orderid', 'id');
+    }
+
+    public function folio_count(): BelongsTo
+    {
+        return $this->belongsTo(StorageShipmentCheckTotal::class, 'id', 'orderid');
+    }
+
+    public function verification_pending(): BelongsTo
+    {
+        return $this->belongsTo(Storageverificationpending::class, 'id', 'orderid');
     }
 
     //  -----------------------------  Scopes para filtros  ------------------------------------------

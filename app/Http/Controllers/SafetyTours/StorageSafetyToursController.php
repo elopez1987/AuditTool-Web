@@ -80,6 +80,8 @@ class StorageSafetyToursController extends BaseController
             ->select(['storagetags.latitude as lat', 'storagetags.name as name',
                 'storagetags.longitude as lng', 'systemstatus.name as status',
             ])
+            ->whereNotNull('storagetags.latitude')
+            ->whereNotNull('storagetags.longitude')
             ->get()->map(function ($location) {
                 $location->lat = (float) $location->lat;
                 $location->lng = (float) $location->lng;

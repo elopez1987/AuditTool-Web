@@ -8,6 +8,12 @@
                     Jobs
                 </div>
                 <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <a href="{{route('clearJobs')}}" class="btn btn-danger"> <i class="fas fa-trash ml-2 mr-2"></i> Limpiar Jobs Pendientes</a>
+                            <a href="{{route('clear-failed-jobs')}}" class="btn btn-danger"> <i class="fas fa-trash ml-2 mr-2"></i> Limpiar Jobs Fallidos</a>
+                        </div>
+                    </div>
                     <hr class="mb-3">
                     <div class="row">
                         <div class="col-10">

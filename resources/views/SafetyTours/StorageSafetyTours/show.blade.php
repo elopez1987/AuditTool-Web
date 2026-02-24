@@ -159,17 +159,28 @@
     
     <script>
         const locations = @json($locations);
+        
         function initMap() {
+            console.log('Iniciando mapa con', locations.length, 'ubicaciones');
+            
+            // Validar que existan ubicaciones
+            if (!locations || locations.length === 0) {
+                console.warn('No hay ubicaciones disponibles para mostrar en el mapa');
+                document.getElementById('map').innerHTML = '<div style="padding: 20px; text-align: center; background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 4px;">No hay ubicaciones disponibles para mostrar en el mapa</div>';
+                return;
+            }
+
             const center = { lat: 19.3540031, lng: -99.587697 };
             const map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 8,
                 center: center,
             });
+            
             const bounds = getBoundsForLocations(locations);
             map.fitBounds(bounds);
 
-
             locations.forEach(location => {
+                console.log('Agregando marcador:', location);
                 const position = { lat: location.lat, lng: location.lng };
                 const markerColor = getMarkerColor(location.status);
                 new google.maps.Marker({
@@ -186,7 +197,10 @@
                     }
                 });
             });
+            
+            console.log('Mapa inicializado correctamente');
         }
+        
         function getMarkerColor(status) {
             switch (status) {
                 case 'TERMINADO':
@@ -197,6 +211,7 @@
                     return 'blue';
             }
         }
+        
         function getBoundsForLocations(locations) {
             const bounds = new google.maps.LatLngBounds();
             locations.forEach(location => {
@@ -204,7 +219,6 @@
             });
             return bounds;
         }
-        window.onload = initMap;
     </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ config('app.google_maps_api_key') }}&callback=initMap"></script>
 @endsection

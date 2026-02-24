@@ -24,19 +24,27 @@ class TraceReceiptUnitController extends BaseController
     public function index()
     {
         $this->authorize('tracereceiptunit.index');
+        $warehouses = $this->getWarehouseForSelect();
+        $concepts = $this->typeReasonInActiveToSelect();
+        $carriers = $this->getCarriersForTransport();
 
-        return view('Yards.KardexReceiptUnit.KardexForFolio.index');
+        return view('Yards.KardexReceiptUnit.KardexForFolio.index',
+            compact('warehouses', 'concepts', 'carriers'));
     }
 
     public function getDataReceiptUnitToKardex(Request $request)
     {
         $data = ReceiptUnit::controlAccessUser()
-            ->join('shipmentcarriers', 'receiptunits.carrierid', '=', 'shipmentcarriers.id')
-            ->select(['receiptunits.*', 'shipmentcarriers.name as carriername'])
+            ->with(['carrier:id,name', 'warehouse:warehouseid,name', 'reason:id,name'])
+            ->select(['receiptunits.*'])
             ->Folio($request->get('folionumber'))
             ->Shipmentid($request->get('shipmentid'))
             ->BoxNumber($request->get('boxnumber'))
             ->Code($request->get('barcode'))
+            ->Warehouse($request->get('warehouseid'))
+            ->Rason($request->get('razonstatusid'))
+            ->Carrier($request->get('carrierid'))
+            ->EcoNumber($request->get('ecobox'))
             ->FilterForRangeDate($request->get('startDate'), $request->get('endDate'))
             ->get();
 
@@ -220,7 +228,8 @@ class TraceReceiptUnitController extends BaseController
                     'allow_self_signed' => true,
                 ],
             ]),
-        ])->loadView($fortmat, compact('receiptunit', 'comments', 'verified', 'photos'));
+        ])
+            ->loadView($fortmat, compact('receiptunit', 'comments', 'verified', 'photos'));
 
         return $pdf->download('Folio_De_Calidad-' . $receiptunit->id . '.pdf');
     }

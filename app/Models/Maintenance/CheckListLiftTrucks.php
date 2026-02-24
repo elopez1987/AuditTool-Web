@@ -121,21 +121,21 @@ class CheckListLiftTrucks extends Model
 
     public function scopeForSerialNumber($query, $serialnumber)
     {
-        if (trim($serialnumber) !== '') {
+        if (trim($serialnumber) != '') {
             $query->where('storagelifttrucks.serialnumber', '=', $serialnumber);
         }
     }
 
     public function scopeForNumberTruck($query, $numbertruck)
     {
-        if (trim($numbertruck) !== '') {
+        if (trim($numbertruck) != '') {
             $query->where('storagelifttrucks.numbertruck', '=', $numbertruck);
         }
     }
 
     public function scopeForWorkday($query, $workday)
     {
-        if ($workday !== '') {
+        if ($workday != '') {
             $query->whereRaw('CAST(checklistlifttrucks.created_at AS DATE) = ?', $workday);
         }
     }

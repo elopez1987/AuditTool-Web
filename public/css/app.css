@@ -12041,7 +12041,6 @@ textarea.form-control-lg {
 
 body {
   font-family: Sans-Serif !important;
-  font-size: 0.725rem !important;
   line-height: 1.5;
   color: black !important;
   margin: 0;
@@ -12082,15 +12081,6 @@ a {
   background: rgba(255, 255, 255, 0.9) !important; /* transparencia */
   backdrop-filter: blur(10px) !important; /* efecto cristal */
   border: 1px solid rgba(255, 255, 255, 0.35); /* borde suave */
-}
-
-.box:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 30px -15px rgba(0, 0, 0, 0.5);
-  background: #c1d5e0;
-  z-index: 1;
-  border-bottom: 2px solid;
-  border-bottom-color: #78909c;
 }
 
 .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
@@ -12198,7 +12188,6 @@ label {
 input[type=text], input[type=password], input[type=email], input[type=tel], input[type=number], input[type=select] {
   height: 26px !important;
   border-radius: 3px;
-  font-size: 0.725rem !important;
   border-color: #c1d5e0;
 }
 
@@ -12207,7 +12196,10 @@ input[type=text], input[type=password], input[type=email], input[type=tel], inpu
   border-color: #c1d5e0;
 }
 
-.select2-container--classic .select2-selection--single, .select2-container--default .select2-selection--single, .select2-container--default .select2-selection--single .select2-selection__rendered, .select2-container--default .select2-selection--single .select2-selection__arrow, .select2-container--default .select2-selection--multiple {
+.select2-container--classic .select2-selection--single, .select2-container--default .select2-selection--single,
+.select2-container--default .select2-selection--single .select2-selection__rendered,
+.select2-container--default .select2-selection--single .select2-selection__arrow,
+.select2-container--default .select2-selection--multiple {
   border-color: #c1d5e0;
   height: 26px !important;
   vertical-align: middle;
@@ -12292,6 +12284,7 @@ span.select2-container {
 .table-condensed > thead > tr > td,
 .table-condensed > thead > tr > th {
   padding: 6px;
+  font-size: 0.875rem !important;
 }
 
 .mr-left {
@@ -12419,7 +12412,7 @@ span.select2-container {
 }
 
 .message-error {
-  font-size: 0.655rem !important;
+  font-size: 0.755rem !important;
   color: red;
 }
 
@@ -12472,19 +12465,18 @@ span.select2-container {
 }
 
 .btn-outline-info {
-  color: #1565c0 !important;
+  color: #0091ea !important;
   background: rgba(255, 255, 255, 0.6);
-  border-color: #b0bec5 !important;
-  font-size: 1rem !important;
+  border-color: #90a4ae !important;
 }
 
 .btn-outline-info:hover {
-  border-color: #b0bec5;
-  background: #cfd8dc;
+  border-color: #90a4ae;
+  background: #607d8b;
+  color: white !important;
 }
 
 .text-button {
-  font-size: 0.835rem !important;
   padding-left: 3px;
   padding-right: 3px;
   text-transform: capitalize !important;
@@ -12535,7 +12527,7 @@ ul, #myUL {
   cursor: pointer;
   -webkit-user-select: none;
      -moz-user-select: none;
-          user-select: none; /* Prevent text selection */
+          user-select: none;
 }
 
 .caret::before {
@@ -12711,13 +12703,22 @@ main h1, main .h1 {
   backdrop-filter: blur(10px); /* efecto cristal */
   border: 1px solid rgba(255, 255, 255, 0.35); /* borde suave */
   -webkit-backdrop-filter: blur(10px); /* Safari */
-  border-radius: 10px; /* bordes redondeados grandes */
+  border-radius: 6px; /* bordes redondeados grandes */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* sombra ligera */
 }
 
+.box:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 30px -15px rgba(0, 0, 0, 0.5);
+  background: #c1d5e0;
+  z-index: 1;
+  border-bottom: 2px solid;
+  border-bottom-color: #78909c;
+}
+
 .box i {
-  font-size: 20px;
-  color: #283593 !important;
+  font-size: 30px;
+  color: #40c4ff !important;
 }
 
 .box:hover i {
@@ -12727,7 +12728,7 @@ main h1, main .h1 {
 .box h5, .box .h5 {
   margin-top: 10px;
   text-transform: capitalize;
-  font-size: 0.775rem !important;
+  font-size: 0.975rem !important;
   font-family: sans-serif;
 }
 
@@ -12738,7 +12739,7 @@ main h1, main .h1 {
 
 .box h4, .box .h4 {
   text-transform: capitalize;
-  font-size: 0.775rem !important;
+  font-size: 0.975rem !important;
   color: #fff;
   position: absolute;
   bottom: 8px;
