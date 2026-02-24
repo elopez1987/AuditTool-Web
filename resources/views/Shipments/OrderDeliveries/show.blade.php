@@ -720,43 +720,42 @@
                             <hr class="m-t-1">
                             @can('orderdelivery.opencount')
                                 <div class="row">
-                                <div class="col-lg-4">
-                                    <table class="table  table-bordered table-condensed tablegeneral">
-                                        <thead>
-                                        <tr>
-                                            <th>Conteo</th>
-                                            <th>Estatus</th>
-                                            <th>Conteo Supervisor</th>
-                                            <th>Conteo Vigilancia</th>
-                                            <th>Abrir</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        @foreach($countsTotals as $item)
+                                    <div class="col-lg-4">
+                                        <table class="table  table-bordered table-condensed tablegeneral">
+                                            <thead>
                                             <tr>
-                                                <th>{{$item->id}}</th>
-                                                <th>{{$item->status ? $item->status->name : ''}}</th>
-                                                <th>{{$item->countoperid}}</th>
-                                                <th>{{$item->countvigid}}</th>
-                                                <th>
-                                                    @
-                                                    @if($item->statusid == 'CVB-02')
-                                                        <button type="button"
-                                                                class="btn btn-rounded btn-block btn-danger"
-                                                                data-toggle="modal"
-                                                                data-target="#modal-conteo-{{$item->id}}">
-                                                            <i class="mdi mdi-eye"></i>
-                                                            Abrir conteo
-                                                        </button>
-                                                        @include('Shipments.OrderDeliveries.partials.opencount')
-                                                    @endif
-                                                </th>
+                                                <th>Conteo</th>
+                                                <th>Estatus</th>
+                                                <th>Conteo Supervisor</th>
+                                                <th>Conteo Vigilancia</th>
+                                                <th>Abrir</th>
                                             </tr>
-                                        @endforeach
-                                        </tbody>
-                                    </table>
+                                            </thead>
+                                            <tbody>
+                                            @foreach($countsTotals as $item)
+                                                <tr>
+                                                    <th>{{$item->id}}</th>
+                                                    <th>{{$item->status ? $item->status->name : ''}}</th>
+                                                    <th>{{$item->countoperid}}</th>
+                                                    <th>{{$item->countvigid}}</th>
+                                                    <th>
+                                                        @if($item->statusid == 'CVB-02')
+                                                            <button type="button"
+                                                                    class="btn btn-rounded btn-block btn-danger"
+                                                                    data-toggle="modal"
+                                                                    data-target="#modal-conteo-{{$item->id}}">
+                                                                <i class="mdi mdi-eye"></i>
+                                                                Abrir conteo
+                                                            </button>
+                                                            @include('Shipments.OrderDeliveries.partials.opencount')
+                                                        @endif
+                                                    </th>
+                                                </tr>
+                                            @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
-                            </div>
                             @endcan
                             <hr class="m-t-1">
                             <div class="row">
