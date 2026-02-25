@@ -8,7 +8,7 @@ use Auth0\SDK\Configuration\SdkConfiguration;
 return Configuration::VERSION_2 + [
     'registerGuards' => true,
     'registerMiddleware' => true,
-    'registerAuthenticationRoutes' => true,
+    'registerAuthenticationRoutes' => false,
     'configurationPath' => null,
 
     'guards' => [
