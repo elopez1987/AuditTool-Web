@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use Auth0\Laravel\Controllers\CallbackController;
+use Auth0\Laravel\Controllers\LoginController;
+use Auth0\Laravel\Controllers\LogoutController;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
 
@@ -38,6 +41,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map()
     {
+        $this->mapAuth0Routes();
         $this->mapApiRoutes();
         $this->mapWebRoutes();
         $this->mapConfigurationRoutes();
@@ -50,6 +54,15 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapReportsRoutes();
         $this->mapMaintenanceRoutes();
         $this->mapToursRoutes();
+    }
+
+    protected function mapAuth0Routes()
+    {
+        Route::middleware('web')->group(function () {
+            Route::get(config('auth0.routes.login', '/login'), LoginController::class)->name('login');
+            Route::get(config('auth0.routes.logout', '/logout'), LogoutController::class)->name('logout');
+            Route::match(['GET', 'POST'], config('auth0.routes.callback', '/callback'), CallbackController::class)->name('callback');
+        });
     }
 
     protected function mapWebRoutes()
