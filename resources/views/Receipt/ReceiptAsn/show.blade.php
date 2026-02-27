@@ -9,11 +9,9 @@
                 <div class="card-body">
                     <div class="row mb-1">
                         <div class="col-lg-12">
-
                             <a href="{{ url()->previous() }}">
                                 @include('buttons.back')
                             </a>
-
                             @if($receiptasn->statusid != 'IG')
                                 @if($receiptasn->statusid != 'CE')
                                     @can('cancellationReceipt')
