@@ -56,11 +56,9 @@
                                     <th class="bg-inverse text-white">Bodega</th>
                                     <th class="bg-inverse text-white">Nombre</th>
                                     <th class="bg-inverse text-white">Tipo</th>
-                                    <th class="bg-inverse text-white">Auxiliar 01</th>
-                                    <th class="bg-inverse text-white">Auxiliar 02</th>
-                                    <th class="bg-inverse text-white">Auxiliar 03</th>
-                                    <th class="bg-inverse text-white">Auxiliar 04</th>
-                                    <th class="bg-inverse text-white">Auxiliar 05</th>
+                                    <th class="bg-inverse text-white">Origen</th>
+                                    <th class="bg-inverse text-white">Tipo de check list</th>
+                                    <th class="bg-inverse text-white">Concepto de entrada</th>
                                     <th class="bg-inverse text-white">Estatus</th>
                                     <th class="bg-inverse text-white">Opciones</th>
                                 </tr>

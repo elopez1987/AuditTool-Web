@@ -26,8 +26,6 @@
             {data: 'auxiliary01'},
             {data: 'auxiliary02'},
             {data: 'auxiliary03'},
-            {data: 'auxiliary04'},
-            {data: 'auxiliary05'},
             {
                 data: 'status.name', name: 'status.name',
                 createdCell: function (td, cellData, rowData) {
@@ -50,8 +48,6 @@
             {"width": "120px", "targets": 6},
             {"width": "120px", "targets": 7},
             {"width": "120px", "targets": 8},
-            {"width": "120px", "targets": 9},
-            {"width": "120px", "targets": 10},
         ],
 
         "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',

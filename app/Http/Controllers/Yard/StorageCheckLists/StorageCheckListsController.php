@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Yard\StorageCheckLists;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Yard\CheckList\CreateCheckListRequest;
 use App\Models\Yard\StorageCheckList;
+use App\Models\Yard\StorageReason;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -40,8 +41,10 @@ class StorageCheckListsController extends BaseController
         $this->authorize('storagechecklists.create');
         $centers = $this->getCenterForSelect();
         $warehouses = $this->getWarehouseForSelect();
+        $concetps = StorageReason::where('auxiliary01', '1')
+            ->select('id', 'name')->get();
 
-        return view('Yards.StorageCheckLists.create', compact('centers', 'warehouses'));
+        return view('Yards.StorageCheckLists.create', compact('centers', 'warehouses', 'concetps'));
     }
 
     public function store(CreateCheckListRequest $request)
@@ -57,8 +60,11 @@ class StorageCheckListsController extends BaseController
         $this->authorize('storagechecklists.edit');
         $status = $this->getStatusSTS();
         $warehouses = $this->getWarehouseForSelect();
+        $concetps = StorageReason::where('auxiliary01', '1')
+            ->select('id', 'name')->get();
 
-        return view('Yards.StorageCheckLists.edit', compact('storagechecklist', 'status', 'warehouses'));
+        return view('Yards.StorageCheckLists.edit',
+            compact('storagechecklist', 'status', 'warehouses', 'concetps'));
     }
 
     public function update(Request $request, StorageCheckList $storagechecklist)
