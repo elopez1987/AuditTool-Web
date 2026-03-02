@@ -8,6 +8,7 @@ use App\Models\Evidence\StorageContainerTravelTrace;
 use App\Models\Evidence\StorageMasterEvidence;
 use DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use PDF;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -103,15 +104,9 @@ class ReportAuditShipmentController extends BaseController
     public function detailmasteraudit($id)
     {
         $master = StorageMasterEvidence::controlAccessUser()->where('masterid', '=', $id)->first();
+        $details = $this->getDetailMaster($id);
 
-        return view('Evidence.ReportAudit.DetailMaster.show', compact('master'));
-    }
-
-    public function detailcontainerformaster(Request $request)
-    {
-        $data = $this->getDetailMaster($request['masterid']);
-
-        return $this->showDataToView($data, []);
+        return view('Evidence.ReportAudit.DetailMaster.show', compact('master', 'details'));
     }
 
     public function detailmasterpdf($id)
@@ -123,16 +118,28 @@ class ReportAuditShipmentController extends BaseController
         return $pdf->download('DETALLE DE MASTER' . '.pdf');
     }
 
-    public function getDetailMaster($masterid): array
+    public function getDetailMaster($masterid): Collection
     {
-        return DB::select('
-        select a.masterid,s.lpnid,i.prtnum as partnumberid,i.lngdsc as description, b.quantity,b.created_at
-            from storagemasterevidence a
-                left join dbo.storagemasterdetailevidence s on a.masterid = s.masterid
-                left join storagecontainerstravel b on s.lpnid = b.lpnid and a.centerid = b.centerid
-                left join inventorypartnumbers i on b.partnumberid = i.id and b.centerid = i.centerid
-                where a.masterid=?
-        ', [$masterid]);
+        return DB::table('storagemasterevidence as a')
+            ->select(
+                'a.masterid',
+                's.lpnid',
+                'i.prtnum as partnumberid',
+                'i.lngdsc as description',
+                'b.quantity',
+                'b.created_at'
+            )
+            ->leftJoin('storagemasterdetailevidence as s', 'a.masterid', '=', 's.masterid')
+            ->leftJoin('storagecontainerstravel as b', function ($join) {
+                $join->on('s.lpnid', '=', 'b.lpnid')
+                    ->on('a.centerid', '=', 'b.centerid');
+            })
+            ->leftJoin('inventorypartnumbers as i', function ($join) {
+                $join->on('b.partnumberid', '=', 'i.id')
+                    ->on('b.centerid', '=', 'i.centerid');
+            })
+            ->where('a.masterid', $masterid)
+            ->get();
     }
 
     public function reportdashboard()

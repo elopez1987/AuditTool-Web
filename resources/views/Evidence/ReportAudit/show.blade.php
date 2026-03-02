@@ -219,8 +219,8 @@
                 "columnDefs": [
                     {"width": "150px", "targets": 0},
                     {"width": "250px", "targets": 1},
-                    {"width": "150px", "targets": 2},
-                    {"width": "150px", "targets": 3},
+                    {"width": "350px", "targets": 2},
+                    {"width": "250px", "targets": 3},
                     // {"width": "150px", "targets": 4},
                     // {"width": "250px", "targets": 5},
                     // {"width": "150px", "targets": 6},
