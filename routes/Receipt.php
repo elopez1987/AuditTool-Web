@@ -54,6 +54,8 @@ Route::middleware(['auth'])->group(function () {
     //    Horario de descarga
     Route::get('schedulereceipt', [ScheduleReceiptController::class, 'index'])->name('schedulereceipt.index');
     Route::get('getDataReceipt', [ScheduleReceiptController::class, 'getDataReceipt'])->name('getDataReceipt');
+    //   Limpiar horario de descarga de estatus Predescarga
+    Route::post('clearSchedulle', [ScheduleReceiptController::class, 'clearSchedulle'])->name('clearSchedulle');
     //  Check list de recibo para el analista de recibo
     Route::get('receiptasn/{id}/checklist', [StorageCheckListReceiptAsnController::class, 'index'])->name('receiptasn.checklist');
     Route::put('addchecklistAR/{id}', [StorageCheckListReceiptAsnController::class, 'addchecklistAR'])->name('addchecklistAR');

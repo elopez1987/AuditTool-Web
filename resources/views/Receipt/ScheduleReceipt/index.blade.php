@@ -96,6 +96,7 @@
                         </div>
                     </form>
                 </div>
+
             </div>
         </div>
     </div>
@@ -132,6 +133,19 @@
                             </tr>
                             </thead>
                         </table>
+                    </div>
+                    <div class="card-footer">
+                        @can('receiptasn.clearschedulle')
+                            <a href="" data-target="#modal-clearschedulle" data-toggle="modal">
+                                <button type="submit"
+                                        class="btn waves-effect waves-light btn-outline-info btn-md">
+                                    <img src="{{asset('/ico/refuseunit.png')}}" alt=""
+                                         class="img-16 ml-1">
+                                    <span class="text-button"> Limpiar horario</span>
+                                </button>
+                            </a>
+                            @include('Receipt.ScheduleReceipt.clearschedulle')
+                        @endcan
                     </div>
                 </div>
             </div>
