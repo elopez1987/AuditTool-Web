@@ -22,7 +22,7 @@ class StorageCheckListsController extends BaseController
     public function getDataCheckList(Request $request)
     {
         $data = StorageCheckList::controlAccessUser()
-            ->with('center:centerid,description', 'status:statusid,name')
+            ->with(['center:centerid,description', 'status:statusid,name'])
             ->Name($request->get('name'))
             ->Warehouse($request->get('warehouseid'))
             ->get();

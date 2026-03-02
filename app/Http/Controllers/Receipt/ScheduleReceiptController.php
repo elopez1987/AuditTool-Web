@@ -24,7 +24,7 @@ class ScheduleReceiptController extends BaseController
 
         return view(
             'Receipt.ScheduleReceipt.index',
-            compact('status', 'providers', 'centers', 'warehouses', 'carriers', 'reasons')
+            compact('status', 'providers', 'centers', 'warehouses', 'carriers', 'reasons'),
         );
     }
 
@@ -61,5 +61,13 @@ class ScheduleReceiptController extends BaseController
             ->addColumn('sap', 'Receipt.ScheduleReceipt.partials.goodissuedate')
             ->addColumn('stays', 'Receipt.ScheduleReceipt.partials.stays')
             ->rawColumns(['btn', 'sap', 'stays', 'exit', 'arrive'])->toJson();
+    }
+
+    public function clearSchedulle()
+    {
+        ReceiptAsn::controlAccessUser()
+            ->where('statusid', 'TE')->update(['statusid' => 'IG']);
+
+        return $this->redirectBackSuccessMessage('Horario de descarga limpiado correctamente');
     }
 }
