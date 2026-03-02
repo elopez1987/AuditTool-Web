@@ -184,6 +184,8 @@ Route::middleware(['auth'])->group(function () {
     // Registro de folios de tractos
     Route::resource('receipttrucks', ReceiptTrucksController::class);
     Route::get('getDataReceiptTrucks', [ReceiptTrucksController::class, 'getDataReceiptTrucks'])->name('getDataReceiptTrucks');
+    //    Importar existencia de tracto
+    Route::post('importtruck-stock', [ReceiptTrucksController::class, 'importStock'])->name('importtruck-stock');
     //   Imprimir formato de check list
     Route::get('generateinvoicetransporttruck/{receipttruck}', [EventTruckController::class, 'generateinvoicetransporttruck'])->name('generateinvoicetransporttruck');
     //    Salida directa de tracto

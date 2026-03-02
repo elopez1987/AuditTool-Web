@@ -273,6 +273,54 @@
                     </div>
                 </a>
             @endcan
+                @can('storageevidenceprocess.index')
+                    <a href="{{route('storageevidenceprocess.index')}}">
+                        <div class="box">
+                            <i class="lni lni-travel"></i>
+                            <h5>Embarques</h5>
+                            <h4>Embarques</h4>
+                        </div>
+                    </a>
+                @endcan
+                @can('storageevidenceprocess.dashboard')
+                    <a href="{{route('storageevidenceprocess.dashboard')}}">
+                        <div class="box">
+                            <i class="lni lni-dashboard"></i>
+                            <h5>Seguimiento Emb.</h5>
+                            <h4>Seguimiento Emb.</h4>
+                        </div>
+                    </a>
+                @endcan
+
+                @can('reportevidence.index')
+                    <a href="{{route('reportevidence.index')}}">
+                        <div class="box">
+                            <i class="lni lni-select"></i>
+                            <h5>Reporte Embarque</h5>
+                            <h4>Reporte Embarque</h4>
+                        </div>
+                    </a>
+                @endcan
+
+                @can('reportauditshipments.index')
+                    <a href="{{route('reportauditshipments.index')}}">
+                        <div class="box">
+                            <i class="lni lni-search"></i>
+                            <h5>Reporte Auditoria</h5>
+                            <h4>Reporte Auditoria</h4>
+                        </div>
+                    </a>
+                @endcan
+
+                @can('reportauditshipments.dashboard')
+                    <a href="{{route('reportdashboard')}}">
+                        <div class="box">
+                            <i class="lni lni-layout"></i>
+                            <h5>Seguimiento DC</h5>
+                            <h4>Seguimiento DC</h4>
+                        </div>
+                    </a>
+                @endcan
         </div>
     </main>
 
