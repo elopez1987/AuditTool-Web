@@ -127,7 +127,6 @@
                                 <th>Inicio de descarga</th>
                                 <th>Fin de descarga</th>
                                 <th>Autorización de salida</th>
-                                <th>¿Ingresado?</th>
                                 <th>Estadia (Min)</th>
                                 <th>Estatus del recibo</th>
                             </tr>

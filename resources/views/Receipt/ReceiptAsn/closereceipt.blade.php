@@ -12,6 +12,16 @@
                 </div>
                 <div class="modal-body">
                     <h6> ¿Estás seguro de cerrar el registro?</h6>
+
+
+{{--                    <div class="row mt-3">--}}
+{{--                        <div class="col-lg-12 col-md-6 col-sm-12">--}}
+{{--                            <div class="form-group">--}}
+{{--                                <label for="gr">GR de SAP</label>--}}
+{{--                                <input type="text" class="form-control" id="gr" name="gr"></input>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn waves-effect waves-light btn-outline-secondary btn-sm "

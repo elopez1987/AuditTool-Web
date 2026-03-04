@@ -58,9 +58,9 @@ class ScheduleReceiptController extends BaseController
 
         return DataTables::of($data)
             ->addColumn('btn', 'Receipt.ScheduleReceipt.partials.buttons')
-            ->addColumn('sap', 'Receipt.ScheduleReceipt.partials.goodissuedate')
+//            ->addColumn('sap', 'Receipt.ScheduleReceipt.partials.goodissuedate')
             ->addColumn('stays', 'Receipt.ScheduleReceipt.partials.stays')
-            ->rawColumns(['btn', 'sap', 'stays', 'exit', 'arrive'])->toJson();
+            ->rawColumns(['btn', 'stays', 'exit', 'arrive'])->toJson();
     }
 
     public function clearSchedulle()

@@ -54,8 +54,25 @@
                                         </a>
                                         @include('Receipt.ReceiptAsn.closereceipt')
                                     @endcan
+
+                                    @can('goodissuedatereceipt')
+                                        @if ($receiptasn->autorizaoutputdate != null)
+                                            <a href="" data-target="#modal-goodissuedate-{{$receiptasn->id}}"
+                                               data-toggle="modal">
+                                                <button type="button"
+                                                        class="btn waves-effect waves-light btn-outline-info btn-md">
+                                                    <img src="{{asset('/ico/closeverific.png')}}" alt="" class="img-16">
+                                                    <span class="text-button"> Cerrar Recibo</span>
+                                                </button>
+                                            </a>
+                                            @include('Receipt.ScheduleReceipt.options.goodissuedate')
+                                        @endif
+                                    @endcan
+
                                 @endif
                             @endif
+
+
                             @if ($receiptasn->statusid == 'IG')
                                 @can('receiptasn.kardex')
                                     <a href="{{url('receiptasn/' . $receiptasn->id . '/kardex')}}">
@@ -162,7 +179,6 @@
                                         @endif
                                     @endif
                                 @endcan
-
                             @endif
 
                             @if($receiptasn->folionumber != null)
@@ -343,32 +359,32 @@
                             </div>
                         </div>
                     </div>
-                   <div class="row mt-3">
-                       <div class="col-lg-2 col-md-6 col-sm-12">
-                           <div class="d-flex flex-row comment-row m-t-0">
-                               <div class="comment-text w-100">
-                                   <h6 class="font-weight-light">Envio de documentos a facturación</h6>
-                                   <span class="m-b-15 d-block font-12"> {{$receiptasn->timereceipt ? $receiptasn->timereceipt->send_to_billing : ''}}</span>
-                               </div>
-                           </div>
-                       </div>
-                       <div class="col-lg-2 col-md-6 col-sm-12">
-                           <div class="d-flex flex-row comment-row m-t-0">
-                               <div class="comment-text w-100">
-                                   <h6 class="font-weight-light">Inicio de  facturación</h6>
-                                   <span class="m-b-15 d-block font-12"> {{$receiptasn->timereceipt ? $receiptasn->timereceipt->start_billing : ''}}</span>
-                               </div>
-                           </div>
-                       </div>
-                       <div class="col-lg-2 col-md-6 col-sm-12">
-                           <div class="d-flex flex-row comment-row m-t-0">
-                               <div class="comment-text w-100">
-                                   <h6 class="font-weight-light">Fin de facturación</h6>
-                                   <span class="m-b-15 d-block font-12"> {{$receiptasn->timereceipt ? $receiptasn->timereceipt->finish_billing : ''}}</span>
-                               </div>
-                           </div>
-                       </div>
-                   </div>
+                    <div class="row mt-3">
+                        <div class="col-lg-2 col-md-6 col-sm-12">
+                            <div class="d-flex flex-row comment-row m-t-0">
+                                <div class="comment-text w-100">
+                                    <h6 class="font-weight-light">Envio de documentos a facturación</h6>
+                                    <span class="m-b-15 d-block font-12"> {{$receiptasn->timereceipt ? $receiptasn->timereceipt->send_to_billing : ''}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-6 col-sm-12">
+                            <div class="d-flex flex-row comment-row m-t-0">
+                                <div class="comment-text w-100">
+                                    <h6 class="font-weight-light">Inicio de facturación</h6>
+                                    <span class="m-b-15 d-block font-12"> {{$receiptasn->timereceipt ? $receiptasn->timereceipt->start_billing : ''}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-6 col-sm-12">
+                            <div class="d-flex flex-row comment-row m-t-0">
+                                <div class="comment-text w-100">
+                                    <h6 class="font-weight-light">Fin de facturación</h6>
+                                    <span class="m-b-15 d-block font-12"> {{$receiptasn->timereceipt ? $receiptasn->timereceipt->finish_billing : ''}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
             </div>

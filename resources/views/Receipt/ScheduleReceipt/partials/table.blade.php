@@ -41,7 +41,6 @@
             {data: 'unloadstartdate'},
             {data: 'unloadfinishdate'},
             {data: 'autorizaoutputdate',name: 'autorizaoutputdate'},
-            {data: 'sap'},
             {data: 'stays'},
             {
                 data: 'status.name', name: 'status.name',
@@ -74,7 +73,7 @@
             {"width": "180px", "targets": 17},
             {"width": "180px", "targets": 18},
             {"width": "180px", "targets": 19},
-            {"width": "180px", "targets": 20, "defaultContent": "-"},
+            // {"width": "180px", "targets": 20, "defaultContent": "-"},
         ],
         "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
         "lengthMenu": [[1,5,10, 30, 50, 100, 150, 200, 250, -1], [1,5,10, 30, 50, 100, 150, 200, 250, "Todos"]],
