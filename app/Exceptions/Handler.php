@@ -38,6 +38,12 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+
+        // Evitar loop si Auth0 no está configurado
+        if ($exception instanceof \Auth0\SDK\Exception\ConfigurationException) {
+            return response('Auth0 configuration error: ' . $exception->getMessage(), 500);
+        }
+
         return parent::render($request, $exception);
     }
 }
