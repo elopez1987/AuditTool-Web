@@ -54,6 +54,7 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapReportsRoutes();
         $this->mapMaintenanceRoutes();
         $this->mapToursRoutes();
+        $this->mapEvidencesRoutes();
     }
 
     protected function mapAuth0Routes()
@@ -133,6 +134,13 @@ class RouteServiceProvider extends ServiceProvider
         Route::middleware('web')
             ->namespace($this->namespace)
             ->group(base_path('routes/Security.php'));
+    }
+
+    protected function mapEvidencesRoutes()
+    {
+        Route::middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/Evidences.php'));
     }
 
     protected function mapSelectRoutes()

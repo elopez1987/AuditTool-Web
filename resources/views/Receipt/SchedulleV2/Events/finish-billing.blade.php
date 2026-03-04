@@ -10,9 +10,12 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
+                    <div class="row mt-3">
                         <div class="col-lg-12 col-md-6 col-sm-12">
-                         <span class="font-12">Registrar evento.</span>
+                            <div class="form-group">
+                                <label for="gr">GR de SAP</label>
+                                <input type="text" class="form-control" id="gr" name="gr"></input>
+                            </div>
                         </div>
                     </div>
                 </div>

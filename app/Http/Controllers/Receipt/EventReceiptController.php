@@ -240,7 +240,7 @@ class EventReceiptController extends BaseController
         return $this->redirectBackSuccessMessage('Se envio a facturacion con exito.');
     }
 
-    public function finishBilling($id)
+    public function finishBilling($id, Request $request)
     {
 
         DB::beginTransaction();
@@ -249,10 +249,15 @@ class EventReceiptController extends BaseController
             if (! $receiptAsn) {
                 return $this->errorResponse('No se encontro el registro solicitado.');
             }
+
             ReceiptAsnTime::where('receiptid', $receiptAsn->id)->update(['finish_billing' => now()]);
-            $receiptAsn->statusid = 'IG';
+
             $receiptAsn->goodissuedate = now();
+            $receiptAsn->auxiliary02 = $request['gr'];
+            $receiptAsn->po = $request['gr'];
+            $receiptAsn->statusid = 'IG';
             $receiptAsn->save();
+
             DB::commit();
 
             return $this->redirectBackSuccessMessage('Se envio a facturacion con exito.');

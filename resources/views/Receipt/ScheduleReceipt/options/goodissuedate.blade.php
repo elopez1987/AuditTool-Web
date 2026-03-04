@@ -1,13 +1,12 @@
 <div class="modal fade bs-example-modal-lg" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true"
-     style="display: none;" id="modal-goodissuedate-{{$id}}">
-    <form method="POST" action="{{url('goodissuedate/' . $id)}}" enctype="multipart/form-data">
+     style="display: none;" id="modal-goodissuedate-{{$receiptasn->id}}">
+    <form method="POST" action="{{url('goodissuedate/' . $receiptasn->id)}}" enctype="multipart/form-data">
         {{ method_field('PUT') }}
         @csrf
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title text-table" id="">Cambio de
-                        Estatus</h5>
+                    <h5 class="modal-title text-table" id="">Cerrar el proceso de descarga.</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
                 <div class="modal-body">
@@ -19,7 +18,7 @@
                     <div class="row">
                         <div class="col-lg-4 col-md-6 col-sm-12">
                             <div class="form-group">
-                                <label for="gr">GR de SAP</label>
+{{--                                <label for="gr">GR de SAP</label>--}}
                                 <input type="text" class="form-control"   id="gr" name="gr">
                             </div>
                         </div>

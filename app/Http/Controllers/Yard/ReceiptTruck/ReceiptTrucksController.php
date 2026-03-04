@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Yard\ReceiptTruck;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Yard\Truck\CreateTruckRequest;
+use App\Imports\ImportTruckStock;
 use App\Models\Yard\ReceiptTruck;
 use App\Traits\Web\Yard\ReceiptTruck\QueryReceiptTruck;
 use DB;
 use Exception;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
 
 class ReceiptTrucksController extends BaseController
@@ -90,5 +92,12 @@ class ReceiptTrucksController extends BaseController
         $receipttruck->update($request->except('centerid', 'warehouseid'));
 
         return $this->redirectBackSuccessMessage('Registro actualizado con exito');
+    }
+
+    public function importStock(Request $request)
+    {
+        Excel::import(new ImportTruckStock($request), $request->file('file'));
+
+        return $this->redirectBackSuccessMessage('Archivo cargado con exito');
     }
 }
