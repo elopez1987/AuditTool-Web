@@ -40,4 +40,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('destroyphoto/{id}', [EvidencePhotoCheckOutController::class, 'destroyPhotoInProcess']);
     Route::get('destroyphotoincidence/{id}', [EvidencePhotoCheckOutController::class, 'destroyphotoincidence']);
 
+    Route::get('/debug-auth0', function () {
+        return [
+            'domain' => config('auth0.domain'),
+            'env_value' => env('AUTH0_DOMAIN'),
+            'cached' => app()->configurationIsCached(),
+        ];
+    });
+
 });
