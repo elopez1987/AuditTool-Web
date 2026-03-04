@@ -14,7 +14,6 @@
     <aside class="left-sidebar">
         <div class="scroll-sidebar">
             <nav class="sidebar-nav">
-                @if(!app()->runningInConsole() && config('auth0.domain'))
                     <ul id="sidebarnav">
                         @can('CONTROL DE PATIOS')
                             <li class="sidebar-item">
@@ -82,7 +81,6 @@
                             </li>
                         @endcan
                     </ul>
-                @endif
             </nav>
         </div>
     </aside>
@@ -95,7 +93,6 @@
         <footer class="footer text-center">
             <div class="row d-flex justify-content-center">
                 <div class="col-lg-3">
-                    @if(!app()->runningInConsole() && config('auth0.domain'))
                         @if(Auth::check())
                             @if(Auth::user()->access->center->centerid == 'SAHUARO' || Auth::user()->access->center->centerid == 'CONDESA')
                                 <img src="{{asset('/img/Garrett.jpg')}}" alt="" style="width: 280px;height: 100px">
@@ -113,7 +110,6 @@
                                 <img src="{{asset('/img/Barry.png')}}" alt="" style="width: 280px;height: 80px">
                             @endif
                         @endif
-                    @endif
                 </div>
             </div>
         </footer>
