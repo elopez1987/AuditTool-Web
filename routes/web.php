@@ -5,11 +5,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Yard\EvidencePhotoCheckOutController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return redirect()->route('login');
-});
-
-Route::get('/', function () {
+Route::post('/', function () {
     return redirect()->route('login');
 });
 
