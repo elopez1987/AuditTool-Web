@@ -9,6 +9,10 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
+Route::get('/', function () {
+    return redirect()->route('login');
+});
+
 // Rutas personalizadas para reset de contraseña (sin auto-login)
 Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])
     ->name('password.request');
