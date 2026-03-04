@@ -5,6 +5,10 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Yard\EvidencePhotoCheckOutController;
 use Illuminate\Support\Facades\Route;
 
+Route::post('/', function () {
+    return redirect()->route('login');
+});
+
 // Rutas personalizadas para reset de contraseña (sin auto-login)
 Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])
     ->name('password.request');
@@ -39,5 +43,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('downloadphoto/{id}', [EvidencePhotoCheckOutController::class, 'downloadPhotoInProcess']);
     Route::get('destroyphoto/{id}', [EvidencePhotoCheckOutController::class, 'destroyPhotoInProcess']);
     Route::get('destroyphotoincidence/{id}', [EvidencePhotoCheckOutController::class, 'destroyphotoincidence']);
+
+    Route::get('/debug-auth0', function () {
+        return [
+            'domain' => config('auth0.domain'),
+            'env_value' => env('AUTH0_DOMAIN'),
+            'cached' => app()->configurationIsCached(),
+        ];
+    });
 
 });

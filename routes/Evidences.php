@@ -28,7 +28,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('storageevidenceprocess/{id}/uploadevidenceshipment', [UploadEvidenceController::class, 'uploadevidenceshipment'])->name('storageevidenceproces.uploadevidenceshipment');
     Route::post('uploadphotoshipment/{id}/uploadfromweb', [UploadEvidenceController::class, 'uploadphotoshipment']);
 
-    Route::get('downloadfiles/{id}', [StorageEvidenceProcessesController::class, 'downloadfiles'])->name('downloadfiles');
+    //    Route::get('downloadfiles/{id}', [StorageEvidenceProcessesController::class, 'downloadfiles'])->name('downloadfiles');
     Route::post('importrequestshipmenttoload', [StorageEvidenceProcessesController::class, 'importrequestshipmenttoload'])->name('importrequestshipmenttoload');
 
     Route::resource('reportevidence', ReportEvidenceController::class);
