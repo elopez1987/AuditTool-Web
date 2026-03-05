@@ -63,7 +63,7 @@
                     </div>
                 </a>
             @endcan
-            @can('systemwhatsapps')
+            @can('systemwhatsapps.index')
                 <a href="{{route('systemwhatsapps.index')}}">
                     <div class="box">
                         <i class="lni lni-whatsapp"></i>
@@ -108,11 +108,6 @@
                     </div>
                 </a>
             @endcan
-
-
-
-            @role('ADMINISTRADOR')
-
             @can('systemfolios.index')
                 <a href="{{route('systemfolios.index')}}">
                     <div class="box">
@@ -122,7 +117,6 @@
                     </div>
                 </a>
             @endcan
-
             @can('databaseupdate')
                 <a href="{{route('databaseupdate.index')}}">
                     <div class="box">
@@ -159,7 +153,6 @@
                     </div>
                 </a>
             @endcan
-
             @can('logdeviceuser')
                 <a href="{{route('logdeviceuser')}}">
                     <div class="box">
@@ -196,7 +189,6 @@
                     </div>
                 </a>
             @endcan
-
             @can('label-dictionary.index')
                 <a href="{{route('label-dictionary.index')}}">
                     <div class="box">
@@ -206,11 +198,6 @@
                     </div>
                 </a>
             @endcan
-
-            @endrole
-        </div>
-
-        <div class="container__box">
             @can('webservicelog')
                 <a href="{{route('webservicelog.index')}}">
                     <div class="box" data-toggle="tooltip" data-placement="top"
@@ -241,7 +228,7 @@
                     </div>
                 </a>
             @endcan
-                @can('edi-configurations.index')
+            @can('edi-configurations.index')
                 <a href="{{route('edi-configurations.index')}}">
                     <div class="box">
                         <i class="lni lni-agenda"></i>
@@ -250,7 +237,9 @@
                     </div>
                 </a>
             @endcan
+
         </div>
+
     </main>
 
 @endsection
