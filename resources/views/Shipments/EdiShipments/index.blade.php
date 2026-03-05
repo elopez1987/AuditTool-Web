@@ -19,7 +19,7 @@
                                         <img
                                                 src="{{asset('/ico/engine_gear_internet_option_security_setting_web_icon_127066.png')}}"
                                                 alt="" class="img-16">
-                                        <span style="font-size: 0.675rem "> Procesar Interfaces RControl</span>
+                                        <span> Procesar Interfaces RControl</span>
                                     </button>
                                 </a>
                             @endcan
@@ -29,7 +29,7 @@
                                         <img
                                                 src="{{asset('/ico/engine_gear_internet_option_security_setting_web_icon_127066.png')}}"
                                                 alt="" class="img-16">
-                                        <span style="font-size: 0.675rem "> Procesar Interfaces Izel</span>
+                                        <span > Procesar Interfaces Izel</span>
                                     </button>
                                 </a>
                             @endcan

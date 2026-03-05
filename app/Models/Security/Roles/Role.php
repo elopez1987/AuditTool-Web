@@ -99,7 +99,7 @@ class Role extends Model
     public function scopeForStatus($query, $statusid)
     {
         if ($statusid != '') {
-            $query->where('statusid', '=', $statusid);
+            $query->where('roles.statusid', '=', $statusid);
         } else {
             $query->where('roles.statusid', '=', 'E');
         }
