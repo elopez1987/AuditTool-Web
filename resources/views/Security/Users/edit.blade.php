@@ -26,7 +26,6 @@
                     </form>
                     <hr>
                     <div class="row mt-4">
-
                         <div class="col-lg-12">
                             @if(!empty($user->email))
                                 <a href="" data-target="#modal-resetpassword-{{$user->id}}" data-toggle="modal">
@@ -35,32 +34,29 @@
                                         <img
                                                 src="{{asset('/ico/restoreaccess.png')}}"
                                                 alt="" class="img-16 ml-2">
-                                        <span style="font-size: 0.675rem "> Reiniciar Contraseña</span>
+                                        <span> Reiniciar Contraseña</span>
                                     </button>
                                 </a>
                                 @include('Security.Users.resetpassword')
                             @endif
-
                             @can('securityusers.destroy')
-
                                 <a href="" data-target="#modal-delete-{{$user->id}}" data-toggle="modal">
                                     <button type="button"
-                                            class="btn waves-effect waves-light btn-outline-info btn-md">
+                                            class="btn waves-effect waves-light btn-outline-info btn-md ml-2">
                                         <img
                                                 src="{{asset('/ico/delete_delete_deleteusers_delete_male_user_maleclient_2348.png')}}"
                                                 alt="" class="img-16 ml-2">
-                                        <span style="font-size: 0.675rem "> Eliminar Usuario</span>
+                                        <span> Eliminar Usuario</span>
                                     </button>
                                 </a>
                                 @include('Security.Users.delete')
-
                                 <a href="" data-target="#modal-restore-{{$user->id}}" data-toggle="modal">
                                     <button type="button"
                                             class="btn waves-effect waves-light btn-outline-info btn-md ml-3">
                                         <img
                                                 src="{{asset('/ico/cloudrefresh_icon-icons.com_54403.png')}}"
                                                 alt="" class="img-16 ml-2">
-                                        <span style="font-size: 0.675rem "> Restaurar Usuario</span>
+                                        <span> Restaurar Usuario</span>
                                     </button>
                                 </a>
                                 @include('Security.Users.restore')
@@ -72,7 +68,7 @@
                                             <img
                                                     src="{{asset('/ico/save02.png')}}"
                                                     alt="" class="img-16 ml-2">
-                                            <span style="font-size: 0.675rem "> Enviar a Okta</span>
+                                            <span> Enviar a Okta</span>
                                         </button>
                                     </a>
                                     @include('Security.Users.okta')
@@ -85,7 +81,7 @@
                                             <img
                                                     src="{{asset('/ico/addestroy1.png')}}"
                                                     alt="" class="img-16 ml-2">
-                                            <span style="font-size: 0.675rem "> Eliminar de Okta</span>
+                                            <span> Eliminar de Okta</span>
                                         </button>
                                     </a>
                                     @include('Security.Users.oktadelete')
@@ -93,9 +89,7 @@
 
                             @endcan
                         </div>
-
                     </div>
-
                 </div>
             </div>
         </div>
@@ -116,11 +110,11 @@
                                     {{ method_field('PUT') }}
                                     @csrf
                                     <div class="row">
-                                        <div class="col-2">
+                                        <div class="col-lg-2 col-md-6 col-sm-12">
                                             <a href="">
                                                 <button type="submit"
                                                         class="btn waves-effect waves-light btn-outline-danger btn-md btn-block">
-                                                    <span style="font-size: 0.675rem "> Actualizar contraseña</span>
+                                                    <span> Actualizar contraseña</span>
                                                 </button>
                                             </a>
                                         </div>
