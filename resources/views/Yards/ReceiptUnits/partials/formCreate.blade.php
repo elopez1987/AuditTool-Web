@@ -136,34 +136,9 @@
 <div class="row">
     <div class="col-lg-10 col-sm-12">
         <div class="card">
-            <div class="card-header">Datos del operador</div>
+            <div class="card-header">Datos de la unidad</div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-lg-2 col-md-6 col-sm-12">
-                        <div class="form-group">
-                            <label for="barcodeoperator">Código de barra de operador
-                                <span style="color: red">*</span>
-                                @error("barcodeoperator")
-                                <span class="message-error">{{$message}}</span>
-                                @enderror
-                            </label>
-                            <div class="input-group">
-                                <input type="text"
-                                       class="form-control numeric @error('barcodeoperator') is-invalid @enderror"
-                                       id="barcodeoperator"
-                                       value="{{ old('barcodeoperator') }}" minlength="4" maxlength="10"
-                                       name="barcodeoperator" required>
-                                <div class="input-group-append">
-                                    <button class="btn btn-info btn-xs" style="font-size: 11px;" id="searchOperator"
-                                            type="button"><i class="ti ti-search"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            @error('barcodeoperator')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
                     <div class="col-lg-2 col-md-6 col-sm-12">
                         <div class="form-group">
                             <label for="operatorname">Nombre de operador
@@ -201,80 +176,6 @@
                                    value="{{old('phone')}}"
                             >
                             @error('phone')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-lg-10 col-sm-12">
-        <div class="card">
-            <div class="card-header">Datos de la unidad</div>
-            <div class="card-body">
-
-                <div class="row">
-                    <div class="col-lg-2 col-md-6 col-sm-12">
-                        <div class="form-group">
-                            <label for="barcodebox">Código de barra de caja
-                                <span style="color: red">*</span>
-                                @error("barcodebox")
-                                <span class="message-error">{{$message}}</span>
-                                @enderror
-                            </label>
-                            <div class="input-group">
-                                <input type="text"
-                                       class="form-control numeric @error('barcodebox') is-invalid @enderror"
-                                       id="barcodebox"
-                                       value="{{ old('barcodebox') }}" minlength="4"
-                                       name="barcodebox" required>
-                                <div class="input-group-append">
-                                    <button class="btn btn-info btn-xs" id="searchBox" style="font-size: 11px;"
-                                            type="button"><i class="ti ti-search"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            @error('barcodebox')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-md-6 col-sm-12">
-                        <div class="form-group">
-                            <label for="boxnumber">Placa de caja
-                                <span style="color: red">*</span>
-                            </label>
-                            <div class="input-group">
-                                <input type="text" class="form-control @error('boxnumber') is-invalid @enderror"
-                                       id="boxnumber" value="{{ old('boxnumber') }}"
-                                       name="boxnumber" required maxlength="10"
-                                       onKeyUp=this.value=this.value.toUpperCase();
-                                >
-                                <div class="input-group-append">
-                                    <button class="btn btn-info btn-xs" id="searchBoxNumber" style="font-size: 11px;"
-                                            type="button"><i class="ti ti-search"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            @error('boxnumber')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-md-6 col-sm-12">
-                        <div class="form-group">
-                            <label for="ecobox">Economico de caja
-                                <span style="color: red">*</span></label>
-                            <input type="text" class="form-control @error('ecobox') is-invalid @enderror"
-                                   required id="ecobox" name="ecobox" maxlength="19"
-                                   onKeyUp=this.value=this.value.toUpperCase();
-                                   value="{{old('ecobox')}}"
-                            >
-                            @error('ecobox')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
@@ -340,33 +241,70 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="row" id="tracto">
+                <div class="row">
                     <div class="col-lg-2 col-md-6 col-sm-12">
                         <div class="form-group">
-                            <label for="barcodetruck">Código de barra de tracto
+                            <label for="barcodebox">Código de barra de caja
                                 <span style="color: red">*</span>
-                                @error("barcodetruck")
+                                @error("barcodebox")
                                 <span class="message-error">{{$message}}</span>
                                 @enderror
                             </label>
                             <div class="input-group">
                                 <input type="text"
-                                       class="form-control numeric @error('barcodetruck') is-invalid @enderror"
-                                       id="barcodetruck"
-                                       value="{{ old('barcodetruck') }}" minlength="4" maxlength="10"
-                                       name="barcodetruck">
+                                       class="form-control numeric @error('barcodebox') is-invalid @enderror"
+                                       id="barcodebox"
+                                       value="{{ old('barcodebox') }}" minlength="4"
+                                       name="barcodebox" required>
                                 <div class="input-group-append">
-                                    <button class="btn btn-info btn-xs" id="searchTruck" style="font-size: 11px;"
+                                    <button class="btn btn-info btn-xs" id="searchBox" style="font-size: 11px;"
                                             type="button"><i class="ti ti-search"></i>
                                     </button>
                                 </div>
                             </div>
-                            @error('barcodetruck')
+                            @error('barcodebox')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
                     </div>
+                    <div class="col-lg-2 col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label for="boxnumber">Placa de caja
+                                <span style="color: red">*</span>
+                            </label>
+                            <div class="input-group">
+                                <input type="text" class="form-control @error('boxnumber') is-invalid @enderror"
+                                       id="boxnumber" value="{{ old('boxnumber') }}"
+                                       name="boxnumber" required maxlength="10"
+                                       onKeyUp=this.value=this.value.toUpperCase();
+                                >
+                                <div class="input-group-append">
+                                    <button class="btn btn-info btn-xs" id="searchBoxNumber" style="font-size: 11px;"
+                                            type="button"><i class="ti ti-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            @error('boxnumber')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label for="ecobox">Economico de caja
+                                <span style="color: red">*</span></label>
+                            <input type="text" class="form-control @error('ecobox') is-invalid @enderror"
+                                   required id="ecobox" name="ecobox" maxlength="19"
+                                   onKeyUp=this.value=this.value.toUpperCase();
+                                   value="{{old('ecobox')}}"
+                            >
+                            @error('ecobox')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="tracto">
                     <div class="col-lg-2 col-md-6 col-sm-12">
                         <div class="form-group">
                             <label for="trucknumber">Placa de tracto
@@ -377,11 +315,6 @@
                                        id="trucknumber"
                                        value="{{ old('trucknumber') }}" maxlength="10"
                                        name="trucknumber" onKeyUp=this.value=this.value.toUpperCase();>
-                                <div class="input-group-append">
-                                    <button class="btn btn-info btn-xs" id="searchTruckNumber" style="font-size: 11px;"
-                                            type="button"><i class="ti ti-search"></i>
-                                    </button>
-                                </div>
                             </div>
                             @error('trucknumber')
                             <div class="invalid-feedback">{{ $message }}</div>

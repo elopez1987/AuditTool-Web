@@ -3,7 +3,7 @@
             data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
         <i class="ti ti-settings"></i>
-        Acciones
+       <span class="font-12">Acciones</span>
     </button>
     <div class="dropdown-menu animated flipInX">
 

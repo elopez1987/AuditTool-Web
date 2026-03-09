@@ -23,7 +23,6 @@ class CreateReceiptUnitRequest extends FormRequest
             'providerid' => 'nullable|exists:receiptproviders,id',
             'zoneid' => 'required|exists:storagezones,id',
             'locationid' => 'required|exists:storagelocations,id',
-            'barcodeoperator' => 'required|string|min:4|max:10',
             'operatorname' => 'required|string',
             'drivernumber' => 'required|string|max:20',
             'phone' => 'required|numeric',
@@ -34,7 +33,6 @@ class CreateReceiptUnitRequest extends FormRequest
             'unittypeid' => 'required|exists:storageunittypes,id',
             'truckcategoryid' => 'required|exists:shipmenttruckcategories,truckcategoryid',
             'truckid' => 'required|exists:shipmenttrucks,id',
-            'barcodetruck' => 'required|string|min:4|max:10',
             'trucknumber' => 'required',
             'ecotruck' => 'required',
             'comment' => 'nullable',
@@ -44,8 +42,8 @@ class CreateReceiptUnitRequest extends FormRequest
     public function messages()
     {
         return [
-            'barcodeoperator.min_digits' => 'Se requieren 4 digitos para el codigo de operador.',
-            'barcodeoperator.max_digits' => 'Se permite un maximo de 10 digitos para el codigo de operador.',
+            //            'barcodeoperator.min_digits' => 'Se requieren 4 digitos para el codigo de operador.',
+            //            'barcodeoperator.max_digits' => 'Se permite un maximo de 10 digitos para el codigo de operador.',
         ];
     }
 }

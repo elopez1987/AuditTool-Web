@@ -34,6 +34,7 @@ trait QueryUser
                 'systemstatus.name as status', 'users.created_at', 'users.updated_at',
             ])
             ->Name($request->get('name'))
+            ->Email($request->get('email'))
             ->UserName($request->get('userid'))
             ->Role($request->get('role_id'))
             ->ForStatus($request->get('statusid'))
