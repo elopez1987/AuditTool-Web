@@ -3,7 +3,6 @@
 namespace App\Traits\Web\Yard\ReceiptTruck;
 
 use App\Models\Yard\ReceiptTruck;
-use App\Models\Yard\StorageLabelTruck\StorageLabelTruck;
 use App\Traits\Web\General\GetParameters;
 use App\Traits\Web\General\Responser;
 use Carbon\Carbon;
@@ -33,11 +32,12 @@ trait QueryReceiptTruck
     //    Crear nuevo registro
     public function createNewTruck($request)
     {
-        $parameter = $this->getParametersOfWarehouse($request['warehouseid']);
-        $truck = ReceiptTruck::create([
+        $barcode = $this->getFolioYMS($request->input('centerid'));
+
+        return ReceiptTruck::create([
             'centerid' => $request['centerid'],
             'warehouseid' => $request['warehouseid'],
-            'barcode' => $request['barcodetruck'],
+            'barcode' => $barcode->folionumber,
             'carrierid' => $request['carrierid'],
             'operatorname' => $request['operatorname'],
             'phone' => $request['phone'] ?? '0',
@@ -48,28 +48,6 @@ trait QueryReceiptTruck
             'validity' => $request['validity'],
             'drivernumber' => $request['drivernumber'],
         ]);
-        if (! empty($parameter) && in_array('SWH-09', (array) $parameter)) {
-            self::createLabelFromRegisterTruck($parameter, $truck);
-        }
-
-        return $truck;
-    }
-
-    public static function createLabelFromRegisterTruck($truck): void
-    {
-        StorageLabelTruck::updateOrCreate(
-            [
-                'barcode' => $truck->barcode,
-            ],
-            [
-                'centerid' => $truck->centerid,
-                'warehouseid' => $truck->warehouseid,
-                'boxnumber' => $truck->trucknumber,
-                'econumber' => $truck->econumber,
-                'carrierid' => $truck->carrierid,
-                'typeid' => 'TR',
-            ]
-        );
     }
 
     //    Realizar salida del tracto

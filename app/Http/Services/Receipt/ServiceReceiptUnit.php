@@ -16,7 +16,6 @@ use App\Models\Yard\ReceiptUnitSeal;
 use App\Models\Yard\ReceiptUnitTicket;
 use App\Models\Yard\StorageLabelTruck\StorageLabelTruck;
 use App\Models\Yard\StorageLocation;
-use App\Models\Yard\StorageOperator;
 use App\Models\Yard\StorageUnitTrace;
 use App\Traits\Web\General\GetParameters;
 use App\Traits\Web\General\Responser;
@@ -137,8 +136,6 @@ class ServiceReceiptUnit
                 $this->insertSchedulleInverse($request, $receiptunit);
             }
         }
-
-        self::createNewOperatorForCarrier($receiptunit, $request, $parameter);
         self::createLabelFromRegisterBox($receiptunit, $parameter);
 
         return $receiptunit;
@@ -204,30 +201,12 @@ class ServiceReceiptUnit
         ]);
     }
 
-    public function createNewOperatorForCarrier($receiptunit, $request, $parameter): void
-    {
-        if (in_array('SWH-03', (array) $parameter)) {
-            StorageOperator::updateOrCreate(
-                [
-                    'barcode' => $request['barcodeoperator'],
-                ],
-                [
-                    'centerid' => $receiptunit->centerid,
-                    'name' => $receiptunit->operatorname,
-                    'drivernumber' => $receiptunit->drivernumber,
-                    'phone' => $receiptunit->phone,
-                    'carrierid' => $receiptunit->carrierid,
-                ],
-            );
-        }
-    }
-
     public static function createLabelFromRegisterBox($receiptunit, $parameter): void
     {
         if (in_array('SWH-09', (array) $parameter)) {
             StorageLabelTruck::updateOrCreate(
                 [
-                    'barcode' => $barcode,
+                    'barcode' => $receiptunit->barcode,
                 ],
                 [
                     'centerid' => $receiptunit->centerid,

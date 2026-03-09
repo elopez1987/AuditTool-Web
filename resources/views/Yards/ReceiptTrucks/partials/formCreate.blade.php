@@ -86,22 +86,6 @@
 <div class="row">
     <div class="col-lg-2 col-md-6 col-sm-12">
         <div class="form-group">
-            <label for="barcodetruck">Código de barra de tracto<span style="color: red">*</span></label>
-            <div class="input-group">
-                <input type="text" class="form-control numeric" id="barcodetruck" value="{{ old('barcodetruck') }}"
-                       name="barcodetruck" maxlength="15" required>
-                <div class="input-group-append">
-                    <button class="btn btn-info btn-xs" id="searchTruck" type="button"><i class="ti ti-search"></i>
-                    </button>
-                </div>
-                @error('barcodetruck')
-                <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-2 col-md-6 col-sm-12">
-        <div class="form-group">
             <label for="trucknumber">Placa de tracto<span style="color: red">*</span></label>
             <input type="text" class="form-control" required id="trucknumber" name="trucknumber"
                    onKeyUp=this.value=this.value.toUpperCase() maxlength="10"
