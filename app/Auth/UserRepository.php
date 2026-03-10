@@ -99,7 +99,7 @@ final class UserRepository extends UserRepositoryAbstract implements UserReposit
         $telescope = '\Laravel\Telescope\Telescope';
 
         if (class_exists($telescope)) {
-            return Laravel\Telescope\Telescope::withoutRecording($callback);
+            //            return Laravel\Telescope\Telescope::withoutRecording($callback);
         }
 
         return call_user_func($callback);
