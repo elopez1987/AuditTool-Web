@@ -138,11 +138,10 @@
 
     <div class="row">
         <table class="border-none">
-            <th
-                style="height: 30px;width: 14.8%;border-top: 0px;text-align: right;font-size: 10px;background-color: #E8EAF6;">
-                Operador:
-            </th>
-            <th style="width: 85.2%;border-top: 0px;font-size: 12px;"> {{$receiptunit->tracto ? $receiptunit->tracto->operatorname : ''}}</th>
+            <th style="height: 30px;width: 14.8%;border-top: 0px;text-align: right;font-size: 10px;background-color: #E8EAF6;">Operador:</th>
+            <th style="width: 40%;border-top: 0px;font-size: 12px;"> {{$receiptunit->tracto ? $receiptunit->tracto->operatorname : ''}}</th>
+            <th style="height: 20px;width: 20%;border-top: 0px;text-align: right;font-size: 10px;background-color: #E8EAF6;">Celular:</th>
+            <th style="width: 20%;border-top: 0px;font-size: 12px;"> {{$receiptunit->phone ??  ''}}</th>
         </table>
     </div>
 
@@ -184,6 +183,30 @@
             <th style="width: 20%;border-top: 0px;font-size: 10px;background-color: #E8EAF6;"> Tipo de Vehiculo</th>
             <th style="width: 20%;border-top: 0px;text-align: center;font-size: 10px;">
                 {{$receiptunit->truck ? $receiptunit->truck->name : ''}}
+            </th>
+        </table>
+    </div>
+    <div class="row">
+        <table class="border-none">
+            <th style="height: 20px;width: 14.8%;border-top: 0px;text-align: right;font-size: 10px;background-color: #E8EAF6;">
+                Zona:
+            </th>
+            <th style="width: 40%;border-top: 0px;font-size: 10px;">{{$receiptunit->zone ? $receiptunit->zone->name : ''}} </th>
+            <th style="width: 20%;border-top: 0px;font-size: 10px;background-color: #E8EAF6;"> Ubicación</th>
+            <th style="width: 20%;border-top: 0px;text-align: center;font-size: 10px;">
+                {{$receiptunit->location ? $receiptunit->location->name : ''}}
+            </th>
+        </table>
+    </div>
+    <div class="row">
+        <table class="border-none">
+            <th style="height: 20px;width: 14.8%;border-top: 0px;text-align: right;font-size: 10px;background-color: #E8EAF6;">
+                Embarque:
+            </th>
+            <th style="width: 40%;border-top: 0px;font-size: 14px;color: red">{{$receiptunit->shipmentid ?? ''}} </th>
+            <th style="width: 20%;border-top: 0px;font-size: 10px;background-color: #E8EAF6;"> Origen</th>
+            <th style="width: 20%;border-top: 0px;text-align: center;font-size: 10px;">
+                {{$receiptunit->unittype ? $receiptunit->unittype->description : ''}}
             </th>
         </table>
     </div>
