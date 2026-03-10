@@ -19,7 +19,7 @@ class StorageLabelTrucksController extends BaseController
     {
         $this->authorize('storagelabeltrucks.index');
 
-        return view('Yards.StorageLabelTrucks.index');
+        return view('Yards.StorageLabelTrucks.index', compact('carriers'));
     }
 
     public function getDataLabelsTrucks(Request $request)
@@ -27,7 +27,7 @@ class StorageLabelTrucksController extends BaseController
         $carrier = AccessCarrier::where('username', Auth::user()->username)
             ->select('carrierid')->get()->toArray();
         $data = StorageLabelTruck::controlAccessUser()
-            ->with('center', 'status', 'carrier')
+            ->with(['center', 'status', 'carrier'])
             ->ForCarrierOperator($carrier)
             ->Label($request->get('label'))
             ->BoxNumber($request->get('boxnumber'))

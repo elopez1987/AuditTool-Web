@@ -222,14 +222,27 @@ class ReceiptUnitController extends BaseController
         $unittypes = $this->getUnitType();
         $centers = $this->getCenterForSelect();
         $warehouses = $this->getWarehouseForSelect();
+        $trucks = $this->shipmentTruckActiveToSelect();
+        $truckcategories = $this->getCateroriesTruckForSelects();
 
         return view("{$this->viewPath}.edit",
-            compact('receiptunit', 'carriers', 'movents', 'unittypes', 'centers', 'warehouses'));
+            compact('receiptunit', 'carriers', 'movents',
+                'unittypes', 'centers', 'warehouses', 'trucks', 'truckcategories'));
     }
 
     public function update(ReceiptUnit $receiptunit, Request $request): RedirectResponse
     {
         $receiptunit->update($request->all());
+
+        $receiptunit->tracto->update(
+            [
+                'operatorname' => $request->operatorname,
+                'drivernumber' => $request->drivernumber,
+                'phone' => $request->phone,
+                'trucknumber' => $request->trucknumber,
+                'econumber' => $request->ecotruck,
+            ]);
+
         StorageUnitTrace::createTraceUnit($receiptunit, '6');
 
         return $this->infoResponse("{$this->routePath}.index");
