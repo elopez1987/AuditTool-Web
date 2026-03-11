@@ -1,3 +1,5 @@
+
+
 <div class="row">
     <div class="col-lg-2 col-md-6 col-sm-12">
         <div class="form-group">
@@ -38,12 +40,30 @@
         </div>
     </div>
 </div>
-
+<div class="alert alert-info"> <i class="ti-user"></i> Datos del operador</div>
+<div class="row">
+    <div class="col-lg-2 col-md-6 col-sm-12">
+        <div class="form-group">
+            <label for="foliotruck">Folio de tracto </label>
+            <input type="text" class="form-control"  readonly
+                   aria-describedby="auxiliary01" value="{{$receiptunit->foliotruck ?? ''}}"
+            >
+        </div>
+    </div>
+    <div class="col-lg-2 col-md-6 col-sm-12">
+        <div class="form-group">
+            <label for="foliotruck">CB. de tracto </label>
+            <input type="text" class="form-control"  readonly
+                   aria-describedby="auxiliary01" value="{{$receiptunit->tracto  ? $receiptunit->tracto->barcode : ''}}"
+            >
+        </div>
+    </div>
+</div>
 <div class="row">
     <div class="col-lg-2 col-md-6 col-sm-12">
         <div class="form-group">
             <label for="operatorname">Nombre de operador </label>
-            <input type="text" class="form-control" id="operatorname" required name="operatorname" maxlength="100"
+            <input type="text" class="form-control" id="operatorname"   name="operatorname" maxlength="100"
                    aria-describedby="auxiliary01" value="{{$receiptunit->tracto ? $receiptunit->tracto->operatorname : ''}}"
                    onKeyUp=this.value=this.value.toUpperCase()
             >
@@ -52,7 +72,7 @@
     <div class="col-lg-2 col-md-6 col-sm-12">
         <div class="form-group">
             <label for="drivernumber">Número de licencia </label>
-            <input type="text" class="form-control" id="drivernumber" required name="drivernumber" maxlength="19"
+            <input type="text" class="form-control" id="drivernumber"  name="drivernumber" maxlength="19"
                    aria-describedby="auxiliary01" value="{{$receiptunit->tracto ? $receiptunit->tracto->drivernumber : ''}}" minlength="1"
                    onKeyUp=this.value=this.value.toUpperCase()>
         </div>
@@ -60,11 +80,33 @@
     <div class="col-lg-2 col-md-6 col-sm-12">
         <div class="form-group">
             <label for="phone">Número de celular </label>
-            <input type="text" class="form-control numeric" required id="phone" name="phone" maxlength="10"
+            <input type="text" class="form-control numeric"  id="phone" name="phone" maxlength="10"
                    aria-describedby="auxiliary01" value="{{$receiptunit->tracto ? $receiptunit->tracto->phone : ''}}" minlength="1">
         </div>
     </div>
 </div>
+
+<div class="row">
+    <div class="col-lg-2 col-md-6 col-sm-12">
+        <div class="form-group">
+            <label for="trucknumber">Placa de tracto </label>
+            <input type="text" class="form-control "  id="trucknumber" name="trucknumber" maxlength="10"
+                   aria-describedby="auxiliary01" value="{{$receiptunit->tracto ? $receiptunit->tracto->trucknumber : ''}}"
+                   onKeyUp=this.value=this.value.toUpperCase()>
+        </div>
+    </div>
+    <div class="col-lg-2 col-md-6 col-sm-12">
+        <div class="form-group">
+            <label for="ecotruck">Eco. de tracto </label>
+            <input type="text" class="form-control "  id="ecotruck" name="ecotruck" maxlength="100"
+                   aria-describedby="ecotruck" value="{{$receiptunit->tracto ? $receiptunit->tracto->econumber : ''}}"
+                   onKeyUp=this.value=this.value.toUpperCase()>
+        </div>
+    </div>
+</div>
+
+<div class="alert alert-info"> <i class="ti-user"></i> Datos del transporte</div>
+
 
 <div class="row">
     <div class="col-lg-2 col-md-6 col-sm-12">
@@ -98,14 +140,7 @@
                    onKeyUp=this.value=this.value.toUpperCase()>
         </div>
     </div>
-    <div class="col-lg-2 col-md-6 col-sm-12">
-        <div class="form-group">
-            <label for="trucknumber">Placa de tracto </label>
-            <input type="text" class="form-control " required id="trucknumber" name="trucknumber" maxlength="10"
-                   aria-describedby="auxiliary01" value="{{$receiptunit->tracto ? $receiptunit->tracto->trucknumber : ''}}"
-                   onKeyUp=this.value=this.value.toUpperCase()>
-        </div>
-    </div>
+
 </div>
 <div class="row">
     <div class="col-lg-2 col-md-6 col-sm-12">
@@ -146,6 +181,26 @@
             @enderror
         </div>
     </div>
+</div>
+<div class="row">
+    <x-select2
+            name="truckid"
+            label="Capacidad"
+            :options="$trucks"
+            valueField="id"
+            textField="name"
+            :selected="$receiptunit->truckid"
+            :required="true"
+    />
+    <x-select2
+            name="truckcategoryid"
+            label="Tipo de unidad"
+            :options="$truckcategories"
+            valueField="truckcategoryid"
+            textField="description"
+            :selected="$receiptunit->truckcategoryid"
+            :required="true"
+    />
 </div>
 <div class="row">
     <div class="col-lg-2 col-md-6 col-sm-12">

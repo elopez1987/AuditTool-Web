@@ -30,6 +30,7 @@
     "require-dev": {
         "laravel/boost": "^1.2",
         "laravel/pint": "^1.25",
+        "laravel/telescope": "^5.18",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.0",
         "nunomaduro/phpinsights": "^2.13",
@@ -49,7 +50,9 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": []
+            "dont-discover": [
+              "laravel/telescope"
+            ]
         }
     },
     "autoload": {
