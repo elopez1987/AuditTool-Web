@@ -30,7 +30,7 @@ class CheckInResource extends JsonResource
             'quantity' => '0',
             'Droplot' => $this->location ? $this->location->locationid : '',
             'trucknumber' => $this->trucknumber,
-            'boxnumber' => $this->boxnumber,
+            'boxnumber' => $this->boxnumber . '-' . $this->econumber,
             'zoneid' => $this->zone ? $this->zone->auxiliary01 : '',
             'ldastatusid' => $this->unitstatus ? $this->unitstatus->unitstatusid : '',
         ];
