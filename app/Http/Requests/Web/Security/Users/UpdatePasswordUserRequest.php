@@ -14,7 +14,7 @@ class UpdatePasswordUserRequest extends FormRequest
                 'required',
                 'string',
                 'confirmed',
-                Password::min(12)
+                Password::min(9)
                     ->letters()
                     ->mixedCase()
                     ->numbers()

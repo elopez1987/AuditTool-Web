@@ -127,7 +127,7 @@
                                                 <div class="input-group">
                                                     <input type="password" class="form-control  " id="password"
                                                            name="password"
-                                                           minlength="10"
+                                                           minlength="9"
                                                            maxlength="12"
                                                            aria-describedby="password"
                                                     >
@@ -146,7 +146,7 @@
                                                 <div class="input-group">
                                                     <input type="password" class="form-control"
                                                            id="password_confirmation"
-                                                           name="password_confirmation" maxlength="12" minlength="10"
+                                                           name="password_confirmation" maxlength="12" minlength="9"
                                                            aria-describedby="password_confirmation"
                                                     >
                                                     <div class="input-group-append">
