@@ -64,9 +64,6 @@ php artisan config:clear
 php artisan route:clear
 php artisan view:clear
 
-log "Regenerando autoloader..."
-composer dump-autoload -o
-
 # --- 4. Reiniciar queue workers ---
 log "Reiniciando queue workers..."
 php artisan queue:restart
