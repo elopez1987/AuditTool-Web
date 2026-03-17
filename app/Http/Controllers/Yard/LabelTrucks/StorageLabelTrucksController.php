@@ -18,6 +18,7 @@ class StorageLabelTrucksController extends BaseController
     public function index()
     {
         $this->authorize('storagelabeltrucks.index');
+        $carriers = $this->getCarriersForSelect();
 
         return view('Yards.StorageLabelTrucks.index', compact('carriers'));
     }

@@ -54,14 +54,14 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-lg-2 col-md-6 col-sm-12">
-                                <div id="categorydiv" class="">
-                                    <label>Linea de transporte</label>
-                                    <select name="carrierid" id="carrierid" class="form-control">
-                                        <option value="" selected="selected">Seleccione una linea de transporte</option>
-                                    </select>
-                                </div>
-                            </div>
+                            <x-select2
+                                    name="carrierid"
+                                    label="Lineas de transporte"
+                                    :options="$carriers"
+                                    valueField="id"
+                                    textField="name"
+                                    :required="true"
+                            />
                         </div>
                     </form>
                 </div>
@@ -97,7 +97,6 @@
 
 @section('script')
     @include('Yards.StorageLabelTrucks.partials.table')
-    @include('layouts.Selects.getCarriers')
     <script>
         function reloadtable() {
             $('#table-label').DataTable().ajax.reload();

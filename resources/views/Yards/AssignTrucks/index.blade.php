@@ -80,7 +80,6 @@
                                     <th class="text-white">C.Barra</th>
                                     <th class="text-white">Linea de transporte</th>
                                     <th class="text-white">Placas de caja</th>
-                                    <th class="text-white">C.Barra</th>
                                     <th class="text-white">Placas de tracto</th>
                                     <th class="text-white">Nombre del operador</th>
                                     <th class="text-white">Celular</th>

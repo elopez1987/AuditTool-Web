@@ -78,7 +78,6 @@
                             </div>
                         </div>
                     </form>
-
                     <div class="row">
                         <div class="col-10">
                             <table class="table table-condensed table-bordered tablegeneral">
@@ -113,6 +112,20 @@
                             </table>
                         </div>
                     </div>
+                </div>
+                <div class="card-footer">
+                    <a href="" data-target="#modal-upload" data-toggle="modal" data-placement="top">
+                        <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md"
+                                data-toggle="tooltip" data-placement="top" title="Importar archivo">
+                            <img src="{{asset('/ico/uploadcsv.png')}}" alt="" class="img-16">
+                            <span style="font-size: 11px;"> Importar coreos </span>
+                        </button>
+                    </a>
+                    @include('Configuration.SystemMails.Imports.file')
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('script')
