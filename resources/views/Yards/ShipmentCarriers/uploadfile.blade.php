@@ -42,6 +42,16 @@
                                         </tr>
                                         <tbody>
                                         <tr>
+                                            <td>centerid</td>
+                                            <td>C.Distribución</td>
+                                            <td>String</td>
+                                        </tr>
+                                        <tr>
+                                            <td>warehouseid</td>
+                                            <td>Bodega</td>
+                                            <td>String</td>
+                                        </tr>
+                                        <tr>
                                             <td>name</td>
                                             <td>Nombre</td>
                                             <td>String</td>

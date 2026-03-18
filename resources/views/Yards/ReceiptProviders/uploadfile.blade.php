@@ -25,26 +25,38 @@
                         <div class="col-lg-12">
                             <table class="table  table-condensed table-hover table-bordered">
                                 <thead>
-                                    <tr>
-                                        <th>Nombre de la cabecera</th>
-                                        <th>Decripción</th>
-                                        <th>Formato</th>
-                                        <th>Obligatorio</th>
-                                    </tr>
+                                <tr>
+                                    <th>Nombre de la cabecera</th>
+                                    <th>Decripción</th>
+                                    <th>Formato</th>
+                                    <th>Obligatorio</th>
+                                </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>name</td>
-                                        <td>Nombre del proveedor</td>
-                                        <td>Texto</td>
-                                        <td>SI</td>
-                                    </tr>
-                                    <tr>
-                                        <td>providerid</td>
-                                        <td>Clave SAP</td>
-                                        <td>Texto</td>
-                                        <td>SI</td>
-                                    </tr>
+                                <tr>
+                                    <td>centerid</td>
+                                    <td>C.Distribución</td>
+                                    <td>String</td>
+                                    <td>SI</td>
+                                </tr>
+                                <tr>
+                                    <td>warehouseid</td>
+                                    <td>Bodega</td>
+                                    <td>String</td>
+                                    <td>SI</td>
+                                </tr>
+                                <tr>
+                                    <td>name</td>
+                                    <td>Nombre del proveedor</td>
+                                    <td>Texto</td>
+                                    <td>SI</td>
+                                </tr>
+                                <tr>
+                                    <td>providerid</td>
+                                    <td>Clave SAP</td>
+                                    <td>Texto</td>
+                                    <td>SI</td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>

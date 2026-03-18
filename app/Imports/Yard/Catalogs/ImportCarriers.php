@@ -15,13 +15,11 @@ class ImportCarriers implements ToCollection, WithHeadingRow, WithValidation
 
     public function collection(Collection $rows)
     {
-        $centerid = $this->getCenterForUser();
-        $warehouseid = $this->getWarehouseForUser();
         foreach ($rows as $row) {
             ShipmentCarrier::updateOrCreate(
                 [
-                    'centerid' => $centerid,
-                    'warehouseid' => $warehouseid,
+                    'centerid' => trim($row['centerid']),
+                    'warehouseid' => trim($row['warehouseid']),
                     'carrierid' => trim($row['carrierid']),
                 ],
                 [
@@ -34,6 +32,8 @@ class ImportCarriers implements ToCollection, WithHeadingRow, WithValidation
     public function rules(): array
     {
         return [
+            '*.centerid' => ['required', 'exists:systemcenterdistributions,centerid'],
+            '*.warehouseid' => ['required', 'exists:systemwarehouses,warehouseid'],
             '*.carrierid' => ['required'],
             '*.name' => ['required', 'max:255'],
         ];
