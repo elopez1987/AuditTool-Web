@@ -11,8 +11,7 @@ trait QueryReceiptUnits
     public function getDataToJoin(Request $request)
     {
         return ReceiptUnit::controlAccessUser()
-            ->leftJoin('shipmentcarriers', 'receiptunits.carrierid', '=', 'shipmentcarriers.id')
-            ->leftJoin('systemwarehouses', 'receiptunits.warehouseid', '=', 'systemwarehouses.warehouseid')
+            ->with(['tracto', 'carrier:id,name', 'warehouse:warehouseid,name'])
             ->whereNull('receiptunits.foliotruck')
             ->whereNotIn('receiptunits.statusid', ['TR'])
             ->Folio($request->get('folionumber'))
@@ -20,10 +19,8 @@ trait QueryReceiptUnits
             ->Carrier($request->get('carrierid'))
             ->Box($request->get('boxnumber'))
             ->select([
-                'receiptunits.warehouseid', 'receiptunits.id', 'receiptunits.barcode', 'receiptunits.auxiliary01',
-                'receiptunits.trucknumber', 'receiptunits.operatorname', 'receiptunits.phone', 'receiptunits.drivernumber',
-                'receiptunits.boxnumber', 'receiptunits.carrierid', 'receiptunits.statusid', 'shipmentcarriers.name as carriername',
-                'systemwarehouses.name as warehouse',
+                'receiptunits.warehouseid', 'receiptunits.id', 'receiptunits.barcode',
+                'receiptunits.boxnumber', 'receiptunits.carrierid', 'receiptunits.statusid',
             ]);
     }
 

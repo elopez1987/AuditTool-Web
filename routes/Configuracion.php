@@ -111,6 +111,7 @@ Route::middleware(['auth'])->group(function () {
     //    Detalle de correo
     Route::get('systemmails/{id}/createMailDetail', [SystemDetailMailController::class, 'createMailDetail'])->name('systemmails.createMailDetail');
     Route::put('storeMailDetail/{id}', [SystemDetailMailController::class, 'storeMailDetail'])->name('storeMailDetail');
+    Route::post('uploademailcotacts', [SystemDetailMailController::class, 'uploademailcotacts'])->name('uploademailcotacts');
     Route::delete('deletedetailmail/{id}', [SystemDetailMailController::class, 'destroy'])->name('deletedetailmail');
 
     //    ---------------------------------------------------- Web Service  ----------------------------------------------------

@@ -7,6 +7,7 @@ use App\Http\Requests\Web\Configuration\Mails\CreateDetailMailRequest;
 use App\Models\Configuration\Mails\SystemDetailMail;
 use App\Models\Configuration\Mails\SystemMail;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 class SystemDetailMailController extends BaseController
 {
@@ -19,7 +20,7 @@ class SystemDetailMailController extends BaseController
 
         return view(
             'Configuration.SystemMails.createdetails',
-            compact('systemmail', 'centers', 'warehouses', 'details')
+            compact('systemmail', 'centers', 'warehouses', 'details'),
         );
     }
 
@@ -37,5 +38,10 @@ class SystemDetailMailController extends BaseController
         SystemDetailMail::destroy($id);
 
         return $this->redirectBackInfo();
+    }
+
+    public function uploademailcotacts(Request $request)
+    {
+        dd($request->all());
     }
 }
