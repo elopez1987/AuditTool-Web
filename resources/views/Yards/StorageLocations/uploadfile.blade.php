@@ -36,9 +36,19 @@
                                 </tr>
                                 <tbody>
                                 <tr>
-                                    <td>zone</td>
-                                    <td>Zona</td>
+                                    <td>centerid</td>
+                                    <td>C.Distribución</td>
                                     <td>String</td>
+                                </tr>
+                                <tr>
+                                    <td>warehouseid</td>
+                                    <td>Bodega</td>
+                                    <td>String</td>
+                                </tr>
+                                <tr>
+                                    <td>zoneid</td>
+                                    <td>Zona</td>
+                                    <td>Number</td>
                                 </tr>
                                 <tr>
                                     <td>name</td>
