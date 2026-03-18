@@ -51,7 +51,7 @@ class StorageEvidenceProcessesController extends BaseController
         $carriers = $this->getCarriersForSelect();
         $turns = $this->getTurns();
         $categories = $this->getCategoriesInventory();
-        $types = $this->getRasonForCodes([1, 2]);
+        $types = $this->getRasonForCodes([1]);
 
         return view('Evidence.StorageEvidences.create',
             compact('providers',

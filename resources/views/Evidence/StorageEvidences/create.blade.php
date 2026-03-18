@@ -39,10 +39,6 @@
     <script>
         $("#razonstatusid").change(event => {
             let razonstatusid = document.getElementById("razonstatusid").value;
-            if (razonstatusid === '1') {
-                $("#provider").hide();
-                $("#customer").show();
-            }
             if (razonstatusid === '2') {
                 $("#customer").hide();
                 $("#provider").show();

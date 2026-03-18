@@ -35,16 +35,6 @@
                 </select>
             </div>
         </div>
-        <div id="provider" class="hide">
-            <div class="form-group">
-                <label for="providerid">Proveedor <span style="color: red">*</span></label>
-                <select name="providerid" id="providerid" required class="form-control  select2 @error('providerid') is-invalid @enderror">
-                    @foreach($providers as $model)
-                        <option value="{{$model->id}}"> {{$model->name}} </option>
-                    @endforeach
-                </select>
-            </div>
-        </div>
     </div>
 </div>
 <div class="row">
