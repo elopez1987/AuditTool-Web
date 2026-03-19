@@ -75,8 +75,8 @@
                                     <th class="text-white">Operador</th>
                                     <th class="text-white">Hora de llegada</th>
                                     <th class="text-white">Embarque</th>
-                                    <th class="text-white">Responsable</th>
-                                    <th class="text-white">Area</th>
+{{--                                    <th class="text-white">Responsable</th>--}}
+{{--                                    <th class="text-white">Area</th>--}}
                                 </tr>
                                 </thead>
                             </table>
@@ -101,57 +101,57 @@
             $('#table-assignshipment').DataTable().ajax.reload();
         }
     </script>
-    <script>
-        $(document).on('shown.bs.modal', '.bs-example-modal-lg', function () {
-            $(this).find('#responsibleid').select2({
-                ajax: {
-                    url: '{{ url('getUsersForResponsable') }}',
-                    dataType: 'json',
-                    delay: 50,
-                    cache: true,
-                    processResults: function (data) {
-                        return {
-                            results: data.map(function (item) {
-                                return { id: item.id, text: item.name };
-                            })
-                        };
-                    },
-                    error: function (xhr, status, error) {
-                        console.error('Error al cargar datos:', error);
-                    }
-                },
-                placeholder: 'Seleccione un responsable',
-                allowClear: true,
-                minimumInputLength: 1,
-                dropdownParent: $(this).find('.modal-content')
-            });
-            $(this).find('#areaid').select2({
-                ajax: {
-                    url: '{{ url('getAreasForResponsable') }}',
-                    dataType: 'json',
-                    delay: 50,
-                    cache: true,
-                    processResults: function (data) {
-                        return {
-                            results: data.map(function (item) {
-                                return { id: item.id, text: item.name };
-                            })
-                        };
-                    },
-                    error: function (xhr, status, error) {
-                        console.error('Error al cargar datos:', error);
-                    }
-                },
-                placeholder: 'Seleccione un responsable',
-                allowClear: true,
-                minimumInputLength: 1,
-                dropdownParent: $(this).find('.modal-content')
-            });
+{{--    <script>--}}
+{{--        $(document).on('shown.bs.modal', '.bs-example-modal-lg', function () {--}}
+{{--            $(this).find('#responsibleid').select2({--}}
+{{--                ajax: {--}}
+{{--                    url: '{{ url('getUsersForResponsable') }}',--}}
+{{--                    dataType: 'json',--}}
+{{--                    delay: 50,--}}
+{{--                    cache: true,--}}
+{{--                    processResults: function (data) {--}}
+{{--                        return {--}}
+{{--                            results: data.map(function (item) {--}}
+{{--                                return { id: item.id, text: item.name };--}}
+{{--                            })--}}
+{{--                        };--}}
+{{--                    },--}}
+{{--                    error: function (xhr, status, error) {--}}
+{{--                        console.error('Error al cargar datos:', error);--}}
+{{--                    }--}}
+{{--                },--}}
+{{--                placeholder: 'Seleccione un responsable',--}}
+{{--                allowClear: true,--}}
+{{--                minimumInputLength: 1,--}}
+{{--                dropdownParent: $(this).find('.modal-content')--}}
+{{--            });--}}
+{{--            $(this).find('#areaid').select2({--}}
+{{--                ajax: {--}}
+{{--                    url: '{{ url('getAreasForResponsable') }}',--}}
+{{--                    dataType: 'json',--}}
+{{--                    delay: 50,--}}
+{{--                    cache: true,--}}
+{{--                    processResults: function (data) {--}}
+{{--                        return {--}}
+{{--                            results: data.map(function (item) {--}}
+{{--                                return { id: item.id, text: item.name };--}}
+{{--                            })--}}
+{{--                        };--}}
+{{--                    },--}}
+{{--                    error: function (xhr, status, error) {--}}
+{{--                        console.error('Error al cargar datos:', error);--}}
+{{--                    }--}}
+{{--                },--}}
+{{--                placeholder: 'Seleccione un responsable',--}}
+{{--                allowClear: true,--}}
+{{--                minimumInputLength: 1,--}}
+{{--                dropdownParent: $(this).find('.modal-content')--}}
+{{--            });--}}
 
-        });
-        $(document).on('hidden.bs.modal', '.bs-example-modal-md', function () {
-            $(this).find('#responsibleid').select2('destroy');
-            $(this).find('#areaid').select2('destroy');
-        });
-    </script>
+{{--        });--}}
+{{--        $(document).on('hidden.bs.modal', '.bs-example-modal-md', function () {--}}
+{{--            $(this).find('#responsibleid').select2('destroy');--}}
+{{--            $(this).find('#areaid').select2('destroy');--}}
+{{--        });--}}
+{{--    </script>--}}
 @endsection
