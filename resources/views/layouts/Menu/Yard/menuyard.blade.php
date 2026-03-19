@@ -151,8 +151,8 @@
                     <div class="box" data-toggle="tooltip" data-placement="top"
                          title="Permite asignar el número de embarque a un número de folio existente en sistema.">
                         <i class="lni lni-folder"></i>
-                        <h5>Asigna Complementos</h5>
-                        <h4>Asigna Complementos</h4>
+                        <h5>Asignar Embarque</h5>
+                        <h4>Asignar Embarque</h4>
                     </div>
                 </a>
             @endcan
