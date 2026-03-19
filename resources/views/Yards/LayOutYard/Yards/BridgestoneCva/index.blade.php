@@ -12153,7 +12153,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
-                      Eco.de Caja: {{$unit->econumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:{{$unit->operatorname}} <br/>
@@ -12394,6 +12394,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -12634,6 +12635,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -12874,6 +12876,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -13114,6 +13117,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -13354,6 +13358,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -13594,6 +13599,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -13834,6 +13840,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -14074,6 +14081,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -14314,6 +14322,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -14554,6 +14563,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -14794,6 +14804,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -15034,6 +15045,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -15285,6 +15297,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -15525,6 +15538,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -15765,6 +15779,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -16005,6 +16020,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -16245,6 +16261,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -16485,6 +16502,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -16725,6 +16743,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -16965,6 +16984,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -17205,6 +17225,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -17445,6 +17466,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -17685,6 +17707,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -17926,6 +17949,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -18167,6 +18191,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -18408,6 +18433,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -18649,6 +18675,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -18889,6 +18916,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -19129,6 +19157,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -19369,6 +19398,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -19609,6 +19639,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -19849,6 +19880,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -20092,6 +20124,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -20332,6 +20365,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -20572,6 +20606,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -20812,6 +20847,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -21052,6 +21088,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -21292,6 +21329,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -21532,6 +21570,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -21772,6 +21811,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -22012,6 +22052,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -22252,6 +22293,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -22497,6 +22539,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -22737,6 +22780,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -22977,6 +23021,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -23217,6 +23262,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -23457,6 +23503,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -23697,6 +23744,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -23937,6 +23985,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -24177,6 +24226,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -24417,6 +24467,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -24657,6 +24708,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -24900,6 +24952,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -25140,6 +25193,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -25380,6 +25434,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -25620,6 +25675,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -25860,6 +25916,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -26100,6 +26157,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -26340,6 +26398,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -26580,6 +26639,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -26820,6 +26880,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -27060,6 +27121,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -27303,6 +27365,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -27543,6 +27606,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -27783,6 +27847,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -28023,6 +28088,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -28263,6 +28329,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -28503,6 +28570,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -28743,6 +28811,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -28983,6 +29052,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -29223,6 +29293,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -29463,6 +29534,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -29715,6 +29787,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -29955,6 +30028,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -30196,6 +30270,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -30437,6 +30512,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -30678,6 +30754,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -30919,6 +30996,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -31160,6 +31238,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -31401,6 +31480,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -31642,6 +31722,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -31883,6 +31964,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -32124,6 +32206,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -32365,6 +32448,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -32606,6 +32690,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -32847,6 +32932,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -33098,6 +33184,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -33338,6 +33425,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -33589,6 +33677,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -33831,6 +33920,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -34081,6 +34171,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -34321,6 +34412,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -34561,6 +34653,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -34801,6 +34894,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -35041,6 +35135,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -35281,6 +35376,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -35521,6 +35617,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -35761,6 +35858,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -36001,6 +36099,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -36251,6 +36350,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -36491,6 +36591,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -36742,6 +36843,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -36983,6 +37085,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -37236,6 +37339,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -37476,6 +37580,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -37716,6 +37821,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -37956,6 +38062,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -38196,6 +38303,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -38447,6 +38555,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -38687,6 +38796,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -38939,6 +39049,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -39180,6 +39291,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -39421,6 +39533,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -39673,6 +39786,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -39913,6 +40027,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -40153,6 +40268,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -40393,6 +40509,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -40633,6 +40750,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -40873,6 +40991,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -41113,6 +41232,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -41353,6 +41473,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -41604,6 +41725,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -41845,6 +41967,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -42095,6 +42218,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -42335,6 +42459,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -42575,6 +42700,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -42815,6 +42941,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -43055,6 +43182,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -43310,6 +43438,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -43550,6 +43679,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -43790,6 +43920,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -44030,6 +44161,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -44270,6 +44402,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -44510,6 +44643,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -44750,6 +44884,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -45001,6 +45136,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -45241,6 +45377,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -45492,6 +45629,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -45732,6 +45870,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -45983,6 +46122,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -46224,6 +46364,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -46474,6 +46615,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -46716,6 +46858,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -46968,6 +47111,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -47209,6 +47353,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -47450,6 +47595,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -47691,6 +47837,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -47932,6 +48079,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -48174,6 +48322,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -48423,6 +48572,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -48663,6 +48813,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -48903,6 +49054,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -49143,6 +49295,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -49383,6 +49536,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -49623,6 +49777,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -49872,6 +50027,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -50113,6 +50269,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -50354,6 +50511,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -50595,6 +50753,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -50836,6 +50995,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -51078,6 +51238,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -51319,6 +51480,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -51559,6 +51721,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -51800,6 +51963,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -52040,6 +52204,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -52280,6 +52445,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -52520,6 +52686,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -52760,6 +52927,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -53003,6 +53171,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -53243,6 +53412,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -53484,6 +53654,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -53724,6 +53895,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -53964,6 +54136,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -54204,6 +54377,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -54447,6 +54621,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -54688,6 +54863,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -54928,6 +55104,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -55168,6 +55345,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -55408,6 +55586,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -55648,6 +55827,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -55888,6 +56068,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -56128,6 +56309,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -56368,6 +56550,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -56608,6 +56791,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -56859,6 +57043,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -57099,6 +57284,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -57339,6 +57525,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -57579,6 +57766,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -57819,6 +58007,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -58059,6 +58248,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -58299,6 +58489,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -58539,6 +58730,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -58779,6 +58971,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -59019,6 +59212,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -59261,6 +59455,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -59501,6 +59696,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -59741,6 +59937,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -59981,6 +60178,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -60221,6 +60419,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -60461,6 +60660,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -60701,6 +60901,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -60941,6 +61142,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -61181,6 +61383,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -61421,6 +61624,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -61665,6 +61869,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -61905,6 +62110,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -62145,6 +62351,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -62385,6 +62592,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -62625,6 +62833,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -62865,6 +63074,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -63105,6 +63315,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -63345,6 +63556,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -63585,6 +63797,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -63825,6 +64038,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -64068,6 +64282,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -64309,6 +64524,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -64549,6 +64765,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -64790,6 +65007,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -65031,6 +65249,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -65271,6 +65490,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -65511,6 +65731,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -65752,6 +65973,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -65993,6 +66215,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -66234,6 +66457,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -66476,6 +66700,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -66717,6 +66942,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -66958,6 +67184,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -67199,6 +67426,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -67439,6 +67667,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -67679,6 +67908,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -67919,6 +68149,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -68174,6 +68405,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -68415,6 +68647,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -68655,6 +68888,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -68895,6 +69129,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -69135,6 +69370,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -69375,6 +69611,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -69615,6 +69852,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -69855,6 +70093,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -70095,6 +70334,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -70345,6 +70585,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -70585,6 +70826,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -70825,6 +71067,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -71065,6 +71308,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -71305,6 +71549,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -71545,6 +71790,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -71785,6 +72031,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -72025,6 +72272,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -72265,6 +72513,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -72505,6 +72754,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -72745,6 +72995,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -72985,6 +73236,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -73225,6 +73477,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -73465,6 +73718,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -76990,6 +77244,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -77245,6 +77500,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -77501,6 +77757,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -77756,6 +78013,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -78011,6 +78269,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -78266,6 +78525,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -78521,6 +78781,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
@@ -78776,6 +79037,7 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco. de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
                       Operador:     {{$unit->operatorname}} <br/>
