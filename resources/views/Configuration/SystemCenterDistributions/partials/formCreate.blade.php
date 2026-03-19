@@ -51,17 +51,6 @@
     </div>
 </div>
 
-<div class="row mb-4 mt-3">
-    <div class="col-lg-12 col-sm-12">
-        <div class="alert alert-info">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                    aria-hidden="true">×</span></button>
-            <h3 class="text-info"><i class="fa fa-exclamation-circle"></i>Información </h3>
-            En los siguientes campos podrá ingresar valores auxiliares que sirvan para identificar algún registro dentro del sistema.
-        </div>
-    </div>
-</div>
-
 <div class="row">
     <div class="col-lg-4 col-md-6 col-sm-12">
         <div class="form-group">
@@ -95,41 +84,30 @@
     </div>
 </div>
 
-<div class="row mb-4 mt-3">
-    <div class="col-lg-12 col-sm-12">
-        <div class="alert alert-info">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                    aria-hidden="true">×</span></button>
-            <h3 class="text-info"><i class="fa fa-exclamation-circle"></i>Información </h3>
-            La siguiente información es necesaria si el sistema se comunicara con otro
-            sistema externo, debera de ingresar la URL antes de la última '/' para el EndPoint final.
-        </div>
-    </div>
-</div>
 
-<div class="row">
-    <div class="col-lg-4 col-md-6 col-sm-12">
-        <div class="form-group">
-            <label for="name">URL del web service a donde el sistema enviara la información en los eventos
-                logisticos. </label>
-            <input type="text" class="form-control" id="url" name="url" maxlength="150" aria-describedby="url"
-                   value="{{old('url')}}">
-        </div>
-    </div>
-    <div class="col-lg-4 col-md-6 col-sm-12">
-        <div class="form-group">
-            <label for="name">Usuario del web service proporcionado por el proveedor al cual se conectara el
-                sistema. </label>
-            <input type="text" class="form-control" id="userapi" name="userapi" maxlength="150"
-                   aria-describedby="userapi" value="{{old('userapi')}}">
-        </div>
-    </div>
-    <div class="col-lg-4 col-md-6 col-sm-12">
-        <div class="form-group">
-            <label for="name">Contraseña del web service proporcionado por el proveedor al cual se conectara el
-                sistema. </label>
-            <input type="text" class="form-control" id="passwordapi" name="passwordapi" maxlength="150"
-                   aria-describedby="passwordapi" value="{{old('passwordapi')}}">
-        </div>
-    </div>
-</div>
+{{--<div class="row">--}}
+{{--    <div class="col-lg-4 col-md-6 col-sm-12">--}}
+{{--        <div class="form-group">--}}
+{{--            <label for="name">URL del web service a donde el sistema enviara la información en los eventos--}}
+{{--                logisticos. </label>--}}
+{{--            <input type="text" class="form-control" id="url" name="url" maxlength="150" aria-describedby="url"--}}
+{{--                   value="{{old('url')}}">--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--    <div class="col-lg-4 col-md-6 col-sm-12">--}}
+{{--        <div class="form-group">--}}
+{{--            <label for="name">Usuario del web service proporcionado por el proveedor al cual se conectara el--}}
+{{--                sistema. </label>--}}
+{{--            <input type="text" class="form-control" id="userapi" name="userapi" maxlength="150"--}}
+{{--                   aria-describedby="userapi" value="{{old('userapi')}}">--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--    <div class="col-lg-4 col-md-6 col-sm-12">--}}
+{{--        <div class="form-group">--}}
+{{--            <label for="name">Contraseña del web service proporcionado por el proveedor al cual se conectara el--}}
+{{--                sistema. </label>--}}
+{{--            <input type="text" class="form-control" id="passwordapi" name="passwordapi" maxlength="150"--}}
+{{--                   aria-describedby="passwordapi" value="{{old('passwordapi')}}">--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--</div>--}}
