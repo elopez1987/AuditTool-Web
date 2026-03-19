@@ -1,28 +1,33 @@
 <div class="row">
     <div class="col-lg-2 col-md-6 col-sm-12">
         <div class="form-group">
-            <label for="id">Folio de entrada <span style="color: red">*</span></label>
+            <label for="id">Folio de entrada</label>
             <input type="text" class="form-control" readonly id="id" name="id"
                    value="{{$receiptunit->id}}"
-                   onKeyUp=this.value=this.value.toUpperCase()
             >
         </div>
     </div>
     <div class="col-lg-2 col-md-6 col-sm-12">
         <div class="form-group">
-            <label for="boxnumber">Placa de caja <span style="color: red">*</span></label>
+            <label for="boxnumber">Linea de transporte</label>
+            <input type="text" class="form-control" readonly
+                   value="{{$receiptunit->carrier ? $receiptunit->carrier->name : ''}}"
+            >
+        </div>
+    </div>
+    <div class="col-lg-2 col-md-6 col-sm-12">
+        <div class="form-group">
+            <label for="boxnumber">Placa de caja</label>
             <input type="text" class="form-control" readonly  id="boxnumber" name="boxnumber"
                    value="{{$receiptunit->boxnumber}}"
-                   onKeyUp=this.value=this.value.toUpperCase()
             >
         </div>
     </div>
     <div class="col-lg-2 col-md-6 col-sm-12">
         <div class="form-group">
-            <label for="barcode">Código de caja <span style="color: red">*</span></label>
+            <label for="barcode">Código de caja</label>
             <input type="text" class="form-control" readonly id="barcode" name="barcode"
                    value="{{$receiptunit->boxnumber}}"
-                   onKeyUp=this.value=this.value.toUpperCase()
             >
         </div>
     </div>
@@ -32,7 +37,7 @@
 <div class="row">
     <div class="col-lg-10">
         <div class="card-input">
-            <div class="alert alert-success">
+            <div class="alert alert-info">
                 Seleecione un tracto camion para el arrastre del remolque, en caso de no ver valores en la lista notificar a Vigilancia el ingreso si es necesario.
             </div>
             <div class="card-body ">
@@ -42,9 +47,9 @@
                             <thead>
                             <tr>
                                 <th>Seleccionar</th>
+                                <th>Operador</th>
                                 <th>Placa de tracto</th>
                                 <th>Código de barra</th>
-                                <th>Operador</th>
                                 <th>Telefono</th>
                                 <th>N. de Licencia</th>
                             </tr>
@@ -58,9 +63,9 @@
                                                data-on-color="success" data-on-text="Seleccionado"
                                                data-off-text="Asignar">
                                     </td>
+                                    <td>{{$truck->operatorname}}</td>
                                     <td>{{$truck->trucknumber}}</td>
                                     <td>{{$truck->barcode}}</td>
-                                    <td>{{$truck->operatorname}}</td>
                                     <td>{{$truck->phone}}</td>
                                     <td>{{$truck->drivernumber}}</td>
                                 </tr>

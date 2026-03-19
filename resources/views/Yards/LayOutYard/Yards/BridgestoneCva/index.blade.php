@@ -12153,11 +12153,12 @@
                       Folio: {{$unit->folionumber}}   <br/>
                       C.Barra: {{$unit->barcode}}   <br/>
                       Placa: {{$unit->boxnumber}}  <br/>
+                      Eco.de Caja: {{$unit->econumber}}  <br/>
                       Embarque: {{$unit->shipmentid}}  <br/>
                       Linea de Transporte: {{$unit->carriername}} <br/>
-                      Operador:     {{$unit->operatorname}} <br/>
+                      Operador:{{$unit->operatorname}} <br/>
                       F.Entrada: {{$unit->entrydate}}  <br/>
-                        F.Enrampe: {{$unit->ensnare}}  <br/>
+                      F.Enrampe: {{$unit->ensnare}}  <br/>
                       F.Inicio: {{$unit->startdate}}  <br/>
                       F.Finalización: {{$unit->finishdate}}  <br/>
                       Concepto: {{$unit->razonname}}  <br/>
