@@ -19,8 +19,6 @@
                     d.warehouseid = $('select[name=warehouseid]').val();
                     d.folionumber = $('input[name=folionumber]').val();
                     d.ticket = $('input[name=ticket]').val();
-                    d.boxnumber = $('input[name=boxnumber]').val();
-                    d.carrierid = $('select[name=carrierid]').val();
                 }
             },
             "columns": [

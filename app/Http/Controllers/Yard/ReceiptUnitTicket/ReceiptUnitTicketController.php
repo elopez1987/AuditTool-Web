@@ -21,7 +21,10 @@ class ReceiptUnitTicketController extends BaseController
     public function getUnitTickets(Request $request)
     {
         $data = ReceiptUnitTicket::controlAccessUser()
-            ->with(['status:statusid,name', 'warehouse:warehouseid,name'])->take(100);
+            ->with(['status:statusid,name', 'warehouse:warehouseid,name'])
+            ->FolioNumber($request->get('folionumber'))
+            ->Ticket($request->get('ticket'))
+            ->take(100)->get();
 
         return DataTables::of($data)
             ->addColumn('btn', 'Yards.ReceiptUnitTicket.partials.buttons')
@@ -64,7 +67,10 @@ class ReceiptUnitTicketController extends BaseController
     public function getUnitTicketsPT(Request $request)
     {
         $data = ReceiptUnitTicket::controlAccessUser()
-            ->with(['status:statusid,name', 'warehouse:warehouseid,name'])->take(100);
+            ->with(['status:statusid,name', 'warehouse:warehouseid,name'])
+            ->FolioNumber($request->get('folionumber'))
+            ->Ticket($request->get('ticket'))
+            ->take(100)->get();
 
         return DataTables::of($data)
             ->addColumn('btn', 'Yards.ReceiptUnitTicket.partials.buttons')
