@@ -26,23 +26,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-lg-2 col-md-6 col-sm-12">
-        <div class="form-group">
-            <label for="barcodeoperator">Código de Barra Operador<span style="color: red">*</span></label>
-            <div class="input-group">
-                <input type="text" class="form-control numeric" id="barcodeoperator" value="{{ old('barcodeoperator') }}"
-                       name="barcodeoperator" maxlength="15" required>
-                <div class="input-group-append">
-                    <button class="btn btn-info btn-xs" id="searchOperator" type="button"><i class="ti ti-search"></i>
-                    </button>
-                </div>
-                @error('barcodeoperator')
-                <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-2 col-md-6 col-sm-12">
+    <div class="col-lg-4 col-md-6 col-sm-12">
         <div class="form-group">
             <label for="operatorname">Nombre de operador<span style="color: red">*</span></label>
             <input type="text" class="form-control" required id="operatorname" name="operatorname"
@@ -110,7 +94,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-lg-2 col-md-6 col-sm-12">
+    <div class="col-lg-4 col-md-6 col-sm-12">
         <div class="form-group">
             <label for="carrierid">Linea de transporte<span style="color: red">*</span></label>
             <select name="carrierid" id="carrierid" class="form-control select2">

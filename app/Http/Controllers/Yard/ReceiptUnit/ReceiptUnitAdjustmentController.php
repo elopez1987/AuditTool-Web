@@ -33,11 +33,13 @@ class ReceiptUnitAdjustmentController extends BaseController
             }
         }
 
-        $receiptunit->operatorname = $request['operatorname'];
+        $receiptunit->foliotruck = $request['foliotruck'];
+
+        //        $receiptunit->operatorname = $request['operatorname'];
+        //        $receiptunit->trucknumber = $request['trucknumber'];
+
         $receiptunit->boxnumber = $request['boxnumber'];
         $receiptunit->econumber = $request['econumber'];
-        $receiptunit->trucknumber = $request['trucknumber'];
-        $receiptunit->foliotruck = $request['foliotruck'];
         $receiptunit->shipmentid = $request['shipmentid'];
         $receiptunit->statusid = $request['statusid'] ?? $receiptunit->statusid;
         $receiptunit->razonstatusid = $request['razonstatusid'] ?? $receiptunit->razonstatusid;

@@ -14,8 +14,6 @@ class CreateTruckRequest extends FormRequest
             'carrierid' => 'required|exists:shipmentcarriers,id',
             'trucknumber' => 'required|string|max:30',
             'operatorname' => 'required|string|max:50',
-            'barcodetruck' => 'required|numeric|min_digits:4|max_digits:20',
-            'barcodeoperator' => 'required|numeric|min_digits:4|max_digits:20',
             'drivernumber' => 'required|max:50',
             'phone' => 'required|max_digits:10',
             'ecotruck' => 'required|max:20',

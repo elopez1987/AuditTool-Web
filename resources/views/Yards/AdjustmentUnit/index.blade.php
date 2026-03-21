@@ -26,19 +26,19 @@
                                            name="carriername">
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-6 col-sm-12">
-                                <div class="form-group">
-                                    <label for="operatorname">Nombre de operador<span
-                                            style="color: red">*</span></label>
-                                    <input type="text"  class="form-control" id="operatorname"
-                                           name="operatorname">
-                                </div>
-                            </div>
+{{--                            <div class="col-lg-4 col-md-6 col-sm-12">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="operatorname">Nombre de operador<span--}}
+{{--                                            style="color: red">*</span></label>--}}
+{{--                                    <input type="text"  class="form-control" id="operatorname"--}}
+{{--                                           name="operatorname">--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                         </div>
                         <div class="row">
                             <div class="col-lg-4 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="boxnumber">Placas de Caja<span style="color: red">*</span></label>
+                                    <label for="boxnumber">Placas de Caja</label>
                                     <input type="text" class="form-control" id="boxnumber" name="boxnumber">
                                 </div>
                             </div>
@@ -50,29 +50,24 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-lg-4 col-md-6 col-sm-12">
-                                <div class="form-group">
-                                    <label for="foliotruck">Folio de tracto<span style="color: red">*</span></label>
-                                    <input type="text" class="form-control" id="foliotruck" name="foliotruck">
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 col-sm-12">
-                                <div class="form-group">
-                                    <label for="trucknumber">Placas de tracto<span style="color: red">*</span></label>
-                                    <input type="text" class="form-control" id="trucknumber" name="trucknumber">
-                                </div>
-                            </div>
+
+{{--                            <div class="col-lg-4 col-md-6 col-sm-12">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="trucknumber">Placas de tracto<span style="color: red">*</span></label>--}}
+{{--                                    <input type="text" class="form-control" id="trucknumber" name="trucknumber">--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                         </div>
                         <div class="row">
                             <div class="col-lg-4 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="econumber">Concepto de entrada<span style="color: red">*</span></label>
+                                    <label for="econumber">Concepto de entrada</label>
                                     <input type="text" readonly class="form-control" id="razonid" >
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="razonstatusid">Concepto de entrada nuevo <span style="color: red">*</span></label>
+                                    <label for="razonstatusid">Concepto de entrada nuevo </label>
                                     <select name="razonstatusid" class="form-control select2">
                                         <option value="" selected>Seleccione un estatus</option>
                                         @foreach($concepts as $model)
@@ -92,7 +87,7 @@
                             </div>
                             <div class="col-lg-4 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="statusid">Estatus nuevo <span style="color: red">*</span></label>
+                                    <label for="statusid">Estatus nuevo </label>
                                     <select name="statusid" class="form-control select2">
                                         <option value="" selected>Seleccione un estatus</option>
                                         @foreach($status as $model)
@@ -128,6 +123,12 @@
                                     <label for="shipmentid">Embarque</label>
                                     <input type="text" class="form-control" id="shipmentid"
                                            name="shipmentid">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="foliotruck">Folio de tracto</label>
+                                    <input type="text" class="form-control" id="foliotruck" name="foliotruck">
                                 </div>
                             </div>
                         </div>
