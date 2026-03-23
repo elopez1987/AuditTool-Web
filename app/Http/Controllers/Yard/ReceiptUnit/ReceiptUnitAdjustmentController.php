@@ -33,14 +33,10 @@ class ReceiptUnitAdjustmentController extends BaseController
             }
         }
 
-        $receiptunit->foliotruck = $request['foliotruck'];
-
-        //        $receiptunit->operatorname = $request['operatorname'];
-        //        $receiptunit->trucknumber = $request['trucknumber'];
-
-        $receiptunit->boxnumber = $request['boxnumber'];
-        $receiptunit->econumber = $request['econumber'];
-        $receiptunit->shipmentid = $request['shipmentid'];
+        $receiptunit->foliotruck = $request['foliotruck'] ?? $receiptunit->foliotruck;
+        $receiptunit->boxnumber = $request['boxnumber'] ?? $receiptunit->boxnumber;
+        $receiptunit->econumber = $request['econumber'] ?? $receiptunit->econumber;
+        $receiptunit->shipmentid = $request['shipmentid'] ?? $receiptunit->shipmentid;
         $receiptunit->statusid = $request['statusid'] ?? $receiptunit->statusid;
         $receiptunit->razonstatusid = $request['razonstatusid'] ?? $receiptunit->razonstatusid;
         $receiptunit->unitstatusid = $request['unitstatus'] ?? $receiptunit->unitstatusid;
@@ -50,7 +46,7 @@ class ReceiptUnitAdjustmentController extends BaseController
             return response()->json([
                 'success' => true,
                 'message' => 'Registro actualizado con éxito.',
-            ], 200);
+            ]);
         }
     }
 }
