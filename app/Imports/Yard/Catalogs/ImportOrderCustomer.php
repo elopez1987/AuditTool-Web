@@ -18,12 +18,11 @@ class ImportOrderCustomer implements ToModel, WithBatchInserts, WithChunkReading
 
     public function model(array $row)
     {
-        $centerid = $this->getCenterForUser();
-        $warehouseid = $this->getWarehouseForUser();
+
         OrderCustomer::updateOrCreate(
             [
-                'centerid' => $centerid,
-                'warehouseid' => $warehouseid,
+                'centerid' => trim($row['centerid']),
+                'warehouseid' => trim($row['warehouseid']),
                 'shiptoid' => trim($row['shiptoid']),
             ],
             [
@@ -36,6 +35,8 @@ class ImportOrderCustomer implements ToModel, WithBatchInserts, WithChunkReading
     public function rules(): array
     {
         return [
+            '*.centerid' => 'required|exists:systemcenterdistributions,centerid',
+            '*.warehouseid' => 'required|exists:systemwarehouses,warehouseid',
             '*.name' => ['string', 'required', 'max:100'],
             '*.shiptoid' => ['required'],
             '*.timetransfer' => ['numeric', 'required', 'min:1'],

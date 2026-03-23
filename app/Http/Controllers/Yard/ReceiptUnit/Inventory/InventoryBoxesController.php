@@ -81,9 +81,10 @@ class InventoryBoxesController extends BaseController
     {
         $this->authorize('inventorybox.edit');
         $data = InventoryCountStock::controlAccessUser()->where('countid', $inventorybox->id)
-            ->with(['center:centerid,name,description', 'status:statusid,name', 'locationold:locationid,name',
-                'locationnew:locationid,name', 'user:id,name', 'zoneold:zoneid,name',
-                'zonenew:zoneid,name', 'inventory', 'folio',
+            ->with(['center:centerid,name,description', 'status:statusid,name',
+                'locationold:locationid,name,id',
+                'locationnew:locationid,name,id', 'user:id,name', 'zoneold:zoneid,name,id',
+                'zonenew:zoneid,name,id', 'inventory', 'folio',
             ])
             ->get();
 
@@ -115,7 +116,8 @@ class InventoryBoxesController extends BaseController
     public function activateInventory(Request $request)
     {
         $this->authorize('inventorybox.edit');
-        $inventoryboxActive = InventoryBox::controlAccessUser()->where('statusid', 'AT')->first();
+        $inventoryboxActive = InventoryBox::controlAccessUser()->where('statusid', 'AT')
+            ->whereNotIn('id', [$request['id']])->first();
         if (! empty($inventoryboxActive)) {
             $inventoryboxActive->statusid = 'TO';
             $inventoryboxActive->save();

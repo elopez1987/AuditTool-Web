@@ -18,6 +18,9 @@
                                     </a>
                                 @endcan
                                 <a>
+                                    @include('buttons.search')
+                                </a>
+                                <a>
                                     @include('buttons.reloadajax')
                                 </a>
                                 <a href="{{route('home')}}">
@@ -26,6 +29,16 @@
                             </div>
                         </div>
                         <hr class="m-t-1">
+                        <div class="row">
+                            <x-text-input
+                                    name="folionumber"
+                                    label="Número de folio"
+                            />
+                            <x-text-input
+                                    name="ticket"
+                                    label="Número de ticket"
+                            />
+                        </div>
                     </form>
                 </div>
             </div>

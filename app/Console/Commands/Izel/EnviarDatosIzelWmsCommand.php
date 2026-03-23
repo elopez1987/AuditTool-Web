@@ -101,17 +101,17 @@ class EnviarDatosIzelWmsCommand extends Command
             throw new Exception("Tipo de movimiento no soportado: {$shipment->typeMovement}");
         }
 
-        Log::info('Enviando datos a Izel WMS', [
-            'shipment_id' => $shipment->shipmentid,
-            'type' => $shipment->typeMovement,
-            'data' => $data->resolve(),
-        ]);
+        //        Log::info('Enviando datos a Izel WMS', [
+        //            'shipment_id' => $shipment->shipmentid,
+        //            'type' => $shipment->typeMovement,
+        //            'data' => $data->resolve(),
+        //        ]);
 
         $response = $this->sendToWms($url, $data, $token);
         $statusService = json_decode($response->getBody()->getContents());
 
         $this->createRegisterLog($receiptUnit, $statusService, $data);
-        Log::info('Registro de log en sistema', ['response' => $statusService->Code]);
+        //        Log::info('Registro de log en sistema', ['response' => $statusService->Code]);
         if ($statusService->Code === 0) {
             $shipment->status = 'Completed';
             $shipment->processed_at = now();
@@ -128,7 +128,7 @@ class EnviarDatosIzelWmsCommand extends Command
             }
         }
 
-        Log::info('Respuesta de Izel WMS', ['response' => $statusService]);
+        //        Log::info('Respuesta de Izel WMS', ['response' => $statusService]);
     }
 
     private function getUrlForMovementType(string $type, EdiConfig $config): ?string

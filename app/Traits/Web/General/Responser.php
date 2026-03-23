@@ -195,7 +195,8 @@ trait Responser
 
     public function getCategoriesInventory()
     {
-        return InventoryStockCategory::where('statusid', '=', 'E')
+        return InventoryStockCategory::controlAccessUser()
+            ->where('statusid', '=', 'E')
             ->select(['description', 'id'])->get();
     }
 

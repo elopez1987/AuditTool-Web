@@ -33,8 +33,8 @@ class AssignShipmentController extends BaseController
             ->BoxNumber(request('boxnumber'))
             ->leftJoin('shipmentcarriers', 'receiptunits.carrierid', '=', 'shipmentcarriers.id')
             ->leftJoin('storagereceiptunitticket', 'receiptunits.id', '=', 'storagereceiptunitticket.folionumber')
-            ->leftJoin('users', 'storagereceiptunitticket.responsibleid', '=', 'users.id')
-            ->leftJoin('storageareas', 'storagereceiptunitticket.areaid', '=', 'storageareas.id')
+//            ->leftJoin('users', 'storagereceiptunitticket.responsibleid', '=', 'users.id')
+//            ->leftJoin('storageareas', 'storagereceiptunitticket.areaid', '=', 'storageareas.id')
             ->whereNotIn('receiptunits.statusid', ['TR', 'OU'])
             ->select([
                 'receiptunits.id',
@@ -45,8 +45,8 @@ class AssignShipmentController extends BaseController
                 'receiptunits.econumber',
                 'receiptunits.operatorname',
                 'receiptunits.shipmentid',
-                'users.name as responsable',
-                'storageareas.name as areaname',
+                //                'users.name as responsable',
+                //                'storageareas.name as areaname',
                 'shipmentcarriers.name as carriername',
             ]);
 

@@ -10,7 +10,7 @@ set -e  # Detener el script si algún comando falla
 # --- Configuración ---
 BRANCH="${1:-main}"
 PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-SSH_KEY="/home/elopez/.ssh/id_ed25519_github"
+SSH_KEY="/home/elopez/.ssh/id_ed25519"
 LOG_FILE="$PROJECT_DIR/storage/logs/deploy.log"
 TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
 

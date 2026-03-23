@@ -179,11 +179,11 @@
                             text: 'No se encuentran registros del folio!',
                         })
                     } else {
-                        $("#folio").val(values.Data.folionumber);
+                        $("#folio").val(values.Data.id);
                         $("#operatorname").val(values.Data.operatorname);
                         $("#boxnumber").val(values.Data.boxnumber);
-                        $("#linea").val(values.Data.carriername);
                         $("#barcode").val(values.Data.barcode);
+                        $("#linea").val(values.Data.carriername);
                         $("#razonid").val(values.Data.razonname);
                     }
                 });
@@ -204,8 +204,6 @@
                 const folionumber = $("#folionumber").val();
                 const warehouseid = $("#warehouseid").val();
                 const barcode = $("#barcode").val();
-                const ticket = $("#ticket").val();
-                const weightout = $("#weightout").val();
                 const razonstatusid = $("#razonstatusid").val();
 
                 if (!centerid || !warehouseid || !folionumber || !razonstatusid) {
@@ -224,8 +222,6 @@
                         warehouseid: warehouseid,
                         barcode: barcode,
                         folionumber: folionumber,
-                        ticket: ticket,
-                        weightout: weightout,
                         razonstatusid: razonstatusid,
                     },
                     url: '{!! route('autoizetransportstore') !!}',
@@ -243,11 +239,21 @@
                         $('#operatorname').val('');
                         $('#boxnumber').val('');
                         $('#carriername').val('');
-                        $('#ticket').val('');
-                        $('#weightout').val('');
                         $('#folionumber').val('');
                         $('#razonid').val('');
                         $('#linea').val('');
+                    },
+                    error: function (xhr) {
+                        let message = 'Ocurrió un error al procesar la solicitud.';
+                        if (xhr.responseJSON && xhr.responseJSON.error) {
+                            message = xhr.responseJSON.error;
+                        }
+                        Swal.fire({
+                            type: 'error',
+                            title: 'Error',
+                            text: message,
+                            width: 350,
+                        });
                     },
                 });
             });

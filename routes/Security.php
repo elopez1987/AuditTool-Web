@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Security\Activos\ActiveUsersController;
 use App\Http\Controllers\Security\Fuctions\CreateNewPermissionController;
 use App\Http\Controllers\Security\Fuctions\SecurityFunctionsController;
 use App\Http\Controllers\Security\Fuctions\SecurityFunctionsMenuController;
@@ -128,5 +129,9 @@ Route::group(['middleware' => ['role:ADMINISTRADOR']], function () {
     //	Usuarios por linea de transporte
     Route::get('usersfortransports', [UsersForTRansportController::class, 'index'])->name('usersfortransports');
     Route::get('usersfortransportdata', [UsersForTRansportController::class, 'usersfortransportdata'])->name('usersfortransportdata');
+
+    //	Usuarios activo
+    Route::resource('activeusers', ActiveUsersController::class);
+    Route::get('getactiveusers', [ActiveUsersController::class, 'getactiveusers'])->name('getactiveusers');
 
 });

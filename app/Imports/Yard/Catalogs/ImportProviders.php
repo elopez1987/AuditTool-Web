@@ -16,13 +16,12 @@ class ImportProviders implements ToCollection, WithHeadingRow, WithValidation
 
     public function collection(Collection $rows)
     {
-        $warehouseid = $this->getWarehouseForUser();
-        $centerid = $this->getCenterForUser();
+
         foreach ($rows as $row) {
             ReceiptProvider::updateOrCreate(
                 [
-                    'centerid' => $centerid,
-                    'warehouseid' => $warehouseid,
+                    'centerid' => trim($row['centerid']),
+                    'warehouseid' => trim($row['warehouseid']),
                     'providerid' => trim($row['providerid']),
                 ],
                 [
@@ -36,6 +35,8 @@ class ImportProviders implements ToCollection, WithHeadingRow, WithValidation
     public function rules(): array
     {
         return [
+            '*.centerid' => ['required', 'exists:systemcenterdistributions,centerid'],
+            '*.warehouseid' => ['required', 'exists:systemwarehouses,warehouseid'],
             '*.providerid' => ['required'],
             '*.name' => ['required', 'string', 'max:150'],
         ];

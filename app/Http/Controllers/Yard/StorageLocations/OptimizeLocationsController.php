@@ -15,9 +15,10 @@ class OptimizeLocationsController extends BaseController
         $locations = $this->getLocations();
         $units = $this->getReceiptUnits();
         $shipments = $this->getShipmentHeaders();
+
         foreach ($locations as $location) {
             foreach ($units as $unit) {
-                if ($location->id === $unit->locationid) {
+                if ((int) $location->id === (int) $unit->locationid) {
                     $location->auxiliary01 = $unit->boxnumber;
                     $location->statusid = 'D';
                     $location->save();
@@ -26,7 +27,7 @@ class OptimizeLocationsController extends BaseController
         }
         foreach ($shipments as $shipment) {
             foreach ($locations as $location) {
-                if ($location->id === $shipment->locationid) {
+                if ((int) $location->id === (int) $shipment->locationid) {
                     $location->statusid = 'D';
                     $location->save();
                 }

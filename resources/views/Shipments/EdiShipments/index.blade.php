@@ -70,8 +70,16 @@
                                         <td>{{$item->model_type}}</td>
                                         <td>{{$item->created_at}}</td>
                                         <td>{{$item->error_message}}</td>
-                                        <td style="background-color: {{$item->status === 'Completed' ? '#00e676' : '#ffff00'}}">
-                                            {{$item->status}}
+                                        @php
+                                            $colors = [
+                                                'Completed' => '#00e676',
+                                                'Error'     => '#ff1744',
+                                                'Pending'   => '#ffff00',
+                                            ];
+                                            $color = $colors[$item->status] ?? '#ffff00';
+                                        @endphp
+                                        <td style="background-color: {{ $color }}">
+                                            {{ $item->status }}
                                         </td>
                                         <td>
                                             @if($item->status != 'Completed')

@@ -100,6 +100,15 @@
                     </div>
                 </a>
             @endcan
+            @can('activeusers.index')
+                <a href="{{route('activeusers.index')}}">
+                        <div class="box">
+                            <i class="lni lni-list"></i>
+                            <h5>Usuarios activos APP</h5>
+                            <h4>Usuarios activos APP</h4>
+                        </div>
+                    </a>
+                @endcan
         </div>
 
     </main>

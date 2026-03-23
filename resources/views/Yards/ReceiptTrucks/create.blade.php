@@ -48,37 +48,17 @@
 @section('script')
     <script type="module">
         const baseUrl = "{{ config('app.url') }}";
-        const operatorUrl = "{{ asset('js/selects/operator.js') }}";
         const warehouseUrl = "{{ asset('js/selects/warehouse-for-center.js') }}";
-        const truckUrl = "{{ asset('js/selects/search-truck.js') }}";
         const carrierUrl = "{{ asset('js/selects/carriers-for-center.js') }}";
         
-        const {initOperatorLookup} = await import(operatorUrl);
+        // const {initOperatorLookup} = await import(operatorUrl);
         const {initializeWarehouseLookup} = await import(warehouseUrl);
-        const {initTruckLookup} = await import(truckUrl);
+        // const {initTruckLookup} = await import(truckUrl);
         const {initCarrierSelector} = await import(carrierUrl);
 
-        initOperatorLookup(
-            "searchOperator",
-            "barcodeoperator",
-            {
-                operatorname: "name",
-                drivernumber: "drivernumber",
-                phone: "phone"
-            },
-            baseUrl
-        );
         initCarrierSelector({
             centerSelectId: "centerid",
             carrierSelectId: "carrierid",
-            baseUrl: baseUrl
-        });
-        initTruckLookup({
-            searchBarcodeButtonId: "searchTruck",
-            searchTruckNumberButtonId: "searchTruckNumber",
-            barcodeInputId: "barcodetruck",
-            truckNumberInputId: "trucknumber",
-            ecoNumberInputId: "ecotruck",
             baseUrl: baseUrl
         });
         initializeWarehouseLookup("centerid", "warehouseid", baseUrl);

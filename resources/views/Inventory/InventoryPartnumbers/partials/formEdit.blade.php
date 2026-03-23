@@ -156,20 +156,36 @@
         </div>
     </div>
 </div>
+
 <div class="row">
-    <div class="col-lg-2">
-        <div class="form-group">
-            <label for="statusid">Estatus <span style="color: red">*</span></label>
-            <select name="statusid" class="form-control select2">
-                @foreach($status as $statu)
-                    <option value="{{$statu->statusid}}"
-                            @if($statu->statusid == $inventorypartnumber->statusid)
-                                selected="selected"
-                        @endif>
-                        {{$statu->name}}
-                    </option>
-                @endforeach
-            </select>
+    @if(ui_visible('inventorypartnumbers_location_create'))
+        <div class="col-lg-2 col-md-6 col-sm-12">
+            <div class="form-group">
+                <label for="auxiliary01"> {{ ui_label('inventorypartnumbers_location_create','Ubicación del producto') }} </label>
+                <input type="text" class="form-control" id="auxiliary01" name="auxiliary01" maxlength="100"
+                       aria-describedby="auxiliary01" value="{{$inventorypartnumber->auxiliary01}}"
+                       @if(ui_required('inventorypartnumbers_location_create')) required @endif
+                >
+            </div>
         </div>
-    </div>
+    @endif
+
+        <div class="col-lg-2">
+            <div class="form-group">
+                <label for="statusid">Estatus <span style="color: red">*</span></label>
+                <select name="statusid" class="form-control select2">
+                    @foreach($status as $statu)
+                        <option value="{{$statu->statusid}}"
+                                @if($statu->statusid == $inventorypartnumber->statusid)
+                                    selected="selected"
+                                @endif>
+                            {{$statu->name}}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+</div>
+<div class="row">
+
 </div>

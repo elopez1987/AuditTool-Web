@@ -29,14 +29,6 @@ class CapacityYardController extends BaseController
             ->where('statusid', '=', 'E')
             ->get();
 
-        // Calcular totales de manera optimizada
-        $totalLocations = $zones->sum('capacity');
-
-        // Contar unidades ocupadas (sin el get())
-        $locationsBusy = ReceiptUnit::controlAccessUser()
-            ->whereNotIn('statusid', ['TR'])
-            ->count();
-
         // Obtener ocupación por zona indexado por zoneid
         $locationfill = ReceiptUnit::controlAccessUser()
             ->whereNotIn('statusid', ['TR'])
@@ -58,7 +50,7 @@ class CapacityYardController extends BaseController
 
         return view(
             'Yards.CapacityYard.index',
-            compact('centers', 'totalLocations', 'zones', 'locationsBusy', 'zonesByCenter', 'locationfill', 'unitsByStatus')
+            compact('centers', 'zones', 'zonesByCenter', 'locationfill', 'unitsByStatus')
         );
     }
 

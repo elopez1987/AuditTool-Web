@@ -20,7 +20,7 @@
                                         <button type="submit"
                                                 class="btn waves-effect waves-light btn-outline-info btn-md">
                                             <img src="{{asset('/ico/save02.png')}}" alt="" class="img-16">
-                                            <span style="font-size: 0.675rem "> Cerrar Inventario</span>
+                                            <span > Cerrar Inventario</span>
                                         </button>
                                     </a>
                                 @endif
@@ -94,7 +94,7 @@
                                                 SI
                                             @endif
                                         </td>
-                                        <td>{{$item->userid}}</td>
+                                        <td>{{$item->user ? $item->user->name : ''}}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -128,27 +128,28 @@
             "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
             "lengthMenu": [[-1], ["Todos"]],
             "columnDefs": [
-                {"width": "100px", "targets": 0},
-                {"width": "60px", "targets": 1},
-                {"width": "150px", "targets": 2},
+                {"width": "280px", "targets": 0},
+                {"width": "100px", "targets": 1},
+                {"width": "250px", "targets": 2},
                 {"width": "120px", "targets": 3},
-                {"width": "250px", "targets": 4},
-                {"width": "100px", "targets": 5},
-                {"width": "100px", "targets": 6},
-                {"width": "100px", "targets": 7},
-                {"width": "100px", "targets": 8},
-                {"width": "100px", "targets": 9},
-                {"width": "100px", "targets": 10},
-                {"width": "100px", "targets": 11},
-                {"width": "120px", "targets": 12},
-                {"width": "100px", "targets": 13},
+                {"width": "290px", "targets": 4},
+                {"width": "150px", "targets": 5},
+                {"width": "160px", "targets": 6},
+                {"width": "160px", "targets": 7},
+                {"width": "160px", "targets": 8},
+                {"width": "160px", "targets": 9},
+                {"width": "280px", "targets": 10},
+                {"width": "160px", "targets": 11},
+                {"width": "160px", "targets": 12},
+                {"width": "200px", "targets": 13},
                 {"width": "180px", "targets": 14},
-                {"width": "180px", "targets": 15},
-                {"width": "180px", "targets": 16},
-                {"width": "180px", "targets": 17},
-                {"width": "180px", "targets": 18},
-                {"width": "180px", "targets": 19},
-                {"width": "180px", "targets": 20},
+                {"width": "250px", "targets": 15},
+                {"width": "250px", "targets": 16},
+                {"width": "250px", "targets": 17},
+                {"width": "250px", "targets": 18},
+                {"width": "250px", "targets": 19},
+                {"width": "280px", "targets": 20},
+                {"width": "280px", "targets": 21},
             ],
             buttons: [
                 {

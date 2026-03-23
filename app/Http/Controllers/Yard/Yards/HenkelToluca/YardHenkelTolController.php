@@ -21,7 +21,7 @@ class YardHenkelTolController extends BaseController
             'receiptunits.shipmentid', 'shipmentcarriers.name as carriername', 'receiptunits.statusid', 'receiptunits.ensnare',
             'receiptunits.boxnumber', 'receiptunits.trucknumber', 'receiptunits.operatorname', 'receiptunits.razonstatusid',
             'receiptunits.phone', 'storageunitstatus.unitstatusid', 'storagereasons.name as razonname', 'receiptunits.statusid',
-            'receiptunits.entrydate', 'receiptunits.startdate', 'receiptunits.finishdate',
+            'receiptunits.entrydate', 'receiptunits.startdate', 'receiptunits.finishdate', 'receiptunits.econumber',
             'receiptunits.locationid', 'storagelocations.name as locationname', 'storagelocations.id as location', 'systemstatus.name as status',
         ])
             ->leftJoin('shipmentcarriers', 'receiptunits.carrierid', '=', 'shipmentcarriers.id')

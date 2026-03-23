@@ -45,7 +45,7 @@ class InventoryPartnumbersController extends BaseController
 
     public function store(CreatePartNumberRequest $request)
     {
-        $access = $this->getAccessForUser();
+
         $partnumber = new InventoryPartnumber($request->validated());
         $partnumber->save();
 

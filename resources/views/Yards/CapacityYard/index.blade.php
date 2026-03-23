@@ -4,6 +4,8 @@
     @foreach($centers as $center)
         @php
             $centerZones = $zonesByCenter->get($center->centerid, collect());
+            $centerCapacity = $centerZones->sum('capacity');
+            $centerBusy = $centerZones->sum(fn($zone) => $locationfill->get($zone->id, 0));
         @endphp
         <div class="row">
             <div class="col-12">
@@ -24,7 +26,7 @@
                                                         <div class="d-flex align-items-center justify-content-center">
                                                             <div class="text-center">
                                                                 <span class="font-14 font-weight-bold text-uppercase">Capacidad de Patio</span>
-                                                                <h2 class="font-medium m-b-0" style="font-size: 42px !important;font-weight: 700 !important;color: #00c853">{{$totalLocations}}</h2>
+                                                                <h2 class="font-medium m-b-0" style="font-size: 42px !important;font-weight: 700 !important;color: #00c853">{{$centerCapacity}}</h2>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -37,7 +39,7 @@
                                                         <div class="d-flex align-items-center justify-content-center">
                                                             <div class="text-center">
                                                                 <span class="font-14 font-weight-bold text-uppercase">Unidades en Patio</span>
-                                                                <h2 class="font-medium m-b-0" style="font-size: 42px !important;font-weight: 700 !important;color: #ff1744">{{$locationsBusy}}</h2>
+                                                                <h2 class="font-medium m-b-0" style="font-size: 42px !important;font-weight: 700 !important;color: #ff1744">{{$centerBusy}}</h2>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -51,7 +53,7 @@
                                                             <div class="text-center">
                                                                 <span class="font-14 font-weight-bold text-uppercase">Ocupación</span>
                                                                 @php
-                                                                    $porcentajeOcupacion = $totalLocations > 0 ? round((100 * $locationsBusy) / $totalLocations) : 0;
+                                                                    $porcentajeOcupacion = $centerCapacity > 0 ? round((100 * $centerBusy) / $centerCapacity) : 0;
                                                                 @endphp
                                                                 <h2 class="font-medium m-b-0" style="font-size: 42px !important;font-weight: 700 !important;color: #3d5afe">
                                                                     {{ $porcentajeOcupacion }} %
