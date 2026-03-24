@@ -27,8 +27,10 @@ class AutorizeTransportController extends Controller
     {
         $this->authorize('receiptunits.autorizeunit');
         $centers = $this->getCenterForSelect();
-        $warehouses = SystemWarehouse::select(['warehouseid', 'name'])
-            ->where('statusid', 'E')->get();
+        $warehouses = SystemWarehouse::select('warehouseid', 'name')
+            ->where('statusid', 'E')
+            ->whereRaw("charindex('SWH-43', configurationflag) > 0")
+            ->get();
         $rason = $this->getRasonForCodes([1, 3]);
 
         return view('Yards.AutorizeTransport.index', compact('centers', 'warehouses', 'rason'));
