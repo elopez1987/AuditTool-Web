@@ -119,13 +119,13 @@ class UserController extends BaseController
                 'email' => $user->email,
             ]);
 
-            // Log de la acción
-            Log::info('Correo de reseteo de contraseña enviado', [
-                'user_id' => $user->id,
-                'user_email' => $user->email,
-                'requested_by' => auth()->id(),
-                'timestamp' => now(),
-            ]);
+            //            // Log de la acción
+            //            Log::info('Correo de reseteo de contraseña enviado', [
+            //                'user_id' => $user->id,
+            //                'user_email' => $user->email,
+            //                'requested_by' => auth()->id(),
+            //                'timestamp' => now(),
+            //            ]);
 
             if ($status === Password::RESET_LINK_SENT) {
                 return redirect()->back()->with('success', 'Se ha enviado un correo de reinicio de contraseña a: ' . $user->email);
