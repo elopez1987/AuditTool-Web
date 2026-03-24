@@ -30,7 +30,6 @@ class EnviarMensajeAFacturacionDocumentosEnviadosJob implements ShouldQueue
 
     public function handle(): void
     {
-        Log::info($this->orderDelivery);
         $url = 'https://api.1msg.io/HEI523482986/sendTemplate';
         $client = new Client;
 

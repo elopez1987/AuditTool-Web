@@ -25,7 +25,7 @@
                         @include('Maintenance.StorageCheckListDetails.partials.formCreate')
                     </form>
                     <div class="row">
-                        <div class="col-8">
+                        <div class="col-12">
                             <table class="table table-condensed  table-bordered tablegeneral">
                                 <thead>
                                 <tr>
@@ -34,8 +34,8 @@
                                     <th>Tipo de revisión</th>
                                     <th>Auxiliar 02</th>
                                     <th>Auxiliar 03</th>
-                                    <th>Auxiliar 04</th>
-                                    <th>Auxiliar 05</th>
+{{--                                    <th>Auxiliar 04</th>--}}
+{{--                                    <th>Auxiliar 05</th>--}}
                                     <th>Estatus</th>
                                     <th>Cambiar estatus</th>
                                     <th>Modificar registro</th>
@@ -56,8 +56,8 @@
                                         <td>{{$detail->auxiliary01}}</td>
                                         <td>{{$detail->auxiliary02}}</td>
                                         <td>{{$detail->auxiliary03}}</td>
-                                        <td>{{$detail->auxiliary04}}</td>
-                                        <td>{{$detail->auxiliary05}}</td>
+{{--                                        <td>{{$detail->auxiliary04}}</td>--}}
+{{--                                        <td>{{$detail->auxiliary05}}</td>--}}
                                         <td>{{$detail->status ? $detail->status->name : ''}}</td>
                                         <td>
                                             <a href="" data-target="#modal-updatestatus-{{$detail->id}}"
