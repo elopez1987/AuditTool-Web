@@ -12,7 +12,7 @@ class EdiShipmentsController extends BaseController
         $this->authorize('edishipments.index');
         $data = EdiShipment::controlAccessUser()
             ->with(['center:centerid,name,description', 'warehouse:warehouseid,name'])
-            ->whereIn('status', ['Pending', 'Error'])
+            ->whereIn('status', ['Pending'])
 //            ->where('status', '=', 'Completed')
             ->get();
 

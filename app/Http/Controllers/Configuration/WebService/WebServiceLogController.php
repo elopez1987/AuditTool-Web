@@ -28,6 +28,9 @@ class WebServiceLogController extends BaseController
 
         return DataTables::of($data)
             ->addColumn('btn', 'Configuration.LogWebService.partials.buttons')
+            ->editColumn('created_at', function ($row) {
+                return $row->created_at->format('d/m/Y H:i:s');
+            })
             ->rawColumns(['btn'])->toJson();
     }
 
