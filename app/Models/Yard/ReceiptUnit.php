@@ -357,9 +357,9 @@ class ReceiptUnit extends Model
     public function tracto()
     {
         return $this->belongsTo(ReceiptTruck::class, 'foliotruck', 'id')->withDefault([
-            'trucknumber' => '',
-            'operatorname' => '',
-            'phone' => '',
+            'trucknumber' => '00000',
+            'operatorname' => 'SIN OPERADOR',
+            'phone' => '00000',
             'id' => null,
         ]);
     }
