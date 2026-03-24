@@ -79,6 +79,33 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="row mt-3">
+                                        <div class="col-lg-4 col-md-6  col-xs-12">
+                                            <div class="form-group">
+                                                <label for="operatorname">Nombre del operador.</label>
+                                                <input type="text" class="form-control" readonly id="operatorname"
+                                                       value="{{ old('operatorname') }}"
+                                                >
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6  col-xs-12">
+                                            <div class="form-group">
+                                                <label for="trucknumber">Placa de tracto</label>
+                                                <input type="text" class="form-control" readonly id="trucknumber"
+                                                       value="{{ old('trucknumber') }}"
+                                                >
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" id="operatornamerow" style="display: none;">
+                                        <div class="col-lg-8">
+                                            <div class="alert alert-danger">
+                                                <label for="" > LA CAJA NO CUENTA CON TRACTO ACOPLADO,FAVOR DE REALIZAR EL PROCESO DE ACOPLE.</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                                 @php
                                     $exists = !empty($parameter) && in_array('SWH-24', $parameter);
@@ -138,25 +165,25 @@
                                             <th>NO</th>
                                             </thead>
                                             <tbody>
-                                                @foreach($checkAS as $item)
-                                                    <tr>
-                                                        <td class="hide"><input type="text"
-                                                                                value="{{$item->checklistid}}"
-                                                                                id="checklistid[]" name="checklistid[]"
-                                                                                class="hide"></td>
-                                                        <td class="hide"><input type="text" value="{{$item->id}}"
-                                                                                id="checklitsdetailid[]"
-                                                                                name="checklitsdetailid[]" class="hide">
-                                                        </td>
-                                                        <td>{{$item->description}}</td>
-                                                        <td><input type="radio" id="response[]" @if($exists) required
-                                                                   @endif value="1" name="response[]-{{$item->id}}">
-                                                        </td>
-                                                        <td><input type="radio" id="response[]" @if($exists) required
-                                                                   @endif value="0" name="response[]-{{$item->id}}">
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
+                                            @foreach($checkAS as $item)
+                                                <tr>
+                                                    <td class="hide"><input type="text"
+                                                                            value="{{$item->checklistid}}"
+                                                                            id="checklistid[]" name="checklistid[]"
+                                                                            class="hide"></td>
+                                                    <td class="hide"><input type="text" value="{{$item->id}}"
+                                                                            id="checklitsdetailid[]"
+                                                                            name="checklitsdetailid[]" class="hide">
+                                                    </td>
+                                                    <td>{{$item->description}}</td>
+                                                    <td><input type="radio" id="response[]" @if($exists) required
+                                                               @endif value="1" name="response[]-{{$item->id}}">
+                                                    </td>
+                                                    <td><input type="radio" id="response[]" @if($exists) required
+                                                               @endif value="0" name="response[]-{{$item->id}}">
+                                                    </td>
+                                                </tr>
+                                            @endforeach
                                             </tbody>
                                         </table>
                                     </div>
@@ -214,7 +241,7 @@
         });
     </script>
     <script>
-        $(document).on('change', '#zoneid', function(event) {
+        $(document).on('change', '#zoneid', function (event) {
             const zoneid = event.target.value;
             if (zoneid) {
                 $.get(`{{ url('storage-locations') }}/${zoneid}/search`, function (res) {
@@ -225,7 +252,7 @@
                             $("#locationid").append(`<option value=${element.id}> ${element.name} </option>`);
                         });
                     }
-                }).fail(function(error) {
+                }).fail(function (error) {
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
@@ -247,7 +274,7 @@
         // Función para buscar datos del folio
         function searchFolioData() {
             var folioValue = $("#folionumber").val().trim();
-            
+
             if (folioValue.length === 0) {
                 // Solo mostrar error si debemos validar
                 if (shouldValidateBlur) {
@@ -272,16 +299,28 @@
                     $("#econumber").val('');
                     $("#linea").val('');
                     $("#barcode").val('');
+                    $("#operatorname").val('');
+                    $("#trucknumber").val('');
+                    $("#operatornamerow").hide();
                 } else {
-
+                    console.log('Datos encontrados:', values.Data);
                     $("#boxnumber").val(values.Data.boxnumber);
                     $("#folionumber").val(values.Data.folionumber);
                     $("#shipmentid").val(values.Data.shipmentid);
                     $("#econumber").val(values.Data.econumberbox);
                     $("#linea").val(values.Data.carriername);
                     $("#barcode").val(values.Data.barcode);
+                    $("#operatorname").val(values.Data.operatorname);
+                    $("#trucknumber").val(values.Data.trucknumber);
+                    // $("#operatorname").text(values.Data.operatorname);
+
+                    if (values.Data.operatorname === 'SIN OPERADOR') {
+                        $("#operatornamerow").show();
+                    } else {
+                        $("#operatornamerow").hide();
+                    }
                 }
-            }).fail(function() {
+            }).fail(function () {
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
@@ -289,15 +328,15 @@
                 });
             });
         }
-        
+
         // Vincular evento blur al campo folionumber
-        $(document).on('blur', '#folionumber', function() {
+        $(document).on('blur', '#folionumber', function () {
             searchFolioData();
         });
 
-        $("#submitBtn").click(function(e) {
+        $("#submitBtn").click(function (e) {
             e.preventDefault();
-            
+
             // Validar formulario
             let form = document.getElementById('autorizeOutputForm');
             if (!form.checkValidity()) {
@@ -317,7 +356,7 @@
                 data: formData,
                 processData: false,
                 contentType: false,
-                success: function(response) {
+                success: function (response) {
                     Swal.fire({
                         icon: 'success',
                         title: '¡Éxito!',
@@ -327,7 +366,7 @@
                     }).then(() => {
                         // Deshabilitar validación temporal
                         shouldValidateBlur = false;
-                        
+
                         // Limpiar todos los inputs del formulario
                         $('#folionumber').val('');
                         $('#barcode').val('');
@@ -335,37 +374,39 @@
                         $('#econumber').val('');
                         $('#boxnumber').val('');
                         $('#shipmentid').val('');
+                        $('#operatorname').text('');
+                        $('#operatornamerow').hide();
                         $('textarea[name="comment"]').val('');
-                        
+
                         // Limpiar radios buttons del checklist
                         $('input[type="radio"][id="response[]"]').prop('checked', false);
-                        
+
                         // Resetear select de zonas
                         $('#zoneid').val('').trigger('change');
-                        
+
                         // Resetear select de ubicaciones y limpiar opciones
                         $('#locationid').empty();
                         $('#locationid').append('<option value="" selected>Seleccione una opción</option>');
                         @foreach($locations as $model)
-                            $('#locationid').append('<option value="{{$model->id}}">{{$model->name}}</option>');
+                        $('#locationid').append('<option value="{{$model->id}}">{{$model->name}}</option>');
                         @endforeach
                         $('#locationid').val('').trigger('change');
-                        
+
                         // Enfocar el campo de folio para nueva captura
                         $('#folionumber').focus();
-                        
+
                         // Reactivar validación después de un momento
-                        setTimeout(function() {
+                        setTimeout(function () {
                             shouldValidateBlur = true;
                         }, 100);
-                        
+
                         // Habilitar botón de guardar
                         $("#submitBtn").prop('disabled', false);
                     });
                 },
-                error: function(xhr) {
+                error: function (xhr) {
                     let errorMessage = 'Error al procesar la solicitud';
-                    
+
                     if (xhr.responseJSON && xhr.responseJSON.message) {
                         errorMessage = xhr.responseJSON.message;
                     } else if (xhr.responseJSON && xhr.responseJSON.error) {
@@ -374,7 +415,7 @@
                         try {
                             let response = JSON.parse(xhr.responseText);
                             errorMessage = response.message || response.error || errorMessage;
-                        } catch(e) {
+                        } catch (e) {
                             errorMessage = xhr.statusText || errorMessage;
                         }
                     }
@@ -385,7 +426,7 @@
                         text: errorMessage,
                         showConfirmButton: true
                     });
-                    
+
                     $("#submitBtn").prop('disabled', false);
                 }
             });
