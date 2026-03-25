@@ -56,7 +56,7 @@
                                     @endcan
 
                                     @can('goodissuedatereceipt')
-                                        @if ($receiptasn->autorizaoutputdate != null)
+                                        @if ($receiptasn->unloadfinishdate != null)
                                             <a href="" data-target="#modal-goodissuedate-{{$receiptasn->id}}"
                                                data-toggle="modal">
                                                 <button type="button"
