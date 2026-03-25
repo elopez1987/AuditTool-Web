@@ -20,7 +20,7 @@
                                         <button type="submit"
                                                 class="btn waves-effect waves-light btn-outline-info btn-md">
                                             <img src="{{asset('/ico/save02.png')}}" alt="" class="img-16">
-                                            <span > Cerrar Inventario</span>
+                                            <span> Cerrar Inventario</span>
                                         </button>
                                     </a>
                                 @endif
@@ -59,7 +59,7 @@
                                 <th class="bg-inverse text-white">Nueva Zona</th>
                                 <th class="bg-inverse text-white">Nueva Ubicación</th>
                                 <th class="bg-inverse text-white">Estatus</th>
-                                <th class="bg-inverse text-white">¿Ajustada?</th>
+                                <th class="bg-inverse text-white">Estatus de inventario</th>
                                 <th class="bg-inverse text-white">Usuario</th>
                                 </thead>
                                 <tbody>
@@ -86,12 +86,24 @@
                                         <td>{{$item->locationnew ? $item->locationnew->name : ''}}</td>
                                         <td>{{$item->status ? $item->status->name : ''}}</td>
                                         <td
-                                            @if ($item->isupdate == 'Y')
-                                                class="bg-cyan text-white text-center"
-                                            @endif
+                                                @if ($item->isupdate == 'Y')
+                                                    class="bg-cyan text-white text-center"
+                                                @endif
+                                                @if ($item->isupdate == 'P')
+                                                    class="bg-warning  text-center"
+                                                @endif
+                                                @if ($item->isupdate == 'C')
+                                                    class="bg-green  text-center"
+                                                @endif
                                         >
                                             @if ($item->isupdate == 'Y')
-                                                SI
+                                                Ajustada
+                                            @endif
+                                            @if ($item->isupdate == 'P')
+                                                Pendiente
+                                            @endif
+                                            @if ($item->isupdate == 'C')
+                                                Correcto
                                             @endif
                                         </td>
                                         <td>{{$item->user ? $item->user->name : ''}}</td>

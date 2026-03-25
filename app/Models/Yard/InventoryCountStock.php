@@ -86,6 +86,7 @@ class InventoryCountStock extends Model
         'countprogramdate',
         'statusid',
         'userid',
+        'isupdate',
         'created_at',
         'updated_at',
     ];
@@ -162,6 +163,7 @@ class InventoryCountStock extends Model
             'zoneid' => $unit->zoneid,
             'locationid' => $unit->locationid,
             'statusid' => $unit->statusid,
+            'isupdate' => 'P',
             'countprogramdate' => Carbon::now()->toDateString(),
         ]);
     }
