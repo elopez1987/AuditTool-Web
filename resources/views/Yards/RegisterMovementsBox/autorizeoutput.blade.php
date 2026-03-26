@@ -303,7 +303,6 @@
                     $("#trucknumber").val('');
                     $("#operatornamerow").hide();
                 } else {
-                    console.log('Datos encontrados:', values.Data);
                     $("#boxnumber").val(values.Data.boxnumber);
                     $("#folionumber").val(values.Data.folionumber);
                     $("#shipmentid").val(values.Data.shipmentid);

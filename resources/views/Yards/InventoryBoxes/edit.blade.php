@@ -85,26 +85,18 @@
                                         <td>{{$item->zonenew ? $item->zonenew->name : ''}}</td>
                                         <td>{{$item->locationnew ? $item->locationnew->name : ''}}</td>
                                         <td>{{$item->status ? $item->status->name : ''}}</td>
-                                        <td
-                                                @if ($item->isupdate == 'Y')
-                                                    class="bg-cyan text-white text-center"
-                                                @endif
-                                                @if ($item->isupdate == 'P')
-                                                    class="bg-warning  text-center"
-                                                @endif
-                                                @if ($item->isupdate == 'C')
-                                                    class="bg-green  text-center"
-                                                @endif
-                                        >
-                                            @if ($item->isupdate == 'Y')
-                                                Ajustada
-                                            @endif
-                                            @if ($item->isupdate == 'P')
-                                                Pendiente
-                                            @endif
-                                            @if ($item->isupdate == 'C')
-                                                Correcto
-                                            @endif
+                                        @php
+                                            $statusMap = [
+                                                'Y' => ['class' => 'bg-cyan text-white', 'text' => 'Ajustada'],
+                                                'P' => ['class' => 'bg-warning', 'text' => 'Pendiente'],
+                                                'C' => ['class' => 'bg-green', 'text' => 'Correcto'],
+                                            ];
+
+                                            $status = $statusMap[$item->isupdate] ?? ['class' => '', 'text' => ''];
+                                        @endphp
+
+                                        <td class="{{ $status['class'] }} text-center">
+                                            {{ $status['text'] }}
                                         </td>
                                         <td>{{$item->user ? $item->user->name : ''}}</td>
                                     </tr>
@@ -166,17 +158,17 @@
             buttons: [
                 {
                     "extend": "copy",
-                    "text": "<img src=\"{{asset('/pics/adcopiar.png')}}\"  alt=''><span  style='font-size: .675rem;'> Copiar</span>",
+                    "text": "<img src=\"{{asset('/pics/adcopiar.png')}}\"  alt=''><span> Copiar</span>",
                     "className": "btn btn-outline-info btn-md  btn-bold",
                 },
                 {
                     "extend": "csv",
-                    "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16'><span  style='font-size: .675rem;'> Csv</span>",
+                    "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16'><span> Csv</span>",
                     "className": "btn btn-outline-info btn-md  btn-bold",
                 },
                 {
                     "extend": "excel",
-                    "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt=''><span  style='font-size: .675rem;'> Excel</span>",
+                    "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt=''><span> Excel</span>",
                     "className": "btn btn-outline-info btn-md  btn-bold",
                 }
             ],
