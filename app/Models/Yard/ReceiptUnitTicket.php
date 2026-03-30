@@ -219,9 +219,6 @@ class ReceiptUnitTicket extends Model
             'folionumber' => $folionumber->id,
             'ticket' => $request['tiket'],
             'weightin' => $request['weightin'],
-            'responsibleid' => $request['responsibleid'],
-            'areaid' => $request['areaid'],
-            'contentid' => $request['contentid'],
             'boxnumber' => $request['boxnumber'],
         ]);
     }

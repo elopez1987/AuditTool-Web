@@ -339,6 +339,35 @@
                         </div>
                     </div>
                 </div>
+
+                    <div class="row" id="full">
+                    <div class="col-lg-2 bt-switch ">
+{{--                        <input type="checkbox" id="isFull" name="isFull" >¿Es Full?--}}
+                        <input type="checkbox" id="isFull" value="SI" name="isFull"
+                               data-size="mini" data-on-color="success" data-off-color="danger"
+                               data-on-text="<i class='ti ti-check'></i>"
+                               data-off-text="<i class='ti ti-close'></i>"
+                        > ¿Es Full?
+                    </div>
+                </div>
+                <div class="row mt-4" id="fulldata" style="display: none;">
+                    <x-text-input
+                            name="boxnumber2"
+                            label="Placa de caja 2"
+                            uppercase
+                    />
+                    <x-text-input
+                            name="eccobox2"
+                            label="Eco. de caja 2"
+                            uppercase
+                    />
+                    <x-text-input
+                            name="shipmentid2"
+                            label="Número de embarque 2"
+                            uppercase
+                    />
+                </div>
+
             </div>
         </div>
     </div>

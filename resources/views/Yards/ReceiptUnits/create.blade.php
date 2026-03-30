@@ -40,11 +40,26 @@
 @endsection
 
 @section('css')
-
+    <link rel="stylesheet" href="{{asset('/theme/assets/libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css')}}">
 @endsection
 
 
 @section('script')
+    <script src="{{asset('/theme/assets/libs/bootstrap-switch/dist/js/bootstrap-switch.min.js')}}"></script>
+    <script>
+        $(".bt-switch input[type='checkbox'], .bt-switch input[type='radio']").bootstrapSwitch();
+
+        // Toggle fulldata visibility and required fields based on isFull checkbox
+        $('#isFull').on('switchChange.bootstrapSwitch', function(event, state) {
+            if (state) {
+                $('#fulldata').show();
+                $('#fulldata input').attr('required', true);
+            } else {
+                $('#fulldata').hide();
+                $('#fulldata input').attr('required', false).val('');
+            }
+        });
+    </script>
 
     <script type="module">
         const baseUrl = "{{ config('app.url') }}";
