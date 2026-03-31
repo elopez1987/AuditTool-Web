@@ -33,6 +33,7 @@ class ReceiptUnitAdjustmentController extends BaseController
             }
         }
 
+        $receiptunit->barcode = $request['barcodenew'] ?? $receiptunit->barcode;
         $receiptunit->foliotruck = $request['foliotruck'] ?? $receiptunit->foliotruck;
         $receiptunit->boxnumber = $request['boxnumber'] ?? $receiptunit->boxnumber;
         $receiptunit->econumber = $request['econumber'] ?? $receiptunit->econumber;

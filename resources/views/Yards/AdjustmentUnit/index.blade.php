@@ -26,14 +26,6 @@
                                            name="carriername">
                                 </div>
                             </div>
-{{--                            <div class="col-lg-4 col-md-6 col-sm-12">--}}
-{{--                                <div class="form-group">--}}
-{{--                                    <label for="operatorname">Nombre de operador<span--}}
-{{--                                            style="color: red">*</span></label>--}}
-{{--                                    <input type="text"  class="form-control" id="operatorname"--}}
-{{--                                           name="operatorname">--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
                         </div>
                         <div class="row">
                             <div class="col-lg-4 col-md-6 col-sm-12">
@@ -50,13 +42,18 @@
                             </div>
                         </div>
                         <div class="row">
-
-{{--                            <div class="col-lg-4 col-md-6 col-sm-12">--}}
-{{--                                <div class="form-group">--}}
-{{--                                    <label for="trucknumber">Placas de tracto<span style="color: red">*</span></label>--}}
-{{--                                    <input type="text" class="form-control" id="trucknumber" name="trucknumber">--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="barcode">Código de barra</label>
+                                    <input type="text" class="form-control" id="barcode" readonly name="barcode">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="barcodenew">Nuevo código de barra</label>
+                                    <input type="text" class="form-control" maxlength="19" id="barcodenew" name="barcodenew">
+                                </div>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-4 col-md-6 col-sm-12">
@@ -207,9 +204,11 @@
                     $("#razonid").val('');
                     $("#statusunit").val('');
                     $("#shipmentid").val('');
+                    $("#barcode").val('');
                 } else {
                     // Usar .val() en lugar de .attr("value") para actualizar correctamente
                     $("#boxnumber").val(values.Data.boxnumber);
+                    $("#barcode").val(values.Data.barcode);
                     $("#trucknumber").val(values.Data.trucknumber);
                     $("#statusidact").val(values.Data.statusname);
                     $("#econumber").val(values.Data.econumberbox);
@@ -299,7 +298,9 @@
                                 $('#statusidact').val('');
                                 $('#statusunit').val('');
                                 $('#shipmentid').val('');
-                                
+                                $('#barcode').val('');
+                                $('#barcodenew').val('');
+
                                 // Resetear selects
                                 $('select[name="razonstatusid"]').val('').trigger('change');
                                 $('select[name="statusid"]').val('').trigger('change');
