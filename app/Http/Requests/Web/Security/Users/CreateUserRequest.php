@@ -17,11 +17,11 @@ class CreateUserRequest extends FormRequest
         return [
             'name' => 'required|string|max:150',
             'email' => 'required|email|unique:users,email',
-            'password' => ['required', 'string', Password::min(10)->mixedCase()
+            'password' => ['required', 'string', Password::min(9)->mixedCase()
                 ->uncompromised()->symbols()->letters()->numbers(),
             ],
             'role_id' => 'required|exists:roles,name',
-            'username' => 'required|max:8|string|unique:users,username',
+            'username' => 'required|min:4|max:8|string|unique:users,username',
             'auxiliary01' => 'nullable|string|max:190|regex:/^[a-zA-Z0-9\s]+$/',
             'auxiliary02' => 'nullable|string|max:190|regex:/^[a-zA-Z0-9\s]+$/',
             'auxiliary03' => 'nullable|string|max:190|regex:/^[a-zA-Z0-9\s]+$/',

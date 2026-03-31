@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Yard\ReceiptUnit;
 
+use AllowDynamicProperties;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Yard\ReceiptUnit\CreateReceiptUnitRequest;
 use App\Http\Services\Receipt\ServiceReceiptUnit;
+use App\Http\Services\Yard\ReceiptUnitFullService;
 use App\Models\Yard\ReceiptUnit;
 use App\Models\Yard\StorageUnitTrace;
 use App\Traits\Web\EDI\RegisterEdiShipment;
@@ -19,6 +21,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Facades\DataTables;
 
+#[AllowDynamicProperties]
 class ReceiptUnitController extends BaseController
 {
     use QueryReceiptTruck;
@@ -33,9 +36,10 @@ class ReceiptUnitController extends BaseController
 
     private ServiceReceiptUnit $serviceReceiptUnit;
 
-    public function __construct(ServiceReceiptUnit $serviceReceiptUnit)
+    public function __construct(ServiceReceiptUnit $serviceReceiptUnit, ReceiptUnitFullService $serviceReceiptUnitFull)
     {
         $this->serviceReceiptUnit = $serviceReceiptUnit;
+        $this->serviceReceiptUnitFull = $serviceReceiptUnitFull;
     }
 
     public function index()
@@ -57,7 +61,7 @@ class ReceiptUnitController extends BaseController
                 'tracto:id,operatorname,phone,trucknumber,econumber', 'center:centerid,description',
                 'unittype:id,description', 'truckcategory:truckcategoryid,description',
                 'unitstatus:id,name', 'status:statusid,name,auxiliary01', 'truck:id,name'])
-            ->whereNotIn('statusid', ['TR'])
+            ->whereNotIn('statusid', ['TR', 'ES'])
             ->Folio($request->get('folionumber'))
             ->Barcode($request->get('barcode'))
             ->Location($request->get('location'))
@@ -173,6 +177,23 @@ class ReceiptUnitController extends BaseController
             if ($receiptunit->razonstatusid == 1) {
                 if (! empty($parameter) && in_array('SWH-21', (array) $parameter)) {
                     $this->sendDataToRControl($receiptunit, 'ENTRANCE', 'EVENT');
+                }
+            }
+
+            //			Válida si la unidad es tipo full
+
+            if ($request->has('isFull') && $request->isFull === 'SI') {
+                $truck2 = $this->createNewTruck($request);
+                $receiptunit2 = $this->serviceReceiptUnitFull->createNewReceiptUnitFull($request, $truck2);
+
+                if (! empty($parameter) && in_array('SWH-08', (array) $parameter)) {
+                    $this->addNewEdiForIzel($receiptunit2, 'IN');
+                }
+
+                if ($receiptunit2->razonstatusid == 1) {
+                    if (! empty($parameter) && in_array('SWH-21', (array) $parameter)) {
+                        $this->sendDataToRControl($receiptunit2, 'ENTRANCE', 'EVENT');
+                    }
                 }
             }
 

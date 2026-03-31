@@ -36,6 +36,11 @@ class CreateReceiptUnitRequest extends FormRequest
             'trucknumber' => 'required',
             'ecotruck' => 'required',
             'comment' => 'nullable',
+
+            'isFull' => 'nullable|string',
+            'boxnumber2' => 'required_if:isFull,SI|nullable|string',
+            'eccobox2' => 'required_if:isFull,SI|nullable|string',
+            'shipmentid2' => 'required_if:isFull,SI|nullable|string',
         ];
     }
 
