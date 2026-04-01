@@ -426,6 +426,16 @@
                     </div>
                 </a>
             @endcan
+            @can('ordercustomers.index')
+                <a href="{{route('ordercustomers.index')}}">
+                    <div class="box" data-toggle="tooltip" data-placement="top"
+                         title="Catálogo de clientes y sus datos generales.">
+                        <i class="lni lni-customer"></i>
+                        <h5>Clientes</h5>
+                        <h4>Clientes</h4>
+                    </div>
+                </a>
+            @endcan
         </div>
 
     </main>

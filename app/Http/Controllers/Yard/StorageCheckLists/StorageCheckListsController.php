@@ -24,7 +24,10 @@ class StorageCheckListsController extends BaseController
         $data = StorageCheckList::controlAccessUser()
             ->with(['center:centerid,description', 'status:statusid,name'])
             ->leftJoin('storagereasons', 'storagereasons.id', '=', 'storagechecklists.auxiliary03')
-            ->leftJoin('storageunittypes', 'storageunittypes.auxiliary01', '=', 'storagechecklists.auxiliary01')
+            ->leftJoin('storageunittypes', function ($join) {
+                $join->on('storageunittypes.auxiliary01', '=', 'storagechecklists.auxiliary01')
+                    ->where('storageunittypes.centerid', '=', 'storagechecklists.centerid');
+            })
             ->Name($request->get('name'))
             ->Warehouse($request->get('warehouseid'))
             ->select('storagechecklists.*', 'storagereasons.name as reason', 'storageunittypes.description as unittype')
