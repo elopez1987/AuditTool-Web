@@ -27,7 +27,7 @@
                     <hr class="mt-2">
                     <div class="row mt-4">
                         <div class="col-lg-6">
-                            <table class="table table-condensed table-striped table-bordered tablegeneral">
+                            <table class="table table-condensed  table-bordered tablegeneral">
                                 <thead>
                                 <tr>
                                     <th>Montcarguista</th>

@@ -55,10 +55,10 @@
                                     <th class="bg-inverse text-white">C.Distribución</th>
                                     <th class="bg-inverse text-white">Bodega</th>
                                     <th class="bg-inverse text-white">Nombre</th>
+                                    <th class="bg-inverse text-white">Concepto de entrada</th>
                                     <th class="bg-inverse text-white">Tipo</th>
                                     <th class="bg-inverse text-white">Origen</th>
                                     <th class="bg-inverse text-white">Tipo de check list</th>
-                                    <th class="bg-inverse text-white">Concepto de entrada</th>
                                     <th class="bg-inverse text-white">Estatus</th>
                                     <th class="bg-inverse text-white">Opciones</th>
                                 </tr>
