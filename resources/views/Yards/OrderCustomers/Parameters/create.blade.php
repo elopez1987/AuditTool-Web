@@ -46,7 +46,7 @@
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
                                             @if ($model->configurationflag != null)
-                                                <td style="width: 70px;">
+                                                <td style="width: 70px;" class="switch">
                                                     <input
                                                         type="checkbox"
                                                         value="{{$parameter->statusid}}"
@@ -56,12 +56,20 @@
                                                         @endif
                                                         @endforeach
                                                         name="parameter[]"
+                                                        data-size="mini" data-on-color="success" data-off-color="danger"
+                                                        data-on-text="<i class='ti ti-check'></i>"
+                                                        data-off-text="<i class='ti ti-close'></i>"
                                                     >
                                                 </td>
                                             @else
-                                                <td>
+                                                <td class="switch">
                                                     <input type="checkbox" value="{{$parameter->statusid}}"
-                                                           name="parameter[]">
+                                                           name="parameter[]"
+                                                           data-size="mini" data-on-color="success" data-off-color="danger"
+                                                           data-on-text="<i class='ti ti-check'></i>"
+                                                           data-off-text="<i class='ti ti-close'></i>"
+                                                    >
+
                                                 </td>
                                             @endif
                                             <td>{{$parameter->statusid}}</td>
@@ -79,7 +87,14 @@
     </div>
 @endsection
 
-@section('script')
+@section('css')
+    <link rel="stylesheet" href="{{asset('/theme/assets/libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css')}}">
+@endsection
 
+@section('script')
+    <script src="{{asset('/theme/assets/libs/bootstrap-switch/dist/js/bootstrap-switch.min.js')}}"></script>
+    <script>
+        $(".switch input[type='checkbox']").bootstrapSwitch();
+    </script>
 @endsection
 

@@ -52,17 +52,15 @@
                                                 @foreach($functions as $function)
                                                     @if ($module->moduleid == $function->moduleid)
                                                         <li>
-                                                        <span class="caret"
-                                                              style="font-size: 12px;color: #0e2259;font-weight: 500;">{{$function->description}}</span>
-                                                            <ul class="nested">
+                                                        <span class="caret" style="font-size: 12px;color: #0e2259;font-weight: 500;margin-top: 10px !important;">{{$function->description}}</span>
+                                                            <ul class="nested ">
                                                                 @foreach($permissions as $permission)
                                                                     @if ($permission->functionid == $function->functionid )
-                                                                        <li class=" text-capitalize"
-                                                                            style="font-size: 11px">
+                                                                        <li class=" text-capitalize switch" style="font-size: 12px">
                                                                             @if (!empty($access))
                                                                                 <input
                                                                                     type="checkbox"
-                                                                                    class="font-16"
+                                                                                    class=" mt-2 mb-2"
                                                                                     value="{{$permission->id}}"
                                                                                     @foreach ($access as $check)
                                                                                         @if ($check->permission_id == $permission->id)
@@ -70,15 +68,20 @@
                                                                                     @endif
                                                                                     @endforeach
                                                                                     name="permissions[]"
+                                                                                    data-size="mini" data-on-color="success" data-off-color="danger"
+                                                                                    data-on-text="<i class='ti ti-check'></i>"
+                                                                                    data-off-text="<i class='ti ti-close'></i>"
                                                                                 >
-                                                                                <span class="text-dark"
-                                                                                      style="font-size: 11px">{{$permission->description}}</span>
+                                                                                <span class="text-dark" style="font-size: 12px;margin-left:10px !important; ">{{$permission->description}}</span>
                                                                             @else
                                                                                 <input type="checkbox"
                                                                                        value="{{$permission->id}}"
-                                                                                       name="permissions[]">
-                                                                                <span
-                                                                                    style="font-size: 11px">{{$permission->description}}</span>
+                                                                                       name="permissions[]"
+                                                                                       data-size="mini" data-on-color="success" data-off-color="danger"
+                                                                                       data-on-text="<i class='ti ti-check'></i>"
+                                                                                       data-off-text="<i class='ti ti-close'></i>"
+                                                                                >
+                                                                                <span style="font-size: 12px">{{$permission->description}}</span>
                                                                             @endif
                                                                         </li>
                                                                     @endif
@@ -132,7 +135,7 @@
                         <div class="card-body">
                             <table>
                                 <tr>
-                                    <td style="width: 50px;">
+                                    <td style="width: 50px;" class="switch">
                                         <input
                                             type="checkbox"
                                             name="param-user-check"
