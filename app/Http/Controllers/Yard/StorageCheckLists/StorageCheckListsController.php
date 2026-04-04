@@ -79,4 +79,14 @@ class StorageCheckListsController extends BaseController
 
         return $this->infoResponse('storagechecklists.index');
     }
+
+    public function destroy(Request $request)
+    {
+        $this->authorize('storagechecklists.destroy');
+        $checklist = StorageCheckList::controlAccessUser()->findOrFail($request->id);
+        $checklist->delete();
+
+        return $this->responseSuccessAjax('', now());
+
+    }
 }

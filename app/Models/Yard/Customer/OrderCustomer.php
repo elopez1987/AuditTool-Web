@@ -8,6 +8,7 @@ use App\Models\Configuration\Warehouses\SystemWarehouse;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -77,6 +78,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class OrderCustomer extends Model
 {
     use LogsActivity;
+    use SoftDeletes;
 
     protected $table = 'ordercustomers';
 

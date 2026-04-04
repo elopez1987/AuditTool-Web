@@ -56,6 +56,8 @@ class SystemStatus extends Model
     protected $fillable = [
         'schemaid',
         'statusid',
+        'centerid',
+        'warehouseid',
         'name',
         'comment',
         'auxiliary01',

@@ -131,21 +131,11 @@
                             <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md"
                                     data-toggle="tooltip" data-placement="top" title="Importar archivo">
                                 <img src="{{asset('/ico/engine_gear_internet_option_security_setting_web_icon_127066.png')}}" alt="" class="img-16">
-                                <span style="font-size: 11px;"> Limpiar tractos.</span>
+                                <span> Limpiar tractos.</span>
                             </button>
                         </a>
                         @include('Yards.ReceiptTrucks.cleartruck')
                     @endcan
-                        @can('receipttrucks.importtrucks')
-                            <a href="" data-target="#modal-importtruck" data-toggle="modal" data-placement="top">
-                                <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md"
-                                        data-toggle="tooltip" data-placement="top" title="Importar archivo">
-                                    <img src="{{asset('/ico/engine_gear_internet_option_security_setting_web_icon_127066.png')}}" alt="" class="img-16">
-                                    <span style="font-size: 11px;"> Importar tractos.</span>
-                                </button>
-                            </a>
-                            @include('Yards.ReceiptTrucks.importtruck')
-                        @endcan
                 </div>
             </div>
         </div>

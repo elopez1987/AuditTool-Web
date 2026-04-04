@@ -46,15 +46,15 @@ class SystemStatusController extends BaseController
     public function updatestatus($id, Request $request)
     {
         $status = SystemStatus::findOrFail($id);
-        $status->centerid = $request['centerid'];
-        $status->warehouseid = $request['warehouseid'];
+        $status->centerid = $request['centerid'] ?? '';
+        $status->warehouseid = $request['warehouseid'] ?? '';
         $status->name = $request['namestatus'];
-        $status->comment = $request['comment'];
-        $status->auxiliary01 = $request['auxiliary01'];  // Se utiliza para el color del estatus en la celda
-        $status->auxiliary02 = $request['centerid'];
-        $status->auxiliary03 = $request['warehouseid'];
-        $status->auxiliary04 = $request['auxiliary04'];
-        $status->auxiliary05 = $request['auxiliary05'];
+        $status->comment = $request['comment'] ?? '';
+        $status->auxiliary01 = $request['auxiliary01'] ?? '';  // Se utiliza para el color del estatus en la celda
+        $status->auxiliary02 = $request['auxiliary02'] ?? '';
+        $status->auxiliary03 = $request['auxiliary03'] ?? '';
+        $status->auxiliary04 = $request['auxiliary04'] ?? '';
+        $status->auxiliary05 = $request['auxiliary05'] ?? '';
 
         $status->save();
 

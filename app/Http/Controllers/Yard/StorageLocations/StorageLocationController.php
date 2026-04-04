@@ -28,6 +28,7 @@ class StorageLocationController extends BaseController
     public function getDataLocations(Request $request)
     {
         $query = StorageLocation::controlAccessUser()
+            ->withTrashed()
             ->with([
                 'zone:id,name,zoneid',
                 'center:centerid,name,description',
@@ -72,7 +73,7 @@ class StorageLocationController extends BaseController
 
         return view(
             'Yards.StorageLocations.edit',
-            compact('storagelocation', 'status', 'zones', 'warehouses')
+            compact('storagelocation', 'status', 'zones', 'warehouses'),
         );
     }
 
@@ -86,13 +87,17 @@ class StorageLocationController extends BaseController
     public function destroy($id, Request $request)
     {
         try {
-            $location = StorageLocation::findOrFail($id);
-            $location->delete();
+            $location = StorageLocation::withTrashed()->findOrFail($id);
+
+            $isDeleted = $location->trashed();
+            $isDeleted ? $location->restore() : $location->delete();
+
+            $message = $isDeleted ? 'Registro restaurado con éxito.' : 'Registro eliminado con éxito.';
 
             if ($request->ajax() || $request->wantsJson()) {
                 return response()->json([
                     'success' => true,
-                    'message' => 'Registro eliminado con éxito.',
+                    'message' => $message,
                 ]);
             }
 

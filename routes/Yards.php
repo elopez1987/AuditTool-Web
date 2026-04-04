@@ -214,6 +214,7 @@ Route::middleware(['auth'])->group(function () {
     //    ---------------------------------------------- Lineas de transporte ----------------------------------------------------
     Route::resource('shipmentcarriers', ShipmentCarrierController::class);
     Route::get('getDataCarriers', [ShipmentCarrierController::class, 'getDataCarriers'])->name('getDataCarriers');
+    Route::post('deleteCarrier', [ShipmentCarrierController::class, 'destroy'])->name('deleteCarrier');
     //	Parametrizar líneas de transporte
     Route::get('shipmentcarriers/{id}/parameters', [ParameterCarrierController::class, 'parameters'])->name('shipmentcarriers.parameters');
     Route::put('addparameterscarrier/{id}', [ParameterCarrierController::class, 'addparameterscarrier'])->name('addparameterscarrier');
@@ -236,6 +237,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('ordercustomers/{id}/parameters', [ParameterCustomerController::class, 'parameters'])->name('ordercustomers.parameters');
     Route::put('addparameters/{id}', [ParameterCustomerController::class, 'addparameters'])->name('addparameters');
     Route::post('uploadfileordercustomers', [ImportCustomerController::class, 'importcustomer'])->name('uploadfileordercustomers');
+    Route::post('deleteCustomer', [OrderCustomerController::class, 'destroy'])->name('deleteCustomer');
 
     //    ---------------------------------------------------- Destinos ---------------------------------------------------------
     Route::resource('storagedestinations', StorageDestinationController::class);
@@ -280,6 +282,7 @@ Route::middleware(['auth'])->group(function () {
 
     //  ----------------------------------------------------  Proveedores  -------------------------------------------------------------
     Route::resource('receiptproviders', ReceiptProvidersController::class);
+    Route::post('deleteProviers', [ReceiptProvidersController::class, 'destroy'])->name('deleteProviers');
     Route::get('getDataProviders', [ReceiptProvidersController::class, 'getDataProviders']);
     //    Importar proveedores
     Route::post('uploadfileproviders', [ImportProvidersController::class, 'index'])->name('uploadfileproviders');
@@ -293,6 +296,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('contacts-providers', [ReceiptProviderContactsController::class, 'contactsForProviders'])->name('contacts-providers');
     //  --------------------------------------------  Catalogo de check list  -----------------------------------------------
     Route::resource('storagechecklists', StorageCheckListsController::class)->except(['destroy']);
+    Route::post('deleteChecklists', [StorageCheckListsController::class, 'destroy'])->name('deleteChecklists');
     Route::get('getDataCheckList', [StorageCheckListsController::class, 'getDataCheckList'])->name('getDataCheckList');
 
     //  --------------------------------------------  Detalle de check list -----------------------------------------------
@@ -318,6 +322,7 @@ Route::middleware(['auth'])->group(function () {
 
     //  -------------------------------------------------- Tipos de Unidad  ------------------------------------------------
     Route::resource('storageunittypes', StorageUnitTypesController::class)->except('show', 'destroy');
+    Route::post('deleteUnitType', [StorageUnitTypesController::class, 'destroy'])->name('deleteUnitType');
     Route::get('getStorageUnitTypes', [StorageUnitTypesController::class, 'getStorageUnitTypes'])->name('getStorageUnitTypes');
 
     //    **************************************************** REPORTES  ***********************************************************

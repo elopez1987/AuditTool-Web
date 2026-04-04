@@ -48,33 +48,37 @@
                         </div>
                     </form>
                     <div class="row mt-4">
-                        <div class="col-12">
-                            <table id="table-checklist" width="100%" class="table table-bordered table-condensed">
+                        <div class="col-lg-12">
+                            <table id="table-checklist" class="table table-bordered table-condensed">
                                 <thead>
                                 <tr>
-                                    <th class="bg-inverse text-white">C.Distribución</th>
-                                    <th class="bg-inverse text-white">Bodega</th>
-                                    <th class="bg-inverse text-white">Nombre</th>
-                                    <th class="bg-inverse text-white">Concepto de entrada</th>
-                                    <th class="bg-inverse text-white">Tipo</th>
-                                    <th class="bg-inverse text-white">Origen</th>
-                                    <th class="bg-inverse text-white">Tipo de check list</th>
-                                    <th class="bg-inverse text-white">Estatus</th>
-                                    <th class="bg-inverse text-white">Opciones</th>
+                                    <th>C.Distribución</th>
+                                    <th>Bodega</th>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th>Concepto de entrada</th>
+                                    <th>Tipo</th>
+                                    <th>Origen</th>
+                                    <th>Tipo de check list</th>
+                                    <th>Estatus</th>
+                                    <th>Opciones</th>
                                 </tr>
                                 </thead>
                             </table>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
+@endsection
 
+@section('css')
+    <link rel="stylesheet" href="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.min.css')}}">
 @endsection
 
 @section('script')
+    <script src="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.all.min.js')}}"></script>
     @include('Yards.StorageCheckLists.partials.table')
     <script>
         function reloadtable() {
@@ -86,5 +90,43 @@
             reloadtable();
         });
     </script>
+    <script>
+        function deletechecklist($id) {
+            Swal.fire({
+                title: '¿Estas seguro?',
+                text: "Eliminar el registro!",
+                type: 'warning',
+                showCancelButton: true,
+                // confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Aceptar!',
+                confirmButtonColor: '#66bb6a',
+            }).then((result) => {
+                if (result.value) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        data: {
+                            id: $id,
+                        },
+                        url: '{!! route('deleteChecklists') !!}',
+                        type: "POST",
+                        dataType: 'json',
+                        success: data => {
+                            Swal.fire({
+                                type: 'success',
+                                title: `Check list eliminado correctamente!`,
+                                width: 350,
+                            })
+                            reloadtable();
+                        },
+                    })
 
+                }
+            })
+        }
+    </script>
 @endsection
