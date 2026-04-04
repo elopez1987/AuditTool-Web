@@ -168,7 +168,11 @@ class StorageLocation extends Model
 
     public function zone(): BelongsTo
     {
-        return $this->belongsTo(StorageZone::class, 'zoneid', 'id');
+        return $this->belongsTo(StorageZone::class, 'zoneid', 'id')
+            ->withDefault([
+                'name' => ' ',
+            ],
+            );
     }
 
     //    Filtros Scopes

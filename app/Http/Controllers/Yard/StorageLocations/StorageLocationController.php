@@ -87,7 +87,7 @@ class StorageLocationController extends BaseController
     public function destroy($id, Request $request)
     {
         try {
-            $location = StorageLocation::withTrashed()->findOrFail($id);
+            $location = StorageLocation::controlAccessUser()->withTrashed()->findOrFail($id);
 
             $isDeleted = $location->trashed();
             $isDeleted ? $location->restore() : $location->delete();

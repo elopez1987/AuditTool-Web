@@ -256,7 +256,7 @@ Route::middleware(['auth'])->group(function () {
     //    ---------------------------------------------------- Zonas de Trabajo (Patio,Cortinas,Precargas) -------------------------------
     Route::resource('storagezones', StorageZoneController::class);
     Route::get('getDataZones', [StorageZoneController::class, 'getDataZones'])->name('getDataZones');
-    Route::post('deleteZone', [StorageZoneController::class, 'deleteZone'])->name('deleteZone');
+    Route::post('deleteZone', [StorageZoneController::class, 'destroy'])->name('deleteZone');
     //    Parametros de zonas
     Route::get('storagezones/{id}/parameters', [ParameterZonesController::class, 'parameters'])->name('storagezones.parameters');
     Route::put('storagezonesparameters/{id}', [ParameterZonesController::class, 'storagezonesparameters'])->name('storagezonesparameters');
