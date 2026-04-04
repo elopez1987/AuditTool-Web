@@ -82,7 +82,7 @@
                     <hr class="mt-4">
                     <div class="row">
                         <div class="col-lg-12">
-                            <table class="table table-condensed table-bordered table-striped table-hover tablegeneral">
+                            <table class="table table-condensed table-bordered  table-hover tablegeneral">
                                 <thead>
                                     <tr>
                                         <th>Descripción</th>

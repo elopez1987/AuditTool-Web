@@ -39,7 +39,7 @@
                         </div>
                     </form>
                     <div class="row">
-                        <div class="col-lg-8 col-md-12">
+                        <div class="col-lg-10 col-md-12">
                             <table id="table-mail" class="table table-bordered table-condensed">
                                 <thead>
                                 <tr>
