@@ -61,12 +61,17 @@ class StorageReason extends Model
         'auxiliary04',
         'auxiliary05',
         'statusid',
+        'configurationflag',
     ];
 
     protected $hidden = [
         'created_at',
         'updated_at',
         'schemaid',
+    ];
+
+    protected $casts = [
+        'configurationflag' => 'array',
     ];
 
     protected $attributes = [

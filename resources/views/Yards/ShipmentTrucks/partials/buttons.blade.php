@@ -9,7 +9,7 @@
     <a href="" data-target="#modal-delete-{{$id}}"
        data-toggle="modal">
         <img src="{{asset('/ico/addestroy1.png')}}" alt=""
-             class="img-16 ml-2">
+             class="img-16 ml-2 mr-2">
     </a>
     @include('Yards.ShipmentTrucks.delete')
 @endcan

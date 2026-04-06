@@ -19,3 +19,9 @@
         <img src="{{asset('/ico/receiptasn.png')}}" alt="" class="img-16 ml-1">
     </a>
 @endcan
+
+@can('shipmentcarriers.destroy')
+    <a  onclick="deletecarrier({!! $id !!})" >
+        <img src="{{asset('/ico/remove_delete_exit_close_1545.png')}}" alt="" class="img-16 ml-2">
+    </a>
+@endcan

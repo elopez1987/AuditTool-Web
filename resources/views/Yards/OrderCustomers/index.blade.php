@@ -97,7 +97,12 @@
 
 @endsection
 
+@section('css')
+    <link rel="stylesheet" href="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.min.css')}}">
+@endsection
+
 @section('script')
+    <script src="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.all.min.js')}}"></script>
     @include('Yards.OrderCustomers.partials.table')
     <script>
         function reloadtable() {
@@ -108,5 +113,43 @@
         $("#statusid,#warehouseid").change(function () {
             reloadtable();
         });
+    </script>
+    <script>
+        function deletecustomer($id) {
+            Swal.fire({
+                title: '¿Estas seguro?',
+                text: "Eliminar el registro!",
+                type: 'warning',
+                showCancelButton: true,
+                // confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Aceptar!',
+                confirmButtonColor: '#66bb6a',
+            }).then((result) => {
+                if (result.value) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        data: {
+                            id: $id,
+                        },
+                        url: '{!! route('deleteCustomer') !!}',
+                        type: "POST",
+                        dataType: 'json',
+                        success: data => {
+                            Swal.fire({
+                                type: 'success',
+                                title: `Origen eliminado correctamente!`,
+                                width: 350,
+                            })
+                            reloadtable();
+                        },
+                    })
+                }
+            })
+        }
     </script>
 @endsection

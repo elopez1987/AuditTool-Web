@@ -6,6 +6,7 @@ use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Configuration\Warehouses\SystemWarehouse;
 use App\Models\Security\Users\SecurityAccessWarehouse;
+use App\Models\Yard\StorageLocation;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -117,6 +118,23 @@ class StorageZone extends Model
             ->whereIn('storagezones.warehouseid', $warehouses);
     }
 
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (StorageZone $model) {});
+            self::updating(function (StorageZone $model) {});
+            self::deleting(function (StorageZone $model) {
+                $model->locations()->update(['statusid' => 'D']);
+                $model->locations()->delete();
+            });
+            self::restoring(function (StorageZone $model) {
+                $model->locations()->withTrashed()->restore();
+                $model->locations()->update(['statusid' => 'E']);
+            });
+        }
+    }
+
     //    --Relaciones entre modelos
     public function center()
     {
@@ -133,17 +151,22 @@ class StorageZone extends Model
         return $this->belongsTo(SystemWarehouse::class, 'warehouseid', 'warehouseid');
     }
 
+    public function locations(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(StorageLocation::class, 'zoneid', 'id');
+    }
+
     //    --Filtros para modelos
     public function scopeName($query, $name)
     {
-        if (trim($name) !== '') {
+        if (trim($name) != '') {
             $query->where('storagezones.name', 'like', "%{$name}%");
         }
     }
 
     public function scopeWarehouse($query, $warehouseid)
     {
-        if (trim($warehouseid) !== '') {
+        if (trim($warehouseid) != '') {
             $query->where('storagezones.warehouseid', '=', $warehouseid);
         }
     }

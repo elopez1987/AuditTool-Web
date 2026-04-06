@@ -47,8 +47,8 @@ class StorageCheckListsController extends BaseController
         $this->authorize('storagechecklists.create');
         $centers = $this->getCenterForSelect();
         $warehouses = $this->getWarehouseForSelect();
-        $concetps = StorageReason::where('auxiliary01', '1')
-            ->select('id', 'name')->get();
+        $concetps = StorageReason::select('id', 'name')
+            ->whereRaw("charindex('RES-01', configurationflag) > 0")->get();
 
         return view('Yards.StorageCheckLists.create', compact('centers', 'warehouses', 'concetps'));
     }
@@ -66,8 +66,8 @@ class StorageCheckListsController extends BaseController
         $this->authorize('storagechecklists.edit');
         $status = $this->getStatusSTS();
         $warehouses = $this->getWarehouseForSelect();
-        $concetps = StorageReason::where('auxiliary01', '1')
-            ->select('id', 'name')->get();
+        $concetps = StorageReason::select('id', 'name')
+            ->whereRaw("charindex('RES-01', configurationflag) > 0")->get();
 
         return view('Yards.StorageCheckLists.edit',
             compact('storagechecklist', 'status', 'warehouses', 'concetps'));
@@ -78,5 +78,15 @@ class StorageCheckListsController extends BaseController
         $storagechecklist->update($request->all());
 
         return $this->infoResponse('storagechecklists.index');
+    }
+
+    public function destroy(Request $request)
+    {
+        $this->authorize('storagechecklists.destroy');
+        $checklist = StorageCheckList::controlAccessUser()->findOrFail($request->id);
+        $checklist->delete();
+
+        return $this->responseSuccessAjax('', now());
+
     }
 }

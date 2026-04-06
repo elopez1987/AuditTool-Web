@@ -163,13 +163,13 @@
             const locationId = $(this).data('id');
 
             Swal.fire({
-                title: '¿Estás seguro?',
-                text: '¿Deseas eliminar este registro?',
+                // title: '¿Estás seguro?',
+                text: '¿Deseas cambiar el estatus de este registro?',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#d33',
                 cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Sí, eliminar',
+                confirmButtonText: 'Sí, confirmar',
                 cancelButtonText: 'Cancelar'
             }).then((result) => {
                 if (result.isConfirmed) {
@@ -192,7 +192,7 @@
                         success: function (response) {
                             Swal.fire({
                                 icon: 'success',
-                                title: '¡Eliminado!',
+                                // title: '¡Eliminado!',
                                 text: response.message,
                                 timer: 2000,
                                 showConfirmButton: false

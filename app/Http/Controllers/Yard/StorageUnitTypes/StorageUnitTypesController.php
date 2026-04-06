@@ -54,4 +54,13 @@ class StorageUnitTypesController extends BaseController
 
         return $this->infoResponse('storageunittypes.index');
     }
+
+    public function destroy(Request $request)
+    {
+        $this->authorize('storageunittypes.destroy');
+        $model = StorageUnitType::controlAccessUser()->findOrFail($request->id);
+        $model->delete();
+
+        return $this->responseSuccessAjax('', now());
+    }
 }

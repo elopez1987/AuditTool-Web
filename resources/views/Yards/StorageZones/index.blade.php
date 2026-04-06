@@ -90,11 +90,11 @@
 @endsection
 
 @section('css')
-    <link rel="stylesheet" href="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.min.css')}}">
+{{--    <link rel="stylesheet" href="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.min.css')}}">--}}
 @endsection
 
 @section('script')
-    <script src="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.all.min.js')}}"></script>
+{{--    <script src="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.all.min.js')}}"></script>--}}
     @include('Yards.StorageZones.partials.table')
     <script>
         function reloadtable() {
@@ -111,15 +111,15 @@
     <script>
         function deletezone($id) {
             Swal.fire({
-                title: '¿Estas seguro?',
-                text: "Eliminar el registro!",
-                type: 'warning',
+                text: '¿Deseas cambiar el estatus de este registro?',
+                icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Aceptar!'
+                confirmButtonText: 'Aceptar!',
+                cancelButtonText: 'Cancelar'
             }).then((result) => {
-                if (result.value) {
+                if (result.isConfirmed) {
                     $.ajaxSetup({
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -130,20 +130,28 @@
                             id: $id,
                         },
                         url: '{!! route('deleteZone') !!}',
-                        type: "POST",
+                        type: 'POST',
                         dataType: 'json',
-                        success: data => {
+                        success: function (response) {
                             Swal.fire({
-                                type: 'success',
-                                title: `Zona eliminada correctamente`,
-                                width: 350,
-                            })
+                                icon: 'success',
+                                text: response.message,
+                                timer: 2000,
+                                showConfirmButton: false
+                            });
                             reloadtable();
                         },
-                    })
-
+                        error: function (xhr) {
+                            const message = xhr.responseJSON?.message || 'Error al procesar el registro';
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: message
+                            });
+                        }
+                    });
                 }
-            })
+            });
         }
     </script>
 @endsection

@@ -37,7 +37,7 @@ class ReceiptProvidersController extends BaseController
 
         return view(
             'Yards.ReceiptProviders.create',
-            compact('centers', 'warehouses')
+            compact('centers', 'warehouses'),
         );
     }
 
@@ -56,7 +56,7 @@ class ReceiptProvidersController extends BaseController
 
         return view(
             'Yards.ReceiptProviders.edit',
-            compact('status', 'receiptprovider')
+            compact('status', 'receiptprovider'),
         );
     }
 
@@ -65,5 +65,15 @@ class ReceiptProvidersController extends BaseController
         $receiptprovider->update($request->except('centerid', 'warehouseid'));
 
         return $this->infoResponse('receiptproviders.index');
+    }
+
+    public function destroy(Request $request)
+    {
+        $this->authorize('receiptproviders.destroy');
+        $receiptprovider = ReceiptProvider::controlAccessUser()->find($request->id);
+        $receiptprovider->statusid = 'D';
+        $receiptprovider->delete();
+
+        return $this->responseSuccessAjax('', now());
     }
 }

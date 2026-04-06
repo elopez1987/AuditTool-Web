@@ -4,9 +4,7 @@ namespace App\Http\Controllers\Yard\StorageZone;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Yard\Zones\CreateZoneRequest;
-use App\Models\Yard\StorageLocation;
 use App\Models\Yard\StorageZone\StorageZone;
-use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -25,6 +23,7 @@ class StorageZoneController extends BaseController
     {
         $data = StorageZone::controlAccessUser()
             ->with(['center:centerid,name,description', 'status:statusid,name'])
+            ->withTrashed()
             ->Name($request->get('name'))
             ->Warehouse($request->get('warehouseid'))
             ->get();
@@ -69,15 +68,26 @@ class StorageZoneController extends BaseController
         return $this->infoResponse('storagezones.index');
     }
 
-    public function deleteZone(Request $request)
+    public function destroy(Request $request)
     {
-        $this->authorize('storagezones.destroy');
-        $zone = StorageZone::controlAccessUser()->findOrFail($request['id']);
-        $zone->statusid = 'D';
-        $zone->save();
-        StorageLocation::controlAccessUser()->where('zoneid', $zone->id)->delete();
-        $zone->delete();
+        try {
+            $this->authorize('storagezones.destroy');
+            $zone = StorageZone::controlAccessUser()->withTrashed()->findOrFail($request->id);
 
-        return $this->responseSuccessAjax('', Carbon::now());
+            $isDeleted = $zone->trashed();
+            $isDeleted ? $zone->restore() : $zone->delete();
+
+            $message = $isDeleted ? 'Registro restaurado con éxito.' : 'Registro eliminado con éxito.';
+
+            return response()->json([
+                'success' => true,
+                'message' => $message,
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al eliminar el registro: ' . $th->getMessage(),
+            ], 500);
+        }
     }
 }

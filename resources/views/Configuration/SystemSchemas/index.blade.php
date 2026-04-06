@@ -54,13 +54,13 @@
                     </form>
                     <div class="card-input">
                         <div class="row">
-                            <div class="col-lg-6">
+                            <div class="col-lg-10">
                                 <table id="table-schema" class="table table-bordered  table-condensed table-hover">
                                     <thead>
                                     <tr>
-                                        <th class="bg-inverse text-white">Nombre</th>
-                                        <th class="bg-inverse text-white">Descripción</th>
-                                        <th class="bg-inverse text-white">Opciones</th>
+                                        <th>Nombre</th>
+                                        <th>Descripción</th>
+                                        <th>Opciones</th>
                                     </tr>
                                     </thead>
                                 </table>

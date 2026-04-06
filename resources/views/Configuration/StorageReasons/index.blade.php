@@ -46,16 +46,16 @@
                                 <thead>
                                 <tr>
                                     <th>Código</th>
-                                    <th class="bg-inverse text-white">Nombre</th>
-                                    <th class="bg-inverse text-white">Evento WMS</th>
-                                    <th class="bg-inverse text-white">Tipo de movimiento</th>
-                                    <th class="bg-inverse text-white">Auxiliar 01</th>
-                                    <th class="bg-inverse text-white">Auxiliar 02</th>
-                                    <th class="bg-inverse text-white">Auxiliar 03</th>
-                                    <th class="bg-inverse text-white">Auxiliar 04</th>
-                                    <th class="bg-inverse text-white">Auxiliar 05</th>
-                                    <th class="bg-inverse text-white">Estatus</th>
-                                    <th class="bg-inverse text-white">Opciones</th>
+                                    <th>Nombre</th>
+                                    <th>Evento WMS</th>
+                                    <th>Tipo de movimiento</th>
+                                    <th>Auxiliar 01</th>
+                                    <th>Auxiliar 02</th>
+                                    <th>Auxiliar 03</th>
+                                    <th>Auxiliar 04</th>
+                                    <th>Auxiliar 05</th>
+                                    <th>Estatus</th>
+                                    <th>Opciones</th>
                                 </tr>
                                 </thead>
                             </table>

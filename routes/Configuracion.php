@@ -22,6 +22,7 @@ use App\Http\Controllers\Configuration\Printers\SystemPrintersController;
 use App\Http\Controllers\Configuration\Schemas\ImportStatusController;
 use App\Http\Controllers\Configuration\Schemas\SystemSchemaController;
 use App\Http\Controllers\Configuration\Schemas\SystemStatusController;
+use App\Http\Controllers\Configuration\StorageReason\ParameterReasonController;
 use App\Http\Controllers\Configuration\StorageReason\StorageReasonController;
 use App\Http\Controllers\Configuration\StorageTaskMails\StorageTaskMailsController;
 use App\Http\Controllers\Configuration\StorageTaskWhatsapp\StorageTaskWhatsappController;
@@ -202,6 +203,9 @@ Route::group(['middleware' => ['role:ADMINISTRADOR']], function () {
     //  --------------------------------------  Conceptos de ajustes (Eventos) ---------------------------------------------------------
     Route::resource('storagereasons', StorageReasonController::class);
     Route::get('getDataTypeMovements', [StorageReasonController::class, 'getDataTypeMovements'])->name('getDataTypeMovements');
+    //    Parametros de bodegas
+    Route::get('storagereasons/{id}/parameters', [ParameterReasonController::class, 'parameters'])->name('systemwarehouses.parameters');
+    Route::put('storagereasons-parameter/{id}', [ParameterReasonController::class, 'update'])->name('storagereasons-parameter');
 
     //  Lista de tareras de WhatsApp pendientes de ejecutar
     Route::resource('storagetaskwhatsapp', StorageTaskWhatsappController::class)->only(['index', 'destroy']);

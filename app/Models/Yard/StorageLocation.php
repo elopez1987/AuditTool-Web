@@ -110,7 +110,6 @@ class StorageLocation extends Model
     protected $hidden = [
         'created_at',
         'updated_at',
-        'deleted_at',
         'schemaid',
     ];
 
@@ -169,7 +168,11 @@ class StorageLocation extends Model
 
     public function zone(): BelongsTo
     {
-        return $this->belongsTo(StorageZone::class, 'zoneid', 'id');
+        return $this->belongsTo(StorageZone::class, 'zoneid', 'id')
+            ->withDefault([
+                'name' => ' ',
+            ],
+            );
     }
 
     //    Filtros Scopes

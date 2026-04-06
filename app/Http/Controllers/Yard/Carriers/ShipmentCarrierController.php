@@ -6,6 +6,8 @@ use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Yard\Carriers\CreateCarrierRequest;
 use App\Models\Yard\Carriers\ShipmentCarrier;
 use App\Traits\Web\General\StorageWebPhotoTrait;
+use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -75,5 +77,15 @@ class ShipmentCarrierController extends BaseController
         }
 
         return $this->infoResponse('shipmentcarriers.index');
+    }
+
+    public function destroy(Request $request): JsonResponse
+    {
+        $this->authorize('shipmentcarriers.destroy');
+        $shipmentcarrier = ShipmentCarrier::controlAccessUser()->findOrFail($request->id);
+        $shipmentcarrier->statusid = 'D';
+        $shipmentcarrier->delete();
+
+        return $this->responseSuccessAjax('', Carbon::now());
     }
 }

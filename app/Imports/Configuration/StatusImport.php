@@ -22,17 +22,37 @@ class StatusImport implements ToModel, WithBatchInserts, WithChunkReading, WithH
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Model|null
+     * @return void
      */
     public function model(array $row)
     {
+        $data = [
+            'name' => trim($row['name']),
+        ];
+
+        $optionalFields = [
+            'centerid',
+            'warehouseid',
+            'comment',
+            'auxiliary01',
+            'auxiliary02',
+            'auxiliary03',
+            'auxiliary04',
+            'auxiliary05',
+        ];
+
+        foreach ($optionalFields as $field) {
+            if (array_key_exists($field, $row)) {
+                $data[$field] = trim($row[$field]) ?? '';
+            }
+        }
+
         SystemStatus::updateOrCreate(
             [
                 'schemaid' => $this->schema->schemaid,
                 'statusid' => trim($row['statusid']),
-            ], [
-                'name' => trim($row['name']),
             ],
+            $data,
         );
     }
 
@@ -55,12 +75,8 @@ class StatusImport implements ToModel, WithBatchInserts, WithChunkReading, WithH
     public function rules(): array
     {
         return [
-            '*.statusid' => [
-                'required',
-            ],
-            '*.name' => [
-                'required',
-            ],
+            '*.statusid' => 'required',
+            '*.name' => 'required',
         ];
     }
 

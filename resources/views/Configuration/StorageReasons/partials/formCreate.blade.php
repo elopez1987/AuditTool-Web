@@ -9,7 +9,7 @@
     <div class="col-lg-2 col-md-6 col-sm-12">
         <div class="form-group">
             <label for="razonstatusid">Evento WMS</label>
-            <input type="text" class="form-control" id="razonstatusid" required name="razonstatusid" maxlength="10"
+            <input type="text" class="form-control" id="razonstatusid"  name="razonstatusid" maxlength="10"
                    aria-describedby="razonstatusid" value="{{old('razonstatusid')}}"
                    onKeyUp=this.value=this.value.toUpperCase()>
         </div>
@@ -17,7 +17,7 @@
     <div class="col-lg-2 col-md-6 col-sm-12">
         <div class="form-group">
             <label for="type">Tipo de movimiento</label>
-            <input type="text" class="form-control" id="type" required name="type" maxlength="10"
+            <input type="text" class="form-control" id="type"  name="type" maxlength="10"
                    aria-describedby="type" value="{{old('type')}}" onKeyUp=this.value=this.value.toUpperCase()>
         </div>
     </div>

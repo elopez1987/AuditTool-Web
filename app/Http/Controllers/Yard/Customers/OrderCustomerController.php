@@ -42,7 +42,7 @@ class OrderCustomerController extends BaseController
 
         return view(
             "{$this->viewPath}.create",
-            compact('centers', 'warehouses')
+            compact('centers', 'warehouses'),
         );
     }
 
@@ -67,7 +67,7 @@ class OrderCustomerController extends BaseController
 
         return view(
             "{$this->viewPath}.edit",
-            compact('ordercustomer', 'status')
+            compact('ordercustomer', 'status'),
         );
     }
 
@@ -76,5 +76,14 @@ class OrderCustomerController extends BaseController
         $ordercustomer->update($request->all());
 
         return $this->infoResponse("{$this->routePath}.index");
+    }
+
+    public function destroy(Request $request)
+    {
+        $this->authorize('ordercustomers.destroy');
+        $ordercustomer = OrderCustomer::controlAccessUser()->find($request->id);
+        $ordercustomer->delete();
+
+        return $this->responseSuccessAjax('', now());
     }
 }
