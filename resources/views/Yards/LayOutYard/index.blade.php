@@ -148,7 +148,6 @@
                         @if(Auth::user()->access->center->centerid == 'BRIDCUE')
                             @include('Yards.LayOutYard.Yards.BridgestoneCva.index')
                         @endif
-
                     </div>
                 </div>
             </div>
