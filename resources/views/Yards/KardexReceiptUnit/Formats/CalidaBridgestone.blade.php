@@ -688,7 +688,12 @@
                         @endif
                     @endforeach
                 </th>
-                <th></th>
+                <th>
+                    @if(!empty($receiptunit->key))
+                        <img src="{{storage_path('app/' . $receiptunit->key->keyautoriza )}}" alt="Firma"
+                             style="height: 40px;max-height: 40px"/>
+                    @endif
+                </th>
             </tr>
         </table>
     </div>
