@@ -71,7 +71,7 @@
         <table class="border-none">
             <tr>
                 <th width="25%" class="border-none">
-                    <img src="img/Bridgestone.png'" alt="" style="height: 25px;width: 100px">
+                    <img src="img/Bridgestone.png" alt="" style="height: 25px;width: 100px">
                 </th>
                 <th class="border-none">INSPECCION DEL TRACTOCAMION Y DEL SEMIREMOLQUE</th>
             </tr>
@@ -668,7 +668,7 @@
                         </th>
                     </table>
                 </th>
-                <th style="width: 25%">
+                <th style="width: 25%;text-transform: uppercase;">
                     {{$receiptunit->key ? $receiptunit->key->nameautoriza : ''}}
                 </th>
             </tr>
@@ -681,14 +681,14 @@
                 <th>FIRMA DE AUTORIZACION</th>
             </tr>
             <tr>
-                <th style="height: 30px">
+                <th style="height: 30px;background: white">
                     @foreach($comments as $comment)
                         @if($comment->auxiliary01 == 'QI')
                             {{$comment->comment}}
                         @endif
                     @endforeach
                 </th>
-                <th>
+                <th style="background: white">
                     @if(!empty($receiptunit->key))
                         <img src="{{storage_path('app/' . $receiptunit->key->keyautoriza )}}" alt="Firma"
                              style="height: 40px;max-height: 40px"/>
