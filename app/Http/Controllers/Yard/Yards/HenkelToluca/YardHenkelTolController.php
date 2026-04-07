@@ -32,6 +32,37 @@ class YardHenkelTolController extends BaseController
             ->whereNotIn('receiptunits.statusid', ['TR'])
             ->get();
 
-        return view('Yards.LayOutYard.index', compact('result', 'receiptUnits'));
+        $totales = DB::table('storagelocations as s')
+            ->leftJoin('storagezones as z', 's.zoneid', '=', 'z.id')
+            ->whereNotIn('z.zoneid', ['CO', 'ST'])
+            ->selectRaw("
+						COUNT(s.locationid) AS total_ubicaciones,
+						COUNT(CASE WHEN s.statusid = 'D' THEN 1 END) AS total_ocupadas,
+						COUNT(s.locationid) - COUNT(CASE WHEN s.statusid = 'D' THEN 1 END) AS total_disponibles,
+						ROUND(
+							COUNT(CASE WHEN s.statusid = 'D' THEN 1 END) * 100.0 / COUNT(s.locationid),
+							2
+						) AS porcentaje_ocupacion
+					")
+            ->first();
+
+        $bodegas = DB::table('storagelocations as s')
+            ->leftJoin('storagezones as z', 's.zoneid', '=', 'z.id')
+            ->leftJoin('systemwarehouses as w', 's.warehouseid', '=', 'w.warehouseid')
+            ->whereNotIn('z.zoneid', ['CO', 'ST'])
+            ->groupBy('w.name')
+            ->selectRaw("
+       					 w.name AS warehouse,
+					COUNT(s.locationid) AS total_ubicaciones,
+					COUNT(CASE WHEN s.statusid = 'D' THEN 1 END) AS total_ocupadas,
+					ROUND(
+						COUNT(CASE WHEN s.statusid = 'D' THEN 1 END) * 100.0 / COUNT(s.locationid),
+						2
+					) AS porcentaje_ocupacion
+				")
+            ->get();
+
+        return view('Yards.LayOutYard.index',
+            compact('result', 'receiptUnits', 'totales', 'bodegas'));
     }
 }

@@ -16,7 +16,7 @@
                                 <a href="">
                                     @include('buttons.save')
                                 </a>
-                                <a href="{{route('schedulereceipt.index')}}">
+                                <a href="{{route('receiptasn.index')}}">
                                     @include('buttons.back')
                                 </a>
                             </div>
