@@ -75,7 +75,8 @@ class SecurityFunctionsController extends BaseController
         $this->authorize('securityfunctions.edit');
         $modules = SecurityModule::select(['description', 'moduleid'])->get();
         $permissions = Permission::where('functionid', $securityfunction->functionid)
-            ->select(['description', 'id', 'name', 'category', 'moduleid', 'functionid', 'guard_name'])->get();
+            ->select(['description', 'id', 'name', 'category',
+                'moduleid', 'functionid', 'guard_name'])->get();
 
         return view(
             'Security.SecurtiyFunctions.edit',

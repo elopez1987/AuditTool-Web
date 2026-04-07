@@ -10,6 +10,7 @@ use App\Models\Security\Permission\Permission;
 use App\Models\Security\Roles\Role;
 use App\Models\Security\Roles\RoleHasPermission;
 use App\Traits\Web\Security\QuerySecurityRoles;
+use Artisan;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
@@ -99,9 +100,8 @@ class RoleController extends BaseController
 
     public function updatePermissionToRole(Request $request, Role $securityrole)
     {
-        $this->serviceRole->destroyPermissionsToRole($securityrole);
-        $this->serviceRole->createNewPermissionToRole($request, $securityrole);
-        \Artisan::call('optimize:clear');
+        $this->serviceRole->syncPermissionsToRole($request, $securityrole);
+        Artisan::call('optimize:clear');
 
         return $this->redirectBackSuccess();
     }

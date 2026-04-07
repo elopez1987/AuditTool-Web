@@ -111,6 +111,7 @@
                                 <tr>
                                     <th>Modulo</th>
                                     <th>Función</th>
+                                    <th>Permiso</th>
                                     <th>Descripión</th>
                                 </tr>
                                 </thead>
@@ -119,6 +120,7 @@
                                     <tr>
                                         <td>{{$item->permission->module->description}}</td>
                                         <td>{{$item->permission->function->description}}</td>
+                                        <td>{{$item->permission->name}}</td>
                                         <td>{{$item->permission->description}}</td>
                                     </tr>
                                 @endforeach
@@ -223,7 +225,7 @@
             "paging": true,
             "searching": true,
             "ordering": true,
-            "sScrollY": "350px",
+            "sScrollY": "650px",
             // "sScrollX": true,
             "processing": true,
             // "serverSide": true,

@@ -76,14 +76,14 @@ class SecurityFunction extends Model
 
     public function scopeDescription($query, $description)
     {
-        if (trim($description) !== '') {
+        if (trim($description) != '') {
             $query->where('securityfunctions.description', 'like', "%{$description}%");
         }
     }
 
     public function scopeModule($query, $moduleid)
     {
-        if (trim($moduleid) !== '') {
+        if (trim($moduleid) != '') {
             $query->where('securityfunctions.moduleid', '=', $moduleid);
         }
     }
