@@ -2,29 +2,38 @@
 
 namespace App\Http\Services\Security;
 
+use App\Models\Security\Roles\Role;
+use App\Models\Security\Roles\RoleHasPermission;
 use App\Traits\Web\Security\QuerySecurityRoles;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class ServiceRole
 {
     use QuerySecurityRoles;
 
-    public function destroyPermissionsToRole($securityrole): void
+    public function syncPermissionsToRole(Request $request, Role $securityrole): void
     {
-        DB::table('role_has_permissions')
-            ->where('role_id', '=', $securityrole->id)->delete();
-    }
+        $incomingPermissions = collect($request->input('permissions', []))->filter()->map(fn ($id) => (int) $id);
 
-    public function createNewPermissionToRole($request, $securityrole): void
-    {
-        if ($request['permissions'] !== '') {
-            $total = count($request['permissions']) - 1;
-            for ($i = 0; $i <= $total; $i++) {
-                DB::table('role_has_permissions')->insert([
-                    'role_id' => $securityrole->id,
-                    'permission_id' => $request['permissions'][$i],
-                ]);
-            }
+        $currentPermissions = RoleHasPermission::where('role_id', $securityrole->id)
+            ->pluck('permission_id');
+
+        $toAdd = $incomingPermissions->diff($currentPermissions);
+        $toRemove = $currentPermissions->diff($incomingPermissions);
+
+        if ($toRemove->isNotEmpty()) {
+            RoleHasPermission::where('role_id', $securityrole->id)
+                ->whereIn('permission_id', $toRemove)
+                ->delete();
+        }
+
+        if ($toAdd->isNotEmpty()) {
+            $records = $toAdd->map(fn ($permissionId) => [
+                'role_id' => $securityrole->id,
+                'permission_id' => $permissionId,
+            ])->values()->toArray();
+
+            RoleHasPermission::insert($records);
         }
     }
 }

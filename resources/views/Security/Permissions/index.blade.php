@@ -73,12 +73,12 @@
                                    class="table table-bordered table-condensed table-hover">
                                 <thead>
                                     <tr>
-                                        <th class="bg-inverse text-white">Modulo</th>
-                                        <th class="bg-inverse text-white">Función</th>
-                                        <th class="bg-inverse text-white">Nombre</th>
-                                        <th class="bg-inverse text-white">Descripción</th>
-                                        <th class="bg-inverse text-white">Guard</th>
-                                        <th width="5%" class="bg-inverse text-white">Opciones</th>
+                                        <th>Modulo</th>
+                                        <th>Función</th>
+                                        <th>Nombre</th>
+                                        <th>Descripción</th>
+                                        <th>Guard</th>
+                                        <th>Opciones</th>
                                     </tr>
                                 </thead>
                             </table>

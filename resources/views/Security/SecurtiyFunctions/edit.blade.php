@@ -128,7 +128,7 @@
                                             @for($i=1;$i <=8;$i++)
                                                 <tr>
                                                     <td><input type="text" class="form-control" name="permisionid[]" ></td>
-                                                    <td><input type="text" class="form-control" name="permisionname[]" onKeyUp=this.value=this.value.toUpperCase();></td>
+                                                    <td><input type="text" class="form-control" name="permisionname[]"></td>
                                                 </tr>
                                             @endfor
                                             </tbody>
@@ -155,10 +155,8 @@
                                     <th>Id</th>
                                     <th>Modulo</th>
                                     <th>Funcion</th>
-                                    <th>Categoria</th>
                                     <th>Permiso</th>
                                     <th>Descripción</th>
-                                    {{--                                    <th>Tipo</th>--}}
                                     <th>Opciones</th>
                                 </tr>
                                 </thead>
@@ -168,10 +166,8 @@
                                         <td>{{$permission->id}}</td>
                                         <td>{{$permission->module ? $permission->module->description : ''}}</td>
                                         <td>{{$permission->function ? $permission->function->description : ''}}</td>
-                                        <td>{{$permission->category}}</td>
                                         <td>{{$permission->name}}</td>
                                         <td>{{$permission->description}}</td>
-                                        {{--                                        <td>{{$permission->guard_name}}</td>--}}
                                         <td>
                                             @can('securitypermissions.destroy')
                                                 <div class="btn-group">

@@ -69,11 +69,6 @@ class Permission extends Model
         'updated_at',
     ];
 
-    public function getNameAttribute($value)
-    {
-        return strtoupper($value);
-    }
-
     public function function()
     {
         return $this->belongsTo(SecurityFunction::class, 'functionid');
@@ -88,21 +83,21 @@ class Permission extends Model
     {
         // Avoid deprecated warning in PHP 8.1+: trim(null) is deprecated
         $name = is_string($name) ? trim($name) : '';
-        if ($name !== '') {
+        if ($name != '') {
             $query->where('permissions.name', 'like', "%{$name}%");
         }
     }
 
     public function scopeForModule($query, $moduleid)
     {
-        if ($moduleid !== null && $moduleid !== '') {
+        if ($moduleid != null && $moduleid != '') {
             $query->where('permissions.moduleid', '=', $moduleid);
         }
     }
 
     public function scopeForFunction($query, $functionid)
     {
-        if ($functionid !== null && $functionid !== '') {
+        if ($functionid != null && $functionid != '') {
             $query->where('permissions.functionid', $functionid);
         }
     }
@@ -111,7 +106,7 @@ class Permission extends Model
     {
         // Avoid deprecated warning in PHP 8.1+: trim(null) is deprecated
         $description = is_string($description) ? trim($description) : '';
-        if ($description !== '') {
+        if ($description != '') {
             $query->where('permissions.description', 'like', "%{$description}%");
         }
     }

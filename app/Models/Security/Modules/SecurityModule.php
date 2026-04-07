@@ -57,7 +57,7 @@ class SecurityModule extends Model
 
     public function scopeDescription($query, $description)
     {
-        if (trim($description) !== '') {
+        if (trim($description) != '') {
             $query->where('description', 'like', "%{$description}%");
         }
     }
