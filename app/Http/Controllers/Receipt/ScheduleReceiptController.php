@@ -53,7 +53,7 @@ class ScheduleReceiptController extends BaseController
                 'receiptasn.unloadstartdate', 'receiptasn.unloadfinishdate', 'receiptasn.cancellationdate',
                 'receiptasn.goodissuedate', 'receiptasn.statusid', 'receiptunits.statusid as statusunit',
                 'receiptunits.deliverdate', 'receiptunits.autorizaoutputdate', 'receiptunits.ensnare',
-                'systemwarehouses.name as warehouse',
+                'systemwarehouses.name as warehouse', 'receiptasn.centerid',
             ]);
 
         return DataTables::of($data)
