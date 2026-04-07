@@ -57,7 +57,7 @@ class ClearLocationCommand extends Command
                 foreach ($locations as $location) {
                     //                Bloquea las cortinas
                     foreach ($units as $unit) {
-                        if ($location->id === $unit->locationid) {
+                        if ((int) $location->id === (int) $unit->locationid) {
                             $location->auxiliary01 = $unit->boxnumber;
                             $location->statusid = 'D';
                             $location->save();
@@ -65,7 +65,7 @@ class ClearLocationCommand extends Command
                     }
                     //                Bloquea las precargas
                     foreach ($shipments as $shipment) {
-                        if ($location->id === $shipment->locationid) {
+                        if ((int) $location->id === (int) $shipment->locationid) {
                             $location->statusid = 'D';
                             $location->save();
                         }

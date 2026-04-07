@@ -47,7 +47,7 @@
 
             {
                 "extend": "colvis",
-                "text": "<img src=\"{{asset('/ico/searchmagnifierinterfacesymbol1_79893.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span  style='font-size: 0.975rem !important;'>Filtrar</span>",
+                "text": "<img src=\"{{asset('/ico/searchmagnifierinterfacesymbol1_79893.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span>Filtrar</span>",
                 "className": "btn btn-outline-info btn-md  btn-bold",
                 columns: ':not(:first):not(:last)'
             },
@@ -55,21 +55,21 @@
             @if(in_array('copy', $buttons))
             {
                 "extend": "copy",
-                "text": "<img src=\"{{asset('/ico/copy_paste_document_file_1557.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span  style='font-size: 0.975rem !important;'>Csv</span>",
+                "text": "<img src=\"{{asset('/ico/copy_paste_document_file_1557.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span>Copiar</span>",
                 "className": "btn btn-outline-info btn-md  btn-bold",
             },
             @endif
             @if(in_array('csv', $buttons))
             {
                 "extend": "csv",
-                "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span  style='font-size: 0.975rem !important;'>Csv</span>",
+                "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span>Csv</span>",
                 "className": "btn btn-outline-info btn-md  btn-bold",
             },
             @endif
             @if(in_array('excel', $buttons))
             {
                 "extend": "excel",
-                "text": "<img src=\"{{asset('/ico/adexportar.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span  style='font-size: 0.975rem !important;'>Excel</span>",
+                "text": "<img src=\"{{asset('/ico/adexportar.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span>Excel</span>",
                 "className": "btn btn-outline-info btn-md  btn-bold",
             }
             @endif
