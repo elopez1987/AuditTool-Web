@@ -196,7 +196,7 @@
                                 {{ csrf_field() }}
                                 <div class="dz-message" data-dz-message>
                                         <span style="font-size: 12px;color: #4db6ac;font-weight: 500">
-                                            Toca para abrir el selector de imagenes, las imagenes deben de tener un maximo de 20 mb. <br><br>
+                                            Toca para abrir el selector de archivos (PDF), los archivos deben de tener un maximo de 5 mb. <br><br>
                                             <i class="fa fa-camera fa-4x"></i>
                                         </span>
                                 </div>
@@ -237,18 +237,18 @@
                 buttons: [
                     {
                         "extend": "colvis",
-                        "text": "<img src=\"{{asset('/pics/adbuscar.png')}}\"  alt=''><span  style='font-size: 11px;'> Mostar/Ocultar</span>",
+                        "text": "<img src=\"{{asset('/pics/adbuscar.png')}}\"  alt=''  class='img-16 ml-2 mr-2' ><span> Mostar/Ocultar</span>",
                         "className": "btn btn-outline-info btn-md  btn-bold",
                         columns: ':not(:first):not(:last)'
                     },
                     {
                         "extend": "csv",
-                        "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16'><span  style='font-size: 11px;'> Csv</span>",
+                        "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span> Csv</span>",
                         "className": "btn btn-outline-info btn-md  btn-bold",
                     },
                     {
                         "extend": "excel",
-                        "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt=''><span  style='font-size: 11px;'> Excel</span>",
+                        "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt=''  class='img-16 ml-2 mr-2'><span> Excel</span>",
                         "className": "btn btn-outline-info btn-md  btn-bold",
                     }
                 ],
@@ -280,7 +280,7 @@
     <script>
         Dropzone.options.myAwesomeDropzone = {
             paramName: "file",
-            maxFiles: 1,
+            maxFiles: 5,
             acceptedFiles: ".pdf",
             chunking: true,
             chunkSize: 2000000,
@@ -291,21 +291,30 @@
             chunksUploaded: function (file, done) {
                 done();
             },
-            maxFilesize: 30,
+            maxFilesize: 5, // MB
+            accept: function (file, done) {
+                if (file.type !== "application/pdf") {
+                    done("Solo se permiten archivos PDF.");
+                } else if (file.size > 5 * 1024 * 1024) {
+                    done("El archivo no debe superar los 5 MB.");
+                } else {
+                    done();
+                }
+            },
             success: function (file, response) {
                 Swal.fire({
                     type: 'success',
-                    text: ` Documento cargado con exito ${response}`,
+                    text: `Documento cargado con éxito ${response}`,
                     width: 250,
-                })
+                });
                 setInterval("actualizar()", 2000);
             },
             error: function (file, response) {
                 Swal.fire({
                     type: 'error',
-                    text: ` Error al subir el documento ${response}`,
+                    text: `Error al subir el documento: ${response}`,
                     width: 250,
-                })
+                });
                 setInterval("actualizar()", 2000);
             },
         };

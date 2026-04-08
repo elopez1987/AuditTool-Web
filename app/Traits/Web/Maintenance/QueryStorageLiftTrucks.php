@@ -4,7 +4,8 @@ namespace App\Traits\Web\Maintenance;
 
 use App\Models\Maintenance\StorageAssignLiftTrucks;
 use App\Models\Maintenance\StorageLiftTruck;
-use DB;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 trait QueryStorageLiftTrucks
 {
@@ -31,7 +32,7 @@ trait QueryStorageLiftTrucks
                     'user' => function ($q) {
                         $q->select('username', 'name');
                     },
-                ]
+                ],
             )
             ->SerialNumber($request->get('serialnumber'))
             ->NumberTruck($request->get('numbertruck'))
@@ -39,14 +40,17 @@ trait QueryStorageLiftTrucks
             ->select('storagelifttrucks.*');
     }
 
-    public function getUserForAssign($centerid, $id): array
+    public function getUserForAssign(): Collection
     {
-        return DB::select("select id,username,name from users
-                        where id in (select model_id from model_has_roles mhr
-                                                     where role_id in (select value02 from systemdetailparameter s
-                                                                                      where parameterid='ROLE-TRUCK' and value01=?))
-        and statusid='E'
-        and username not in (select username from storageassignlifttrucks s2 where typeid=?)", [$centerid, $id]);
+
+        return DB::table('users as u')
+            ->select('u.id', 'u.username', 'u.name')
+            ->leftJoin('model_has_roles as mhr', 'u.id', '=', 'mhr.model_id')
+            ->leftJoin('roles as r', 'mhr.role_id', '=', 'r.id')
+            ->where('u.statusid', 'E')
+            ->whereRaw("CHARINDEX('ROL-01', r.configurationflag) > 0")
+            ->get();
+
     }
 
     public function getStorageAssignLiftTrucks($id)

@@ -28,7 +28,7 @@ class StorageAssignLiftTruckController extends BaseController
         $this->authorize('storageassignlifttrucks.edit');
         $centerid = $this->getCenterForUser();
         $type = SystemStatus::findOrFail($id);
-        $users = $this->getUserForAssign($centerid, $id);
+        $users = $this->getUserForAssign();
         $userAssigns = $this->getStorageAssignLiftTrucks($id);
 
         return view(
