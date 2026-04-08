@@ -1,326 +1,299 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title> Folio de Entrada {{$receiptunit->id}}</title>
-    <link rel="stylesheet" href="{{asset('/css/InvoiceDefault.css')}}">
+    <title>Folio de Unidad de Recibo</title>
     <style>
-        .cols {
-            border: 1px solid black;
+        .container {
+            padding: 0;
+            border: 0;
+            width: 700px;
+            height: 612px;
+        }
+
+        html {
+            margin: 0;
+            font-weight: 400;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 10mm 10mm 10mm 10mm;
+            font-size: 11px !important;
+            color: black;
+            font-weight: 400;
+        }
+
+        .row:after {
+            content: "";
             display: table;
+            clear: both;
         }
 
-        .div1 {
-            display: inline-block;
-            width: 50%;
-            float: left;
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+            width: 100%;
+            border: 1px solid #ddd;
         }
 
-        .div2 {
-            display: inline-block;
-            width: 50%;
-            float: right;
+        th,
+        td {
+            text-align: center;
+            vertical-align: middle;
+            padding: 1px;
+            border: 1px solid #212121;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 11px;
+        }
+        th:first-child,
+        td:first-child {
+            text-align: left;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2
+        }
+        .border-none {
+            border: 0;
         }
     </style>
 </head>
+
 <body>
 
 <div class="container">
-
     <div class="row">
-        <table cellpadding="20">
-            <th style="height: 70px;width: 33.3%;align-items: center">
-                <img src="{{ public_path('img/logo.png') }}" alt="" class="logo">
+        <table>
+            <th style="width: 120px;text-align: center">
+                <img src="{{ public_path('img/henkel.png') }}" alt="" class="logo" style="width: 100px;height: 60px;">
             </th>
-            <th style="vertical-align: center;width: 33.3%">
-                <h3 class='formato' style="font-size: 15px;">FOLIO DE ENTRADA DE UNIDAD</h3>
-            </th>
-            <th style="width: 33.3%">
-                @if(!empty($logo->auxiliary09))
-                    <img src="{{ storage_path('app/public/' . $logo->auxiliary09) }}"
-                         class="align-self-center img-responsive" alt="" style="height: 70px;width: 280px">
-                @endif
+            <th>
+                <div class="row">
+                    <table class="border-none">
+                        <th
+                            style="height:25px;border-top: 0;border-left: 0;border-right: 0;
+                        align-content: center;text-align: center;width: 80%;padding: 0;border-bottom: 0;font-size: 18px;">
+                            CHECK LIST DE TRANSPORTE PARA DESCARGA
+                        </th>
+                        <th style="height: 25px;border-top: 0;border-right: 0;padding: 0;border-bottom: 0;">
+                            Codigo: <br>
+
+                        </th>
+                    </table>
+                </div>
+                <div>
+                    <table class="border-none">
+                        <th
+                            style="width: 40%;border-bottom: 0;border-left: 0;text-align: center;height: 30px;font-size: 14px;">
+                            CORTINA ASIGNADA
+                        </th>
+                        <th style="width: 40%;border-bottom: 0;font-size: 18px;color: red">
+                            {{$receiptunit->location ? $receiptunit->location->name : ''}}
+                        </th>
+                        <th style="width:20%;border-bottom: 0;border-right: 0;font-size: 12px;">
+                            "Versión: 1"
+                        </th>
+                    </table>
+                </div>
             </th>
         </table>
     </div>
-    <br>
-    <table>
-        <td class="centro" style="font-size: 14px;">DISTRIBUCIÓN Y ALMACENAJE AVIOR SA DE CV</td>
-    </table>
-    <table>
-        <tr>
-            <td class="border-none" style="width: 50%;">
-                <table align="center" border=0 cellspacing=0 cellpadding=0>
-                    <tr>
-                        <td class="datos w20 f11"> Folio</td>
-                        <td style="font-size: 13px !important;"><?php echo str_pad($receiptunit->id, 10, '0', STR_PAD_LEFT) ?></td>
-                    </tr>
-                    <tr>
-                        <td class="datos w20 f11"> Etiqueta</td>
-                        <td style="font-size: 13px !important;">
-                            {{$receiptunit->barcode}}
-                        </td>
-                    </tr>
-                </table>
-            </td>
-            <td class="border-none" style="width: 50%">
-                <table align="center" border=0 cellspacing=0 cellpadding=0>
-                    <tr>
-                        <td class="datos w20 f11"> Destino</td>
-                        <td style="font-size: 13px;">{{$receiptunit->warehouse ? $receiptunit->warehouse->name : ''}}</td>
-                    </tr>
-                    <tr>
-                        <td class="datos w20 f11"> Evento</td>
-                        <td style="font-size: 13px !important;">
-                            {{$receiptunit->event ? $receiptunit->event->name : ''}}
-                        </td>
-                    </tr>
-                </table>
-            </td>
-            <td class="border-none" style="width: 50%">
-                <table align="center" border=0 cellspacing=0 cellpadding=0>
-                    <tr>
-                        <td class="datos w20 f11"> Zona</td>
-                        <td style="font-size: 13px;">{{$receiptunit->zone ? $receiptunit->zone->name : ''}}</td>
-                    </tr>
-                    <tr>
-                        <td class="datos w20 f11"> Ubicación</td>
-                        <td style="font-size: 13px !important;">{{$receiptunit->location ? $receiptunit->location->name : ''}}</td>
-                    </tr>
-                </table>
-            </td>
-
-        </tr>
-    </table>
-    <br>
-    <table align="center" border=0 cellspacing=0 cellpadding=0 class="border-none">
-        <tr>
-            <td class="border-none" style="width: 50%;">
-                <table align="center" border=0 cellspacing=0 cellpadding=0>
-                    <tr>
-                        <td colspan="2"
-                            style="font-size: 12px;background-color: #1A8BCD;color: white;text-align: center">DATOS DE
-                            ENTRADA DE UNIDAD
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="datos w30 tipo"> Licencia</td>
-                        <td class="pleft tipo"> {{$receiptunit->tracto ? $receiptunit->tracto->drivernumber : ''}} </td>
-                    </tr>
-                    <tr>
-                        <td class="datos w30">N. Operador</td>
-                        <td class="pleft"> {{$receiptunit->tracto ? $receiptunit->tracto->operatorname : ''}} </td>
-                    </tr>
-                    <tr>
-                        <td class="datos w30">Teléfono</td>
-                        <td class="pleft"> {{$receiptunit->tracto ? $receiptunit->tracto->phone : ''}}</td>
-                    </tr>
-                    <tr>
-                        <td class="datos w30">Linea</td>
-                        <td class="pleft"> {{$receiptunit->carrier ? $receiptunit->carrier->name : ''}}</td>
-                    </tr>
-                    <tr>
-                        <td class="datos w30">Fecha/Hora</td>
-                        <td class="pleft"> {{$receiptunit->entrydate}}</td>
-                    </tr>
-                    <tr>
-                        <td class="datos w30">N.Caja</td>
-                        <td class="pleft"> {{$receiptunit->boxnumber}} / {{$receiptunit->econumber}}</td>
-                    </tr>
-                    <tr>
-                        <td class="datos w30">N.Tracto</td>
-                        <td class="pleft"> {{ $receiptunit->tracto ? $receiptunit->tracto->trucknumber : '' }}
-                            / {{$receiptunit->tracto ? $receiptunit->tracto->econumber : ''}}</td>
-                    </tr>
-                    <tr>
-                        <td class="datos w30">Longitud</td>
-                        <td class="pleft"> {{$receiptunit->truck ? $receiptunit->truck->name : ''}}</td>
-                    </tr>
-                    <tr>
-                        <td class="datos w30">Tipo de Caja</td>
-                        <td class="pleft"> {{$receiptunit->truckcategory ? $receiptunit->truckcategory->description : ''}}</td>
-                    </tr>
-                    <tr>
-                        <td class="datos w30">Embarque</td>
-                        <td class="pleft"> {{$receiptunit->shipmentid}}</td>
-                    </tr>
-                    <tr>
-                        <td class="datos w30">Sellos</td>
-                        <td class="pleft"> {{$receiptunit->containerseal}}</td>
-                    </tr>
-                </table>
-            </td>
-            <td class="border-none" style="width: 50%;">
-                <table align="center" border=0 cellspacing=0 cellpadding=0>
-                    <tr>
-                        <td colspan="2"
-                            style="font-size: 12px;background-color: #1A8BCD;color: white;text-align: center">DATOS DE
-                            SALIDA DE UNIDAD
-                        </td>
-                    </tr>
-                    <tr style="height: 25px !important;">
-                        <td class="datos w30" style="height: 15px;">Operador</td>
-                        <td class="pleft"></td>
-                    </tr>
-                    <tr style="height: 15px !important;">
-                        <td class="datos w30">Licencia</td>
-                        <td class="pleft"></td>
-                    </tr>
-                    <tr style="height: 15px !important;">
-                        <td class="datos w30">Fecha/Hora</td>
-                        <td class="pleft"></td>
-                    </tr>
-                    <tr style="height: 15px !important;">
-                        <td class="datos w30">N.Tracto</td>
-                        <td class="pleft"></td>
-                    </tr>
-                    <tr style="height: 15px !important;">
-                        <td class="datos w30">Embarque</td>
-                        <td class="pleft"></td>
-                    </tr>
-                    <tr style="height: 15px !important;">
-                        <td class="datos w30">Sellos</td>
-                        <td class="pleft"></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"
-                            style="font-size: 12px;background-color: #1A8BCD;color: white;text-align: center">
-                            COMENTARIO DE ENTRADA
-                        </td>
-                    </tr>
-                    <tr style="height: 45px !important;">
-                        <td colspan="2">
-                            @if(!empty($comment))
-                                {{$comment->comment}}
-                            @endif
-                        </td>
-                    </tr>
-
-                </table>
-            </td>
-        </tr>
-    </table>
-    <br>
-    <table class="border-none">
-        <tr>
-            <td width="50%">
-                <img src="{{ public_path('img/trailer.png') }}" alt=""
-                     style="width: 400px;height: 150px;margin-top: 20px;margin-left:50px ">
-                <br>
-                <div style="border: 1px dashed black;margin: auto;width: 250px;padding: 5px;text-align: center;">
-                    <span style="font-size: 16px;font-weight: 700;text-align: center;margin-top: 5px">Sr.Operador</span>
-                    <br>
-                    <span>Te recordamos que se debe de colocar las calzas al momento de enrampar su unidad,</span>
-                    <br>
-                    <span>y no retirarlas hasta que reciba instrucciones  para ello. </span>
-                    <br>
-                    <span style="font-weight: 800;font-size: 16px;">Tomar y colocar en su lugar.</span>
-                </div>
-            </td>
-            <td width="49%">
-                <table class="border-none">
-                    <tr>
-                        <td class="border-none" width="50%">
-                            <table class="border-none">
-                                <thead>
-                                <tr>
-                                    <th class="border-none" style="background-color: #0ba8ef;color: #ffffff">
-                                        DESCRIPCIÓN
-                                    </th>
-                                    <th class="border-none" style="background-color: #0ba8ef;color: #ffffff">¿CUMPLE?
-                                    </th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($verified as $detail)
-                                    <tr>
-                                        <td class="border-none"
-                                            style="font-size: 9px !important;">{{$detail->description}}</td>
-                                        <td class="border-none">{{$detail->verified}}</td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
-                        </td>
-                        <td class="border-none" width="50%">
-                             <span style="font-size: 12px;margin: auto;text-align: center">
-                                    Etiqueta: {{$receiptunit->barcode}}
-                              </span>
-                            <br>
-                            <div style="margin:auto;text-align: center;padding-top: 10px">
-                                <span style="margin: auto;display: block">
-                                    {!! DNS2D::getBarcodeHTML($receiptunit->barcode, 'QRCODE',3,3) !!}
-                                </span>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
-    <br>
-    <table>
-        <td class="border-none" style="text-align: center;font-size: 10px;">
-            <hr>
-            Nombre y Firma Vigilancia
-        </td>
-        <td class="border-none" style="text-align: center;font-size: 10px">
-            <hr>
-            Nombre y Firma Operador
-        </td>
-        <td class="border-none" style="text-align: center;font-size: 10px">
-            <hr>
-            Nombre y Firma Analista
-        </td>
-        <td class="border-none" style="text-align: center;font-size: 10px">
-            <hr>
-            Nombre y Firma Vigilancia
-        </td>
-        <td class="border-none" style="text-align: center;font-size: 10px">
-            <hr>
-            Nombre y Firma Operador
-        </td>
-        <td class="border-none" style="text-align: center;font-size: 10px">
-            <hr>
-            Nombre y Firma Analista
-        </td>
-    </table>
-    <br>
-    @if($firma)
-        <table>
-            <td class="border-none" style="text-align: center;font-size: 10px;">
-                <img src="{{ storage_path('app/' . $firma->keyguard01) }}" alt="Firma"
-                     style="height: 100px;max-height: 200px"/>
-            </td>
-            <td class="border-none" style="text-align: center;font-size: 10px">
-                <img src="{{ storage_path('app/' . $firma->keyoperator01) }}"
-                     alt="Firma"
-                     style="height: 100px;max-height: 200px"/>
-            </td>
-            <td class="border-none" style="text-align: center;font-size: 10px">
-
-            </td>
-            <td class="border-none" style="text-align: center;font-size: 10px">
-                <img src="{{ storage_path('app/' . $firma->keyguard03) }}"
-                     alt="Firma"
-                     style="height: 100px;max-height: 200px"/>
-            </td>
-            <td class="border-none" style="text-align: center;font-size: 10px">
-                <img src="{{ storage_path('app/' . $firma->keyoperator03) }}"
-                     alt="Firma"
-                     style="height: 100px;max-height: 200px"/>
-            </td>
-            <td class="border-none" style="text-align: center;font-size: 10px">
-
-            </td>
+    <div class="row">
+        <table class="border-none">
+            <th style="height: 10px;width: 10%;border-top: 0;text-align: right;font-size: 18px;">Folio:</th>
+            <th style="width: 15%;border-top: 0;font-size: 18px !important;color: red">{{$folio}}</th>
+            <th style="width: 50%;border-top: 0;text-align: center;font-size: 14px;"> CENTRO DE DISTRIBUCION
+                HENKEL ONE ROOF
+            </th>
+            <th style="height: 10px;width: 10%;border-top: 0;text-align: right;font-size: 18px;">YardTrax:</th>
+            <th style="width: 15%;border-top: 0;font-size: 18px !important;color: red">{{$receiptunit->id}}</th>
         </table>
-    @endif
+    </div>
+    <div class="row">
+        <table class="border-none">
+            <th
+                style="height: 30px;width: 13.9%;border-top: 1px solid black;text-align: right;font-size: 12px;background-color: #E8EAF6;">
+                Código de barra:
+            </th>
+            <th style="width: 25%;border-top: 0;font-size: 16px !important;">{{$receiptunit->barcode}}</th>
+            <th style="width: 25%;border-top: 1px solid black;text-align: center;font-size: 12px;background-color: #E8EAF6;">
+                Embarque :
+            </th>
+            <th style="width: 25%;border-top: 0;text-align: center;font-size: 16px !important;"> {{$receiptunit->shipmentid}}</th>
+        </table>
+    </div>
+    <div class="row">
+        <table class="border-none">
+            <th
+                style="height: 30px;width: 13.9%;border-top: 0;text-align: right;font-size: 10px;background-color: #E8EAF6;">
+                Operador:
+            </th>
+            <th style="width: 65%;border-top: 0;font-size: 16px;">{{$receiptunit->tracto ? $receiptunit->tracto->operatorname : ''}}</th>
+            <th style="width: 10%;border-top: 0;text-align: center;font-size: 12px;"> Pagina: 1/1</th>
+        </table>
+    </div>
+    <div class="row">
+        <table class="border-none">
+            <th
+                style="height: 20px;width: 14.8%;border-top: 0;text-align: right;font-size: 10px;background-color: #E8EAF6;">
+                Fecha de
+                Revisión:
+            </th>
+            <th style="width: 40%;border-top: 0;font-size: 10px;">{{$receiptunit->entrydate}}</th>
+            <th style="width: 20%;border-top: 1px solid black;font-size: 10px;background-color: #E8EAF6;">No.Placas
+                Tracto
+            </th>
+            <th style="width: 20%;border-top: 0;text-align: center;font-size: 10px;">{{$receiptunit->tracto ? $receiptunit->tracto->trucknumber : ''}}</th>
+        </table>
+    </div>
+    <div class="row">
+        <table class="border-none">
+            <th
+                style="height: 20px;width: 14.8%;border-top: 0;text-align: right;font-size: 10px;background-color: #E8EAF6;">
+                Linea de
+                transporte:
+            </th>
+            <th style="width: 40%;border-top: 0;font-size: 10px;">{{$receiptunit->carrier ? $receiptunit->carrier->name : ''}}</th>
+            <th style="width: 20%;border-top: 1px solid black;font-size: 10px;background-color: #E8EAF6;">No. Placas
+                Caja
+            </th>
+            <th style="width: 20%;border-top: 0;text-align: center;font-size: 10px;">{{$receiptunit->boxnumber}}</th>
+        </table>
+    </div>
+    <div class="row">
+        <table class="border-none">
+            <th
+                style="height: 20px;width: 14.8%;border-top: 0;text-align: right;font-size: 10px;background-color: #E8EAF6;">
+                Licencia:
+            </th>
+            <th style="width: 40%;border-top: 0;font-size: 10px;">{{$receiptunit->tracto ? $receiptunit->tracto->drivernumber : ''}}</th>
+            <th style="width: 20%;border-top: 0;font-size: 10px;background-color: #E8EAF6;"> Tipo de Vehiculo
+            </th>
+            <th style="width: 20%;border-top: 0;text-align: center;font-size: 10px;">{{$receiptunit->truck ? $receiptunit->truck->name : ''}}</th>
+        </table>
+    </div>
+    <div class="row">
+        <table class="border-none">
+            <th style="border-top: 1px solid black;background-color: #E8EAF6;text-align: center;font-size: 14px;">
+                Inspección del
+                Vehiculo
+            </th>
+        </table>
+    </div>
+    <div class="row">
+        <table class="border-none">
+            <th style="border-top: 0;background-color: #E8EAF6;text-align: center;width: 40%;font-size: 11px;height: 25px;">Concepto Obligatorio
+                por cumplir, se rechazara la unidad.
+            </th>
+            <th style="border-top: 0;background-color: #E8EAF6;text-align: center;width: 10%;font-size: 11px;">¿CUMPLE?</th>
+            <th style="border-top: 0;background-color: #E8EAF6;text-align: center;width: 40%;font-size: 11px;">Observaciones</th>
+        </table>
+    </div>
+    @foreach($verified as $detail)
+    <div class="row">
+        <table class="border-none">
+            <th style="width: 40%;background-color: #E8EAF6;border-top: 0;height: 20px;font-size: 11px;">{{$detail->description}}</th>
+            <th style="border-top: 0;text-align: center;width: 10%;">{{$detail->verified}}</th>
+            <th style="border-top: 0;"></th>
+        </table>
+    </div>
+    @endforeach
 
+    <div class="row">
+        <table class="border-none">
+            <th style="border-top: 0;background-color: #E8EAF6;text-align: center;height: 20px;font-size: 13px;">
+                Observaciones
+                Generales
+            </th>
+        </table>
+    </div>
+    <div class="row">
+        <table class="border-none">
+            <th style="margin-left: 50px">
+                <div style="margin-left: 80px;">
+                    <span style="margin-bottom: 30px;">Código: {{$receiptunit->barcode}}</span> <br>
+                    {!! DNS2D::getBarcodeHTML($receiptunit->barcode, 'QRCODE',3,3) !!}
+                </div>
+            </th>
+            <th style="height: 120px;border-top: 0;width: 33%">
+                <span>
+                    No. De Sellos de Seguridad <br><br>
+                    {{$receiptunit->containerseal}}
+                </span><br>
+            </th>
+            <th style="height: 120px;border-top: 0;width: 33%">
+                <span>Calzas de Seguridad</span><br>
+            </th>
+        </table>
+    </div>
+    <div class="row">
+        <table class="border-none">
+            <th
+                style="border-top: 0;text-align: center;width: 20%;height: 20px;font-size: 11px;background-color: #E8EAF6">
+                Dictamen
+            </th>
+            <th style="border-top: 0;text-align: center;width: 15%;font-size: 11px;">Aceptado</th>
+            <th style="border-top: 0;text-align: center;width: 15%;font-size: 11px;"></th>
+            <th style="border-top: 0;text-align: center;width: 15%;font-size: 11px;">Rechazado</th>
+            <th style="border-top: 0;text-align: center;width: 15%;"></th>
+        </table>
+    </div>
+    <div class="row">
+        <table class="border-none">
+            <th style="border-top: 0;text-align: center;font-size: 11px;background-color: #E8EAF6">
+                Observaciones:
+            </th>
+            <th style="border-top: 0;text-align: center;width: 75%;height: 20px;">{{$receiptunit->auxiliary02}}</th>
+        </table>
+    </div>
+    <div class="row">
+        <table class="border-none">
+            <th
+                style="border-top: 0;text-align: center;width: 25%;height: 20px;font-size: 11px;background-color: #E8EAF6">
+                Revisado por:
+            </th>
+            <th style="border-top: 0;text-align: center;width: 25%;font-size: 10px;background-color: #E8EAF6">Nombre
+                y firma Guardia
+                (Entrada)
+            </th>
+            <th style="border-top: 0;text-align: center;width: 25%;font-size: 10px;background-color: #E8EAF6">Nombre
+                y firma de analista de
+                trafico (Salida)
+            </th>
+            <th style="border-top: 0;text-align: center;width: 25%;font-size: 10px;background-color: #E8EAF6">Nombre
+                y firma del operador
+                (Entrada)
+            </th>
+        </table>
+    </div>
+    <div class="row">
+        <table class="border-none">
+            <th
+                style="border-top: 0;text-align: center;width: 25%;height: 40px;vertical-align:bottom;font-size: 11px;background-color: #E8EAF6">
+                Firma
+            </th>
+            <th style="border-top: 0;text-align: center;width: 25%;">
+                {{$receiptunit->user ? $receiptunit->user->name : ''}}
+            </th>
+            <th style="border-top: 0;text-align: center;width: 25%;"></th>
+            <th style="border-top: 0;text-align: center;">
+                {{$receiptunit->tracto ? $receiptunit->tracto->operatorname : ''}}
+            </th>
+        </table>
+    </div>
+    <div class="row">
+        <div style="text-align: center;font-size: 9px;margin-top: 6px;">
+                <span style="text-align: center;">Este documento es propiedad de Henkel Capital S.A de C.V., queda
+                    prohibida su reproducción total o parcial.</span>
+            <br>
+        </div>
+        <br><br><br><br>
 
+    </div>
 </div>
 
 </body>
-</html>
 
+</html>
