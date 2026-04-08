@@ -16,7 +16,6 @@
         <img src="{{asset('/ico/storageareas.png')}}" alt="" class="img-16 ml-2">
     </a>
 @endcan
-
 @can('securityroles.parameters')
     <a href="{{url('securityroles/' . $id . '/parameters')}}" data-toggle="tooltip" data-placement="top"
        title="Agregar Parametros">
