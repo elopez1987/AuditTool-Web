@@ -1,5 +1,11 @@
 <?php
 
+use App\Http\Controllers\Maintanance\CheckListLiftTruckController;
+use App\Http\Controllers\Maintanance\DashboardController;
+use App\Http\Controllers\Maintanance\StorageAssignLiftTruckController;
+use App\Http\Controllers\Maintanance\StorageCatalogTruckController;
+use App\Http\Controllers\Maintanance\StorageCheckListDetailLiftTruckController;
+use App\Http\Controllers\Maintanance\StorageCheckListLiftTruckController;
 use App\Http\Controllers\Maintanance\StorageLiftTruckController;
 use Illuminate\Support\Facades\Route;
 
@@ -9,32 +15,32 @@ Route::middleware(['auth'])->group(function () {
     })->name('menumaintenance');
 
     Route::resource('storagelifttrucks', StorageLiftTruckController::class);
-    Route::get('getStorageLiftTrucks', 'Maintanance\StorageLiftTruckController@getStorageLiftTrucks')->name('getStorageLiftTrucks');
+    Route::get('getStorageLiftTrucks', [StorageLiftTruckController::class, 'getStorageLiftTrucks'])->name('getStorageLiftTrucks');
 
-    Route::resource('storagechecklistlifttrucks', 'Maintanance\StorageCheckListLiftTruckController');
-    Route::get('getDataCheckListLiftTrucks', 'Maintanance\StorageCheckListLiftTruckController@getDataCheckListLiftTrucks')->name('getDataCheckListLiftTrucks');
+    Route::resource('storagechecklistlifttrucks', StorageCheckListLiftTruckController::class);
+    Route::get('getDataCheckListLiftTrucks', [StorageCheckListLiftTruckController::class, 'getDataCheckListLiftTrucks'])->name('getDataCheckListLiftTrucks');
     //    Detalle del check lists
-    Route::get('addchecklistdetailslifttruck/{id}', 'Maintanance\StorageCheckListDetailLiftTruckController@index')->name('addchecklistdetailslifttruck');
-    Route::put('storedetailslifttruck/{id}', 'Maintanance\StorageCheckListDetailLiftTruckController@store')->name('storedetailslifttruck.store');
-    Route::put('updatestatusdetaillifttruck/{id}', 'Maintanance\StorageCheckListDetailLiftTruckController@updatestatusdetaillifttruck')->name('updatestatusdetaillifttruck');
+    Route::get('addchecklistdetailslifttruck/{id}', [StorageCheckListDetailLiftTruckController::class, 'index'])->name('addchecklistdetailslifttruck');
+    Route::put('storedetailslifttruck/{id}', [StorageCheckListDetailLiftTruckController::class, 'store'])->name('storedetailslifttruck.store');
+    Route::put('updatestatusdetaillifttruck/{id}', [StorageCheckListDetailLiftTruckController::class, 'updatestatusdetaillifttruck'])->name('updatestatusdetaillifttruck');
 
     //    Borrar detalle de check list de montacargas
-    Route::post('deletedetailchecklistlifttrucks/{id}', 'Maintanance\StorageCheckListDetailLiftTruckController@deletedetailchecklistlifttrucks')->name('deletedetailchecklistlifttrucks');
+    Route::post('deletedetailchecklistlifttrucks/{id}', [StorageCheckListDetailLiftTruckController::class, 'deletedetailchecklistlifttrucks'])->name('deletedetailchecklistlifttrucks');
     //    Actualizar detalle de check list de montacargas
-    Route::put('updatestatusdetaillifttruckedit/{id}', 'Maintanance\StorageCheckListDetailLiftTruckController@updatestatusdetaillifttruckedit')->name('updatestatusdetaillifttruckedit');
-    Route::resource('storageassignlifttrucks', 'Maintanance\StorageAssignLiftTruckController');
-    Route::post('deleteUserAssingTruck', 'Maintanance\StorageAssignLiftTruckController@deleteUserAssingTruck')->name('deleteUserAssingTruck');
+    Route::put('updatestatusdetaillifttruckedit/{id}', [StorageCheckListDetailLiftTruckController::class, 'updatestatusdetaillifttruckedit'])->name('updatestatusdetaillifttruckedit');
+    Route::resource('storageassignlifttrucks', StorageAssignLiftTruckController::class);
+    Route::post('deleteUserAssingTruck', [StorageAssignLiftTruckController::class, 'deleteUserAssingTruck'])->name('deleteUserAssingTruck');
 
-    Route::resource('checklistlifttrucks', 'Maintanance\CheckListLiftTruckController');
-    Route::get('getCheckListTruck', 'Maintanance\CheckListLiftTruckController@getCheckListTruck')->name('getCheckListTruck');
-    Route::get('printFormatToCheckList/{id}', 'Maintanance\CheckListLiftTruckController@printFormatToCheckList')->name('printFormatToCheckList');
-    Route::get('dashboardtrucks', 'Maintanance\DashboardController@index')->name('dashboardtrucks');
-    Route::get('getTruckAssigned', 'Maintanance\DashboardController@getTruckAssigned')->name('getTruckAssigned');
-    Route::get('storagelifttrucksreports', 'Maintanance\DashboardController@storagelifttrucksreports')->name('storagelifttrucksreports');
-    Route::get('exportreportmtn', 'Maintanance\DashboardController@exportreportmtn')->name('exportreportmtn');
+    Route::resource('checklistlifttrucks', CheckListLiftTruckController::class);
+    Route::get('getCheckListTruck', [CheckListLiftTruckController::class, 'getCheckListTruck'])->name('getCheckListTruck');
+    Route::get('printFormatToCheckList/{id}', [CheckListLiftTruckController::class, 'printFormatToCheckList'])->name('printFormatToCheckList');
+    Route::get('dashboardtrucks', [DashboardController::class, 'index'])->name('dashboardtrucks');
+    Route::get('getTruckAssigned', [DashboardController::class, 'getTruckAssigned'])->name('getTruckAssigned');
+    Route::get('storagelifttrucksreports', [DashboardController::class, 'storagelifttrucksreports'])->name('storagelifttrucksreports');
+    Route::get('exportreportmtn', [DashboardController::class, 'exportreportmtn'])->name('exportreportmtn');
 
-    Route::get('storagelifttruckscatalogs', 'Maintanance\StorageCatalogTruckController@index')->name('storagelifttruckscatalogs');
-    Route::post('savebrand', 'Maintanance\StorageCatalogTruckController@savebrand')->name('savebrand');
-    Route::post('savemodel', 'Maintanance\StorageCatalogTruckController@savemodel')->name('savemodel');
-    Route::post('savetype', 'Maintanance\StorageCatalogTruckController@savetype')->name('savetype');
+    Route::get('storagelifttruckscatalogs', [StorageCatalogTruckController::class, 'index'])->name('storagelifttruckscatalogs');
+    Route::post('savebrand', [StorageCatalogTruckController::class, 'savebrand'])->name('savebrand');
+    Route::post('savemodel', [StorageCatalogTruckController::class, 'savemodel'])->name('savemodel');
+    Route::post('savetype', [StorageCatalogTruckController::class, 'savetype'])->name('savetype');
 });

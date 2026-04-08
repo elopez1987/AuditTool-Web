@@ -84,6 +84,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('securityroles/{id}/conceptajust', [StorageCategoryRoleController::class, 'conceptajust'])->name('securityroles.conceptajust');
     Route::post('saveconceptajust/{id}', [StorageCategoryRoleController::class, 'saveconceptajust'])->name('saveconceptajust');
     Route::delete('destroycategoryrole/{id}', [StorageCategoryRoleController::class, 'destroy'])->name('destroycategoryrole');
+    //	  Parametrizar roles
+    Route::get('securityroles/{id}/parameters', [ParameterRoleController::class, 'parameters'])->name('roles.parameters');
+    Route::put('securityroles-parameters/{id}', [ParameterRoleController::class, 'store'])->name('roles.parameters');
 
     //    Crear un permiso
     Route::put('createNewPermissionForFunction/{securityFunction}', [CreateNewPermissionController::class, 'createNewPermissionForFunction'])->name('createNewPermissionForFunction');
@@ -111,10 +114,6 @@ Route::group(['middleware' => ['role:ADMINISTRADOR']], function () {
     //    Detalle de funciones sobre menu
     Route::put('savefunctionsformenustructure/{securitymenustructure}', [SecurityFunctionsMenuController::class, 'savefunctionsformenustructure'])->name('savefunctionsformenustructure');
     Route::post('deletefunctionformenu', [SecurityFunctionsMenuController::class, 'deletefunctionformenu'])->name('deletefunctionformenu');
-
-    //    Parametros de modulo de roles
-    Route::post('registercheckforchecklistverific', [ParameterRoleController::class, 'registercheckforchecklistverific'])->name('registercheckforchecklistverific');
-    Route::post('deletecheckforchecklistverific', [ParameterRoleController::class, 'deletecheckforchecklistverific'])->name('deletecheckforchecklistverific');
 
     //    Super Usuarios
     Route::resource('superusers', SuperUserController::class)->except(['show', 'edit', 'update']);

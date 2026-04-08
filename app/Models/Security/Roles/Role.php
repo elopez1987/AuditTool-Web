@@ -69,6 +69,11 @@ class Role extends Model
         'description',
         'statusid',
         'menustrucid',
+        'configurationflag',
+    ];
+
+    protected $casts = [
+        'configurationflag' => 'array',
     ];
 
     protected $hidden = [

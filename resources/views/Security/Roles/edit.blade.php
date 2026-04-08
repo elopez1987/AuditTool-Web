@@ -130,31 +130,6 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-header">Parametros de perfil</div>
-                        <div class="card-body">
-                            <table>
-                                <tr>
-                                    <td style="width: 50px;" class="switch">
-                                        <input
-                                            type="checkbox"
-                                            name="param-user-check"
-                                            id="param-user-check"
-                                            data-size="mini" data-on-color="success" data-off-color="danger"
-                                            data-on-text="<i class='ti ti-check'></i>"
-                                            data-off-text="<i class='ti ti-close'></i>"
-                                        >
-                                    </td>
-                                    <td class="font-12">Los usuarios que tengan este perfil asignado podran ser asignados
-                                        para el proceso de chek list de montacargas en el modulo de mantenimiento.</td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 @endsection
@@ -171,55 +146,7 @@
     <script>
         $(".switch input[type='checkbox']").bootstrapSwitch();
     </script>
-    <script>
-        $(document).ready(function(){
-            var checkMtn = <?php echo $checkMtn; ?>;
-            if(checkMtn === 1) {
-                $('#param-user-check').prop('checked', true); // Marca el checkbox
-            } else {
-                $('#param-user-check').prop('checked', false); // Desmarca el checkbox
-            }
-        });
-    </script>
-    <script>
-        $(document).ready(function(){
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $('#param-user-check').change(function(){
-                let isChecked = $(this).is(":checked");
-                if(isChecked) {
-                    $.ajax({
-                        url: '{{url('registercheckforchecklistverific')}}',
-                        method: 'POST',
-                        data: { id: {{$securityrole->id}} },
-                        success: function(data) {
-                            Swal.fire({
-                                type: 'success',
-                                title: `Parametro asignado correctamente`,
-                                width: 350,
-                            })
-                        },
-                    });
-                } else {
-                    $.ajax({
-                        url: '{{url('deletecheckforchecklistverific')}}',
-                        method: 'POST',
-                        data: { id: {{$securityrole->id}}},
-                        success: function(data) {
-                            Swal.fire({
-                                type: 'success',
-                                title: `Parametro eliminado correctamente`,
-                                width: 350,
-                            })
-                        },
-                    });
-                }
-            });
-        });
-    </script>
+
     <script>
         let oTable = $("#table-assing").DataTable({
             "paging": true,

@@ -2,26 +2,25 @@
 
 namespace App\Http\Controllers\Security\Roles;
 
-use App\Http\Controllers\Controller;
-use App\Models\Configuration\Parameters\SystemDetailParameter;
+use App\Http\Controllers\BaseController;
 use App\Models\Security\Roles\Role;
 use Illuminate\Http\Request;
 
-class ParameterRoleController extends Controller
+class ParameterRoleController extends BaseController
 {
-    public function registercheckforchecklistverific(Request $request)
+    public function parameters($id)
     {
-        $role = Role::where('id', $request['id'])->first();
-        SystemDetailParameter::updateOrCreate([
-            'parameterid' => 'ROLE-TRUCK',
-            'value01' => $role->centerid,
-            'value02' => $role->id,
-        ]);
+        $role = Role::findOrFail($id);
+        $parameters = $this->getStatusForSchema('ROL');
+
+        return view('Security.Roles.Parameters.create', compact('role', 'parameters'));
     }
 
-    public function deletecheckforchecklistverific(Request $request)
+    public function store(Request $request, $id)
     {
-        SystemDetailParameter::where('value02', $request['id'])
-            ->where('parameterid', 'ROLE-TRUCK')->delete();
+        $role = Role::findOrFail($id);
+        $role->update(['configurationflag' => $request->input('parameter')]);
+
+        return $this->redirectBackSuccess();
     }
 }
