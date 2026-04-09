@@ -23,6 +23,7 @@
             {data: 'center.description', name: 'center.description'},
             {data: 'warehouse.name', name: 'warehouse.name'},
             {data: 'zone.name', name: 'zone.name'},
+            {data: 'id'},
             {data: 'name'},
             {data: 'locationid'},
             {data: 'barcode'},

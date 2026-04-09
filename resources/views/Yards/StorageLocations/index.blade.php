@@ -76,6 +76,7 @@
                                     <th class="bg-inverse text-white">C.Distribución</th>
                                     <th class="bg-inverse text-white">Bodega</th>
                                     <th class="bg-inverse text-white">Zona</th>
+                                    <th class="bg-inverse text-white">ID</th>
                                     <th class="bg-inverse text-white">Nombre</th>
                                     <th class="bg-inverse text-white">Ubicacion WMS</th>
                                     <th class="bg-inverse text-white">C.Barra</th>

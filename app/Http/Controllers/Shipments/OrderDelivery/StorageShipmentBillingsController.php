@@ -11,7 +11,8 @@ class StorageShipmentBillingsController extends BaseController
 {
     public function index($id)
     {
-        $orderDelivery = OrderDeliverie::controlAccessUser()->with('billings')->where('auxiliary05', $id)->first();
+
+        $orderDelivery = OrderDeliverie::controlAccessUser()->with('billings')->where('id', $id)->first();
 
         return view('Shipments.OrderDeliveries.ShipmentBillings.index', compact('orderDelivery'));
     }
