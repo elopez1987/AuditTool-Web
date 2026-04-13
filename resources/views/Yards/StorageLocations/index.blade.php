@@ -116,8 +116,8 @@
                         <a href="" data-target="#modal-upload" data-toggle="modal" data-placement="top">
                             <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md"
                                     data-toggle="tooltip" data-placement="top" title="Importar archivo">
-                                <img src="{{asset('/ico/uploadcsv.png')}}" alt="" class="img-16">
-                                <span style="font-size: 11px;"> Importar catalogo </span>
+                                <img src="{{asset('/ico/uploadcsv.png')}}" alt="" class="img-16 mr-2">
+                                <span> Importar catalogo </span>
                             </button>
                         </a>
                         @include('Yards.StorageLocations.uploadfile')
@@ -125,8 +125,8 @@
                     @can('optimizelocations')
                         <a href="{{route('optimizelocations')}}">
                             <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
-                                <img src="{{asset('/ico/code.png')}}" alt="" class="img-16">
-                                <span style="font-size: 11px;"> Optimizar Ubicaciones</span>
+                                <img src="{{asset('/ico/code.png')}}" alt="" class="img-16 mr-2">
+                                <span> Optimizar Ubicaciones</span>
                             </button>
                         </a>
                     @endcan

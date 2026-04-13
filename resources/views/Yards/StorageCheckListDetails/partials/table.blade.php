@@ -28,12 +28,12 @@
         buttons: [
             {
                 "extend": "csv",
-                "text": "<i class='fa fa-database'></i> <span  style='font-size: 0.675rem !important;'> Exportar Csv</span>",
+                "text": "<i class='fa fa-database'></i> <span  > Exportar Csv</span>",
                 "className": "btn waves-effect waves-light btn-outline-secondary btn-sm"
             },
             {
                 "extend": "excel",
-                "text": "<i class='fa fa-file'></i> <span  style='font-size: 0.675rem !important'> Exportar Excel</span>",
+                "text": "<i class='fa fa-file'></i> <span > Exportar Excel</span>",
                 "className": "btn waves-effect waves-light btn-outline-secondary btn-sm"
             }
         ],

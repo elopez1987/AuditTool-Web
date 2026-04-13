@@ -12,11 +12,12 @@ class ParameterLocationsController extends BaseController
     public function index($id)
     {
         $this->authorize('storagelocations.parameters');
-        $model = Storagelocation::controlAccessUser()->find($id);
+        $model = Storagelocation::controlAccessUser()->findOrFail($id);
         $parameters = SystemStatus::whereSchemaid('PUB')
             ->select(['statusid', 'name'])->get();
 
-        return view('Yards.StorageLocations.Parameters.create', compact('model', 'parameters'));
+        return view('Yards.StorageLocations.Parameters.create',
+            compact('model', 'parameters'));
     }
 
     public function storagelocationsparameters(Request $request, $id)

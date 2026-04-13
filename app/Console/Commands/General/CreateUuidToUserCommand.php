@@ -4,6 +4,7 @@ namespace App\Console\Commands\General;
 
 use App\User;
 use Illuminate\Console\Command;
+use Str;
 
 class CreateUuidToUserCommand extends Command
 {
@@ -15,7 +16,7 @@ class CreateUuidToUserCommand extends Command
     {
         $users = User::withTrashed()->get();
         foreach ($users as $user) {
-            $user->uuiduser = \Str::uuid();
+            $user->uuiduser = Str::uuid();
             $user->save();
         }
     }

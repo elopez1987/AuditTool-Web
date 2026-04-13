@@ -40,16 +40,16 @@
         ],
 
         "columnDefs": [
-            {"width": "180px", "targets": 0},
-            {"width": "180px", "targets": 1},
+            {"width": "280px", "targets": 0},
+            {"width": "280px", "targets": 1},
             {"width": "120px", "targets": 2},
             {"width": "280px", "targets": 3},
             {"width": "280px", "targets": 4},
-            {"width": "120px", "targets": 5},
+            {"width": "180px", "targets": 5},
             {"width": "180px", "targets": 6},
-            {"width": "120px", "targets": 7},
-            {"width": "120px", "targets": 8},
-            {"width": "120px", "targets": 9},
+            {"width": "180px", "targets": 7},
+            {"width": "180px", "targets": 8},
+            {"width": "180px", "targets": 9},
         ],
 
         "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
@@ -58,18 +58,18 @@
         buttons: [
             {
                 "extend": "colvis",
-                "text": "<img src=\"{{asset('/pics/adbuscar.png')}}\"  alt=''><span> Mostar/Ocultar</span>",
+                "text": "<img src=\"{{asset('/pics/adbuscar.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span> Mostar/Ocultar</span>",
                 "className": "btn btn-outline-info btn-md  btn-bold",
                 columns: ':not(:first):not(:last)'
             },
             {
                 "extend": "csv",
-                "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16'><span> Csv</span>",
+                "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt=''  class='img-16 ml-2 mr-2'><span> Csv</span>",
                 "className": "btn btn-outline-info btn-md  btn-bold",
             },
             {
                 "extend": "excel",
-                "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt=''><span> Excel</span>",
+                "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span> Excel</span>",
                 "className": "btn btn-outline-info btn-md  btn-bold",
             }
         ],

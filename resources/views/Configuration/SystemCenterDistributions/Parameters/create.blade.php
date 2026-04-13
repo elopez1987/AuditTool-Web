@@ -30,6 +30,18 @@
                                            aria-describedby="auxiliary05" value="{{$center->name}}" readonly>
                                 </div>
                             </div>
+                            <div class="col-lg-2 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="name">Esquema</label>
+                                    <input type="text" class="form-control"  value="SDC" readonly>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="name">Nombre de parametro</label>
+                                    <input type="text" class="form-control" value="FLAGS: CEDIS (SYSTEMDISTRIBUTIONCENTER)" readonly>
+                                </div>
+                            </div>
                         </div>
                         <hr>
                         <div class="row">

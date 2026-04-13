@@ -45,14 +45,14 @@
                         </div>
                         <div class="row mt-3">
                             <div class="col-md-10">
-                                <table class="table  table-bordered table-condensed table-list ">
+                                <table class="table  table-bordered table-condensed table-parameters ">
                                     <thead>
                                     <tr>
-                                        <th width="10%">Secuencia</th>
-                                        <th width="10%">Activar/Desactivar</th>
+                                        <th>Secuencia</th>
+                                        <th>Activar/Desactivar</th>
                                         <th>Parametro</th>
                                         <th>Descripción</th>
-                                        <th width="20%">Comentario</th>
+                                        <th>Comentario</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -94,8 +94,7 @@
 
 
 @section('css')
-    <link rel="stylesheet"
-          href="{{asset('/theme/assets/libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css')}}">
+    <link rel="stylesheet" href="{{asset('/theme/assets/libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css')}}">
 @endsection
 
 
@@ -107,7 +106,7 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            $(".table-list").DataTable({
+            $(".table-parameters").DataTable({
                 "paging": true,
                 "lengthChange": true,
                 "searching": true,
@@ -118,12 +117,12 @@
                 buttons: [
                     {
                         "extend": "copy",
-                        "text": "<img src=\"{{asset('/pics/adcopiar.png')}}\"  alt=''><span  style='font-size: 11px;'> Copiar</span>",
+                        "text": "<img src=\"{{asset('/pics/adcopiar.png')}}\"  alt='' class='img-16 ml-2 mr-2'> <span> Copiar</span>",
                         "className": "btn btn-outline-info btn-sm  btn-bold",
                     },
                     {
                         "extend": "excel",
-                        "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt=''><span  style='font-size: 11px;'> Excel</span>",
+                        "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span> Excel</span>",
                         "className": "btn btn-outline-info btn-sm  btn-bold",
                     }
                 ],

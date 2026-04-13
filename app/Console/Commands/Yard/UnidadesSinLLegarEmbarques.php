@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands\General;
+namespace App\Console\Commands\Yard;
 
 use App\Models\Configuration\Warehouses\SystemWarehouse;
 use App\Models\Configuration\WhatsApp\SystemDetailWhatsApp;

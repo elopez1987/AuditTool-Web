@@ -105,14 +105,14 @@ class StorageUnitType extends Model
 
     public function scopeName($query, $name)
     {
-        if (trim($name) !== '') {
+        if (trim($name) != '') {
             $query->where('storageunittypes.description', 'like', "%{$name}%");
         }
     }
 
     public function scopeStatus($query, $statusid)
     {
-        if (trim($statusid) !== '') {
+        if (trim($statusid) != '') {
             $query->where('statusid', '=', $statusid);
         }
     }
