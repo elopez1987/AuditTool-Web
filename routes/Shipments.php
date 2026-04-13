@@ -132,7 +132,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('addstartshipment/{id}', [StartOrderDeliveryController::class, 'index'])->name('addstartshipment');
     //  Registrar Preparado En Piso o Armando
     Route::put('addendchecker/{id}', [EndCheckOrderDeliveryController::class, 'index'])->name('shipmentoperation.addendchecker');
-    //  Registro Por Cargar
+    //  Registro Por Cargarmonitorcheck
     Route::put('addforload/{id}', [ForLoadOrderDeliveryController::class, 'index'])->name('shipmentoperation.addforload');
     //  Registro de Inicio de Carga
     Route::put('addstartload/{id}', [StartLoadOrderDeliveryController::class, 'index'])->name('shipmentoperation.addstartload');

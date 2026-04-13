@@ -30,7 +30,7 @@
                     <div class="row">
                         <div class="col-lg-8">
                             <table width="100%" id="table-createreserve"
-                                   class="table table-condensed table-bordered table-striped">
+                                   class="table table-condensed table-bordered">
                                 <thead>
                                 <tr>
                                     <th>Seleccionar</th>
@@ -51,19 +51,19 @@
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-lg-12">
-                                                <h3>Total de cajas seleccionadas: </h3>
+                                                <h4>Total de cajas seleccionadas: </h4>
                                                 <h2 id="total_quantity_label" class="text-danger">0</h2>
                                             </div>
                                         </div>
                                         <div class="row mt-4">
                                             <div class="col-lg-12">
-                                                <h3>Total de embarques seleccionados: </h3>
+                                                <h4>Total de embarques seleccionados: </h4>
                                                 <h2 id="selected_count_label" class="text-danger">0</h2>
                                             </div>
                                         </div>
                                         <div class="row mt-4">
                                             <div class="col-lg-12">
-                                                <h3>Fecha seleccionada: </h3>
+                                                <h4>Fecha seleccionada: </h4>
                                                 <h2 id="fechawork" class="text-danger"></h2>
                                             </div>
                                         </div>
@@ -74,10 +74,10 @@
                                 <div class="col-lg-12">
                                     <a>
                                         <button type="button"
-                                                class="btn waves-effect waves-light btn-outline-info btn-md btn-block"
+                                                class="btn waves-effect waves-light btn-danger btn-block"
                                                 id="btn_generate_schedule">
                                             <img src="{{asset('/ico/calendar.png')}}" alt="" class="img-16">
-                                            <span style="font-size: 0.675rem "> Generar cita</span>
+                                            <span > Generar cita</span>
                                         </button>
 
                                     </a>
@@ -99,9 +99,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-12 ">
-                            <table width="100%"
-                                   class="table table-condensed table-bordered table-striped table-responsive"
-                                   id="table-reserve-schedule">
+                            <table class="table table-condensed table-bordered table-responsive" id="table-reserve-schedule">
                                 <thead>
                                 <tr>
                                     <th>
@@ -353,7 +351,6 @@
             text-align: center;
             text-decoration: none;
             display: inline-block;
-            font-size: .658rem;
             cursor: pointer;
             border-radius: 3px;
         }

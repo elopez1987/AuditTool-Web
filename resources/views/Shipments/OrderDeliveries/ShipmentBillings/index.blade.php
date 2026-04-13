@@ -45,18 +45,7 @@
                                   enctype="multipart/form-data">
                                 {{ method_field('PUT') }}
                                 @csrf
-                                <div class="row">
-                                    <div class="col-lg-3">
-                                        <a href="">
-                                            <button type="submit"
-                                                    class="btn waves-effect waves-light btn-outline-info btn-md btn-block">
-                                                <img src="{{asset('/ico/save02.png')}}" alt="" class="img-16">
-                                                <span style="font-size: 0.675rem "> Guardar</span>
-                                            </button>
-                                        </a>
-                                    </div>
-                                </div>
-                                <hr class="mt-3">
+
                                 <div class="row">
                                     <div class="col-lg-3 col-md-6 col-sm-12">
                                         <div class="form-group">
@@ -78,6 +67,18 @@
                                             <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-3">
+                                    <div class="col-lg-3">
+                                        <a href="">
+                                            <button type="submit"
+                                                    class="btn waves-effect waves-light btn-danger btn-block">
+                                                <img src="{{asset('/ico/save02.png')}}" alt="" class="img-16">
+                                                <span > Guardar Factura</span>
+                                            </button>
+                                        </a>
                                     </div>
                                 </div>
                             </form>
@@ -130,22 +131,21 @@
             buttons: [
                 {
                     "extend": "colvis",
-                    "text": "<img src=\"{{asset('/pics/adbuscar.png')}}\"  alt=''><span  style='font-size: 0.675rem !important;'> Mostar/Ocultar</span>",
+                    "text": "<img src=\"{{asset('/pics/adbuscar.png')}}\"  alt='' class='ml-2 mr-2'><span> Mostar/Ocultar</span>",
                     "className": "btn btn-outline-info btn-md  btn-bold",
                     columns: ':not(:first):not(:last)'
                 },
                 {
                     "extend": "csv",
-                    "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16'><span  style='font-size: 0.675rem !important;'> Csv</span>",
+                    "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span> Csv</span>",
                     "className": "btn btn-outline-info btn-md  btn-bold",
                 },
                 {
                     "extend": "excel",
-                    "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt=''><span  style='font-size: 0.675rem !important;'> Excel</span>",
+                    "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt='' class='ml-2 mr-2'><span> Excel</span>",
                     "className": "btn btn-outline-info btn-md  btn-bold",
                 }
             ],
-
 
             language: {
                 "decimal": "",

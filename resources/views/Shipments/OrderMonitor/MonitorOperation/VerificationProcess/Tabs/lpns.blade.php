@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-lg-8 col-md-6 col-sm-12">
             <table
-                class="table table-striped table-condensed table-bordered"
+                class="table table-condensed table-bordered"
                 style="width:80%">
                 <thead>
                 <tr>

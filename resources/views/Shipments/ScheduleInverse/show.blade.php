@@ -29,8 +29,7 @@
                     </div>
                     <div class="row">
                         <div class="col-lg-12">
-                            <table class="table table-bordered table-striped table-condensed"
-                                   id="table-detailschedulle">
+                            <table class="table table-bordered table-condensed" id="table-detailschedulle">
                                 <thead>
                                 <tr>
                                     <th>Periodo</th>
