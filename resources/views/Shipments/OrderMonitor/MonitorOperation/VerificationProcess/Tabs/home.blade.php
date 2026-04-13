@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-lg-12 co-md-10 col-sm-12">
             <table
-                class="table table-condensed table-bordered table-striped table-hover tablegeneral" style="width:100%">
+                class="table table-condensed table-bordered  table-hover tablegeneral" style="width:100%">
                 <thead>
                 <tr>
                     <th>Embarque</th>

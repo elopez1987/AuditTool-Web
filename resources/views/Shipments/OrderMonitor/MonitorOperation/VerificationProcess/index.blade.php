@@ -29,7 +29,7 @@
                                                     class="btn waves-effect waves-light btn-outline-info btn-md"
                                                     id="closeverific">
                                                 <img src="{{asset('/ico/closeverific.png')}}" alt="" class="img-16">
-                                                <span style="font-size: 11px;"> Cerrar verificación</span>
+                                                <span> Cerrar verificación</span>
                                             </button>
                                         </a>
                                         @include('Shipments.OrderMonitor.MonitorOperation.VerificationProcess.closeverific')
@@ -42,7 +42,7 @@
                                                     class="btn waves-effect waves-light btn-outline-info btn-md"
                                                     id="closeverific">
                                                 <img src="{{asset('/ico/window_add_12815.png')}}" alt="" class="img-16">
-                                                <span style="font-size: 11px;"> Agregar pedido</span>
+                                                <span> Agregar pedido</span>
                                             </button>
                                         </a>
                                         @include('Shipments.OrderMonitor.MonitorOperation.VerificationProcess.addpartnumber')
@@ -55,7 +55,7 @@
                                                     class="btn waves-effect waves-light btn-outline-info btn-md">
                                                 <img src="{{asset('/ico/changelocation.png')}}" alt=""
                                                      class="img-16">
-                                                <span style="font-size: 11px;"> Reabrir conteo</span>
+                                                <span> Reabrir conteo</span>
                                             </button>
                                         </a>
                                     @endif
@@ -65,7 +65,7 @@
                                             class="btn waves-effect waves-light btn-outline-info btn-md"
                                             id="closeverific">
                                         <img src="{{asset('/ico/verificacion.png')}}" alt="" class="img-16">
-                                        <span style="font-size: 11px;"> Datos de verificación</span>
+                                        <span> Datos de verificación</span>
                                     </button>
                                 </a>
                                 @include('Shipments.OrderMonitor.MonitorOperation.VerificationProcess.verificacion')
@@ -188,7 +188,7 @@
                                                         <i class="ti-list"></i></span> <span class="hidden-xs-down">Kardex de consolidación</span></a>
                                             </li>
                                         </ul>
-                                        <div class="tab-content tabcontent-border">
+                                        <div class="tab-content tabcontent-border mb-4">
                                             @include('Shipments.OrderMonitor.MonitorOperation.VerificationProcess.Tabs.home')
                                             @include('Shipments.OrderMonitor.MonitorOperation.VerificationProcess.Tabs.lpns')
                                             @include('Shipments.OrderMonitor.MonitorOperation.VerificationProcess.Tabs.detailslpns')
@@ -233,17 +233,17 @@
                 "colReorder": true,
                 "stateSave": true,
                 "stateDuration": 0,
-                "dom": '<"top">fBlrt<"bottom"p><"clear"i>',
+                "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
                 "lengthMenu": [[1, 5, 10, 30, 50, 100, 150, 200, 250, -1], [1, 5, 10, 30, 50, 100, 150, 200, 250, "Todos"]],
                 buttons: [
                     {
                         "extend": "csv",
-                        "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16'><span  style='font-size: 11px;'> Csv</span>",
+                        "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span> Csv</span>",
                         "className": "btn btn-outline-info btn-md  btn-bold",
                     },
                     {
                         "extend": "excel",
-                        "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt=''><span  style='font-size: 11px;'> Excel</span>",
+                        "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span> Excel</span>",
                         "className": "btn btn-outline-info btn-md  btn-bold",
                     }
                 ],

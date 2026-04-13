@@ -73,7 +73,6 @@ class ShipmentCheckImport implements ToModel, WithBatchInserts, WithChunkReading
             '*.shipmentid.regex' => 'El pedido debe contener solo letras y numeros',
             '*.partnumberid.regex' => 'El Sku debe contener solo letras y numeros',
             '*.quantity.regex' => 'La cantidad debe contener solo numeros',
-            '*.quantity.required' => 'La cantidad es requerida',
         ];
     }
 
