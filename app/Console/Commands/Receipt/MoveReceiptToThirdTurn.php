@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Console\Commands\General;
+namespace App\Console\Commands\Receipt;
 
 use Carbon\Carbon;
 use DB;
 use Illuminate\Console\Command;
 
-class MoveReceiptToSecondTurn extends Command
+class MoveReceiptToThirdTurn extends Command
 {
-    protected $signature = 'command:MoveReceiptToSecondTurn';
+    protected $signature = 'command:MoveReceiptToThirdTurn';
 
-    protected $description = 'Mueve los recibos que no se terminaron del primero al segundo';
+    protected $description = 'Mueve los recibos sin terminar del segundo turno al tercero';
 
     public function __construct()
     {
@@ -20,10 +20,9 @@ class MoveReceiptToSecondTurn extends Command
     public function handle()
     {
         DB::table('receiptasn')->whereDate('workday', Carbon::now()->format('Y-m-d'))
-            ->where('turnid', '=', '1')
+            ->where('turnid', '=', 2)
             ->whereNotIn('statusid', ['IG', 'CE'])
-            ->update([
-                'turnid' => 2,
+            ->update(['turnid' => 3,
                 'auxiliary10' => 'Y',
             ]);
     }

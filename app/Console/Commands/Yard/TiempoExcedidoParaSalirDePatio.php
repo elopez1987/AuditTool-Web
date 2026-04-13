@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands\General;
+namespace App\Console\Commands\Yard;
 
 use App\Models\Configuration\Parameters\SystemDetailParameter;
 use App\Models\Configuration\Warehouses\SystemWarehouse;
@@ -55,7 +55,7 @@ class TiempoExcedidoParaSalirDePatio extends Command
 
             return Command::SUCCESS;
         } catch (Exception $e) {
-            Log::error('Error en comando TiempoExcedidoParaSalirDePatio', [
+            Log::error('Error en comando Tiempo Excedido Para Salir De Patio', [
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
             ]);

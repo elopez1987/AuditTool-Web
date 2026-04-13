@@ -26,11 +26,11 @@ class StorageCheckListsController extends BaseController
             ->leftJoin('storagereasons', 'storagereasons.id', '=', 'storagechecklists.auxiliary03')
             ->leftJoin('storageunittypes', function ($join) {
                 $join->on('storageunittypes.auxiliary01', '=', 'storagechecklists.auxiliary01')
-                    ->where('storageunittypes.centerid', '=', 'storagechecklists.centerid');
+                    ->on('storageunittypes.centerid', '=', 'storagechecklists.centerid');
             })
-            ->Name($request->get('name'))
-            ->Warehouse($request->get('warehouseid'))
             ->select('storagechecklists.*', 'storagereasons.name as reason', 'storageunittypes.description as unittype')
+            ->Warehouse($request->get('warehouseid'))
+            ->Name($request->get('name'))
             ->get();
 
         return DataTables::of($data)

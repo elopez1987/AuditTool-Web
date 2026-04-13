@@ -2,20 +2,19 @@
 
 namespace App\Console;
 
-use App\Console\Commands\General\ClearReceiptAsnCommand;
+use App\Console\Commands\General\ClearLocationCommand;
 use App\Console\Commands\General\CloseValidateQRReceipt;
 use App\Console\Commands\General\DeleteHistLogWebServiceIzel;
 use App\Console\Commands\General\DeleteLogWhatsApp;
-use App\Console\Commands\General\MensajeDeCapacidadDePatio;
-use App\Console\Commands\General\TiempoExcedidoParaSalirDePatio;
-use App\Console\Commands\General\UnidadesSinLLegarEmbarques;
-use App\Console\Commands\HENKELTOL01\ClearLocationCommand;
-use App\Console\Commands\HENKELTOL01\EnviaMensajeDeNuevaIncidenciaRegistrada;
 use App\Console\Commands\Izel\EnviarDatosIzelWmsCommand;
+use App\Console\Commands\Receipt\ClearReceiptAsnCommand;
 use App\Console\Commands\RecursoConfiable\GetEvidenceFromRControl;
 use App\Console\Commands\RecursoConfiable\ObtenerETAdeRecursoConfiable;
 use App\Console\Commands\RecursoConfiable\SendEventForShipmentCommand;
 use App\Console\Commands\RecursoConfiable\SendPlanForShipmentCommand;
+use App\Console\Commands\Yard\MensajeDeCapacidadDePatio;
+use App\Console\Commands\Yard\TiempoExcedidoParaSalirDePatio;
+use App\Console\Commands\Yard\UnidadesSinLLegarEmbarques;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -35,7 +34,6 @@ class Kernel extends ConsoleKernel
         TiempoExcedidoParaSalirDePatio::class,
         ObtenerETAdeRecursoConfiable::class,
         UnidadesSinLLegarEmbarques::class,
-        EnviaMensajeDeNuevaIncidenciaRegistrada::class,
         MensajeDeCapacidadDePatio::class,
 
         SendPlanForShipmentCommand::class,
@@ -69,8 +67,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('command:TiempoExcedidoParaSalirDePatio')->everyFifteenMinutes();
         //        Envia mensajes de a unidades sin llegada para embarques
         $schedule->command('command:UnidadesSinLLegarEmbarques')->everyMinute();
-        //        Envío de mensajes de nuevas incidencias en embarques
-        $schedule->command('command:EnviaMensajeDeNuevaIncidenciaRegistrada')->everyFiveMinutes();
+
         //        Envia mensaje de capacidad de patio superada al parámetro máximo
         $schedule->command('whatsapp:patiolleno')->everyTwoHours();
 

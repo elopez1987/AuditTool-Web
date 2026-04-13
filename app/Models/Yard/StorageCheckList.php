@@ -138,14 +138,14 @@ class StorageCheckList extends Model
 
     public function scopeName($query, $name)
     {
-        if (trim($name) !== '') {
+        if (trim($name) != '') {
             $query->where('storagechecklists.name', 'like', "%{$name}%");
         }
     }
 
     public function scopeWarehouse($query, $warehouseid)
     {
-        if (trim($warehouseid) !== '') {
+        if (trim($warehouseid) != '') {
             $query->where('storagechecklists.warehouseid', '=', $warehouseid);
         }
     }

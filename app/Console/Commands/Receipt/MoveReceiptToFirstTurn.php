@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands\General;
+namespace App\Console\Commands\Receipt;
 
 use Carbon\Carbon;
 use DB;
