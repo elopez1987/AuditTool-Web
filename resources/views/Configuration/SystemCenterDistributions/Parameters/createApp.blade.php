@@ -30,17 +30,29 @@
                                            aria-describedby="auxiliary05" value="{{$center->name}}" readonly>
                                 </div>
                             </div>
+                            <div class="col-lg-2 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="name">Esquema</label>
+                                    <input type="text" class="form-control"  value="APP" readonly>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="name">Nombre de parametro</label>
+                                    <input type="text" class="form-control" value="PARAMETROS DE APP" readonly>
+                                </div>
+                            </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-10">
+                            <div class="col-lg-10">
                                 <table class="table  table-bordered table-condensed tabledata">
                                     <thead>
                                     <tr>
-                                        <th width="10%">Secuencia</th>
-                                        <th width="10%">Activar/Desactivar</th>
+                                        <th >Secuencia</th>
+                                        <th >Activar/Desactivar</th>
                                         <th>Parametro</th>
                                         <th>Descripción</th>
-                                        <th width="20%">Comentario</th>
+                                        <th>Comentario</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -104,18 +116,18 @@
                 buttons: [
                     {
                         "extend": "colvis",
-                        "text": "<img src=\"{{asset('/pics/adbuscar.png')}}\"  alt=''><span  style='font-size: 11px;'> Mostar/Ocultar</span>",
+                        "text": "<img src=\"{{asset('/pics/adbuscar.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span> Mostar/Ocultar</span>",
                         "className": "btn btn-outline-info btn-md  btn-bold",
                         columns: ':not(:first):not(:last)'
                     },
                     {
                         "extend": "csv",
-                        "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16'><span  style='font-size: 11px;'> Csv</span>",
+                        "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span> Csv</span>",
                         "className": "btn btn-outline-info btn-md  btn-bold",
                     },
                     {
                         "extend": "excel",
-                        "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt=''><span  style='font-size: 11px;'> Excel</span>",
+                        "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span> Excel</span>",
                         "className": "btn btn-outline-info btn-md  btn-bold",
                     }
                 ],

@@ -29,6 +29,18 @@
                                     <input type="text" class="form-control" readonly  id="name" name="name" value="{{$model->name}}">
                                 </div>
                             </div>
+                            <div class="col-lg-2 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Esquema</label>
+                                    <input type="text" class="form-control" readonly  value="PUB">
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Nombre del esquema</label>
+                                    <input type="text" class="form-control" readonly value="PARAMETROS DE UBICACIONES">
+                                </div>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">

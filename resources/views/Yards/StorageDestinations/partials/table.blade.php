@@ -32,7 +32,7 @@
         buttons: [
             {
                 "extend": "excel",
-                "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt=''><span  style='font-size: 10px;'> Exportar Excel</span>",
+                "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span> Exportar Excel</span>",
                 "className": "btn waves-effect waves-light btn-outline-secondary btn-sm"
             }
         ],

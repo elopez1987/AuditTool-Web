@@ -30,6 +30,18 @@
                                            aria-describedby="auxiliary05" value="{{$role->description}}" readonly>
                                 </div>
                             </div>
+                            <div class="col-lg-2 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Esquema</label>
+                                    <input type="text" class="form-control" value="ROL" readonly>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Nombre de esquema</label>
+                                    <input type="text" class="form-control" value="PARAMETRIZACION DE ROLES" readonly>
+                                </div>
+                            </div>
                         </div>
                         <div class="row mt-3">
                             <div class="col-md-10">

@@ -32,7 +32,7 @@
                             </div>
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="name">Parametro</label>
+                                    <label for="name">Esquema</label>
                                     <input type="text" class="form-control"  value="RES" readonly>
                                 </div>
                             </div>
