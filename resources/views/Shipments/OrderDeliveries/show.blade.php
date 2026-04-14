@@ -720,7 +720,7 @@
                             <hr class="m-t-1">
                             @can('orderdelivery.opencount')
                                 <div class="row">
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-8">
                                         <table class="table  table-bordered table-condensed tablegeneral">
                                             <thead>
                                             <tr>

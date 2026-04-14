@@ -10,6 +10,9 @@ class YardHenkelTolController extends BaseController
 {
     public function index()
     {
+        $centers = $this->getCenterForUser();
+        $warehouses = $this->getWarehouseForUser();
+
         $result = ReceiptUnit::controlAccessUser()->select(['storagereasons.name as razonname',
             'receiptunits.razonstatusid', DB::raw('count(receiptunits.razonstatusid) as total')])
             ->leftJoin('storagereasons', 'receiptunits.razonstatusid', '=', 'storagereasons.id')
@@ -35,6 +38,8 @@ class YardHenkelTolController extends BaseController
         $totales = DB::table('storagelocations as s')
             ->leftJoin('storagezones as z', 's.zoneid', '=', 'z.id')
             ->whereNotIn('z.zoneid', ['CO', 'ST'])
+            ->whereIn('s.warehouseid', $warehouses)
+            ->whereIn('s.centerid', $centers)
             ->selectRaw("
 						COUNT(s.locationid) AS total_ubicaciones,
 						COUNT(CASE WHEN s.statusid = 'D' THEN 1 END) AS total_ocupadas,
@@ -50,6 +55,8 @@ class YardHenkelTolController extends BaseController
             ->leftJoin('storagezones as z', 's.zoneid', '=', 'z.id')
             ->leftJoin('systemwarehouses as w', 's.warehouseid', '=', 'w.warehouseid')
             ->whereNotIn('z.zoneid', ['CO', 'ST'])
+            ->whereIn('s.warehouseid', $warehouses)
+            ->whereIn('s.centerid', $centers)
             ->groupBy('w.name')
             ->selectRaw("
        					 w.name AS warehouse,
