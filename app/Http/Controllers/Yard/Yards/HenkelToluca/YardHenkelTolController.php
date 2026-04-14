@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Yard\Yards\HenkelToluca;
 
 use App\Http\Controllers\BaseController;
+use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\Models\Yard\ReceiptUnit;
 use DB;
 
@@ -10,8 +11,8 @@ class YardHenkelTolController extends BaseController
 {
     public function index()
     {
-        $centers = $this->getCenterForUser();
-        $warehouses = $this->getWarehouseForUser();
+        $centers = SecurityAccessWarehouse::Centers();
+        $warehouses = SecurityAccessWarehouse::Warehouses();
 
         $result = ReceiptUnit::controlAccessUser()->select(['storagereasons.name as razonname',
             'receiptunits.razonstatusid', DB::raw('count(receiptunits.razonstatusid) as total')])
