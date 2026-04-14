@@ -24,7 +24,9 @@ class ReceiptUnitTicketController extends BaseController
             ->with(['status:statusid,name', 'warehouse:warehouseid,name'])
             ->FolioNumber($request->get('folionumber'))
             ->Ticket($request->get('ticket'))
-            ->take(100)->get();
+            ->take(300)
+            ->orderBy('id', 'desc')
+            ->get();
 
         return DataTables::of($data)
             ->addColumn('btn', 'Yards.ReceiptUnitTicket.partials.buttons')

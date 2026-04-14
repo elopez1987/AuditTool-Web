@@ -6,55 +6,57 @@ use App\Http\Controllers\BaseController;
 use App\Models\Shipments\ShipmentHeader;
 use App\Models\Yard\ReceiptUnit;
 use App\Models\Yard\StorageLocation;
+use App\Models\Yard\StorageZone\StorageZone;
+use Illuminate\Support\Facades\DB;
 
 class OptimizeLocationsController extends BaseController
 {
     public function optimizelocations()
     {
         $this->UpdateLocationToEnabled();
-        $locations = $this->getLocations();
-        $units = $this->getReceiptUnits();
-        $shipments = $this->getShipmentHeaders();
 
-        foreach ($locations as $location) {
-            foreach ($units as $unit) {
-                if ((int) $location->id === (int) $unit->locationid) {
-                    $location->auxiliary01 = $unit->boxnumber;
-                    $location->statusid = 'D';
-                    $location->save();
-                }
-            }
-        }
-        foreach ($shipments as $shipment) {
-            foreach ($locations as $location) {
-                if ((int) $location->id === (int) $shipment->locationid) {
-                    $location->statusid = 'D';
-                    $location->save();
-                }
-            }
+        // Bloquea cortinas: actualiza ubicaciones con unidades activas
+        $units = ReceiptUnit::controlAccessUser()
+            ->whereNotIn('statusid', ['TR'])
+            ->whereNotNull('locationid')
+            ->select(['locationid', 'boxnumber'])
+            ->get()
+            ->keyBy('locationid');
+
+        foreach ($units as $locationId => $unit) {
+            StorageLocation::controlAccessUser()
+                ->where('id', $locationId)
+                ->update(['statusid' => 'D', 'auxiliary01' => $unit->boxnumber]);
         }
 
-        return $this->redirectBackSuccess();
-    }
-
-    public function getShipmentHeaders()
-    {
-        return ShipmentHeader::controlAccessUser()
+        // Bloquea precargas: actualiza ubicaciones con embarques activos
+        $shipmentLocationIds = ShipmentHeader::controlAccessUser()
             ->leftJoin('orderdeliveries', 'orderdeliveries.id', '=', 'shipmentheader.orderid')
             ->whereNotIn('orderdeliveries.statusid', ['DH', 'CA'])
             ->whereNotNull('shipmentheader.locationid')
-            ->select(['shipmentheader.id', 'shipmentheader.locationid'])->get();
-    }
+            ->pluck('shipmentheader.locationid');
 
-    public function getReceiptUnits()
-    {
-        return ReceiptUnit::controlAccessUser()->whereNotIn('statusid', ['TR'])
-            ->select(['locationid', 'boxnumber'])->get();
-    }
+        if ($shipmentLocationIds->isNotEmpty()) {
+            StorageLocation::controlAccessUser()
+                ->whereIn('id', $shipmentLocationIds)
+                ->update(['statusid' => 'D']);
+        }
 
-    public function getLocations()
-    {
-        return StorageLocation::controlAccessUser()->select(['id', 'auxiliary01', 'statusid'])->get();
+        // Actualiza capacidades por zona
+        $totalLocations = DB::table('storagelocations as s')
+            ->leftJoin('storagezones as z', 's.zoneid', '=', 'z.id')
+            ->whereNotIn('z.zoneid', ['ST'])
+            ->whereNotIn('s.name', ['DUMMY'])
+            ->groupBy('s.zoneid')
+            ->selectRaw('s.zoneid, COUNT(s.locationid) as total_ubicaciones')
+            ->get();
+
+        foreach ($totalLocations as $totalLocation) {
+            StorageZone::where('id', $totalLocation->zoneid)
+                ->update(['capacity' => $totalLocation->total_ubicaciones]);
+        }
+
+        return $this->redirectBackSuccess();
     }
 
     public function UpdateLocationToEnabled(): void
