@@ -37,7 +37,7 @@ class YardHenkelTolController extends BaseController
 
         $totales = DB::table('storagelocations as s')
             ->leftJoin('storagezones as z', 's.zoneid', '=', 'z.id')
-            ->whereNotIn('z.zoneid', ['CO', 'ST'])
+            ->whereNotIn('z.zoneid', ['ST'])
             ->whereIn('s.warehouseid', $warehouses)
             ->whereIn('s.centerid', $centers)
             ->selectRaw("
@@ -54,7 +54,7 @@ class YardHenkelTolController extends BaseController
         $bodegas = DB::table('storagelocations as s')
             ->leftJoin('storagezones as z', 's.zoneid', '=', 'z.id')
             ->leftJoin('systemwarehouses as w', 's.warehouseid', '=', 'w.warehouseid')
-            ->whereNotIn('z.zoneid', ['CO', 'ST'])
+            ->whereNotIn('z.zoneid', ['ST'])
             ->whereIn('s.warehouseid', $warehouses)
             ->whereIn('s.centerid', $centers)
             ->groupBy('w.name')
