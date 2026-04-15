@@ -47,6 +47,7 @@ class OptimizeLocationsController extends BaseController
             ->leftJoin('storagezones as z', 's.zoneid', '=', 'z.id')
             ->whereNotIn('z.zoneid', ['ST'])
             ->whereNotIn('s.name', ['DUMMY'])
+            ->whereNull('s.deleted_at')
             ->groupBy('s.zoneid')
             ->selectRaw('s.zoneid, COUNT(s.locationid) as total_ubicaciones')
             ->get();
