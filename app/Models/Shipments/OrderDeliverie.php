@@ -245,28 +245,33 @@ class OrderDeliverie extends Model
     public static function validateShipmentOrder($shipmentid)
     {
         return OrderDeliverie::controlAccessUser()->whereShipmentid($shipmentid)
-            ->whereNotIn('statusid', ['DH', 'CA'])->first();
+            ->whereNotIn('orderdeliveries.statusid', ['DH', 'CA'])->first();
     }
 
     public static function getOrderForStatus()
     {
-        return OrderDeliverie::controlAccessUser()->select(['statusid', DB::raw('COUNT(statusid) as total_for_status')])->groupBy('statusid')->get();
+        return OrderDeliverie::controlAccessUser()
+            ->select(['statusid', DB::raw('COUNT(statusid) as total_for_status')])
+            ->groupBy('statusid')->get();
     }
 
     public static function searchForShipment($shipment)
     {
-        return OrderDeliverie::controlAccessUser()->whereShipmentid($shipment)->first();
+        return OrderDeliverie::controlAccessUser()
+            ->whereShipmentid($shipment)->first();
     }
 
     public static function searchShipmentForArrayStatus($folionumber, $status)
     {
-        return OrderDeliverie::controlAccessUser()->where('orderdeliveries.folionumber', $folionumber)
+        return OrderDeliverie::controlAccessUser()
+            ->where('orderdeliveries.folionumber', $folionumber)
             ->whereNotIn('orderdeliveries.statusid', $status)->first();
     }
 
     public static function searchForUnit($folio)
     {
-        return OrderDeliverie::controlAccessUser()->where('orderdeliveries.folionumber', $folio)->first();
+        return OrderDeliverie::controlAccessUser()
+            ->where('orderdeliveries.folionumber', $folio)->first();
     }
 
     protected static function boot()
