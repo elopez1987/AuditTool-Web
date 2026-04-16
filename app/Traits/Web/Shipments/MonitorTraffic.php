@@ -40,6 +40,6 @@ trait MonitorTraffic
             ->when($request->workday, fn ($q) => $q->Workday($request->workday))
             ->when($request->turnid, fn ($q) => $q->Turn($request->turnid))
             ->when($request->warehouseid, fn ($q) => $q->Warehouse($request->warehouseid))
-            ->whereNotIn('statusid', ['CA', 'DH']);
+            ->whereNotIn('orderdeliveries.statusid', ['CA', 'DH']);
     }
 }
