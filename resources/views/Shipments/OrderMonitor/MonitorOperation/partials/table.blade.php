@@ -80,18 +80,18 @@
         buttons: [
             {
                 "extend": "colvis",
-                "text": "<img src=\"{{asset('/pics/adbuscar.png')}}\"  alt=''><span  style='font-size: 0.675rem;'> Mostar/Ocultar</span>",
+                "text": "<img src=\"{{asset('/pics/adbuscar.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span> Mostar/Ocultar</span>",
                 "className": "btn btn-outline-info btn-md  btn-bold",
                 columns: ':not(:first):not(:last)'
             },
             {
                 "extend": "csv",
-                "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16'><span  style='font-size:0.675rem'> Csv</span>",
+                "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16 ml-2 mr-2'><sp> Csv</span>",
                 "className": "btn btn-outline-info btn-md  btn-bold",
             },
             {
                 "extend": "excel",
-                "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt=''><span  style='font-size: 0.675rem'> Excel</span>",
+                "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt='' class='img-16 ml-2 mr-2'><spa> Excel</span>",
                 "className": "btn btn-outline-info btn-md  btn-bold",
             }
         ],
