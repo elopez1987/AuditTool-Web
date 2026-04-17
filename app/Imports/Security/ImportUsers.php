@@ -98,6 +98,21 @@ class ImportUsers implements SkipsOnError, SkipsOnFailure, ToModel, WithBatchIns
         ];
     }
 
+    /**
+     * Normaliza la fila antes de ejecutar la validación.
+     * Esto permite que usernames numéricos (p.ej. 10089727) no fallen la regla "string".
+     */
+    public function prepareForValidation($row, $index)
+    {
+        foreach (['username', 'email', 'name', 'roleid', 'centerid', 'warehouseid'] as $field) {
+            if (array_key_exists($field, $row) && $row[$field] !== null) {
+                $row[$field] = (string) $row[$field];
+            }
+        }
+
+        return $row;
+    }
+
     public function customValidationMessages(): array
     {
         return [
