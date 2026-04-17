@@ -169,10 +169,11 @@ class ImportUsers implements SkipsOnError, SkipsOnFailure, ToModel, WithBatchIns
             return;
         }
 
-        $role = Role::query()
-            ->where('id', $roleid)
-            ->orWhere('name', $roleid)
-            ->first();
+        // Evitamos el cast nvarchar -> bigint en SQL Server: si el valor es
+        // numérico buscamos por id, si no, buscamos sólo por name.
+        $role = ctype_digit($roleid)
+            ? Role::query()->where('id', (int) $roleid)->orWhere('name', $roleid)->first()
+            : Role::query()->where('name', $roleid)->first();
 
         if ($role === null) {
             Log::warning('[ImportUsers] Rol no encontrado, se omite asignación', [
