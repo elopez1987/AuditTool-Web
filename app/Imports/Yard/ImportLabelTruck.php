@@ -7,9 +7,8 @@ use App\Traits\Web\General\GetParameters;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
-use Maatwebsite\Excel\Concerns\WithValidation;
 
-class ImportLabelTruck implements ToCollection, WithHeadingRow, WithValidation
+class ImportLabelTruck implements ToCollection, WithHeadingRow
 {
     use GetParameters;
 
@@ -34,13 +33,13 @@ class ImportLabelTruck implements ToCollection, WithHeadingRow, WithValidation
         }
     }
 
-    public function rules(): array
-    {
-        //        return [
-        //            '*.centerid' => 'required|exists:systemcenterdistributions,centerid',
-        //            '*.warehouseid' => 'required|exists:systemwarehouses,warehouseid',
-        //            '*.carrierid' => 'required|exists:shipmentcarriers,id',
-        //            '*.boxnumber' => 'required|string|max:50',
-        //        ];
-    }
+    //    public function rules(): array
+    //    {
+    //        //        return [
+    //        //            '*.centerid' => 'required|exists:systemcenterdistributions,centerid',
+    //        //            '*.warehouseid' => 'required|exists:systemwarehouses,warehouseid',
+    //        //            '*.carrierid' => 'required|exists:shipmentcarriers,id',
+    //        //            '*.boxnumber' => 'required|string|max:50',
+    //        //        ];
+    //    }
 }
