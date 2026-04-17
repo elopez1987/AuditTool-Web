@@ -36,11 +36,11 @@ class ImportLabelTruck implements ToCollection, WithHeadingRow, WithValidation
 
     public function rules(): array
     {
-        return [
-            '*.centerid' => 'required|exists:systemcenterdistributions,centerid',
-            '*.warehouseid' => 'required|exists:systemwarehouses,warehouseid',
-            '*.carrierid' => 'required|exists:shipmentcarriers,id',
-            '*.boxnumber' => 'required|string|max:50',
-        ];
+        //        return [
+        //            '*.centerid' => 'required|exists:systemcenterdistributions,centerid',
+        //            '*.warehouseid' => 'required|exists:systemwarehouses,warehouseid',
+        //            '*.carrierid' => 'required|exists:shipmentcarriers,id',
+        //            '*.boxnumber' => 'required|string|max:50',
+        //        ];
     }
 }
