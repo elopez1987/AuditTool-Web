@@ -43,7 +43,6 @@ class ImportUsers implements ToModel, WithBatchInserts, WithChunkReading, WithHe
             '*.username' => [
                 'string',
                 'required',
-                'max:10',
             ],
             '*.email' => [
                 'email',
