@@ -4,7 +4,6 @@ namespace App\Imports\Security;
 
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\User;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\SkipsErrors;
@@ -41,18 +40,20 @@ class ImportUsers implements SkipsOnError, SkipsOnFailure, ToModel, WithBatchIns
 
         Log::info('[ImportUsers] Procesando fila', $rowContext);
 
+        // NOTA: No envolvemos en DB::transaction() para evitar el error
+        // "Cannot roll back transNN. No transaction or savepoint of that name was found."
+        // que ocurre con SQL Server cuando se crean savepoints anidados dentro de
+        // los chunks de Maatwebsite/Excel. Los updateOrCreate ya son atómicos.
         try {
-            DB::transaction(function () use ($row, $rowContext) {
-                $user = $this->getUpdateOrCreateUser($row);
-                $this->assignRole($row, $user);
-                $this->createAccessWarehouse($row, $user);
+            $user = $this->getUpdateOrCreateUser($row);
+            $this->assignRole($row, $user);
+            $this->createAccessWarehouse($row, $user);
 
-                $this->createdOrUpdatedUsers++;
+            $this->createdOrUpdatedUsers++;
 
-                Log::info('[ImportUsers] Fila procesada correctamente', $rowContext + [
-                    'userid' => $user->id,
-                ]);
-            });
+            Log::info('[ImportUsers] Fila procesada correctamente', $rowContext + [
+                'userid' => $user->id,
+            ]);
         } catch (Throwable $e) {
             $this->skippedRows++;
 
