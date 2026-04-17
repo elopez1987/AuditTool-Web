@@ -39,7 +39,7 @@
                 @enderror
                 <span style="color: red">*</span></label>
             <input type="text" class="form-control @error('name') is-invalid @enderror"
-                   required id="name" name="name" maxlength="20" aria-describedby="name"
+                   required id="name" name="name" maxlength="200" aria-describedby="name"
                    value="{{$securitypermission->name}}"
             >
         </div>
@@ -53,7 +53,7 @@
                 <span style="color: red">*</span></label>
             <input type="text" class="form-control @error('description') is-invalid @enderror"
                    required id="description" name="description"
-                   aria-describedby="description" onKeyUp=this.value=this.value.toUpperCase();
+                   aria-describedby="description"
                    value="{{$securitypermission->description}}"
             >
         </div>

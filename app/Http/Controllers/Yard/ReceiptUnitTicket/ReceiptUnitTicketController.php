@@ -69,7 +69,7 @@ class ReceiptUnitTicketController extends BaseController
     public function getUnitTicketsPT(Request $request)
     {
         $data = ReceiptUnitTicket::controlAccessUser()
-            ->with(['status:statusid,name', 'warehouse:warehouseid,name'])
+            ->with(['status:statusid,name', 'warehouse:warehouseid,name', 'folio'])
             ->FolioNumber($request->get('folionumber'))
             ->Ticket($request->get('ticket'))
             ->take(100)->get();
@@ -81,6 +81,9 @@ class ReceiptUnitTicketController extends BaseController
             })
             ->editColumn('weightin', function ($row) {
                 return number_format($row->weightin, 2) . ' Kg';
+            })
+            ->addColumn('carrier', function ($row) {
+                return $row->folio ? $row->folio->carrier->name : '';
             })
             ->editColumn('weightinlb', function ($row) {
                 return number_format($row->weightinlb, 2) . ' lbs';

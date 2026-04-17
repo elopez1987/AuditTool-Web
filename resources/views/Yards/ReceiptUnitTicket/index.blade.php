@@ -63,6 +63,12 @@
                                             Número de ticket
                                         </th>
                                         <th style="background-color: #0b0b0b !important;color: white !important;text-transform: uppercase">
+                                            Linea de transporte
+                                        </th>
+                                        <th style="background-color: #0b0b0b !important;color: white !important;text-transform: uppercase">
+                                            Placa de caja / Economico
+                                        </th>
+                                        <th style="background-color: #0b0b0b !important;color: white !important;text-transform: uppercase">
                                             Peso de entrada kilogramos
                                         </th>
                                         <th style="background-color: #0b0b0b !important;color: white !important;text-transform: uppercase">
