@@ -6,7 +6,8 @@
                 <span class="message-error">{{$message}}</span>
                 @enderror
             </label>
-            <select name="moduleid" id='moduleid' required class="form-control select2 @error('moduleid') is-invalid @enderror">
+            <select name="moduleid" id='moduleid' required
+                    class="form-control select2 @error('moduleid') is-invalid @enderror">
                 <option value="" selected>Seleccione un valor</option>
                 @foreach($modules as $model)
                     <option value="{{$model->moduleid}}"> {{$model->description}} </option>
@@ -21,7 +22,8 @@
                 <span class="message-error">{{$message}}</span>
                 @enderror
             </label>
-            <select name="functionid" id='functionid' required class="form-control select2 @error('functionid') is-invalid @enderror">
+            <select name="functionid" id='functionid' required
+                    class="form-control select2 @error('functionid') is-invalid @enderror">
                 <option value="" >Seleccione un valor</option>
             </select>
         </div>
@@ -36,9 +38,7 @@
                 @enderror
                 <span style="color: red">*</span></label>
             <input type="text" class="form-control @error('name') is-invalid @enderror"
-                   required id="name" name="name" maxlength="15"
-                   aria-describedby="name" value="{{old('name')}}"
-            >
+                   required id="name" name="name" maxlength="200" value="{{old('name')}}">
         </div>
     </div>
     <div class="col-lg-2 col-md-6 col-sm-12">
@@ -49,9 +49,7 @@
                 @enderror
                 <span style="color: red">*</span></label>
             <input type="text" class="form-control @error('description') is-invalid @enderror"
-                   required id="description" name="description"
-                   aria-describedby="description" onKeyUp=this.value=this.value.toUpperCase();
-                   value="{{old('description')}}"
+                   required id="description" name="description" value="{{old('description')}}"
             >
         </div>
     </div>

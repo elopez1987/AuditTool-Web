@@ -24,6 +24,15 @@
             "columns": [
                 {data: 'folionumber'},
                 {data: 'ticket'},
+                {data:'carrier'},
+                {
+                    data: null,
+                    render: function(data, type, row) {
+                        let box = row.folio?.boxnumber ?? '-';
+                        let eco = row.folio?.econumber ?? '-';
+                        return `<span>${box}</span> / <span>${eco}</span>`;
+                    }
+                },
                 {data: 'weightin'},
                 {data: 'weightinlb'},
                 {data: 'weightout'},
@@ -37,7 +46,7 @@
             "columnDefs": [
                 {"width": "150px", "targets": 0},
                 {"width": "150px", "targets": 1},
-                {"width": "150px", "targets": 2},
+                {"width": "250px", "targets": 2},
                 {"width": "250px", "targets": 3},
                 {"width": "250px", "targets": 4},
                 {"width": "250px", "targets": 5},
@@ -46,6 +55,8 @@
                 {"width": "250px", "targets": 8},
                 {"width": "250px", "targets": 9},
                 {"width": "250px", "targets": 10},
+                {"width": "250px", "targets": 11},
+                {"width": "250px", "targets": 12},
             ],
             "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
             "lengthMenu": [[5, 10, 30, 50, 100, 150, 200, 250, -1], [5, 10, 30, 50, 100, 150, 200, 250, "Todos"]],
