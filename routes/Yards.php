@@ -315,6 +315,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('getDataLabelsTrucks', [StorageLabelTrucksController::class, 'getDataLabelsTrucks'])->name('getDataLabelsTrucks');
     //    Imprimir etiquetas de caja
     Route::get('printlabeltruck/{storagelabeltruck}', [StorageLabelTrucksController::class, 'printlabeltruck'])->name('printlabeltruck');
+    // Importar etiquetas
+    Route::post('upload-labels', [StorageLabelTrucksController::class, 'importlabels'])->name('upload-labels');
 
     //  -------------------------------------------------- Areas  ------------------------------------------------
     Route::resource('storageareas', StorageAreasController::class);

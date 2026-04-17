@@ -64,35 +64,49 @@
                             />
                         </div>
                     </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-body">
                     <div class="row">
-                        <div class="col-12">
-                            <table id="table-label" class="table table-bordered  table-condensed">
-                                <thead>
-                                <tr>
-                                    <th class="bg-inverse text-white">C.Distribución</th>
-                                    <th class="bg-inverse text-white">C.Barra</th>
-                                    <th class="bg-inverse text-white">Linea</th>
-                                    <th class="bg-inverse text-white">Placas</th>
-                                    <th class="bg-inverse text-white">Economico</th>
-                                    <th class="bg-inverse text-white">Tipo de Registro</th>
-                                    <th class="bg-inverse text-white">Opciones</th>
-                                </tr>
-                                </thead>
-                            </table>
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <table id="table-label" class="table table-bordered  table-condensed">
+                                                <thead>
+                                                <tr>
+                                                    <th class="bg-inverse text-white">C.Distribución</th>
+                                                    <th class="bg-inverse text-white">C.Barra</th>
+                                                    <th class="bg-inverse text-white">Linea</th>
+                                                    <th class="bg-inverse text-white">Placas</th>
+                                                    <th class="bg-inverse text-white">Economico</th>
+                                                    <th class="bg-inverse text-white">Tipo de Registro</th>
+                                                    <th class="bg-inverse text-white">Opciones</th>
+                                                </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <div class="card-footer">
+                    @can('storagelocations.importlocation')
+                        <a href="" data-target="#modal-upload" data-toggle="modal" data-placement="top">
+                            <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md"
+                                    data-toggle="tooltip" data-placement="top" title="Importar archivo">
+                                <img src="{{asset('/ico/uploadcsv.png')}}" alt="" class="img-16 mr-2">
+                                <span> Importar Etiquetas </span>
+                            </button>
+                        </a>
+                        @include('Yards.StorageLabelTrucks.uploadfile')
+                    @endcan
+                </div>
             </div>
+
         </div>
     </div>
+
 @endsection
 
 @section('script')

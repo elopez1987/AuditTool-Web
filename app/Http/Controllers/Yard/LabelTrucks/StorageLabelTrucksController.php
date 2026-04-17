@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Yard\LabelTrucks;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Yard\LabelTruck\RegisterLabelRequest;
+use App\Imports\Yard\ImportLabelTruck;
 use App\Models\Security\Users\AccessCarrier;
 use App\Models\Yard\StorageLabelTruck\StorageLabelTruck;
 use App\Traits\Web\General\GenerateLabel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
 
 class StorageLabelTrucksController extends BaseController
@@ -56,8 +58,8 @@ class StorageLabelTrucksController extends BaseController
                 'carriers',
                 'trucks',
                 'unittype',
-                'warehouses'
-            )
+                'warehouses',
+            ),
         );
     }
 
@@ -83,7 +85,7 @@ class StorageLabelTrucksController extends BaseController
 
         return view(
             'Yards.StorageLabelTrucks.edit',
-            compact('storagelabeltruck', 'carriers', 'trucks', 'unittypes')
+            compact('storagelabeltruck', 'carriers', 'trucks', 'unittypes'),
         );
     }
 
@@ -105,5 +107,12 @@ class StorageLabelTrucksController extends BaseController
     public function printlabeltruck(StorageLabelTruck $storagelabeltruck)
     {
         return $this->generateLabelBox($storagelabeltruck);
+    }
+
+    public function importlabels(Request $request)
+    {
+        Excel::import(new ImportLabelTruck, $request->file('file'), '', \Maatwebsite\Excel\Excel::XLSX);
+
+        return $this->redirectBackSuccessMessage('Archivo cargado con exito');
     }
 }
