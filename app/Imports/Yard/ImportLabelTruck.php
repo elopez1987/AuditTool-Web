@@ -27,6 +27,7 @@ class ImportLabelTruck implements ToCollection, WithHeadingRow, WithValidation
                 [
                     'truckid' => trim($row['truckid']),
                     'typeid' => trim($row['typeid']),
+                    'econumber' => trim($row['econumber']),
                     'barcode' => $barcode->folionumber,
                 ],
             );
