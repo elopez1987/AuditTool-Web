@@ -216,6 +216,16 @@
                     </div>
                 </a>
             @endcan
+                @can('viewkeyreception')
+                    <a href="{{route('viewkeyreception')}}">
+                        <div class="box" data-toggle="tooltip" data-placement="top"
+                             title="Permite registrar el evento de llegada de la unidad a mesa de control al entregar su documentación.">
+                            <i class="lni lni-key"></i>
+                            <h5>Recepción llaves</h5>
+                            <h4>Recepción llaves</h4>
+                        </div>
+                    </a>
+                @endcan
             @can('viewmovementsofbox')
                 <a href="{{route('viewmovementsofbox')}}">
                     <div class="box" data-toggle="tooltip" data-placement="top"

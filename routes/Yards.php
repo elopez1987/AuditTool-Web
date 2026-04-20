@@ -32,6 +32,7 @@ use App\Http\Controllers\Yard\ReceiptUnit\CircuitProcess\GenerateAccessWarehouse
 use App\Http\Controllers\Yard\ReceiptUnit\CircuitProcess\StorageBoxTravelsController;
 use App\Http\Controllers\Yard\ReceiptUnit\Event\ArriveUnitController;
 use App\Http\Controllers\Yard\ReceiptUnit\Event\AuthorizeExitController;
+use App\Http\Controllers\Yard\ReceiptUnit\Event\KeyReceptionController;
 use App\Http\Controllers\Yard\ReceiptUnit\Event\MoveBoxController;
 use App\Http\Controllers\Yard\ReceiptUnit\Event\RefuseUnitController;
 use App\Http\Controllers\Yard\ReceiptUnit\EventReceiptUnitController;
@@ -147,6 +148,11 @@ Route::middleware(['auth'])->group(function () {
     //  Autorizar transporte para ser reutilizado en otro almacen y concepto de entrada.
     Route::get('autorizetransport', [AutorizeTransportController::class, 'autorizetransport'])->name('receiptunits.autorizeunit');
     Route::post('autoizetransportstore', [AutorizeTransportController::class, 'autoizetransportstore'])->name('autoizetransportstore');
+
+    //    Registrar recepcion de llaves
+    Route::get('viewkeyreception', [KeyReceptionController::class, 'index'])->name('viewkeyreception');
+    Route::post('savekeyreception', [KeyReceptionController::class, 'store'])->name('savekeyreception');
+
     //  Modulo de candados LOTO
     Route::resource('storagesealloto', StorageSealLotoController::class);
     Route::get('getSealLotos', [StorageSealLotoController::class, 'getSealLotos'])->name('getSealLotos');
