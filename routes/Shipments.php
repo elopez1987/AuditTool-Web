@@ -24,6 +24,8 @@ use App\Http\Controllers\Shipments\MonitorOperation\VerificationProcess\ModuleMo
 use App\Http\Controllers\Shipments\MonitorOperation\VerificationProcess\OpenVerificationProcessController;
 use App\Http\Controllers\Shipments\MonitorOperation\VerificationProcess\RegisterMissingConcepToShipmentController;
 use App\Http\Controllers\Shipments\Monitors\Operation\MonitorOperationHenkelController;
+use App\Http\Controllers\Shipments\Monitors\Traffic\BackLogController;
+use App\Http\Controllers\Shipments\Monitors\Traffic\CustomerController;
 use App\Http\Controllers\Shipments\Monitors\Traffic\MonitorShipmentController;
 use App\Http\Controllers\Shipments\Monitors\Transport\MonitorShipmentStatusController;
 use App\Http\Controllers\Shipments\Monitors\Verification\MonitorVerificationProcessController;
@@ -190,6 +192,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('getshipmentstage', [ShipmentStagesController::class, 'getshipmentstage'])->name('getshipmentstage');
     Route::get('shipmentstages/{id}/editstage', [ShipmentStagesController::class, 'editstage']);
 
+    //	Monitor de backlog
+    Route::get('monitor-backlog', [BackLogController::class, 'index'])->name('monitor-backlog');
+    //	Monitor para customer sercvice
+    Route::get('monitor-customer-service', [CustomerController::class, 'index'])->name('monitor-customer-service');
     //    ----------------------------------------------- Asignacion de Transporte a Viaje----------------------------------
     //    Agregar datos del transporte esperado
     Route::resource('datatransport', StorageShipmentTransportsController::class)->only(['index', 'edit', 'update']);
