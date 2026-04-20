@@ -27,7 +27,7 @@
                         <div class="row">
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="turnid">Turno<span style="color: red">*</span></label>
+                                    <label for="turnid">Turno</label>
                                     <select name="turnid" id="turnid" class="form-control select2">
                                         <option value="" selected>Seleecione una opción</option>
                                         @foreach($turns as $model)
@@ -44,7 +44,7 @@
                             </div>
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="statusid">Estatus <span style="color: red">*</span></label>
+                                    <label for="statusid">Estatus</label>
                                     <select name="statusid" id="statusid" class="form-control select2">
                                         <option value="" selected>Seleecione una opción</option>
                                         @foreach($status as $model)

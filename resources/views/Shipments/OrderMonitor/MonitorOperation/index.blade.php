@@ -27,7 +27,7 @@
                         <div class="row">
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="warehouseid">Bodega <span style="color: red">*</span></label>
+                                    <label for="warehouseid">Bodega </label>
                                     <select name="warehouseid" id="warehouseid" class="form-control select2">
                                         @foreach($warehouses as $warehouse)
                                             <option value="{{$warehouse->warehouseid}}"> {{$warehouse->name}} </option>
@@ -45,7 +45,7 @@
                             </div>
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="statusid">Estatus <span style="color: red">*</span></label>
+                                    <label for="statusid">Estatus </label>
                                     <select name="statusid[]" id="statusid" class="form-control select2" multiple="multiple">
                                         @foreach($status as $model)
                                             <option value="{{$model->statusid}}"> {{$model->name}} </option>

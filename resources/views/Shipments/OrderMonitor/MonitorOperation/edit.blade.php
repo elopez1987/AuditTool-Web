@@ -17,14 +17,14 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-lg-12">
-                        <a href="{{ url()->previous() }}">
+                        <a href="{{ url('monitoroperation')}}">
                             @include('buttons.back')
                         </a>
                         @can('orderdeliveries.show')
                             <a href="{{url('orderdeliveries/' . $orderDelivery->id)}}" target="_blank">
                                 <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
                                     <img src="{{asset('/ico/viewdetail.png')}}" alt="" class="img-16">
-                                    <span style="font-size: 0.675rem "> Ver Kardex </span>
+                                    <span > Ver Kardex </span>
                                 </button>
                             </a>
                         @endcan
@@ -66,14 +66,12 @@
                                                                             <img src="{{asset('/ico/priority.png')}}"
                                                                                  alt=""
                                                                                  class="img-16 ml-2 mr-2">
-                                                                            <span
-                                                                                    style="font-size: 0.675rem "> Iniciar</span>
+                                                                            <span> Iniciar</span>
                                                                         </button>
                                                                     </a>
                                                                     @include('Shipments.OrderMonitor.MonitorOperation.Events.addstartshipment')
                                                                 @else
-                                                                    <span
-                                                                            style="font-size: 11px;">   {{$orderDelivery->operation->startshipment}} </span>
+                                                                    <span>   {{$orderDelivery->operation->startshipment}} </span>
                                                                 @endif
                                                             </td>
                                                         </tr>
@@ -89,13 +87,12 @@
                                                                                     class="btn waves-effect waves-light btn-outline-info btn-sm btn-block">
                                                                                 <img src="{{asset('/ico/priority.png')}}"
                                                                                      alt="" class="img-16 ml-2 mr-2">
-                                                                                <span
-                                                                                        style="font-size: 0.675rem "> Iniciar</span>
+                                                                                <span> Iniciar</span>
                                                                             </button>
                                                                         </a>
                                                                         @include('Shipments.OrderMonitor.MonitorOperation.Events.addendchecker')
                                                                     @else
-                                                                        <span style="font-size: 11px;">{{$orderDelivery->operation->endchecker}}
+                                                                        <span >{{$orderDelivery->operation->endchecker}}
                                                                 </span>
                                                                     @endif
                                                                 @endif
@@ -112,7 +109,7 @@
                                                         <tr>
                                                             <td class="td-events">Fin de Verificación</td>
                                                             <td class="td-events">
-                                                            <span style="font-size: 11px;">
+                                                            <span >
                                                                 {{ $orderDelivery->check ? $orderDelivery->check->finishdate : ''}}
                                                             </span>
                                                             </td>
@@ -132,14 +129,13 @@
                                                                                             src="{{asset('/ico/priority.png')}}"
                                                                                             alt=""
                                                                                             class="img-16 ml-2 mr-2">
-                                                                                    <span style="font-size: 0.675rem "> Iniciar</span>
+                                                                                    <span > Iniciar</span>
                                                                                 </button>
                                                                             </a>
                                                                             @include('Shipments.OrderMonitor.MonitorOperation.Events.forload')
                                                                         @endcan
                                                                     @else
-                                                                        <span
-                                                                                style="font-size: 11px;">{{$orderDelivery->operation->forload}}</span>
+                                                                        <span>{{$orderDelivery->operation->forload}}</span>
                                                                     @endif
                                                                 @endif
                                                             </td>
@@ -159,14 +155,13 @@
                                                                                             src="{{asset('/ico/priority.png')}}"
                                                                                             alt=""
                                                                                             class="img-16 ml-2 mr-2">
-                                                                                    <span style="font-size: 0.675rem "> Iniciar</span>
+                                                                                    <span > Iniciar</span>
                                                                                 </button>
                                                                             </a>
                                                                             @include('Shipments.OrderMonitor.MonitorOperation.Events.addstartload')
                                                                         @endcan
                                                                     @else
-                                                                        <span
-                                                                                style="font-size: 11px;">{{$orderDelivery->operation->startload}}</span>
+                                                                        <span>{{$orderDelivery->operation->startload}}</span>
                                                                     @endif
                                                                 @endif
                                                             </td>
@@ -186,14 +181,13 @@
                                                                                             src="{{asset('/ico/priority.png')}}"
                                                                                             alt=""
                                                                                             class="img-16 ml-2 mr-2">
-                                                                                    <span style="font-size: 0.675rem "> Iniciar</span>
+                                                                                    <span > Iniciar</span>
                                                                                 </button>
                                                                             </a>
                                                                             @include('Shipments.OrderMonitor.MonitorOperation.Events.addendload')
                                                                         @endcan
                                                                     @else
-                                                                        <span
-                                                                                style="font-size: 11px;">{{$orderDelivery->operation->endload}}</span>
+                                                                        <span>{{$orderDelivery->operation->endload}}</span>
                                                                     @endif
                                                                 @endif
                                                             </td>
@@ -211,14 +205,12 @@
                                                                                     class="btn waves-effect waves-light btn-outline-info btn-sm btn-block">
                                                                                 <img src="{{asset('/ico/priority.png')}}"
                                                                                      alt="" class="img-16 ml-2 mr-2">
-                                                                                <span
-                                                                                        style="font-size: 0.675rem "> Iniciar</span>
+                                                                                <span> Iniciar</span>
                                                                             </button>
                                                                         </a>
                                                                         @include('Shipments.OrderMonitor.MonitorOperation.Events.addsenddocument')
                                                                     @else
-                                                                        <span
-                                                                                style="font-size: 11px;">{{$orderDelivery->operation->senddocument}}</span>
+                                                                        <span>{{$orderDelivery->operation->senddocument}}</span>
                                                                     @endif
                                                                 @endif
                                                             </td>

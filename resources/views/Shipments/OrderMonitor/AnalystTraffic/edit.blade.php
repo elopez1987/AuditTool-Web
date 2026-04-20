@@ -17,7 +17,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-12">
-                            <a href="{{ url()->previous() }}">
+                            <a href="{{ url('monitoranalistatrafico')}}">
                                 @include('buttons.back')
                             </a>
                             @can('orderdeliveries.show')
@@ -27,7 +27,7 @@
                                             class="btn waves-effect waves-light btn-outline-info btn-md">
                                         <img src="{{asset('/ico/viewdetail.png')}}" alt=""
                                              class="img-16">
-                                        <span style="font-size: 0.675rem "> Ver Kardex</span>
+                                        <span> Ver Kardex</span>
                                     </button>
                                 </a>
                             @endcan
@@ -56,8 +56,7 @@
                                                                         class="btn waves-effect waves-light btn-outline-info btn-sm btn-block">
                                                                     <img src="{{asset('/ico/priority.png')}}"
                                                                          alt="" class="img-16 ml-2 mr-2">
-                                                                    <span
-                                                                            style="font-size: 0.675rem "> Iniciar facturación</span>
+                                                                    <span> Iniciar facturación</span>
                                                                 </button>
                                                             </a>
                                                             @include('Shipments.OrderMonitor.AnalystTraffic.Events.startgoodissuedate')
@@ -89,8 +88,7 @@
                                                                         class="btn waves-effect waves-light btn-outline-info btn-sm btn-block">
                                                                     <img src="{{asset('/ico/priority.png')}}"
                                                                          alt="" class="img-16 ml-2 mr-2">
-                                                                    <span
-                                                                            style="font-size: 0.675rem "> Iniciar</span>
+                                                                    <span> Iniciar</span>
                                                                 </button>
                                                             </a>
                                                             @include('Shipments.OrderMonitor.AnalystTraffic.Events.goodissuedate')
@@ -113,14 +111,12 @@
                                                                     class="btn waves-effect waves-light btn-outline-info btn-sm btn-block">
                                                                 <img src="{{asset('/ico/priority.png')}}"
                                                                      alt="" class="img-16 ml-2 mr-2">
-                                                                <span
-                                                                        style="font-size: 0.675rem "> Iniciar</span>
+                                                                <span> Iniciar</span>
                                                             </button>
                                                         </a>
                                                         @include('Shipments.OrderMonitor.AnalystTraffic.Events.requestletter')
                                                     @else
-                                                        <span
-                                                                style="font-size: 11px;">{{$orderDelivery->operation->requestletter}}</span>
+                                                        <span>{{$orderDelivery->operation->requestletter}}</span>
                                                     @endif
 
                                                 </td>
@@ -138,13 +134,12 @@
                                                                         class="btn waves-effect waves-light btn-outline-info btn-sm btn-block">
                                                                     <img src="{{asset('/ico/priority.png')}}"
                                                                          alt="" class="img-16 ml-2 mr-2">
-                                                                    <span
-                                                                            style="font-size: 0.675rem "> Iniciar</span>
+                                                                    <span> Iniciar</span>
                                                                 </button>
                                                             </a>
                                                             @include('Shipments.OrderMonitor.AnalystTraffic.Events.responseletter')
                                                         @else
-                                                            <span style="font-size: 11px;">{{$orderDelivery->operation->responseletter}}</span>
+                                                            <span >{{$orderDelivery->operation->responseletter}}</span>
                                                         @endif
                                                     @endif
                                                 </td>
