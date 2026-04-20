@@ -9,7 +9,6 @@ use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\Models\Shipments\OrderDeliverie;
 use App\Models\Shipments\StorageIncidenceJourney;
 use Auth;
-use Carbon\Carbon;
 use DB;
 use Illuminate\Support\Collection;
 
@@ -26,7 +25,7 @@ trait QuerysIncidencesJourneys
             ->select(['id', 'shipmentid'])
             ->CarrierIn($carrier)
             ->where('statusid', '=', 'DH')
-            ->where('downloaddate', '>', Carbon::now()->subDays(intval($days))->format('Y-m-d'))
+//            ->where('downloaddate', '>', Carbon::now()->subDays(intval($days))->format('Y-m-d'))
             ->whereNotIn('id', (function ($query) {
                 $query->from('storageincidencejourneys')
                     ->select('orderid')

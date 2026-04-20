@@ -36,7 +36,7 @@
                     <div class="row">
                         <div class="col-12">
                             <table id="table-customer"
-                                   class="table table-bordered table-striped table-condensed  table-hover tablegeneral" width="100%">
+                                   class="table table-bordered  table-condensed  table-hover tablegeneral" width="100%">
                                 <thead>
                                     <tr>
                                         <th >Fecha</th>
