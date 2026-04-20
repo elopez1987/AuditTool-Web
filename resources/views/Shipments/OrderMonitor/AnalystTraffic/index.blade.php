@@ -92,6 +92,7 @@
                                     <th >F.Patios</th>
                                     <th >Linea transportista</th>
                                     <th >Placa de caja</th>
+                                    <th >F.Entrada</th>
                                     <th >Cita con cliente</th>
                                     <th >Salida maxima</th>
                                 </tr>
