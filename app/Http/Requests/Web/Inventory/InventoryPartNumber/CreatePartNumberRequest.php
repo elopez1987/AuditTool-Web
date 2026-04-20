@@ -22,9 +22,9 @@ class CreatePartNumberRequest extends FormRequest
             'shelflife' => 'required|numeric|max_digits:5',
             'codedun' => 'nullable|string|max:30',
             'codeean' => 'nullable|string|max:30',
-            'auxiliary01' => 'nullable|string|max:190',
-            'auxiliary02' => 'nullable|string|max:190',
-            'auxiliary03' => 'nullable|string|max:190',
+            //            'auxiliary01' => 'nullable|string|max:190',
+            //            'auxiliary02' => 'nullable|string|max:190',
+            //            'auxiliary03' => 'nullable|string|max:190',
         ];
     }
 
