@@ -170,8 +170,8 @@
             <th style="width: 42.4%;border-top: 0px;text-align: left;">
                 <span style="margin-left:15px"> {{$receiptunit->carrier  ? $receiptunit->carrier->name : ''}} </span>
             </th>
-            <th style="border-top: 0px;">Centro:</th>
-            <th style="border-top: 0px;"> ONE ROOF</th>
+            <th style="border-top: 0px;">Celular:</th>
+            <th style="border-top: 0px;">{{$receiptunit->tracto ? $receiptunit->tracto->phone : ''}}</th>
         </table>
     </div>
 
@@ -183,6 +183,16 @@
             <th style="border-top:0px;font-size: 16px">{{$receiptunit->barcode}} / {{$receiptunit->tracto ? $receiptunit->tracto->barcode : ''}}</th>
         </table>
     </div>
+    <div class="row">
+        <table class="border-none">
+            <th style="border-top:0px;width: 25%;height: 25px;color: red">Folio YardTrax</th>
+            <th style="border-top:0px;width: 25%;font-size: 18PX;color: red"> {{$receiptunit->id}}</th>
+            <th style="border-top:0px;">Número de Caja / Número de Tracto</th>
+            <th style="border-top:0px;font-size: 16px">{{$receiptunit->econumber}} / {{$receiptunit->tracto ? $receiptunit->tracto->econumber : ''}}</th>
+        </table>
+    </div>
+
+
     <div class="row">
         <table class="border-none">
             <th style="border-top: 0;background-color: #E8EAF6;text-align: center;">Inspección del Vehiculo</th>
