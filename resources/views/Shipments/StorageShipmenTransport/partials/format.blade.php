@@ -196,14 +196,13 @@
                 <tbody>
                 <tr>
                     <th style="width: 50%">
-                        @if($data->transport->carrier->qr != null)
-                            <img src='{{asset('storage/' . $data->qr)}}' alt="" style="max-width: 200px;height: 200px">
+                        @if($data->transport->carrier->auxiliary04 != null)
+                            <img src='{{storage_path('app/' . $data->transport->carrier->auxiliary04)}}' alt="" style="max-width: 200px;height: 200px">
                         @endif
                     </th>
                     <th style="width: 50%">
-                        @if($data->transport->carrier->logo != null)
-                            <img src='{{asset('storage/' . $data->logo)}}' alt=""
-                                 style="height: 200px;max-width: 200px">
+                        @if($data->transport->carrier->auxiliary05 != null)
+                            <img src='{{storage_path('app/' . $data->transport->carrier->auxiliary05)}}' alt="" style="height: 200px;max-width: 200px">
                         @endif
                     </th>
                 </tr>
