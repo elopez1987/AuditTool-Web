@@ -197,9 +197,6 @@
                 <tr>
                     <th style="width: 50%">
                         @php
-                            {{$data->transport->carrier->auxiliary04}}
-                        @endphp
-                        @php
                             $outPhotoPath = str_starts_with($data->transport->carrier->auxiliary04, 'public/')
                                 ? storage_path('app/' . $data->transport->carrier->auxiliary04)
                                 : storage_path('app/public/' . $data->transport->carrier->auxiliary04);
@@ -214,9 +211,6 @@
                     </th>
                     <th style="width: 50%">
                         @if($data->transport->carrier->auxiliary05 != null)
-                            @php
-                                {{$data->transport->carrier->auxiliary05}}
-                            @endphp
                             <img src='{{storage_path('app/' . $data->transport->carrier->auxiliary05)}}' alt=""
                                  style="height: 200px;max-width: 200px">
                         @endif
