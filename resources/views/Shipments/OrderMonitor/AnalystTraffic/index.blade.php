@@ -91,6 +91,7 @@
                                     <th >E.de llegada</th>
                                     <th >F.Patios</th>
                                     <th >Linea transportista</th>
+                                    <th>Operador</th>
                                     <th >Placa de caja</th>
                                     <th >F.Entrada</th>
                                     <th >Cita con cliente</th>

@@ -42,6 +42,7 @@ class MonitorTrafficController extends BaseController
             })
             ->addColumn('precarga', fn ($row) => $row->header->location->name ?? '')
             ->addColumn('cortina', fn ($row) => $row->folio->location->name ?? '')
+            ->addColumn('operador', fn ($row) => $row->folio->operatorname ?? '')
             ->addColumn('statusunit', function ($row) {
                 if (! $row->folio?->entrydate) {
                     return '<span class="label label-warning" 
