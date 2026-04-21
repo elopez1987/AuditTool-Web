@@ -27,6 +27,7 @@ class ImportOrderCustomer implements ToModel, WithBatchInserts, WithChunkReading
             ],
             [
                 'name' => trim($row['name']),
+                'city' => trim($row['city']),
                 'timetransfer' => $row['timetransfer'],
             ]
         );
@@ -39,6 +40,7 @@ class ImportOrderCustomer implements ToModel, WithBatchInserts, WithChunkReading
             '*.warehouseid' => 'required|exists:systemwarehouses,warehouseid',
             '*.name' => ['string', 'required', 'max:100'],
             '*.shiptoid' => ['required'],
+            '*.city' => ['required'],
             '*.timetransfer' => ['numeric', 'required', 'min:1'],
         ];
     }
