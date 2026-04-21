@@ -5,16 +5,13 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                   MONITOR DE OPERACIONES.
+                    Monitor de operaciones de embarques.
                 </div>
                 <div class="card-body">
                     <form method="GET" id="search" role="form">
                         {{csrf_field()}}
                         <div class="row">
                             <div class="col-md-12">
-                                <a href="">
-                                    @include('buttons.search')
-                                </a>
                                 <a>
                                     @include('buttons.reloadajax')
                                 </a>
@@ -24,8 +21,53 @@
                             </div>
                         </div>
                         <hr class="m-t-1">
+                        <div class="row">
+                            <div class="col-lg-2 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="shipmentid">Embarque</label>
+                                    <input type="text" class="form-control" id="shipmentid" name="shipmentid"
+                                           onKeyUp=this.value=this.value.toUpperCase()
+                                    >
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="carriers">Linea de transporte </label>
+                                    <select name="carrierid[]" id="carrierid" class="form-control select2"
+                                            multiple="multiple">
+                                        @foreach($carriers as $model)
+                                            <option value="{{$model->id}}"> {{$model->name}} </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="customerid">Cliente</label>
+                                    <select name="customerid[]" id="customerid" class="form-control select2"
+                                            multiple="multiple">
+                                        @foreach($customers as $model)
+                                            <option value="{{$model->id}}"> {{$model->name}} </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-2 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="statusid">Estatus <span style="color: red">*</span></label>
+                                    <select name="statusid[]" id="statusid" class="form-control select2"
+                                            multiple="multiple">
+                                        @foreach($status as $model)
+                                            <option value="{{$model->statusid}}"> {{$model->name}} </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
                     </form>
-                    <hr class="m-t-1 m-b-1">
+
                     <div class="row">
                         @foreach($statusQuantitys as $status)
                             <div class="col-lg-1 col-md-3">
@@ -40,11 +82,12 @@
                             </div>
                         @endforeach
                     </div>
-                    <hr class="m-t-1 m-b-1">
+
+                    <hr class="mt-3 mb-3">
                     <div class="row">
-                        <div class="col-lg-12">
+                        <div class="col-lg-8">
                             <table id="table-monitortrafico"
-                                   class="table table-bordered  table-condensed table-hover">
+                                   class="table table-bordered table-striped table-condensed table-hover">
                                 <thead>
                                 <tr>
                                     <th class="bg-inverse text-white">Embarque</th>
@@ -63,13 +106,41 @@
                                 </thead>
                             </table>
                         </div>
+                        <div class="col-lg-4">
+                            <table class="table table-bordered table-striped table-condensed table-hover tablegeneral"
+                                   width="100%">
+                                <thead>
+                                <tr>
+                                    <th>Embarque</th>
+                                    <th>Cliente</th>
+                                    <th>Estatus</th>
+                                    <th>Estadia</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($shipmentsStatus as $item)
+                                    <tr>
+                                        <td>{{$item->shipmentid}}</td>
+                                        <td>{{$item->customer ? $item->customer->name : ''}}</td>
+                                        <td style="background-color: {{$item->status ? $item->status->auxiliary01 : ''}}">
+                                            {{$item->status ? $item->status->name : ''}}
+                                        </td>
+                                        <td>
+                                            {{$item->folio ? $item->folio->staytime : ''}}
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
                     <hr class="mt-3 mb-3">
 
                     <div class="row">
                         <div class="col-lg-6">
-                            <table class="table table-bordered table-striped table-condensed table-hover tablegeneral" width="100%">
+                            <table class="table table-bordered table-striped table-condensed table-hover tablegeneral"
+                                   width="100%">
                                 <thead>
                                 <tr>
                                     <th>Fecha de trabajo</th>
@@ -103,7 +174,8 @@
                             </table>
                         </div>
                         <div class="col-lg-6">
-                            <table class="table table-bordered table-striped table-condensed table-hover tablegeneral" width="100%">
+                            <table class="table table-bordered table-striped table-condensed table-hover tablegeneral"
+                                   width="100%">
                                 <thead>
                                 <tr>
                                     <th>Fecha de trabajo</th>
@@ -127,15 +199,15 @@
                             </table>
                         </div>
                     </div>
-
                 </div>
+
+
                 <div class="card-footer">
                     Control de patios.
                 </div>
             </div>
         </div>
     </div>
-
 @endsection
 
 @section('script')
@@ -145,5 +217,51 @@
             $('#table-monitortrafico').DataTable().ajax.reload();
         }
     </script>
+    <script>
+        var oTable = $(".tablegeneral").DataTable({
+            "paging": true,
+            "searching": true,
+            "ordering": true,
+            "serverSide": false,
+            "sScrollY": "450px",
+            'colReorder': true,
+            "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
+            "lengthMenu": [[30, 50, 100, 150, 200, 250, -1], [30, 50, 100, 150, 200, 250, "Todos"]],
 
+            buttons: [
+                {
+                    "extend": "csv",
+                    "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span> Csv</span>",
+                    "className": "btn btn-outline-info btn-md  btn-bold",
+                },
+                {
+                    "extend": "excel",
+                    "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span> Excel</span>",
+                    "className": "btn btn-outline-info btn-md  btn-bold",
+                }
+            ],
+
+
+            language: {
+                "decimal": "",
+                "emptyTable": "No hay información",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                "infoPostFix": "",
+                "thousands": ",",
+                "lengthMenu": "Mostrar _MENU_ Entradas",
+                "loadingRecords": "Cargando...",
+                "processing": "Procesando...",
+                "search": "Buscar:",
+                "zeroRecords": "Sin resultados encontrados",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Ultimo",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                }
+            },
+        });
+    </script>
 @endsection
