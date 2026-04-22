@@ -33,10 +33,8 @@ trait QuerysIncidencesJourneys
             }))->select(['id', 'shipmentid'])->get();
     }
 
-    public function getAllIncidenceJourneys()
+    public function getAllIncidenceJourneys(): \Illuminate\Database\Eloquent\Collection
     {
-        $carrier = $this->getCarriers();
-
         return StorageIncidenceJourney::controlAccessUser()
             ->leftJoin('orderdeliveries as o', function ($join) {
                 $join->on('storageincidencejourneys.orderid', '=', 'o.id')
@@ -53,20 +51,27 @@ trait QuerysIncidencesJourneys
             })
             ->where('storageincidencejourneys.statusid', 'AB')
             ->where('o.statusid', 'DH')
-            ->CarrierIn($carrier)
-            ->select(['storageincidencejourneys.folioid',
+            ->CarrierIn($this->getCarriers())
+            ->select([
+                'storageincidencejourneys.folioid',
                 'storageincidencejourneys.statusid',
-                'o.id as orderid', 'o.shipmentid',
-                'c.name as customername', 'sc.name as carriername',
-                'c.city', 'o.downloaddate', 'o.loadingdate',
+                'o.id as orderid',
+                'o.shipmentid',
+                'c.name as customername',
+                'sc.name as carriername',
+                'c.city',
+                'o.downloaddate',
+                'o.loadingdate',
                 'storageincidencejourneys.created_at',
-            ])->get();
+            ])
+            ->get();
     }
 
     public function getCarriers(): array
     {
         return AccessCarrier::where('username', Auth::user()->username)
-            ->select('carrierid')->get()->toArray();
+            ->pluck('carrierid')
+            ->toArray();
     }
 
     /**
