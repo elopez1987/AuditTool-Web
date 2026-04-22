@@ -6,9 +6,6 @@ use App\Http\Controllers\Shipments\CategoryIncidences\StorageCategoryIncidenceDe
 use App\Http\Controllers\Shipments\CategoryIncidences\StorageCategoryIncidencesController;
 use App\Http\Controllers\Shipments\Dashboard\DashboardShipmentsController;
 use App\Http\Controllers\Shipments\EdiShipment\EdiShipmentsController;
-use App\Http\Controllers\Shipments\EventsIncidenceJourneysController;
-use App\Http\Controllers\Shipments\FollowupIncidenceJournyesController;
-use App\Http\Controllers\Shipments\ImportDataInverseController;
 use App\Http\Controllers\Shipments\MonitorGeneral\OrderMonitorController;
 use App\Http\Controllers\Shipments\MonitorOperation\Events\EndCheckOrderDeliveryController;
 use App\Http\Controllers\Shipments\MonitorOperation\Events\FinishLoadOrderDeliveryController;
@@ -49,8 +46,6 @@ use App\Http\Controllers\Shipments\OrderDelivery\Imports\ImportShipmentCheckCont
 use App\Http\Controllers\Shipments\OrderDelivery\OrderDeliveryController;
 use App\Http\Controllers\Shipments\OrderDelivery\StorageShipmentBillingsController;
 use App\Http\Controllers\Shipments\Reports\ReportShipmentController;
-use App\Http\Controllers\Shipments\ResponseIncidenceJourneyController;
-use App\Http\Controllers\Shipments\ResponseIncidenceTransportController;
 use App\Http\Controllers\Shipments\ScheduleInverse\PrinFormatInvoiceSchedulleController;
 use App\Http\Controllers\Shipments\ScheduleInverse\ScheduleInverseController;
 use App\Http\Controllers\Shipments\ScheduleInverse\ScheduleInverseDetailController;
@@ -68,13 +63,19 @@ use App\Http\Controllers\Shipments\ShipmentTransport\StorageShipmentTransportsCo
 use App\Http\Controllers\Shipments\ShipmentTransport\UpdateFromMonitorOperationController;
 use App\Http\Controllers\Shipments\ShipmentTypesController;
 use App\Http\Controllers\Shipments\StorageDoor\StorageDoorStageController;
-use App\Http\Controllers\Shipments\StorageIncidenceJourneysController;
-use App\Http\Controllers\Shipments\StorageKeyIncidenceOperationController;
-use App\Http\Controllers\Shipments\StorageKeyIncidenceTransportController;
-use App\Http\Controllers\Shipments\StorageScheduleInverseInventoriesController;
-use App\Http\Controllers\Shipments\StorageScheduleInverseOperationsController;
-use App\Http\Controllers\Shipments\StorageScheduleInversesController;
-use App\Http\Controllers\Shipments\StorageScheduleInverseTrafficController;
+use App\Http\Controllers\Shipments\StorageIncidenceJourney\EventsIncidenceJourneysController;
+use App\Http\Controllers\Shipments\StorageIncidenceJourney\FollowupIncidenceJournyesController;
+use App\Http\Controllers\Shipments\StorageIncidenceJourney\ImportDataInverseController;
+use App\Http\Controllers\Shipments\StorageIncidenceJourney\ResponseIncidenceJourneyController;
+use App\Http\Controllers\Shipments\StorageIncidenceJourney\ResponseIncidenceTransportController;
+use App\Http\Controllers\Shipments\StorageIncidenceJourney\StorageIncidenceJourneyDetailController;
+use App\Http\Controllers\Shipments\StorageIncidenceJourney\StorageIncidenceJourneysController;
+use App\Http\Controllers\Shipments\StorageIncidenceJourney\StorageKeyIncidenceOperationController;
+use App\Http\Controllers\Shipments\StorageIncidenceJourney\StorageKeyIncidenceTransportController;
+use App\Http\Controllers\Shipments\StorageIncidenceJourney\StorageScheduleInverseInventoriesController;
+use App\Http\Controllers\Shipments\StorageIncidenceJourney\StorageScheduleInverseOperationsController;
+use App\Http\Controllers\Shipments\StorageIncidenceJourney\StorageScheduleInversesController;
+use App\Http\Controllers\Shipments\StorageIncidenceJourney\StorageScheduleInverseTrafficController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->group(function () {
@@ -291,6 +292,8 @@ Route::middleware(['auth'])->group(function () {
     //    Reporte de incidencias en viajes
     Route::resource('storageincidencesjourneys', StorageIncidenceJourneysController::class);
     Route::get('getDataIncidenceShipments', [StorageIncidenceJourneysController::class, 'getDataIncidenceShipments'])->name('getDataIncidenceShipments');
+    // 	  Eliminar detalle de reporte de incidencia
+    Route::delete('deletedetailincidence/{id}', [StorageIncidenceJourneyDetailController::class, 'destroy'])->name('deletedetailincidence');
 
     //    Seguimiento de incidencias
     Route::resource('followupofincidences', FollowupIncidenceJournyesController::class)->except(['destroy']);

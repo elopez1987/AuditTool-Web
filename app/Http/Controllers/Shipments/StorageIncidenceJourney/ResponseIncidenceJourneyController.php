@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Shipments;
+namespace App\Http\Controllers\Shipments\StorageIncidenceJourney;
 
 use App\Http\Controllers\BaseController;
+use App\Http\Controllers\Shipments\Exception;
 use App\Http\Services\Shipment\IncidecesJourney\ServiceIncidenceJourneyDetail;
 use App\Http\Services\Shipment\IncidecesJourney\ServiceResponseIncidences;
 use App\Models\Configuration\Schemas\SystemStatus;

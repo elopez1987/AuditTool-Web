@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Shipments;
+namespace App\Http\Controllers\Shipments\StorageIncidenceJourney;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Shipments\SchedulleInverse\CreateScheduleInverseRequest;

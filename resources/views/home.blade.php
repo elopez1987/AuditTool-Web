@@ -207,16 +207,25 @@
         </div>
 
     @else
-        <div class="row justify-content-center mt-5">
-            <div class="col-md-6 text-center">
-                <div class="card shadow">
-                    <div class="card-body py-5">
-                        <i class="fas fa-lock fa-4x text-danger mb-3"></i>
-                        <h3 class="font-weight-bold">Acceso Denegado</h3>
-                        <p class="text-muted">No tienes permisos para visualizar este módulo.</p>
-                        <a href="{{ url()->previous() }}" class="btn btn-outline-secondary">
-                            <i class="fas fa-arrow-left"></i> Regresar
-                        </a>
+        <div class="row ">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        @if(!empty($image->auxiliary05))
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div style=" display: grid;height: 100vh;margin: 0;padding: 0;">
+                                        <div style="margin: auto;text-align: center">
+                                            <img src="{{asset('storage/' . $image->auxiliary05)}}"
+                                                 class="align-self-center img-responsive" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        @else
+                            <img src="{{asset('/img/login-register.jpg')}}" alt="" style="width: 100%;height: 80%">
+                        @endif
                     </div>
                 </div>
             </div>

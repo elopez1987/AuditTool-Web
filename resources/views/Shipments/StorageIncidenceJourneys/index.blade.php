@@ -71,4 +71,61 @@
             $('#table-monitorincidences').DataTable().ajax.reload();
         }
     </script>
+    <script>
+        // SweetAlert2 delete handler
+        $(document).on('click', '.btn-delete-location', function (e) {
+            e.preventDefault();
+            const locationId = $(this).data('id');
+
+            Swal.fire({
+                // title: '¿Estás seguro?',
+                text: '¿Deseas cambiar el estatus de este registro?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Sí, confirmar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Show loading
+                    Swal.fire({
+                        title: 'Eliminando...',
+                        allowOutsideClick: false,
+                        didOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
+
+                    // Send AJAX request
+                    $.ajax({
+                        url: `{{url('storageincidencesjourneys')}}/${locationId}`,
+                        type: 'DELETE',
+                        data: {
+                            _token: '{{csrf_token()}}'
+                        },
+                        success: function (response) {
+                            Swal.fire({
+                                icon: 'success',
+                                // title: '¡Eliminado!',
+                                text: response.message,
+                                timer: 2000,
+                                showConfirmButton: false
+                            });
+                            // Reload DataTable
+                            $('#table-monitorincidences').DataTable().ajax.reload();
+                        },
+                        error: function (xhr) {
+                            const message = xhr.responseJSON?.message || 'Error al eliminar el registro';
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: message
+                            });
+                        }
+                    });
+                }
+            });
+        });
+    </script>
 @endsection

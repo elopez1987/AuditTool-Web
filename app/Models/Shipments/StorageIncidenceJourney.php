@@ -107,6 +107,21 @@ class StorageIncidenceJourney extends Model
 
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (StorageIncidenceJourney $model) {
+                $model->createuser = Auth::id();
+            });
+            self::updating(function (StorageIncidenceJourney $model) {});
+            self::deleting(function (StorageIncidenceJourney $model) {
+                $model->details()->delete();
+            });
+
+        }
+    }
+
     protected $casts = [
         //        'created_at' => 'datetime:Y-m-d H:s',
     ];
@@ -131,6 +146,11 @@ class StorageIncidenceJourney extends Model
         return $this->belongsTo(StorageKeyIncidenceTransport::class, 'orderid', 'orderid');
     }
 
+    public function details(): StorageIncidenceJourney|\Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(StorageIncidenceJourneyDetails::class, 'orderid', 'orderid');
+    }
+
     public static function controlAccessUser()
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
@@ -138,16 +158,6 @@ class StorageIncidenceJourney extends Model
 
         return StorageIncidenceJourney::whereIn('storageincidencejourneys.warehouseid', $warehouses)
             ->whereIn('storageincidencejourneys.centerid', $centers);
-    }
-
-    protected static function boot()
-    {
-        parent::boot();
-        if (! app()->runningInConsole()) {
-            self::creating(function (StorageIncidenceJourney $model) {
-                $model->createuser = Auth::id();
-            });
-        }
     }
 
     public function scopeCarrier($query, $carrierid)

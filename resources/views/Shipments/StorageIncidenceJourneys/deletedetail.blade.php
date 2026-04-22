@@ -1,6 +1,6 @@
 <div class="modal fade bs-example-modal-lg" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true"
      style="display: none;" id="modal-deletedetail-{{$detail->folioid}}">
-    <form method="POST" action="{{url('storageincidencesjourneys/' . $detail->folioid)}}" enctype="multipart/form-data">
+    <form method="POST" action="{{url('deletedetailincidence/' . $detail->folioid)}}" enctype="multipart/form-data">
         {{ method_field('DELETE') }}
         @csrf
         <div class="modal-dialog modal-lg">
