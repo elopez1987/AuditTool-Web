@@ -200,6 +200,6 @@ class StorageIncidenceJourney extends Model
     public static function searchIncidence($folioid)
     {
         return StorageIncidenceJourney::controlAccessUser()
-            ->where('folioid', $folioid)->first();
+            ->where('storageincidencejourneys.folioid', $folioid)->first();
     }
 }

@@ -36,32 +36,32 @@ trait QuerysIncidencesJourneys
     public function getAllIncidenceJourneys(): \Illuminate\Database\Eloquent\Collection
     {
         return StorageIncidenceJourney::controlAccessUser()
-            ->leftJoin('orderdeliveries as o', function ($join) {
-                $join->on('storageincidencejourneys.orderid', '=', 'o.id')
-                    ->on('storageincidencejourneys.centerid', '=', 'o.centerid')
-                    ->on('storageincidencejourneys.warehouseid', '=', 'o.warehouseid');
+            ->leftJoin('orderdeliveries', function ($join) {
+                $join->on('storageincidencejourneys.orderid', '=', 'orderdeliveries.id')
+                    ->on('storageincidencejourneys.centerid', '=', 'orderdeliveries.centerid')
+                    ->on('storageincidencejourneys.warehouseid', '=', 'orderdeliveries.warehouseid');
             })
             ->leftJoin('ordercustomers as c', function ($join) {
-                $join->on('o.customerid', '=', 'c.id')
-                    ->on('o.centerid', '=', 'c.centerid');
+                $join->on('orderdeliveries.customerid', '=', 'c.id')
+                    ->on('orderdeliveries.centerid', '=', 'c.centerid');
             })
             ->leftJoin('shipmentcarriers as sc', function ($join) {
-                $join->on('o.carrierid', '=', 'sc.id')
-                    ->on('o.centerid', '=', 'sc.centerid');
+                $join->on('orderdeliveries.carrierid', '=', 'sc.id')
+                    ->on('orderdeliveries.centerid', '=', 'sc.centerid');
             })
             ->where('storageincidencejourneys.statusid', 'AB')
-            ->where('o.statusid', 'DH')
+            ->where('orderdeliveries.statusid', 'DH')
             ->CarrierIn($this->getCarriers())
             ->select([
                 'storageincidencejourneys.folioid',
                 'storageincidencejourneys.statusid',
-                'o.id as orderid',
-                'o.shipmentid',
+                'orderdeliveries.id as orderid',
+                'orderdeliveries.shipmentid',
                 'c.name as customername',
                 'sc.name as carriername',
                 'c.city',
-                'o.downloaddate',
-                'o.loadingdate',
+                'orderdeliveries.downloaddate',
+                'orderdeliveries.loadingdate',
                 'storageincidencejourneys.created_at',
             ])
             ->get();
