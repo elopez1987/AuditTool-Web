@@ -181,6 +181,7 @@ trait PrintFormat
     //    Genera el formato para el QR de  planta en el modulo de circuito
     public function printFormatAccess($id)
     {
+        $pathImage = SystemDetailParameter::where('parameterid', '=', 'PARAM-IMG')->first();
         $data = GenerateAccessWarehouse::controlAccessUser()->where('storageaccesswarehouse.id', $id)
             ->leftJoin('systemcenterdistributions as cd', 'storageaccesswarehouse.centerid', '=', 'cd.centerid')
             ->leftJoin('systemwarehouses as sw', 'storageaccesswarehouse.warehouseid', '=', 'sw.warehouseid')
@@ -213,7 +214,20 @@ trait PrintFormat
                 'sc.auxiliary05 as logo',
             ])->first();
         $fortmat = 'Yards.GenerateAccess.partials.format';
-        $pdf = PDF::loadView($fortmat, compact('data'));
+        $pdf = PDF::setOptions([
+            'isRemoteEnabled' => true,
+            'chroot' => [
+                realpath(base_path()),
+                realpath($pathImage->value01),
+            ],
+            'httpContext' => stream_context_create([
+                'ssl' => [
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                    'allow_self_signed' => true,
+                ],
+            ]),
+        ])->loadView($fortmat, compact('data'));
 
         return $pdf->download('Acceso_De_Entrada-' . $data->id . '.pdf');
     }
