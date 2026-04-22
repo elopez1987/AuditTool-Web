@@ -70,7 +70,7 @@ trait QuerysIncidencesJourneys
     public function getCarriers(): array
     {
         return AccessCarrier::where('username', Auth::user()->username)
-            ->pluck('carrierid')
+            ->pluck('securityaccesscarriers.carrierid')
             ->toArray();
     }
 
