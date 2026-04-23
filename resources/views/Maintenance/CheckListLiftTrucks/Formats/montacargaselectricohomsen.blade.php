@@ -115,7 +115,8 @@
         </div>
         <div class="row" style="margin-top: 5px">
             <table class="border-none">
-                <th style="height: 20px;width: 33%;text-align: left;"> NÚM. DE EQUIPO : {{ $truckChecklist->serialnumber  }}</th>
+                <th style="height: 20px;width: 33%;text-align: left;"> NÚM. DE EQUIPO
+                    : {{ $truckChecklist->serialnumber  }}</th>
                 <th style="height: 20px;width: 33%;text-align: left;"> HOROMETRO : {{$truckChecklist->horometro}}</th>
                 <th style="height: 20px;width: 33%;text-align: left;"> FECHA : {{$truckChecklist->created_at}}</th>
             </table>
@@ -171,31 +172,34 @@
                         <img src="{{asset('./img/motaizq.png')}}" alt="" width="80%">
                     </th>
                     <th style="height: 100px;width: 33%;text-align: center;background-color: white;border-left: 0;border-right: 0;">
-                        <img src="{{asset('img/motader.png')}}" alt="" width="80%">
+                        <img src="/img/motader.png" alt="" width="80%">
                     </th>
                     <th style="height: 100px;width: 33%;text-align: center;background-color: white;border-left: 0;">
-                        <img src="{{asset('img/riesgosmonta.png')}}" alt="" width="80%">
+                        <img src="{{storage_path('/app/' . 'img/riesgosmonta.png')}}" alt="" width="80%">
                     </th>
                 </tr>
-
             </table>
             <br>
         </div>
         <div class="row" style="margin-top: 5px">
             <table class="border-none">
                 <tr>
-                    <th style="height: 20px;width: 50%;" colspan="3"> NOMBRE : {{ $truckChecklist->user ? $truckChecklist->user->name : '' }}</th>
+                    <th style="height: 20px;width: 50%;" colspan="3"> NOMBRE
+                        : {{ $truckChecklist->user ? $truckChecklist->user->name : '' }}</th>
                 </tr>
                 <tr>
                     <th style="height: 20px;width: 50%;" colspan="2"> LICENCIA :</th>
-                    <th style="height: 20px;width: 50%;text-align: right;"> FIRMA : <img src='{{storage_path('app/' . $truckChecklist->auxiliary02)}}' style="width: 50px;height:50px">
+                    <th style="height: 20px;width: 50%;text-align: right;"> FIRMA : <img
+                                src='{{storage_path('app/' . $truckChecklist->auxiliary02)}}'
+                                style="width: 50px;height:50px">
                     </th>
                 </tr>
                 <tr>
-                    <th style="height: 20px;width: 50%;" colspan="2"> SUPERVISOR : {{$truckChecklist->supervisorname}}</th>
+                    <th style="height: 20px;width: 50%;" colspan="2"> SUPERVISOR
+                        : {{$truckChecklist->supervisorname}}</th>
                     <th id="firmasuper" style="height: 20px;width: 50%;text-align: right;"> FIRMA : <img
-                            src='{{storage_path('app/' . $truckChecklist->auxiliary03)}}'
-                            style="width: 50px;height:50px">
+                                src='{{storage_path('app/' . $truckChecklist->auxiliary03)}}'
+                                style="width: 50px;height:50px">
                     </th>
                 </tr>
             </table>
