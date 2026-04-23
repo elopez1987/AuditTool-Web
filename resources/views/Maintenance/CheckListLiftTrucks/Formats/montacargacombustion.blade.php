@@ -193,14 +193,14 @@
                 <tr>
                     <th style="height: 20px;width: 50%;" colspan="2"> LICENCIA :</th>
                     <th style="height: 20px;width: 50%;text-align: right;"> FIRMA : <img
-                            src='{{asset('storage/' . $truckChecklist->auxiliary02)}}'
+                            src='{{storage_path('app/' . $truckChecklist->auxiliary02)}}'
                             style="width: 50px;height:50px">
                     </th>
                 </tr>
                 <tr>
                     <th style="height: 20px;width: 50%;" colspan="2"> SUPERVISOR : {{$truckChecklist->supervisorname}}</th>
                     <th id="firmasuper" style="height: 20px;width: 50%;text-align: right;"> FIRMA : <img
-                            src='{{asset('storage/' . $truckChecklist->auxiliary03)}}'
+                            src='{{storage_path('app/' . $truckChecklist->auxiliary03)}}'
                             style="width: 50px;height:50px">
                     </th>
                 </tr>
