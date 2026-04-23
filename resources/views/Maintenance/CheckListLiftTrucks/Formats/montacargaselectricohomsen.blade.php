@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Check list de montacargas -- {{ $truckChecklist->serialnumber  }} </title>
-
     <style>
         @page {
             margin: 0cm 0cm;
@@ -89,7 +88,6 @@
             border: 0;
         }
     </style>
-
 </head>
 
 <body>
@@ -192,13 +190,13 @@
                 </tr>
                 <tr>
                     <th style="height: 20px;width: 50%;" colspan="2"> LICENCIA :</th>
-                    <th style="height: 20px;width: 50%;text-align: right;"> FIRMA : <img src='{{asset('storage/' . $truckChecklist->auxiliary02)}}' style="width: 50px;height:50px">
+                    <th style="height: 20px;width: 50%;text-align: right;"> FIRMA : <img src='{{storage_path('app/' . $truckChecklist->auxiliary02)}}' style="width: 50px;height:50px">
                     </th>
                 </tr>
                 <tr>
                     <th style="height: 20px;width: 50%;" colspan="2"> SUPERVISOR : {{$truckChecklist->supervisorname}}</th>
                     <th id="firmasuper" style="height: 20px;width: 50%;text-align: right;"> FIRMA : <img
-                            src='{{asset('storage/' . $truckChecklist->auxiliary03)}}'
+                            src='{{storage_path('app/' . $truckChecklist->auxiliary03)}}'
                             style="width: 50px;height:50px">
                     </th>
                 </tr>

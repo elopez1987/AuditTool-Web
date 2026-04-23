@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Maintanance;
 
 use App\Http\Controllers\BaseController;
+use App\Models\Configuration\Parameters\SystemDetailParameter;
 use App\Models\General\EvidencePhoto;
 use App\Models\Maintenance\CheckListLiftTrucks;
 use App\Models\Maintenance\StorageCheckListActiveTruck;
@@ -33,6 +34,7 @@ class CheckListLiftTruckController extends BaseController
 
     public function printFormatToCheckList($id)
     {
+        $pathImage = SystemDetailParameter::where('parameterid', '=', 'PARAM-IMG')->first();
         $truckChecklist = CheckListLiftTrucks::find($id);
         $details = $this->getDetailCheckListForTruck($truckChecklist, $id);
         $typeIdToFormatMap = [
@@ -47,7 +49,20 @@ class CheckListLiftTruckController extends BaseController
             return $this->errorResponse('No existe un formato definido para este tipo de check list.');
         }
         $format = $typeIdToFormatMap[$typeId];
-        $pdf = PDF::loadView($format, compact('truckChecklist', 'details'));
+        $pdf = PDF::setOptions([
+            'isRemoteEnabled' => true,
+            'chroot' => [
+                realpath(base_path()),
+                realpath($pathImage->value01),
+            ],
+            'httpContext' => stream_context_create([
+                'ssl' => [
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                    'allow_self_signed' => true,
+                ],
+            ]),
+        ])->loadView($format, compact('truckChecklist', 'details'));
 
         return $pdf->stream('Check List de equipo -' . $truckChecklist->id . '.pdf');
     }
