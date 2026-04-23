@@ -192,7 +192,6 @@
         </table>
     </div>
 
-
     <div class="row">
         <table class="border-none">
             <th style="border-top: 0;background-color: #E8EAF6;text-align: center;">Inspección del Vehiculo</th>

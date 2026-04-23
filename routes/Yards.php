@@ -42,6 +42,7 @@ use App\Http\Controllers\Yard\ReceiptUnit\Evidences\SaveEvidenceFromStockWebCont
 use App\Http\Controllers\Yard\ReceiptUnit\Inventory\InventoryBoxesController;
 use App\Http\Controllers\Yard\ReceiptUnit\Inventory\InventoryCountStocksController;
 use App\Http\Controllers\Yard\ReceiptUnit\PrintInvoiceController;
+use App\Http\Controllers\Yard\ReceiptUnit\ProcessMonitoringController;
 use App\Http\Controllers\Yard\ReceiptUnit\ReceiptUnitAdjustmentController;
 use App\Http\Controllers\Yard\ReceiptUnit\ReceiptUnitCommentController;
 use App\Http\Controllers\Yard\ReceiptUnit\ReceiptUnitController;
@@ -346,6 +347,10 @@ Route::middleware(['auth'])->group(function () {
     //  Monitor de cajas en patio con cálculo de tiempos
     Route::get('monitorunitsyard', [MonitorUnitsController::class, 'index'])->name('monitorunitsyard');
     Route::get('getDataStockBox', [MonitorUnitsController::class, 'getDataStockBox'])->name('getDataStockBox');
+
+    //	Proceso de unidades
+    Route::resource('processmonitoring', ProcessMonitoringController::class);
+
     //  Vista de ocupacion de patio
     Route::get('layoutcapacitycenter', [CapacityYardController::class, 'index'])->name('layoutcapacitycenter');
     //  Detalle de las ubicaciones con relacion a la placa que la está utilizando

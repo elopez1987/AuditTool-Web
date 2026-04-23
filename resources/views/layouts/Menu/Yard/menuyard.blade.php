@@ -66,6 +66,16 @@
                     </div>
                 </a>
             @endcan
+                @can('monitorunitsyard')
+                    <a href="{{route('processmonitoring.index')}}">
+                        <div class="box" data-toggle="tooltip" data-placement="top"
+                             title="Permite darle seguimiento a los tiempos de procesos operativos a cada unidad registrada en sistema.">
+                            <i class="lni lni-layout"></i>
+                            <h5>Seguimiento de procesos</h5>
+                            <h4>Seguimiento de procesos</h4>
+                        </div>
+                    </a>
+                @endcan
             @can('generateaccesswarehouse.index')
                 <a href="{{route('generateaccesswarehouse.index')}}">
                     <div class="box" data-toggle="tooltip" data-placement="top"
