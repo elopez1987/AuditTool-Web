@@ -20,17 +20,17 @@
                             <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
                                 <button id="filterBtn" class="btn waves-effect waves-light btn-outline-info btn-sm">
                                     <img src="{{asset('/ico/adbuscar.png')}}" alt="" class="img-16 ml-1">
-                                    <span class="text-button mr-2 ml-2"> Buscar</span>
+                                    <span class=" mr-2 ml-2 font-12"> Buscar</span>
                                 </button>
                                 <button type="button" id="clearBtn"
                                         class="btn waves-effect waves-light btn-outline-info btn-sm">
                                     <img src="{{asset('/ico/addestroy.png')}}" alt="" class="img-16 ml-1">
-                                    <span class="text-button ml-2 mr-2"> Limpiar filtros</span>
+                                    <span class="ml-2 mr-2 font-12"> Limpiar filtros</span>
                                 </button>
                                 <button type="button" id="reloaddata"
                                         class="btn waves-effect waves-light btn-outline-info btn-sm">
                                     <img src="{{asset('/ico/changelocation.png')}}" alt="" class="img-16 ml-1">
-                                    <span class="text-button ml-2 mr-2" > Recargar datos</span>
+                                    <span class="ml-2 mr-2 font-12" > Recargar datos</span>
                                 </button>
                             </div>
                         </div>

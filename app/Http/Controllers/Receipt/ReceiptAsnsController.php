@@ -83,8 +83,8 @@ class ReceiptAsnsController extends BaseController
         $providers = $this->getReceiptProviderForSelect();
         $turns = $this->getTurns();
         $carriers = $this->getCarriersForSelect();
-        $categorystocks = InventoryStockCategory::select('description', 'id')
-            ->where('statusid', 'E')->get();
+        $categorystocks = InventoryStockCategory::controlAccessUser()
+            ->select('description', 'id')->where('statusid', 'E')->get();
         $reasons = StorageReason::whereType('RE')->select('name', 'id')->get();
 
         return view('Receipt.ReceiptAsn.create', compact(
