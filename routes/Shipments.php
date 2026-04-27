@@ -66,6 +66,7 @@ use App\Http\Controllers\Shipments\StorageDoor\StorageDoorStageController;
 use App\Http\Controllers\Shipments\StorageIncidenceJourney\EventsIncidenceJourneysController;
 use App\Http\Controllers\Shipments\StorageIncidenceJourney\FollowupIncidenceJournyesController;
 use App\Http\Controllers\Shipments\StorageIncidenceJourney\ImportDataInverseController;
+use App\Http\Controllers\Shipments\StorageIncidenceJourney\ImportIncidencesJourneyController;
 use App\Http\Controllers\Shipments\StorageIncidenceJourney\ResponseIncidenceJourneyController;
 use App\Http\Controllers\Shipments\StorageIncidenceJourney\ResponseIncidenceTransportController;
 use App\Http\Controllers\Shipments\StorageIncidenceJourney\StorageIncidenceJourneyDetailController;
@@ -294,6 +295,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('getDataIncidenceShipments', [StorageIncidenceJourneysController::class, 'getDataIncidenceShipments'])->name('getDataIncidenceShipments');
     // 	  Eliminar detalle de reporte de incidencia
     Route::delete('deletedetailincidence/{id}', [StorageIncidenceJourneyDetailController::class, 'destroy'])->name('deletedetailincidence');
+    // 	  Importar incidencias masivas
+    Route::post('importincidences', [ImportIncidencesJourneyController::class, 'index'])->name('importincidences');
 
     //    Seguimiento de incidencias
     Route::resource('followupofincidences', FollowupIncidenceJournyesController::class)->except(['destroy']);

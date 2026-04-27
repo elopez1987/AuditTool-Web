@@ -54,10 +54,22 @@
                         </div>
                     </div>
                 </div>
+                <div class="card-footer">
+                    @can('storagelocations.importlocation')
+                        <a href="" data-target="#modal-upload" data-toggle="modal" data-placement="top">
+                            <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md"
+                                    data-toggle="tooltip" data-placement="top" title="Importar archivo">
+                                <img src="{{asset('/ico/uploadcsv.png')}}" alt="" class="img-16 mr-2">
+                                <span> Importar Incidencias </span>
+                            </button>
+                        </a>
+                        @include('Shipments.StorageIncidenceJourneys.cargarincidenci')
+                    @endcan
+                </div>
             </div>
         </div>
     </div>
-
+    @include('layouts.Partials.Errors')
 @endsection
 
 @section('css')
