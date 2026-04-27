@@ -90,7 +90,7 @@ class MonitorPodsController extends BaseController
             })
             ->leftJoin('systemstatus as s3', 'shipmentpods.statusid', '=', 's3.statusid')
             ->where('orderdeliveries.statusid', 'DH')
-            ->whereBetween('orderdeliveries.downloaddate', [$datestart, $datefinish])
+//            ->whereBetween('orderdeliveries.downloaddate', [$datestart, $datefinish])
             ->select(
                 [
                     'shipmentpods.id',

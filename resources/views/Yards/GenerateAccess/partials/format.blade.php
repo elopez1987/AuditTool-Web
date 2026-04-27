@@ -186,14 +186,12 @@
             <tr>
                 <th style="width: 50%">
                     @if($data->qr != null)
-                        <img src="{{ storage_path('app/public/' . $data->qr) }}" alt=""
-                             style="max-width: 150px;height: 150px">
+                        <img src="{{ storage_path('app/' . $data->qr) }}" alt="" style="max-width: 150px;height: 150px">
                     @endif
                 </th>
                 <th style="width: 50%">
                     @if($data->logo != null)
-                        <img src="{{ storage_path('app/public/' . $data->logo) }}" alt=""
-                             style="height: 150px;max-width: 150px">
+                        <img src="{{ storage_path('app/' . $data->logo) }}" alt="" style="height: 150px;max-width: 150px">
                     @endif
                 </th>
             </tr>

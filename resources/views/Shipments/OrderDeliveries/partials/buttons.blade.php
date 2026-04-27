@@ -13,7 +13,7 @@
             </a>
         @endcan
         @can('orderdeliveries.uploadevidence')
-            <a href="{{url('orderdeliveries/' . $token . '/uploadevidence')}}" data-toggle="tooltip"
+            <a href="{{url('orderdeliveries/' . $id . '/uploadevidence')}}" data-toggle="tooltip"
                data-placement="top"
                title="Modificar">
                 <img src="{{asset('/ico/img.png')}}" alt="" class="img-16 ml-2 mr-2">

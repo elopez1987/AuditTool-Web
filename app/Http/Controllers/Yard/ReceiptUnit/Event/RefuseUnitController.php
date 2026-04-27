@@ -11,6 +11,7 @@ use App\Traits\Web\Yard\ReceiptUnit\DeclineUnit\DeclineUnitForReceipt;
 use App\Traits\Web\Yard\ReceiptUnit\DeclineUnit\DeclineUnitForShipment;
 use DB;
 use Exception;
+use Illuminate\Http\JsonResponse;
 
 class RefuseUnitController extends BaseController
 {
@@ -25,57 +26,53 @@ class RefuseUnitController extends BaseController
         return view('Yards.RefuseUnit.index');
     }
 
-    public function store(RegisterRefuseUnitRequest $request)
+    public function store(RegisterRefuseUnitRequest $request): JsonResponse
     {
+        $receiptunit = ReceiptUnit::searchForId($request['folionumber']);
+
+        if (empty($receiptunit)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'El número de folio no existe.',
+            ], 422);
+        }
+
         DB::beginTransaction();
         try {
-            $folio = ReceiptUnit::searchForId($request['folionumber']);
-            if (empty($folio)) {
-                if ($request->ajax() || $request->wantsJson()) {
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'El número de folio no existe!!',
-                    ], 422);
-                }
-            }
-            if ($folio->razonstatusid == 1) {
-                $this->declineUnitForShipment($folio);
-            }
-            if ($folio->razonstatusid == 2) {
-                $this->declineUnitForReceipt($folio->id);
-            }
+            match ((int) $receiptunit->razonstatusid) {
+                1 => $this->declineUnitForShipment($receiptunit),
+                2 => $this->declineUnitForReceipt($receiptunit->id),
+                default => null,
+            };
 
-            self::updateUnitForRefuse($folio->id);
+            $this->updateUnitForRefuse($receiptunit);
+
             DB::commit();
 
-            if ($request->ajax() || $request->wantsJson()) {
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Unidad rechazada con éxito!!',
-                ], 200);
-            }
+            return response()->json([
+                'success' => true,
+                'message' => 'Unidad rechazada con éxito.',
+            ], 200);
 
         } catch (Exception $e) {
-            $error = $e->getMessage();
-            DB::rollback();
+            DB::rollBack();
 
-            if ($request->ajax() || $request->wantsJson()) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Error al procesar la solicitud, intente más tarde: ' . $error,
-                ], 500);
-            }
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al procesar la solicitud: ' . $e->getMessage(),
+            ], 500);
         }
     }
 
-    private function updateUnitForRefuse($folio)
+    private function updateUnitForRefuse(ReceiptUnit $unit): ReceiptUnit
     {
-        $unit = ReceiptUnit::controlAccessUser()->where('id', '=', $folio)->whereNotIn('statusid', ['TR'])->first();
-        $unit->autorizaoutputdate = now();
-        $unit->statusid = 'OU';
-        $unit->shipmentid = null;
-        $unit->unitstatusid = '1';
-        $unit->save();
+        $unit->update([
+            'autorizaoutputdate' => now(),
+            'statusid' => 'OU',
+            'shipmentid' => null,
+            'unitstatusid' => '1',
+        ]);
+
         StorageUnitTrace::createTraceUnit($unit, '23');
 
         return $unit;

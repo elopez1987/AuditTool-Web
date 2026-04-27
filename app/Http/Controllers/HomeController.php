@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Configuration\NameSystem\NameSystem;
 use App\Models\Yard\ReceiptUnit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -144,7 +145,12 @@ class HomeController extends BaseController
             ->unique('warehouseid')
             ->sortBy('name');
 
-        return view('home', compact('locationsBusy', 'unitsByStatus', 'unitsByCarrier', 'unitsByReason', 'unitsByType', 'unitsByTruck', 'unitsByTruckCategory', 'unitsByGeneralStatus', 'unitsByZone', 'topEstadias', 'carriers', 'reasons', 'warehouses'));
+        $image = NameSystem::first();
+
+        return view('home', compact('locationsBusy', 'unitsByStatus', 'unitsByCarrier',
+            'unitsByReason', 'unitsByType', 'unitsByTruck', 'unitsByTruckCategory',
+            'unitsByGeneralStatus', 'unitsByZone', 'topEstadias', 'image',
+            'carriers', 'reasons', 'warehouses'));
     }
 
     public function filterData(Request $request)

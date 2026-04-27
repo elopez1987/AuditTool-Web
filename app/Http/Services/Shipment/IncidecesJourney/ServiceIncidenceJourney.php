@@ -6,7 +6,6 @@ use App\Models\General\StorageComment;
 use App\Models\Shipments\StorageIncidenceJourney;
 use App\Models\Shipments\StorageIncidenceJourneyDetails;
 use App\Traits\Web\General\GetParameters;
-use Auth;
 
 class ServiceIncidenceJourney
 {
@@ -34,7 +33,6 @@ class ServiceIncidenceJourney
             'unitmeasure' => $request['unitmeasure'],
             'razoncode' => $request['razoncode'],
             'downloaddate' => $request['downloaddate'],
-            'auxiliary03' => Auth::user()->username,
             'partnumberiderror' => $request['partnumberiderror'],
         ]);
         $this->createNewCommentForIncidence($incidence, $request);

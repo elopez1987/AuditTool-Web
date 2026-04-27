@@ -30,8 +30,28 @@
                     <div class="box" data-toggle="tooltip" data-placement="top"
                          title="Realice su seguimiento de unidades, tiempos y eventos de facturación en este modulo.">
                         <i class="lni lni-display-alt"></i>
-                        <h5>M. Trafico</h5>
-                        <h4>M. Trafico</h4>
+                        <h5>Monitor Trafico</h5>
+                        <h4>Monitor Trafico</h4>
+                    </div>
+                </a>
+            @endcan
+            @can('monitoranalistatrafico.index')
+                <a href="{{route('monitor-customer-service')}}">
+                    <div class="box" data-toggle="tooltip" data-placement="top"
+                         title="Realice su seguimiento de unidades, tiempos y eventos de facturación en este modulo.">
+                        <i class="lni lni-display-alt"></i>
+                        <h5>Customer Service</h5>
+                        <h4>Customer Service</h4>
+                    </div>
+                </a>
+            @endcan
+            @can('monitoranalistatrafico.index')
+                <a href="{{route('monitor-backlog')}}">
+                    <div class="box" data-toggle="tooltip" data-placement="top"
+                         title="Realice su seguimiento de unidades, tiempos y eventos de facturación en este modulo.">
+                        <i class="lni lni-display-alt"></i>
+                        <h5>BackLog</h5>
+                        <h4>BackLog</h4>
                     </div>
                 </a>
             @endcan
@@ -40,11 +60,12 @@
                     <div class="box" data-toggle="tooltip" data-placement="top"
                          title="Realice su seguimiento de eventos logisticos de cada embarque, proceso de verificación,etc.">
                         <i class="lni lni-display-alt"></i>
-                        <h5>M. Operativo</h5>
-                        <h4>M. Operativo</h4>
+                        <h5>Monitor Operativo</h5>
+                        <h4>Monitor Operativo</h4>
                     </div>
                 </a>
             @endcan
+
             @can('ordermonitor.index')
                 <a href="{{route('ordermonitor.index')}}">
                     <div class="box" data-toggle="tooltip" data-placement="top"
@@ -235,15 +256,15 @@
                     </div>
                 </a>
             @endcan
-                @can('storageshipmentfolios.index')
-                    <a href="{{route('storageshipmentfolios.index')}}">
-                        <div class="box" data-toggle="tooltip" data-placement="top" title="">
-                            <i class="lni lni-microsoft"></i>
-                            <h5>Folios de conteo</h5>
-                            <h4>Folios de conteo</h4>
-                        </div>
-                    </a>
-                @endcan
+            @can('storageshipmentfolios.index')
+                <a href="{{route('storageshipmentfolios.index')}}">
+                    <div class="box" data-toggle="tooltip" data-placement="top" title="">
+                        <i class="lni lni-microsoft"></i>
+                        <h5>Folios de conteo</h5>
+                        <h4>Folios de conteo</h4>
+                    </div>
+                </a>
+            @endcan
             @can('ordercustomers.index')
                 <a href="{{route('ordercustomers.index')}}">
                     <div class="box" data-toggle="tooltip" data-placement="top"
@@ -273,54 +294,54 @@
                     </div>
                 </a>
             @endcan
-                @can('storageevidenceprocess.index')
-                    <a href="{{route('storageevidenceprocess.index')}}">
-                        <div class="box">
-                            <i class="lni lni-travel"></i>
-                            <h5>Embarques</h5>
-                            <h4>Embarques</h4>
-                        </div>
-                    </a>
-                @endcan
-                @can('storageevidenceprocess.dashboard')
-                    <a href="{{route('storageevidenceprocess.dashboard')}}">
-                        <div class="box">
-                            <i class="lni lni-dashboard"></i>
-                            <h5>Seguimiento Emb.</h5>
-                            <h4>Seguimiento Emb.</h4>
-                        </div>
-                    </a>
-                @endcan
+            @can('storageevidenceprocess.index')
+                <a href="{{route('storageevidenceprocess.index')}}">
+                    <div class="box">
+                        <i class="lni lni-travel"></i>
+                        <h5>Embarques</h5>
+                        <h4>Embarques</h4>
+                    </div>
+                </a>
+            @endcan
+            @can('storageevidenceprocess.dashboard')
+                <a href="{{route('storageevidenceprocess.dashboard')}}">
+                    <div class="box">
+                        <i class="lni lni-dashboard"></i>
+                        <h5>Seguimiento Emb.</h5>
+                        <h4>Seguimiento Emb.</h4>
+                    </div>
+                </a>
+            @endcan
 
-                @can('reportevidence.index')
-                    <a href="{{route('reportevidence.index')}}">
-                        <div class="box">
-                            <i class="lni lni-select"></i>
-                            <h5>Reporte Embarque</h5>
-                            <h4>Reporte Embarque</h4>
-                        </div>
-                    </a>
-                @endcan
+            @can('reportevidence.index')
+                <a href="{{route('reportevidence.index')}}">
+                    <div class="box">
+                        <i class="lni lni-select"></i>
+                        <h5>Reporte Embarque</h5>
+                        <h4>Reporte Embarque</h4>
+                    </div>
+                </a>
+            @endcan
 
-                @can('reportauditshipments.index')
-                    <a href="{{route('reportauditshipments.index')}}">
-                        <div class="box">
-                            <i class="lni lni-search"></i>
-                            <h5>Reporte Auditoria</h5>
-                            <h4>Reporte Auditoria</h4>
-                        </div>
-                    </a>
-                @endcan
+            @can('reportauditshipments.index')
+                <a href="{{route('reportauditshipments.index')}}">
+                    <div class="box">
+                        <i class="lni lni-search"></i>
+                        <h5>Reporte Auditoria</h5>
+                        <h4>Reporte Auditoria</h4>
+                    </div>
+                </a>
+            @endcan
 
-                @can('reportauditshipments.dashboard')
-                    <a href="{{route('reportdashboard')}}">
-                        <div class="box">
-                            <i class="lni lni-layout"></i>
-                            <h5>Seguimiento DC</h5>
-                            <h4>Seguimiento DC</h4>
-                        </div>
-                    </a>
-                @endcan
+            @can('reportauditshipments.dashboard')
+                <a href="{{route('reportdashboard')}}">
+                    <div class="box">
+                        <i class="lni lni-layout"></i>
+                        <h5>Seguimiento DC</h5>
+                        <h4>Seguimiento DC</h4>
+                    </div>
+                </a>
+            @endcan
         </div>
     </main>
 

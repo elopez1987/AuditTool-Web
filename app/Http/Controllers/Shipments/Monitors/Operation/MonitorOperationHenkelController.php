@@ -19,8 +19,19 @@ class MonitorOperationHenkelController extends BaseController
             ->groupBy('statusid')->orderByDesc('total')->get();
         $monitorStatus = $this->getDataMonitor();
         $totalPallets = $this->getTotalPallets();
+        $shipmentsStatus = OrderDeliverie::controlAccessUser()
+            ->select(['orderdeliveries.shipmentid', 'orderdeliveries.statusid', 'orderdeliveries.customerid', 'orderdeliveries.folionumber'])
+            ->with(['status:statusid,name,auxiliary01', 'customer:id,name', 'folio:id,entrydate'])
+            ->whereNotIn('orderdeliveries.statusid', ['DH', 'CA'])
+            ->whereNotNull('orderdeliveries.folionumber')
+            ->get();
+        $carriers = $this->getCarriersForSelect();
+        $customers = $this->getOrderCustomerForSelect();
+        $status = $this->getStatusForSchema('KLE');
 
-        return view('Shipments.MonitorShipments.MonitorOperation.index', compact('statusQuantitys', 'monitorStatus', 'totalPallets'));
+        return view('Shipments.MonitorShipments.MonitorOperation.index',
+            compact('statusQuantitys', 'monitorStatus',
+                'totalPallets', 'shipmentsStatus', 'carriers', 'customers', 'status'));
     }
 
     public function getDataMonitorOperation()

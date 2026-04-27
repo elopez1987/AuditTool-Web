@@ -9,7 +9,6 @@ use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\Models\Shipments\OrderDeliverie;
 use App\Models\Shipments\StorageIncidenceJourney;
 use Auth;
-use Carbon\Carbon;
 use DB;
 use Illuminate\Support\Collection;
 
@@ -26,7 +25,7 @@ trait QuerysIncidencesJourneys
             ->select(['id', 'shipmentid'])
             ->CarrierIn($carrier)
             ->where('statusid', '=', 'DH')
-            ->where('downloaddate', '>', Carbon::now()->subDays(intval($days))->format('Y-m-d'))
+//            ->where('downloaddate', '>', Carbon::now()->subDays(intval($days))->format('Y-m-d'))
             ->whereNotIn('id', (function ($query) {
                 $query->from('storageincidencejourneys')
                     ->select('orderid')
@@ -34,40 +33,45 @@ trait QuerysIncidencesJourneys
             }))->select(['id', 'shipmentid'])->get();
     }
 
-    public function getAllIncidenceJourneys()
+    public function getAllIncidenceJourneys(): \Illuminate\Database\Eloquent\Collection
     {
-        $carrier = $this->getCarriers();
-
         return StorageIncidenceJourney::controlAccessUser()
-            ->leftJoin('orderdeliveries as o', function ($join) {
-                $join->on('storageincidencejourneys.orderid', '=', 'o.id')
-                    ->on('storageincidencejourneys.centerid', '=', 'o.centerid')
-                    ->on('storageincidencejourneys.warehouseid', '=', 'o.warehouseid');
+            ->leftJoin('orderdeliveries', function ($join) {
+                $join->on('storageincidencejourneys.orderid', '=', 'orderdeliveries.id')
+                    ->on('storageincidencejourneys.centerid', '=', 'orderdeliveries.centerid')
+                    ->on('storageincidencejourneys.warehouseid', '=', 'orderdeliveries.warehouseid');
             })
             ->leftJoin('ordercustomers as c', function ($join) {
-                $join->on('o.customerid', '=', 'c.id')
-                    ->on('o.centerid', '=', 'c.centerid');
+                $join->on('orderdeliveries.customerid', '=', 'c.id')
+                    ->on('orderdeliveries.centerid', '=', 'c.centerid');
             })
             ->leftJoin('shipmentcarriers as sc', function ($join) {
-                $join->on('o.carrierid', '=', 'sc.id')
-                    ->on('o.centerid', '=', 'sc.centerid');
+                $join->on('orderdeliveries.carrierid', '=', 'sc.id')
+                    ->on('orderdeliveries.centerid', '=', 'sc.centerid');
             })
             ->where('storageincidencejourneys.statusid', 'AB')
-            ->where('o.statusid', 'DH')
-            ->CarrierIn($carrier)
-            ->select(['storageincidencejourneys.folioid',
+            ->where('orderdeliveries.statusid', 'DH')
+            ->CarrierIn($this->getCarriers())
+            ->select([
+                'storageincidencejourneys.folioid',
                 'storageincidencejourneys.statusid',
-                'o.id as orderid', 'o.shipmentid',
-                'c.name as customername', 'sc.name as carriername',
-                'c.city', 'o.downloaddate', 'o.loadingdate',
+                'orderdeliveries.id as orderid',
+                'orderdeliveries.shipmentid',
+                'c.name as customername',
+                'sc.name as carriername',
+                'c.city',
+                'orderdeliveries.downloaddate',
+                'orderdeliveries.loadingdate',
                 'storageincidencejourneys.created_at',
-            ])->get();
+            ])
+            ->get();
     }
 
     public function getCarriers(): array
     {
         return AccessCarrier::where('username', Auth::user()->username)
-            ->select('carrierid')->get()->toArray();
+            ->pluck('securityaccesscarriers.carrierid')
+            ->toArray();
     }
 
     /**

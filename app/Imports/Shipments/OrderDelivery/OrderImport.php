@@ -178,7 +178,7 @@ class OrderImport implements ToCollection, WithHeadingRow, WithValidation
                 'turnid' => $row['turnid'],
                 'carrierid' => $carrier->id,
                 'customerid' => $customer->id,
-                'shipmenttypeid' => '3',
+                'shipmenttypeid' => '1',
                 'auxiliary01' => (string) $row['dvbusiness'] ?? '',
                 'auxiliary02' => (string) $row['responsible'] ?? '',
                 'loadingdate' => Carbon::createFromFormat('d/m/Y H:i', $row['loadingdate'])->format('Y-m-d H:i'),

@@ -28,7 +28,7 @@ trait MonitorTraffic
                 'warehouse:warehouseid,name',
                 'turns:id,name',
                 'header:id,locationid,orderid,totalcontainers,totalpieces',
-                'folio:id,boxnumber,locationid,keydate,entrydate,ensnare',
+                'folio:id,boxnumber,locationid,keydate,entrydate,ensnare,operatorname,foliotruck',
                 'customer:id,name,city',
                 'carrier:id,name',
                 'monitor:id,outputdate,orderid',

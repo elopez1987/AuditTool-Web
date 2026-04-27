@@ -196,13 +196,22 @@
                 <tbody>
                 <tr>
                     <th style="width: 50%">
-                        @if($data->transport->carrier->qr != null)
-                            <img src='{{asset('storage/' . $data->qr)}}' alt="" style="max-width: 200px;height: 200px">
+                        @php
+                            $outPhotoPath = str_starts_with($data->transport->carrier->auxiliary04, 'public/')
+                                ? storage_path('app/' . $data->transport->carrier->auxiliary04)
+                                : storage_path('app/public/' . $data->transport->carrier->auxiliary04);
+                        @endphp
+                        @if(file_exists($outPhotoPath))
+                            <img src="{{ $outPhotoPath }}" style="width: 300px; height: 200px; margin: 5px;">
                         @endif
+
+                        {{--                        @if($data->transport->carrier->auxiliary04 != null)--}}
+                        {{--                            <img src='{{storage_path('app/' . $data->transport->carrier->auxiliary04)}}' alt="" style="max-width: 200px;height: 200px">--}}
+                        {{--                        @endif--}}
                     </th>
                     <th style="width: 50%">
-                        @if($data->transport->carrier->logo != null)
-                            <img src='{{asset('storage/' . $data->logo)}}' alt=""
+                        @if($data->transport->carrier->auxiliary05 != null)
+                            <img src='{{storage_path('app/' . $data->transport->carrier->auxiliary05)}}' alt=""
                                  style="height: 200px;max-width: 200px">
                         @endif
                     </th>

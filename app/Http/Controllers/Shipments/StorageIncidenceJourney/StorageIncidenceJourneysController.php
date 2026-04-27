@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Shipments;
+namespace App\Http\Controllers\Shipments\StorageIncidenceJourney;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Services\Shipment\IncidecesJourney\ServiceIncidenceJourney;
@@ -47,7 +47,7 @@ class StorageIncidenceJourneysController extends BaseController
 
         return view(
             'Shipments.StorageIncidenceJourneys.create',
-            compact('shipments', 'razoncodes')
+            compact('shipments', 'razoncodes'),
         );
     }
 
@@ -96,7 +96,7 @@ class StorageIncidenceJourneysController extends BaseController
 
         return view(
             'Shipments.StorageIncidenceJourneys.show',
-            compact('shipment', 'details', 'evidences', 'entregas', 'comments')
+            compact('shipment', 'details', 'evidences', 'entregas', 'comments'),
         );
     }
 
@@ -111,15 +111,20 @@ class StorageIncidenceJourneysController extends BaseController
 
         return view(
             'Shipments.StorageIncidenceJourneys.edit',
-            compact('shipment', 'details', 'razoncodes')
+            compact('shipment', 'details', 'razoncodes'),
         );
     }
 
-    public function destroy($folioid)
+    public function destroy($folioid, Request $request, $message = 'Incidencia eliminada con exito')
     {
-        $folio = StorageIncidenceJourneyDetails::findOrFail($folioid);
+        $folio = StorageIncidenceJourney::where('folioid', $folioid)->first();
         $folio->delete();
 
-        return $this->redirectBackSuccessMessage('Registro eliminado con exito');
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => $message,
+            ]);
+        }
     }
 }

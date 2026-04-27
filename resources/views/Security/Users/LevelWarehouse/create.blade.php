@@ -45,16 +45,6 @@
                                                 >
                                             </div>
                                         </div>
-                                        <div class="col-lg-3 col-md-6 col-sm-12">
-                                            <div class="form-group">
-                                                <label for="username">Nombre de usuario <span
-                                                        style="color: red">*</span></label>
-                                                <input type="text" class="form-control" readonly id="username"
-                                                       name="username"
-                                                       value="{{$user->uuiduser}}"
-                                                >
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>

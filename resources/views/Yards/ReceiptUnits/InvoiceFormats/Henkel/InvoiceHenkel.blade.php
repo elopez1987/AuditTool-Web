@@ -170,19 +170,28 @@
             <th style="width: 42.4%;border-top: 0px;text-align: left;">
                 <span style="margin-left:15px"> {{$receiptunit->carrier  ? $receiptunit->carrier->name : ''}} </span>
             </th>
-            <th style="border-top: 0px;">Centro:</th>
-            <th style="border-top: 0px;"> ONE ROOF</th>
+            <th style="border-top: 0px;">Celular:</th>
+            <th style="border-top: 0px;">{{$receiptunit->tracto ? $receiptunit->tracto->phone : ''}}</th>
         </table>
     </div>
 
     <div class="row">
         <table class="border-none">
-            <th style="border-top:0px;width: 25%;height: 25px;">N°. De Placas</th>
-            <th style="border-top:0px;width: 25%;font-size: 16PX;"> {{$receiptunit->boxnumber}}</th>
-            <th style="border-top:0px;">Código de barra de Caja / Tracto</th>
-            <th style="border-top:0px;font-size: 16px">{{$receiptunit->barcode}} / {{$receiptunit->tracto ? $receiptunit->tracto->barcode : ''}}</th>
+            <th style="border-top:0px;width: 25%;height: 25px;">N°. De Placas / Economico </th>
+            <th style="border-top:0px;width: 25%;font-size: 16PX;"> {{$receiptunit->boxnumber}} / {{$receiptunit->econumber}} </th>
+            <th style="border-top:0px;">Placa de tracto / Número de Tracto </th>
+            <th style="border-top:0px;font-size: 16px">{{$receiptunit->tracto?->trucknumber}} / {{$receiptunit->tracto?->econumber ?? ''}}  </th>
         </table>
     </div>
+    <div class="row">
+        <table class="border-none">
+            <th style="border-top:0px;width: 25%;height: 25px;color: red">Folio YardTrax</th>
+            <th style="border-top:0px;width: 25%;font-size: 18PX;color: red"> {{$receiptunit->id}}</th>
+            <th style="border-top:0px;">CB de Caja / CB de Tracto</th>
+            <th style="border-top:0px;font-size: 16px">{{$receiptunit->barcode}} / {{$receiptunit->tracto ? $receiptunit->tracto->barcode : ''}} </th>
+        </table>
+    </div>
+
     <div class="row">
         <table class="border-none">
             <th style="border-top: 0;background-color: #E8EAF6;text-align: center;">Inspección del Vehiculo</th>

@@ -11,60 +11,63 @@ use Ramsey\Uuid\Uuid;
 
 trait DeclineUnitForShipment
 {
-    public function declineUnitForShipment($receiptunit)
+    public function declineUnitForShipment($receiptunit): void
     {
-        $shipment = OrderDeliverie::controlAccessUser()->where('folionumber', $receiptunit->id)->first();
-        if (! empty($shipment)) {
-            if ($shipment->statusid === 'IP') {
-                self::updateForRefuseUnit($receiptunit->id);
-            } else {
-                $shipment->folionumber = null;
-                $shipment->save();
-                self::updateForRefuseUnitTransport($shipment);
-            }
+        $shipment = OrderDeliverie::controlAccessUser()
+            ->where('folionumber', $receiptunit->id)
+            ->first();
+
+        if (empty($shipment)) {
+            return;
         }
+
+        if ($shipment->statusid === 'IP') {
+            self::updateForRefuseUnit($shipment);
+
+            return;
+        }
+
+        $shipment->update(['folionumber' => null]);
+        self::updateForRefuseUnitTransport($shipment);
     }
 
-    public static function updateForRefuseUnit($folio)
+    public static function updateForRefuseUnit(OrderDeliverie $shipment): void
     {
-        $shipment = OrderDeliverie::controlAccessUser()->where('folionumber', $folio)->first();
-        if (! empty($shipment)) {
-            $shipment->folionumber = '';
-            $shipment->statusid = 'PC';
-            $shipment->save();
+        $shipment->update([
+            'folionumber' => '',
+            'statusid' => 'PC',
+        ]);
 
-            $header = ShipmentHeader::controlAccessUser()->where('orderid', $shipment->id)->first();
-            $header->startdate = null;
-            $header->finishdate = null;
-            $header->save();
+        ShipmentHeader::controlAccessUser()
+            ->where('orderid', $shipment->id)
+            ->first()
+            ?->update(['startdate' => null, 'finishdate' => null]);
 
-            $operation = ShipmentDataOperation::controlAccessUser()->where('orderid', $shipment->id)->first();
-            $operation->startload = null;
-            $operation->endload = null;
-            $operation->senddocument = null;
-            $operation->save();
+        ShipmentDataOperation::controlAccessUser()
+            ->where('orderid', $shipment->id)
+            ->first()
+            ?->update(['startload' => null, 'endload' => null, 'senddocument' => null]);
 
-            self::updateForRefuseUnitTransport($shipment);
-            $stage = ShipmentStage::where('orderid', '=', $shipment->id)->first();
-            if (! empty($stage)) {
-                $stage->delete();
-            }
-        }
+        self::updateForRefuseUnitTransport($shipment);
+
+        ShipmentStage::where('orderid', $shipment->id)
+            ->first()
+            ?->delete();
     }
 
-    public static function updateForRefuseUnitTransport($shipment)
+    public static function updateForRefuseUnitTransport(OrderDeliverie $shipment): void
     {
-        $transport = StorageShipmentTransport::where('orderid', $shipment->id)->first();
-        if (! empty($transport)) {
-            $transport->operatorname = '';
-            $transport->drivernumber = '';
-            $transport->phone = '';
-            $transport->boxnumber = '';
-            $transport->trucknumber = '';
-            $transport->auxiliary01 = null;
-            $transport->auxiliary02 = null;
-            $transport->auxiliary05 = Uuid::uuid4()->toString();
-            $transport->save();
-        }
+        StorageShipmentTransport::where('orderid', $shipment->id)
+            ->first()
+            ?->update([
+                'operatorname' => '',
+                'drivernumber' => '',
+                'phone' => '',
+                'boxnumber' => '',
+                'trucknumber' => '',
+                'has_data' => false,
+                'has_registered' => false,
+                'auxiliary05' => Uuid::uuid4()->toString(),
+            ]);
     }
 }

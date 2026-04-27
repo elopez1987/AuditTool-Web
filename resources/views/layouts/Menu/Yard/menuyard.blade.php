@@ -66,6 +66,16 @@
                     </div>
                 </a>
             @endcan
+                @can('monitorunitsyard')
+                    <a href="{{route('processmonitoring.index')}}">
+                        <div class="box" data-toggle="tooltip" data-placement="top"
+                             title="Permite darle seguimiento a los tiempos de procesos operativos a cada unidad registrada en sistema.">
+                            <i class="lni lni-layout"></i>
+                            <h5>Seguimiento de procesos</h5>
+                            <h4>Seguimiento de procesos</h4>
+                        </div>
+                    </a>
+                @endcan
             @can('generateaccesswarehouse.index')
                 <a href="{{route('generateaccesswarehouse.index')}}">
                     <div class="box" data-toggle="tooltip" data-placement="top"
@@ -216,6 +226,16 @@
                     </div>
                 </a>
             @endcan
+                @can('viewkeyreception')
+                    <a href="{{route('viewkeyreception')}}">
+                        <div class="box" data-toggle="tooltip" data-placement="top"
+                             title="Permite registrar el evento de llegada de la unidad a mesa de control al entregar su documentación.">
+                            <i class="lni lni-key"></i>
+                            <h5>Recepción llaves</h5>
+                            <h4>Recepción llaves</h4>
+                        </div>
+                    </a>
+                @endcan
             @can('viewmovementsofbox')
                 <a href="{{route('viewmovementsofbox')}}">
                     <div class="box" data-toggle="tooltip" data-placement="top"

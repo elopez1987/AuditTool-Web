@@ -7,6 +7,7 @@ use App\Models\Inventory\PartNumber\InventoryPartnumber;
 use App\Models\Receipt\StorageCategoryIncidenceDetail;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * @property int $folioid
@@ -105,6 +106,21 @@ class StorageIncidenceJourneyDetails extends Model
 
         return StorageIncidenceJourneyDetails::whereIn('storageincidencejourneydetails.warehouseid', $warehouses)
             ->whereIn('storageincidencejourneydetails.centerid', $centers);
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (StorageIncidenceJourneyDetails $model) {
+                $model->auxiliary03 = Auth::user()->username;
+            });
+            //            self::updating(function (StorageIncidenceJourneyDetails $model) {});
+            //            self::deleting(function (StorageIncidenceJourneyDetails $model) {
+            //                $model->details()->delete();
+            //            });
+
+        }
     }
 
     public function status()

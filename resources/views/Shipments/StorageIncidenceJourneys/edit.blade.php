@@ -48,7 +48,7 @@
                                                 <a href="" data-target="#modal-updatedetail-{{$detail->folioid}}"
                                                    data-toggle="modal">
                                                     <img src="{{asset('/ico/adedit.png')}}" alt=""
-                                                         class="img-16">
+                                                         class="img-16 ml-2 mr-2">
                                                 </a>
                                                 @include('Shipments.StorageIncidenceJourneys.updatedetail')
                                             @endcan
@@ -56,7 +56,7 @@
                                                 <a href="" data-target="#modal-deletedetail-{{$detail->folioid}}"
                                                    data-toggle="modal">
                                                     <img src="{{asset('/ico/adcancelar.png')}}" alt=""
-                                                         class="img-16">
+                                                         class="img-16 ml-2 mr-2">
                                                 </a>
                                                 @include('Shipments.StorageIncidenceJourneys.deletedetail')
                                             @endcan

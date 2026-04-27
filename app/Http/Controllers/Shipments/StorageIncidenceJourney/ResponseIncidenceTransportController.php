@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Shipments;
+namespace App\Http\Controllers\Shipments\StorageIncidenceJourney;
 
 use App\Http\Controllers\Controller;
 use App\Http\Services\Shipment\IncidecesJourney\ServiceResponseIncidences;
