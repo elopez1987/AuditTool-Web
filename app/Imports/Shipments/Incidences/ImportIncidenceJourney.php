@@ -7,11 +7,13 @@ use App\Models\Shipments\OrderDeliverie;
 use App\Models\Shipments\StorageIncidenceJourney;
 use App\Models\Shipments\StorageIncidenceJourneyDetails;
 use App\Models\Shipments\StorageLogInverse;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use PhpOffice\PhpSpreadsheet\Shared\Date as ExcelDate;
 use Throwable;
 
 class ImportIncidenceJourney implements ToCollection, WithHeadingRow
@@ -99,7 +101,22 @@ class ImportIncidenceJourney implements ToCollection, WithHeadingRow
                     continue;
                 }
 
-                DB::transaction(function () use ($orderDelivery, $row, $razoncode, $razoncodeDetail, $shipmentid, $rowNumber) {
+                $rawDownloadDate = $row['downloaddate'] ?? null;
+                $downloadDate = $this->parseDownloadDate($rawDownloadDate);
+                if ($downloadDate === null) {
+                    $this->logSkip($rowNumber, $shipmentid, 'downloaddate inválido o vacío', [
+                        'downloaddate' => $rawDownloadDate,
+                    ]);
+                    StorageLogInverse::createNewLog(
+                        'La columna downloaddate no es una fecha válida',
+                        $shipmentid
+                    );
+                    $skipped++;
+
+                    continue;
+                }
+
+                DB::transaction(function () use ($orderDelivery, $row, $razoncode, $razoncodeDetail, $shipmentid, $rowNumber, $downloadDate) {
                     $incidence = StorageIncidenceJourney::updateOrCreate([
                         'centerid' => $orderDelivery->centerid,
                         'warehouseid' => $orderDelivery->warehouseid,
@@ -125,7 +142,7 @@ class ImportIncidenceJourney implements ToCollection, WithHeadingRow
                         'quantity' => $row['quantity'] ?? null,
                         'unitmeasure' => $row['unitmeasure'] ?? null,
                         'razoncode' => $razoncode->getKey(),
-                        'downloaddate' => $row['downloaddate'] ?? null,
+                        'downloaddate' => $downloadDate,
                         'partnumberiderror' => $row['partnumberiderror'] ?? null,
                         'comment' => $row['comment'] ?? null,
                         'auxiliary01' => $row['auxiliary01'] ?? null,
@@ -192,5 +209,46 @@ class ImportIncidenceJourney implements ToCollection, WithHeadingRow
         Log::warning(self::LOG_TAG . " Fila #{$rowNumber} omitida: {$reason}", array_merge([
             'shipmentid' => $shipmentid,
         ], $extra));
+    }
+
+    /**
+     * Valida la columna downloaddate y la normaliza al formato Y-m-d.
+     *
+     * Soporta los formatos típicos que entrega Excel:
+     *  - Número serial de Excel (ej. 45727).
+     *  - Instancias de DateTimeInterface.
+     *  - Cadenas en formatos comunes (Y-m-d, d/m/Y, etc.).
+     *
+     * Devuelve null cuando el valor está vacío o no se puede interpretar como fecha.
+     */
+    private function parseDownloadDate(mixed $value): ?string
+    {
+        if ($value === null || $value === '') {
+            return null;
+        }
+
+        try {
+            if ($value instanceof \DateTimeInterface) {
+                return Carbon::instance(\DateTimeImmutable::createFromInterface($value))->format('Y-m-d');
+            }
+
+            if (is_numeric($value)) {
+                return Carbon::instance(ExcelDate::excelToDateTimeObject((float) $value))->format('Y-m-d');
+            }
+
+            $stringValue = trim((string) $value);
+            if ($stringValue === '') {
+                return null;
+            }
+
+            return Carbon::parse($stringValue)->format('Y-m-d');
+        } catch (Throwable $e) {
+            Log::warning(self::LOG_TAG . ' No se pudo interpretar downloaddate', [
+                'value' => $value,
+                'message' => $e->getMessage(),
+            ]);
+
+            return null;
+        }
     }
 }
