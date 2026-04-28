@@ -8,8 +8,10 @@ use App\Models\Shipments\OrderDeliverie;
 use App\Models\Shipments\OrderMonitor;
 use App\Models\Shipments\ShipmentHeader;
 use App\Models\Shipments\ShipmentSeal;
+use App\Models\Shipments\ShipmentTransport\StorageShipmentTransport;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Ramsey\Uuid\Uuid;
 
 class CancelOrderDeliveryController extends BaseController
 {
@@ -21,6 +23,8 @@ class CancelOrderDeliveryController extends BaseController
             self::canceHeader($orderDelivery);
             self::canceShipmentSeal($orderDelivery);
             self::cancelOrdeMonitor($orderDelivery);
+            self::cancelTransport($orderDelivery);
+            self::cancelOrderDelivery($orderDelivery);
             DB::commit();
 
             return $this->successResponse('orderdeliveries.index');
@@ -32,37 +36,44 @@ class CancelOrderDeliveryController extends BaseController
         }
     }
 
-    public static function cancelOrderDelivery($id)
+    private function cancelTransport($orderDelivery)
     {
-        $orderDelivery = OrderDeliverie::controlAccessUser()->where('id', $id)
+        StorageShipmentTransport::where('orderid', $orderDelivery->id)
+            ->first()
+            ?->update([
+                'operatorname' => '',
+                'drivernumber' => '',
+                'phone' => '',
+                'boxnumber' => '',
+                'trucknumber' => '',
+                'has_data' => false,
+                'has_registered' => false,
+                'auxiliary05' => Uuid::uuid4()->toString(),
+            ]);
+    }
+
+    private function cancelOrderDelivery($id)
+    {
+        return OrderDeliverie::controlAccessUser()->where('id', $id)
             ->select(['id', 'statusid', 'auxiliary05'])
-            ->first();
-        $orderDelivery->statusid = 'CA';
-        $orderDelivery->auxiliary05 = Auth::user()->id;
-        $orderDelivery->save();
-
-        return $orderDelivery;
+            ->update(['statusid' => 'CA', 'auxiliary05' => Auth::user()->id, 'folionumber' => null]);
     }
 
-    public static function canceHeader($orderDelivery)
+    private function canceHeader($orderDelivery)
     {
-        $header = ShipmentHeader::controlAccessUser()->where('orderid', $orderDelivery->id)->first();
-        $header->statusid = 'CA';
-        $header->cancellationdate = now();
-        $header->save();
+        ShipmentHeader::controlAccessUser()->where('orderid', $orderDelivery->id)
+            ->update(['statusid' => 'CA', 'cancellationdate' => now()]);
     }
 
-    public static function canceShipmentSeal($orderDelivery)
+    private function canceShipmentSeal($orderDelivery)
     {
-        $shipmentseal = ShipmentSeal::whereOrderid($orderDelivery->id)->first();
-        $shipmentseal->statusorderid = 'CA';
-        $shipmentseal->save();
+        ShipmentSeal::whereOrderid($orderDelivery->id)
+            ->update(['statusorderid' => 'CA']);
     }
 
-    public static function cancelOrdeMonitor($orderDelivery)
+    private function cancelOrdeMonitor($orderDelivery)
     {
-        $ordermonitor = OrderMonitor::where('orderid', $orderDelivery->id)->first();
-        $ordermonitor->statusid = 'CN';
-        $ordermonitor->save();
+        OrderMonitor::where('orderid', $orderDelivery->id)
+            ->update(['statusid' => 'CN']);
     }
 }
