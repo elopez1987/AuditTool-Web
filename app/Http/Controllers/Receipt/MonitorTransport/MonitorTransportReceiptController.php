@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Receipt\MonitorTransport;
 
 use App\Http\Controllers\BaseController;
+use App\Models\Configuration\Parameters\SystemDetailParameter;
 use App\Models\Receipt\ReceiptAsn;
 use App\Models\Shipments\ShipmentTransport\StorageShipmentTransport;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -71,9 +72,23 @@ class MonitorTransportReceiptController extends BaseController
 
     public function printFormatQr($id)
     {
+        $pathImage = SystemDetailParameter::where('parameterid', '=', 'PARAM-IMG')->first();
         $data = ReceiptAsn::with('transport')->findOrFail($id);
         $fortmat = 'Receipt.MonitorTransport.partials.format';
-        $pdf = PDF::loadView($fortmat, compact('data'));
+        $pdf = PDF::setOptions([
+            'isRemoteEnabled' => true,
+            'chroot' => [
+                realpath(base_path()),
+                realpath($pathImage->value01),
+            ],
+            'httpContext' => stream_context_create([
+                'ssl' => [
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                    'allow_self_signed' => true,
+                ],
+            ]),
+        ])->loadView($fortmat, compact('data'));
 
         return $pdf->download('Acceso_De_Entrada-' . $data->id . '.pdf');
     }
