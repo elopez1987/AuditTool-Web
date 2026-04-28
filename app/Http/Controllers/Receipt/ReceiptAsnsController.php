@@ -197,6 +197,7 @@ class ReceiptAsnsController extends BaseController
         return ReceiptStock::controlAccessUser()->select(
             'inventorypartnumbers.prtnum',
             'inventorypartnumbers.lngdsc',
+            'receiptstock.id',
             'receiptstock.expirecode',
             'receiptstock.quantitytrue',
             'inventoryunitsmeasure.description as unidadmedida',
@@ -218,6 +219,7 @@ class ReceiptAsnsController extends BaseController
             ->groupBy(
                 'inventorypartnumbers.prtnum',
                 'inventorypartnumbers.lngdsc',
+                'receiptstock.id',
                 'receiptstock.expirecode',
                 'receiptstock.quantitytrue',
                 'inventorypartnumbers.untcas',

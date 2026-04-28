@@ -8,6 +8,7 @@ use App\Models\Receipt\ReceiptAsn;
 use App\Models\Receipt\ReceiptAsnCheckList;
 use App\Models\Yard\StorageCheckList;
 use App\Models\Yard\StorageCheckListDetail;
+use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -29,9 +30,10 @@ class StorageCheckListReceiptAsnController extends BaseController
             ->get();
 
         $categories = SystemStatus::where('schemaid', 'CRE')
-            ->where('auxiliary02', $receipt->centerid)
-            ->where('auxiliary03', $receipt->warehouseid)
+            ->where('centerid', $receipt->centerid)
+            ->where('warehouseid', $receipt->warehouseid)
             ->select(['name', 'statusid'])->get();
+
         if ($categories->isEmpty()) {
             return $this->errorResponse('No existe categoria de material en el esquema CRE.');
         }
@@ -49,7 +51,7 @@ class StorageCheckListReceiptAsnController extends BaseController
     {
         $receipt = ReceiptAsn::findOrFail($id);
         $receipt->auxiliary03 = $request['categoryid']; // Categoria de material esquema CRE
-        $receipt->auxiliary08 = \Auth::user()->username;
+        $receipt->auxiliary08 = Auth::user()->username;
         $receipt->save();
         $this->destroyCheckListOfReceipt($receipt, $request);
         $this->createCheckListReceipt($request, $receipt);
@@ -78,7 +80,7 @@ class StorageCheckListReceiptAsnController extends BaseController
                     'checklistid' => $request['checklistid'],
                     'typeid' => $request['typeid'],
                     'checklistdetailid' => $request['checklistdetailid'][$i],
-                    'createuser' => \Auth::user()->username,
+                    'createuser' => Auth::user()->username,
                     'created_at' => Carbon::now(),
                 ]);
             }

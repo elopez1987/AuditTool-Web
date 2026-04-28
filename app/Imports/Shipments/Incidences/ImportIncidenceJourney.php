@@ -109,7 +109,7 @@ class ImportIncidenceJourney implements ToCollection, WithHeadingRow
                     ]);
                     StorageLogInverse::createNewLog(
                         'La columna downloaddate no es una fecha válida',
-                        $shipmentid
+                        $shipmentid,
                     );
                     $skipped++;
 
@@ -122,7 +122,7 @@ class ImportIncidenceJourney implements ToCollection, WithHeadingRow
                         'warehouseid' => $orderDelivery->warehouseid,
                         'orderid' => $orderDelivery->id,
                         'carrierid' => $orderDelivery->carrierid,
-                        //                        'statusid' => self::STATUS_INCIDENCE,
+                        'statusid' => self::STATUS_INCIDENCE,
                     ]);
 
                     Log::debug(self::LOG_TAG . " Incidencia upserted en fila #{$rowNumber}", [
@@ -144,13 +144,13 @@ class ImportIncidenceJourney implements ToCollection, WithHeadingRow
                         'razoncode' => $razoncode->getKey(),
                         'downloaddate' => $downloadDate,
                         'partnumberiderror' => $row['partnumberiderror'] ?? null,
-                        //                        'comment' => $row['comment'] ?? null,
-                        //                        'auxiliary01' => $row['auxiliary01'] ?? null,
-                        //                        'auxiliary02' => $razoncodeDetail->getKey(),
-                        //                        'auxiliary03' => $row['auxiliary03'] ?? null,
-                        //                        'auxiliary04' => $row['auxiliary04'] ?? null,
-                        //                        'auxiliary05' => $row['auxiliary05'] ?? null,
-                        //                        'statusiddetail' => $row['statusiddetail'] ?? null,
+                        'comment' => $row['comment'] ?? null,
+                        'auxiliary01' => $row['auxiliary01'] ?? null,
+                        'auxiliary02' => $razoncodeDetail->getKey(),
+                        'auxiliary03' => $row['auxiliary03'] ?? null,
+                        'auxiliary04' => $row['auxiliary04'] ?? null,
+                        'auxiliary05' => $row['auxiliary05'] ?? null,
+                        'statusiddetail' => $row['statusiddetail'] ?? null,
                     ]);
                 });
 
@@ -168,7 +168,7 @@ class ImportIncidenceJourney implements ToCollection, WithHeadingRow
                 ]);
                 StorageLogInverse::createNewLog(
                     'Error al importar incidencia: ' . $e->getMessage(),
-                    $shipmentid !== '' ? $shipmentid : null
+                    $shipmentid !== '' ? $shipmentid : null,
                 );
             }
         }

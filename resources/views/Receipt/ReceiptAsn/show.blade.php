@@ -436,8 +436,7 @@
                                         <div class="card-body">
                                             <div class="row mt-3">
                                                 <div class="col-lg-12">
-                                                    <table
-                                                            class="table table-bordered table-condensed  tablegeneral ">
+                                                    <table class="table table-bordered table-condensed  tablegeneral ">
                                                         <thead>
                                                         <tr>
                                                             <th>Material</th>
