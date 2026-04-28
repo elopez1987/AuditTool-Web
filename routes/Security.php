@@ -132,5 +132,6 @@ Route::group(['middleware' => ['role:ADMINISTRADOR']], function () {
     //	Usuarios activo
     Route::resource('activeusers', ActiveUsersController::class);
     Route::get('getactiveusers', [ActiveUsersController::class, 'getactiveusers'])->name('getactiveusers');
+    Route::get('clearsessions', [ActiveUsersController::class, 'clearsessions'])->name('clearsessions');
 
 });

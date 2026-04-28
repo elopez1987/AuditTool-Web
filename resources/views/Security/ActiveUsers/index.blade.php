@@ -40,7 +40,15 @@
                             </table>
                         </div>
                     </div>
-
+                </div>
+                <div class="card-footer">
+                    <a href="{{url('clearsessions')}}">
+                        <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
+                            <img src="{{asset('/ico/engine_gear_internet_option_security_setting_web_icon_127066.png')}}"
+                                    alt="" class="img-16">
+                            <span class="text-button"> Limpiar sesiones</span>
+                        </button>
+                    </a>
                 </div>
             </div>
         </div>
