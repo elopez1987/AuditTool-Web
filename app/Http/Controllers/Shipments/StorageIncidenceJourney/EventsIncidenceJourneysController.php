@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Shipments\StorageIncidenceJourney;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Services\Shipment\IncidecesJourney\ServiceIncidenceJourneyDetail;
+use App\Models\Configuration\Parameters\SystemDetailParameter;
 use App\Models\General\EvidencePhoto;
 use App\Models\Shipments\StorageIncidenceJourney;
 use App\Models\Shipments\StorageKeyIncidenceOperation;
@@ -42,11 +43,25 @@ class EventsIncidenceJourneysController extends BaseController
 
     public function generatepdf($folioid)
     {
+        $pathImage = SystemDetailParameter::where('parameterid', '=', 'PARAM-IMG')->first();
         $incidence = StorageIncidenceJourney::findOrFail($folioid);
         $details = $this->getDetailsForGeneratePDF($incidence);
         $keys = StorageKeyIncidenceOperation::with('user')
             ->where('orderid', $incidence->orderid)->first();
-        $pdf = PDF::loadView(
+        $pdf = PDF::setOptions([
+            'isRemoteEnabled' => true,
+            'chroot' => [
+                realpath(base_path()),
+                realpath($pathImage->value01),
+            ],
+            'httpContext' => stream_context_create([
+                'ssl' => [
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                    'allow_self_signed' => true,
+                ],
+            ]),
+        ])->loadView(
             'Shipments.StorageIncidenceJourneys.partials.pdfdevolucion',
             compact('folioid', 'incidence', 'details', 'keys')
         );
