@@ -6,6 +6,7 @@ use App\Models\Configuration\Warehouses\SystemWarehouse;
 use App\Models\Configuration\WhatsApp\SystemDetailWhatsApp;
 use App\Models\Shipments\OrderDeliverie;
 use App\Models\Yard\LogMessageWhatsApp;
+use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
@@ -75,7 +76,7 @@ class UnidadesSinLLegarEmbarques extends Command
                 'Unidades sin arrivar a Cedis para embarques.'
             );
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error('Error al enviar mensaje de cajas sin arribar a carga', [
                 'error' => $e->getMessage(),
                 'unit' => $unit->id ?? null,
@@ -86,8 +87,6 @@ class UnidadesSinLLegarEmbarques extends Command
     private function processShipments($shipments, $contacts, Client $client, string $url)
     {
         foreach ($shipments as $unit) {
-
-            // Solo procesa unidades cuyo loadingdate ya pasó
             if (now()->lte($unit->loadingdate)) {
                 continue;
             }
