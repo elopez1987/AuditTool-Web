@@ -240,7 +240,7 @@
     </div>
     <br>
     <table>
-        <td class="centro" style="font-size: 14px;">DISTRIBUCIÓN Y ALMACENAJE AVIOR SA DE CV</td>
+        <td class="centro" style="font-size: 14px;">{{$receiptunit->center ? $receiptunit->center->description : ''}} - {{$receiptunit->warehouse ? $receiptunit->warehouse->name : ''}}</td>
     </table>
     <table>
         <tr>

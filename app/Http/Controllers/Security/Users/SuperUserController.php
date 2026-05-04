@@ -28,7 +28,6 @@ class SuperUserController extends BaseController
 
     public function store(Request $request)
     {
-        //        dd($request->all());
         $this->authorize('superusers.create');
         $users = new SuperUser($request->all());
         $users->save();

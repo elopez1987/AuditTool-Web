@@ -4,104 +4,97 @@ declare(strict_types=1);
 
 namespace App\Auth;
 
+use App\User;
 use Auth0\Laravel\UserRepositoryAbstract;
 use Auth0\Laravel\UserRepositoryContract;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 
 final class UserRepository extends UserRepositoryAbstract implements UserRepositoryContract
 {
+    private const CACHE_TTL_SECONDS = 120;
+
+    private const CACHE_PREFIX = 'auth0_user_';
+
     public function fromAccessToken(array $user): ?Authenticatable
     {
-        $identifier = $user['sub'] ?? $user['auth0'] ?? null;
+        $identifier = $this->extractIdentifier($user);
 
         if ($identifier === null) {
             return null;
         }
 
-        return \App\User::where('auth0', $identifier)->first();
+        return $this->findByAuth0($identifier);
     }
 
     public function fromSession(array $user): ?Authenticatable
     {
-        $identifier = $user['sub'] ?? $user['auth0'] ?? null;
-        $profile = [
-            'auth0' => $identifier,
-            //            'name' => $user['name'] ?? '',
-            //            'email' => $user['email'] ?? '',
-            //            'email_verified' => in_array($user['email_verified'], [1, true], true),
-        ];
-        $cached = $this->withoutRecording(fn () => Cache::get('auth0_user_' . $identifier));
+        $identifier = $this->extractIdentifier($user);
 
-        if ($cached) {
+        if ($identifier === null) {
+            Log::warning('Auth0 login: missing identifier in session data.');
+
+            return null;
+        }
+
+        $cached = $this->withoutRecording(fn () => Cache::get(self::CACHE_PREFIX . $identifier));
+
+        if ($cached instanceof Authenticatable) {
             return $cached;
         }
 
-        $user = null;
-        if ($identifier !== null) {
-            $user = \App\User::where('auth0', $identifier)->first();
+        $localUser = $this->findByAuth0($identifier)
+            ?? $this->findByEmail($user['email'] ?? null);
+
+        if ($localUser === null) {
+            Log::warning('Auth0 login: user not found in local database.', [
+                'auth0_identifier' => $identifier,
+                'email' => $user['email'] ?? null,
+            ]);
+
+            return null;
         }
 
-        if ($user === null && isset($user['email'])) {
-            $user = \App\User::where('email', $user['email'])->first();
+        $this->withoutRecording(
+            fn () => Cache::put(self::CACHE_PREFIX . $identifier, $localUser, self::CACHE_TTL_SECONDS)
+        );
+
+        return $localUser;
+    }
+
+    private function extractIdentifier(array $user): ?string
+    {
+        return $user['sub'] ?? $user['auth0'] ?? null;
+    }
+
+    private function findByAuth0(string $identifier): ?User
+    {
+        return User::where('auth0', $identifier)->first();
+    }
+
+    private function findByEmail(?string $email): ?User
+    {
+        if ($email === null || $email === '') {
+            return null;
         }
 
-        if ($user !== null) {
-            $updates = [];
-
-            //            if ($user->auth0 !== $profile['auth0']) {
-            //                $updates['auth0'] = $profile['auth0'];
-            //            }
-            //
-            //            if ($user->name !== $profile['name']) {
-            //                $updates['name'] = $profile['name'];
-            //            }
-            //
-            //            if ($user->email !== $profile['email']) {
-            //                $updates['email'] = $profile['email'];
-            //            }
-
-            //            $emailVerified = in_array($user->email_verified, [1, true], true);
-
-            //            if ($emailVerified !== $profile['email_verified']) {
-            //                $updates['email_verified'] = $profile['email_verified'];
-            //            }
-
-            if ($updates !== []) {
-                $user->update($updates);
-                $user->save();
-            }
-
-            if ($updates === [] && $cached !== null) {
-                return $user;
-            }
-        }
-
-        //        if (null === $user) {
-        //            $profile['password'] = Hash::make(Str::random(32));
-        //            $user = \App\User::create($profile);
-        //        }
-
-        $this->withoutRecording(fn () => Cache::put('auth0_user_' . $identifier, $user, 30));
-
-        return $user;
+        return User::where('email', $email)->first();
     }
 
     /**
      * Workaround for Laravel Telescope potentially causing an infinite loop.
      *
      * @link https://github.com/auth0/laravel-auth0/tree/main/docs/Telescope.md
-     *
-     * @param  callable  $callback
      */
-    private function withoutRecording($callback): mixed
+    private function withoutRecording(callable $callback): mixed
     {
         $telescope = '\Laravel\Telescope\Telescope';
 
-        if (class_exists($telescope)) {
-            //            return Laravel\Telescope\Telescope::withoutRecording($callback);
+        if (class_exists($telescope) && method_exists($telescope, 'withoutRecording')) {
+            return $telescope::withoutRecording($callback);
         }
 
-        return call_user_func($callback);
+        return $callback();
     }
 }
