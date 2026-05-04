@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title> Folio de Entrada {{$receiptunit->id}}</title>
-    <link rel="stylesheet" href="{{asset('/css/InvoiceDefault.css')}}">
     <style>
         .cols {
             border: 1px solid black;
@@ -23,6 +22,200 @@
             width: 50%;
             float: right;
         }
+
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&display=swap');
+
+
+        .container {
+            padding: 0px;
+            border: 0px;
+            width: 720px;
+            height: 612px;
+            font-family: 'Roboto Condensed', sans-serif !important;
+        }
+
+        html {
+            margin: 0;
+            font-weight: 400;
+            font-family: 'Roboto Condensed', sans-serif !important;
+        }
+
+        body {
+            font-family: 'Roboto Condensed', sans-serif !important;
+            margin: 10mm 10mm 10mm 10mm;
+            font-size: 11px;
+            color: #0b0b0b;
+            font-weight: 400;
+        }
+
+        .column {
+            float: left;
+            width: 33.33%;
+        }
+
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .tipo {
+            font-family: 'Roboto Condensed', sans-serif !important;
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+            width: 100%;
+            font-family: 'Roboto Condensed', sans-serif !important;
+        }
+
+        th, td {
+            text-align: center;
+            padding: 1px;
+            border: 1px solid #212121;
+            font-size: 9px;
+            font-family: 'Roboto Condensed', sans-serif !important;
+        }
+
+        th:first-child, td:first-child {
+            text-align: left;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2
+        }
+
+        .table-bordered {
+            border: 1px solid #212121;
+        }
+
+        .border-none {
+            border: 0px;
+            font-size: 9px;
+            font-weight: 500;
+        }
+
+        .logo {
+            width: 150px;
+            height: 60px;
+            margin: auto;
+        }
+
+        .formato {
+            padding-top: 5px;
+        }
+
+        .centro {
+            text-align: center;
+            display: block;
+            font-weight: bold;
+            background-color: #f5f5f5;
+        }
+
+        .datos {
+            background-color: #f5f5f5;
+            width: 90%;
+            text-align: left;
+            font-size: 11px;
+            font-family: 'Roboto Condensed', sans-serif !important;
+        }
+
+        .foto {
+            width: 120px;
+            height: 120px;
+            border: 1px solid #0d47a1;
+            border-radius: 5px;
+            margin-left: 30px;
+        }
+
+        .w80 {
+            width: 80%;
+        }
+
+        .w50 {
+            width: 50%;
+            text-align: center;
+        }
+
+        .w20 {
+            width: 20%;
+        }
+
+        .w30 {
+            width: 30%;
+        }
+
+        .w70 {
+            width: 70%;
+        }
+
+        .name-station {
+            border-left: 0px;
+            border-right: 0px;
+            border-bottom: 0px;
+        }
+
+        .nota {
+            color: red;
+            font-family: 'Roboto Condensed', sans-serif !important;
+            font-style: italic;
+            font-weight: 600;
+            text-align: center;
+            font-size: 9px;
+        }
+
+        .pleft {
+            text-align: left;
+            font-size: 11px;
+            font-family: 'Roboto Condensed', sans-serif !important;
+        }
+
+        .pd2 {
+            padding: 2px;
+        }
+
+        .h10 {
+            height: 10px;
+            background-color: darkgray
+        }
+
+        .tiempo {
+            border-top: 0px;
+            border-left: 0px;
+            border-right: 0px;
+        }
+
+        .cab {
+            padding: 1px;
+            text-align: left;
+            font-size: 9px;
+
+
+        }
+
+        .datos-empleado {
+            height: 10px;
+            padding: 1px;
+            text-align: left;
+        }
+
+        .duracion {
+            border-top: 0px;
+            border-left: 0px;
+            border-right: 0px;
+            background-color: #ffffff;
+        }
+
+
+        input[type="radio" i] {
+            margin: 1px 1px 0px 3px;
+        }
+
+        .f11 {
+            font-size: 11px;
+        }
+
     </style>
 </head>
 <body>
@@ -32,14 +225,14 @@
     <div class="row">
         <table cellpadding="20">
             <th style="height: 70px;width: 33.3%;align-items: center">
-                <img src="{{ public_path('img/logo.png') }}" alt="" class="logo">
+                <img src="img/logo.png" alt="" class="logo">
             </th>
             <th style="vertical-align: center;width: 33.3%">
                 <h3 class='formato' style="font-size: 15px;">FOLIO DE ENTRADA DE UNIDAD</h3>
             </th>
             <th style="width: 33.3%">
                 @if(!empty($logo->auxiliary09))
-                    <img src="{{ storage_path('app/public/' . $logo->auxiliary09) }}"
+                    <img src="{{ storage_path('app/' . $logo->auxiliary09) }}"
                          class="align-self-center img-responsive" alt="" style="height: 70px;width: 280px">
                 @endif
             </th>
@@ -206,7 +399,7 @@
     <table class="border-none">
         <tr>
             <td width="50%">
-                <img src="{{ public_path('img/trailer.png') }}" alt=""
+                <img src="img/trailer.png" alt=""
                      style="width: 400px;height: 150px;margin-top: 20px;margin-left:50px ">
                 <br>
                 <div style="border: 1px dashed black;margin: auto;width: 250px;padding: 5px;text-align: center;">
