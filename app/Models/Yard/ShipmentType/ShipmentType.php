@@ -113,7 +113,7 @@ class ShipmentType extends Model
 
     public function scopeName($query, $name)
     {
-        if (trim($name) !== '') {
+        if (trim($name) != '') {
             $query->where('name', 'like', "%{$name}%");
         }
     }

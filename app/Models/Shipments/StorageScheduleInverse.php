@@ -102,7 +102,7 @@ class StorageScheduleInverse extends Model
 
     public function scopeForStatus($query, $statusid)
     {
-        if ($statusid !== '') {
+        if ($statusid != '') {
             $query->where('storagescheduleinverse.statusid', $statusid);
         } else {
             $query->where('storagescheduleinverse.statusid', '=', 'AD');
@@ -111,7 +111,7 @@ class StorageScheduleInverse extends Model
 
     public function scopeForShipment($query, $shipmentid)
     {
-        if ($shipmentid !== '') {
+        if ($shipmentid != '') {
             $query->where('orderdeliveries.shipmentid', $shipmentid);
         }
     }

@@ -109,7 +109,7 @@ class ShipmentTruck extends Model
 
     public function scopeName($query, $name)
     {
-        if (trim($name) !== '') {
+        if (trim($name) != '') {
             $query->where('shipmenttrucks.name', 'like', "%{$name}%");
         }
     }

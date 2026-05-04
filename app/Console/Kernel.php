@@ -66,7 +66,7 @@ class Kernel extends ConsoleKernel
         //      Comandos del módulo de Control de Patios
         $schedule->command('command:TiempoExcedidoParaSalirDePatio')->everyFifteenMinutes();
         //        Envia mensajes de a unidades sin llegada para embarques
-        $schedule->command('command:UnidadesSinLLegarEmbarques')->everyMinute();
+        $schedule->command('command:UnidadesSinLLegarEmbarques')->everyThirtyMinutes();
 
         //        Envia mensaje de capacidad de patio superada al parámetro máximo
         $schedule->command('whatsapp:patiolleno')->everyTwoHours();

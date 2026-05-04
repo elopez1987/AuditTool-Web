@@ -148,14 +148,14 @@ class StorageSchedulleReceipt extends Model
     //    Filtros
     public function scopeWorkday($query, $workday)
     {
-        if (trim($workday) !== '') {
+        if (trim($workday) != '') {
             return $query->where('storageschedullereceipt.workday', '=', $workday);
         }
     }
 
     public function scopeShipment($query, $shipment)
     {
-        if (trim($shipment) !== '') {
+        if (trim($shipment) != '') {
             $query->where('storageschedullereceipt.shipmentid', '=', $shipment);
         }
     }

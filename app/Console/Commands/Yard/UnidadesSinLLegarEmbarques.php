@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands\Yard;
 
+use App\Models\Configuration\Parameters\SystemDetailParameter;
 use App\Models\Configuration\Warehouses\SystemWarehouse;
 use App\Models\Configuration\WhatsApp\SystemDetailWhatsApp;
 use App\Models\Shipments\OrderDeliverie;
@@ -25,7 +26,13 @@ class UnidadesSinLLegarEmbarques extends Command
     public function handle()
     {
         $client = new Client;
-        $url = 'https://api.1msg.io/HEI523482986/sendTemplate';
+
+        $configWhatsApp = SystemDetailParameter::where('parameterid', '=', 'PARAM-WTH')->first();
+        if (empty($config)) {
+            Log::error('MensajeAutorizacionSalidaUnidadJob:No se encuentra configurado parametro PARAM-WTH');
+
+            return;
+        }
 
         $warehouses = SystemWarehouse::where('statusid', 'E')
             ->select(['centerid', 'warehouseid', 'notificationsflags'])->get();
@@ -47,7 +54,7 @@ class UnidadesSinLLegarEmbarques extends Command
                 continue;
             }
 
-            $this->processShipments($shipments, $contacts, $client, $url);
+            $this->processShipments($shipments, $contacts, $client, $configWhatsApp);
         }
     }
 
@@ -58,12 +65,12 @@ class UnidadesSinLLegarEmbarques extends Command
         return ! empty($flags) && in_array('MWH-14', $flags);
     }
 
-    private function sendNotification($unit, $contact, Client $client, string $url)
+    private function sendNotification($unit, $contact, Client $client, $configWhatsApp)
     {
         try {
-            $data = $this->getBodyData($unit, $contact);
+            $data = $this->getBodyData($unit, $contact, $configWhatsApp);
 
-            $response = $client->post($url, [
+            $response = $client->post($configWhatsApp->value03, [
                 'json' => $data,
                 'headers' => ['Content-Type' => 'application/json'],
             ]);
@@ -84,7 +91,7 @@ class UnidadesSinLLegarEmbarques extends Command
         }
     }
 
-    private function processShipments($shipments, $contacts, Client $client, string $url)
+    private function processShipments($shipments, $contacts, Client $client, SystemDetailParameter $configWhatsApp)
     {
         foreach ($shipments as $unit) {
             if (now()->lte($unit->loadingdate)) {
@@ -92,7 +99,7 @@ class UnidadesSinLLegarEmbarques extends Command
             }
 
             foreach ($contacts as $contact) {
-                $this->sendNotification($unit, $contact, $client, $url);
+                $this->sendNotification($unit, $contact, $client, $configWhatsApp);
             }
         }
     }
@@ -102,18 +109,19 @@ class UnidadesSinLLegarEmbarques extends Command
         return OrderDeliverie::where('orderdeliveries.centerid', '=', $warehouse->centerid)
             ->where('orderdeliveries.warehouseid', '=', $warehouse->warehouseid)
             ->with(['customer:id,name,city', 'carrier:id,name'])
-            ->select(['orderdeliveries.shipmentid', 'orderdeliveries.loadingdate', 'orderdeliveries.customerid', 'orderdeliveries.carrierid'])
+            ->select(['orderdeliveries.shipmentid', 'orderdeliveries.loadingdate',
+                'orderdeliveries.customerid', 'orderdeliveries.carrierid'])
             ->whereNotIn('orderdeliveries.statusid', ['DH', 'CA'])
             ->whereNull('orderdeliveries.folionumber')
             ->select(['shipmentid', 'loadingdate', 'customerid', 'carrierid', 'id'])
             ->get();
     }
 
-    public function getBodyData($unit, $contact)
+    public function getBodyData($unit, $contact, $configWhatsApp)
     {
         return [
-            'token' => 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbnN0YW5jZUlkIjoiSEVJNTIzNDgyOTg2IiwidG9rZW4iOiJtaGVaTTh4cTQ2a2RadjZ0Q0NJeXZydGo4dkc3bnlOeCIsImlzcyI6IjFtc2cuaW8iLCJpYXQiOjE3NTU2MTU3NTZ9.PNJB7YjZbqerW-s-r8TOSTlPOS_6OddKHxVbwfsQ9GY',
-            'namespace' => '3686dca6_3e5f_4dc5_a838_74a7716b881c',
+            'token' => $configWhatsApp->value01,
+            'namespace' => $configWhatsApp->value02,
             'template' => 'unidadesinllegarembarquehenkelor',
             'language' => [
                 'policy' => 'deterministic',

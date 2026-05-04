@@ -122,27 +122,31 @@
 
     <div class="row" style="margin-top: 10px">
         <table class="border-none">
-            <th style="height: 10px;width: 50%;border-top: 1px solid black;">Ingreso de unidad: {{$receipt->folio() ? $receipt->folio->entrydate : ''}} </th>
-            <th style="width: 50%;border-top: 1px solid black;text-align: left">Proveedor: {{$receipt->provider ? $receipt->provider->name : ''}}</th>
-
-{{--            <th style="width: 19.8%;border-top: 1px solid black;border-bottom: 1px solid;">Hora de Ingreso a Almacén</th>--}}
-{{--            <th style="width: 10%;border-top: 1px solid black;border-bottom: 1px solid;"></th>--}}
+            <th style="height: 10px;width: 50%;border-top: 1px solid black;">Ingreso de
+                unidad: {{$receipt->folio() ? $receipt->folio->entrydate : ''}} </th>
+            <th style="width: 50%;border-top: 1px solid black;text-align: left">
+                Proveedor: {{$receipt->provider ? $receipt->provider->name : ''}}</th>
         </table>
     </div>
 
     <div class="row">
         <table class="border-none">
-            <th style="height: 10px;width: 33%;border-top: 0;">Operador : {{$receipt->folio ? $receipt->folio->operatorname : ''}}</th>
-            <th style="width: 33%;border-top: 0px;text-align: left">Placa de caja : {{$receipt->folio ? $receipt->folio->boxnumber : ''}}</th>
-            <th style="width: 33%;border-top: 0px;text-align: left">Cortina : {{$receipt->folio ? $receipt->folio->location->name : ''}}</th>
+            <th style="height: 10px;width: 33%;border-top: 0;">Operador
+                : {{$receipt->folio ? $receipt->folio->operatorname : ''}}</th>
+            <th style="width: 33%;border-top: 0px;text-align: left">Placa de caja
+                : {{$receipt->folio ? $receipt->folio->boxnumber : ''}}</th>
+            <th style="width: 33%;border-top: 0px;text-align: left">Cortina
+                : {{$receipt->folio ? $receipt->folio->location->name : ''}}</th>
         </table>
     </div>
 
 
     <div class="row">
         <table class="border-none">
-            <th style="border-top: 0px;width: 50%;height: 10px;">Linea de Transporte :  {{$receipt->folio ? $receipt->folio->carrier->name : ''}}</th>
-            <th style="border-top: 0px;text-align: left">Centro: {{$receipt->warehouse ? $receipt->warehouse->name : ''}} </th>
+            <th style="border-top: 0px;width: 50%;height: 10px;">Linea de Transporte
+                : {{$receipt->folio ? $receipt->folio->carrier->name : ''}}</th>
+            <th style="border-top: 0px;text-align: left">
+                Centro: {{$receipt->warehouse ? $receipt->warehouse->name : ''}} </th>
         </table>
     </div>
 
@@ -151,56 +155,25 @@
             <th class="border-none" style="text-align: center">Datos de la descarga</th>
         </table>
     </div>
-    <div class="row" >
+    <div class="row">
         <table>
-            <thead >
-                <tr>
-                    <th>Sku</th>
-                    <th>Descripción</th>
-                    <th>Lote</th>
-                    <th>Cantidad solicitada</th>
-                    <th>Cantidad verificada</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($stocks as $stock)
-                    <tr>
-                        <td>{{$stock->prtnum}}</td>
-                        <td>{{$stock->lngdsc}}</td>
-                        <td>{{$stock->expirecode}}</td>
-                        <td>{{$stock->quantitytrue}}</td>
-                        <td>{{$stock->totalescaneado}}</td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-
-
-    <div class="row" style="margin-top: 10px">
-        <table class="border-none">
-            <th class="border-none" style="text-align: center">Datos de contenedores</th>
-        </table>
-    </div>
-    <div class="row" >
-        <table>
-            <thead >
+            <thead>
             <tr>
                 <th>Sku</th>
                 <th>Descripción</th>
                 <th>Lote</th>
-                <th>Lpn</th>
-                <th>Cantidad</th>
+                <th>Cantidad solicitada</th>
+                <th>Cantidad verificada</th>
             </tr>
             </thead>
             <tbody>
-            @foreach($containers as $lpn)
+            @foreach($stocks as $stock)
                 <tr>
-                    <td>{{$lpn->partnumber ? $lpn->partnumber->prtnum : ''}}</td>
-                    <td>{{$lpn->partnumber ? $lpn->partnumber->lngdsc : ''}}</td>
-                    <td>{{$lpn->batch}}</td>
-                    <td>{{$lpn->lpnid}}</td>
-                    <td>{{$lpn->quantity}}</td>
+                    <td>{{$stock->prtnum}}</td>
+                    <td>{{$stock->lngdsc}}</td>
+                    <td>{{$stock->expirecode}}</td>
+                    <td>{{$stock->quantitytrue}}</td>
+                    <td>{{$stock->totalescaneado}}</td>
                 </tr>
             @endforeach
             </tbody>
@@ -208,68 +181,103 @@
     </div>
 
 
-    <div class="row" style="margin-top: 10px">
-        <table class="border-none">
-            <th class="border-none" style="text-align: center">Datos de incidencias</th>
-        </table>
-    </div>
-    <div class="row" >
-        <table>
-            <thead >
-            <tr>
-                <th>Sku</th>
-                <th>Descripción</th>
-                <th>Categoría</th>
-                <th>Subcategoría</th>
-                <th>Cantidad</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach($incidences as $incidence)
+    @if($containers->isNotEmpty())
+        <div class="row" style="margin-top: 10px">
+            <table class="border-none">
+                <th class="border-none" style="text-align: center">Datos de contenedores</th>
+            </table>
+        </div>
+        <div class="row">
+            <table>
+                <thead>
                 <tr>
-                    <td>{{$incidence->partnumber ? $incidence->partnumber->prtnum : ''}}</td>
-                    <td>{{$incidence->partnumber ? $incidence->partnumber->lngdsc : ''}}</td>
-                    <td>{{$incidence->categoryincidence ? $incidence->categoryincidence->description : ''}}</td>
-                    <td>{{$incidence->subcategoryincidence ? $incidence->subcategoryincidence->description : ''}}</td>
-                    <td>{{$incidence->quantity}}</td>
+                    <th>Sku</th>
+                    <th>Descripción</th>
+                    <th>Lote</th>
+                    <th>Lpn</th>
+                    <th>Cantidad</th>
                 </tr>
-            @endforeach
-            </tbody>
-        </table>
-    </div>
+                </thead>
+                <tbody>
+                @foreach($containers as $lpn)
+                    <tr>
+                        <td>{{$lpn->partnumber ? $lpn->partnumber->prtnum : ''}}</td>
+                        <td>{{$lpn->partnumber ? $lpn->partnumber->lngdsc : ''}}</td>
+                        <td>{{$lpn->batch}}</td>
+                        <td>{{$lpn->lpnid}}</td>
+                        <td>{{$lpn->quantity}}</td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
+    @endif
 
+    @if($incidences->isNotEmpty())
+        <div class="row" style="margin-top: 10px">
+            <table class="border-none">
+                <th class="border-none" style="text-align: center">Datos de incidencias</th>
+            </table>
+        </div>
+        <div class="row">
+            <table>
+                <thead>
+                <tr>
+                    <th>Sku</th>
+                    <th>Descripción</th>
+                    <th>Categoría</th>
+                    <th>Subcategoría</th>
+                    <th>Cantidad</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach($incidences as $incidence)
+                    <tr>
+                        <td>{{$incidence->partnumber ? $incidence->partnumber->prtnum : ''}}</td>
+                        <td>{{$incidence->partnumber ? $incidence->partnumber->lngdsc : ''}}</td>
+                        <td>{{$incidence->categoryincidence ? $incidence->categoryincidence->description : ''}}</td>
+                        <td>{{$incidence->subcategoryincidence ? $incidence->subcategoryincidence->description : ''}}</td>
+                        <td>{{$incidence->quantity}}</td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
+    @endif
 
     {{--    Fotos--}}
-    <div class="row" style="margin-top: 20px;margin-bottom: 20px">
-        <table class="border-none">
-            <th class="border-none" style="text-align: center">Fotos de Incidencias</th>
-        </table>
-    </div>
-    <div class="row" >
-        @if ($images->isNotEmpty())
+    @if ($images->isNotEmpty())
+        <div class="row" style="margin-top: 20px;margin-bottom: 20px">
+            <table class="border-none">
+                <th class="border-none" style="text-align: center">Fotos de Incidencias</th>
+            </table>
+        </div>
+        <div class="row">
             @foreach($images as $image)
                 @if($image->auxiliary01 == 'INC')
-                    <img src='{{asset('storage/' . $image->path)}}' style="width: 200px;height:150px;margin-top: 20px;margin-left: 10px;margin-right: 10px;border: 1px solid #cfdd01 !important">
+                    <img src='{{asset('storage/' . $image->path)}}'
+                         style="width: 200px;height:150px;margin-top: 20px;margin-left: 10px;margin-right: 10px;border: 1px solid #cfdd01 !important">
                 @endif
             @endforeach
-        @endif
-    </div>
+        </div>
+    @endif
 
 
-    <div class="row" style="margin-top: 10px;margin-bottom: 20px">
-        <table class="border-none">
-            <th class="border-none" style="text-align: center">Fotos de Descarga</th>
-        </table>
-    </div>
-    <div class="row" >
-        @if ($images->isNotEmpty())
+    @if ($images->isNotEmpty())
+        <div class="row" style="margin-top: 10px;margin-bottom: 20px">
+            <table class="border-none">
+                <th class="border-none" style="text-align: center">Fotos de Descarga</th>
+            </table>
+        </div>
+        <div class="row">
             @foreach($images as $image)
                 @if($image->auxiliary01 == 'DES')
-                    <img src='{{asset('storage/' . $image->path)}}' style="width: 200px;height:150px;margin-top: 20px;margin-left: 10px;margin-right: 10px;border: 1px solid #cfdd01 !important">
+                    <img src='{{asset('storage/' . $image->path)}}'
+                         style="width: 200px;height:150px;margin-top: 20px;margin-left: 10px;margin-right: 10px;border: 1px solid #cfdd01 !important">
                 @endif
             @endforeach
-        @endif
-    </div>
+        </div>
+    @endif
 
 
     <div class="row" style="margin-top: 50px ">

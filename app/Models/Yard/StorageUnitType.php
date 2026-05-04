@@ -113,7 +113,7 @@ class StorageUnitType extends Model
     public function scopeStatus($query, $statusid)
     {
         if (trim($statusid) != '') {
-            $query->where('statusid', '=', $statusid);
+            $query->where('storageunittypes.statusid', '=', $statusid);
         }
     }
 }
