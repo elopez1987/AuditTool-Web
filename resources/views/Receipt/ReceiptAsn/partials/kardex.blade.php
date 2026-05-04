@@ -255,7 +255,7 @@
         <div class="row">
             @foreach($images as $image)
                 @if($image->auxiliary01 == 'INC')
-                    <img src='{{asset('storage/' . $image->path)}}'
+                    <img src='{{storage_path('app/' . $image->path)}}'
                          style="width: 200px;height:150px;margin-top: 20px;margin-left: 10px;margin-right: 10px;border: 1px solid #cfdd01 !important">
                 @endif
             @endforeach
@@ -272,7 +272,7 @@
         <div class="row">
             @foreach($images as $image)
                 @if($image->auxiliary01 == 'DES')
-                    <img src='{{asset('storage/' . $image->path)}}'
+                    <img src='{{storage_path('app/' . $image->path)}}'
                          style="width: 200px;height:150px;margin-top: 20px;margin-left: 10px;margin-right: 10px;border: 1px solid #cfdd01 !important">
                 @endif
             @endforeach
