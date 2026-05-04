@@ -42,135 +42,70 @@ trait PrintFormat
         // Henkel One Roof
         if ($receiptunit->centerid === 'HENKELTOL01') {
             $folio = StorageFolioClient::where('folionumber', $receiptunit->id)->value('folioclient');
-            if ($receiptunit->razonstatusid === '1') {
-                $fortmat = 'Yards.ReceiptUnits.InvoiceFormats.Henkel.InvoiceHenkel';
-            } else {
-                $fortmat = 'Yards.ReceiptUnits.InvoiceFormats.Henkel.InvoiceHenkelReceipt';
-            }
-            $pdf = PDF::setOptions([
-                'isRemoteEnabled' => true,
-                'chroot' => [
-                    realpath(base_path()),
-                    realpath($pathImage->value01),
-                ],
-                'httpContext' => stream_context_create([
-                    'ssl' => [
-                        'verify_peer' => false,
-                        'verify_peer_name' => false,
-                        'allow_self_signed' => true,
-                    ],
-                ]),
-            ])->loadView($fortmat, compact('receiptunit', 'verified', 'folio'));
+            $format = $receiptunit->razonstatusid === '1'
+                ? 'Yards.ReceiptUnits.InvoiceFormats.Henkel.InvoiceHenkel'
+                : 'Yards.ReceiptUnits.InvoiceFormats.Henkel.InvoiceHenkelReceipt';
 
-            return $this->printFormat($receiptunit, $pdf);
+            return $this->printFormat($receiptunit, $this->buildPdf($format, $pathImage, compact('receiptunit', 'verified', 'folio')));
         }
 
-        //  Planta Henkel
+        // Planta Henkel
         if ($receiptunit->centerid === 'PLANHENKTOL') {
-            $fortmat = 'Yards.ReceiptUnits.InvoiceFormats.Henkel.InvoicePlantHenkel';
-            $pdf = PDF::setOptions([
-                'isRemoteEnabled' => true,
-                'chroot' => [
-                    realpath(base_path()),
-                    realpath($pathImage->value01),
-                ],
-                'httpContext' => stream_context_create([
-                    'ssl' => [
-                        'verify_peer' => false,
-                        'verify_peer_name' => false,
-                        'allow_self_signed' => true,
-                    ],
-                ]),
-            ])->loadView($fortmat, compact('receiptunit', 'verified'));
+            $format = 'Yards.ReceiptUnits.InvoiceFormats.Henkel.InvoicePlantHenkel';
 
-            return $this->printFormat($receiptunit, $pdf);
+            return $this->printFormat($receiptunit, $this->buildPdf($format, $pathImage, compact('receiptunit', 'verified')));
         }
 
-        //	Kraft
+        // Kraft
         if ($receiptunit->centerid === 'AVIOR-INT') {
-            if ($receiptunit->unittype->auxiliary01 === 'NAC') {
-                $fortmat = 'Yards.ReceiptUnits.InvoiceFormats.Kraft.Nacional';
-            }
-            if ($receiptunit->unittype->auxiliary01 === 'EXP') {
-                $fortmat = 'Yards.ReceiptUnits.InvoiceFormats.Kraft.Exportacion';
-            }
-            $pdf = PDF::setOptions([
-                'isRemoteEnabled' => true,
-                'chroot' => [
-                    realpath(base_path()),
-                    realpath($pathImage->value01),
-                ],
-                'httpContext' => stream_context_create([
-                    'ssl' => [
-                        'verify_peer' => false,
-                        'verify_peer_name' => false,
-                        'allow_self_signed' => true,
-                    ],
-                ]),
-            ])->loadView($fortmat, compact('receiptunit', 'verified'));
+            $format = $receiptunit->unittype->auxiliary01 === 'EXP'
+                ? 'Yards.ReceiptUnits.InvoiceFormats.Kraft.Exportacion'
+                : 'Yards.ReceiptUnits.InvoiceFormats.Kraft.Nacional';
 
-            return $this->printFormat($receiptunit, $pdf);
+            return $this->printFormat($receiptunit, $this->buildPdf($format, $pathImage, compact('receiptunit', 'verified')));
         }
 
         // Barry
-        if ($receiptunit->centerid == 'BARRYTOL') {
-            $fortmat = 'Yards.ReceiptUnits.InvoiceFormats.Barry.InvoiceBarry';
-            $pdf = PDF::setOptions([
-                'isRemoteEnabled' => true,
-                'chroot' => [
-                    realpath(base_path()),
-                    realpath($pathImage->value01),
-                ],
-                'httpContext' => stream_context_create([
-                    'ssl' => [
-                        'verify_peer' => false,
-                        'verify_peer_name' => false,
-                        'allow_self_signed' => true,
-                    ],
-                ]),
-            ])->loadView($fortmat, compact('receiptunit', 'verified', 'comment'));
+        if ($receiptunit->centerid === 'BARRYTOL') {
+            $format = 'Yards.ReceiptUnits.InvoiceFormats.Barry.InvoiceBarry';
 
-            return $this->printFormat($receiptunit, $pdf);
-
+            return $this->printFormat($receiptunit, $this->buildPdf($format, $pathImage, compact('receiptunit', 'verified', 'comment')));
         }
 
-        //  Impresiones Estandar
+        // Impresiones Estandar
         if ($receiptunit->center->formatinvoice === 'Estandar') {
-            $fortmat = 'Yards.ReceiptUnits.InvoiceFormats.General.Estandar';
-            $pdf = PDF::setOptions([
-                'isRemoteEnabled' => true,
-                'chroot' => [
-                    realpath(base_path()),
-                    realpath($pathImage->value01),
+            $format = 'Yards.ReceiptUnits.InvoiceFormats.General.Estandar';
+
+            return $this->printFormat($receiptunit, $this->buildPdf($format, $pathImage, compact('receiptunit', 'verified', 'logo', 'comment', 'firma')));
+        }
+
+        $format = 'Yards.ReceiptUnits.InvoiceFormats.General.Invoice';
+
+        return $this->printFormat($receiptunit, $this->buildPdf($format, $pathImage, compact('receiptunit', 'verified', 'logo', 'comment', 'firma'), landscape: true));
+    }
+
+    private function buildPdf(string $format, $pathImage, array $viewData, bool $landscape = false)
+    {
+        $pdf = PDF::setOptions([
+            'isRemoteEnabled' => true,
+            'chroot' => [
+                realpath(base_path()),
+                realpath($pathImage->value01),
+            ],
+            'httpContext' => stream_context_create([
+                'ssl' => [
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                    'allow_self_signed' => true,
                 ],
-                'httpContext' => stream_context_create([
-                    'ssl' => [
-                        'verify_peer' => false,
-                        'verify_peer_name' => false,
-                        'allow_self_signed' => true,
-                    ],
-                ]),
-            ])->loadView($fortmat, compact('receiptunit', 'verified', 'logo', 'comment', 'firma'));
-        } else {
-            $fortmat = 'Yards.ReceiptUnits.InvoiceFormats.General.Invoice';
-            $pdf = PDF::setOptions([
-                'isRemoteEnabled' => true,
-                'chroot' => [
-                    realpath(base_path()),
-                    realpath($pathImage->value01),
-                ],
-                'httpContext' => stream_context_create([
-                    'ssl' => [
-                        'verify_peer' => false,
-                        'verify_peer_name' => false,
-                        'allow_self_signed' => true,
-                    ],
-                ]),
-            ])->loadView($fortmat, compact('receiptunit', 'verified', 'logo', 'comment', 'firma'));
+            ]),
+        ])->loadView($format, $viewData);
+
+        if ($landscape) {
             $pdf->setPaper('A4', 'landscape');
         }
 
-        return $this->printFormat($receiptunit, $pdf);
+        return $pdf;
     }
 
     private function printFormat($receiptunit, $pdf)

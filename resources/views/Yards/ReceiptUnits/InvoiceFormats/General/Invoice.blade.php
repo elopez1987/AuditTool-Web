@@ -29,7 +29,7 @@
         .container {
             padding: 0px;
             border: 0px;
-            width: 720px;
+            width: 1056px;
             height: 612px;
             font-family: 'Roboto Condensed', sans-serif !important;
         }
