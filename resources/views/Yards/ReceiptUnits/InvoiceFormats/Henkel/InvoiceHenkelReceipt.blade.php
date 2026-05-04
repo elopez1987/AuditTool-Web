@@ -67,7 +67,7 @@
     <div class="row">
         <table>
             <th style="width: 120px;text-align: center">
-                <img src="{{ public_path('img/henkel.png') }}" alt="" class="logo" style="width: 100px;height: 60px;">
+                <img src="img/henkel.png" alt="" class="logo" style="width: 100px;height: 60px;">
             </th>
             <th>
                 <div class="row">
