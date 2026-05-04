@@ -149,7 +149,7 @@ class StorageTask extends Model
 
     public function scopeForStatusTask($query, $statusid)
     {
-        if (trim($statusid) !== '') {
+        if (trim($statusid) != '') {
             $query->where('storagetasks.statusid', $statusid);
         } else {
             $query->where('storagetasks.statusid', 'PD');

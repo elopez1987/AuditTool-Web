@@ -82,7 +82,7 @@
     <div class="row">
         <table>
             <th style="width: 33%;">
-                <img src="{{storage_path('app/' . $data->center->auxiliary04)}}" alt="" style="height: 65px;width: 150px;" class="logo">
+{{--                <img src="{{storage_path('app/' . $data->center->auxiliary04)}}" alt="" style="height: 65px;width: 150px;" class="logo">--}}
             </th>
             <th style="width: 33%;">
                 <h3 class='formato'>
@@ -185,6 +185,33 @@
             </th>
         </table>
     </div>
+
+    @if($data->transport)
+        <div class="row">
+            <table style="border: 1px solid black">
+                <tbody>
+                <tr>
+                    <th style="width: 50%">
+                        @php
+                            $outPhotoPath = str_starts_with($data->transport->carrier->auxiliary04, 'public/')
+                                ? storage_path('app/' . $data->transport->carrier->auxiliary04)
+                                : storage_path('app/public/' . $data->transport->carrier->auxiliary04);
+                        @endphp
+                        @if(file_exists($outPhotoPath))
+                            <img src="{{ $outPhotoPath }}" style="width: 300px; height: 200px; margin: 5px;">
+                        @endif
+                    </th>
+                    <th style="width: 50%">
+                        @if($data->transport->carrier->auxiliary05 != null)
+                            <img src='{{storage_path('app/' . $data->transport->carrier->auxiliary05)}}' alt=""
+                                 style="height: 200px;max-width: 200px">
+                        @endif
+                    </th>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    @endif
 
     <h5 class='nota' style="margin-top:50px">
         La información registrada en este documento es responsabilidad de la linea de transporte y quien la comparta.

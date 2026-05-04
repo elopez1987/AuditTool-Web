@@ -2,6 +2,8 @@
 
 namespace App\Observers;
 
+use App\Jobs\Recibos\SendEmailToProviderJob;
+use App\Models\Configuration\Warehouses\SystemWarehouse;
 use App\Models\Receipt\ReceiptAsn;
 use App\Models\Shipments\ShipmentTransport\StorageShipmentTransport;
 
@@ -16,6 +18,12 @@ class ReceiptAsnObserver
             'carrierid' => $receiptAsn->carrierid,
             'auxiliary04' => 'ReceiptAsn',
         ]);
+
+        $parameterNotificationWarehouse = SystemWarehouse::whereWarehouseid($receiptAsn->warehouseid)->value('notificationsflags');
+        if (! empty($parameterNotificationWarehouse) && in_array('MWH-18', (array) $parameterNotificationWarehouse)) {
+            SendEmailToProviderJob::dispatch($receiptAsn->id)->onQueue('yms-web');
+        }
+
     }
 
     public function updated(ReceiptAsn $receiptAsn): void {}

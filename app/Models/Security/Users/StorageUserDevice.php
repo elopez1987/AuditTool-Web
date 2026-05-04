@@ -57,7 +57,7 @@ class StorageUserDevice extends Model
 
     public function scopeForSerialNumber($query, $serialnumber)
     {
-        if (trim($serialnumber) !== '') {
+        if (trim($serialnumber) != '') {
             $query->where('securitydeviceforuser.serialnumber', $serialnumber);
         }
     }

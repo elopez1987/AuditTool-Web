@@ -237,13 +237,13 @@
             <tr>
                 <th style="width: 50%">
                     @if($incidence->order->carrier->auxiliary04 != null)
-                        <img src='{{asset('storage/' . $incidence->order->carrier->auxiliary04)}}' alt=""
+                        <img src='{{storage_path('app/' . $incidence->order->carrier->auxiliary04)}}' alt=""
                              style="max-width: 150px;height: 150px">
                     @endif
                 </th>
                 <th style="width: 50%">
                     @if($incidence->order->carrier->auxiliary05 != null)
-                        <img src='{{asset('storage/' . $incidence->order->carrier->auxiliary05)}}' alt=""
+                        <img src='{{storage_path('app/' . $incidence->order->carrier->auxiliary05)}}' alt=""
                              style="height: 150px;max-width: 150px">
                     @endif
                 </th>

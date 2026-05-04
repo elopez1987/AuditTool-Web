@@ -140,9 +140,9 @@
                         <th style="height: 20px;text-align: left;font-size: 10px;font-weight: 400;">{{$detail->description}}</th>
                         <th style="height: 20px;">
                             @if($detail->typeid == 'TP-01')
-                                <img src="{{asset('/ico/mtnormal.png')}}" alt="" class="img-16">
+                                <img src="ico/mtnormal.png" alt="" class="img-16">
                             @else
-                                <img src="{{asset('ico/mtcritico.png')}}" alt="" class="img-16">
+                                <img src="ico/mtcritico.png" alt="" class="img-16">
                             @endif
                         </th>
                         <th style="height: 20px;text-align: center;font-size: 11px;font-weight: 400;">
@@ -169,13 +169,13 @@
                 </tr>
                 <tr>
                     <th style="height: 100px;width: 33%;text-align: center;background-color: white;border-right: 0;">
-                        <img src="{{asset('./img/motaizq.png')}}" alt="" width="80%">
+                        <img src="img/motaizq.png" alt="" width="80%">
                     </th>
                     <th style="height: 100px;width: 33%;text-align: center;background-color: white;border-left: 0;border-right: 0;">
-                        <img src="/img/motader.png" alt="" width="80%">
+                        <img src="img/motader.png" alt="" width="80%">
                     </th>
                     <th style="height: 100px;width: 33%;text-align: center;background-color: white;border-left: 0;">
-                        <img src="{{storage_path('/app/' . 'img/riesgosmonta.png')}}" alt="" width="80%">
+                        <img src="img/riesgosmonta.png" alt="" width="80%">
                     </th>
                 </tr>
             </table>

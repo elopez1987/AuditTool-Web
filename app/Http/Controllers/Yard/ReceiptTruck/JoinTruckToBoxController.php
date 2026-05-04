@@ -10,6 +10,7 @@ use App\Traits\Web\Yard\ReceiptUnit\QueryReceiptUnits;
 use DB;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Facades\DataTables;
 
 class JoinTruckToBoxController extends BaseController
@@ -47,38 +48,38 @@ class JoinTruckToBoxController extends BaseController
     {
         DB::beginTransaction();
         try {
+
             $truck = ReceiptTruck::findOrFail($request['truckid']);
-            $unit = ReceiptUnit::searchForBarcodeTruck($truck->id);
-            if (! empty($unit)) {
-                self::updateUnitForAssingTruck($unit);
+
+            $unitStock = ReceiptUnit::searchForBarcodeTruck($truck->id);
+            if (! empty($unitStock)) {
+                $unitStock->update([
+                    'auxiliary01' => null,
+                    'foliotruck' => null, ]);
+
             }
-            $newAssign = self::updateUnitForNewTruck($id, $truck);
+            $newAssign = tap(
+                ReceiptUnit::controlAccessUser()
+                    ->where('receiptunits.id', $id)
+                    ->firstOrFail(),
+            )->update(['foliotruck' => $truck->id]);
+
             StorageUnitTrace::createTraceUnit($newAssign, 25);
             DB::commit();
 
             return $this->redirectBackSuccess();
         } catch (Exception $e) {
-            $error = $e->getMessage();
+
             DB::rollback();
 
-            return $this->errorResponse('No se pudieron guardar los datos !!' . $error);
+            Log::error('Error al guardar datos', [
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            return $this->errorResponse('No se pudieron guardar los datos !!');
         }
-    }
-
-    public function updateUnitForNewTruck($id, $truck)
-    {
-        $newAssign = ReceiptUnit::findOrFail($id);
-        $newAssign->auxiliary01 = $truck->barcode;
-        $newAssign->foliotruck = $truck->id;
-        $newAssign->save();
-
-        return $newAssign;
-    }
-
-    public static function updateUnitForAssingTruck($unit)
-    {
-        $unit->auxiliary01 = null;
-        $unit->foliotruck = null;
-        $unit->save();
     }
 }

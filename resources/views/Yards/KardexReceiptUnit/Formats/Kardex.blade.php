@@ -90,7 +90,8 @@
 <div class="container">
     <div class="row" style="margin-top: 5px">
         <table class="border-none">
-            <th style="height: 20px;width: 25%;"><img src="img/taxion-logistic.png" alt="" style="height: 60px;width: 180px;">
+            <th style="height: 20px;width: 25%;">
+                <img src="img/taxion-logistic.png" alt="" style="height: 60px;width: 180px;">
             </th>
             <th style="height: 20px;width: 50%;text-align: center;font-size: 14px;">
                 KARDEX DE UNIDAD - {{$receiptunit->id}}

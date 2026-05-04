@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Receipt;
 
 use App\Http\Controllers\BaseController;
+use App\Models\Configuration\Parameters\SystemDetailParameter;
 use App\Models\General\EvidencePhoto;
 use App\Models\General\StorageComment;
 use App\Models\Receipt\ReceiptAsn;
@@ -68,6 +69,7 @@ class EventReceiptController extends BaseController
 
     public function kardexpdf($id)
     {
+        $pathImage = SystemDetailParameter::where('parameterid', '=', 'PARAM-IMG')->first();
         $receipt = ReceiptAsn::controlAccessUser()->where('receiptasn.id', $id)
             ->leftJoin('systemstatus as se', 'receiptasn.auxiliary04', '=', 'se.statusid')
             ->leftJoin('users as u1', 'receiptasn.auxiliary08', '=', 'u1.username')
@@ -82,7 +84,21 @@ class EventReceiptController extends BaseController
             ->where('receiptid', $id)->get();
         $stocks = $this->getTotalsReceipt($id);
         $containers = ReceiptContainer::getContainersForReceipt($id);
-        $pdf = PDF::loadView('Receipt.ReceiptAsn.partials.kardex', compact('receipt', 'checklistAsn', 'images', 'stocks', 'incidences', 'containers'));
+        $pdf = PDF::setOptions([
+            'isRemoteEnabled' => true,
+            'chroot' => [
+                realpath(base_path()),
+                realpath($pathImage->value01),
+            ],
+            'httpContext' => stream_context_create([
+                'ssl' => [
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                    'allow_self_signed' => true,
+                ],
+            ]),
+        ])->loadView('Receipt.ReceiptAsn.partials.kardex',
+            compact('receipt', 'checklistAsn', 'images', 'stocks', 'incidences', 'containers'));
 
         return $pdf->download('Kardex de descarga - ' . $receipt->id . '.pdf');
     }

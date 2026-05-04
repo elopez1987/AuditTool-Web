@@ -119,7 +119,7 @@ class ReceiptProvider extends Model
 
     public function scopeWarehouse($query, $warehouseid)
     {
-        if (trim($warehouseid) !== '') {
+        if (trim($warehouseid) != '') {
             $query->where('receiptproviders.warehouseid', '=', $warehouseid);
         }
     }
