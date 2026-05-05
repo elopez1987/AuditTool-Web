@@ -3,15 +3,15 @@
 @section('content')
 
     <main>
-        {{--        <h1 class="name-menu">Embarques</h1>--}}
+        <h5 class="name-menu"> Monitoreo</h5>
         <div class="container__box">
             @can('orderdeliveries.index')
                 <a href="{{route('orderdeliveries.index')}}">
                     <div class="box" data-toggle="tooltip" data-placement="top"
                          title="Modulo para administrar los embarques, permite ver el Kardex de eventos, evidencias fotograficas y documental.">
                         <i class="lni lni-calendar"></i>
-                        <h5>Programador</h5>
-                        <h4>Programador</h4>
+                        <h5>Planeación</h5>
+                        <h4>Planeación</h4>
                     </div>
                 </a>
             @endcan
@@ -35,6 +35,16 @@
                     </div>
                 </a>
             @endcan
+                @can('monitoroperation.index')
+                    <a href="{{route('monitoroperation.index')}}">
+                        <div class="box" data-toggle="tooltip" data-placement="top"
+                             title="Realice su seguimiento de eventos logisticos de cada embarque, proceso de verificación,etc.">
+                            <i class="lni lni-display-alt"></i>
+                            <h5>Monitor Operativo</h5>
+                            <h4>Monitor Operativo</h4>
+                        </div>
+                    </a>
+                @endcan
             @can('monitoranalistatrafico.index')
                 <a href="{{route('monitor-customer-service')}}">
                     <div class="box" data-toggle="tooltip" data-placement="top"
@@ -55,16 +65,7 @@
                     </div>
                 </a>
             @endcan
-            @can('monitoroperation.index')
-                <a href="{{route('monitoroperation.index')}}">
-                    <div class="box" data-toggle="tooltip" data-placement="top"
-                         title="Realice su seguimiento de eventos logisticos de cada embarque, proceso de verificación,etc.">
-                        <i class="lni lni-display-alt"></i>
-                        <h5>Monitor Operativo</h5>
-                        <h4>Monitor Operativo</h4>
-                    </div>
-                </a>
-            @endcan
+
 
             @can('ordermonitor.index')
                 <a href="{{route('ordermonitor.index')}}">
@@ -106,16 +107,7 @@
                     </div>
                 </a>
             @endcan
-            @can('storagedoorstage.index')
-                <a href="{{route('storagedoorstage.index')}}">
-                    <div class="box" data-toggle="tooltip" data-placement="top"
-                         title="Catálogo de categorias de incidencia en los modulos de recibo y embarques.">
-                        <i class="lni lni-layers"></i>
-                        <h5>Cortinas / Stages</h5>
-                        <h4>Cortinas / Stages</h4>
-                    </div>
-                </a>
-            @endcan
+
             @can('edilogs.index')
                 <a href="{{route('edilogs.index')}}">
                     <div class="box" data-toggle="tooltip" data-placement="top"
@@ -126,86 +118,8 @@
                     </div>
                 </a>
             @endcan
-            @can('storageincidencesjourneys.index')
-                <a href="{{route('storageincidencesjourneys.index')}}">
-                    <div class="box" data-toggle="tooltip" data-placement="top" title="Módulo para registrar las incidencias en sus entregas y
-                     generar el folio de devolución al centro de distribución.">
-                        <i class="lni lni-delivery"></i>
-                        <h5>Reportar Inc.</h5>
-                        <h4>Reportar Inc.</h4>
-                    </div>
-                </a>
-            @endcan
-            @can('followupofincidences.index')
-                <a href="{{route('followupofincidences.index')}}">
-                    <div class="box" data-toggle="tooltip" data-placement="top" title="Módulo para dar seguimiento a las incidencias reportadas por las lineas de transporte, podrá generar su
-                    folio de entrega de la devolución.">
-                        <i class="lni lni-chromecast"></i>
-                        <h5>Seguimiento Inc.</h5>
-                        <h4>Seguimiento Inc.</h4>
-                    </div>
-                </a>
-            @endcan
-            @can('monitorpods.index')
-                <a href="{{route('monitorpods.index')}}">
-                    <div class="box" data-toggle="tooltip" data-placement="top"
-                         title="Módulo para subir sus evidencias de entrega con el cliente final.">
-                        <i class="lni lni-invest-monitor"></i>
-                        <h5>Monitor PODs</h5>
-                        <h4>Monitor PODs</h4>
-                    </div>
-                </a>
-            @endcan
-            @can('storagekeyincidencesopetations.index')
-                <a href="{{route('storagekeyincidencesopetations.index')}}">
-                    <div class="box" data-toggle="tooltip" data-placement="top" title="Módulo para dar seguimiento a las incidencias reportadas por las lineas de transporte, podrá generar su
-                    folio de entrega de la devolución.">
-                        <i class="lni lni-key"></i>
-                        <h5>Firmas Almacen</h5>
-                        <h4>Firmas Almacen</h4>
-                    </div>
-                </a>
-            @endcan
-            @can('storagekeyincidencestransport.index')
-                <a href="{{route('storagekeyincidencestransport.index')}}">
-                    <div class="box" data-toggle="tooltip" data-placement="top" title="Módulo para dar seguimiento a las incidencias reportadas por las lineas de transporte, podrá generar su
-                    folio de entrega de la devolución.">
-                        <i class="lni lni-files"></i>
-                        <h5>Firmas Transporte</h5>
-                        <h4>Firmas Transporte</h4>
-                    </div>
-                </a>
-            @endcan
-            @can('storagescheduleinverse.index')
-                <a href="{{route('storagescheduleinverse.index')}}">
-                    <div class="box" data-toggle="tooltip" data-placement="top" title="Realice el seguimiento de cada embarque con incidencia registrada, desde la generación de la cita hasta la entrega
-                    del produto por parte de la linea de transporte (PMV).">
-                        <i class="lni lni-travel"></i>
-                        <h5>Logistica Inversa</h5>
-                        <h4>Logistica Inversa</h4>
-                    </div>
-                </a>
-            @endcan
-            @can('scheduleinverse.index')
-                <a href="{{route('scheduleinverse.index')}}">
-                    <div class="box" data-toggle="tooltip" data-placement="top"
-                         title="Creación de periodos de horario de devoluciones.">
-                        <i class="lni lni-dashboard"></i>
-                        <h5>Horario</h5>
-                        <h4>Horario</h4>
-                    </div>
-                </a>
-            @endcan
-            @can('reserveschedulleinverse.index')
-                <a href="{{route('reserveschedulleinverse.index')}}">
-                    <div class="box" data-toggle="tooltip" data-placement="top"
-                         title="Creación de periodos de horario de devoluciones.">
-                        <i class="lni lni-calendar"></i>
-                        <h5>Generar Cita</h5>
-                        <h4>Generar Cita</h4>
-                    </div>
-                </a>
-            @endcan
+
+
             @can('shipmentstatustransport')
                 <a href="{{route('shipmentstatustransport')}}">
                     <div class="box" data-toggle="tooltip" data-placement="top"
@@ -265,35 +179,13 @@
                     </div>
                 </a>
             @endcan
-            @can('ordercustomers.index')
-                <a href="{{route('ordercustomers.index')}}">
-                    <div class="box" data-toggle="tooltip" data-placement="top"
-                         title="Catálogo de clientes y sus datos generales.">
-                        <i class="lni lni-customer"></i>
-                        <h5>Clientes</h5>
-                        <h4>Clientes</h4>
-                    </div>
-                </a>
-            @endcan
-            @can('shipmenttypes.index')
-                <a href="{{route('shipmenttypes.index')}}">
-                    <div class="box" data-toggle="tooltip" data-placement="top" title="Catálogo de tipos de embarques.">
-                        <i class="lni lni-menu"></i>
-                        <h5>Tipos de Emb.</h5>
-                        <h4>Tipos de Emb.</h4>
-                    </div>
-                </a>
-            @endcan
-            @can('storagecategoryincidences.index')
-                <a href="{{route('storagecategoryincidences.index')}}">
-                    <div class="box" data-toggle="tooltip" data-placement="top"
-                         title="Catálogo de categorias de incidencia en los modulos de recibo y embarques.">
-                        <i class="lni lni-menu"></i>
-                        <h5>C. de Incidencia</h5>
-                        <h4>C. de Incidencia</h4>
-                    </div>
-                </a>
-            @endcan
+
+
+        </div>
+
+        @can('storageevidenceprocess.index')
+        <h5 class="name-menu"> Embarques</h5>
+        <div class="container__box">
             @can('storageevidenceprocess.index')
                 <a href="{{route('storageevidenceprocess.index')}}">
                     <div class="box">
@@ -342,6 +234,137 @@
                     </div>
                 </a>
             @endcan
+        </div>
+        @endcan
+
+
+        <h5 class="name-menu"> Logistica Inversa</h5>
+        <div class="container__box">
+
+            @can('storageincidencesjourneys.index')
+                <a href="{{route('storageincidencesjourneys.index')}}">
+                    <div class="box" data-toggle="tooltip" data-placement="top" title="Módulo para registrar las incidencias en sus entregas y
+                     generar el folio de devolución al centro de distribución.">
+                        <i class="lni lni-delivery"></i>
+                        <h5>Reportar Inc.</h5>
+                        <h4>Reportar Inc.</h4>
+                    </div>
+                </a>
+            @endcan
+            @can('followupofincidences.index')
+                <a href="{{route('followupofincidences.index')}}">
+                    <div class="box" data-toggle="tooltip" data-placement="top" title="Módulo para dar seguimiento a las incidencias reportadas por las lineas de transporte, podrá generar su
+                    folio de entrega de la devolución.">
+                        <i class="lni lni-chromecast"></i>
+                        <h5>Seguimiento Inc.</h5>
+                        <h4>Seguimiento Inc.</h4>
+                    </div>
+                </a>
+            @endcan
+            @can('monitorpods.index')
+                <a href="{{route('monitorpods.index')}}">
+                    <div class="box" data-toggle="tooltip" data-placement="top"
+                         title="Módulo para subir sus evidencias de entrega con el cliente final.">
+                        <i class="lni lni-invest-monitor"></i>
+                        <h5>Monitor PODs</h5>
+                        <h4>Monitor PODs</h4>
+                    </div>
+                </a>
+            @endcan
+
+            @can('storagekeyincidencesopetations.index')
+                <a href="{{route('storagekeyincidencesopetations.index')}}">
+                    <div class="box" data-toggle="tooltip" data-placement="top" title="Módulo para dar seguimiento a las incidencias reportadas por las lineas de transporte, podrá generar su
+                    folio de entrega de la devolución.">
+                        <i class="lni lni-key"></i>
+                        <h5>Firmas Almacen</h5>
+                        <h4>Firmas Almacen</h4>
+                    </div>
+                </a>
+            @endcan
+            @can('storagekeyincidencestransport.index')
+                <a href="{{route('storagekeyincidencestransport.index')}}">
+                    <div class="box" data-toggle="tooltip" data-placement="top" title="Módulo para dar seguimiento a las incidencias reportadas por las lineas de transporte, podrá generar su
+                    folio de entrega de la devolución.">
+                        <i class="lni lni-files"></i>
+                        <h5>Firmas Transporte</h5>
+                        <h4>Firmas Transporte</h4>
+                    </div>
+                </a>
+            @endcan
+            @can('storagescheduleinverse.index')
+                <a href="{{route('storagescheduleinverse.index')}}">
+                    <div class="box" data-toggle="tooltip" data-placement="top" title="Realice el seguimiento de cada embarque con incidencia registrada, desde la generación de la cita hasta la entrega
+                    del produto por parte de la linea de transporte (PMV).">
+                        <i class="lni lni-travel"></i>
+                        <h5>Logistica Inversa</h5>
+                        <h4>Logistica Inversa</h4>
+                    </div>
+                </a>
+            @endcan
+            @can('scheduleinverse.index')
+                <a href="{{route('scheduleinverse.index')}}">
+                    <div class="box" data-toggle="tooltip" data-placement="top"
+                         title="Creación de periodos de horario de devoluciones.">
+                        <i class="lni lni-dashboard"></i>
+                        <h5>Horario</h5>
+                        <h4>Horario</h4>
+                    </div>
+                </a>
+            @endcan
+            @can('reserveschedulleinverse.index')
+                <a href="{{route('reserveschedulleinverse.index')}}">
+                    <div class="box" data-toggle="tooltip" data-placement="top"
+                         title="Creación de periodos de horario de devoluciones.">
+                        <i class="lni lni-calendar"></i>
+                        <h5>Generar Cita</h5>
+                        <h4>Generar Cita</h4>
+                    </div>
+                </a>
+            @endcan
+        </div>
+
+        <h5 class="name-menu"> Catalogos</h5>
+        <div class="container__box">
+            @can('ordercustomers.index')
+                <a href="{{route('ordercustomers.index')}}">
+                    <div class="box" data-toggle="tooltip" data-placement="top"
+                         title="Catálogo de clientes y sus datos generales.">
+                        <i class="lni lni-customer"></i>
+                        <h5>Clientes</h5>
+                        <h4>Clientes</h4>
+                    </div>
+                </a>
+            @endcan
+            @can('shipmenttypes.index')
+                <a href="{{route('shipmenttypes.index')}}">
+                    <div class="box" data-toggle="tooltip" data-placement="top" title="Catálogo de tipos de embarques.">
+                        <i class="lni lni-menu"></i>
+                        <h5>Tipos de Emb.</h5>
+                        <h4>Tipos de Emb.</h4>
+                    </div>
+                </a>
+            @endcan
+            @can('storagecategoryincidences.index')
+                <a href="{{route('storagecategoryincidences.index')}}">
+                    <div class="box" data-toggle="tooltip" data-placement="top"
+                         title="Catálogo de categorias de incidencia en los modulos de recibo y embarques.">
+                        <i class="lni lni-menu"></i>
+                        <h5>C. de Incidencia</h5>
+                        <h4>C. de Incidencia</h4>
+                    </div>
+                </a>
+            @endcan
+                @can('storagedoorstage.index')
+                    <a href="{{route('storagedoorstage.index')}}">
+                        <div class="box" data-toggle="tooltip" data-placement="top"
+                             title="Catálogo de categorias de incidencia en los modulos de recibo y embarques.">
+                            <i class="lni lni-layers"></i>
+                            <h5>Cortinas / Stages</h5>
+                            <h4>Cortinas / Stages</h4>
+                        </div>
+                    </a>
+                @endcan
         </div>
     </main>
 
