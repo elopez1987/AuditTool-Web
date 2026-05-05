@@ -6,11 +6,11 @@ use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Configuration\Schemas\SystemSchema;
 use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Configuration\Warehouses\SystemWarehouse;
+use App\Models\Receipt\StorageSchedulleReceipt;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -66,7 +66,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class StorageReceiptPeriod extends Model
 {
     use LogsActivity;
-    use SoftDeletes;
+    //    use SoftDeletes;
 
     protected $table = 'storagereceiptperiods';
 
@@ -132,6 +132,11 @@ class StorageReceiptPeriod extends Model
         return $this->belongsTo(User::class, 'useid', 'id');
     }
 
+    public function schedulles()
+    {
+        return $this->hasMany(StorageSchedulleReceipt::class, 'periodid', 'id');
+    }
+
     public function scopeName($query, $name)
     {
         if (trim($name) !== '') {
@@ -145,6 +150,9 @@ class StorageReceiptPeriod extends Model
         if (! app()->runningInConsole()) {
             self::creating(function (StorageReceiptPeriod $model) {
                 $model->userid = \Auth::id();
+            });
+            self::deleting(function (StorageReceiptPeriod $model) {
+                $model->schedulles()->delete();
             });
         }
     }

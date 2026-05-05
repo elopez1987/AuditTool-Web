@@ -43,6 +43,7 @@ class DownloadScheduleController extends BaseController
                 'storageschedullereceipt.periodid',
                 'storageschedullereceipt.workday',
                 's1.name as secuencia',
+                's1.auxiliary03',
                 'ra.shipmentid',
                 'r2.name as proveedor',
                 's3.name as carriername',
@@ -90,6 +91,7 @@ class DownloadScheduleController extends BaseController
             ->leftJoin('systemstatus as s2', 'ra.statusid', '=', 's2.statusid')
             ->leftJoin('systemcenterdistributions as sc', 'storageschedullereceipt.centerid', '=', 'sc.centerid')
             ->leftJoin('systemwarehouses as sw', 'storageschedullereceipt.warehouseid', '=', 'sw.warehouseid')
+            ->orderBy('s1.auxiliary03', 'desc')
             ->get();
 
         // Obtener las variables necesarias para el modal
@@ -126,14 +128,17 @@ class DownloadScheduleController extends BaseController
         try {
             $schedulleReceipt = StorageSchedulleReceipt::controlAccessUser()->findOrFail($id);
             $hour = SystemStatus::where('statusid', $schedulleReceipt->secuence)->first();
-            $combinedDateTime = $schedulleReceipt->workday . ' ' . $hour->auxiliary04;
+            $workday = Carbon::parse($schedulleReceipt->workday);
+
+            $date = $hour->auxiliary05 === 'S' ? $workday->addDay() : $workday;
+
+            $combinedDateTime = $date->toDateString() . ' ' . $hour->auxiliary04;
 
             $formattedDateTime = Carbon::createFromFormat('Y-m-d H:i', $combinedDateTime);
 
             // Validar que la fecha y hora seleccionada no sean menores a la fecha y hora actual
             if ($formattedDateTime->lt(Carbon::now())) {
                 DB::rollBack();
-
                 // Respuesta para peticiones AJAX / JSON
                 if ($request->ajax() || $request->wantsJson()) {
                     return response()->json([
@@ -141,9 +146,6 @@ class DownloadScheduleController extends BaseController
                         'message' => 'No se puede insertar un embarque menor a la fecha y hora actual',
                     ], 422);
                 }
-
-                // En caso de petición normal
-                return back()->withErrors(['addasndate' => 'No se puede insertar un embarque menor a la fecha y hora actual']);
             }
 
             $parameterWarehouse = SystemWarehouse::whereWarehouseid($schedulleReceipt->warehouseid)->value('configurationflag');

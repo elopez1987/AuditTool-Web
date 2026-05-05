@@ -52,7 +52,7 @@ class StorageReceiptPeriodsController extends BaseController
         }
         $bloks = SystemStatus::where('centerid', $request['centerid'])
             ->where('warehouseid', $request['warehouseid'])
-            ->where('schemaid', 'BHR')->select('statusid', 'name')->get();
+            ->where('schemaid', 'BHR')->select('statusid', 'name', 'auxiliary01', 'auxiliary02')->get();
         if ($bloks->isEmpty()) {
             return $this->errorResponse('No existen bloques de horario para el almacen y centro seleccionado');
         }
@@ -70,6 +70,7 @@ class StorageReceiptPeriodsController extends BaseController
                             'periodid' => $storageReceiptPeriod->id,
                             'workday' => $date,
                             'secuence' => $bloq->statusid,
+                            'statusid' => $bloq->auxiliary02,
                         ],
                     );
                 }

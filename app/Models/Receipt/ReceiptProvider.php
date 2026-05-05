@@ -112,7 +112,7 @@ class ReceiptProvider extends Model
 
     public function scopeName($query, $name)
     {
-        if (trim($name) !== '') {
+        if (trim($name) != '') {
             $query->where('receiptproviders.name', 'like', "%{$name}%");
         }
     }
@@ -122,5 +122,10 @@ class ReceiptProvider extends Model
         if (trim($warehouseid) != '') {
             $query->where('receiptproviders.warehouseid', '=', $warehouseid);
         }
+    }
+
+    public function scopeProvider($query, $providers)
+    {
+        $query->whereIn('receiptproviders.id', $providers);
     }
 }

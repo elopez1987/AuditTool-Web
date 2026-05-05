@@ -66,6 +66,7 @@
                                     <th>Bodega</th>
                                     <th>Fecha de trabajo</th>
                                     <th>Secuencia</th>
+                                    <th>Horario</th>
                                     <th>Embarque</th>
                                     <th>Proveedor</th>
                                     <th>Material</th>

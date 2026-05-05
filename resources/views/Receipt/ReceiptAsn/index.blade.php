@@ -69,7 +69,7 @@
                                 <tr>
                                     <th class="bg-inverse text-white">{{ ui_label('receiptasn_cdistribucion_index','C.Distribución') }}</th>
                                     <th class="bg-inverse text-white">{{ ui_label('receiptasn_warehouse_index','Bodega') }}</th>
-                                    <th class="bg-inverse text-white">{{ ui_label('receiptasn_folionumber_index','Folio') }}</th>
+                                    <th class="bg-inverse text-white">{{ ui_label('receiptasn_folionumber_index','Folio de patios') }}</th>
                                     <th class="bg-inverse text-white">{{ ui_label('receiptasn_shipmentid_index','Recibo') }}</th>
                                     <th class="bg-inverse text-white">{{ ui_label('receiptasn_delivery_index','Factura') }}</th>
                                     <th class="bg-inverse text-white">{{ ui_label('receiptasn_oc_index','O. de Compra') }}</th>
