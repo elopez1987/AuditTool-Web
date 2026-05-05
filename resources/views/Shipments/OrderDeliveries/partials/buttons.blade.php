@@ -12,15 +12,17 @@
                 @include('buttons.edit')
             </a>
         @endcan
-        @can('orderdeliveries.uploadevidence')
-            <a href="{{url('orderdeliveries/' . $id . '/uploadevidence')}}" data-toggle="tooltip"
-               data-placement="top"
-               title="Modificar">
-                <img src="{{asset('/ico/img.png')}}" alt="" class="img-16 ml-2 mr-2">
-            </a>
-        @endcan
     @endif
 @endif
+
+@can('orderdeliveries.uploadevidence')
+    <a href="{{url('orderdeliveries/' . $id . '/uploadevidence')}}" data-toggle="tooltip"
+       data-placement="top"
+       title="Modificar">
+        <img src="{{asset('/ico/img.png')}}" alt="" class="img-16 ml-2 mr-2">
+    </a>
+@endcan
+
 
 @if ($statusid != "CA")
     @can('orderdeliveries.uploadfile')
@@ -32,7 +34,6 @@
         @endif
     @endcan
 @endif
-
 
 @can('monitoroperation.check')
     <a href="{{url('monitoroperation/' . $id . '/monitorcheck')}}" class="m-l-2" data-toggle="tooltip"

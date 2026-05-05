@@ -29,10 +29,10 @@
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <h4 class="card-title"> Cortinas disponibles </h4>
-                                            <select multiple="multiple" size="15" class="duallistbox-with-filter"
-                                                    name="locationstage[]" required>
+                                            <select multiple="multiple" size="15" class="duallistbox-with-filter font-12"
+                                                    name="locationstage[]" required >
                                                 @foreach($locations as $location)
-                                                    <option value="{{$location->id}}"> {{$location->name}}</option>
+                                                    <option value="{{$location->id}}" class="font-12"> {{$location->name}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -46,7 +46,7 @@
 
                     <div class="row">
                         <div class="col-lg-6">
-                            <table class="table table-condensed table-bordered table-striped">
+                            <table class="table table-condensed table-bordered tablegeneral">
                                 <thead>
                                     <tr>
                                         <th>Cortina</th>
@@ -83,9 +83,9 @@
 @endsection
 
 @section('script')
-    <script
-        src="{{asset('theme/assets/libs/bootstrap-duallistbox/dist/jquery.bootstrap-duallistbox.min.js')}}"></script>
+    <script src="{{asset('theme/assets/libs/bootstrap-duallistbox/dist/jquery.bootstrap-duallistbox.min.js')}}"></script>
     <script src="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.all.min.js')}}"></script>
+    @include('layouts.Partials.DataTable')
 
     <script>
         $('.duallistbox-with-filter').bootstrapDualListbox({
