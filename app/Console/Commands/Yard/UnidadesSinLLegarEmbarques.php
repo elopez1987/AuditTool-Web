@@ -28,8 +28,8 @@ class UnidadesSinLLegarEmbarques extends Command
         $client = new Client;
 
         $configWhatsApp = SystemDetailParameter::where('parameterid', '=', 'PARAM-WTH')->first();
-        if (empty($config)) {
-            Log::error('MensajeAutorizacionSalidaUnidadJob:No se encuentra configurado parametro PARAM-WTH');
+        if (empty($configWhatsApp)) {
+            Log::error('UnidadesSinLLegarEmbarques:No se encuentra configurado parametro PARAM-WTH');
 
             return;
         }
