@@ -117,24 +117,7 @@
                     </div>
                 </a>
             @endcan
-            @can('databaseupdate')
-                <a href="{{route('databaseupdate.index')}}">
-                    <div class="box">
-                        <i class="lni lni-database"></i>
-                        <h5>Mantenimiento</h5>
-                        <h4>Mantenimiento</h4>
-                    </div>
-                </a>
-            @endcan
-            @can('systemtables.index')
-                <a href="{{route('systemtables.index')}}">
-                    <div class="box">
-                        <i class="lni lni-layout"></i>
-                        <h5>Tablas</h5>
-                        <h4>Tablas</h4>
-                    </div>
-                </a>
-            @endcan
+
             @can('logsystems')
                 <a href="{{route('logsystems')}}" target="_blank">
                     <div class="box">
@@ -144,24 +127,7 @@
                     </div>
                 </a>
             @endcan
-            @can('commandmenu')
-                <a href="{{route('commandmenu')}}">
-                    <div class="box">
-                        <i class="lni lni-code"></i>
-                        <h5>Comandos</h5>
-                        <h4>Comandos</h4>
-                    </div>
-                </a>
-            @endcan
-            @can('logdeviceuser')
-                <a href="{{route('logdeviceuser')}}">
-                    <div class="box">
-                        <i class="lni lni-laptop-phone"></i>
-                        <h5>Dispositivos</h5>
-                        <h4>Dispositivos</h4>
-                    </div>
-                </a>
-            @endcan
+
             @can('storagetaskwhatsapp')
                 <a href="{{route('storagetaskwhatsapp.index')}}">
                     <div class="box">
@@ -219,24 +185,63 @@
                     </div>
                 </a>
             @endcan
-            @can('editokens.index')
-                <a href="{{route('editokens.index')}}">
-                    <div class="box">
-                        <i class="lni lni-agenda"></i>
-                        <h5>Edi Token</h5>
-                        <h4>Edi Token</h4>
-                    </div>
-                </a>
-            @endcan
-            @can('edi-configurations.index')
-                <a href="{{route('edi-configurations.index')}}">
-                    <div class="box">
-                        <i class="lni lni-agenda"></i>
-                        <h5>Configuración de interfaces</h5>
-                        <h4>Configuración de interfaces</h4>
-                    </div>
-                </a>
-            @endcan
+
+            @role('ADMINISTRADOR')
+                @can('edi-configurations.index')
+                    <a href="{{route('edi-configurations.index')}}">
+                        <div class="box">
+                            <i class="lni lni-agenda"></i>
+                            <h5>Configuración de interfaces</h5>
+                            <h4>Configuración de interfaces</h4>
+                        </div>
+                    </a>
+                @endcan
+                @can('editokens.index')
+                    <a href="{{route('editokens.index')}}">
+                        <div class="box">
+                            <i class="lni lni-agenda"></i>
+                            <h5>Edi Token</h5>
+                            <h4>Edi Token</h4>
+                        </div>
+                    </a>
+                @endcan
+                @can('commandmenu')
+                    <a href="{{route('commandmenu')}}">
+                        <div class="box">
+                            <i class="lni lni-code"></i>
+                            <h5>Comandos</h5>
+                            <h4>Comandos</h4>
+                        </div>
+                    </a>
+                @endcan
+                @can('logdeviceuser')
+                    <a href="{{route('logdeviceuser')}}">
+                        <div class="box">
+                            <i class="lni lni-laptop-phone"></i>
+                            <h5>Dispositivos</h5>
+                            <h4>Dispositivos</h4>
+                        </div>
+                    </a>
+                @endcan
+                @can('databaseupdate')
+                    <a href="{{route('databaseupdate.index')}}">
+                        <div class="box">
+                            <i class="lni lni-database"></i>
+                            <h5>Mantenimiento</h5>
+                            <h4>Mantenimiento</h4>
+                        </div>
+                    </a>
+                @endcan
+                @can('systemtables.index')
+                    <a href="{{route('systemtables.index')}}">
+                        <div class="box">
+                            <i class="lni lni-layout"></i>
+                            <h5>Tablas</h5>
+                            <h4>Tablas</h4>
+                        </div>
+                    </a>
+                @endcan
+            @endrole
 
         </div>
 

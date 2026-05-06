@@ -16,8 +16,15 @@ trait QueryUser
 {
     public function getRoles()
     {
-        return Role::controlAccessUser()->where('statusid', '=', 'E')
-            ->select(['description', 'name', 'id'])->get();
+        $user = Auth::user();
+        $centers = SecurityAccessWarehouse::where('username', $user->username)
+            ->pluck('centerid')
+            ->toArray();
+
+        return Role::whereIn('roles.centerid', $centers)
+            ->when(! $user->hasRole('ADMINISTRADOR'), fn ($q) => $q->where('roles.name', '!=', 'ADMINISTRADOR')
+            )
+            ->select('roles.id', 'roles.name', 'roles.description')->get();
     }
 
     public function getAllUsers($request)

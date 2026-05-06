@@ -50,12 +50,12 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-lg-6">
+                            <div class="col-lg-10">
                                 <div class="card-input">
                                     @foreach($centers as $center)
                                         <div class="row">
-                                            <div class="col-md-8">
-                                                <table class="table table-hover table-bordered table-condensed">
+                                            <div class="col-md-10">
+                                                <table class="table table-hover table-bordered table-condensed tablegeneral">
                                                     <thead>
                                                     <tr>
                                                         <th class="bg-inverse text-white"></th>
@@ -67,7 +67,7 @@
                                                     @foreach($warehouses as $warehouse)
                                                         @if ($center->centerid == $warehouse->centerid)
                                                             <tr>
-                                                                <td style="width: 100px;" class="switch">
+                                                                <td class="switch">
                                                                     <input
                                                                         type="checkbox"
                                                                         value="{{$warehouse->warehouseid}}"
@@ -85,7 +85,7 @@
                                                                         data-off-text="<i class='ti ti-close'></i>"
                                                                     >
                                                                 </td>
-                                                                <td width="200px;">{{$warehouse->centerdistribution->name}}</td>
+                                                                <td >{{$warehouse->centerdistribution->name}}</td>
                                                                 <td>{{$warehouse->name}}</td>
                                                             </tr>
                                                         @endif
@@ -111,6 +111,7 @@
 
 
 @section('script')
+    @include('layouts.Partials.DataTable')
     <script src="{{asset('/theme/assets/libs/bootstrap-switch/dist/js/bootstrap-switch.min.js')}}"></script>
     <script>
         $(".switch input[type='checkbox']").bootstrapSwitch();

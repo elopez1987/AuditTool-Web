@@ -28,12 +28,12 @@
                     <div class="card-input">
                         <div class="row mt-3">
                             <div class="col-lg-6 ">
-                                <table id="table-users" class="table table-bordered table-condensed table-hover">
+                                <table id="table-users" class="table table-bordered table-condensed table-hover tablegeneral">
                                     <thead>
                                     <tr>
-                                        <th class="bg-inverse text-white">Nombre</th>
-                                        <th class="bg-inverse text-white">Usuario</th>
-                                        <th class="bg-inverse text-white">Opciones</th>
+                                        <th>Nombre</th>
+                                        <th>Usuario</th>
+                                        <th>Opciones</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -59,5 +59,9 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('script')
+    @include('layouts.Partials.DataTable')
 @endsection
 
