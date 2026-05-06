@@ -45,13 +45,13 @@ trait StorageWebPhotoTrait
     public function createEvidencePhoto($modeltype, $id, $path, $type, $model)
     {
         EvidencePhoto::create([
+            'centerid' => $model->centerid,
+            'warehouseid' => $model->warehouseid,
             'model_type' => $modeltype,
             'model_id' => $id,
             'path' => $path,
             'createuser' => Auth::user()->id,
             'auxiliary01' => $type,
-            'auxiliary02' => $model->centerid,
-            'auxiliary03' => $model->warehouseid,
         ]);
     }
 

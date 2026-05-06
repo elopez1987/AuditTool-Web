@@ -76,7 +76,7 @@
     <script>
         Dropzone.options.myAwesomeDropzone = {
             paramName: "file",
-            maxFiles: 10,
+            maxFiles: 25,
             acceptedFiles: ".jpeg,.jpg,.png,.gif",
             maxFilesize: 8,
         };
