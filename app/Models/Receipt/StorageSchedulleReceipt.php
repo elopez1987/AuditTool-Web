@@ -36,7 +36,6 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read SystemCenterDistribution $center
  * @property-read StorageReceiptPeriod|null $period
  * @property-read \App\Models\Receipt\ReceiptAsn|null $receipt
- * @property-read SystemStatus|null $status
  * @property-read SystemStatus|null $statussecuence
  * @property-read StorageTurn|null $turn
  * @property-read SystemWarehouse $warehouse

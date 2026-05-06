@@ -56,7 +56,7 @@ class Kernel extends ConsoleKernel
     {
         //      Comandos generales
         $schedule->command('command:deletehistlogwebserviceizel')->weekly();
-        $schedule->command('command:CloseValidateQRReceipt')->everyTenMinutes();
+        $schedule->command('command:CloseValidateQRReceipt')->everyTwoHours();
         $schedule->command('whatsapp:deletelog')->daily();
         $schedule->command('clear:receiptasn')->dailyAt('01:00');
 
@@ -66,7 +66,7 @@ class Kernel extends ConsoleKernel
         //      Comandos del módulo de Control de Patios
         $schedule->command('command:TiempoExcedidoParaSalirDePatio')->everyFifteenMinutes();
         //        Envia mensajes de a unidades sin llegada para embarques
-        $schedule->command('command:UnidadesSinLLegarEmbarques')->everyThirtyMinutes();
+        $schedule->command('command:UnidadesSinLLegarEmbarques')->hourly();
 
         //        Envia mensaje de capacidad de patio superada al parámetro máximo
         $schedule->command('whatsapp:patiolleno')->everyTwoHours();
@@ -80,7 +80,7 @@ class Kernel extends ConsoleKernel
         //        Recolectar evidencia de POD de recurso confiable
         $schedule->command('rc:getevidencefromrcontrol')->dailyAt('10:00');
         //        Limpiar ubicaciones de cortinas y stages
-        $schedule->command('system:clearlocation')->everyThirtyMinutes();
+        $schedule->command('system:clearlocation')->everyFifteenMinutes();
     }
 
     /**
