@@ -54,7 +54,7 @@
                                     <div class="form-group">
                                         <label for="providerid">Proveedor <span style="color: red">*</span></label>
                                         <select name="providerid" required class="form-control select2">
-                                            <option value="">Seleeciona un cliente</option>
+                                            <option value="">Seleeciona un proveedor</option>
                                             @foreach($providers as $model)
                                                 <option value="{{$model->id}}">{{$model->providerid}} - {{$model->name}} </option>
                                             @endforeach

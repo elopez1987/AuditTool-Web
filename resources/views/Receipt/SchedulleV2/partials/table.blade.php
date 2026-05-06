@@ -24,7 +24,18 @@
             {data: 'centername', name: 'centername'},
             {data: 'warehousename', name: 'warehousename'},
             {data: 'workday', name: 'workday'},
+            {data: 'auxiliary03', name: 'auxiliary03'},
             {data: 'secuencia', name: 'secuencia'},
+            // {data: 'statushorario', name: 'statushorario'},
+            {
+                data: 'statushorario', name: 'statushorario',
+                createdCell: function (td, cellData, rowData) {
+                    $(td).css({
+                        'background-color': (rowData.horariocolor),
+                        'color': 'black'
+                    });
+                }
+            },
             {data: 'shipmentid', name: 'shipmentid'},
             {data: 'proveedor', name: 'proveedor'},
             {data: 'material', name: 'material'},
@@ -64,23 +75,24 @@
         ],
         "columnDefs": [
             {"width": "100px", "targets": 0},
-            {"width": "180px", "targets": 1},
-            {"width": "180px", "targets": 2},
-            {"width": "100px", "targets": 3},
+            {"width": "280px", "targets": 1},
+            {"width": "280px", "targets": 2},
+            {"width": "180px", "targets": 3},
             {"width": "100px", "targets": 4},
-            {"width": "280px", "targets": 5},
-            {"width": "280px", "targets": 6},
-            {"width": "280px", "targets": 7},
+            {"width": "200px", "targets": 5},
+            {"width": "200px", "targets": 6},
+            {"width": "200px", "targets": 7},
             {"width": "280px", "targets": 8},
             {"width": "280px", "targets": 9},
             {"width": "180px", "targets": 10},
             {"width": "180px", "targets": 11},
-            {"width": "180px", "targets": 12},
+            {"width": "280px", "targets": 12},
             {"width": "180px", "targets": 13},
             {"width": "180px", "targets": 14},
             {"width": "180px", "targets": 15},
             {"width": "180px", "targets": 16},
-            // {"width": "180px", "targets": 17},
+            {"width": "180px", "targets": 17},
+            {"width": "180px", "targets": 18},
         ],
 
         "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
@@ -89,23 +101,23 @@
         buttons: [
             {
                 "extend": "colvis",
-                "text": "<img src=\"{{asset('/pics/adbuscar.png')}}\"  alt=''><span  style='font-size: 0.675rem;'> Mostar/Ocultar</span>",
+                "text": "<img src=\"{{asset('/pics/adbuscar.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span  > Mostar/Ocultar</span>",
                 "className": "btn btn-outline-info btn-md  btn-bold",
                 columns: ':not(:first):not(:last)'
             },
             {
                 "extend": "copy",
-                "text": "<img src=\"{{asset('/pics/adcopiar.png')}}\"  alt=''><span  style='font-size: 0.675rem;'> Copiar</span>",
+                "text": "<img src=\"{{asset('/pics/adcopiar.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span  > Copiar</span>",
                 "className": "btn btn-outline-info btn-md  btn-bold",
             },
             {
                 "extend": "csv",
-                "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16'><span  style='font-size: 0.675rem;'> Csv</span>",
+                "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span > Csv</span>",
                 "className": "btn btn-outline-info btn-md  btn-bold",
             },
             {
                 "extend": "excel",
-                "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt=''><span  style='font-size: 0.675rem;'> Excel</span>",
+                "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span > Excel</span>",
                 "className": "btn btn-outline-info btn-md  btn-bold",
             }
         ],

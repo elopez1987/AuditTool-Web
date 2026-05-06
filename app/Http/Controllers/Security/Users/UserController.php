@@ -57,23 +57,20 @@ class UserController extends BaseController
 
     public function store(CreateUserRequest $request)
     {
-        $error = null;
         DB::beginTransaction();
         try {
             $user = $this->serviceuser->createNewUser($request);
             $user->syncRoles([$request['role_id']]);
             DB::commit();
-            $success = true;
+
+            return redirect::back()->with(session()->flash('success', 'Datos agregados correctamente!!'));
         } catch (Exception $e) {
-            $success = false;
             $error = $e->getMessage();
             DB::rollback();
-        }
-        if ($success) {
-            return redirect::back()->with(session()->flash('success', 'Datos agregados correctamente!!'));
+
+            return redirect::back()->withInput()->with(session()->flash('success', 'No se pudieron guardar los datos!!' . $error));
         }
 
-        return redirect::back()->withInput()->with(session()->flash('success', 'No se pudieron guardar los datos!!' . $error));
     }
 
     public function edit($uuiduser)
@@ -102,7 +99,8 @@ class UserController extends BaseController
         $user->statusid = 'D';
         $user->save();
 
-        return redirect()->route('securityusers.index')->with(session()->flash('success', 'Registro eliminadó con exito'));
+        return redirect()->route('securityusers.index')
+            ->with(session()->flash('success', 'Registro eliminadó con exito'));
     }
 
     /**
@@ -118,14 +116,6 @@ class UserController extends BaseController
             $status = Password::sendResetLink([
                 'email' => $user->email,
             ]);
-
-            //            // Log de la acción
-            //            Log::info('Correo de reseteo de contraseña enviado', [
-            //                'user_id' => $user->id,
-            //                'user_email' => $user->email,
-            //                'requested_by' => auth()->id(),
-            //                'timestamp' => now(),
-            //            ]);
 
             if ($status === Password::RESET_LINK_SENT) {
                 return redirect()->back()->with('success', 'Se ha enviado un correo de reinicio de contraseña a: ' . $user->email);

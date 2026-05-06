@@ -38,7 +38,7 @@ class SecurityFunctionsController extends BaseController
         });
         $query = SecurityFunction::with('module:moduleid,description')
             ->whereIn('functionid', $ids)
-            ->select(['functionid', 'description', 'moduleid']);
+            ->select(['functionid', 'securityfunctions.description', 'securityfunctions.moduleid']);
 
         return DataTables::of($query)
             ->addColumn('btn', function ($row) {

@@ -160,6 +160,11 @@ class StorageSchedulleReceipt extends Model
         }
     }
 
+    public function scopeProviders($query, $providers)
+    {
+        $query->whereIn('receiptasn.providerid', $providers);
+    }
+
     protected static function boot()
     {
         parent::boot();

@@ -55,7 +55,7 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    @can('storagelocations.importlocation')
+                    @can('storageincidencesjourneys.importreport')
                         <a href="" data-target="#modal-upload" data-toggle="modal" data-placement="top">
                             <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md"
                                     data-toggle="tooltip" data-placement="top" title="Importar archivo">

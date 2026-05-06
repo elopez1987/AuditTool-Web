@@ -12,6 +12,7 @@ use App\Models\Inventory\Origin\InventoryStockCategory;
 use App\Models\Inventory\PartNumber\InventoryPartnumber;
 use App\Models\Receipt\ReceiptProvider;
 use App\Models\Security\Users\AccessCarrier;
+use App\Models\Security\Users\AccessProvider;
 use App\Models\Security\Users\SecurityAccessCustomer;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\Models\Yard\Carriers\ShipmentCarrier;
@@ -25,6 +26,7 @@ use App\Models\Yard\StorageReason;
 use App\Models\Yard\StorageUnitType;
 use App\Models\Yard\StorageZone\StorageZone;
 use Auth;
+use Cache;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Http\RedirectResponse;
@@ -136,13 +138,30 @@ trait Responser
 
     public function getReceiptProviderForSelect()
     {
-        $centers = SecurityAccessWarehouse::Centers();
-        $warehouses = SecurityAccessWarehouse::Warehouses();
+        $userId = auth()->id();
 
-        return (new ReceiptProvider)->whereStatusid('E')
+        $centers = Cache::remember("security_centers_{$userId}", 300,
+            fn () => SecurityAccessWarehouse::Centers()
+        );
+
+        $warehouses = Cache::remember("security_warehouses_{$userId}", 300,
+            fn () => SecurityAccessWarehouse::Warehouses()
+        );
+
+        if (empty($centers) || empty($warehouses)) {
+            return collect();
+        }
+        $providers = AccessProvider::where('username', Auth::user()
+            ->username)->pluck('providerid')->toArray();
+
+        return ReceiptProvider::query()
+            ->where('statusid', 'E')
+            ->Provider($providers)
             ->whereIn('centerid', $centers)
             ->whereIn('warehouseid', $warehouses)
-            ->select(['name', 'id', 'providerid'])->get();
+            ->select(['id', 'name', 'providerid'])
+            ->orderBy('name')
+            ->get();
     }
 
     public function getOrderCustomerForSelect()

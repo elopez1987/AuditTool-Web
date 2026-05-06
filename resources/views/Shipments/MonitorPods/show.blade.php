@@ -13,14 +13,16 @@
                             <a href="{{route('monitorpods.index')}}">
                                 @include('buttons.back')
                             </a>
-                            <a>
-                                <button id="searchPODInRC" type="button"
-                                        class="btn waves-effect waves-light btn-outline-info btn-md">
-                                    <img src="{{asset('/ico/adbuscar.png')}}" alt=""
-                                         class="img-16 ml-1">
-                                    <span style="font-size: 11px;"> Buscar POD</span>
-                                </button>
-                            </a>
+                            @can('monitorpods.searchrc')
+                                <a>
+                                    <button id="searchPODInRC" type="button"
+                                            class="btn waves-effect waves-light btn-outline-info btn-md">
+                                        <img src="{{asset('/ico/adbuscar.png')}}" alt=""
+                                             class="img-16 ml-1">
+                                        <span style="font-size: 11px;"> Buscar POD</span>
+                                    </button>
+                                </a>
+                            @endcan
                         </div>
                     </div>
                 </div>

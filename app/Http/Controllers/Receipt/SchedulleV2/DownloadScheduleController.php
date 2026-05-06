@@ -8,6 +8,7 @@ use App\Models\Configuration\Warehouses\SystemWarehouse;
 use App\Models\Inventory\Origin\InventoryStockCategory;
 use App\Models\Receipt\ReceiptAsn;
 use App\Models\Receipt\StorageSchedulleReceipt;
+use App\Models\Security\Users\AccessProvider;
 use App\Models\Yard\Carriers\ShipmentCarrier;
 use App\Models\Yard\StorageReason;
 use Carbon\Carbon;
@@ -29,6 +30,8 @@ class DownloadScheduleController extends BaseController
 
     public function getDataSchedulleV2(Request $request)
     {
+        $user = Auth::user();
+        $providers = AccessProvider::where('username', $user->username)->pluck('providerid')->toArray();
         $data = StorageSchedulleReceipt::controlAccessUser()
             ->Workday($request->get('workday'))
             ->Shipment($request->get('shipmentid'))
@@ -43,10 +46,12 @@ class DownloadScheduleController extends BaseController
                 'storageschedullereceipt.periodid',
                 'storageschedullereceipt.workday',
                 's1.name as secuencia',
+                's1.auxiliary03',
                 'ra.shipmentid',
                 'r2.name as proveedor',
                 's3.name as carriername',
                 'ra.oc',
+                'ra.providerid',
                 'ra.billoflading as factura',
                 'ra.auxiliary02 as po',
                 'ra.partnumberid as material',
@@ -60,8 +65,10 @@ class DownloadScheduleController extends BaseController
                 'ra.id as receiptid',
                 'ra.downloadpriority',
                 'ra.goodissuedate as goodissuedate',
-                //                'ra.statusid',
+                'se3.name as statushorario',
+                'se3.auxiliary01 as horariocolor',
                 'ra.po as grsap',
+                'ra.providerid',
             ])
             ->leftJoin('receiptasn as ra', function ($join) {
                 $join->on('storageschedullereceipt.receiptid', '=', 'ra.id')
@@ -88,9 +95,40 @@ class DownloadScheduleController extends BaseController
             ->leftJoin('inventorystockcategories as i', 'ra.stockcategoryid', '=', 'i.id')
             ->leftJoin('systemstatus as s1', 'storageschedullereceipt.secuence', '=', 's1.statusid')
             ->leftJoin('systemstatus as s2', 'ra.statusid', '=', 's2.statusid')
+            ->leftJoin('systemstatus as se3', 'storageschedullereceipt.statusid', '=', 'se3.statusid')
             ->leftJoin('systemcenterdistributions as sc', 'storageschedullereceipt.centerid', '=', 'sc.centerid')
             ->leftJoin('systemwarehouses as sw', 'storageschedullereceipt.warehouseid', '=', 'sw.warehouseid')
+            ->orderBy('s1.auxiliary03', 'desc')
             ->get();
+
+        // Solo aplicar el filtro si el usuario tiene proveedores asignados.
+        // Si no tiene proveedores, se muestran todos los datos sin restricción.
+        if (! empty($providers)) {
+            $data->transform(function ($row) use ($providers) {
+                if ($row->providerid && ! in_array($row->providerid, $providers)) {
+                    $row->proveedor = null;
+                    $row->carriername = null;
+                    $row->oc = null;
+                    $row->factura = null;
+                    $row->po = null;
+                    $row->material = null;
+                    $row->quantity = null;
+                    $row->priority = null;
+                    $row->comment = null;
+                    $row->tipo = null;
+                    $row->status = null;
+                    $row->color = null;
+                    $row->cortina = null;
+                    $row->receiptid = null;
+                    $row->downloadpriority = null;
+                    $row->goodissuedate = null;
+                    $row->grsap = null;
+                    $row->value01 = null;
+                }
+
+                return $row;
+            });
+        }
 
         // Obtener las variables necesarias para el modal
         $providers = $this->getReceiptProviderForSelect();
@@ -126,14 +164,17 @@ class DownloadScheduleController extends BaseController
         try {
             $schedulleReceipt = StorageSchedulleReceipt::controlAccessUser()->findOrFail($id);
             $hour = SystemStatus::where('statusid', $schedulleReceipt->secuence)->first();
-            $combinedDateTime = $schedulleReceipt->workday . ' ' . $hour->auxiliary04;
+            $workday = Carbon::parse($schedulleReceipt->workday);
+
+            $date = $hour->auxiliary05 === 'S' ? $workday->addDay() : $workday;
+
+            $combinedDateTime = $date->toDateString() . ' ' . $hour->auxiliary04;
 
             $formattedDateTime = Carbon::createFromFormat('Y-m-d H:i', $combinedDateTime);
 
             // Validar que la fecha y hora seleccionada no sean menores a la fecha y hora actual
             if ($formattedDateTime->lt(Carbon::now())) {
                 DB::rollBack();
-
                 // Respuesta para peticiones AJAX / JSON
                 if ($request->ajax() || $request->wantsJson()) {
                     return response()->json([
@@ -141,9 +182,6 @@ class DownloadScheduleController extends BaseController
                         'message' => 'No se puede insertar un embarque menor a la fecha y hora actual',
                     ], 422);
                 }
-
-                // En caso de petición normal
-                return back()->withErrors(['addasndate' => 'No se puede insertar un embarque menor a la fecha y hora actual']);
             }
 
             $parameterWarehouse = SystemWarehouse::whereWarehouseid($schedulleReceipt->warehouseid)->value('configurationflag');

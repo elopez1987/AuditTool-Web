@@ -66,6 +66,8 @@
                                     <th>Bodega</th>
                                     <th>Fecha de trabajo</th>
                                     <th>Secuencia</th>
+                                    <th>Horario</th>
+                                    <th>Estatus de reserva</th>
                                     <th>Embarque</th>
                                     <th>Proveedor</th>
                                     <th>Material</th>
@@ -77,7 +79,7 @@
                                     <th>Prioridad</th>
                                     <th>Cortina</th>
                                     <th>Observaciones</th>
-                                    <th>Estatus</th>
+                                    <th>Estatus de descarga</th>
                                 </tr>
                                 </thead>
                             </table>

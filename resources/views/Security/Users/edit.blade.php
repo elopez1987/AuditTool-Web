@@ -60,7 +60,8 @@
                                     </button>
                                 </a>
                                 @include('Security.Users.restore')
-
+                            @endcan
+                            @can('securityusers.auth')
                                 @if(empty($user->auth0))
                                     <a href="" data-target="#modal-okta-{{$user->id}}" data-toggle="modal">
                                         <button type="button"
@@ -86,7 +87,6 @@
                                     </a>
                                     @include('Security.Users.oktadelete')
                                 @endif
-
                             @endcan
                         </div>
                     </div>

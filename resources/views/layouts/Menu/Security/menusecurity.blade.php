@@ -16,21 +16,23 @@
                     </div>
                 </a>
             @endcan
-            @can('superusers.index')
-                <a href="{{route('superusers.index')}}">
-                    <div class="box">
-                        <i class="lni lni-lock"></i>
-                        <h5>Administradores</h5>
-                        <h4>Administradores</h4>
-                    </div>
-                </a>
-            @endcan
             @can('securityroles.index')
                 <a href="{{route('securityroles.index')}}">
                     <div class="box">
                         <i class="lni lni-list"></i>
                         <h5>Perfiles</h5>
                         <h4>Perfiles</h4>
+                    </div>
+                </a>
+            @endcan
+
+            @role('ADMINISTRADOR')
+            @can('superusers.index')
+                <a href="{{route('superusers.index')}}">
+                    <div class="box">
+                        <i class="lni lni-lock"></i>
+                        <h5>Administradores</h5>
+                        <h4>Administradores</h4>
                     </div>
                 </a>
             @endcan
@@ -70,8 +72,11 @@
                     </div>
                 </a>
             @endcan
+            @endrole
+
         </div>
 
+        @role('ADMINISTRADOR')
         <div class="container__box">
             @can('usersfortransports')
                 <a href="{{route('usersfortransports')}}">
@@ -102,14 +107,15 @@
             @endcan
             @can('activeusers.index')
                 <a href="{{route('activeusers.index')}}">
-                        <div class="box">
-                            <i class="lni lni-list"></i>
-                            <h5>Usuarios activos APP</h5>
-                            <h4>Usuarios activos APP</h4>
-                        </div>
-                    </a>
-                @endcan
+                    <div class="box">
+                        <i class="lni lni-list"></i>
+                        <h5>Usuarios activos APP</h5>
+                        <h4>Usuarios activos APP</h4>
+                    </div>
+                </a>
+            @endcan
         </div>
+        @endrole
 
     </main>
 @endsection

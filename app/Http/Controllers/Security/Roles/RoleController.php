@@ -63,7 +63,7 @@ class RoleController extends BaseController
         $this->authorize('securityroles.edit');
         $assings = RoleHasPermission::where('role_id', $securityrole->id)->get();
         $modules = $this->getModulesForRole($securityrole);
-        $functions = $this->getFunctiondForRole($securityrole);
+        $functions = $this->getFunctionForRole($securityrole);
         $permissions = Permission::select(['id', 'name', 'functionid', 'description'])->get();
         $access = $this->getPermissionForRole($securityrole->id);
         $status = $this->getStatusForSchema('STS');

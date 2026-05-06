@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Security\Users\AccessWarehouse;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Services\Security\ServiceUser;
+use App\Models\Receipt\ReceiptProvider;
 use App\Models\Security\Users\AccessProvider;
 use App\Traits\Web\Security\QueryUser;
 use App\User;
@@ -23,7 +24,8 @@ class AccessProviderController extends BaseController
     public function index($uuiduser)
     {
         $user = User::where('uuiduser', $uuiduser)->firstOrFail();
-        $providers = $this->getReceiptProviderForSelect();
+        $providers = ReceiptProvider::controlAccessUser()->where('statusid', 'E')
+            ->select(['id', 'name'])->get();
         $listProviders = AccessProvider::with('provider:id,name,providerid')
             ->where('username', $user->username)->get();
 
