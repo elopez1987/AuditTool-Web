@@ -144,6 +144,7 @@ class DownloadScheduleController extends BaseController
                     'id' => $row->id,
                     'shipmentid' => $row->shipmentid,
                     'statusid' => $row->statusid,
+                    'statusidasn' => $row->statusidasn,
                     'receiptid' => $row->receiptid,
                     'value01' => $row->value01,
                     'providers' => $providers,
@@ -156,6 +157,30 @@ class DownloadScheduleController extends BaseController
             ->addColumn('po', 'Receipt.SchedulleV2.goodissuedate')
             ->rawColumns(['btn', 'prioridad', 'po'])
             ->toJson();
+    }
+
+    public function getdaysforperiods()
+    {
+        $days = StorageSchedulleReceipt::controlAccessUser()
+            ->select('workday')
+            ->where('workday', '>', Carbon::now()->format('Y-m-d'))
+            ->distinct()->get();
+
+        return response()->json($days);
+    }
+
+    public function getsecuenceforday($workday)
+    {
+        $secuence = StorageSchedulleReceipt::controlAccessUser()
+            ->leftJoin('systemstatus', 'systemstatus.statusid', '=', 'storageschedullereceipt.secuence')
+            ->where('workday', $workday)
+            ->where('storageschedullereceipt.statusid', 'DPR-01')
+            ->select('systemstatus.name as secuence', 'storageschedullereceipt.id as id')
+            ->distinct()
+            ->orderBy('storageschedullereceipt.id')
+            ->get();
+
+        return response()->json($secuence);
     }
 
     //	Esta funcion edita el registro el recibo en el plan de entrega
@@ -217,6 +242,8 @@ class DownloadScheduleController extends BaseController
                 'receiptid' => $receipt->id,
                 'statusid' => 'DPR-02',
                 'value01' => Auth::id(),  // Usuario que agrega el recibo al plan de entrega
+                'value02' => now(), // Fecha y hora en que se agrega el recibo al plan de entrega
+                'value03' => $formattedDateTime,  // Fecha y hora de la cita programada para el recibo
             ]);
 
             DB::commit();

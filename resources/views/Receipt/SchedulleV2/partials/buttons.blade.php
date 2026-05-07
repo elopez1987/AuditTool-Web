@@ -35,13 +35,22 @@
 @endcan
 
 
+@if($statusidasn === 'PG')
+    @can('receiptasn.move')
+    <a href="" data-target="#modal-move-{{$id}}" data-toggle="modal" data-toggle="tooltip"
+       data-placement="top" title="Reprogramar descarga.">
+        <img src="{{asset('/ico/reloadpage.png')}}" alt="" class="img-16 text-center">
+    </a>
+    @include('Receipt.SchedulleV2.move')
+    @endcan
+@endif
+
 
 @can('receiptasn.blocked')
-
     {{--    @if($statusid == 'DPR-04' && $value01 == Auth::id())--}}
     @if($statusid == 'DPR-04')
         <a href="" data-target="#modal-clear-{{$id}}" data-toggle="modal" data-toggle="tooltip"
-           data-placement="top" title="liberar registro.">
+           data-placement="top" title="Liberar registro.">
             <img src="{{asset('/ico/reloadpage.png')}}" alt="" class="img-16 text-center">
         </a>
         @include('Receipt.SchedulleV2.clear')
