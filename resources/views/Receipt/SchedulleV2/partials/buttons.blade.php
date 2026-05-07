@@ -9,9 +9,9 @@
 
 @can('receiptasn.show')
     @if($shipmentid !== null)
-            <a href="{{url('receiptasn/' . $receiptid )}}">
-                <img src="{{asset('/ico/viewdetail.png')}}" alt="" class="img-16 ml-2 mr-2">
-            </a>
+        <a href="{{url('receiptasn/' . $receiptid )}}">
+            <img src="{{asset('/ico/viewdetail.png')}}" alt="" class="img-16 ml-2 mr-2">
+        </a>
     @endif
 @endcan
 
@@ -22,6 +22,19 @@
         </a>
     @endcan
 @endif
+
+{{--    Agregar validacion que solo se pueda cancelar los programados y solo lo puede cancelar el mismo usuario que creo el registro--}}
+@can('receiptasn.cancel-v2')
+    @if($shipmentid !== null &&  $value01 == \Illuminate\Support\Facades\Auth::id())
+        <a href="" data-target="#modal-cancel-{{$id}}" data-toggle="modal" data-toggle="tooltip"
+           data-placement="top" title="Cancelar registro.">
+            <img src="{{asset('/ico/4115230-cancel-close-cross-delete_114048.png')}}" alt="" class="img-16 text-center">
+        </a>
+        @include('Receipt.SchedulleV2.cancelReceipt')
+    @endif
+@endcan
+
+
 
 @can('receiptasn.blocked')
 
