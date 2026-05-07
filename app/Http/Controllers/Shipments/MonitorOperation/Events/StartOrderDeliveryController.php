@@ -50,40 +50,44 @@ class StartOrderDeliveryController extends BaseController
     public function updateShipmentDataOperation($id): ShipmentDataOperation
     {
         $shipment = ShipmentDataOperation::controlAccessUser()->where('orderid', $id)->first();
-        $shipment->startshipment = now();
-        $shipment->lastuserid = Auth::user()->id;
-        $shipment->save();
+
+        $shipment->update(
+            ['startshipment' => now(), 'lastuserid' => Auth::id()],
+        );
 
         return $shipment;
     }
 
     public function updateShipmentHeader($id, $locationid): void
     {
-        $header = ShipmentHeader::controlAccessUser()->where('orderid', $id)->first();
-        $header->locationid = $locationid;
-        $header->statusid = 'PR';
-        $header->createuserid = Auth::user()->id;
-        $header->save();
+        ShipmentHeader::controlAccessUser()->where('orderid', $id)
+            ->update(
+                [
+                    'locationid' => $locationid,
+                    'statusid' => 'PR',
+                    'createuserid' => Auth::id(),
+                ],
+            );
     }
 
     public function updateOrderDelivery($id): void
     {
-        $orderdelivery = OrderDeliverie::whereId($id)->first();
-        $orderdelivery->statusid = 'PR';
-        $orderdelivery->save();
+        OrderDeliverie::whereId($id)
+            ->update([
+                'statusid' => 'PR',
+            ]);
     }
 
     public function updateShipmentSeal($id): void
     {
-        $shipmentseal = ShipmentSeal::whereOrderid($id)->first();
-        $shipmentseal->statusorderid = 'PR';
-        $shipmentseal->save();
+        ShipmentSeal::whereOrderid($id)
+            ->update(['statusorderid' => 'PR']);
     }
 
     public function BloquedLocationStage(ShipmentDataOperation $shipment, $locationid): void
     {
         $parameter = $this->getParametersOfWarehouse($shipment->warehouseid);
-        if (in_array('SWH-20', (array) $parameter)) {
+        if (! empty($parameter) && in_array('SWH-20', (array) $parameter)) {
             StorageLocation::updateLocation($locationid, 'D', '');
         }
     }

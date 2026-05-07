@@ -9,6 +9,7 @@ use App\Models\Shipments\ShipmentDataOperation;
 use App\Models\Shipments\ShipmentHeader;
 use App\Models\Shipments\ShipmentSeal;
 use App\Models\Yard\ReceiptUnit;
+use App\Models\Yard\StorageUnitTrace;
 use App\Traits\Web\EDI\RegisterEdiShipment;
 use Exception;
 use Illuminate\Support\Facades\Auth;
@@ -36,7 +37,7 @@ class StartLoadOrderDeliveryController extends BaseController
             $parameter = $this->getParametersOfWarehouse($orderDelivery->warehouseid);
             if (! empty($parameter) && in_array('SWH-32', (array) $parameter)) {
 
-                $folionumber = ReceiptUnit::whereId($orderDelivery->folionumber)->first(['zoneid', 'id']);
+                $folionumber = ReceiptUnit::whereId($orderDelivery->folionumber)->first();
                 if (! $folionumber) {
                     return redirect()->back()->with(session()->flash('error', 'El embarque no cuenta con transporte,favor de validar.'));
                 }
@@ -44,6 +45,7 @@ class StartLoadOrderDeliveryController extends BaseController
                     return redirect()->back()->with(session()->flash('error', 'La caja no se encuentra en cortina, favor de enrampar.'));
                 }
                 $this->updateFolioNumber($folionumber);
+                StorageUnitTrace::createTraceUnit($folionumber, '14');
             }
 
             $this->updateOrderDelivery($orderDelivery);
@@ -66,37 +68,39 @@ class StartLoadOrderDeliveryController extends BaseController
 
     private function updateOrderDelivery($orderDelivery): void
     {
-        $orderDelivery->statusid = 'IP';
-        $orderDelivery->save();
+        $orderDelivery->update([
+            'statusid' => 'IP',
+        ]);
     }
 
     private function updateFolioNumber($folionumber): void
     {
-        $folionumber->statusid = 'EP';
-        $folionumber->startdate = now();
-        $folionumber->save();
+        $folionumber->update(
+            ['statusid' => 'EP',
+                'startdate' => now(),
+            ]);
     }
 
-    private function updateShipmentDataOperation($id): void
+    private function updateShipmentDataOperation(int $id): void
     {
-        $shipment = ShipmentDataOperation::controlAccessUser()->where('orderid', $id)->first();
-        $shipment->startload = now();
-        $shipment->lastuserid = Auth::user()->id;
-        $shipment->save();
+        ShipmentDataOperation::controlAccessUser()
+            ->where('orderid', $id)
+            ->update([
+                'startload' => now(),
+                'lastuserid' => Auth::id(),
+            ]);
     }
 
-    private function updateShipmentHeader($id): void
+    private function updateShipmentHeader(int $id): void
     {
-        $shipmentheader = ShipmentHeader::whereOrderid($id)->first();
-        $shipmentheader->statusid = 'IP';
-        $shipmentheader->save();
+        ShipmentHeader::where('orderid', $id)
+            ->update(['statusid' => 'IP']);
     }
 
-    private function updateShipmentSeal($id): void
+    private function updateShipmentSeal(int $id): void
     {
-        $shipmentseal = ShipmentSeal::whereOrderid($id)->first();
-        $shipmentseal->statusorderid = 'IP';
-        $shipmentseal->save();
+        ShipmentSeal::where('orderid', $id)
+            ->update(['statusorderid' => 'IP']);
     }
 
     private function sendEDIToRControl($orderDelivery): void

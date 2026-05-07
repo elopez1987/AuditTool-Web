@@ -71,29 +71,24 @@ class SendDocumentOrderDeliveryController extends BaseController
 
     private function updateShipmentDataOperation(OrderDeliverie $orderDelivery): void
     {
-        $shipment = ShipmentDataOperation::controlAccessUser()->where('orderid', $orderDelivery->id)->lockForUpdate()->first();
-        if (! empty($shipment)) {
-            $shipment->senddocument = now();
-            $shipment->lastuserid = Auth::user()->id;
-            $shipment->save();
-        }
+        ShipmentDataOperation::controlAccessUser()
+            ->where('orderid', $orderDelivery->id)->lockForUpdate()
+            ->update([
+                'senddocument' => now(),
+                'lastuserid' => Auth::id(),
+            ]);
     }
 
     private function updateShipmentHeader(OrderDeliverie $orderDelivery): void
     {
-        $shipmentheader = ShipmentHeader::whereOrderid($orderDelivery->id)->lockForUpdate()->first();
-        if (! empty($shipmentheader)) {
-            $shipmentheader->statusid = 'DO';
-            $shipmentheader->save();
-        }
+        ShipmentHeader::whereOrderid($orderDelivery->id)->lockForUpdate()
+            ->update(['statusid' => 'DO']);
     }
 
     private function updateShipmentSeal(OrderDeliverie $orderDelivery): void
     {
-        $shipmentseal = ShipmentSeal::controlAccessUser()->whereOrderid($orderDelivery->id)->lockForUpdate()->first();
-        if (! empty($shipmentseal)) {
-            $shipmentseal->statusorderid = 'DO';
-            $shipmentseal->save();
-        }
+        ShipmentSeal::controlAccessUser()->whereOrderid($orderDelivery->id)
+            ->lockForUpdate()
+            ->update(['statusorderid' => 'DO']);
     }
 }

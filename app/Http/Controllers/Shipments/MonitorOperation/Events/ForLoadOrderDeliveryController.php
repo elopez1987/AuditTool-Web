@@ -49,7 +49,7 @@ class ForLoadOrderDeliveryController extends BaseController
             //          Validamos el cierre del proceso de verificación
             if (! empty($parameterWarehouse) && in_array('SWH-34', (array) $parameterWarehouse)) {
                 $shipmentCheck = ShipmentCheck::where('orderid', '=', $orderDelivery->id)->first();
-                if ($shipmentCheck->statusid !== 'VY') {
+                if ($shipmentCheck->statusid !== 'VF') {
                     return $this->errorResponse('El embarque no se encuentra verificado.');
                 }
             }

@@ -12,44 +12,49 @@ use Illuminate\Support\Facades\DB;
 
 class EndCheckOrderDeliveryController extends BaseController
 {
-    public function index($id)
+    public function index(int $id)
     {
-        DB::beginTransaction();
-        try {
-            $orderdelivery = OrderDeliverie::controlAccessUser()->whereId($id)->first();
-            if (! $orderdelivery) {
-                return $this->errorResponse('El número de embarque no existe,favor de validar.');
-            }
-            if ($orderdelivery->statusid == 'IV') {
-                return $this->errorResponse('El evento ya fue ejecutado anteriormente.');
-            }
+        $orderDelivery = OrderDeliverie::controlAccessUser()
+            ->where('id', $id)
+            ->first();
 
-            $statusold = $orderdelivery->statusid;
-            $this->updateShipmentDataOperation($id);
-            $this->updateStatusOrderDelivery($id);
-            OrderdeliveryTrace::saveEventShipment($orderdelivery, 'EEM-03', $statusold);
-            DB::commit();
+        if (! $orderDelivery) {
+            return $this->errorResponse('El número de embarque no existe, favor de validar.');
+        }
+
+        if ($orderDelivery->statusid === 'IV') {
+            return $this->errorResponse('El evento ya fue ejecutado anteriormente.');
+        }
+
+        try {
+            DB::transaction(function () use ($id, $orderDelivery) {
+                $statusOld = $orderDelivery->statusid;
+
+                $this->updateShipmentDataOperation($id);
+                $this->updateStatusOrderDelivery($orderDelivery);
+
+                OrderdeliveryTrace::saveEventShipment($orderDelivery, 'EEM-03', $statusOld);
+            });
 
             return $this->redirectBackSuccess();
-        } catch (Exception $e) {
-            DB::rollback();
 
+        } catch (Exception $e) {
             return $this->errorResponse($e->getMessage());
         }
     }
 
-    public function updateStatusOrderDelivery($id): void
+    private function updateStatusOrderDelivery(OrderDeliverie $orderDelivery): void
     {
-        $orderdelivery = OrderDeliverie::controlAccessUser()->whereId($id)->first();
-        $orderdelivery->statusid = 'IV';
-        $orderdelivery->save();
+        $orderDelivery->update(['statusid' => 'IV']);
     }
 
-    public function updateShipmentDataOperation($id): void
+    private function updateShipmentDataOperation(int $id): void
     {
-        $shipment = ShipmentDataOperation::controlAccessUser()->where('orderid', $id)->first();
-        $shipment->endchecker = now();
-        $shipment->lastuserid = Auth::user()->id;
-        $shipment->save();
+        ShipmentDataOperation::controlAccessUser()
+            ->where('orderid', $id)
+            ->update([
+                'endchecker' => now(),
+                'lastuserid' => Auth::id(),
+            ]);
     }
 }
