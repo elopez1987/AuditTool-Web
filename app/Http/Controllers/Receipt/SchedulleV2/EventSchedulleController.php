@@ -3,14 +3,17 @@
 namespace App\Http\Controllers\Receipt\SchedulleV2;
 
 use App\Http\Controllers\BaseController;
+use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Receipt\ReceiptAsn;
 use App\Models\Receipt\StorageSchedulleReceipt;
 use Auth;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class EventSchedulleController extends BaseController
 {
+    //	Bloquear secuencia de horario de descarga v2
     public function blockedeshedule(Request $request, $id)
     {
         try {
@@ -51,6 +54,7 @@ class EventSchedulleController extends BaseController
         }
     }
 
+    //	Limpiar bloqueo de descarga
     public function clearBlocked(Request $request, $id)
     {
         try {
@@ -90,6 +94,7 @@ class EventSchedulleController extends BaseController
         }
     }
 
+    //	Agregar prioridad a la descarga desde el horario v2
     public function addpriorityreceipt(Request $request, $id)
     {
         try {
@@ -114,7 +119,8 @@ class EventSchedulleController extends BaseController
         }
     }
 
-    public function cancelReceipt(Request $request, $id)
+    //	Cancelar descarga desde el horario v2
+    public function cancelRecei–pt(Request $request, $id)
     {
         DB::beginTransaction();
         try {
@@ -159,5 +165,66 @@ class EventSchedulleController extends BaseController
                 ], 500);
             }
         }
+    }
+
+    //	Reprogramar descarga desde el horario v2
+    public function movetosecuente(Request $request, $id)
+    {
+
+        DB::beginTransaction();
+        try {
+
+            $schedulleReceipt = StorageSchedulleReceipt::controlAccessUser()
+                ->where('id', $id)->first();
+
+            $secuenceNew = StorageSchedulleReceipt::controlAccessUser()
+                ->where('id', $request->secuence)->first();
+            if ($secuenceNew) {
+                $secuenceNew->update([
+                    'receiptid' => $schedulleReceipt->receiptid,
+                    'value01' => Auth::id(),
+                    'statusid' => 'DPR-03',
+                ]);
+
+                $hour = SystemStatus::where('statusid', $secuenceNew->secuence)->first();
+                $workday = Carbon::parse($request->workday);
+                $date = $hour->auxiliary05 === 'S' ? $workday->addDay() : $workday;
+                $combinedDateTime = $date->toDateString() . ' ' . $hour->auxiliary04;
+                $formattedDateTime = Carbon::createFromFormat('Y-m-d H:i', $combinedDateTime);
+
+                $receiptAsn = ReceiptAsn::controlAccessUser()
+                    ->where('id', $schedulleReceipt->receiptid)->first();
+
+                if ($receiptAsn) {
+                    $receiptAsn->update([
+                        'addasndate' => $formattedDateTime,
+                    ]);
+                }
+
+            }
+
+            $schedulleReceipt->update(
+                [
+                    'receiptid' => null,
+                    'value01' => null,
+                    'statusid' => 'DPR-01',
+                ],
+            );
+
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Registro reprogramado correctamente.',
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al reprogramar el registro.',
+            ]);
+        }
+
     }
 }

@@ -88,6 +88,8 @@ Route::middleware(['auth'])->group(function () {
 
     //    Agregar embarque al detalle del horario de descarga
     Route::put('addShipmentToScheduleedit/{id}', [DownloadScheduleController::class, 'addShipmentToScheduleedit'])->name('addShipmentToScheduleedit');
+    Route::post('getdaysforperiods', [DownloadScheduleController::class, 'getdaysforperiods'])->name('getdaysforperiods');
+    Route::post('getsecuenceforday/{workday}', [DownloadScheduleController::class, 'getsecuenceforday'])->name('getsecuenceforday');
 
     //	Bloquear modulo del horario de descarga v2
     Route::put('appointmentschedule/{id}', [EventSchedulleController::class, 'blockedeshedule'])->name('blockedeshedule');
@@ -95,6 +97,8 @@ Route::middleware(['auth'])->group(function () {
     Route::put('appointmentschedulecancel/{id}', [EventSchedulleController::class, 'cancelReceipt'])->name('appointmentschedulecancel');
     //	Agregar como prioridad
     Route::put('addpriorityreceipt/{id}', [EventSchedulleController::class, 'addpriorityreceipt'])->name('addpriorityreceipt');
+    //	Reprogramar cita de entrega
+    Route::put('movetosecuente/{id}', [EventSchedulleController::class, 'movetosecuente'])->name('movetosecuente');
 
     //   Monitor para registro de transporte por parte de proveedores
     Route::get('monitor-transport-receipts', [MonitorTransportReceiptController::class, 'index'])->name('monitortransportreceipt');

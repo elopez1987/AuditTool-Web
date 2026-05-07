@@ -66,8 +66,7 @@ class ReceiptProvider extends Model
 
     protected $fillable = ['centerid', 'warehouseid', 'providerid',
         'name', 'auxiliary01', 'auxiliary02', 'auxiliary03', 'auxiliary04',
-        'auxiliary05', 'auxiliary06', 'auxiliary07', 'auxiliary08',
-        'auxiliary09', 'auxiliary10', 'statusid',
+        'auxiliary05', 'statusid',
     ];
 
     protected $hidden = [
