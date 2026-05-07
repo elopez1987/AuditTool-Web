@@ -31,7 +31,7 @@ class DownloadScheduleController extends BaseController
     public function getDataSchedulleV2(Request $request)
     {
         $user = Auth::user();
-        $providers = AccessProvider::where('username', $user->username)->pluck('providerid')->toArray();
+        $providersAccess = AccessProvider::where('username', $user->username)->pluck('providerid')->toArray();
         $data = StorageSchedulleReceipt::controlAccessUser()
             ->Workday($request->get('workday'))
             ->Shipment($request->get('shipmentid'))
@@ -48,6 +48,7 @@ class DownloadScheduleController extends BaseController
                 's1.name as secuencia',
                 's1.auxiliary03',
                 'ra.shipmentid',
+                'ra.statusid as statusidasn',
                 'r2.name as proveedor',
                 's3.name as carriername',
                 'ra.oc',
@@ -103,15 +104,16 @@ class DownloadScheduleController extends BaseController
 
         // Solo aplicar el filtro si el usuario tiene proveedores asignados.
         // Si no tiene proveedores, se muestran todos los datos sin restricción.
-        if (! empty($providers)) {
-            $data->transform(function ($row) use ($providers) {
-                if ($row->providerid && ! in_array($row->providerid, $providers)) {
+        if (! empty($providersAccess)) {
+            $data->transform(function ($row) use ($providersAccess) {
+                if ($row->providerid && ! in_array($row->providerid, $providersAccess)) {
                     $row->proveedor = null;
                     $row->carriername = null;
                     $row->oc = null;
                     $row->factura = null;
                     $row->po = null;
                     $row->material = null;
+                    $row->statusidasn = null;
                     $row->quantity = null;
                     $row->priority = null;
                     $row->comment = null;
@@ -211,9 +213,11 @@ class DownloadScheduleController extends BaseController
                 'auxiliary01' => Auth::user()->name, // Planeador del recibo
             ]);
 
-            $schedulleReceipt->receiptid = $receipt->id;
-            $schedulleReceipt->statusid = 'DPR-02';
-            $schedulleReceipt->save();
+            $schedulleReceipt->update([
+                'receiptid' => $receipt->id,
+                'statusid' => 'DPR-02',
+                'value01' => Auth::id(),  // Usuario que agrega el recibo al plan de entrega
+            ]);
 
             DB::commit();
 

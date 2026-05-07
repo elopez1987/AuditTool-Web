@@ -7,6 +7,7 @@ use App\Models\Receipt\ReceiptAsn;
 use App\Models\Receipt\StorageSchedulleReceipt;
 use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class EventSchedulleController extends BaseController
 {
@@ -108,6 +109,53 @@ class EventSchedulleController extends BaseController
                 return response()->json([
                     'success' => false,
                     'message' => 'No se pudo asignar la prioridad: ' . $e->getMessage(),
+                ], 500);
+            }
+        }
+    }
+
+    public function cancelReceipt(Request $request, $id)
+    {
+        DB::beginTransaction();
+        try {
+
+            $receiptId = StorageSchedulleReceipt::controlAccessUser()->where('id', $id)->first();
+            if (empty($receiptId)) {
+                if ($request->ajax() || $request->wantsJson()) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'No se encontró el registro solicitado.',
+                    ], 404);
+                }
+            }
+
+            $receipt = ReceiptAsn::controlAccessUser()->where('id', $receiptId->receiptid)->first();
+            if ($receipt) {
+                $receipt->update([
+                    'statusid' => 'CE',
+                    'cancellationdate' => now(), ]);
+            }
+
+            $receiptId->update([
+                'receiptid' => null,
+                'statusid' => 'DPR-01',
+            ]);
+
+            DB::commit();
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Descarga cancelada con éxito.',
+                    'receipt_id' => $receipt->id,
+                ]);
+            }
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Error al cancelar la descarga: ',
                 ], 500);
             }
         }

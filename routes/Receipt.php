@@ -92,6 +92,7 @@ Route::middleware(['auth'])->group(function () {
     //	Bloquear modulo del horario de descarga v2
     Route::put('appointmentschedule/{id}', [EventSchedulleController::class, 'blockedeshedule'])->name('blockedeshedule');
     Route::put('appointmentscheduleclear/{id}', [EventSchedulleController::class, 'clearBlocked'])->name('appointmentscheduleclear');
+    Route::put('appointmentschedulecancel/{id}', [EventSchedulleController::class, 'cancelReceipt'])->name('appointmentschedulecancel');
     //	Agregar como prioridad
     Route::put('addpriorityreceipt/{id}', [EventSchedulleController::class, 'addpriorityreceipt'])->name('addpriorityreceipt');
 

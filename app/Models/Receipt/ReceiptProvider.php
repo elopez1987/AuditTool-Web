@@ -126,6 +126,8 @@ class ReceiptProvider extends Model
 
     public function scopeProvider($query, $providers)
     {
-        $query->whereIn('receiptproviders.id', $providers);
+        if (! empty($providers)) {
+            $query->whereIn('receiptproviders.id', $providers);
+        }
     }
 }
