@@ -180,11 +180,6 @@ class EventSchedulleController extends BaseController
             $secuenceNew = StorageSchedulleReceipt::controlAccessUser()
                 ->where('id', $request->secuence)->first();
             if ($secuenceNew) {
-                $secuenceNew->update([
-                    'receiptid' => $schedulleReceipt->receiptid,
-                    'value01' => Auth::id(),
-                    'statusid' => 'DPR-03',
-                ]);
 
                 $hour = SystemStatus::where('statusid', $secuenceNew->secuence)->first();
                 $workday = Carbon::parse($request->workday);
@@ -200,6 +195,14 @@ class EventSchedulleController extends BaseController
                         'addasndate' => $formattedDateTime,
                     ]);
                 }
+
+                $secuenceNew->update([
+                    'receiptid' => $schedulleReceipt->receiptid,
+                    'value01' => Auth::id(), // Usuario que agrega el recibo al plan de entrega
+                    'value02' => now(), // Fecha y hora en que se agrega el recibo al plan de entrega
+                    'value03' => $formattedDateTime, // Fecha y hora de la cita programada para el recibo
+                    'statusid' => 'DPR-03',
+                ]);
 
             }
 
