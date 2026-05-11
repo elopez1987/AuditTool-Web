@@ -6,6 +6,7 @@ use App\Http\Controllers\BaseController;
 use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Receipt\ReceiptAsn;
 use App\Models\Receipt\StorageSchedulleReceipt;
+use App\Models\Shipments\ShipmentTransport\StorageShipmentTransport;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -120,7 +121,7 @@ class EventSchedulleController extends BaseController
     }
 
     //	Cancelar descarga desde el horario v2
-    public function cancelRecei–pt(Request $request, $id)
+    public function cancelReceipt(Request $request, $id)
     {
         DB::beginTransaction();
         try {
@@ -141,6 +142,11 @@ class EventSchedulleController extends BaseController
                     'statusid' => 'CE',
                     'cancellationdate' => now(), ]);
             }
+
+            StorageShipmentTransport::controlAccessUser()
+                ->where('orderid', $receiptId->receiptid)
+                ->where('auxiliary04', 'ReceiptAsn')
+                ->delete();
 
             $receiptId->update([
                 'receiptid' => null,

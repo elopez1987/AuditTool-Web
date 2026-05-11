@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Yard\ReceiptUnit\Taks;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Yard\Task\CreateTaksOperator;
+use App\Jobs\Yard\SendMessageNewTaskJob;
 use App\Models\Yard\ReceiptUnit;
 use App\Models\Yard\StorageTask;
 use App\Models\Yard\StorageUnitTrace;
 use App\Models\Yard\StorageZone\StorageZone;
-use App\Traits\Web\Yard\Task\SendMessageWhatsAppForTask;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -16,8 +16,6 @@ use Yajra\DataTables\Facades\DataTables;
 
 class StorageTasksController extends BaseController
 {
-    use SendMessageWhatsAppForTask;
-
     public function index()
     {
         $this->authorize('storagetask.index');
@@ -94,7 +92,7 @@ class StorageTasksController extends BaseController
             $parameterNotificacionWarehouse = $this->getParameterNotificacionWarehouse($receiptunit->warehouseid);
 
             if (! empty($parameterNotificacionWarehouse) && in_array('MWH-01', (array) $parameterNotificacionWarehouse)) {
-                $this->sendMessageNewTask($task);
+                SendMessageNewTaskJob::dispatch($task->id)->onQueue('yms-web');
             }
 
             if ($request->ajax() || $request->wantsJson()) {

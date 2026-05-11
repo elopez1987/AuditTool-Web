@@ -17,7 +17,7 @@
             @can('monitortransportreceipt')
                 <a href="{{route('monitortransportreceipt')}}">
                     <div class="box">
-                        <i class="fa fa-qrcode"></i>
+                        <i class="mdi mdi-qrcode"></i>
                         <h5>Generar QR</h5>
                         <h4>Generar QR</h4>
                     </div>
