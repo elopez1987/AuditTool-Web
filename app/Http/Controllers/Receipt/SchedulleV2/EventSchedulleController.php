@@ -6,6 +6,7 @@ use App\Http\Controllers\BaseController;
 use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Receipt\ReceiptAsn;
 use App\Models\Receipt\StorageSchedulleReceipt;
+use App\Models\Shipments\ShipmentTransport\StorageShipmentTransport;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -120,7 +121,7 @@ class EventSchedulleController extends BaseController
     }
 
     //	Cancelar descarga desde el horario v2
-    public function cancelRecei–pt(Request $request, $id)
+    public function cancelReceipt(Request $request, $id)
     {
         DB::beginTransaction();
         try {
@@ -141,6 +142,11 @@ class EventSchedulleController extends BaseController
                     'statusid' => 'CE',
                     'cancellationdate' => now(), ]);
             }
+
+            StorageShipmentTransport::controlAccessUser()
+                ->where('orderid', $receiptId->receiptid)
+                ->where('auxiliary04', 'ReceiptAsn')
+                ->delete();
 
             $receiptId->update([
                 'receiptid' => null,
@@ -180,11 +186,6 @@ class EventSchedulleController extends BaseController
             $secuenceNew = StorageSchedulleReceipt::controlAccessUser()
                 ->where('id', $request->secuence)->first();
             if ($secuenceNew) {
-                $secuenceNew->update([
-                    'receiptid' => $schedulleReceipt->receiptid,
-                    'value01' => Auth::id(),
-                    'statusid' => 'DPR-03',
-                ]);
 
                 $hour = SystemStatus::where('statusid', $secuenceNew->secuence)->first();
                 $workday = Carbon::parse($request->workday);
@@ -200,6 +201,14 @@ class EventSchedulleController extends BaseController
                         'addasndate' => $formattedDateTime,
                     ]);
                 }
+
+                $secuenceNew->update([
+                    'receiptid' => $schedulleReceipt->receiptid,
+                    'value01' => Auth::id(), // Usuario que agrega el recibo al plan de entrega
+                    'value02' => now(), // Fecha y hora en que se agrega el recibo al plan de entrega
+                    'value03' => $formattedDateTime, // Fecha y hora de la cita programada para el recibo
+                    'statusid' => 'DPR-03',
+                ]);
 
             }
 

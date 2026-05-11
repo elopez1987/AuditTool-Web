@@ -1,31 +1,63 @@
 <?php
 
-namespace App\Traits\Web\Yard\Task;
+namespace App\Jobs\Yard;
 
+use App\Models\Configuration\Parameters\SystemDetailParameter;
 use App\Models\Yard\LogMessageWhatsApp;
 use App\Models\Yard\ReceiptUnit;
 use App\Models\Yard\StorageTask;
 use App\User;
 use GuzzleHttp\Client;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 
-trait SendMessageWhatsAppForTask
+class SendMessageNewTaskJob implements ShouldQueue
 {
-    public function sendMessageNewTask($task)
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    public $task_id;
+
+    public function __construct($task_id)
     {
+        $this->task_id = $task_id;
+    }
+
+    public function handle(): void
+    {
+
+        $configWhatsApp = SystemDetailParameter::where('parameterid', '=', 'PARAM-WTH')->first();
+        if (empty($configWhatsApp)) {
+            Log::error('SendMessageNewTaskJob:No se encuentra configurado parametro PARAM-WTH');
+
+            return;
+        }
+
+        $task = StorageTask::where('id', $this->task_id)->first();
+        if (empty($task)) {
+            Log::error('SendMessageNewTaskJob:No existe la tarea con el id: ' . $this->task_id . '');
+
+            return;
+        }
+
         $contact = $this->getContact($task);
 
         if (empty($contact->phone)) {
+            Log::error('SendMessageNewTaskJob:No se encontro el contacto para la tarea con el id: ' . $this->task_id . '');
+
             return;
         }
 
         $task = $this->getStorageTask($task);
 
         $client = new Client;
-        $url = 'https://api.1msg.io/HEI523482986/sendTemplate';
+        $url = $configWhatsApp->value03;
 
         try {
-            $payload = $this->getBodyData($task, $contact);
+            $payload = $this->getBodyData($task, $contact, $configWhatsApp);
 
             $response = $client->post($url, [
                 'json' => $payload,
@@ -49,13 +81,14 @@ trait SendMessageWhatsAppForTask
                 'error' => $e->getMessage(),
             ]);
         }
+
     }
 
-    public function getBodyData($task, $contact)
+    public function getBodyData($task, $contact, $configWhatsApp)
     {
         return [
-            'token' => 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbnN0YW5jZUlkIjoiSEVJNTIzNDgyOTg2IiwidG9rZW4iOiJtaGVaTTh4cTQ2a2RadjZ0Q0NJeXZydGo4dkc3bnlOeCIsImlzcyI6IjFtc2cuaW8iLCJpYXQiOjE3NTU2MTU3NTZ9.PNJB7YjZbqerW-s-r8TOSTlPOS_6OddKHxVbwfsQ9GY',
-            'namespace' => '3686dca6_3e5f_4dc5_a838_74a7716b881c',
+            'token' => $configWhatsApp->value01,
+            'namespace' => $configWhatsApp->value02,
             'template' => 'tareapatiero',
             'language' => [
                 'policy' => 'deterministic',
@@ -80,8 +113,7 @@ trait SendMessageWhatsAppForTask
 
     public function getStorageTask($task): StorageTask
     {
-        return StorageTask::controlAccessUser()
-            ->leftJoin('receiptunits', 'receiptunits.id', '=', 'storagetasks.receiptunitid')
+        return StorageTask::leftJoin('receiptunits', 'receiptunits.id', '=', 'storagetasks.receiptunitid')
             ->leftJoin('shipmentcarriers', 'receiptunits.carrierid', 'shipmentcarriers.id')
             ->leftJoin('storagezones', 'storagetasks.zoneid', '=', 'storagezones.id')
             ->leftJoin('storagelocations', 'storagetasks.locationid', '=', 'storagelocations.id')
@@ -94,14 +126,14 @@ trait SendMessageWhatsAppForTask
             ])->first();
     }
 
-    public function getContact($task): ReceiptUnit|User
+    public function getContact(StorageTask $task): ReceiptUnit|User
     {
-        if ($task->assignedto == 1) {
-            $contact = ReceiptUnit::controlAccessUser()->where('id', $task->receiptunitid)->select('phone')->first();
-        } else {
-            $contact = User::where('id', $task->operatoryard)->select('auxiliary01 as phone')->first();
-        }
-
-        return $contact;
+        return $task->assignedto === 1
+            ? ReceiptUnit::where('id', $task->receiptunitid)
+                ->select('phone')
+                ->firstOrFail()
+            : User::where('id', $task->operatoryard)
+                ->select('auxiliary01 as phone')
+                ->firstOrFail();
     }
 }

@@ -132,11 +132,11 @@
     <div class="row">
         <table class="border-none">
             <th style="height: 10px;width: 33%;border-top: 0;">Operador
-                : {{$receipt->folio ? $receipt->folio->operatorname : ''}}</th>
+                : {{$receipt->folio ? $receipt->folio?->operatorname : ''}}</th>
             <th style="width: 33%;border-top: 0px;text-align: left">Placa de caja
-                : {{$receipt->folio ? $receipt->folio->boxnumber : ''}}</th>
+                : {{$receipt->folio ? $receipt->folio?->boxnumber : ''}}</th>
             <th style="width: 33%;border-top: 0px;text-align: left">Cortina
-                : {{$receipt->folio ? $receipt->folio->location->name : ''}}</th>
+                : {{$receipt->folio ? $receipt->folio?->location?->name : ''}}</th>
         </table>
     </div>
 
@@ -144,12 +144,13 @@
     <div class="row">
         <table class="border-none">
             <th style="border-top: 0px;width: 50%;height: 10px;">Linea de Transporte
-                : {{$receipt->folio ? $receipt->folio->carrier->name : ''}}</th>
+                : {{$receipt->folio ? $receipt->folio?->carrier?->name : ''}}</th>
             <th style="border-top: 0px;text-align: left">
                 Centro: {{$receipt->warehouse ? $receipt->warehouse->name : ''}} </th>
         </table>
     </div>
 
+    @if($stocks->isNotEmpty())
     <div class="row" style="margin-top: 20px">
         <table class="border-none">
             <th class="border-none" style="text-align: center">Datos de la descarga</th>
@@ -179,7 +180,7 @@
             </tbody>
         </table>
     </div>
-
+    @endif
 
     @if($containers->isNotEmpty())
         <div class="row" style="margin-top: 10px">

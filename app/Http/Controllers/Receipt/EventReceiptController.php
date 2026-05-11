@@ -12,11 +12,12 @@ use App\Models\Receipt\ReceiptAsnTime;
 use App\Models\Receipt\ReceiptContainer;
 use App\Models\Receipt\ReceiptIncidenceStock;
 use App\Models\Receipt\ReceiptStock;
+use App\Models\Receipt\StorageReceiptPallet;
 use App\Models\Receipt\StorageSchedulleReceipt;
 use App\Models\Yard\ReceiptUnit;
 use App\Models\Yard\StorageUnitTrace;
-use Carbon\Carbon;
 use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Log;
@@ -24,72 +25,104 @@ use PDF;
 
 class EventReceiptController extends BaseController
 {
-    public function cancellationReceipt($id)
+    public function cancellationReceipt(int $id)
     {
-        $receipt = ReceiptAsn::findOrFail($id);
-        $receipt->cancellationdate = now();
-        $receipt->statusid = 'CE';
-        $receipt->save();
+        DB::transaction(function () use ($id) {
+            ReceiptAsn::where('id', $id)
+                ->update([
+                    'cancellationdate' => now(),
+                    'statusid' => 'CE',
+                ]);
 
-        $schedulleReceipt = StorageSchedulleReceipt::controlAccessUser()->where('receiptid', $id)->first();
-        if (! empty($schedulleReceipt)) {
-            $schedulleReceipt->receiptid = null;
-            $schedulleReceipt->save();
-        }
+            StorageSchedulleReceipt::controlAccessUser()
+                ->where('receiptid', $id)
+                ->update(['receiptid' => null]);
+        });
 
         return $this->successResponse('receiptasn.index');
     }
 
-    public function addpriority($id)
+    public function addpriority(int $id)
     {
-        $receipt = ReceiptAsn::findOrFail($id);
-        $receipt->downloadpriority = 'S';
-        $receipt->save();
+        ReceiptAsn::where('id', $id)
+            ->update(['downloadpriority' => 'S']);
 
         return $this->redirectBackInfo();
     }
 
-    public function goodissuedate(Request $request, $id)
+    //	Cerrar descarga con registro de PO de SAP
+    public function goodissuedate(Request $request, int $id)
     {
-        $receipt = ReceiptAsn::findOrFail($id);
-        $receipt->goodissuedate = now();
-        $receipt->auxiliary02 = $request['gr'];
-        $receipt->po = $request['gr'];
-        $receipt->statusid = 'IG';
-        $receipt->save();
+        $request->validate([
+            'gr' => ['required'],
+        ]);
 
-        $folio = ReceiptUnit::whereId($receipt->folionumber)->first(['id', 'unitstatusid']);
-        if ($folio !== null) {
-            $folio->unitstatusid = '1';
-            $folio->save();
+        $receipt = ReceiptAsn::findOrFail($id);
+
+        $parameterWarehouse = $this->getParametersOfWarehouse($receipt->warehouseid);
+
+        if (! empty($parameterWarehouse) && in_array('SWH-45', $parameterWarehouse)) {
+            $hasPallets = StorageReceiptPallet::where('receiptid', $id)->exists();
+
+            if (! $hasPallets) {
+                return $this->errorResponse('No se encontraron registros de tarimas en la descarga, favor de registrarlos para finalizar el proceso.');
+            }
         }
 
+        DB::transaction(function () use ($request, $receipt) {
+            $receipt->update([
+                'goodissuedate' => now(),
+                'auxiliary02' => $request->input('gr'),
+                'po' => $request->input('gr'),
+                'statusid' => 'IG',
+            ]);
+
+            ReceiptUnit::where('id', $receipt->folionumber)
+                ->whereNotNull('id')
+                ->update(['unitstatusid' => '1']);
+        });
+
         return $this->redirectBackInfo();
     }
 
-    public function kardexpdf($id)
+    public function kardexpdf(int $id)
     {
-        $pathImage = SystemDetailParameter::where('parameterid', '=', 'PARAM-IMG')->first();
-        $receipt = ReceiptAsn::controlAccessUser()->where('receiptasn.id', $id)
-            ->leftJoin('systemstatus as se', 'receiptasn.auxiliary04', '=', 'se.statusid')
-            ->leftJoin('users as u1', 'receiptasn.auxiliary08', '=', 'u1.username')
-            ->leftJoin('users as u2', 'receiptasn.auxiliary09', '=', 'u2.username')
-            ->leftJoin('users as u3', 'receiptasn.auxiliary10', '=', 'u3.username')
-            ->select(['receiptasn.*', 'u1.name as analista', 'u2.name as monta', 'u3.name as verificador'])
-            ->first();
-        $checklistAsn = ReceiptAsnCheckList::where('receiptid', $id)->get();
-        $images = EvidencePhoto::where('model_type', '=', 'ReceiptAsn')
-            ->where('model_id', $id)->get();
-        $incidences = ReceiptIncidenceStock::with(['partnumber', 'categoryincidence', 'subcategoryincidence'])
-            ->where('receiptid', $id)->get();
+        // Queries en paralelo — independientes entre sí
+        [$pathImage, $receipt, $checklistAsn, $images, $incidences, $containers] = [
+            SystemDetailParameter::where('parameterid', 'PARAM-IMG')->value('value01'),
+
+            ReceiptAsn::controlAccessUser()
+                ->where('receiptasn.id', $id)
+                ->leftJoin('systemstatus as se', 'receiptasn.auxiliary04', '=', 'se.statusid')
+                ->leftJoin('users as u1', 'receiptasn.auxiliary08', '=', 'u1.username')
+                ->leftJoin('users as u2', 'receiptasn.auxiliary09', '=', 'u2.username')
+                ->leftJoin('users as u3', 'receiptasn.auxiliary10', '=', 'u3.username')
+                ->select([
+                    'receiptasn.*',
+                    'u1.name as analista',
+                    'u2.name as monta',
+                    'u3.name as verificador',
+                ])
+                ->firstOrFail(),
+
+            ReceiptAsnCheckList::where('receiptid', $id)->get(),
+
+            EvidencePhoto::where('model_type', 'ReceiptAsn')
+                ->where('model_id', $id)
+                ->get(),
+
+            ReceiptIncidenceStock::with(['partnumber', 'categoryincidence', 'subcategoryincidence'])
+                ->where('receiptid', $id)
+                ->get(),
+
+            ReceiptContainer::getContainersForReceipt($id),
+        ];
+
         $stocks = $this->getTotalsReceipt($id);
-        $containers = ReceiptContainer::getContainersForReceipt($id);
+
         $pdf = PDF::setOptions([
             'isRemoteEnabled' => true,
-            'chroot' => [
-                realpath(base_path()),
-                realpath($pathImage->value01),
-            ],
+            'chroot' => [realpath(base_path()), realpath($pathImage)],
             'httpContext' => stream_context_create([
                 'ssl' => [
                     'verify_peer' => false,
@@ -98,9 +131,10 @@ class EventReceiptController extends BaseController
                 ],
             ]),
         ])->loadView('Receipt.ReceiptAsn.partials.kardex',
-            compact('receipt', 'checklistAsn', 'images', 'stocks', 'incidences', 'containers'));
+            compact('receipt', 'checklistAsn', 'images', 'stocks', 'incidences', 'containers')
+        );
 
-        return $pdf->download('Kardex de descarga - ' . $receipt->id . '.pdf');
+        return $pdf->download("Kardex de descarga - {$receipt->id}.pdf");
     }
 
     public function getTotalsReceipt($receiptid)
@@ -136,149 +170,145 @@ class EventReceiptController extends BaseController
             ->get();
     }
 
-    public function addNewCommentToReceipt(Request $request, $id)
+    public function addNewCommentToReceipt(Request $request, int $id)
     {
-        $receiptAsn = ReceiptAsn::findOrFail($id);
-        if ($request['comment'] !== '') {
-            StorageComment::createCommentary('receiptasn', $receiptAsn->id, $request);
-        }
-
-        return $this->redirectBackSuccessMessage('Comentario agregado con exito.');
-    }
-
-    public function receiptasnclose($id)
-    {
-        $receiptasn = ReceiptAsn::findOrFail($id);
-        $receiptasn->statusid = 'IG';
-        $receiptasn->goodissuedate = Carbon::now();
-        $receiptasn->save();
-
-        return $this->redirectBackSuccessMessage('Descarga finalizada con exito.');
-    }
-
-    public function startprocess($id)
-    {
-        DB::beginTransaction();
-        try {
-            $receiptasn = ReceiptAsn::controlAccessUser()->findOrFail($id);
-            if (empty($receiptasn)) {
-                return $this->errorResponse('No se encontro el registro solicitado.');
-            }
-            $receiptunit = ReceiptUnit::controlAccessUser()->findOrFail($receiptasn->folionumber);
-            if (empty($receiptunit)) {
-                return $this->errorResponse('La unidad no cuenta con folio de patios.');
-            }
-            if ($receiptunit->zone->zoneid !== 'CO') {
-                return $this->errorResponse('La unidad no se encuentra en Cortinas.');
-            }
-
-            $receiptasn->statusid = 'DE';
-            $receiptasn->unloadstartdate = Carbon::now();
-            $receiptasn->save();
-
-            $receiptunit->startdate = Carbon::now();
-            $receiptunit->statusid = 'EP';
-            $receiptunit->save();
-
-            StorageUnitTrace::createTraceUnit($receiptunit, '14');
-
-            DB::commit();
-
-            return $this->redirectBackSuccessMessage('Proceso de descarga iniciado con exito.');
-        } catch (Exception $e) {
-            Log::error($e->getMessage());
-            DB::rollback();
-
-            return $this->errorResponse('No se pudo iniciar el proceso de descarga, favor de intentar nuevamente.');
-        }
-    }
-
-    public function finishprocess($id)
-    {
-        DB::beginTransaction();
-        try {
-            $receiptasn = ReceiptAsn::controlAccessUser()->findOrFail($id);
-            if (empty($receiptasn)) {
-                return $this->errorResponse('No se encontro el registro solicitado.');
-            }
-            $receiptunit = ReceiptUnit::controlAccessUser()->findOrFail($receiptasn->folionumber);
-            if (empty($receiptunit)) {
-                return $this->errorResponse('La unidad no cuenta con folio de patios.');
-            }
-            if ($receiptunit->zone->zoneid !== 'CO') {
-                return $this->errorResponse('La unidad no se encuentra en Cortinas.');
-            }
-
-            $receiptasn->statusid = 'TE';
-            $receiptasn->unloadfinishdate = Carbon::now();
-            $receiptasn->save();
-
-            $receiptunit->finishdate = Carbon::now();
-            $receiptunit->statusid = 'FI';
-            $receiptunit->save();
-
-            StorageUnitTrace::createTraceUnit($receiptunit, '15');
-
-            DB::commit();
-
-            return $this->redirectBackSuccessMessage('Proceso de descarga iniciado con exito.');
-        } catch (Exception $e) {
-            Log::error($e->getMessage());
-            DB::rollback();
-
-            return $this->errorResponse('No se pudo iniciar el proceso de descarga, favor de intentar nuevamente.');
-        }
-    }
-
-    public function sendToBilling($id)
-    {
-        $receiptAsn = ReceiptAsn::findOrFail($id);
-        if (! $receiptAsn) {
-            return $this->errorResponse('No se encontro el registro solicitado.');
-        }
-        ReceiptAsnTime::updateOrCreate([
-            'receiptid' => $receiptAsn->id,
-            'send_to_billing' => now(),
+        $request->validate([
+            'comment' => ['required', 'string', 'max:500'],
         ]);
 
-        return $this->redirectBackSuccessMessage('Se envio a facturacion con exito.');
+        StorageComment::createCommentary('receiptasn', $id, $request);
 
+        return $this->redirectBackSuccessMessage('Comentario agregado con éxito.');
     }
 
-    public function startBilling($id)
+    public function receiptasnclose(int $id)
     {
-        $receiptAsn = ReceiptAsn::findOrFail($id);
-        if (! $receiptAsn) {
-            return $this->errorResponse('No se encontro el registro solicitado.');
-        }
-        ReceiptAsnTime::where('receiptid', $receiptAsn->id)->update(['start_billing' => now()]);
+        ReceiptAsn::where('id', $id)
+            ->update([
+                'statusid' => 'IG',
+                'goodissuedate' => now(),
+            ]);
 
-        return $this->redirectBackSuccessMessage('Se envio a facturacion con exito.');
+        return $this->redirectBackSuccessMessage('Descarga finalizada con éxito.');
     }
 
-    public function finishBilling($id, Request $request)
+    public function startprocess(int $id)
     {
-
-        DB::beginTransaction();
         try {
-            $receiptAsn = ReceiptAsn::findOrFail($id);
-            if (! $receiptAsn) {
-                return $this->errorResponse('No se encontro el registro solicitado.');
+            $receiptAsn = ReceiptAsn::controlAccessUser()->findOrFail($id);
+
+            $receiptUnit = ReceiptUnit::controlAccessUser()
+                ->findOrFail($receiptAsn->folionumber);
+
+            if ($receiptUnit->zone->zoneid !== 'CO') {
+                return $this->errorResponse('La unidad no se encuentra en Cortinas.');
             }
 
-            ReceiptAsnTime::where('receiptid', $receiptAsn->id)->update(['finish_billing' => now()]);
+            DB::transaction(function () use ($receiptAsn, $receiptUnit) {
+                $receiptAsn->update([
+                    'statusid' => 'DE',
+                    'unloadstartdate' => now(),
+                ]);
 
-            $receiptAsn->goodissuedate = now();
-            $receiptAsn->auxiliary02 = $request['gr'];
-            $receiptAsn->po = $request['gr'];
-            $receiptAsn->statusid = 'IG';
-            $receiptAsn->save();
+                $receiptUnit->update([
+                    'startdate' => now(),
+                    'statusid' => 'EP',
+                ]);
 
-            DB::commit();
+                StorageUnitTrace::createTraceUnit($receiptUnit, '14');
+            });
 
-            return $this->redirectBackSuccessMessage('Se envio a facturacion con exito.');
+            return $this->redirectBackSuccessMessage('Proceso de descarga iniciado con éxito.');
+
+        } catch (ModelNotFoundException $e) {
+            return $this->errorResponse('No se encontró el registro solicitado.');
         } catch (Exception $e) {
-            DB::rollback();
+            Log::error($e->getMessage());
+
+            return $this->errorResponse('No se pudo iniciar el proceso de descarga, favor de intentar nuevamente.');
+        }
+    }
+
+    public function finishprocess(int $id)
+    {
+        try {
+            $receiptAsn = ReceiptAsn::controlAccessUser()->findOrFail($id);
+
+            $receiptUnit = ReceiptUnit::controlAccessUser()
+                ->findOrFail($receiptAsn->folionumber);
+
+            if ($receiptUnit->zone->zoneid !== 'CO') {
+                return $this->errorResponse('La unidad no se encuentra en Cortinas.');
+            }
+
+            DB::transaction(function () use ($receiptAsn, $receiptUnit) {
+                $receiptAsn->update([
+                    'statusid' => 'TE',
+                    'unloadfinishdate' => now(),
+                ]);
+
+                $receiptUnit->update([
+                    'finishdate' => now(),
+                    'statusid' => 'FI',
+                ]);
+
+                StorageUnitTrace::createTraceUnit($receiptUnit, '15');
+            });
+
+            return $this->redirectBackSuccessMessage('Proceso de descarga finalizado con éxito.');
+
+        } catch (ModelNotFoundException $e) {
+            return $this->errorResponse('No se encontró el registro solicitado.');
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+
+            return $this->errorResponse('No se pudo finalizar el proceso de descarga, favor de intentar nuevamente.');
+        }
+    }
+
+    public function sendToBilling(int $id)
+    {
+        $receiptAsn = ReceiptAsn::findOrFail($id);
+
+        ReceiptAsnTime::updateOrCreate(
+            ['receiptid' => $receiptAsn->id],
+            ['send_to_billing' => now()]
+        );
+
+        return $this->redirectBackSuccessMessage('Se envió a facturación con éxito.');
+    }
+
+    public function startBilling(int $id)
+    {
+        ReceiptAsnTime::where('receiptid', $id)
+            ->update(['start_billing' => now()]);
+
+        return $this->redirectBackSuccessMessage('Se inició facturación con éxito.');
+    }
+
+    public function finishBilling(int $id, Request $request)
+    {
+        $request->validate([
+            'gr' => ['required', 'string'],
+        ]);
+
+        try {
+            DB::transaction(function () use ($id, $request) {
+                ReceiptAsnTime::where('receiptid', $id)
+                    ->update(['finish_billing' => now()]);
+
+                ReceiptAsn::where('id', $id)
+                    ->update([
+                        'goodissuedate' => now(),
+                        'auxiliary02' => $request->input('gr'),
+                        'po' => $request->input('gr'),
+                        'statusid' => 'IG',
+                    ]);
+            });
+
+            return $this->redirectBackSuccessMessage('Facturación finalizada con éxito.');
+
+        } catch (Exception $e) {
             Log::error('Error en finishBilling', [
                 'message' => $e->getMessage(),
                 'file' => $e->getFile(),
@@ -288,6 +318,5 @@ class EventReceiptController extends BaseController
 
             return $this->errorResponse('No se pudo registrar el fin de facturación, favor de intentar nuevamente.');
         }
-
     }
 }

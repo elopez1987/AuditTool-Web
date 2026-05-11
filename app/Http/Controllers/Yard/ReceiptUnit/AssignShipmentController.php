@@ -68,7 +68,7 @@ class AssignShipmentController extends BaseController
             $parameter = $this->getParametersOfWarehouse($receiptunit->warehouseid);
 
             // Si aplica la validación del parámetro SWH-26
-            if (in_array('SWH-26', (array) $parameter)) {
+            if (! empty($parameter) && in_array('SWH-26', (array) $parameter)) {
 
                 // 1. Validar que la unidad no esté ya asignada a un embarque
                 $folioToshipment = OrderDeliverie::searchForUnit($receiptunit->id);

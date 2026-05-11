@@ -8,6 +8,7 @@ use App\Models\Configuration\Warehouses\SystemWarehouse;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\Models\Yard\StorageZone\StorageZone;
 use App\User;
+use Auth;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -75,6 +76,9 @@ class StorageTask extends Model
         'zoneid',
         'locationid',
         'statusid',
+        'created_by',
+        'closed_by',
+        'closed_at',
     ];
 
     protected $attributes = [
@@ -98,6 +102,16 @@ class StorageTask extends Model
 
         return StorageTask::whereIn('storagetasks.warehouseid', $warehouses)
             ->whereIn('storagetasks.centerid', $centers);
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (StorageTask $model) {
+                $model->created_by = Auth::id();
+            });
+        }
     }
 
     public function center()

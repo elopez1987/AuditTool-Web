@@ -18,7 +18,6 @@
                     <div class="row">
                         <div class="col-lg-4 col-md-6 col-sm-12">
                             <div class="form-group">
-{{--                                <label for="gr">GR de SAP</label>--}}
                                 <input type="text" class="form-control"   id="gr" name="gr">
                             </div>
                         </div>
