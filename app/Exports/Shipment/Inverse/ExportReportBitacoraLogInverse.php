@@ -219,7 +219,7 @@ class ExportReportBitacoraLogInverse implements FromCollection, ShouldAutoSize, 
 
             // ── WHERE ──────────────────────────────────────────────────}
             ->where('s.centerid', $this->request->centerid)
-            ->whereBetween('s.adddate', [$this->request->entrydate, $this->request->finishdate])
+            ->whereBetween('s.adddate', [$this->request->workdayin, $this->request->workdayout])
 
             // ── GROUP BY ───────────────────────────────────────────────
             ->groupBy([
