@@ -25,6 +25,10 @@ class MonitorTransportReceiptController extends BaseController
                     ->from('securityaccessproviders')
                     ->where('username', auth()->user()->username);
             })
+            ->where(function ($query) {
+                $query->whereHas('transport', fn ($q) => $q->where('auxiliary04', 'ReceiptAsn'))
+                    ->orWhereDoesntHave('transport');
+            })
             ->select(['id', 'providerid', 'centerid', 'shipmentid', 'carrierid',
                 'warehouseid', 'statusid', 'auxiliary01', 'addasndate'])
             ->get();
