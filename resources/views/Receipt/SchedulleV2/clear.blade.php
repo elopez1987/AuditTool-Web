@@ -62,7 +62,7 @@
                     
                     // Recargar DataTable
                     if (typeof reloadtable === 'function') {
-                        reloadtable();
+                        $('#schedulle').DataTable().ajax.reload();
                     }
                 },
                 error: function(xhr) {

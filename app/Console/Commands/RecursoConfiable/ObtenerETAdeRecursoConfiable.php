@@ -190,10 +190,10 @@ class ObtenerETAdeRecursoConfiable extends Command
 
         $shipmentJourney->save();
 
-        Log::info('ETA actualizado exitosamente', [
-            'shipment_id' => $shipmentid,
-            'eta' => $shipmentJourney->eta,
-        ]);
+        //        Log::info('ETA actualizado exitosamente', [
+        //            'shipment_id' => $shipmentid,
+        //            'eta' => $shipmentJourney->eta,
+        //        ]);
     }
 
     private function getShipmentJourneys(string $centerid): array

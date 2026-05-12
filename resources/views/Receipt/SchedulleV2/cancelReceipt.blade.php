@@ -1,6 +1,6 @@
 <div class="modal fade bs-example-modal-lg" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true"
      style="display: none;" id="modal-cancel-{{$id}}">
-    <form id="form-clear-{{$id}}" data-schedule-id="{{$id}}">
+    <form id="form-cancel-{{$id}}" data-schedule-id="{{$id}}">
         @csrf
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -22,7 +22,7 @@
                         Cancelar
                     </button>
                     <button type="submit" class="btn btn-outline-secondary btn-sm  waves-effect waves-light"
-                            id="btn-clear-{{$id}}">
+                            id="btn-cancel-{{$id}}">
                         <img src="{{asset('/pics/adaceptar.png')}}" alt="">
                         Aceptar
                     </button>
@@ -34,7 +34,7 @@
 
 <script>
     $(document).ready(function() {
-        $('#form-clear-{{$id}}').on('submit', function(e) {
+        $('#form-cancel-{{$id}}').on('submit', function(e) {
             e.preventDefault();
             
             var scheduleId = $(this).data('schedule-id');
@@ -47,10 +47,10 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 beforeSend: function() {
-                    $('#btn-clear-{{$id}}').prop('disabled', true);
+                    $('#btn-cancel-{{$id}}').prop('disabled', true);
                 },
                 success: function(response) {
-                    $('#modal-clear-{{$id}}').modal('hide');
+                    $('#modal-cancel-{{$id}}').modal('hide');
                     
                     Swal.fire({
                         icon: 'success',
@@ -62,7 +62,7 @@
                     
                     // Recargar DataTable
                     if (typeof reloadtable === 'function') {
-                        reloadtable();
+                        $('#schedulle').DataTable().ajax.reload();
                     }
                 },
                 error: function(xhr) {
@@ -80,7 +80,7 @@
                     });
                 },
                 complete: function() {
-                    $('#btn-clear-{{$id}}').prop('disabled', false);
+                    $('#btn-cancel-{{$id}}').prop('disabled', false);
                 }
             });
         });

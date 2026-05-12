@@ -15,9 +15,6 @@
                                 <a href="">
                                     @include('buttons.search')
                                 </a>
-                                <a>
-                                    @include('buttons.reloadajax')
-                                </a>
                                 <a href="{{route('menureceipt')}}">
                                     @include('buttons.cancel')
                                 </a>

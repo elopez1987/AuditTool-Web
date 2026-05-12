@@ -12,13 +12,13 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-lg-12">
-                            <p class="text-table text-black">¿Ingrese el valor de GR de SAP?</p>
+                            <p class="text-table text-black">Ingrese el valor de GR de SAP</p>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-4 col-md-6 col-sm-12">
                             <div class="form-group">
-                                <input type="text" class="form-control"   id="gr" name="gr">
+                                <input type="text" class="form-control"   id="gr" name="gr" required>
                             </div>
                         </div>
                     </div>
