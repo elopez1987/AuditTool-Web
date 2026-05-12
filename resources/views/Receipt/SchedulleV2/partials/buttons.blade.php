@@ -25,7 +25,7 @@
 
 {{--    Agregar validacion que solo se pueda cancelar los programados y solo lo puede cancelar el mismo usuario que creo el registro--}}
 @can('receiptasn.cancel-v2')
-    @if($shipmentid !== null &&  $value01 == \Illuminate\Support\Facades\Auth::id())
+    @if($shipmentid !== null &&  $value01 == \Illuminate\Support\Facades\Auth::id() && $statusidasn == 'PG')
         <a href="" data-target="#modal-cancel-{{$id}}" data-toggle="modal" data-toggle="tooltip"
            data-placement="top" title="Cancelar registro.">
             <img src="{{asset('/ico/4115230-cancel-close-cross-delete_114048.png')}}" alt="" class="img-16 text-center">

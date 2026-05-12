@@ -17,20 +17,21 @@ class MonitorTransportReceiptController extends BaseController
             'provider:id,name',
             'center:centerid,name,description',
             'warehouse:warehouseid,name',
-            'transport:id,orderid,has_data',
         ])
+            ->leftJoin('shipmenttransport', function ($join) {
+                $join->on('receiptasn.id', '=', 'shipmenttransport.orderid')
+                    ->where('shipmenttransport.auxiliary04', '=', 'ReceiptAsn');
+            })
             ->where('statusid', 'PG')
             ->whereIn('providerid', function ($query) {
                 $query->select('providerid')
                     ->from('securityaccessproviders')
                     ->where('username', auth()->user()->username);
             })
-            ->where(function ($query) {
-                $query->whereHas('transport', fn ($q) => $q->where('auxiliary04', 'ReceiptAsn'))
-                    ->orWhereDoesntHave('transport');
-            })
-            ->select(['id', 'providerid', 'centerid', 'shipmentid', 'carrierid',
-                'warehouseid', 'statusid', 'auxiliary01', 'addasndate'])
+            ->select(['receiptasn.id', 'receiptasn.providerid', 'receiptasn.centerid',
+                'receiptasn.shipmentid', 'receiptasn.carrierid',
+                'receiptasn.warehouseid', 'receiptasn.statusid', 'receiptasn.auxiliary01',
+                'receiptasn.addasndate', 'has_data', 'shipmenttransport.orderid'])
             ->get();
 
         return view('Receipt.MonitorTransport.index', compact('receipts'));
