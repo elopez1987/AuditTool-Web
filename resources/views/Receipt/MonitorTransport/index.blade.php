@@ -54,7 +54,7 @@
                                                class="btn waves-effect waves-light  btn-md">
                                                 <img src="{{asset('/ico/viewdetail.png')}}" alt="" class="img-16">
                                             </a>
-                                            @if($receipt->transport?->has_data)
+                                            @if($receipt->has_data)
                                                 <a href="{{route('printFormatQr',$receipt->id)}}"
                                                    class="btn waves-effect waves-light  btn-md">
                                                     <img src="{{asset('/ico/pdf.png')}}" alt="" class="img-16">
