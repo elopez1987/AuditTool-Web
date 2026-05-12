@@ -13,7 +13,7 @@ class MonitorTransportReceiptController extends BaseController
 {
     public function index()
     {
-        $receipts = ReceiptAsn::with([
+        $receipts = ReceiptAsn::controlAccessUser()->with([
             'provider:id,name',
             'center:centerid,name,description',
             'warehouse:warehouseid,name',
@@ -31,7 +31,7 @@ class MonitorTransportReceiptController extends BaseController
             ->select(['receiptasn.id', 'receiptasn.providerid', 'receiptasn.centerid',
                 'receiptasn.shipmentid', 'receiptasn.carrierid',
                 'receiptasn.warehouseid', 'receiptasn.statusid', 'receiptasn.auxiliary01',
-                'receiptasn.addasndate', 'has_data', 'shipmenttransport.orderid'])
+                'receiptasn.addasndate', 'shipmenttransport.has_data', 'shipmenttransport.orderid'])
             ->get();
 
         return view('Receipt.MonitorTransport.index', compact('receipts'));
@@ -78,7 +78,31 @@ class MonitorTransportReceiptController extends BaseController
     public function printFormatQr($id)
     {
         $pathImage = SystemDetailParameter::where('parameterid', '=', 'PARAM-IMG')->first();
-        $data = ReceiptAsn::with('transport')->findOrFail($id);
+
+        $data = ReceiptAsn::controlAccessUser()
+            ->where('receiptasn.id', $id)
+            ->leftJoin('shipmenttransport', function ($join) {
+                $join->on('receiptasn.id', '=', 'shipmenttransport.orderid')
+                    ->where('shipmenttransport.auxiliary04', '=', 'ReceiptAsn');
+            })
+            ->select([
+                'receiptasn.id',
+                'receiptasn.centerid',
+                'receiptasn.warehouseid',
+                'receiptasn.carrierid',
+                'receiptasn.shipmentid',
+                'receiptasn.addasndate',
+                'shipmenttransport.orderid',
+                'shipmenttransport.operatorname',
+                'shipmenttransport.phone',
+                'shipmenttransport.drivernumber',
+                'shipmenttransport.boxnumber',
+                'shipmenttransport.trucknumber',
+                'shipmenttransport.auxiliary05',
+                'shipmenttransport.has_data',
+            ])
+            ->first();
+
         $fortmat = 'Receipt.MonitorTransport.partials.format';
         $pdf = PDF::setOptions([
             'isRemoteEnabled' => true,

@@ -82,7 +82,7 @@
     <div class="row">
         <table>
             <th style="width: 33%;">
-{{--                <img src="{{storage_path('app/' . $data->center->auxiliary04)}}" alt="" style="height: 65px;width: 150px;" class="logo">--}}
+                <img src="img/taxion-logistic.png" alt="" style="height: 60px;width: 180px;">
             </th>
             <th style="width: 33%;">
                 <h3 class='formato'>
@@ -106,29 +106,18 @@
     <table>
         <thead>
         <tr>
-            <th class="w20" style="text-align: left;padding: 2px;background-color:#eeeeee">OPERADOR:</th>
+            <th class="w20" style="text-align: left;padding: 2px;background-color:#eeeeee">EMBARQUE:</th>
             <th class="w30"
-                style="text-align: left;padding: 2px;">{{$data->transport ? $data->transport->operatorname : ''}} </th>
+                style="text-align: left;padding: 2px;">{{$data->shipmentid ?? '' }} </th>
             <th class="w20" style="text-align: left;padding: 2px;background-color:#eeeeee">TELEFONO</th>
             <th class="w30"
-                style="text-align: left;padding: 2px;">{{$data->transport ? $data->transport->phone : ''}} </th>
+                style="text-align: left;padding: 2px;">{{$data->phone ?? ''}} </th>
         </tr>
         <tr>
-            <th class="w20" style="text-align: left;padding: 2px;background-color:#eeeeee">LICENCIA</th>
+            <th class="w20" style="text-align: left;padding: 2px;background-color:#eeeeee">OPERADOR</th>
             <th class="w30" style="text-align: left;padding: 2px;background-color:#ffffff"
-                colspan="3"> {{$data->transport ? $data->transport->drivernumber : ''}}</th>
+                COLSPAN="3"> {{$data->operatorname}}</th>
         </tr>
-        <tr>
-            <th class="w20" style="text-align: left;padding: 2px;background-color:#eeeeee">EMBARQUE</th>
-            <th class="w30"
-                style="text-align: left;padding: 2px;background-color:#ffffff;font-size: 16px !important;color: red"> {{$data->shipmentid ?? ''}}
-            </th>
-            <th class="w20" style="text-align: left;padding: 2px;background-color:#eeeeee">N.CONFIRMACIÓN</th>
-            <th class="w30"
-                style="text-align: left;padding: 2px;background-color:#ffffff"> {{$data->transport ? $data->transport->confirmation : ''}}
-            </th>
-        </tr>
-
         <tr>
             <th class="w20" style="text-align: left;padding: 2px;background-color:#eeeeee">CLIENTE / DESTINO</th>
             <th class="w30"
@@ -138,15 +127,15 @@
         <tr>
             <th class="w20" style="text-align: left;padding: 2px;background-color:#eeeeee">LÍNEA</th>
             <th style="text-align: left;padding: 2px;background-color:#ffffff"
-                colspan="3"> {{$data->transport ? $data->transport->carrier->name : ''}}</th>
+                colspan="3"> {{$data->carrier ? $data->carrier->name : ''}}</th>
         </tr>
         <tr>
             <th class="w20" style="text-align: left;padding: 2px;background-color:#eeeeee">PLACA DE CAJA</th>
             <th class="w30"
-                style="text-align: left;padding: 2px;background-color:#ffffff;font-size: 14px;color: blue">{{$data->transport ? $data->transport->boxnumber : ''}} </th>
+                style="text-align: left;padding: 2px;background-color:#ffffff;font-size: 14px;color: blue">{{$data->boxnumber ?? ''}} </th>
             <th class="w20" style="text-align: left;padding: 2px;background-color:#eeeeee">PLACA DE TRACTO</th>
             <th class="w30"
-                style="text-align: left;padding: 2px;background-color:#ffffff;font-size: 14px;color: blue"> {{$data->transport ? $data->transport->trucknumber : ''}}</th>
+                style="text-align: left;padding: 2px;background-color:#ffffff;font-size: 14px;color: blue"> {{$data->trucknumber ?? ''}}</th>
         </tr>
         <tr>
             <th class="w20" style="text-align: left;padding: 2px;background-color:#eeeeee">F. de entrega</th>
@@ -167,7 +156,7 @@
                 <th class="w30" style="text-align: center;padding: 2px;padding-left: 10px;">
                     <div style="text-align: center;">
                         <div style="display: inline-block;">
-                            {!! DNS2D::getBarcodeHTML($data->transport->auxiliary05, 'QRCODE',3,3) !!}
+                            {!! DNS2D::getBarcodeHTML($data->auxiliary05, 'QRCODE',3,3) !!}
                         </div>
                     </div>
                 </th>
