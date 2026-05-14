@@ -36,6 +36,7 @@
                     });
                 }
             },
+            {data: 'auxiliary04'},
             {data: 'btn'},
         ],
 
@@ -50,6 +51,7 @@
             {"width": "180px", "targets": 7},
             {"width": "180px", "targets": 8},
             {"width": "180px", "targets": 9},
+            {"width": "180px", "targets": 10},
         ],
 
         "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',

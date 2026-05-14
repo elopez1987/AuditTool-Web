@@ -61,6 +61,7 @@
                                     <th>Origen</th>
                                     <th>Tipo de check list</th>
                                     <th>Estatus</th>
+                                    <th>¿Check list por defecto?</th>
                                     <th>Opciones</th>
                                 </tr>
                                 </thead>

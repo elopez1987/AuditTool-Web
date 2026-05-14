@@ -83,4 +83,13 @@
             textField="name"
             :required="true"
     />
+    <x-select2
+            name="auxiliary04"
+            label="¿Check list por defecto?"
+            :required="true"
+            :options="[
+                    ['id' => 'N', 'name' => 'NO'],
+                    ['id' => 'S', 'name' => 'SI'],
+                ]"
+    />
 </div>

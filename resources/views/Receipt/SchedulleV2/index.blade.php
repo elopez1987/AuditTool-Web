@@ -45,11 +45,11 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-lg-1 col-md-6 col-sm-12" id="reset-filter">
+                            <div class="col-lg-2 col-md-6 col-sm-12" id="reset-filter">
                                 <div class="form-group">
                                     <label>&nbsp;</label>
                                     <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md btn-block" id="btn-reset-filter">
-                                        <i class="ti ti-reload"></i> <span class="text-button">Limpiar Filtros</span>
+                                        <i class="ti ti-reload"></i> <span class="text-button">Limpiar</span>
                                     </button>
                                 </div>
                             </div>
