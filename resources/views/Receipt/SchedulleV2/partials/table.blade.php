@@ -72,6 +72,11 @@
                     });
                 }
             },
+            {data: 'fechaentrada', name: 'fechaentrada'},
+            {data: 'enrampe', name: 'enrampe'},
+            {data: 'fechainicio', name: 'fechainicio'},
+            {data: 'fechafin', name: 'fechafin'},
+            {data: 'fechasalida', name: 'fechasalida'},
         ],
         "columnDefs": [
             {"width": "100px", "targets": 0},
@@ -93,10 +98,16 @@
             {"width": "180px", "targets": 16},
             {"width": "180px", "targets": 17},
             {"width": "180px", "targets": 18},
+            {"width": "180px", "targets": 19},
+            {"width": "180px", "targets": 20},
+            {"width": "180px", "targets": 21},
+            {"width": "180px", "targets": 22},
+            {"width": "180px", "targets": 23},
+            // {"width": "180px", "targets": 18},
         ],
 
         "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
-        "lengthMenu": [[1,5,10,15,20,25,30,40,50,100], [1,5,10,15,20,25,30,40,50,100]],
+        "lengthMenu": [[10,15,20,25,30,40,50,100], [10,15,20,25,30,40,50,100]],
 
         buttons: [
             {

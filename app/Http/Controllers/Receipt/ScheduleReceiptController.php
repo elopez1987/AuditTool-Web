@@ -20,7 +20,9 @@ class ScheduleReceiptController extends BaseController
         $centers = $this->getCenterForSelect();
         $warehouses = $this->getWarehouseForSelect();
         $carriers = $this->getCarriersForSelect();
-        $reasons = StorageReason::whereIn('id', [17, 18, 19, 20, 31, 32])->select(['name', 'id'])->get();
+        //        $reasons = StorageReason::whereIn('id', [17, 18, 19, 20, 31, 32])->select(['name', 'id'])->get();
+        $reasons = StorageReason::select('id', 'name')
+            ->whereRaw("charindex('RES-02', configurationflag) > 0")->get();
 
         return view(
             'Receipt.ScheduleReceipt.index',
