@@ -1,6 +1,16 @@
 <div class="row">
     <div class="col-lg-2 col-md-6 col-sm-12">
         <div class="form-group">
+            <label for="id">ID de concepto</label>
+            <input type="text" class="form-control numeric" id="id" required name="id" maxlength="50"
+                   aria-describedby="id" value="{{old('id')}}">
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-2 col-md-6 col-sm-12">
+        <div class="form-group">
             <label for="name">Nombre</label>
             <input type="text" class="form-control" id="name" required name="name" maxlength="50"
                    aria-describedby="name" value="{{old('name')}}" onKeyUp=this.value=this.value.toUpperCase()>

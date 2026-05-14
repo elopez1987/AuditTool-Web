@@ -7,6 +7,7 @@ use App\Http\Requests\Web\Inventory\InventoryPartNumber\CreatePartNumberRequest;
 use App\Models\Inventory\PartNumber\InventoryPartnumber;
 use App\Models\Inventory\UnitMeasure\InventoryUnitMeasure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
 
 class InventoryPartnumbersController extends BaseController
 {
@@ -68,7 +69,17 @@ class InventoryPartnumbersController extends BaseController
 
     public function update(Request $request, InventoryPartnumber $inventorypartnumber)
     {
-        $inventorypartnumber->update($request->all());
+        //        $inventorypartnumber->update($request->all());
+        $requestData = $request->all();
+
+        $safeData = collect($requestData)
+            ->filter(fn ($value, $column) => Schema::hasColumn($inventorypartnumber->getTable(), $column)
+            )
+            ->toArray();
+
+        if (! empty($safeData)) {
+            $inventorypartnumber->update($safeData);
+        }
 
         return $this->redirectBackSuccess();
     }

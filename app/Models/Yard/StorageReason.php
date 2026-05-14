@@ -60,7 +60,6 @@ class StorageReason extends Model
         'auxiliary03',
         'auxiliary04',
         'auxiliary05',
-        'statusid',
         'configurationflag',
     ];
 

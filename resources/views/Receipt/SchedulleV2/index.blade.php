@@ -80,6 +80,11 @@
                                     <th>Cortina</th>
                                     <th>Observaciones</th>
                                     <th>Estatus de descarga</th>
+                                    <th>Hora de arribo</th>
+                                    <th>Hora de enrampe</th>
+                                    <th>Inicio de descarga</th>
+                                    <th>Fin de descarga</th>
+                                    <th>Salida de unidad</th>
                                 </tr>
                                 </thead>
                             </table>

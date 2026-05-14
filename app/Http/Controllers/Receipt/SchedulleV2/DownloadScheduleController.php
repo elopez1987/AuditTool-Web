@@ -70,6 +70,12 @@ class DownloadScheduleController extends BaseController
                 'se3.auxiliary01 as horariocolor',
                 'ra.po as grsap',
                 'ra.providerid',
+                'ru.entrydate as fechaentrada',
+                'ru.ensnare as enrampe',
+                'ru.startdate as fechainicio',
+                'ru.finishdate as fechafin',
+                'ru.outputdate as fechasalida',
+                'ru.autorizaoutputdate as autorizacion',
             ])
             ->leftJoin('receiptasn as ra', function ($join) {
                 $join->on('storageschedullereceipt.receiptid', '=', 'ra.id')
@@ -126,6 +132,12 @@ class DownloadScheduleController extends BaseController
                     $row->goodissuedate = null;
                     $row->grsap = null;
                     $row->value01 = null;
+                    $row->fechaentrada = null;
+                    $row->enrampe = null;
+                    $row->fechainicio = null;
+                    $row->fechafin = null;
+                    $row->fechasalida = null;
+                    $row->autorizacion = null;
                 }
 
                 return $row;

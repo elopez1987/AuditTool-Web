@@ -119,9 +119,9 @@ class InventoryPartnumber extends Model
         'codeean',
         'codedun',
         'configurationflag',
-        //        'auxiliary01',
-        //        'auxiliary02',
-        //        'auxiliary03',
+        'auxiliary01',
+        'auxiliary02',
+        'auxiliary03',
     ];
 
     protected $hidden = [
