@@ -15,7 +15,7 @@ class InventoryPartNumberData01Controller extends BaseController
         $inventoryPartNumber = InventoryPartNumber::findOrFail($id);
         $inventoryPartNumberData01 = InventoryPartNumberData01::where('inventorypartnumber_id', $id)->first();
 
-        return view('Inventory.InventoryPartNumbers.Data01.index',
+        return view('Inventory.InventoryPartnumbers.Data01.index',
             compact('inventoryPartNumber', 'inventoryPartNumberData01'));
 
     }
