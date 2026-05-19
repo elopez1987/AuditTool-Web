@@ -3,6 +3,7 @@
 use App\Http\Controllers\Inventory\InventoryPartNumberCategory01sController;
 use App\Http\Controllers\Inventory\InventoryPartNumberCategory02sController;
 use App\Http\Controllers\Inventory\InventoryPartNumbers\ImportPartNumbersController;
+use App\Http\Controllers\Inventory\InventoryPartNumbers\InventoryPartNumberData01Controller;
 use App\Http\Controllers\Inventory\InventoryPartNumbers\InventoryPartnumbersController;
 use App\Http\Controllers\Inventory\InventoryPartNumbers\ParameterPartNumberController;
 use App\Http\Controllers\Inventory\InventoryStockCategoriesController;
@@ -38,4 +39,9 @@ Route::middleware(['auth'])->group(function () {
     //    Parametrizar Skus
     Route::get('inventorypartnumbers/{id}/parameters', [ParameterPartNumberController::class, 'parameters'])->name('inventorypartnumbers.parameters');
     Route::put('inventorypartnumbersaddparameters/{id}', [ParameterPartNumberController::class, 'addparameters'])->name('addparametersinventory');
+
+    //	Agregar informacion adicional para Garrett
+    Route::get('inventorypartnumbers/{id}/adddata01', [InventoryPartNumberData01Controller::class, 'index'])->name('inventorypartnumbers.adddata01');
+    Route::put('inventorypartnumbersadddata01/{id}', [InventoryPartNumberData01Controller::class, 'store'])->name('inventorypartnumbersadddata01');
+
 });

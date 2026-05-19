@@ -60,7 +60,7 @@
                                     :options="$carriers"
                                     valueField="id"
                                     textField="name"
-                                    :required="true"
+                                    :required="false"
                             />
                         </div>
                     </form>

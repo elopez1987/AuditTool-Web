@@ -69,7 +69,6 @@ class InventoryPartnumbersController extends BaseController
 
     public function update(Request $request, InventoryPartnumber $inventorypartnumber)
     {
-        //        $inventorypartnumber->update($request->all());
         $requestData = $request->all();
 
         $safeData = collect($requestData)
