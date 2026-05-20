@@ -87,6 +87,16 @@
             textField="name"
             :required="true"
     />
+    <x-select2
+            name="auxiliary04"
+            label="¿Check list por defecto?"
+            :required="true"
+            :selected="$storagechecklist->auxiliary04"
+            :options="[
+                    ['id' => 'N', 'name' => 'NO'],
+                    ['id' => 'S', 'name' => 'SI'],
+                ]"
+    />
 </div>
 <div class="row">
     <div class="col-lg-2 col-md-6 col-sm-12">

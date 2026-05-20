@@ -63,7 +63,6 @@ pnpm-lock.yaml
 !/database/factories/.gitkeep
 /database/seeds/*
 !/database/seeds/.gitkeep
-/database/migrations/*
 !/database/migrations/.gitkeep
 
 
