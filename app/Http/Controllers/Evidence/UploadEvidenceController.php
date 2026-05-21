@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Evidence;
 
 use App\Http\Controllers\BaseController;
 use App\Models\Evidence\StorageEvidenceProcess;
-use App\Traits\EvidencePhotoTrait;
+use App\Traits\Web\General\EvidencePhotoTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;

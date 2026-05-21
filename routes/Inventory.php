@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Inventory\InventoryAreaController;
 use App\Http\Controllers\Inventory\InventoryPartNumberCategory01sController;
 use App\Http\Controllers\Inventory\InventoryPartNumberCategory02sController;
 use App\Http\Controllers\Inventory\InventoryPartNumbers\ImportPartNumbersController;
@@ -44,4 +45,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('inventorypartnumbers/{id}/adddata01', [InventoryPartNumberData01Controller::class, 'index'])->name('inventorypartnumbers.adddata01');
     Route::put('inventorypartnumbersadddata01/{id}', [InventoryPartNumberData01Controller::class, 'store'])->name('inventorypartnumbersadddata01');
 
+    //	Inventario Fiscal
+    Route::resource('inventoryareas', InventoryAreaController::class)->except('show');
+    Route::get('getInventoryArea', [InventoryAreaController::class, 'getInventoryArea'])->name('getInventoryArea');
 });

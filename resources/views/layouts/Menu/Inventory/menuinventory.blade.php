@@ -50,6 +50,20 @@
                 </a>
             @endcan
         </div>
+
+
+        <div class="container__box">
+            @can('inventoryareas.index')
+                <a href="{{route('inventoryareas.index')}}">
+                    <div class="box">
+                        <i class="lni lni-list"></i>
+                        <h5>Areas</h5>
+                        <h4>Areas</h4>
+                    </div>
+                </a>
+            @endcan
+
+        </div>
     </main>
 
 @endsection
