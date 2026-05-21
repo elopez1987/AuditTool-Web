@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Inventory\InventoryAisleController;
 use App\Http\Controllers\Inventory\InventoryAreaController;
 use App\Http\Controllers\Inventory\InventoryPartNumberCategory01sController;
 use App\Http\Controllers\Inventory\InventoryPartNumberCategory02sController;
@@ -48,4 +49,7 @@ Route::middleware(['auth'])->group(function () {
     //	Inventario Fiscal
     Route::resource('inventoryareas', InventoryAreaController::class)->except('show');
     Route::get('getInventoryArea', [InventoryAreaController::class, 'getInventoryArea'])->name('getInventoryArea');
+
+    Route::resource('inventoryaisles', InventoryAisleController::class)->except('show');
+    Route::get('getInventoryAisle', [InventoryAisleController::class, 'getInventoryAisle'])->name('getInventoryAisle');
 });

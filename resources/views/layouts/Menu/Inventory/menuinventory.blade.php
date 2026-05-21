@@ -62,6 +62,15 @@
                     </div>
                 </a>
             @endcan
+                @can('inventoryaisles.index')
+                <a href="{{route('inventoryaisles.index')}}">
+                    <div class="box">
+                        <i class="lni lni-list"></i>
+                        <h5>Pasillos</h5>
+                        <h4>Pasillos</h4>
+                    </div>
+                </a>
+            @endcan
 
         </div>
     </main>
