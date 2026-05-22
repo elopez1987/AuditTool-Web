@@ -1,7 +1,9 @@
 <?php
 
-use App\Http\Controllers\Inventory\InventoryAisleController;
-use App\Http\Controllers\Inventory\InventoryAreaController;
+use App\Http\Controllers\Inventory\InventoryFiscal\InventoryAisleController;
+use App\Http\Controllers\Inventory\InventoryFiscal\InventoryAreaController;
+use App\Http\Controllers\Inventory\InventoryFiscal\InventoryCardController;
+use App\Http\Controllers\Inventory\InventoryFiscal\InventoryLocationController;
 use App\Http\Controllers\Inventory\InventoryPartNumberCategory01sController;
 use App\Http\Controllers\Inventory\InventoryPartNumberCategory02sController;
 use App\Http\Controllers\Inventory\InventoryPartNumbers\ImportPartNumbersController;
@@ -52,4 +54,12 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('inventoryaisles', InventoryAisleController::class)->except('show');
     Route::get('getInventoryAisle', [InventoryAisleController::class, 'getInventoryAisle'])->name('getInventoryAisle');
+
+    Route::resource('inventorycards', InventoryCardController::class);
+    Route::get('getInventoryCard', [InventoryCardController::class, 'getInventoryCard'])->name('getInventoryCard');
+
+    Route::resource('inventorylocations', InventoryLocationController::class);
+    Route::put('create-location/{id}', [InventoryLocationController::class, 'createLocation'])->name('create-location');
+    Route::get('getLocationForCard/{id}', [InventoryLocationController::class, 'getLocationForCard'])->name('getLocationForCard');
+
 });

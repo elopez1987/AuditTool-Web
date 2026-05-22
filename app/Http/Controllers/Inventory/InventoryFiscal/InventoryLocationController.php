@@ -1,0 +1,125 @@
+<?php
+
+namespace App\Http\Controllers\Inventory\InventoryFiscal;
+
+use App\Http\Controllers\BaseController;
+use App\Http\Requests\Inventory\InventoryLocationRequest;
+use App\Models\Inventory\InventoryCard;
+use App\Models\Inventory\InventoryLocation;
+use Illuminate\Http\Request;
+
+class InventoryLocationController extends BaseController
+{
+    public function createLocation(InventoryLocationRequest $request, $id)
+    {
+        $inventoryCard = InventoryCard::findOrFail($id);
+        InventoryLocation::create([
+            'centerid' => $inventoryCard->centerid,
+            'warehouseid' => $inventoryCard->warehouseid,
+            'inventory_card_id' => $inventoryCard->id,
+            'name' => $request->input('name'),
+            'inventoryunitsmeasure_id' => $request->input('inventoryunitsmeasure_id'),
+        ]);
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Ubicacion creada con exito!!',
+            ]);
+        }
+
+        return $this->redirectBackSuccessMessage('Ubicacion creada con exito!!');
+    }
+
+    public function getLocationForCard(Request $request)
+    {
+        $data = InventoryLocation::controlAccessUser()
+            ->with(['inventoryunitsmeasure:id,description', 'status:statusid,name,auxiliary01'])
+            ->withTrashed()
+            ->where('inventory_card_id', $request->input('inventory_card_id'))
+            ->get();
+
+        return $this->showDataToView($data,
+            'Inventory.InventoryLocation.partials.buttonsforcard');
+    }
+
+    public function show(InventoryLocation $inventorylocation)
+    {
+        $location = InventoryLocation::controlAccessUser()
+            ->where('id', $inventorylocation->id)
+            ->firstOrFail();
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'id' => $location->id,
+                'name' => $location->name,
+                'inventoryunitsmeasure_id' => $location->inventoryunitsmeasure_id,
+                'auxiliary01' => $location->auxiliary01,
+                'auxiliary02' => $location->auxiliary02,
+                'auxiliary03' => $location->auxiliary03,
+                'statusid' => $location->statusid,
+            ],
+        ]);
+    }
+
+    //    public function edit(InventoryLocation $inventoryLocation) {}
+
+    public function update(InventoryLocationRequest $request, InventoryLocation $inventorylocation)
+    {
+        $location = InventoryLocation::controlAccessUser()
+            ->where('id', $inventorylocation->id)
+            ->firstOrFail();
+
+        $location->update($request->validated());
+
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Ubicacion actualizada con exito!!',
+            ]);
+        }
+
+        return $this->redirectBackSuccessMessage('Ubicacion actualizada con exito!!');
+    }
+
+    public function destroy($id)
+    {
+        try {
+            $this->authorize('inventorylocations.destroy');
+
+            $location = InventoryLocation::controlAccessUser()
+                ->withTrashed()
+                ->where('id', $id)
+                ->firstOrFail();
+
+            if ($location->trashed()) {
+                $location->update([
+                    'statusid' => 'E',
+                ]);
+                $location->restore();
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Ubicación restaurada con éxito!!',
+                    'action' => 'restore',
+                ]);
+            }
+
+            $location->update([
+                'statusid' => 'D',
+            ]);
+            $location->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Ubicación eliminada con éxito!!',
+                'action' => 'delete',
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al procesar la ubicación: ' . $th->getMessage(),
+            ], 500);
+        }
+    }
+}
