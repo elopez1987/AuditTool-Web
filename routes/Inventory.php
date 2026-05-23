@@ -3,6 +3,7 @@
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryAisleController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryAreaController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryCardController;
+use App\Http\Controllers\Inventory\InventoryFiscal\InventoryHeadController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryLocationController;
 use App\Http\Controllers\Inventory\InventoryPartNumberCategory01sController;
 use App\Http\Controllers\Inventory\InventoryPartNumberCategory02sController;
@@ -61,5 +62,11 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('inventorylocations', InventoryLocationController::class);
     Route::put('create-location/{id}', [InventoryLocationController::class, 'createLocation'])->name('create-location');
     Route::get('getLocationForCard/{id}', [InventoryLocationController::class, 'getLocationForCard'])->name('getLocationForCard');
+
+    Route::resource('inventoryheads', InventoryHeadController::class)->except('show');
+    Route::get('getInventoryHead', [InventoryHeadController::class, 'getInventoryHead'])->name('getInventoryHead');
+    //	Route::get('getInventoryHeadForCard/{id}', [InventoryHeadController::class, 'getInventoryHeadForCard'])->name('getInventoryHeadForCard');
+    //	Route::get('getInventoryHeadForCard/{id}/adddata01', [InventoryHeadController::class, 'getInventoryHeadForCardData01'])->name('getInventoryHeadForCard.adddata01');
+    //	Route::put('inventoryheadadddata01/{id}', [InventoryHeadController::class, 'addData01'])->name('inventoryheadadddata01');
 
 });

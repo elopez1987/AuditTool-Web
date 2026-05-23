@@ -342,6 +342,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('reportauthorizedoutputs', [AuthorizeOutPutController::class, 'reportauthorizedoutputs'])->name('reportauthorizedoutputs');
     Route::get('getDataAuthorized', [AuthorizeOutPutController::class, 'getDataAuthorized'])->name('getDataAuthorized');
     //    Reporte de Estadias
+
     Route::get('reportstays', [ReportStayController::class, 'index'])->name('reportstays');
     Route::get('getDataStays', [ReportStayController::class, 'getDataStays'])->name('getDataStays');
     //  Monitor de cajas en patio con cálculo de tiempos
