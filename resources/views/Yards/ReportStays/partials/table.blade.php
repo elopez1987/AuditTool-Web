@@ -4,7 +4,7 @@
         "searching": true,
         "ordering": true,
         "sScrollY": "450px",
-        // "sScrollX": true,
+        "sScrollX": true,
         "processing": true,
         "serverSide": true,
         "responsive": true,
@@ -15,7 +15,18 @@
             url: 'getDataStays',
             data: function (d) {
                 d.folionumber = $('input[name=folionumber]').val();
+                d.boxnumber = $('input[name=boxnumber]').val();
+                d.location = $('input[name=location]').val();
+                d.econumber = $('input[name=econumber]').val();
+                d.trucknumber = $('input[name=trucknumber]').val();
+                d.barcode = $('input[name=barcode]').val();
                 d.shipmentid = $('input[name=shipmentid]').val();
+                d.carrierid = $('select[name=carrierid]').val();
+                d.centerid = $('select[name=centerid]').val();
+                d.warehouseid = $('select[name=warehouseid]').val();
+                d.rasonid = $('select[name=rasonid]').val();
+                d.statusid = $('select[name=statusid]').val();
+                d.unitstatusid = $('select[name=unitstatusid]').val();
             }
         },
         "columns": [
@@ -37,8 +48,27 @@
             {data: 'stays'},
             {data: 'autorize'},
         ],
+        "columnDefs": [
+            {"width": "200px", "targets": 0},
+            {"width": "180px", "targets": 1},
+            {"width": "180px", "targets": 2},
+            {"width": "320px", "targets": 3},
+            {"width": "200px", "targets": 4},
+            {"width": "200px", "targets": 5},
+            {"width": "220px", "targets": 6},
+            {"width": "250px", "targets": 7},
+            {"width": "180px", "targets": 8},
+            {"width": "180px", "targets": 9},
+            {"width": "280px", "targets": 10},
+            {"width": "150px", "targets": 11},
+            {"width": "150px", "targets": 12},
+            {"width": "250px", "targets": 13},
+            {"width": "150px", "targets": 14},
+            {"width": "220px", "targets": 15},
+            {"width": "220px", "targets": 16},
+        ],
         "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
-        "lengthMenu": [[1,5,10, 30, 50, 100, 150, 200, 250, -1], [1,5,10, 30, 50, 100, 150, 200, 250, "Todos"]],
+        "lengthMenu": [[10, 30, 50, 100, 150, 200, 250, -1], [10, 30, 50, 100, 150, 200, 250, "Todos"]],
 
         buttons: [
             {

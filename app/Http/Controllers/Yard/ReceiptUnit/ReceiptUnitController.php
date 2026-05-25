@@ -8,6 +8,7 @@ use App\Http\Requests\Web\Yard\ReceiptUnit\CreateReceiptUnitRequest;
 use App\Http\Services\Receipt\ServiceReceiptUnit;
 use App\Http\Services\Yard\ReceiptUnitFullService;
 use App\Models\Yard\ReceiptUnit;
+use App\Models\Yard\StorageUnitStatus;
 use App\Models\Yard\StorageUnitTrace;
 use App\Traits\Web\EDI\RegisterEdiShipment;
 use App\Traits\Web\Receipt\ReceiptAsn\ValidateReceiptInCheckInProcess;
@@ -49,8 +50,10 @@ class ReceiptUnitController extends BaseController
         $warehouses = $this->getWarehouseForSelect();
         $rason = $this->typeReasonInActiveToSelect();
         $status = $this->getStatusForSchema('RUS');
+        $unitstatus = StorageUnitStatus::select(['id', 'name'])->get();
 
-        return view('Yards.ReceiptUnits.index', compact('carriers', 'warehouses', 'rason', 'status'));
+        return view('Yards.ReceiptUnits.index',
+            compact('carriers', 'warehouses', 'rason', 'status', 'unitstatus'));
     }
 
     public function getDataReceipts(Request $request)
@@ -73,6 +76,7 @@ class ReceiptUnitController extends BaseController
             ->Warehouse($request->get('warehouseid'))
             ->Shipment($request->get('shipmentid'))
             ->Status($request->get('statusid'))
+            ->UnitStatus($request->get('unitstatusid'))
             ->get();
 
         return DataTables::of($data)

@@ -519,6 +519,13 @@ class ReceiptUnit extends Model
         }
     }
 
+    public function scopeUnitStatus($query, $unitstatusid)
+    {
+        if ($unitstatusid != '') {
+            $query->where('receiptunits.unitstatusid', '=', $unitstatusid);
+        }
+    }
+
     public function scopeFilterForRangeDate($query, $startDate, $endDate)
     {
         if ($startDate !== '' && $endDate !== '') {

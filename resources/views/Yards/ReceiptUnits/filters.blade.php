@@ -10,7 +10,7 @@
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-12 ">
                         <div class="form-group">
-                            <label for="warehouseid">Bodega <span style="color: red">*</span></label>
+                            <label for="warehouseid">Bodega </label>
                             <select name="warehouseid" id="warehouseid" class="form-control select2">
                                 <option value="" selected>Seleccione una opción</option>
                                 @foreach($warehouses as $warehouse)
@@ -21,7 +21,7 @@
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-12 ">
                         <div class="form-group">
-                            <label for="rasonid">Concepto de entrada <span style="color: red">*</span></label>
+                            <label for="rasonid">Concepto de entrada </label>
                             <select name="rasonid" id="rasonid" class="form-control select2">
                                 <option value="" selected>Seleccione una opción</option>
                                 @foreach($rason as $model)
@@ -34,7 +34,7 @@
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-12">
                         <div class="form-group">
-                            <label for="carrierid">Linea de transporte<span style="color: red">*</span></label>
+                            <label for="carrierid">Linea de transporte</label>
                             <select name="carrierid" id="carrierid" class="form-control select2">
                                 <option value="" selected>Seleccione una opción</option>
                                 @foreach($carriers as $model)
@@ -70,6 +70,19 @@
                             <input type="text" class="form-control" id="location" name="location"
                                    onKeyUp=this.value=this.value.toUpperCase()
                             >
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label for="unitstatusid">Estatus de unidad</label>
+                            <select name="unitstatusid" id="unitstatusid" class="form-control select2">
+                                <option value="" selected>Seleccione una opción</option>
+                                @foreach($unitstatus as $model)
+                                    <option value="{{$model->id}}"> {{$model->name}} </option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                 </div>

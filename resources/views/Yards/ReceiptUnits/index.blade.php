@@ -143,7 +143,7 @@
         });
     </script>
     <script>
-        $("#carrierid,#rasonid,#statusid,#warehouseid").change(function () {
+        $("#carrierid,#rasonid,#statusid,#warehouseid,#unitstatusid").change(function () {
             reloadtable();
         });
         $("#barcode,#folionumber,#trucknumber,#shipmentid").blur(function () {
@@ -160,6 +160,9 @@
                 dropdownParent: $("#modal-filter")
             });
             $("#statusid").select2({
+                dropdownParent: $("#modal-filter")
+            });
+            $("#unitstatusid").select2({
                 dropdownParent: $("#modal-filter")
             });
         });

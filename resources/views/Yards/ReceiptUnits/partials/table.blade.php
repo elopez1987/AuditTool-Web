@@ -28,6 +28,7 @@
                     d.warehouseid = $('select[name=warehouseid]').val();
                     d.rasonid = $('select[name=rasonid]').val();
                     d.statusid = $('select[name=statusid]').val();
+                    d.unitstatusid = $('select[name=unitstatusid]').val();
                 }
             },
             "columns": [

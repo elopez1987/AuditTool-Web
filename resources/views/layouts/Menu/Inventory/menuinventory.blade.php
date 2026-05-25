@@ -22,7 +22,7 @@
                     </div>
                 </a>
             @endcan
-                @can('inventorypartnumbercategory01.index')
+            @can('inventorypartnumbercategory01.index')
                 <a href="{{route('inventorypartnumbercategory01.index')}}">
                     <div class="box">
                         <i class="lni lni-control-panel"></i>
@@ -49,6 +49,47 @@
                     </div>
                 </a>
             @endcan
+        </div>
+
+
+        <div class="container__box">
+            @can('inventoryareas.index')
+                <a href="{{route('inventoryareas.index')}}">
+                    <div class="box">
+                        <i class="lni lni-list"></i>
+                        <h5>Areas</h5>
+                        <h4>Areas</h4>
+                    </div>
+                </a>
+            @endcan
+            @can('inventoryaisles.index')
+                <a href="{{route('inventoryaisles.index')}}">
+                    <div class="box">
+                        <i class="lni lni-list"></i>
+                        <h5>Pasillos</h5>
+                        <h4>Pasillos</h4>
+                    </div>
+                </a>
+            @endcan
+            @can('inventorycards.index')
+                <a href="{{route('inventorycards.index')}}">
+                    <div class="box">
+                        <i class="lni lni-list"></i>
+                        <h5>Cédulas</h5>
+                        <h4>Cédulas</h4>
+                    </div>
+                </a>
+            @endcan
+            @can('inventoryheads.index')
+                <a href="{{route('inventoryheads.index')}}">
+                    <div class="box">
+                        <i class="lni lni-list"></i>
+                        <h5>Inventario Fiscal</h5>
+                        <h4>Inventario Fiscal</h4>
+                    </div>
+                </a>
+            @endcan
+
         </div>
     </main>
 

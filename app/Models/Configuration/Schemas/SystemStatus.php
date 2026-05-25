@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $centerid
  * @property string|null $warehouseid
  * @property string $schemaid
- * @property string $statusid
+ * @property string unitstatusid$statusid
  * @property string $name
  * @property string|null $comment
  * @property string|null $auxiliary01
