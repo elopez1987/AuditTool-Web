@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Inventory\InventoryFiscal;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Inventory\InventoryAreaRequest;
 use App\Models\Configuration\Schemas\SystemStatus;
-use App\Models\Inventory\InventoryArea;
+use App\Models\Inventory\InventoryFiscal\InventoryArea;
 use Illuminate\Http\Request;
 
 class InventoryAreaController extends BaseController

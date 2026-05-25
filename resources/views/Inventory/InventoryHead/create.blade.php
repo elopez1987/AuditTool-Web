@@ -5,23 +5,23 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                  AGREGAR NUEVA AREA
+                  AGREGAR INVENTARUO
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{{url('inventoryareas')}}">
+                    <form method="POST" action="{{url('inventoryheads')}}">
                         @csrf
                         <div class="row">
                             <div class="col-12">
-                                <a href="{{route('inventoryareas.create')}}">
+                                <a href="{{route('inventoryheads.create')}}">
                                     @include('buttons.save')
                                 </a>
-                                <a href="{{route('inventoryareas.index')}}">
+                                <a href="{{route('inventoryheads.index')}}">
                                     @include('buttons.back')
                                 </a>
                             </div>
                         </div>
                         <hr class="mt-3">
-                        @include('Inventory.InventoryArea.partials.formCreate')
+                        @include('Inventory.InventoryHead.partials.formCreate')
                     </form>
                 </div>
             </div>

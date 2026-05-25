@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Inventory\InventoryFiscal;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Inventory\InventoryAisleRequest;
 use App\Models\Configuration\Schemas\SystemStatus;
-use App\Models\Inventory\InventoryAisle;
+use App\Models\Inventory\InventoryFiscal\InventoryAisle;
 use Illuminate\Http\Request;
 
 class InventoryAisleController extends BaseController

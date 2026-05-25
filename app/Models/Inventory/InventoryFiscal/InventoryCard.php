@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Inventory;
+namespace App\Models\Inventory\InventoryFiscal;
 
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Configuration\Schemas\SystemStatus;
@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class InventoryArea extends Model
+class InventoryCard extends Model
 {
     use LogsActivity;
 
@@ -20,7 +20,7 @@ class InventoryArea extends Model
         return LogOptions::defaults()->logFillable();
     }
 
-    protected $table = 'inventory_areas';
+    protected $table = 'inventory_cards';
 
     protected $fillable = [
         'centerid',
@@ -30,8 +30,9 @@ class InventoryArea extends Model
         'auxiliary01',
         'auxiliary02',
         'auxiliary03',
-        'schemaid',
         'statusid',
+        'inventory_area_id',
+        'inventory_aisle_id',
     ];
 
     public function center(): BelongsTo
@@ -49,6 +50,16 @@ class InventoryArea extends Model
         return $this->belongsTo(SystemStatus::class, 'statusid', 'statusid');
     }
 
+    public function inventoryarea(): BelongsTo
+    {
+        return $this->belongsTo(InventoryArea::class, 'inventory_area_id', 'id');
+    }
+
+    public function inventoryaisle(): BelongsTo
+    {
+        return $this->belongsTo(InventoryAisle::class, 'inventory_aisle_id', 'id');
+    }
+
     protected $attributes = [
         'statusid' => 'E',
         'schemaid' => 'STS',
@@ -63,7 +74,7 @@ class InventoryArea extends Model
         $centers = SecurityAccessWarehouse::Centers();
         $warehouses = SecurityAccessWarehouse::Warehouses();
 
-        return InventoryArea::whereIn('inventory_areas.centerid', $centers)
-            ->whereIn('inventory_areas.warehouseid', $warehouses);
+        return InventoryCard::whereIn('inventory_cards.centerid', $centers)
+            ->whereIn('inventory_cards.warehouseid', $warehouses);
     }
 }

@@ -3,8 +3,8 @@
 namespace App\Traits\Web\Inventory;
 
 use App\Models\Configuration\Schemas\SystemStatus;
-use App\Models\Inventory\InventoryAisle;
-use App\Models\Inventory\InventoryArea;
+use App\Models\Inventory\InventoryFiscal\InventoryAisle;
+use App\Models\Inventory\InventoryFiscal\InventoryArea;
 
 trait InventoryFiscalTrait
 {

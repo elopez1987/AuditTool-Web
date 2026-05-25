@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Models\Inventory;
+namespace App\Models\Inventory\InventoryFiscal;
 
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Configuration\Warehouses\SystemWarehouse;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Activitylog\LogOptions;
@@ -51,14 +52,15 @@ class InventoryHead extends Model
         return $this->belongsTo(SystemStatus::class, 'statusid', 'statusid');
     }
 
-    public function created(): BelongsTo
+    public function created_by(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_id', 'id');
     }
 
-    public function closed(): BelongsTo
+    public function closed_by(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'closed_id', 'id');
+        return $this->belongsTo(User::class, 'closed_id', 'id')
+            ->withDefault(['name' => '']);
     }
 
     protected function casts(): array
@@ -80,6 +82,7 @@ class InventoryHead extends Model
 
         static::creating(function ($model) {
             $model->inventory_uuid = (string) Str::uuid();
+            $model->created_id = auth()->id();
         });
     }
 
@@ -90,5 +93,28 @@ class InventoryHead extends Model
 
         return InventoryHead::whereIn('inventory_heads.centerid', $centers)
             ->whereIn('inventory_heads.warehouseid', $warehouses);
+    }
+
+    public function scopeFilter(Builder $query, array $filters): Builder
+    {
+        return $query
+            ->when($filters['name'] ?? null, function ($q, $name) {
+                $q->where('name', 'LIKE', "%{$name}%");
+            });
+        //            ->when($filters['warehouse_id'] ?? null, function ($q, $warehouseId) {
+        //                $q->where('warehouse_id', $warehouseId);
+        //            })
+        //            ->when($filters['date_from'] ?? null, function ($q, $dateFrom) {
+        //                $q->whereDate('created_at', '>=', $dateFrom);
+        //            })
+        //            ->when($filters['date_to'] ?? null, function ($q, $dateTo) {
+        //                $q->whereDate('created_at', '<=', $dateTo);
+        //            })
+        //            ->when($filters['search'] ?? null, function ($q, $search) {
+        //                $q->where(function ($q) use ($search) {
+        //                    $q->where('folio', 'LIKE', "%{$search}%")
+        //                        ->orWhere('reference', 'LIKE', "%{$search}%");
+        //                });
+        //            });
     }
 }

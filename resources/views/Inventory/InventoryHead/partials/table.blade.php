@@ -1,5 +1,5 @@
 <script>
-    var oTable = $("#table-areas").DataTable({
+    var oTable = $("#table-head").DataTable({
         "paging": true,
         "searching": true,
         "ordering": true,
@@ -23,10 +23,10 @@
             {data: 'warehouse.name',name: 'warehouse.name'},
             {data: 'name'},
             {data: 'created_at', name: 'created_at'},
-            {data: 'crated_by', name: 'crated_by'},
+            {data: 'created_by.name', name: 'created_by.name'},
             {data: 'startdate'},
             {data: 'finishdate'},
-            {data: 'closed_id'},
+            {data: 'closed_by.name', name: 'closed_by.name'},
             {
                 data: 'status.name', name: 'status.name',
                 createdCell: function (td, cellData, rowData) {

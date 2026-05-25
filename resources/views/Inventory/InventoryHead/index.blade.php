@@ -36,17 +36,17 @@
                                     <input type="text" class="form-control"  id="name" name="name" value="{{old('name')}}">
                                 </div>
                             </div>
-                            <div class="col-lg-2 col-md-6 col-sm-12">
-                                <div class="form-group">
-                                    <label for="statusid">Estatus</label>
-                                    <select name="statusid" class="form-control select2">
-                                        <option value="">Selecciona una opción</option>
-                                        @foreach($status as $model)
-                                            <option value="{{$model->statusid}}"> {{$model->name}} </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
+{{--                            <div class="col-lg-2 col-md-6 col-sm-12">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="statusid">Estatus</label>--}}
+{{--                                    <select name="statusid" class="form-control select2">--}}
+{{--                                        <option value="">Selecciona una opción</option>--}}
+{{--                                        @foreach($status as $model)--}}
+{{--                                            <option value="{{$model->statusid}}"> {{$model->name}} </option>--}}
+{{--                                        @endforeach--}}
+{{--                                    </select>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                         </div>
                     </form>
 
