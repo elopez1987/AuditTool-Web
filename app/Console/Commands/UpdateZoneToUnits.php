@@ -27,17 +27,37 @@ class UpdateZoneToUnits extends Command
      */
     public function handle()
     {
+        $this->info('Iniciando actualización de zonas en unidades...');
+
         $receiptUnits = ReceiptUnit::whereNotIn('statusid', ['TR'])
             ->select(['id', 'zoneid', 'locationid'])
             ->get();
 
+        $total = $receiptUnits->count();
+        $updated = 0;
+        $skipped = 0;
+
+        $this->info("Total de unidades a procesar: {$total}");
+
         foreach ($receiptUnits as $receiptUnit) {
 
-            $locations = StorageLocation::whereIn('id', $receiptUnit->locationid)
+            $location = StorageLocation::where('id', $receiptUnit->locationid)
                 ->select(['id', 'zoneid'])
                 ->first();
 
-            $receiptUnit->update(['zoneid' => $locations->zoneid]);
+            if (! $location) {
+                $this->warn("Unidad ID {$receiptUnit->id}: ubicación ID {$receiptUnit->locationid} no encontrada. Se omite.");
+                $skipped++;
+
+                continue;
+            }
+
+            $this->line("Unidad ID {$receiptUnit->id}: ubicación ID {$location->id} → zona '{$location->zoneid}'");
+
+            $receiptUnit->update(['zoneid' => $location->zoneid]);
+            $updated++;
         }
+
+        $this->info("Proceso finalizado. Actualizadas: {$updated} | Omitidas: {$skipped} | Total: {$total}");
     }
 }
