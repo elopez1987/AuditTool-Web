@@ -27,15 +27,13 @@ class UpdateZoneToUnits extends Command
      */
     public function handle()
     {
-        $receiptUnits = ReceiptUnit::controlAccessUser()
-            ->whereNotIn('statusid', ['TR'])
+        $receiptUnits = ReceiptUnit::whereNotIn('statusid', ['TR'])
             ->select(['id', 'zoneid', 'locationid'])
             ->get();
 
         foreach ($receiptUnits as $receiptUnit) {
 
-            $locations = StorageLocation::controlAccessUser()
-                ->whereIn('id', $receiptUnit->locationid)
+            $locations = StorageLocation::whereIn('id', $receiptUnit->locationid)
                 ->select(['id', 'zoneid'])
                 ->first();
 
