@@ -57,23 +57,6 @@ class OptimizeLocationsController extends BaseController
                 ->update(['capacity' => $totalLocation->total_ubicaciones]);
         }
 
-        $receiptUnits = ReceiptUnit::controlAccessUser()
-            ->whereNotIn('statusid', ['TR'])
-            ->whereNotNull('locationid')
-            ->select(['id', 'zoneid', 'locationid'])
-            ->get();
-
-        foreach ($receiptUnits as $receiptUnit) {
-
-            $locations = StorageLocation::controlAccessUser()
-                ->whereIn('id', $receiptUnit->locationid)
-                ->select(['id', 'zoneid'])
-                ->first();
-            if ($locations) {
-                $receiptUnit->update(['zoneid' => $locations->zoneid]);
-            }
-        }
-
         return $this->redirectBackSuccess();
     }
 
