@@ -7,7 +7,6 @@ use App\Models\Shipments\ShipmentHeader;
 use App\Models\Yard\ReceiptUnit;
 use App\Models\Yard\StorageLocation;
 use App\Models\Yard\StorageZone\StorageZone;
-use Illuminate\Support\Facades\DB;
 
 class OptimizeLocationsController extends BaseController
 {
@@ -43,13 +42,14 @@ class OptimizeLocationsController extends BaseController
         }
 
         // Actualiza capacidades por zona
-        $totalLocations = DB::table('storagelocations as s')
-            ->leftJoin('storagezones as z', 's.zoneid', '=', 'z.id')
+        $totalLocations = StorageLocation::controlAccessUser()
+            ->Join('storagezones as z', 'storagelocations.zoneid', '=', 'z.id')
             ->whereNotIn('z.zoneid', ['ST'])
-            ->whereNotIn('s.name', ['DUMMY'])
-            ->whereNull('s.deleted_at')
-            ->groupBy('s.zoneid')
-            ->selectRaw('s.zoneid, COUNT(s.locationid) as total_ubicaciones')
+            ->whereNotIn('storagelocations.name', ['DUMMY'])
+            ->whereNull('storagelocations.deleted_at')
+            ->whereNull('z.deleted_at')
+            ->groupBy('storagelocations.zoneid')
+            ->selectRaw('storagelocations.zoneid, COUNT(storagelocations.locationid) as total_ubicaciones')
             ->get();
 
         foreach ($totalLocations as $totalLocation) {
@@ -62,6 +62,7 @@ class OptimizeLocationsController extends BaseController
 
     public function UpdateLocationToEnabled(): void
     {
-        StorageLocation::controlAccessUser()->update(['statusid' => 'E', 'auxiliary01' => '']);
+        StorageLocation::controlAccessUser()
+            ->update(['statusid' => 'E', 'auxiliary01' => '']);
     }
 }
