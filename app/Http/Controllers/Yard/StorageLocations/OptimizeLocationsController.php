@@ -44,10 +44,11 @@ class OptimizeLocationsController extends BaseController
 
         // Actualiza capacidades por zona
         $totalLocations = DB::table('storagelocations as s')
-            ->leftJoin('storagezones as z', 's.zoneid', '=', 'z.id')
+            ->Join('storagezones as z', 's.zoneid', '=', 'z.id')
             ->whereNotIn('z.zoneid', ['ST'])
             ->whereNotIn('s.name', ['DUMMY'])
             ->whereNull('s.deleted_at')
+            ->whereNull('z.deleted_at')
             ->groupBy('s.zoneid')
             ->selectRaw('s.zoneid, COUNT(s.locationid) as total_ubicaciones')
             ->get();
