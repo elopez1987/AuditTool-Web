@@ -57,7 +57,6 @@ class OptimizeLocationsController extends BaseController
                 ->update(['capacity' => $totalLocation->total_ubicaciones]);
         }
 
-
         $receiptUnits = ReceiptUnit::controlAccessUser()
             ->whereNotIn('statusid', ['TR'])
             ->whereNotNull('locationid')
