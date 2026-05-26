@@ -156,23 +156,23 @@
             <div class="card sidebar-yard-card">
                 <div class="card-body">
 
-                    <div class="row item-center">
-                        <div class="col-lg-12">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-12 text-center">
                             @if(Auth::check())
                                 @if(Auth::user()->access->center->centerid == 'SAHUARO' || Auth::user()->access->center->centerid == 'CONDESA')
-                                    <img src="{{asset('/img/Garrett.jpg')}}" alt="" style="width: 280px;height: 100px">
+                                    <img src="{{asset('/img/Garrett.jpg')}}" alt="" style="max-width: 100%; height: auto; max-height: 100px; object-fit: contain;">
                                 @endif
                                 @if(Auth::user()->access->center->centerid == 'PLANHENKTOL' || Auth::user()->access->center->centerid == 'HENKELTOL01')
-                                    <img src="{{asset('/img/henkel.png')}}" alt="" style="width: 280px;height: 100px">
+                                    <img src="{{asset('/img/henkel.png')}}" alt="" style="max-width: 100%; height: auto; max-height: 100px; object-fit: contain;">
                                 @endif
                                 @if(Auth::user()->access->center->centerid == 'PRONUMEX02' || Auth::user()->access->center->centerid == 'KELLOGGS01'|| Auth::user()->access->center->centerid == 'KELLOGGS02')
-                                    <img src="{{asset('/img/Kellogg.png')}}" alt="" style="width: 280px;height: 100px">
+                                    <img src="{{asset('/img/Kellogg.png')}}" alt="" style="max-width: 100%; height: auto; max-height: 100px; object-fit: contain;">
                                 @endif
                                 @if(Auth::user()->access->center->centerid == 'BRIDGESTONES' || Auth::user()->access->center->centerid == 'AVBSMX' || Auth::user()->access->center->centerid == 'BRIDCUE'  )
-                                    <img src="{{asset('/img/Bridgestone.png')}}" alt="" style="width: 500px;height: 30px">
+                                    <img src="{{asset('/img/Bridgestone.png')}}" alt="" style="max-width: 100%; height: auto; max-height: 50px; object-fit: contain;">
                                 @endif
                                 @if(Auth::user()->access->center->centerid == 'BARRYTOL')
-                                    <img src="{{asset('/img/Barry.png')}}" alt="" style="width: 280px;height: 80px">
+                                    <img src="{{asset('/img/Barry.png')}}" alt="" style="max-width: 100%; height: auto; max-height: 80px; object-fit: contain;">
                                 @endif
                             @endif
                         </div>
@@ -182,11 +182,15 @@
                     <div class="yard-section-title mt-4">Ocupación del Patio</div>
 
                     {{-- Gráfica de dona --}}
+                    @php
+                        $porcentaje_ocupacion = $total_ubicaciones > 0
+                            ? round(($total_ocupadas / $total_ubicaciones) * 100, 2)
+                            : 0;
+                    @endphp
                     <div id="grafica">
-                        <div class="donut-chart"
-                             style="background: conic-gradient(#3a8fd6 0% {{ $totales->porcentaje_ocupacion }}%, #e0e0e0 {{ $totales->porcentaje_ocupacion }}% 100%);">
+                        <div class="donut-chart" style="background: conic-gradient(#3a8fd6 0% {{ $porcentaje_ocupacion }}%, #e0e0e0 {{ $porcentaje_ocupacion }}% 100%);">
                             <div class="donut-label">
-                                <div class="donut-percent">{{ number_format($totales->porcentaje_ocupacion, 0) }}%</div>
+                                <div class="donut-percent">{{ number_format($porcentaje_ocupacion, 0) }}%</div>
                                 <div class="donut-text">Ocupado</div>
                             </div>
                         </div>
@@ -197,8 +201,7 @@
                     {{-- Cajones ocupados --}}
                     <div class="yard-stat-row mt-4">
                         <div class="yard-stat-label">Cajones ocupados:</div>
-                        <div class="yard-stat-value">{{ $totales->total_ocupadas }}
-                            / {{ $totales->total_ubicaciones }}</div>
+                        <div class="yard-stat-value">{{ $total_ocupadas }}/ {{ $total_ubicaciones }}</div>
                     </div>
 
                     <hr class="mt-4">
@@ -206,7 +209,7 @@
                     {{-- Cajones libres --}}
                     <div class="yard-stat-row mt-4">
                         <div class="yard-stat-label">Cajones libres:</div>
-                        <div class="yard-stat-value">{{ $totales->total_disponibles }}</div>
+                        <div class="yard-stat-value">{{ $total_ubicaciones - $total_ocupadas}}</div>
                     </div>
 
                     <hr class="mt-4">

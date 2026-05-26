@@ -27,7 +27,12 @@ class CapacityYardController extends BaseController
             ->select(['id', 'name', 'capacity', 'centerid'])
             ->whereRaw("charindex('ZO-01', configurationflag) > 0")
             ->where('statusid', '=', 'E')
+            ->whereNull('deleted_at')
             ->get();
+
+        $centerBusy = ReceiptUnit::controlAccessUser()
+            ->whereNotIn('statusid', ['TR'])
+            ->count('id');
 
         // Obtener ocupación por zona indexado por zoneid
         $locationfill = ReceiptUnit::controlAccessUser()
@@ -50,7 +55,8 @@ class CapacityYardController extends BaseController
 
         return view(
             'Yards.CapacityYard.index',
-            compact('centers', 'zones', 'zonesByCenter', 'locationfill', 'unitsByStatus')
+            compact('centers', 'zones', 'zonesByCenter',
+                'locationfill', 'unitsByStatus', 'centerBusy')
         );
     }
 
