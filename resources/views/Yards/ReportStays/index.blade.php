@@ -111,6 +111,9 @@
                         </div>
                     </div>
                 </div>
+                <div class="card-footer">
+                    <span>Reporte de estadias</span>
+                </div>
             </div>
         </div>
     </div>
