@@ -5,7 +5,7 @@
         @php
             $centerZones = $zonesByCenter->get($center->centerid, collect());
             $centerCapacity = $centerZones->sum('capacity');
-            $centerBusy = $centerZones->sum(fn($zone) => $locationfill->get($zone->id, 0));
+//            $centerBusy = $centerZones->sum(fn($zone) => $locationfill->get($zone->id, 0));
         @endphp
         <div class="row">
             <div class="col-12">
