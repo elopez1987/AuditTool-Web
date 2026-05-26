@@ -156,23 +156,23 @@
             <div class="card sidebar-yard-card">
                 <div class="card-body">
 
-                    <div class="row item-center">
-                        <div class="col-lg-12">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-12 text-center">
                             @if(Auth::check())
                                 @if(Auth::user()->access->center->centerid == 'SAHUARO' || Auth::user()->access->center->centerid == 'CONDESA')
-                                    <img src="{{asset('/img/Garrett.jpg')}}" alt="" style="width: 280px;height: 100px">
+                                    <img src="{{asset('/img/Garrett.jpg')}}" alt="" style="max-width: 100%; height: auto; max-height: 100px; object-fit: contain;">
                                 @endif
                                 @if(Auth::user()->access->center->centerid == 'PLANHENKTOL' || Auth::user()->access->center->centerid == 'HENKELTOL01')
-                                    <img src="{{asset('/img/henkel.png')}}" alt="" style="width: 280px;height: 100px">
+                                    <img src="{{asset('/img/henkel.png')}}" alt="" style="max-width: 100%; height: auto; max-height: 100px; object-fit: contain;">
                                 @endif
                                 @if(Auth::user()->access->center->centerid == 'PRONUMEX02' || Auth::user()->access->center->centerid == 'KELLOGGS01'|| Auth::user()->access->center->centerid == 'KELLOGGS02')
-                                    <img src="{{asset('/img/Kellogg.png')}}" alt="" style="width: 280px;height: 100px">
+                                    <img src="{{asset('/img/Kellogg.png')}}" alt="" style="max-width: 100%; height: auto; max-height: 100px; object-fit: contain;">
                                 @endif
                                 @if(Auth::user()->access->center->centerid == 'BRIDGESTONES' || Auth::user()->access->center->centerid == 'AVBSMX' || Auth::user()->access->center->centerid == 'BRIDCUE'  )
-                                    <img src="{{asset('/img/Bridgestone.png')}}" alt="" style="width: 500px;height: 30px">
+                                    <img src="{{asset('/img/Bridgestone.png')}}" alt="" style="max-width: 100%; height: auto; max-height: 50px; object-fit: contain;">
                                 @endif
                                 @if(Auth::user()->access->center->centerid == 'BARRYTOL')
-                                    <img src="{{asset('/img/Barry.png')}}" alt="" style="width: 280px;height: 80px">
+                                    <img src="{{asset('/img/Barry.png')}}" alt="" style="max-width: 100%; height: auto; max-height: 80px; object-fit: contain;">
                                 @endif
                             @endif
                         </div>
