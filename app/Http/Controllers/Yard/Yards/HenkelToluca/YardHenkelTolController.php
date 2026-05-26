@@ -37,8 +37,10 @@ class YardHenkelTolController extends BaseController
             ->get();
 
         $totales = DB::table('storagelocations as s')
-            ->leftJoin('storagezones as z', 's.zoneid', '=', 'z.id')
+            ->Join('storagezones as z', 's.zoneid', '=', 'z.id')
             ->whereNotIn('z.zoneid', ['ST'])
+            ->whereNull('s.deleted_at')
+            ->whereNull('z.deleted_at')
             ->whereIn('s.warehouseid', $warehouses)
             ->whereIn('s.centerid', $centers)
             ->selectRaw("
@@ -53,9 +55,11 @@ class YardHenkelTolController extends BaseController
             ->first();
 
         $bodegas = DB::table('storagelocations as s')
-            ->leftJoin('storagezones as z', 's.zoneid', '=', 'z.id')
-            ->leftJoin('systemwarehouses as w', 's.warehouseid', '=', 'w.warehouseid')
+            ->Join('storagezones as z', 's.zoneid', '=', 'z.id')
+            ->Join('systemwarehouses as w', 's.warehouseid', '=', 'w.warehouseid')
             ->whereNotIn('z.zoneid', ['ST'])
+            ->whereNull('s.deleted_at')
+            ->whereNull('z.deleted_at')
             ->whereIn('s.warehouseid', $warehouses)
             ->whereIn('s.centerid', $centers)
             ->groupBy('w.name')
