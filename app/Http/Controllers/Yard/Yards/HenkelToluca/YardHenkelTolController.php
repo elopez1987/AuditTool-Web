@@ -47,24 +47,43 @@ class YardHenkelTolController extends BaseController
             ->whereNotIn('statusid', ['TR'])
             ->count();
 
-        $bodegas = DB::table('storagelocations as s')
-            ->Join('storagezones as z', 's.zoneid', '=', 'z.id')
-            ->Join('systemwarehouses as w', 's.warehouseid', '=', 'w.warehouseid')
-            ->whereNotIn('z.zoneid', ['ST'])
-            ->whereNull('s.deleted_at')
-            ->whereNull('z.deleted_at')
+        $bodegas = DB::table('systemwarehouses as s')
             ->whereIn('s.warehouseid', $warehouses)
-            ->whereIn('s.centerid', $centers)
-            ->groupBy('w.name')
             ->selectRaw("
-       					 w.name AS warehouse,
-					COUNT(s.locationid) AS total_ubicaciones,
-					COUNT(CASE WHEN s.statusid = 'D' THEN 1 END) AS total_ocupadas,
-					ROUND(
-						COUNT(CASE WHEN s.statusid = 'D' THEN 1 END) * 100.0 / COUNT(s.locationid),
-						2
-					) AS porcentaje_ocupacion
-				")
+                s.name AS warehouse,
+                (
+                    SELECT SUM(s2.capacity)
+                    FROM storagezones s2
+                    WHERE s2.warehouseid = s.warehouseid
+                      AND s2.statusid = 'E'
+                      AND s2.deleted_at IS NULL
+                ) AS total_ubicaciones,
+                (
+                    SELECT COUNT(r2.id)
+                    FROM receiptunits r2
+                    WHERE r2.warehouseid = s.warehouseid
+                      AND r2.statusid NOT IN ('TR')
+                ) AS total_ocupadas,
+                ROUND(
+                    (
+                        SELECT COUNT(r2.id)
+                        FROM receiptunits r2
+                        WHERE r2.warehouseid = s.warehouseid
+                          AND r2.statusid NOT IN ('TR')
+                    ) * 100.0
+                    / NULLIF(
+                        (
+                            SELECT SUM(s2.capacity)
+                            FROM storagezones s2
+                            WHERE s2.warehouseid = s.warehouseid
+                              AND s2.statusid = 'E'
+                              AND s2.deleted_at IS NULL
+                        ),
+                        0
+                    ),
+                    2
+                ) AS porcentaje_ocupacion
+            ")
             ->get();
 
         return view('Yards.LayOutYard.index',
