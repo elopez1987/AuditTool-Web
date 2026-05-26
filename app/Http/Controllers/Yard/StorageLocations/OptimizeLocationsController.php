@@ -63,19 +63,14 @@ class OptimizeLocationsController extends BaseController
             ->select(['id', 'zoneid', 'locationid'])
             ->get();
 
-        $locationIds = $receiptUnits->pluck('locationid')->unique();
-
-        $locations = StorageLocation::controlAccessUser()
-            ->whereIn('id', $locationIds)
-            ->select(['id', 'zoneid'])
-            ->get()
-            ->keyBy('id');
-
         foreach ($receiptUnits as $receiptUnit) {
-            $location = $locations->get($receiptUnit->locationid);
 
-            if ($location) {
-                $receiptUnit->update(['zoneid' => $location->zoneid]);
+            $locations = StorageLocation::controlAccessUser()
+                ->whereIn('id', $receiptUnit->locationid)
+                ->select(['id', 'zoneid'])
+                ->first();
+            if ($locations) {
+                $receiptUnit->update(['zoneid' => $locations->zoneid]);
             }
         }
 
