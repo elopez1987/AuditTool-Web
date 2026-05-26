@@ -4,7 +4,11 @@ namespace App\Http\Controllers\Inventory\InventoryFiscal;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Inventory\InventoryHeadRequest;
-use App\Models\Inventory\InventoryHead;
+use App\Models\Inventory\InventoryFiscal\InventoryAisle;
+use App\Models\Inventory\InventoryFiscal\InventoryAisleCount;
+use App\Models\Inventory\InventoryFiscal\InventoryCard;
+use App\Models\Inventory\InventoryFiscal\InventoryCardCount;
+use App\Models\Inventory\InventoryFiscal\InventoryHead;
 use App\Traits\Web\Inventory\InventoryFiscalTrait;
 use Illuminate\Http\Request;
 
@@ -22,9 +26,16 @@ class InventoryHeadController extends BaseController
 
     public function getInventoryHead(Request $request)
     {
+        $filters = $request->only(['name']);
+
         $data = InventoryHead::controlAccessUser()
-            ->with(['status:statusid,name,auxiliary01', 'center:centerid,name,description', 'warehouse:warehouseid,name'])
-//            ->Name($request->get('name'))
+            ->with(['status:statusid,name,auxiliary01',
+                'center:centerid,name,description',
+                'created_by:name,id',
+                'closed_by:name,id',
+                'warehouse:warehouseid,name'])
+            ->Filter($filters)
+            ->orderBy('id', 'desc')
             ->get();
 
         return $this->showDataToView($data, 'Inventory.InventoryHead.partials.buttons');
@@ -51,8 +62,26 @@ class InventoryHeadController extends BaseController
 
     public function edit(InventoryHead $inventoryhead)
     {
+        $aislesPlanning = InventoryAisleCount::where('inventory_head_id', $inventoryhead->id)
+            ->pluck('inventory_aisle_id');
 
-        return view('Inventory.InventoryHead.edit', compact('inventoryhead'));
+        $cardsPlanning = InventoryCardCount::where('inventory_head_id', $inventoryhead->id)
+            ->pluck('inventory_card_id');
+
+        $aisles = InventoryAisle::controlAccessUser()
+            ->where('statusid', 'E')
+            ->select(['id', 'name'])
+            ->whereNotIn('id', $aislesPlanning)
+            ->get();
+
+        $cards = InventoryCard::controlAccessUser()
+            ->where('statusid', 'E')
+            ->whereIn('inventory_aisle_id', $aislesPlanning)
+            ->whereNotIn('id', $cardsPlanning)
+            ->select(['id', 'name'])
+            ->get();
+
+        return view('Inventory.InventoryHead.edit', compact('inventoryhead', 'aisles', 'cards'));
     }
 
     public function update(Request $request, InventoryHead $inventoryhead)

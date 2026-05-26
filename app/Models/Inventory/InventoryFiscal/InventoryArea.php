@@ -1,47 +1,38 @@
 <?php
 
-namespace App\Models\Inventory;
+namespace App\Models\Inventory\InventoryFiscal;
 
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Configuration\Warehouses\SystemWarehouse;
-use App\Models\Inventory\UnitMeasure\InventoryUnitMeasure;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class InventoryLocation extends Model
+class InventoryArea extends Model
 {
     use LogsActivity;
-    use SoftDeletes;
 
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()->logFillable();
     }
 
-    protected $table = 'inventory_locations';
+    protected $table = 'inventory_areas';
 
     protected $fillable = [
         'centerid',
         'warehouseid',
         'name',
         'configurationflag',
-        'inventoryunitsmeasure_id',
-        'inventory_card_id',
         'auxiliary01',
         'auxiliary02',
         'auxiliary03',
+        'schemaid',
         'statusid',
     ];
-
-    public function inventoryunitsmeasure(): BelongsTo
-    {
-        return $this->belongsTo(InventoryUnitMeasure::class, 'inventoryunitsmeasure_id');
-    }
 
     public function center(): BelongsTo
     {
@@ -72,7 +63,7 @@ class InventoryLocation extends Model
         $centers = SecurityAccessWarehouse::Centers();
         $warehouses = SecurityAccessWarehouse::Warehouses();
 
-        return InventoryLocation::whereIn('inventory_locations.centerid', $centers)
-            ->whereIn('inventory_locations.warehouseid', $warehouses);
+        return InventoryArea::whereIn('inventory_areas.centerid', $centers)
+            ->whereIn('inventory_areas.warehouseid', $warehouses);
     }
 }

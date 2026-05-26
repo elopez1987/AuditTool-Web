@@ -64,6 +64,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('izel:enviar-datos-izel-wms')->everyFiveMinutes();
 
         //      Comandos del módulo de Control de Patios
+
+        //		Envia mensaje de unidades sin salida de patio por tiempo excedido por autorización
         $schedule->command('command:TiempoExcedidoParaSalirDePatio')->everyFifteenMinutes();
         //        Envia mensajes de a unidades sin llegada para embarques
         $schedule->command('command:UnidadesSinLLegarEmbarques')->hourly();

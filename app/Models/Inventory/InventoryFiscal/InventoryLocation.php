@@ -1,39 +1,47 @@
 <?php
 
-namespace App\Models\Inventory;
+namespace App\Models\Inventory\InventoryFiscal;
 
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Configuration\Warehouses\SystemWarehouse;
+use App\Models\Inventory\UnitMeasure\InventoryUnitMeasure;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class InventoryCard extends Model
+class InventoryLocation extends Model
 {
     use LogsActivity;
+    use SoftDeletes;
 
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()->logFillable();
     }
 
-    protected $table = 'inventory_cards';
+    protected $table = 'inventory_locations';
 
     protected $fillable = [
         'centerid',
         'warehouseid',
         'name',
         'configurationflag',
+        'inventoryunitsmeasure_id',
+        'inventory_card_id',
         'auxiliary01',
         'auxiliary02',
         'auxiliary03',
         'statusid',
-        'inventory_area_id',
-        'inventory_aisle_id',
     ];
+
+    public function inventoryunitsmeasure(): BelongsTo
+    {
+        return $this->belongsTo(InventoryUnitMeasure::class, 'inventoryunitsmeasure_id');
+    }
 
     public function center(): BelongsTo
     {
@@ -50,16 +58,6 @@ class InventoryCard extends Model
         return $this->belongsTo(SystemStatus::class, 'statusid', 'statusid');
     }
 
-    public function inventoryarea(): BelongsTo
-    {
-        return $this->belongsTo(InventoryArea::class, 'inventory_area_id', 'id');
-    }
-
-    public function inventoryaisle(): BelongsTo
-    {
-        return $this->belongsTo(InventoryAisle::class, 'inventory_aisle_id', 'id');
-    }
-
     protected $attributes = [
         'statusid' => 'E',
         'schemaid' => 'STS',
@@ -74,7 +72,7 @@ class InventoryCard extends Model
         $centers = SecurityAccessWarehouse::Centers();
         $warehouses = SecurityAccessWarehouse::Warehouses();
 
-        return InventoryCard::whereIn('inventory_cards.centerid', $centers)
-            ->whereIn('inventory_cards.warehouseid', $warehouses);
+        return InventoryLocation::whereIn('inventory_locations.centerid', $centers)
+            ->whereIn('inventory_locations.warehouseid', $warehouses);
     }
 }

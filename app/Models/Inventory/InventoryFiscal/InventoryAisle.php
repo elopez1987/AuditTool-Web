@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Inventory;
+namespace App\Models\Inventory\InventoryFiscal;
 
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Configuration\Schemas\SystemStatus;

@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryAisleController;
+use App\Http\Controllers\Inventory\InventoryFiscal\InventoryAisleCountController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryAreaController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryCardController;
+use App\Http\Controllers\Inventory\InventoryFiscal\InventoryCardCountController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryHeadController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryLocationController;
 use App\Http\Controllers\Inventory\InventoryPartNumberCategory01sController;
@@ -65,8 +67,17 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('inventoryheads', InventoryHeadController::class)->except('show');
     Route::get('getInventoryHead', [InventoryHeadController::class, 'getInventoryHead'])->name('getInventoryHead');
-    //	Route::get('getInventoryHeadForCard/{id}', [InventoryHeadController::class, 'getInventoryHeadForCard'])->name('getInventoryHeadForCard');
-    //	Route::get('getInventoryHeadForCard/{id}/adddata01', [InventoryHeadController::class, 'getInventoryHeadForCardData01'])->name('getInventoryHeadForCard.adddata01');
-    //	Route::put('inventoryheadadddata01/{id}', [InventoryHeadController::class, 'addData01'])->name('inventoryheadadddata01');
+
+    //	Asignar los pasillos al conteo
+    Route::put('addaislecounttoinventory/{id}', [InventoryAisleCountController::class, 'addAisleCountToInventory'])->name('addaislecounttoinventory');
+    Route::get('getAisleCountInventory/{id}', [InventoryAisleCountController::class, 'getAisleCountInventory'])->name('getAisleCountInventory');
+    Route::get('getAvailableAislesForInventory/{id}', [InventoryAisleCountController::class, 'getAvailableAislesForInventory'])->name('getAvailableAislesForInventory');
+    Route::delete('deleteAisleCountFromInventory/{id}', [InventoryAisleCountController::class, 'deleteAisleCountFromInventory'])->name('deleteAisleCountFromInventory');
+
+    //	Asignar las cedulas al conteo
+    Route::put('addcardcounttoinventory/{id}', [InventoryCardCountController::class, 'addCardCountToInventory'])->name('addcardcounttoinventory');
+    Route::get('getCardCountInventory/{id}', [InventoryCardCountController::class, 'getCardCountInventory'])->name('getCardCountInventory');
+    Route::get('getAvailableCardsForInventory/{id}', [InventoryCardCountController::class, 'getAvailableCardsForInventory'])->name('getAvailableCardsForInventory');
+    Route::delete('deleteCardCountFromInventory/{id}', [InventoryCardCountController::class, 'deleteCardCountFromInventory'])->name('deleteCardCountFromInventory');
 
 });

@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Inventory\InventoryFiscal;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Inventory\InventoryLocationRequest;
-use App\Models\Inventory\InventoryCard;
-use App\Models\Inventory\InventoryLocation;
+use App\Models\Inventory\InventoryFiscal\InventoryCard;
+use App\Models\Inventory\InventoryFiscal\InventoryLocation;
 use Illuminate\Http\Request;
 
 class InventoryLocationController extends BaseController
