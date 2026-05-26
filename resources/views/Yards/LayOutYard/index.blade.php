@@ -182,11 +182,15 @@
                     <div class="yard-section-title mt-4">Ocupación del Patio</div>
 
                     {{-- Gráfica de dona --}}
+                    @php
+                        $porcentaje_ocupacion = $total_ubicaciones > 0
+                            ? round(($total_ocupadas / $total_ubicaciones) * 100, 2)
+                            : 0;
+                    @endphp
                     <div id="grafica">
-                        <div class="donut-chart"
-                             style="background: conic-gradient(#3a8fd6 0% {{ $totales->porcentaje_ocupacion }}%, #e0e0e0 {{ $totales->porcentaje_ocupacion }}% 100%);">
+                        <div class="donut-chart" style="background: conic-gradient(#3a8fd6 0% {{ $porcentaje_ocupacion }}%, #e0e0e0 {{ $porcentaje_ocupacion }}% 100%);">
                             <div class="donut-label">
-                                <div class="donut-percent">{{ number_format($totales->porcentaje_ocupacion, 0) }}%</div>
+                                <div class="donut-percent">{{ number_format($porcentaje_ocupacion, 0) }}%</div>
                                 <div class="donut-text">Ocupado</div>
                             </div>
                         </div>
@@ -197,8 +201,7 @@
                     {{-- Cajones ocupados --}}
                     <div class="yard-stat-row mt-4">
                         <div class="yard-stat-label">Cajones ocupados:</div>
-                        <div class="yard-stat-value">{{ $totales->total_ocupadas }}
-                            / {{ $totales->total_ubicaciones }}</div>
+                        <div class="yard-stat-value">{{ $total_ocupadas }}/ {{ $total_ubicaciones }}</div>
                     </div>
 
                     <hr class="mt-4">
@@ -206,7 +209,7 @@
                     {{-- Cajones libres --}}
                     <div class="yard-stat-row mt-4">
                         <div class="yard-stat-label">Cajones libres:</div>
-                        <div class="yard-stat-value">{{ $totales->total_disponibles }}</div>
+                        <div class="yard-stat-value">{{ $total_ubicaciones - $total_ocupadas}}</div>
                     </div>
 
                     <hr class="mt-4">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Yard\Yards\HenkelToluca;
 use App\Http\Controllers\BaseController;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\Models\Yard\ReceiptUnit;
+use App\Models\Yard\StorageZone\StorageZone;
 use DB;
 
 class YardHenkelTolController extends BaseController
@@ -26,7 +27,8 @@ class YardHenkelTolController extends BaseController
             'receiptunits.boxnumber', 'receiptunits.trucknumber', 'receiptunits.operatorname', 'receiptunits.razonstatusid',
             'receiptunits.phone', 'storageunitstatus.unitstatusid', 'storagereasons.name as razonname', 'receiptunits.statusid',
             'receiptunits.entrydate', 'receiptunits.startdate', 'receiptunits.finishdate', 'receiptunits.econumber',
-            'receiptunits.locationid', 'storagelocations.name as locationname', 'storagelocations.id as location', 'systemstatus.name as status',
+            'receiptunits.locationid', 'storagelocations.name as locationname',
+            'storagelocations.id as location', 'systemstatus.name as status',
         ])
             ->leftJoin('shipmentcarriers', 'receiptunits.carrierid', '=', 'shipmentcarriers.id')
             ->leftJoin('storageunitstatus', 'receiptunits.unitstatusid', '=', 'storageunitstatus.id')
@@ -36,23 +38,14 @@ class YardHenkelTolController extends BaseController
             ->whereNotIn('receiptunits.statusid', ['TR'])
             ->get();
 
-        $totales = DB::table('storagelocations as s')
-            ->Join('storagezones as z', 's.zoneid', '=', 'z.id')
-            ->whereNotIn('z.zoneid', ['ST'])
-            ->whereNull('s.deleted_at')
-            ->whereNull('z.deleted_at')
-            ->whereIn('s.warehouseid', $warehouses)
-            ->whereIn('s.centerid', $centers)
-            ->selectRaw("
-						COUNT(s.locationid) AS total_ubicaciones,
-						COUNT(CASE WHEN s.statusid = 'D' THEN 1 END) AS total_ocupadas,
-						COUNT(s.locationid) - COUNT(CASE WHEN s.statusid = 'D' THEN 1 END) AS total_disponibles,
-						ROUND(
-							COUNT(CASE WHEN s.statusid = 'D' THEN 1 END) * 100.0 / COUNT(s.locationid),
-							2
-						) AS porcentaje_ocupacion
-					")
-            ->first();
+        $total_ubicaciones = StorageZone::controlAccessUser()
+            ->whereNotIn('zoneid', ['ST'])
+            ->where('statusid', 'E')
+            ->whereNull('deleted_at')->sum('capacity');
+
+        $total_ocupadas = ReceiptUnit::controlAccessUser()
+            ->whereNotIn('statusid', ['TR'])
+            ->count();
 
         $bodegas = DB::table('storagelocations as s')
             ->Join('storagezones as z', 's.zoneid', '=', 'z.id')
@@ -75,6 +68,6 @@ class YardHenkelTolController extends BaseController
             ->get();
 
         return view('Yards.LayOutYard.index',
-            compact('result', 'receiptUnits', 'totales', 'bodegas'));
+            compact('result', 'receiptUnits', 'bodegas', 'total_ubicaciones', 'total_ocupadas'));
     }
 }
