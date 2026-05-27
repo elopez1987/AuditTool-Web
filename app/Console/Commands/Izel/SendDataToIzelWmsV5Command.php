@@ -45,11 +45,11 @@ class SendDataToIzelWmsV5Command extends Command
             foreach ($centers as $center) {
                 $parameterCenter = $center->configurationflag;
 
-                if (! empty($parameterCenter) && in_array('SDC-07', $parameterCenter)) {
-                    $this->info("Centro {$center->centerid} tiene flag SDC-07, se omite.");
-
-                    continue;
-                }
+                //                if (!empty($parameterCenter) && in_array('SDC-07', $parameterCenter)) {
+                //                    $this->info("Centro {$center->centerid} tiene flag SDC-07, se omite.");
+                //
+                //                    continue;
+                //                }
 
                 $this->info("Iniciando envío de datos a Izel WMS V5 para centro: {$center->centerid}");
 
@@ -131,18 +131,29 @@ class SendDataToIzelWmsV5Command extends Command
         }
 
         $response = $this->sendToWms($url, $data, $token, $ediConfig->value01, $ediConfig->value02);
-        $statusService = json_decode($response->body());
+        $body = $response->json();
 
-        $this->createRegisterLog($receiptUnit, $statusService, $data);
+        $this->createRegisterLog($receiptUnit, $body, $data);
 
-        if ($statusService->Code === 0) {
+        $code = $body['Code'] ?? null;
+        $status = $body['Status'] ?? null;
+
+        if ($code === self::HTTP_OK && $status === 'SUCCESS') {
             $shipment->status = 'Completed';
             $shipment->processed_at = now();
-            $shipment->error_message = $statusService->Message;
+            $shipment->error_message = $body['Description'] ?? null;
             $shipment->save();
         } else {
+            $errorMessage = $body['Description'] ?? $body['message'] ?? $body['error'] ?? 'Error desconocido';
+
+            $this->error("Error en respuesta WMS para shipment {$shipment->shipmentid}: {$errorMessage}");
+            Log::warning('Respuesta de error WMS V5', [
+                'shipment_id' => $shipment->shipmentid,
+                'response' => $body,
+            ]);
+
             $shipment->retry_count++;
-            $shipment->error_message = $statusService->Message;
+            $shipment->error_message = $errorMessage;
             $shipment->save();
 
             if ($shipment->retry_count > 12) {
@@ -205,24 +216,30 @@ class SendDataToIzelWmsV5Command extends Command
                     'client_secret' => $config->value04,
                 ]);
 
-            if ($response->status() !== self::HTTP_OK) {
+            $body = $response->json();
+            $code = $body['Code'] ?? null;
+            $status = $body['Status'] ?? null;
+
+            if ($code !== self::HTTP_OK || $status !== 'SUCCESS') {
                 Log::error('Error obteniendo token WMS V5', [
                     'center' => $config->value05,
-                    'status' => $response->status(),
-                    'body' => $response->body(),
+                    'code' => $code,
+                    'status' => $status,
+                    'description' => $body['Description'] ?? null,
                 ]);
+
+                $this->error("Error al obtener token para centro {$config->value05}: [{$code}] {$body['Description']}");
 
                 return null;
             }
 
-            $data = $response->json();
-            $token = $data['access_token'] ?? $data['Token'] ?? null;
-            $ttl = $data['expires_in'] ?? 3600;
+            $token = $body['Data']['access_token'] ?? null;
+            $ttl = $body['Data']['expires_in'] ?? 3600;
 
             if (! $token) {
-                Log::error('Token no encontrado en la respuesta V5', [
+                Log::error('Token no encontrado en Data de la respuesta V5', [
                     'center' => $config->value05,
-                    'response' => $data,
+                    'response' => $body,
                 ]);
 
                 return null;
@@ -276,20 +293,20 @@ class SendDataToIzelWmsV5Command extends Command
             ->get();
     }
 
-    private function createRegisterLog($receiptunit, $statusService, $data): void
+    private function createRegisterLog($receiptunit, array $body, $data): void
     {
         SystemEventWebServiceIzel::create([
             'centerid' => $receiptunit->centerid,
             'warehouseid' => $receiptunit->warehouseid,
             'folionumber' => $receiptunit->id,
             'boxnumber' => $receiptunit->boxnumber,
-            'servicename' => $statusService->{'Service_Name'},
-            'processdate' => $statusService->{'ProcessDate'},
-            'code' => $statusService->{'Code'},
+            'servicename' => $body['Status'] ?? $body['error'] ?? null,
+            'processdate' => now(),
+            'code' => $body['Code'] ?? $body['status'] ?? null,
             'type' => 'IZEL',
-            'message' => $statusService->{'Message'},
+            'message' => $body['Description'] ?? $body['message'] ?? null,
             'messagejson' => $data->resolve(),
-            'messagejsonresponse' => $statusService,
+            'messagejsonresponse' => $body,
         ]);
     }
 }
