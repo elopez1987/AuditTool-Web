@@ -28,11 +28,12 @@ class CheckInResource extends JsonResource
             'entrydate' => $this->entrydate,
             'quantitytotal' => '0',
             'quantity' => '0',
-            'Droplot' => $this->location ? $this->location->locationid : '_locationid',
+            'droplot' => $this->location ? $this->location->locationid : '_locationid',
             'trucknumber' => $this->tracto ? $this->tracto->trucknumber : '00000',
             'boxnumber' => $this->boxnumber . '-' . $this->econumber ?? '00000',
             'zoneid' => $this->zone ? $this->zone->auxiliary01 : 'ZONA',
             'ldastatusid' => $this->unitstatus ? $this->unitstatus->unitstatusid : 'ESTATUS',
+            'updstatusid' => '',
         ];
     }
 }

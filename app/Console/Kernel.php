@@ -6,7 +6,7 @@ use App\Console\Commands\General\ClearLocationCommand;
 use App\Console\Commands\General\CloseValidateQRReceipt;
 use App\Console\Commands\General\DeleteHistLogWebServiceIzel;
 use App\Console\Commands\General\DeleteLogWhatsApp;
-use App\Console\Commands\Izel\EnviarDatosIzelWmsCommand;
+use App\Console\Commands\Izel\SendDataToIzelWmsV5Command;
 use App\Console\Commands\Receipt\ClearReceiptAsnCommand;
 use App\Console\Commands\RecursoConfiable\GetEvidenceFromRControl;
 use App\Console\Commands\RecursoConfiable\ObtenerETAdeRecursoConfiable;
@@ -43,7 +43,8 @@ class Kernel extends ConsoleKernel
         ClearLocationCommand::class,
 
         //		Interfaces a Wms Izel
-        EnviarDatosIzelWmsCommand::class,
+        //        EnviarDatosIzelWmsCommand::class,
+        SendDataToIzelWmsV5Command::class,
     ];
 
     /**
@@ -61,7 +62,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('clear:receiptasn')->dailyAt('01:00');
 
         //      Comandos para interfaces a WMS Izel
-        $schedule->command('izel:enviar-datos-izel-wms')->everyFiveMinutes();
+        //        $schedule->command('izel:enviar-datos-izel-wms')->everyFiveMinutes();
+        $schedule->command('izel:send-data-izel-wms-v5')->everyFiveMinutes();
 
         //      Comandos del módulo de Control de Patios
 

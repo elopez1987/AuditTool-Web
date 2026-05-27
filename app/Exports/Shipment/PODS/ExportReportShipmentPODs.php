@@ -64,7 +64,7 @@ class ExportReportShipmentPODs implements FromCollection, ShouldAutoSize, WithEv
             ->where('orderdeliveries.statusid', '=', 'DH')
             ->where('orderdeliveries.centerid', $this->request->centerid)
             ->where('orderdeliveries.warehouseid', $this->request->warehouseid)
-            ->whereBetween('orderdeliveries.workday', [$this->workdayin, $this->workdayout])
+            ->whereBetween('orderdeliveries.workday', [$this->request->workdayin, $this->request->workdayout])
             ->groupBy(
                 'orderdeliveries.centerid',
                 'orderdeliveries.warehouseid',
