@@ -14,6 +14,13 @@ return new class extends Migration
             $table->foreignId('inventory_aisle_id');
             $table->foreignId('inventory_card_id');
 
+            $table->foreignId('user_count01_id')->nullable();
+            $table->foreignId('user_count02_id')->nullable();
+            $table->string('statusid_count01')->nullable();
+            $table->string('statusid_count02')->nullable();
+
+            $table->timestamps();
+
             $table->index(['inventory_head_id']);
             $table->index(['inventory_aisle_id']);
             $table->index(['inventory_card_id']);
