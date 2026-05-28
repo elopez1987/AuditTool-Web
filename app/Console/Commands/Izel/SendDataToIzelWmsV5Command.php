@@ -81,6 +81,8 @@ class SendDataToIzelWmsV5Command extends Command
                 $this->info("Centro {$center->centerid} NO tiene flag SDC-07, se omite.");
             }
 
+            return Command::SUCCESS;
+
         } catch (Exception $e) {
             $this->error("Error en el proceso: {$e->getMessage()}");
             Log::error('Error en SendDataToIzelWmsV5Command', [
