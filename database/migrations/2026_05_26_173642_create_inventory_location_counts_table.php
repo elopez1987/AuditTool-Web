@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('inventory_location_counts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('inventory_head_id');
+            $table->foreignId('inventory_head_id')->constrained('inventory_heads')->onDelete('cascade');
             $table->foreignId('inventory_aisle_id');
             $table->foreignId('inventory_card_id');
             $table->foreignId('inventory_location_id');

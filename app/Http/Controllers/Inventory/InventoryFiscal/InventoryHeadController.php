@@ -58,7 +58,15 @@ class InventoryHeadController extends BaseController
         return $this->successResponse('inventoryheads.index');
     }
 
-    public function show($id) {}
+    public function show($id)
+    {
+        $inventoryhead = InventoryHead::controlAccessUser()
+            ->with(['status:statusid,name,auxiliary01'])
+            ->findOrFail($id);
+
+        return view('Inventory.InventoryHead.show', compact('inventoryhead'));
+
+    }
 
     public function edit(InventoryHead $inventoryhead)
     {

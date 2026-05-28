@@ -2,10 +2,13 @@
 
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryAisleController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryAisleCountController;
+use App\Http\Controllers\Inventory\InventoryFiscal\InventoryAisleDetailController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryAreaController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryCardController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryCardCountController;
+use App\Http\Controllers\Inventory\InventoryFiscal\InventoryCardDetailController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryHeadController;
+use App\Http\Controllers\Inventory\InventoryFiscal\InventoryLocationCardController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryLocationController;
 use App\Http\Controllers\Inventory\InventoryPartNumberCategory01sController;
 use App\Http\Controllers\Inventory\InventoryPartNumberCategory02sController;
@@ -65,7 +68,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('create-location/{id}', [InventoryLocationController::class, 'createLocation'])->name('create-location');
     Route::get('getLocationForCard/{id}', [InventoryLocationController::class, 'getLocationForCard'])->name('getLocationForCard');
 
-    Route::resource('inventoryheads', InventoryHeadController::class)->except('show');
+    Route::resource('inventoryheads', InventoryHeadController::class);
     Route::get('getInventoryHead', [InventoryHeadController::class, 'getInventoryHead'])->name('getInventoryHead');
 
     //	Asignar los pasillos al conteo
@@ -79,5 +82,18 @@ Route::middleware(['auth'])->group(function () {
     Route::get('getCardCountInventory/{id}', [InventoryCardCountController::class, 'getCardCountInventory'])->name('getCardCountInventory');
     Route::get('getAvailableCardsForInventory/{id}', [InventoryCardCountController::class, 'getAvailableCardsForInventory'])->name('getAvailableCardsForInventory');
     Route::delete('deleteCardCountFromInventory/{id}', [InventoryCardCountController::class, 'deleteCardCountFromInventory'])->name('deleteCardCountFromInventory');
+
+    //	Detalle de pasillos de inventario
+    Route::get('inventoryhead-aisles/{id}', [InventoryAisleDetailController::class, 'index'])->name('inventoryhead-aisles');
+    Route::get('getAislesInventory/{id}', [InventoryAisleDetailController::class, 'getAislesInventory'])->name('getAislesInventory');
+    Route::delete('deleteAisleDetail/{id}', [InventoryAisleDetailController::class, 'destroy'])->name('deleteAisleDetail');
+
+    //	Detalle de cedulas de inventario
+    Route::get('inventoryhead-cards/{id}', [InventoryCardDetailController::class, 'index'])->name('inventoryhead-cards');
+    Route::get('getCardsInventory/{id}', [InventoryCardDetailController::class, 'getCardsInventory'])->name('getCardsInventory');
+    Route::delete('deleteCardDetail/{id}', [InventoryCardDetailController::class, 'destroy'])->name('deleteCardDetail');
+
+    //	Detalle de ubicaciones por cedula para su validacion en drones y comparacion en APP
+    Route::get('inventorylocations-card/{id}', [InventoryLocationCardController::class, 'index'])->name('inventorylocations-card');
 
 });

@@ -5,3 +5,10 @@
     </a>
 @endcan
 
+@can('inventoryheads.show')
+    <a href="{{url('inventoryheads/' . $id )}}" data-toggle="tooltip" data-placement="top"
+       title="Detalle del Inventario">
+        <img src="{{asset('/ico/dashboard.png')}}" alt="" class="img-16 ml-2 mr-2">
+    </a>
+@endcan
+
