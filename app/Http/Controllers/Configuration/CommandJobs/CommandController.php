@@ -50,7 +50,7 @@ class CommandController extends Controller
 
     public function senddatatoizel()
     {
-        Artisan::call('izel:enviar-datos-izel-wms');
+        Artisan::call('izel:send-data-izel-wms-v5');
 
         return redirect()->back()->with(session()->flash('success', 'Datos enviados con éxito a Izel.'));
     }
