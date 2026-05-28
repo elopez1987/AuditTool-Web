@@ -45,44 +45,41 @@ class SendDataToIzelWmsV5Command extends Command
             foreach ($centers as $center) {
                 $parameterCenter = $center->configurationflag;
 
-                //                if (!empty($parameterCenter) && in_array('SDC-07', $parameterCenter)) {
-                //                    $this->info("Centro {$center->centerid} tiene flag SDC-07, se omite.");
-                //
-                //                    continue;
-                //                }
+                if (! empty($parameterCenter) && in_array('SDC-07', $parameterCenter)) {
+                    $this->info("Iniciando envío de datos a Izel WMS V5 para centro: {$center->centerid}");
 
-                $this->info("Iniciando envío de datos a Izel WMS V5 para centro: {$center->centerid}");
+                    $shipments = $this->getShipments($center->centerid);
 
-                $shipments = $this->getShipments($center->centerid);
+                    if ($shipments->isEmpty()) {
+                        $this->info("No hay envíos pendientes para el centro {$center->centerid}.");
 
-                if ($shipments->isEmpty()) {
-                    $this->info("No hay envíos pendientes para el centro {$center->centerid}.");
+                        continue;
+                    }
 
-                    continue;
+                    try {
+                        $ediConfig = $this->getEdiConfig($center->centerid);
+                    } catch (Exception $e) {
+                        $this->warn("Config IZEL no encontrada para centro {$center->centerid}: {$e->getMessage()}");
+
+                        continue;
+                    }
+
+                    $token = $this->getTokenWms($ediConfig);
+
+                    if (! $token) {
+                        $this->error("No se pudo obtener el token para centro {$center->centerid}.");
+
+                        continue;
+                    }
+
+                    $this->processShipments($shipments, $ediConfig, $token, $center->centerid);
+
+                    $this->info('Proceso completado exitosamente.');
+
+                    return Command::SUCCESS;
                 }
-
-                try {
-                    $ediConfig = $this->getEdiConfig($center->centerid);
-                } catch (Exception $e) {
-                    $this->warn("Config IZEL no encontrada para centro {$center->centerid}: {$e->getMessage()}");
-
-                    continue;
-                }
-
-                $token = $this->getTokenWms($ediConfig);
-
-                if (! $token) {
-                    $this->error("No se pudo obtener el token para centro {$center->centerid}.");
-
-                    continue;
-                }
-
-                $this->processShipments($shipments, $ediConfig, $token, $center->centerid);
+                $this->info("Centro {$center->centerid} NO tiene flag SDC-07, se omite.");
             }
-
-            $this->info('Proceso completado exitosamente.');
-
-            return Command::SUCCESS;
 
         } catch (Exception $e) {
             $this->error("Error en el proceso: {$e->getMessage()}");
