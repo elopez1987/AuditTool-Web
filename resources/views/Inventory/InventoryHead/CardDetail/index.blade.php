@@ -23,7 +23,7 @@
                                         <a>
                                             @include('buttons.reloadajax')
                                         </a>
-                                        <a href="{{url('inventoryheads')}}">
+                                        <a href="{{url('inventoryheads/' . $inventoryHead->id)}}">
                                             @include('buttons.cancel')
                                         </a>
                                     </div>

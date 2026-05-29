@@ -95,5 +95,6 @@ Route::middleware(['auth'])->group(function () {
 
     //	Detalle de ubicaciones por cedula para su validacion en drones y comparacion en APP
     Route::get('inventorylocations-card/{id}', [InventoryLocationCardController::class, 'index'])->name('inventorylocations-card');
+    Route::get('getLocationCardInventory/{id}', [InventoryLocationCardController::class, 'getLocationCardInventory'])->name('getLocationCardInventory');
 
 });

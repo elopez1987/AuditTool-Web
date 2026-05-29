@@ -5,7 +5,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    Inventario Fiscal
+                    Detalla de cédula
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -20,7 +20,7 @@
                                         <a>
                                             @include('buttons.reloadajax')
                                         </a>
-                                        <a href="{{url('inventoryheads')}}">
+                                        <a href="{{url('inventoryhead-cards/' . $inventoryCardCount->inventory_head_id)}}">
                                             @include('buttons.cancel')
                                         </a>
                                     </div>
@@ -36,7 +36,7 @@
                                     />
                                     <x-text-input
                                             name="name"
-                                            label="Nombre del pasillo"
+                                            label="Ubicación"
                                             uppercase
                                     />
                                 </div>
@@ -46,16 +46,23 @@
 
                     <div class="row">
                         <div class="col-12">
-                            <table width="100%" id="table-cards" class="table table-bordered  table-condensed">
+                            <table width="100%" id="table-cards-locations" class="table table-bordered  table-condensed">
                                 <thead>
                                 <tr>
-                                    <th>ID Inventario</th>
                                     <th>Pasillo</th>
                                     <th>Cédula</th>
-                                    <th>Contador Asingado Para Conteo 01</th>
-                                    <th>Contador Asingado Para Conteo 02</th>
+                                    <th>Ubicación</th>
+                                    <th>Número de parte 01</th>
+                                    <th>Description 01</th>
+                                    <th>Cantidad 01</th>
+                                    <th>Contado por :</th>
+                                    <th>Número de parte 02</th>
+                                    <th>Description 02</th>
+                                    <th>Cantidad 02</th>
+                                    <th>Contado por :</th>
                                     <th>Estatus Conteo 01</th>
                                     <th>Estatus Conteo 02</th>
+                                    <th>Estatus General</th>
                                     <th>Opciones</th>
                                 </tr>
                                 </thead>
@@ -71,16 +78,96 @@
 @endsection
 
 @section('script')
+    <script>
+        function reloadtable() {
+            $('#table-cards-locations').DataTable().ajax.reload();
+        }
+    </script>
+    <script>
+        var oTable = $("#table-cards-locations").DataTable({
+            "paging": true,
+            "searching": true,
+            "ordering": true,
+            "sScrollY": "650px",
+            "sScrollX": true,
+            "processing": true,
+            "serverSide": true,
+            "responsive": true,
+            "colReorder": true,
+            "stateSave": true,
+            "stateDuration": 0,
+            "ajax": {
+                url: '{{ route("getLocationCardInventory", $inventoryCardCount->id) }}',
+                data: function (d) {
+                    d.name = $('input[name=name]').val();
+                }
+            },
+            "columns": [
+                {data: 'pasillo',          name: 'pasillo'},
+                {data: 'cedula',           name: 'cedula'},
+                {data: 'ubicacion',        name: 'ubicacion'},
+                {data: 'sku01',            name: 'sku01'},
+                {data: 'description01',    name: 'description01'},
+                {data: 'quantity01'},
+                {data: 'user_count01',     name: 'user_count01'},
+                {data: 'sku02',            name: 'sku02'},
+                {data: 'description02',    name: 'description02'},
+                {data: 'quantity02'},
+                {data: 'user_count02',     name: 'user_count02'},
+                {data: 'statusid_count01', name: 'statusid_count01'},
+                {data: 'statusid_count02', name: 'statusid_count02'},
+                {data: 'statusid_location'},
+                {data: 'btn', orderable: false, searchable: false},
+            ],
+            "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
+            "lengthMenu": [[25, 50,100, -1], [25, 50,100, "Todos"]],
 
-    {{-- Variables dinámicas de Blade expuestas al JS externo --}}
-{{--    <script>--}}
-{{--        var CardDetail = {--}}
-{{--            ajaxUrl:   '{{ route("getCardsInventory", $inventoryHead->id) }}',--}}
-{{--            deleteUrl: '{{ url("deleteCardDetail") }}',--}}
-{{--            csrfToken: '{{ csrf_token() }}'--}}
-{{--        };--}}
-{{--    </script>--}}
+            buttons: [
+                {
+                    "extend": "colvis",
+                    "text": "<img src=\"{{asset('/pics/adbuscar.png')}}\"  alt=''><span  style='font-size: 11px;'> Mostar/Ocultar</span>",
+                    "className": "btn btn-outline-info btn-md  btn-bold",
+                    columns: ':not(:first):not(:last)'
+                },
+                {
+                    "extend": "csv",
+                    "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16'><span  style='font-size: 11px;'> Csv</span>",
+                    "className": "btn btn-outline-info btn-md  btn-bold",
+                },
+                {
+                    "extend": "excel",
+                    "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt=''><span  style='font-size: 11px;'> Excel</span>",
+                    "className": "btn btn-outline-info btn-md  btn-bold",
+                }
+            ],
 
-{{--    <script src="{{ asset('js/inventory/card-detail.js') }}"></script>--}}
+            language: {
+                "decimal": "",
+                "emptyTable": "No hay información",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                "infoPostFix": "",
+                "thousands": ",",
+                "lengthMenu": "Mostrar _MENU_ Entradas",
+                "loadingRecords": "Cargando...",
+                "processing": "Procesando...",
+                "search": "Buscar:",
+                "zeroRecords": "Sin resultados encontrados",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Ultimo",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                }
+            },
+        });
+        $('#search').on('submit', function (e) {
+            oTable.draw();
+            e.preventDefault();
+        });
+    </script>
+
+
 
 @endsection
