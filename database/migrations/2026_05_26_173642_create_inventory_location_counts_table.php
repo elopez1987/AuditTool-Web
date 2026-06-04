@@ -22,7 +22,7 @@ return new class extends Migration
             $table->foreignId('user_count02_id')->nullable();
             $table->string('statusid_count01', 10)->nullable();
             $table->string('statusid_count02', 10)->nullable();
-            $table->string('statusid_location', 10)->nullable();
+            $table->boolean('statusid_location')->nullable();
             $table->timestamps();
 
             $table->index(['inventory_head_id']);

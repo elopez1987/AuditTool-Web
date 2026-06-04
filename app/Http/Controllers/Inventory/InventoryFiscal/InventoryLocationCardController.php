@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Inventory\InventoryFiscal;
 
 use App\Http\Controllers\BaseController;
 use App\Models\Inventory\InventoryFiscal\InventoryCardCount;
+use App\Models\Inventory\InventoryFiscal\InventoryLocationCount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
@@ -51,7 +52,9 @@ class InventoryLocationCardController extends BaseController
                 'ilc.quantity02',
                 'u2.name as user_count02',
                 's.name as statusid_count01',
+                's.auxiliary01 as color_count01',
                 's2.name as statusid_count02',
+                's2.auxiliary01 as color_count02',
                 'ilc.statusid_location',
             ]);
 
@@ -59,5 +62,45 @@ class InventoryLocationCardController extends BaseController
             ->addColumn('btn', '')
             ->rawColumns(['btn'])
             ->toJson();
+    }
+
+    public function initializeCount1($id)
+    {
+        $inventoryCardCount = InventoryCardCount::findOrFail($id);
+
+        $inventoryCardCount->update([
+            'statusid_count01' => 'F',
+            'key_user_count_01' => null,
+        ]);
+
+        InventoryLocationCount::where('inventory_head_id', $inventoryCardCount->inventory_head_id)
+            ->where('inventory_card_id', $inventoryCardCount->inventory_card_id)
+            ->update([
+                'inventorypartnumber01_id' => null,
+                'quantity01' => null,
+                'statusid_count01' => 'F',
+            ]);
+
+        return $this->redirectBackSuccessMessage('Conteo inicializado con exito.');
+    }
+
+    public function initializeCount2($id)
+    {
+        $inventoryCardCount = InventoryCardCount::findOrFail($id);
+
+        $inventoryCardCount->update([
+            'statusid_count02' => 'F',
+            'key_user_count_02' => null,
+        ]);
+
+        InventoryLocationCount::where('inventory_head_id', $inventoryCardCount->inventory_head_id)
+            ->where('inventory_card_id', $inventoryCardCount->inventory_card_id)
+            ->update([
+                'inventorypartnumber02_id' => null,
+                'quantity02' => null,
+                'statusid_count02' => 'F',
+            ]);
+
+        return $this->redirectBackSuccessMessage('Conteo inicializado con exito.');
     }
 }

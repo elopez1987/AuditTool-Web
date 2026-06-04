@@ -63,8 +63,8 @@
                             <table width="100%" id="table-cards" class="table table-bordered  table-condensed">
                                 <thead>
                                 <tr>
-                                    <th class="bg-inverse text-white">C.Distribución</th>
-                                    <th class="bg-inverse text-white">Bodega</th>
+{{--                                    <th class="bg-inverse text-white">C.Distribución</th>--}}
+{{--                                    <th class="bg-inverse text-white">Bodega</th>--}}
                                     <th class="bg-inverse text-white">Area</th>
                                     <th class="bg-inverse text-white">Pasillo</th>
                                     <th class="bg-inverse text-white">Cedula</th>
@@ -80,10 +80,23 @@
                     </div>
 
                 </div>
+                <div class="card-footer">
+                    @can('inventorycards.importlocation')
+                        <a href="" data-target="#modal-upload" data-toggle="modal" data-placement="top">
+                            <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md"
+                                    data-toggle="tooltip" data-placement="top" title="Importar archivo">
+                                <img src="{{asset('/ico/window_add_12815.png')}}" alt="" class="img-16 mr-2">
+                                <span> Importar catalogo </span>
+                            </button>
+                        </a>
+                        @include('Inventory.InventoryCard.partials.uploadfile')
+                    @endcan
+                </div>
             </div>
         </div>
     </div>
 
+    @include('layouts.Partials.Errors')
 @endsection
 
 @section('script')

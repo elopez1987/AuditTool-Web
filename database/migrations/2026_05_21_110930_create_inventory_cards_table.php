@@ -10,8 +10,6 @@ return new class extends Migration
     {
         Schema::create('inventory_cards', function (Blueprint $table) {
             $table->id();
-            $table->string('centerid', 15);
-            $table->string('warehouseid', 15);
             $table->foreignId('inventory_area_id');
             $table->foreignId('inventory_aisle_id');
             $table->string('name');
@@ -24,8 +22,6 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->index(['centerid']);
-            $table->index(['warehouseid']);
             $table->index(['name']);
             $table->index(['statusid']);
             $table->index(['inventory_area_id']);

@@ -43,10 +43,10 @@
                             </form>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-12">
-                            <table width="100%" id="table-cards-locations" class="table table-bordered  table-condensed">
+                            <table width="100%" id="table-cards-locations"
+                                   class="table table-bordered  table-condensed">
                                 <thead>
                                 <tr>
                                     <th>Pasillo</th>
@@ -69,7 +69,33 @@
                             </table>
                         </div>
                     </div>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            @can('inventoryheads.initializecount')
+                                <a href="" data-target="#modal-initialize1-{{$inventoryCardCount->id}}"
+                                   data-toggle="modal" data-placement="top">
+                                    <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md"
+                                            data-toggle="tooltip" data-placement="top" title="Cerrar Inventario">
+                                        <img src="{{asset('/ico/adreload.png')}}" alt="" class="img-16">
+                                        <span style="font-size: 11px;"> Reiniciar Conteo 1</span>
+                                    </button>
+                                </a>
+                                @include('Inventory.InventoryHead.LocationCard.initialize-count1')
 
+                                <a href="" data-target="#modal-initialize2-{{$inventoryCardCount->id}}"
+                                   data-toggle="modal" data-placement="top">
+                                    <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md"
+                                            data-toggle="tooltip" data-placement="top" title="Cerrar Inventario">
+                                        <img src="{{asset('/ico/adreload.png')}}" alt="" class="img-16">
+                                        <span style="font-size: 11px;"> Reiniciar Conteo 2</span>
+                                    </button>
+                                </a>
+                                @include('Inventory.InventoryHead.LocationCard.initialize-count2')
+                            @endcan
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -103,24 +129,41 @@
                 }
             },
             "columns": [
-                {data: 'pasillo',          name: 'pasillo'},
-                {data: 'cedula',           name: 'cedula'},
-                {data: 'ubicacion',        name: 'ubicacion'},
-                {data: 'sku01',            name: 'sku01'},
-                {data: 'description01',    name: 'description01'},
+                {data: 'pasillo', name: 'pasillo'},
+                {data: 'cedula', name: 'cedula'},
+                {data: 'ubicacion', name: 'ubicacion'},
+                {data: 'sku01', name: 'sku01'},
+                {data: 'description01', name: 'description01'},
                 {data: 'quantity01'},
-                {data: 'user_count01',     name: 'user_count01'},
-                {data: 'sku02',            name: 'sku02'},
-                {data: 'description02',    name: 'description02'},
+                {data: 'user_count01', name: 'user_count01'},
+                {data: 'sku02', name: 'sku02'},
+                {data: 'description02', name: 'description02'},
                 {data: 'quantity02'},
-                {data: 'user_count02',     name: 'user_count02'},
-                {data: 'statusid_count01', name: 'statusid_count01'},
-                {data: 'statusid_count02', name: 'statusid_count02'},
+                {data: 'user_count02', name: 'user_count02'},
+                {
+                    data: 'statusid_count01', name: 'statusid_count01',
+                    createdCell: function (td, cellData, rowData) {
+                        $(td).css({
+                            'background-color': (rowData.color_count01),
+                            'color': 'black'
+                        });
+                    }
+                },
+                {
+                    data: 'statusid_count02', name: 'statusid_count02',
+                    createdCell: function (td, cellData, rowData) {
+                        $(td).css({
+                            'background-color': (rowData.color_count02),
+                            'color': 'black'
+                        });
+                    }
+                },
+                // {data: 'statusid_count02', name: 'statusid_count02'},
                 {data: 'statusid_location'},
                 {data: 'btn', orderable: false, searchable: false},
             ],
             "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
-            "lengthMenu": [[25, 50,100, -1], [25, 50,100, "Todos"]],
+            "lengthMenu": [[25, 50, 100, -1], [25, 50, 100, "Todos"]],
 
             buttons: [
                 {
@@ -167,7 +210,5 @@
             e.preventDefault();
         });
     </script>
-
-
 
 @endsection

@@ -9,8 +9,8 @@ class InventoryCardRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'centerid' => ['required', 'exists:systemcenterdistributions,centerid'],
-            'warehouseid' => ['required', 'exists:systemwarehouses,warehouseid'],
+            //            'centerid' => ['required', 'exists:systemcenterdistributions,centerid'],
+            //            'warehouseid' => ['required', 'exists:systemwarehouses,warehouseid'],
             'name' => ['required'],
             'configurationflag' => ['nullable'],
             'auxiliary01' => ['nullable'],

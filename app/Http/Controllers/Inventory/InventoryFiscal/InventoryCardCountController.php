@@ -40,8 +40,7 @@ class InventoryCardCountController extends BaseController
         $assignedCardIds = InventoryCardCount::where('inventory_head_id', $inventoryHead->id)
             ->pluck('inventory_card_id');
 
-        $cards = InventoryCard::controlAccessUser()
-            ->where('statusid', 'E')
+        $cards = InventoryCard::where('statusid', 'E')
             ->whereIn('inventory_aisle_id', $aislesPlanning)
             ->whereNotIn('id', $assignedCardIds)
             ->select(['id', 'name'])

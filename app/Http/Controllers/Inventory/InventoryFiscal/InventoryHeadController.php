@@ -82,8 +82,7 @@ class InventoryHeadController extends BaseController
             ->whereNotIn('id', $aislesPlanning)
             ->get();
 
-        $cards = InventoryCard::controlAccessUser()
-            ->where('statusid', 'E')
+        $cards = InventoryCard::where('statusid', 'E')
             ->whereIn('inventory_aisle_id', $aislesPlanning)
             ->whereNotIn('id', $cardsPlanning)
             ->select(['id', 'name'])

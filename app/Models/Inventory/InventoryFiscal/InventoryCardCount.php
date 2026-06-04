@@ -28,6 +28,8 @@ class InventoryCardCount extends Model
         'user_count02_id',
         'statusid_count01',
         'statusid_count02',
+        'key_user_count_01',
+        'key_user_count_02',
     ];
 
     protected $attributes = [

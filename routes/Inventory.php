@@ -7,7 +7,9 @@ use App\Http\Controllers\Inventory\InventoryFiscal\InventoryAreaController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryCardController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryCardCountController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryCardDetailController;
+use App\Http\Controllers\Inventory\InventoryFiscal\InventoryDashboardController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryHeadController;
+use App\Http\Controllers\Inventory\InventoryFiscal\InventoryHeadEventController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryLocationCardController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryLocationController;
 use App\Http\Controllers\Inventory\InventoryPartNumberCategory01sController;
@@ -67,9 +69,17 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('inventorylocations', InventoryLocationController::class);
     Route::put('create-location/{id}', [InventoryLocationController::class, 'createLocation'])->name('create-location');
     Route::get('getLocationForCard/{id}', [InventoryLocationController::class, 'getLocationForCard'])->name('getLocationForCard');
+    //	Importar ubicaciones masivas
+    Route::post('uploadfilelocations-inventory', [InventoryLocationController::class, 'importLocations'])->name('uploadfilelocations-inventory');
 
     Route::resource('inventoryheads', InventoryHeadController::class);
     Route::get('getInventoryHead', [InventoryHeadController::class, 'getInventoryHead'])->name('getInventoryHead');
+
+    //	Activar conteo fiscal
+    Route::put('inventory-head-activate/{id}', [InventoryHeadEventController::class, 'activateInventoryHead'])->name('inventory-head-activate');
+    Route::put('inventory-head-close/{id}', [InventoryHeadEventController::class, 'closeInventoryHead'])->name('inventory-head-close');
+    Route::delete('inventory-head-delete/{id}', [InventoryHeadEventController::class, 'deleteInventoryHead'])->name('inventory-head-delete');
+    Route::put('inventory-head-initialize/{id}', [InventoryHeadEventController::class, 'initializeInventory'])->name('inventory-head-initialize');
 
     //	Asignar los pasillos al conteo
     Route::put('addaislecounttoinventory/{id}', [InventoryAisleCountController::class, 'addAisleCountToInventory'])->name('addaislecounttoinventory');
@@ -96,5 +106,16 @@ Route::middleware(['auth'])->group(function () {
     //	Detalle de ubicaciones por cedula para su validacion en drones y comparacion en APP
     Route::get('inventorylocations-card/{id}', [InventoryLocationCardController::class, 'index'])->name('inventorylocations-card');
     Route::get('getLocationCardInventory/{id}', [InventoryLocationCardController::class, 'getLocationCardInventory'])->name('getLocationCardInventory');
+    //	Reiniciar conteo 1
+    Route::put('reset-count-1/{id}', [InventoryLocationCardController::class, 'initializeCount1'])->name('reset-count-1');
+    Route::put('reset-count-2/{id}', [InventoryLocationCardController::class, 'initializeCount2'])->name('reset-count-1');
+
+    //	Consultas para el dashboard
+    Route::get('getTotalAisles/{id}', [InventoryDashboardController::class, 'getTotalAisles'])->name('getTotalAisles');
+    Route::get('getTotalCards/{id}', [InventoryDashboardController::class, 'getTotalCards'])->name('getTotalCards');
+    Route::get('getTotalLocations/{id}', [InventoryDashboardController::class, 'getTotalLocations'])->name('getTotalLocations');
+    Route::get('getTotalErrors/{id}', [InventoryDashboardController::class, 'getTotalErrors'])->name('getTotalErrors');
+    Route::get('getDetailAisles/{id}', [InventoryDashboardController::class, 'getDetailAisles'])->name('getDetailAisles');
+    Route::get('getDetailInventoryErrors/{id}', [InventoryDashboardController::class, 'getDetailInventoryErrors'])->name('getDetailInventoryErrors');
 
 });
