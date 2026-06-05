@@ -48,7 +48,7 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <select multiple="multiple" size="30"  class="duallistbox-with-filter" name="user_id[]" id="user_id" required>
-                                            @foreach($users as $user)
+                                            @foreach($availableUsers as $user)
                                                 <option value="{{$user->id}}" style="font-size: 14px !important;text-transform: uppercase">
                                                     {{$user->name}}
                                                 </option>
@@ -71,6 +71,65 @@
                                         </table>
                                     </div>
                                 </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <hr class="mb-3">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        Selecciona los usuarios para asignarlos como contadores.
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <form method="POST" action="{{url('save-users-accountants/' . $inventoryhead->id)}}" id="form-add-users-accountants">
+                                {{ method_field('PUT') }}
+                                @csrf
+                                <div class="row">
+                                    <div class="col-2">
+                                        <button type="submit" class="btn waves-effect waves-light btn-outline-success btn-block btn-md" id="btn-save-accountants">
+                                            <img src="{{asset('/ico/save02.png')}}" alt="" class="img-16">
+                                            <span class="text-button"> Guardar</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <hr class="mb-3">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <select multiple="multiple" size="30"  class="duallistbox-with-filter" name="user_id[]" id="user_id" required>
+                                            @foreach($availableUsers as $user)
+                                                <option value="{{$user->id}}" style="font-size: 14px !important;text-transform: uppercase">
+                                                    {{$user->name}}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <table class="table table-bordered table-condensed " id="table-accountants-users" width="100%">
+                                        <thead>
+                                        <tr>
+                                            <th>Usuario</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -155,12 +214,61 @@
             });
         }
 
+        function refreshAccountantsDualListbox() {
+            $.ajax({
+                url: '{{ route("getAvailableAccountantsForInventory", $inventoryhead->id) }}',
+                type: 'GET',
+                headers: {'Accept': 'application/json'},
+                success: function (response) {
+                    var select = $('#user_id');
+                    select.empty();
+
+                    (response.data || []).forEach(function (user) {
+                        select.append(
+                            $('<option>', {
+                                value: user.id,
+                                text:  user.name,
+                                style: 'font-size:14px;text-transform:uppercase'
+                            })
+                        );
+                    });
+
+                    select.bootstrapDualListbox('refresh', true);
+                },
+                error: function (xhr) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: getAjaxErrorMessage(xhr, 'Error al actualizar la lista de usuarios.')
+                    });
+                }
+            });
+        }
+
         // ── DataTable de facilitadores asignados ──────────────────────────────
         var supervisorTable = initDataTable('#table-supervisors-users', {
             serverSide: false,
             searching: false,
             ajax: {
                 url: '{{ route("getSupervisorInventory", $inventoryhead->id) }}',
+                type: 'GET',
+            },
+            columns: [
+                {
+                    data: 'user',
+                    render: function (user) {
+                        return user ? user.name : '-';
+                    }
+                },
+                {data: 'btn', orderable: false, searchable: true}
+            ]
+        });
+
+        var accountantsTable = initDataTable('#table-accountants-users', {
+            serverSide: false,
+            searching: false,
+            ajax: {
+                url: '{{ route("getAccountantsInventory", $inventoryhead->id) }}',
                 type: 'GET',
             },
             columns: [
@@ -199,7 +307,50 @@
                         showConfirmButton: false
                     });
                     supervisorTable.ajax.reload(null, false);
+                    accountantsTable.ajax.reload(null, false);
                     refreshSupervisorDualListbox();
+                    refreshAccountantsDualListbox();
+                },
+                error: function (xhr) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: getAjaxErrorMessage(xhr, 'Error al guardar los facilitadores.')
+                    });
+                },
+                complete: function () {
+                    submitBtn.prop('disabled', false);
+                }
+            });
+        });
+
+        $('#form-add-users-accountants').on('submit', function (e) {
+            e.preventDefault();
+
+            var form = $(this);
+            var submitBtn = $('#btn-save-accountants');
+
+            submitBtn.prop('disabled', true);
+
+            $.ajax({
+                url: form.attr('action'),
+                type: 'POST',
+                data: form.serialize(),
+                headers: {
+                    'Accept': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                success: function (response) {
+                    Swal.fire({
+                        icon: 'success',
+                        text: response.message || 'Facilitadores asignados con éxito.',
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                    supervisorTable.ajax.reload(null, false);
+                    accountantsTable.ajax.reload(null, false);
+                    refreshSupervisorDualListbox();
+                    refreshAccountantsDualListbox();
                 },
                 error: function (xhr) {
                     Swal.fire({
@@ -244,7 +395,53 @@
                             showConfirmButton: false
                         });
                         supervisorTable.ajax.reload(null, false);
+                        accountantsTable.ajax.reload(null, false);
                         refreshSupervisorDualListbox();
+                        refreshAccountantsDualListbox();
+                    },
+                    error: function (xhr) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: getAjaxErrorMessage(xhr, 'Error al eliminar el facilitador.')
+                        });
+                    }
+                });
+            });
+        }
+
+        function deleteAccountantsInventory(id) {
+            Swal.fire({
+                title: '¿Eliminar facilitador?',
+                text: 'Esta acción no se puede deshacer.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then(function (result) {
+                if (!result.isConfirmed) return;
+
+                $.ajax({
+                    url: '{{ url("deleteAccountantsInventory") }}/' + id,
+                    type: 'DELETE',
+                    data: {_token: '{{ csrf_token() }}'},
+                    headers: {
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    success: function (response) {
+                        Swal.fire({
+                            icon: 'success',
+                            text: response.message || 'Facilitador eliminado con éxito.',
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                        supervisorTable.ajax.reload(null, false);
+                        accountantsTable.ajax.reload(null, false);
+                        refreshSupervisorDualListbox();
+                        refreshAccountantsDualListbox();
                     },
                     error: function (xhr) {
                         Swal.fire({

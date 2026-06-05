@@ -19,16 +19,22 @@ class InventorySupervisorController extends BaseController
             ->where('inventory_uuid', $id)
             ->firstOrFail();
 
-        $inventorySupervisor = InventorySupervisor::where('inventory_head_id', $inventoryhead->id)
-            ->pluck('user_id');
-
-        $users = User::where('statusid', 'E')
-            ->whereNotIn('id', $inventorySupervisor)
+        $availableUsers = User::where('statusid', 'E')
+            ->whereNotIn('id', function ($query) use ($inventoryhead) {
+                $query->select('user_id')
+                    ->from('inventory_supervisors')
+                    ->where('inventory_head_id', $inventoryhead->id)
+                    ->union(
+                        DB::table('inventory_accountants')
+                            ->select('user_id')
+                            ->where('inventory_head_id', $inventoryhead->id),
+                    );
+            })
             ->select('id', 'name')
             ->get();
 
         return view('Inventory.InventoryHead.Supervisors.index',
-            compact('inventoryhead', 'users'));
+            compact('inventoryhead', 'availableUsers'));
     }
 
     public function addUsersToInventory(InventorySupervisorRequest $request, $id)
@@ -59,13 +65,19 @@ class InventorySupervisorController extends BaseController
 
     public function getAvailableUsersForInventory($id)
     {
-        $assignedUserIds = InventorySupervisor::where('inventory_head_id', $id)
-            ->pluck('user_id');
-
         $users = User::where('statusid', 'E')
-            ->whereNotIn('id', $assignedUserIds)
-            ->orderBy('name')
-            ->get(['id', 'name']);
+            ->whereNotIn('id', function ($query) use ($id) {
+                $query->select('user_id')
+                    ->from('inventory_supervisors')
+                    ->where('inventory_head_id', $id)
+                    ->union(
+                        DB::table('inventory_accountants')
+                            ->select('user_id')
+                            ->where('inventory_head_id', $id),
+                    );
+            })
+            ->select('id', 'name')
+            ->get();
 
         return response()->json([
             'success' => true,

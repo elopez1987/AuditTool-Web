@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Inventory\InventoryFiscal\InventoryAccountantController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryAisleController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryAisleCountController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryAisleDetailController;
@@ -127,9 +128,17 @@ Route::middleware(['auth'])->group(function () {
 
     //	Crear facilitadores del conteo
     Route::get('inventory-supervisors/{id}', [InventorySupervisorController::class, 'index'])->name('inventory-supervisors');
+
+    //	Registrar usuarios para facilitadores
     Route::put('save-users-supervisors/{id}', [InventorySupervisorController::class, 'addUsersToInventory'])->name('save-users-supervisors');
     Route::get('getSupervisorInventory/{id}', [InventorySupervisorController::class, 'getSupervisorInventory'])->name('getSupervisorInventory');
     Route::get('getAvailableUsersForInventory/{id}', [InventorySupervisorController::class, 'getAvailableUsersForInventory'])->name('getAvailableUsersForInventory');
     Route::delete('deleteSupervisorInventory/{id}', [InventorySupervisorController::class, 'deleteSupervisorInventory'])->name('deleteSupervisorInventory');
+
+    //	Registrar usuarios para contadores de APP
+    Route::put('save-users-accountants/{id}', [InventoryAccountantController::class, 'addUsersAccountants'])->name('save-users-accountants');
+    Route::get('getAccountantsInventory/{id}', [InventoryAccountantController::class, 'getAccountantsInventory'])->name('getAccountantsInventory');
+    Route::get('getAvailableAccountantsForInventory/{id}', [InventoryAccountantController::class, 'getAvailableAccountantsForInventory'])->name('getAvailableAccountantsForInventory');
+    Route::delete('deleteAccountantsInventory/{id}', [InventoryAccountantController::class, 'deleteAccountantsInventory'])->name('deleteAccountantsInventory');
 
 });
