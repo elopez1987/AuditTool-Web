@@ -8,9 +8,6 @@
                     Inventario Fiscal
                 </div>
                 <div class="card-body">
-
-
-
                     <div class="row">
                         <div class="col-lg-12">
                             <form method="GET" id="search" role="form">
@@ -23,7 +20,7 @@
                                         <a>
                                             @include('buttons.reloadajax')
                                         </a>
-                                        <a href="{{url('inventoryheads/' . $inventoryHead->id)}}">
+                                        <a href="{{url('inventoryheads/' . $inventoryHead->inventory_uuid)}}">
                                             @include('buttons.cancel')
                                         </a>
                                     </div>
@@ -42,6 +39,11 @@
                                             label="Nombre del pasillo"
                                             uppercase
                                     />
+                                    <x-text-input
+                                            name="cardname"
+                                            label="Cédula"
+                                            uppercase
+                                    />
                                 </div>
                             </form>
                         </div>
@@ -51,16 +53,16 @@
                         <div class="col-12">
                             <table width="100%" id="table-cards" class="table table-bordered  table-condensed">
                                 <thead>
-                                <tr>
-                                    <th>ID Inventario</th>
-                                    <th>Pasillo</th>
-                                    <th>Cédula</th>
-                                    <th>Contador Asingado Para Conteo 01</th>
-                                    <th>Contador Asingado Para Conteo 02</th>
-                                    <th>Estatus Conteo 01</th>
-                                    <th>Estatus Conteo 02</th>
-                                    <th>Opciones</th>
-                                </tr>
+                                    <tr>
+                                        <th>ID Inventario</th>
+                                        <th>Pasillo</th>
+                                        <th>Cédula</th>
+                                        <th>Contador Asingado Para Conteo 01</th>
+                                        <th>Contador Asingado Para Conteo 02</th>
+                                        <th>Estatus Conteo 01</th>
+                                        <th>Estatus Conteo 02</th>
+                                        <th>Opciones</th>
+                                    </tr>
                                 </thead>
                             </table>
                         </div>
@@ -86,4 +88,9 @@
 
     <script src="{{ asset('js/inventory/card-detail.js') }}"></script>
 
+    <script>
+        function reloadtable() {
+            $('#table-cards').DataTable().ajax.reload();
+        }
+    </script>
 @endsection

@@ -1,4 +1,3 @@
-
 @if($statusid == 'INF-01')
     @can('inventoryheads.edit')
         <a href="{{url('inventoryheads/' . $id. '/edit')}}" data-toggle="tooltip" data-placement="top"
@@ -24,7 +23,7 @@
 @endif
 
 @can('inventoryheads.show')
-    <a href="{{url('inventoryheads/' . $id )}}" data-toggle="tooltip" data-placement="top"
+    <a href="{{url('inventoryheads/' . $inventory_uuid )}}" data-toggle="tooltip" data-placement="top"
        title="Detalle del Inventario">
         <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md"
                 data-toggle="tooltip" data-placement="top" title="Dashboard">
@@ -68,3 +67,12 @@
     </a>
     @include('Inventory.InventoryHead.Events.delete-inventory')
 @endcan
+@if($statusid == 'INF-03')
+    <a href="{{url('inventoryheads')}}">
+        <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
+            <img src="{{asset('/ico/clouddown_icon-icons.com_54405.png')}}" alt=""
+                 class="img-16 ml-1">
+            <span class="text-button ml-3 mr-3"> Descargar Cédulas</span>
+        </button>
+    </a>
+@endif

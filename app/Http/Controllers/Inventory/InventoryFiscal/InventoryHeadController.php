@@ -62,7 +62,8 @@ class InventoryHeadController extends BaseController
     {
         $inventoryhead = InventoryHead::controlAccessUser()
             ->with(['status:statusid,name,auxiliary01'])
-            ->findOrFail($id);
+            ->where('inventory_uuid', $id)
+            ->firstOrFail();
 
         return view('Inventory.InventoryHead.show', compact('inventoryhead'));
 

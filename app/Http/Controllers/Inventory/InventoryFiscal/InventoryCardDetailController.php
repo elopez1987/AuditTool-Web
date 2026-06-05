@@ -12,7 +12,7 @@ class InventoryCardDetailController extends BaseController
 {
     public function index($id)
     {
-        $inventoryHead = InventoryHead::findOrFail($id);
+        $inventoryHead = InventoryHead::where('inventory_uuid', $id)->first();
 
         return view('Inventory.InventoryHead.CardDetail.index',
             ['inventoryHead' => $inventoryHead]);
@@ -31,6 +31,9 @@ class InventoryCardDetailController extends BaseController
             ->when($request->filled('name'), function ($q) use ($request) {
                 $q->where('ia.name', 'like', '%' . $request->name . '%');
             })
+//            ->when($request->filled('cardname'), function ($q) use ($request) {
+//                $q->where('ic.name', 'like', '%' . $request->cardname . '%');
+//            })
             ->select([
                 'icc.id',
                 'icc.inventory_head_id',
@@ -42,6 +45,8 @@ class InventoryCardDetailController extends BaseController
                 's2.name as statusid_count02',
                 'icc.key_user_count_01',
                 'icc.key_user_count_02',
+                's.auxiliary01 as color_count01',
+                's2.auxiliary01 as color_count02',
             ]);
 
         return DataTables::of($query)

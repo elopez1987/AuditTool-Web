@@ -91,4 +91,24 @@ class InventoryDashboardController extends BaseController
 
         return $this->showDataToView($data, '');
     }
+
+    public function getTotalCount01($id)
+    {
+        $toalCount01 = InventoryLocationCount::where('inventory_head_id', $id)
+            ->where('statusid_count01', 'C')
+            ->count();
+
+        return response()->json(['totalCount01' => $toalCount01]);
+    }
+
+    public function getTotalCount02($id)
+    {
+        //        DB::connection()->enableQueryLog();
+        $toalCount02 = InventoryLocationCount::where('inventory_head_id', $id)
+            ->where('statusid_count02', 'C')
+            ->count();
+        //        $queries = DB::getQueryLog();
+
+        return response()->json(['totalCount02' => $toalCount02]);
+    }
 }

@@ -8,10 +8,12 @@ use App\Http\Controllers\Inventory\InventoryFiscal\InventoryCardController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryCardCountController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryCardDetailController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryDashboardController;
+use App\Http\Controllers\Inventory\InventoryFiscal\InventoryErrorsController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryHeadController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryHeadEventController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryLocationCardController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryLocationController;
+use App\Http\Controllers\Inventory\InventoryFiscal\InventorySupervisorController;
 use App\Http\Controllers\Inventory\InventoryPartNumberCategory01sController;
 use App\Http\Controllers\Inventory\InventoryPartNumberCategory02sController;
 use App\Http\Controllers\Inventory\InventoryPartNumbers\ImportPartNumbersController;
@@ -110,12 +112,24 @@ Route::middleware(['auth'])->group(function () {
     Route::put('reset-count-1/{id}', [InventoryLocationCardController::class, 'initializeCount1'])->name('reset-count-1');
     Route::put('reset-count-2/{id}', [InventoryLocationCardController::class, 'initializeCount2'])->name('reset-count-1');
 
+    //	Detalle de errores de conteo
+    Route::get('inventoryhead-errors/{id}', [InventoryErrorsController::class, 'index'])->name('inventoryhead-errors');
+
     //	Consultas para el dashboard
     Route::get('getTotalAisles/{id}', [InventoryDashboardController::class, 'getTotalAisles'])->name('getTotalAisles');
     Route::get('getTotalCards/{id}', [InventoryDashboardController::class, 'getTotalCards'])->name('getTotalCards');
     Route::get('getTotalLocations/{id}', [InventoryDashboardController::class, 'getTotalLocations'])->name('getTotalLocations');
     Route::get('getTotalErrors/{id}', [InventoryDashboardController::class, 'getTotalErrors'])->name('getTotalErrors');
     Route::get('getDetailAisles/{id}', [InventoryDashboardController::class, 'getDetailAisles'])->name('getDetailAisles');
+    Route::get('getTotalCount01/{id}', [InventoryDashboardController::class, 'getTotalCount01'])->name('getTotalCount01');
+    Route::get('getTotalCount02/{id}', [InventoryDashboardController::class, 'getTotalCount02'])->name('getTotalCount02');
     Route::get('getDetailInventoryErrors/{id}', [InventoryDashboardController::class, 'getDetailInventoryErrors'])->name('getDetailInventoryErrors');
+
+    //	Crear facilitadores del conteo
+    Route::get('inventory-supervisors/{id}', [InventorySupervisorController::class, 'index'])->name('inventory-supervisors');
+    Route::put('save-users-supervisors/{id}', [InventorySupervisorController::class, 'addUsersToInventory'])->name('save-users-supervisors');
+    Route::get('getSupervisorInventory/{id}', [InventorySupervisorController::class, 'getSupervisorInventory'])->name('getSupervisorInventory');
+    Route::get('getAvailableUsersForInventory/{id}', [InventorySupervisorController::class, 'getAvailableUsersForInventory'])->name('getAvailableUsersForInventory');
+    Route::delete('deleteSupervisorInventory/{id}', [InventorySupervisorController::class, 'deleteSupervisorInventory'])->name('deleteSupervisorInventory');
 
 });
