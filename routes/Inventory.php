@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Inventory\InventoryFiscal\InventoryAccountantCardController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryAccountantController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryAisleController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryAisleCountController;
@@ -141,4 +142,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('getAvailableAccountantsForInventory/{id}', [InventoryAccountantController::class, 'getAvailableAccountantsForInventory'])->name('getAvailableAccountantsForInventory');
     Route::delete('deleteAccountantsInventory/{id}', [InventoryAccountantController::class, 'deleteAccountantsInventory'])->name('deleteAccountantsInventory');
 
+    // Asignar cedulas de conteo a cada contador
+    Route::get('inventory-accountants-cards/{id}', [InventoryAccountantCardController::class, 'index'])->name('inventory-accountants-cards');
 });

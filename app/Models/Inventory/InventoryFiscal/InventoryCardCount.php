@@ -20,6 +20,8 @@ class InventoryCardCount extends Model
 
     public $timestamps = false;
 
+    protected $table = 'inventory_card_counts';
+
     protected $fillable = [
         'inventory_head_id',
         'inventory_aisle_id',

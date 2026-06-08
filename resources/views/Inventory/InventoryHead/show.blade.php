@@ -49,7 +49,7 @@
                                 </button>
                             </a>
 
-                            <a href="{{url('inventoryheads')}}">
+                            <a href="{{url('inventory-accountants-cards/' . $inventoryhead->inventory_uuid)}}">
                                 <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
                                     <img src="{{asset('/ico/user_inventory.png')}}" alt=""
                                          class="img-16 ml-1">
