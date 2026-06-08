@@ -5,16 +5,18 @@ namespace App\Models\Maintenance;
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Models\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * @property int $id
  * @property string $centerid
- * @property \App\Models\Maintenance\StorageLiftTruck $serialnumber
+ * @property StorageLiftTruck $serialnumber
  * @property string $horometro
  * @property string $distance
  * @property string $stationary
@@ -24,7 +26,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property string|null $value03
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read Collection<int, Activity> $activities
  * @property-read int|null $activities_count
  * @property-read SystemCenterDistribution $center
  *

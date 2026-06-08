@@ -3,6 +3,7 @@
 namespace App\Models\Configuration\Schemas;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 /**
  * @method static where(string $string, mixed $schemaid)
@@ -20,8 +21,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $auxiliary03
  * @property string|null $auxiliary04
  * @property string|null $auxiliary05
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemStatus newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemStatus newQuery()

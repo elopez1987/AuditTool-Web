@@ -8,9 +8,12 @@ use App\Models\Configuration\Turns\StorageTurn;
 use App\Models\Configuration\Warehouses\SystemWarehouse;
 use App\Models\Receipt\StorageReceiptPeriods\StorageReceiptPeriod;
 use App\Models\Security\Users\SecurityAccessWarehouse;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Models\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
@@ -29,13 +32,13 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property string|null $value05
  * @property string $schemaid
  * @property string $statusid
- * @property \Illuminate\Support\Carbon $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property Carbon $created_at
+ * @property Carbon|null $updated_at
+ * @property-read Collection<int, Activity> $activities
  * @property-read int|null $activities_count
  * @property-read SystemCenterDistribution $center
  * @property-read StorageReceiptPeriod|null $period
- * @property-read \App\Models\Receipt\ReceiptAsn|null $receipt
+ * @property-read ReceiptAsn|null $receipt
  * @property-read SystemStatus|null $statussecuence
  * @property-read StorageTurn|null $turn
  * @property-read SystemWarehouse $warehouse

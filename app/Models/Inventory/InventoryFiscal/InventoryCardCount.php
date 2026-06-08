@@ -6,6 +6,7 @@ use App\Models\Configuration\Schemas\SystemStatus;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -54,7 +55,7 @@ class InventoryCardCount extends Model
         return $this->belongsTo(InventoryCard::class, 'inventory_card_id', 'id');
     }
 
-    public function inventorylocationscount(): InventoryCardCount|\Illuminate\Database\Eloquent\Relations\HasMany
+    public function inventorylocationscount(): InventoryCardCount|HasMany
     {
         return $this->hasMany(InventoryLocationCount::class, 'inventory_card_id', 'inventory_card_id');
     }

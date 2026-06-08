@@ -12,7 +12,7 @@ class ParameterLocationsController extends BaseController
     public function index($id)
     {
         $this->authorize('storagelocations.parameters');
-        $model = Storagelocation::controlAccessUser()->findOrFail($id);
+        $model = StorageLocation::controlAccessUser()->findOrFail($id);
         $parameters = SystemStatus::whereSchemaid('PUB')
             ->select(['statusid', 'name'])->get();
 
@@ -22,7 +22,7 @@ class ParameterLocationsController extends BaseController
 
     public function storagelocationsparameters(Request $request, $id)
     {
-        $model = Storagelocation::controlAccessUser()->find($id);
+        $model = StorageLocation::controlAccessUser()->find($id);
         $model->configurationflag = $request['parameter'];
         $model->save();
 

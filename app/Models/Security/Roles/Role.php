@@ -5,8 +5,11 @@ namespace App\Models\Security\Roles;
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Security\Users\SecurityAccessWarehouse;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
+use Spatie\Activitylog\Models\Activity;
 
 /**
  * App\Models\Security\Role
@@ -16,7 +19,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $guard_name
  * @property string|null $created_at
  * @property string|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\Spatie\Activitylog\Models\Activity> $activities
+ * @property-read Collection|array<Activity> $activities
  * @property-read int|null $activities_count
  *
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Security\Role newModelQuery()
@@ -33,7 +36,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string|null $description
  * @property string|null $statusid
  * @property string|null $schemaid
- * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property Carbon|null $deleted_at
  * @property-read SystemCenterDistribution|null $center
  * @property-read SystemStatus|null $status
  *

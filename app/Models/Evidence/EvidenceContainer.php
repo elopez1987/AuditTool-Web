@@ -7,6 +7,7 @@ use App\Models\Inventory\PartNumber\InventoryPartnumber;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\Evidence\EvidenceContainer
@@ -18,10 +19,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $partnumberid
  * @property float $quantity
  * @property string $lpnid
- * @property \Illuminate\Support\Carbon $adddatecheck
+ * @property Carbon $adddatecheck
  * @property string $scanusercheck
  * @property string|null $filecheck
- * @property \Illuminate\Support\Carbon|null $adddateload
+ * @property Carbon|null $adddateload
  * @property string|null $scanuserload
  * @property string|null $fileload
  * @property string|null $statusid

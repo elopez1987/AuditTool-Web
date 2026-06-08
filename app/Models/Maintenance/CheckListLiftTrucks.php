@@ -5,9 +5,12 @@ namespace App\Models\Maintenance;
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Models\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
@@ -24,12 +27,12 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property string $createuser
  * @property string $schemaid
  * @property string $statusid
- * @property \Illuminate\Support\Carbon $created_at
- * @property \Illuminate\Support\Carbon $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ * @property-read Collection<int, Activity> $activities
  * @property-read int|null $activities_count
  * @property-read SystemCenterDistribution $center
- * @property-read \App\Models\Maintenance\StorageLiftTruck $truck
+ * @property-read StorageLiftTruck $truck
  * @property-read User|null $user
  *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListLiftTrucks forNumberTruck($numbertruck)

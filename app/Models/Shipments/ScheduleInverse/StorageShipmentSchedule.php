@@ -4,9 +4,12 @@ namespace App\Models\Shipments\ScheduleInverse;
 
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\Models\Yard\Carriers\ShipmentCarrier;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Models\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
@@ -22,9 +25,9 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property string|null $value03
  * @property string|null $schemaid
  * @property string|null $statusid
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read Collection<int, Activity> $activities
  * @property-read int|null $activities_count
  * @property-read ShipmentCarrier $carrier
  *

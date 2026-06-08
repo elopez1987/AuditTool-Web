@@ -7,10 +7,13 @@ use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\User;
 use Auth;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Models\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
@@ -27,10 +30,10 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property string|null $value03
  * @property string $schemaid
  * @property string $statusid
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
+ * @property-read Collection<int, Activity> $activities
  * @property-read int|null $activities_count
  * @property-read SystemCenterDistribution $center
  * @property-read SystemStatus $status
@@ -65,7 +68,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class StorageTags extends Model
 {
     use LogsActivity;
-    use softDeletes;
+    use SoftDeletes;
 
     protected $table = 'storagetags';
 

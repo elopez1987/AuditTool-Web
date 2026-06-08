@@ -2,8 +2,11 @@
 
 namespace App\Models\Shipments;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Models\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
@@ -23,11 +26,11 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property string|null $startdatedoctofac
  * @property string|null $startbillingdate
  * @property string|null $autorizeoutput
- * @property \Illuminate\Support\Carbon|null $outputdate
+ * @property Carbon|null $outputdate
  * @property int|null $userid
  * @property string $schemaid
  * @property string $statusid
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read Collection<int, Activity> $activities
  * @property-read int|null $activities_count
  *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|OrderMonitor newModelQuery()

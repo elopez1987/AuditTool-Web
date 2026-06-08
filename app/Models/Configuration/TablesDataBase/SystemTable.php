@@ -3,6 +3,7 @@
 namespace App\Models\Configuration\TablesDataBase;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 /**
  * @property string $tableid
@@ -11,8 +12,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $value01
  * @property string|null $value02
  * @property string|null $value03
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemTable forName($tableid)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemTable newModelQuery()

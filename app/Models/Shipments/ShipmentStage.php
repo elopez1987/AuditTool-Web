@@ -2,8 +2,10 @@
 
 namespace App\Models\Shipments;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Models\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
@@ -14,7 +16,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property int|null $value03
  * @property int|null $value04
  * @property string|null $value05
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read Collection<int, Activity> $activities
  * @property-read int|null $activities_count
  *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentStage newModelQuery()

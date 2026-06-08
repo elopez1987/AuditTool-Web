@@ -13,6 +13,7 @@ use App\User;
 use Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
@@ -35,16 +36,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $razonstatusid
  * @property int $createuser
  * @property string|null $statusid
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  * @property-read ShipmentCarrier|null $carrier
  * @property-read SystemCenterDistribution $center
- * @property-read \App\Models\Yard\StorageReason $event
- * @property-read \App\Models\Yard\StorageLocation|null $location
+ * @property-read StorageReason $event
+ * @property-read StorageLocation|null $location
  * @property-read SystemStatus|null $status
  * @property-read ShipmentTruck|null $truck
- * @property-read \App\Models\Yard\ReceiptUnit $unit
- * @property-read \App\Models\Yard\StorageUnitStatus $unitstatus
+ * @property-read ReceiptUnit $unit
+ * @property-read StorageUnitStatus $unitstatus
  * @property-read User|null $user
  * @property-read SystemWarehouse $warehouse
  * @property-read StorageZone|null $zone

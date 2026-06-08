@@ -3,6 +3,7 @@
 namespace App\Models\Configuration\WhatsApp;
 
 use App\Models\Configuration\Schemas\SystemStatus;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -17,7 +18,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string|null $configurationflag
  * @property string $schemaid
  * @property string $statusid
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Configuration\WhatsApp\SystemDetailWhatsApp> $detailwhatsapp
+ * @property-read Collection<int, SystemDetailWhatsApp> $detailwhatsapp
  * @property-read int|null $detailwhatsapp_count
  * @property-read SystemStatus|null $status
  *

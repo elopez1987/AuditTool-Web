@@ -2,8 +2,10 @@
 
 namespace App\Models\Configuration\WebService;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Models\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
@@ -12,7 +14,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property string|null $service
  * @property array<array-key, mixed>|null $request
  * @property array<array-key, mixed>|null $response
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read Collection<int, Activity> $activities
  * @property-read int|null $activities_count
  *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WsLog newModelQuery()

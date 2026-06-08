@@ -9,6 +9,7 @@ use App\User;
 use Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 
 /**
  * @property string $centerid
@@ -28,9 +29,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string|null $auxiliary05
  * @property string $schemaid
  * @property string $statusid
- * @property \Illuminate\Support\Carbon $created_at
- * @property \Illuminate\Support\Carbon $updated_at
- * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ * @property Carbon|null $deleted_at
  * @property-read SystemStatus|null $brand
  * @property-read SystemCenterDistribution $center
  * @property-read SystemStatus|null $model

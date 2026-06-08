@@ -7,6 +7,7 @@ use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 
 /**
  * @method whereStatusid(string $string)
@@ -31,8 +32,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string|null $auxiliary10
  * @property string $schemaid
  * @property string $statusid
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  * @property-read SystemCenterDistribution $centerdistribution
  * @property-read SystemStatus $status
  *

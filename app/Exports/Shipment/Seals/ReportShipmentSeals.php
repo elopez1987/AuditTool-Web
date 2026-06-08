@@ -11,6 +11,7 @@ use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Events\AfterSheet;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
 class ReportShipmentSeals implements FromCollection, ShouldAutoSize, WithColumnFormatting, WithEvents, WithHeadings, WithMapping
@@ -83,7 +84,7 @@ class ReportShipmentSeals implements FromCollection, ShouldAutoSize, WithColumnF
         return [
             AfterSheet::class => function (AfterSheet $event) {
                 $event->sheet->getDelegate()->getStyle('A1:I1')->getFill()
-                    ->applyFromArray(['fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                    ->applyFromArray(['fillType' => Fill::FILL_SOLID,
                         'rotation' => 0, 'startColor' => ['rgb' => '64b5f6'],
                     ]);
             },

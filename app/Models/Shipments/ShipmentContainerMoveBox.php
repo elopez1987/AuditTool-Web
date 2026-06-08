@@ -6,8 +6,10 @@ use App\Models\Inventory\PartNumber\InventoryPartnumber;
 use App\User;
 use Auth;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Models\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
@@ -23,7 +25,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property string|null $value03
  * @property int $createuser
  * @property string $created_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read Collection<int, Activity> $activities
  * @property-read int|null $activities_count
  * @property-read InventoryPartnumber $sku
  * @property-read User $user

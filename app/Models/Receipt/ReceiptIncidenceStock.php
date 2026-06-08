@@ -23,10 +23,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $value02
  * @property string|null $value03
  * @property string $created_at
- * @property-read \App\Models\Receipt\StorageCategoryIncidence|null $categoryincidence
+ * @property-read StorageCategoryIncidence|null $categoryincidence
  * @property-read InventoryPartnumber|null $partnumber
- * @property-read \App\Models\Receipt\ReceiptStock $stock
- * @property-read \App\Models\Receipt\StorageCategoryIncidenceDetail|null $subcategoryincidence
+ * @property-read ReceiptStock $stock
+ * @property-read StorageCategoryIncidenceDetail|null $subcategoryincidence
  * @property-read User|null $user
  *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReceiptIncidenceStock newModelQuery()

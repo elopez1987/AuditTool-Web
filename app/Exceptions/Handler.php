@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Auth0\SDK\Exception\ConfigurationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,7 +41,7 @@ class Handler extends ExceptionHandler
     {
 
         // Evitar loop si Auth0 no está configurado
-        if ($exception instanceof \Auth0\SDK\Exception\ConfigurationException) {
+        if ($exception instanceof ConfigurationException) {
             return response('Auth0 configuration error: ' . $exception->getMessage(), 500);
         }
 

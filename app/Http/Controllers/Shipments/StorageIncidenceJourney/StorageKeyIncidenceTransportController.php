@@ -8,6 +8,7 @@ use App\Models\Shipments\OrderDeliverie;
 use App\Models\Shipments\StorageIncidenceJourney;
 use App\Models\Shipments\StorageKeyIncidenceTransport;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Ramsey\Uuid\Uuid;
 
@@ -44,7 +45,7 @@ class StorageKeyIncidenceTransportController extends BaseController
             $item = StorageKeyIncidenceTransport::where('id', '=', $request['id'][$i])->first();
             $item->razoncode = $request['key'][$i];
             $item->keytransportuser = Auth::user()->username;
-            $item->keytransportdate = \Illuminate\Support\Carbon::now();
+            $item->keytransportdate = Carbon::now();
             $item->statusid = 'FR';
             $item->save();
             $order = $item->orderid;

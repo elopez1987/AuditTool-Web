@@ -3,9 +3,11 @@
 namespace App\Models\Configuration\Mails;
 
 use App\Models\Configuration\Schemas\SystemStatus;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 
 /**
  * @property mixed mailid
@@ -19,9 +21,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string|null $configurationflag
  * @property string $schemaid
  * @property string $statusid
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Configuration\Mails\SystemDetailMail> $maildetails
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read Collection<int, SystemDetailMail> $maildetails
  * @property-read int|null $maildetails_count
  * @property-read SystemStatus $status
  *

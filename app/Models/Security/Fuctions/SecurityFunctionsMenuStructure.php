@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $menustrucid
  * @property int $functionid
  * @property int $moduleid
- * @property-read \App\Models\Security\Fuctions\SecurityFunction $funtion
+ * @property-read SecurityFunction $funtion
  * @property-read SecurityModule $module
  *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SecurityFunctionsMenuStructure newModelQuery()

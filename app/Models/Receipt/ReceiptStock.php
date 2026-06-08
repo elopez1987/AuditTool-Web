@@ -8,8 +8,11 @@ use App\Models\Inventory\Categories\InventoryPartNumberCategory01;
 use App\Models\Inventory\Categories\InventoryPartNumberCategory02;
 use App\Models\Inventory\PartNumber\InventoryPartnumber;
 use App\Models\Security\Users\SecurityAccessWarehouse;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Models\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
@@ -26,9 +29,9 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property string|null $expiredate
  * @property string|null $productiondate
  * @property float|null $quantitytrue
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read Collection<int, Activity> $activities
  * @property-read int|null $activities_count
  * @property-read InventoryPartNumberCategory01|null $category01
  * @property-read InventoryPartNumberCategory02|null $category02
