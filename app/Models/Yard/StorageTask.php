@@ -9,8 +9,11 @@ use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\Models\Yard\StorageZone\StorageZone;
 use App\User;
 use Auth;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Models\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
@@ -25,15 +28,15 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property int $locationid
  * @property string $schemaid
  * @property string $statusid
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read Collection<int, Activity> $activities
  * @property-read int|null $activities_count
  * @property-read SystemCenterDistribution $center
- * @property-read \App\Models\Yard\StorageLocation $location
+ * @property-read StorageLocation $location
  * @property-read User|null $operator
- * @property-read \App\Models\Yard\StorageReason $razon
- * @property-read \App\Models\Yard\ReceiptUnit $receiptunit
+ * @property-read StorageReason $razon
+ * @property-read ReceiptUnit $receiptunit
  * @property-read SystemStatus $status
  * @property-read SystemWarehouse $warehouse
  * @property-read StorageZone|null $zone

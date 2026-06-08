@@ -52,7 +52,7 @@ class InventoryLocationCount extends Model
 
     public function quantity01(): BelongsTo
     {
-        return $this->belongsTo(\string::class, 'quantity01');
+        return $this->belongsTo(string::class, 'quantity01');
     }
 
     public function inventorypartnumber02(): BelongsTo
@@ -62,7 +62,7 @@ class InventoryLocationCount extends Model
 
     public function quantity02(): BelongsTo
     {
-        return $this->belongsTo(\string::class, 'quantity02');
+        return $this->belongsTo(string::class, 'quantity02');
     }
 
     public function userCount01(): BelongsTo

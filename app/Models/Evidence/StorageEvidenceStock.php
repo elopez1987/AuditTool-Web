@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $value03
  * @property string|null $value04
  * @property string|null $value05
- * @property-read \App\Models\Evidence\StorageEvidenceProcess $shipment
+ * @property-read StorageEvidenceProcess $shipment
  * @property-read InventoryPartnumber $sku
  *
  * @method static \Illuminate\Database\Eloquent\Builder|StorageEvidenceStock newModelQuery()

@@ -3,6 +3,7 @@
 namespace App\Models\Configuration\NameSystem;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 /**
  * @method static get()
@@ -15,8 +16,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $auxiliary03
  * @property string|null $auxiliary04
  * @property string|null $auxiliary05
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|NameSystem newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|NameSystem newQuery()

@@ -5,6 +5,7 @@ namespace App\Models\Evidence;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use Auth;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\Evidence\StorageEvidences
@@ -21,8 +22,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $auxiliary03
  * @property string|null $auxiliary04
  * @property string|null $auxiliary05
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  *
  * @method static \Illuminate\Database\Eloquent\Builder|StorageEvidences newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|StorageEvidences newQuery()

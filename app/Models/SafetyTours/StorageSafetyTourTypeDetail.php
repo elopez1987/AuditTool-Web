@@ -6,10 +6,13 @@ use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\User;
 use Auth;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Models\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
@@ -18,14 +21,14 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property int $typeid
  * @property int $tagid
  * @property int $userid
- * @property \Illuminate\Support\Carbon $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property Carbon $created_at
+ * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
+ * @property-read Collection<int, Activity> $activities
  * @property-read int|null $activities_count
  * @property-read SystemCenterDistribution $center
- * @property-read \App\Models\SafetyTours\StorageTags $tag
- * @property-read \App\Models\SafetyTours\StorageSafetyTourType $type
+ * @property-read StorageTags $tag
+ * @property-read StorageSafetyTourType $type
  * @property-read User $user
  *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourTypeDetail newModelQuery()

@@ -3,6 +3,7 @@
 namespace App\Models\Security\Logs;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
@@ -24,8 +25,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $request_headers_encrypted
  * @property string|null $session_id
  * @property string|null $processing_time_ms
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|AuthenticationAuditLog newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|AuthenticationAuditLog newQuery()

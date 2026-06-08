@@ -6,6 +6,7 @@ use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Security\Fuctions\SecurityFunctionsMenuStructure;
 use App\Models\Security\Users\SecurityAccessWarehouse;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -15,9 +16,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $schemaid
  * @property string $statusid
  * @property-read SystemCenterDistribution $center
- * @property-read \Illuminate\Database\Eloquent\Collection<int, SecurityFunctionsMenuStructure> $functiondDetails
+ * @property-read Collection<int, SecurityFunctionsMenuStructure> $functiondDetails
  * @property-read int|null $functiond_details_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Security\MenuStructure\SecurityDetailsMenuStructure> $moduleDetails
+ * @property-read Collection<int, SecurityDetailsMenuStructure> $moduleDetails
  * @property-read int|null $module_details_count
  * @property-read SystemStatus $status
  *

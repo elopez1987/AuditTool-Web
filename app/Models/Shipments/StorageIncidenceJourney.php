@@ -7,6 +7,7 @@ use App\Models\Security\Users\SecurityAccessWarehouse;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int $folioid
@@ -31,9 +32,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $statusid
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\Shipments\StorageKeyIncidenceOperation $key
- * @property-read \App\Models\Shipments\StorageKeyIncidenceTransport $keytransport
- * @property-read \App\Models\Shipments\OrderDeliverie $order
+ * @property-read StorageKeyIncidenceOperation $key
+ * @property-read StorageKeyIncidenceTransport $keytransport
+ * @property-read OrderDeliverie $order
  * @property-read SystemStatus $status
  *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageIncidenceJourney carrier($carrierid)
@@ -146,7 +147,7 @@ class StorageIncidenceJourney extends Model
         return $this->belongsTo(StorageKeyIncidenceTransport::class, 'orderid', 'orderid');
     }
 
-    public function details(): StorageIncidenceJourney|\Illuminate\Database\Eloquent\Relations\HasMany
+    public function details(): StorageIncidenceJourney|HasMany
     {
         return $this->hasMany(StorageIncidenceJourneyDetails::class, 'orderid', 'orderid');
     }

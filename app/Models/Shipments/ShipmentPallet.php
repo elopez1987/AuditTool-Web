@@ -5,9 +5,11 @@ namespace App\Models\Shipments;
 use App\Models\Inventory\PartNumber\InventoryPartnumber;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Models\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
@@ -21,7 +23,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property string|null $update
  * @property int|null $adduserid
  * @property int|null $lastuserid
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read Collection<int, Activity> $activities
  * @property-read int|null $activities_count
  * @property-read InventoryPartnumber|null $partnumber
  *

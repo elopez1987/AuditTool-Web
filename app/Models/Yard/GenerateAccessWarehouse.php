@@ -4,8 +4,11 @@ namespace App\Models\Yard;
 
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use Auth;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Models\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
@@ -17,8 +20,8 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property int $truckid
  * @property string|null $shipmentid
  * @property string|null $confirmationnumber
- * @property \Illuminate\Support\Carbon $datestart
- * @property \Illuminate\Support\Carbon $datefinish
+ * @property Carbon $datestart
+ * @property Carbon $datefinish
  * @property int $createuser
  * @property int $updateuser
  * @property string|null $auxiliary01
@@ -26,9 +29,9 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property string|null $auxiliary03
  * @property string $schemaid
  * @property string $statusid
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read Collection<int, Activity> $activities
  * @property-read int|null $activities_count
  *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|GenerateAccessWarehouse forBox($boxnumber)

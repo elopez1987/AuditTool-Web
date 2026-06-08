@@ -9,7 +9,7 @@ class StorageVerificationPendingController extends BaseController
 {
     public function update($id)
     {
-        StorageVerificationPending::where('id', $id)->update(['statusid' => 'CVB-03']);
+        Storageverificationpending::where('id', $id)->update(['statusid' => 'CVB-03']);
 
         return $this->redirectBackSuccessMessage('Registro actualizado con exito!!');
     }

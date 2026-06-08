@@ -23,7 +23,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null $quantityfail
  * @property string|null $missingconceptid
  * @property-read StorageCategoryIncidenceDetail|null $concept
- * @property-read \App\Models\Shipments\OrderDeliverie $order
+ * @property-read OrderDeliverie $order
  * @property-read InventoryPartnumber $product
  *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentControl newModelQuery()

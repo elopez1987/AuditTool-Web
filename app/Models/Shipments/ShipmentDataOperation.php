@@ -4,8 +4,10 @@ namespace App\Models\Shipments;
 
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Models\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
@@ -38,10 +40,10 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property string|null $comment05
  * @property int|null $createuserid
  * @property int|null $lastuserid
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read Collection<int, Activity> $activities
  * @property-read int|null $activities_count
- * @property-read \App\Models\Shipments\OrderDeliverie $order
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Shipments\ShipmentPallet> $pallets
+ * @property-read OrderDeliverie $order
+ * @property-read Collection<int, ShipmentPallet> $pallets
  * @property-read int|null $pallets_count
  * @property-read User|null $user
  *

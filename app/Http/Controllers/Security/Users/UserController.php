@@ -63,12 +63,12 @@ class UserController extends BaseController
             $user->syncRoles([$request['role_id']]);
             DB::commit();
 
-            return redirect::back()->with(session()->flash('success', 'Datos agregados correctamente!!'));
+            return Redirect::back()->with(session()->flash('success', 'Datos agregados correctamente!!'));
         } catch (Exception $e) {
             $error = $e->getMessage();
             DB::rollback();
 
-            return redirect::back()->withInput()->with(session()->flash('success', 'No se pudieron guardar los datos!!' . $error));
+            return Redirect::back()->withInput()->with(session()->flash('success', 'No se pudieron guardar los datos!!' . $error));
         }
 
     }

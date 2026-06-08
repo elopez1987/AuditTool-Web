@@ -13,9 +13,11 @@ use App\Models\Yard\StorageZone\StorageZone;
 use App\User;
 use Auth;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Models\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 // Auxiliary01 = Nombre del cliente o proveedor
@@ -66,23 +68,23 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property string $statusid
  * @property int $createuser
  * @property int|null $updateuser
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read Collection<int, Activity> $activities
  * @property-read int|null $activities_count
  * @property-read ShipmentCarrier $carrier
  * @property-read SystemCenterDistribution $center
- * @property-read \App\Models\Yard\StorageReason $event
- * @property-read \App\Models\Yard\StorageFolioClient|null $folioclient
- * @property-read \App\Models\Yard\ReceiptUnitKey|null $key
- * @property-read \App\Models\Yard\StorageLocation|null $location
- * @property-read \App\Models\Yard\StorageReason $reason
+ * @property-read StorageReason $event
+ * @property-read StorageFolioClient|null $folioclient
+ * @property-read ReceiptUnitKey|null $key
+ * @property-read StorageLocation|null $location
+ * @property-read StorageReason $reason
  * @property-read SystemStatus $status
- * @property-read \App\Models\Yard\ReceiptUnitTicket|null $tiket
- * @property-read \App\Models\Yard\ReceiptTruck|null $tracto
+ * @property-read ReceiptUnitTicket|null $tiket
+ * @property-read ReceiptTruck|null $tracto
  * @property-read ShipmentTruck $truck
- * @property-read \App\Models\Yard\ShipmentTruckCategory $truckcategory
- * @property-read \App\Models\Yard\ReceiptUnitData|null $unitdata
- * @property-read \App\Models\Yard\StorageUnitStatus $unitstatus
- * @property-read \App\Models\Yard\StorageUnitType $unittype
+ * @property-read ShipmentTruckCategory $truckcategory
+ * @property-read ReceiptUnitData|null $unitdata
+ * @property-read StorageUnitStatus $unitstatus
+ * @property-read StorageUnitType $unittype
  * @property-read User|null $user
  * @property-read User|null $userclose
  * @property-read SystemWarehouse $warehouse

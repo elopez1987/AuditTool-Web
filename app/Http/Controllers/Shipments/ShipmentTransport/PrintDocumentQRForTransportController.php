@@ -17,7 +17,7 @@ class PrintDocumentQRForTransportController extends Controller
         $pathImage = SystemDetailParameter::where('parameterid', '=', 'PARAM-IMG')->first();
         $data = OrderDeliverie::with(['transport', 'center:centerid,auxiliary04'])->findOrFail($id);
         $fortmat = 'Shipments.StorageShipmenTransport.partials.format';
-        $pdf = PDF::setOptions([
+        $pdf = Pdf::setOptions([
             'isRemoteEnabled' => true,
             'chroot' => [
                 realpath(base_path()),
