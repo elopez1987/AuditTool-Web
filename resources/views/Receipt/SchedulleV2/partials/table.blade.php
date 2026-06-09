@@ -79,7 +79,7 @@
             {data: 'fechasalida', name: 'fechasalida'},
         ],
         "columnDefs": [
-            {"width": "100px", "targets": 0},
+            {"width": "180px", "targets": 0},
             {"width": "280px", "targets": 1},
             {"width": "280px", "targets": 2},
             {"width": "180px", "targets": 3},
