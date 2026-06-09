@@ -15,6 +15,15 @@
     @endif
 @endcan
 
+@can('receiptasn.edit')
+    @if($shipmentid !== null && $statusidasn == 'PG')
+        <a href="" data-target="#modal-edit-{{$id}}" data-toggle="modal" data-placement="top" title="Editar recibo.">
+            <img src="{{asset('/ico/adedit.png')}}" alt="" class="img-16 ml-1">
+        </a>
+        @include('Receipt.SchedulleV2.partials.edit')
+    @endif
+@endcan
+
 @if ($statusid == 'IG')
     @can('receiptasn.kardex')
         <a href="{{url('receiptasn/' . $receiptid . '/kardex')}}">
@@ -44,6 +53,16 @@
         @include('Receipt.SchedulleV2.move')
     @endcan
 @endif
+
+@can('receipans.clearblock')
+    @if($statusid == 'DPR-04')
+        <a href="" data-target="#modal-clear-{{$id}}" data-toggle="modal" data-toggle="tooltip"
+           data-placement="top" title="Liberar registro.">
+            <img src="{{asset('/ico/typemovements.png')}}" alt="" class="img-16 text-center">
+        </a>
+        @include('Receipt.SchedulleV2.clear')
+    @endif
+@endcan
 
 
 @can('receiptasn.blocked')

@@ -53,6 +53,9 @@ class DownloadScheduleController extends BaseController
                 's3.name as carriername',
                 'ra.oc',
                 'ra.providerid',
+                'ra.razonstatusid',
+                'ra.stockcategoryid',
+                'ra.carrierid',
                 'ra.billoflading as factura',
                 'ra.auxiliary02 as po',
                 'ra.partnumberid as material',
@@ -163,6 +166,14 @@ class DownloadScheduleController extends BaseController
                     'carriers' => $carriers,
                     'categorystocks' => $categorystocks,
                     'reasons' => $reasons,
+                    'razonstatusid' => $row->razonstatusid,
+                    'stockcategoryid' => $row->stockcategoryid,
+                    'providerid' => $row->providerid,
+                    'carrierid' => $row->carrierid,
+                    'billoflading' => $row->factura,
+                    'oc' => $row->oc,
+                    'partnumberid' => $row->material,
+                    'quantity' => $row->quantity,
                 ])->render();
             })
             ->addColumn('prioridad', 'Receipt.SchedulleV2.addpriority')
@@ -193,6 +204,48 @@ class DownloadScheduleController extends BaseController
             ->get();
 
         return response()->json($secuence);
+    }
+
+    public function updateShipmentToSchedule(Request $request, $id)
+    {
+        $this->authorize('receiptasn.create');
+        DB::beginTransaction();
+        try {
+
+            $receipt = ReceiptAsn::controlAccessUser()->findOrFail($id);
+
+            $receipt->update([
+                'razonstatusid' => $request->razonstatusid,
+                'stockcategoryid' => $request->stockcategoryid,
+                'providerid' => $request->providerid,
+                'shipmentid' => $request->shipmentid ?? $receipt->shipmentid,
+                'billoflading' => $request->billoflading,
+                'partnumberid' => $request->partnumberid,
+                'quantity' => $request->quantity,
+                'carrierid' => $request->carrierid ?? $receipt->carrierid,
+                'oc' => $request->oc,
+            ]);
+
+            DB::commit();
+
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Recibo actualizado correctamente.',
+                ]);
+            }
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::error($e->getMessage());
+
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Error al actualizar el recibo, por favor intente nuevamente.',
+                ], 500);
+            }
+        }
     }
 
     //	Esta funcion edita el registro el recibo en el plan de entrega

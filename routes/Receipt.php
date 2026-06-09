@@ -88,6 +88,8 @@ Route::middleware(['auth'])->group(function () {
 
     //    Agregar embarque al detalle del horario de descarga
     Route::put('addShipmentToScheduleedit/{id}', [DownloadScheduleController::class, 'addShipmentToScheduleedit'])->name('addShipmentToScheduleedit');
+    //    Editar embarque del detalle del horario de descarga
+    Route::put('updateShipmentToSchedule/{id}', [DownloadScheduleController::class, 'updateShipmentToSchedule'])->name('updateShipmentToSchedule');
     Route::post('getdaysforperiods', [DownloadScheduleController::class, 'getdaysforperiods'])->name('getdaysforperiods');
     Route::post('getsecuenceforday/{workday}', [DownloadScheduleController::class, 'getsecuenceforday'])->name('getsecuenceforday');
 
