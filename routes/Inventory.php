@@ -112,7 +112,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('getLocationCardInventory/{id}', [InventoryLocationCardController::class, 'getLocationCardInventory'])->name('getLocationCardInventory');
     //	Reiniciar conteo 1
     Route::put('reset-count-1/{id}', [InventoryLocationCardController::class, 'initializeCount1'])->name('reset-count-1');
-    Route::put('reset-count-2/{id}', [InventoryLocationCardController::class, 'initializeCount2'])->name('reset-count-1');
+    Route::put('reset-count-2/{id}', [InventoryLocationCardController::class, 'initializeCount2'])->name('reset-count-2');
 
     //	Detalle de errores de conteo
     Route::get('inventoryhead-errors/{id}', [InventoryErrorsController::class, 'index'])->name('inventoryhead-errors');
