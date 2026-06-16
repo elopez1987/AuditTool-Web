@@ -20,7 +20,7 @@ class StorageCategorySafety extends Model
         return LogOptions::defaults()->logFillable();
     }
 
-    protected $table = 'stotage_category_safeties';
+    protected $table = 'storage_category_safeties';
 
     protected $fillable = [
         'centerid',
@@ -44,7 +44,7 @@ class StorageCategorySafety extends Model
 
     public function category_details(): StorageCategorySafety|HasMany
     {
-        return $this->hasMany(StorageSafetyCategoryDetail::class, 'stotage_category_safety_id', 'id');
+        return $this->hasMany(StorageSafetyCategoryDetail::class, 'storage_category_safety_id', 'id');
     }
 
     protected $attributes = [
@@ -60,6 +60,6 @@ class StorageCategorySafety extends Model
     {
         $centers = SecurityAccessWarehouse::Centers();
 
-        return StorageCategorySafety::whereIn('stotage_category_safeties.centerid', $centers);
+        return StorageCategorySafety::whereIn('storage_category_safeties.centerid', $centers);
     }
 }
