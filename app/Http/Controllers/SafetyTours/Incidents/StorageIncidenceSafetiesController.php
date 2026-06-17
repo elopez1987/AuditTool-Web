@@ -11,8 +11,8 @@ class StorageIncidenceSafetiesController extends BaseController
     public function index()
     {
         $status_total = StorageIncidenceSafety::leftJoin('systemstatus as s', 'storage_incidence_safeties.statusid', '=', 's.statusid')
-            ->groupBy('s.name')
-            ->selectRaw('s.name, COUNT(s.statusid) as total_status')
+            ->groupBy('s.name', 's.statusid')
+            ->selectRaw('s.name,s.statusid, COUNT(s.statusid) as total_status')
             ->get();
 
         return view('SafetyTours.StorageIncidenceSafety.index', compact('status_total'));

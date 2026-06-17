@@ -30,33 +30,26 @@
                     </form>
 
                     <div class="row">
-                        <div class="col-lg-4">
-                            <div class="card border-success">
-                                <div class="card-header bg-success">
-                                    <h4 class="mb-0 ">Terminadas</h4></div>
-                                <div class="card-body">
-                                    <h3 class="card-title">45</h3>
+                        @foreach($status_total as $status)
+                            @php
+                                $statusColor = match($status->statusid) {
+                                    'IRS-01' => 'danger',
+                                    'IRS-02' => 'warning',
+                                    'IRS-03' => 'success',
+                                    default  => 'secondary',
+                                };
+                            @endphp
+                            <div class="col-lg-4">
+                                <div class="card border-{{ $statusColor }}">
+                                    <div class="card-header bg-{{ $statusColor }}">
+                                        <h4 class="mb-0">{{ $status->name }}</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <h3 class="card-title">{{ $status->total_status }}</h3>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="card border-warning">
-                                <div class="card-header bg-warning">
-                                    <h4 class="mb-0 ">En Proceso</h4></div>
-                                <div class="card-body">
-                                    <h3 class="card-title">45</h3>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="card border-danger">
-                                <div class="card-header bg-danger">
-                                    <h4 class="mb-0 ">Pendientes</h4></div>
-                                <div class="card-body">
-                                    <h3 class="card-title">45</h3>
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                     <div class="row">
                         <div class="col-12">
