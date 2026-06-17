@@ -5,6 +5,7 @@ namespace App\Models\SafetyTours\Incidents;
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Security\Users\SecurityAccessWarehouse;
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Activitylog\LogOptions;
@@ -23,7 +24,7 @@ class StorageIncidenceSafety extends Model
 
     protected $fillable = [
         'centerid',
-        'stotage_category_safety_id',
+        'storage_category_safety_id',
         'storage_safety_category_detail_id',
         'name',
         'description',
@@ -47,14 +48,26 @@ class StorageIncidenceSafety extends Model
         return $this->belongsTo(SystemStatus::class, 'statusid', 'statusid');
     }
 
-    public function stotagecategorysafety(): BelongsTo
+    public function category(): BelongsTo
     {
-        return $this->belongsTo(StorageCategorySafety::class, 'storage_category_safety_id');
+        return $this->belongsTo(StorageCategorySafety::class, 'storage_category_safety_id', 'id');
     }
 
-    public function storagesafetycategorydetail(): BelongsTo
+    public function categorydetail(): BelongsTo
     {
-        return $this->belongsTo(StorageSafetyCategoryDetail::class);
+        return $this->belongsTo(StorageSafetyCategoryDetail::class, 'storage_safety_category_detail_id', 'id');
+    }
+
+    public function createuser(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by', 'id');
+    }
+
+    public function closeduser(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'closed_by', 'id')->withDefault(
+            ['name' => '-']
+        );
     }
 
     protected $attributes = [
@@ -65,8 +78,8 @@ class StorageIncidenceSafety extends Model
     protected function casts(): array
     {
         return [
-            'created_at' => 'timestamp',
-            'closed_at' => 'timestamp',
+            'created_at' => 'datetime:d-m-Y H:i',
+            'closed_at' => 'datetime:d-m-Y H:i',
         ];
     }
 
@@ -74,6 +87,6 @@ class StorageIncidenceSafety extends Model
     {
         $centers = SecurityAccessWarehouse::Centers();
 
-        return StorageCategorySafety::whereIn('storage_category_safeties.centerid', $centers);
+        return StorageIncidenceSafety::whereIn('storage_incidence_safeties.centerid', $centers);
     }
 }

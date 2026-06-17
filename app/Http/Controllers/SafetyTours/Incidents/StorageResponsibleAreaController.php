@@ -17,7 +17,8 @@ class StorageResponsibleAreaController extends BaseController
     public function getResponsibleArea(Request $request)
     {
         $data = StorageResponsibleArea::controlAccessUser()
-            ->with(['status:statusid,name,auxiliary01', 'center:centerid,description,name'])
+            ->with(['status:statusid,name,auxiliary01',
+                'center:centerid,description,name'])
             ->get();
 
         return $this->showDataToView($data, 'SafetyTours.StorageResponsibleArea.partials.buttons');
@@ -38,7 +39,10 @@ class StorageResponsibleAreaController extends BaseController
         return $this->redirectBackSuccessMessage('Registro agregado con exito.');
     }
 
-    public function show(StorageResponsibleArea $responsible_area_security) {}
+    public function show(StorageResponsibleArea $responsible_area_security)
+    {
+        return $responsible_area_security;
+    }
 
     public function edit(StorageResponsibleArea $responsible_area_security)
     {
@@ -63,5 +67,10 @@ class StorageResponsibleAreaController extends BaseController
         return $this->redirectBackSuccessMessage('Registro actualizado con exito.');
     }
 
-    public function destroy(StorageResponsibleArea $responsible_area_security) {}
+    public function destroy(StorageResponsibleArea $responsible_area_security)
+    {
+        StorageResponsibleArea::destroy($responsible_area_security->id);
+
+        return $this->redirectBackSuccessMessage('Registro eliminado con exito.');
+    }
 }

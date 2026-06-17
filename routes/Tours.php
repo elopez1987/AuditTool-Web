@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SafetyTours\Incidents\StorageIncidenceSafetiesController;
 use App\Http\Controllers\SafetyTours\Incidents\StorageResponsibleAreaController;
 use App\Http\Controllers\SafetyTours\StorageSafetyToursController;
 use App\Http\Controllers\SafetyTours\StorageSafetyTourTypeController;
@@ -32,4 +33,9 @@ Route::middleware(['auth'])->group(function () {
     //	Modulo de Incidencias
     Route::resource('responsible-area-security', StorageResponsibleAreaController::class);
     Route::get('getResponsibleArea', [StorageResponsibleAreaController::class, 'getResponsibleArea'])->name('getResponsibleArea');
+
+    //	Incidencias encontradas
+    Route::resource('storage-incidence-safeties', StorageIncidenceSafetiesController::class);
+    Route::get('getIncidenceSafeties', [StorageIncidenceSafetiesController::class, 'getIncidenceSafeties'])->name('getIncidenceSafeties');
+
 });

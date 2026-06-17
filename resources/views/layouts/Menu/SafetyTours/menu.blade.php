@@ -36,8 +36,8 @@
 
         <h5 class="name-menu"> Incidencias</h5>
         <div class="container__box">
-            @can('storagetags.index')
-                <a href="{{route('storagetags.index')}}">
+            @can('storage-incidence-safeties.index')
+                <a href="{{route('storage-incidence-safeties.index')}}">
                     <div class="box">
                         <i class="mdi mdi-menu"></i>
                         <h5>Incidencias</h5>
