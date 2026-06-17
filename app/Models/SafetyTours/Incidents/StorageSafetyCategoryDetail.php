@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\SafetyTours;
+namespace App\Models\SafetyTours\Incidents;
 
 use App\Models\Configuration\Schemas\SystemStatus;
 use Illuminate\Database\Eloquent\Model;

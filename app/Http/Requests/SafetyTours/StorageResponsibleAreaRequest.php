@@ -10,7 +10,7 @@ class StorageResponsibleAreaRequest extends FormRequest
     {
         return [
             'centerid' => ['required', 'exists:systemcenterdistributions,centerid'],
-            'name' => ['required'],
+            'name' => ['required', 'max:100'],
             'auxiliary01' => ['nullable'],
             'auxiliary02' => ['nullable'],
             'auxiliary03' => ['nullable'],

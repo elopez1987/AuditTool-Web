@@ -1,18 +1,16 @@
 <?php
 
-namespace App\Models\SafetyTours;
+namespace App\Models\SafetyTours\Incidents;
 
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Configuration\Schemas\SystemStatus;
-use App\Models\Inventory\InventoryFiscal\InventoryArea;
 use App\Models\Security\Users\SecurityAccessWarehouse;
-use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class StorageResponsibleArea extends Model
+class StorageIncidenceSafety extends Model
 {
     use LogsActivity;
 
@@ -21,16 +19,21 @@ class StorageResponsibleArea extends Model
         return LogOptions::defaults()->logFillable();
     }
 
-    protected $table = 'storage_safety_responsible_areas';
+    protected $table = 'storage_incidence_safeties';
 
     protected $fillable = [
         'centerid',
+        'stotage_category_safety_id',
+        'storage_safety_category_detail_id',
         'name',
+        'description',
+        'created_by',
+        'closed_by',
+        'closed_at',
+        'location',
         'auxiliary01',
         'auxiliary02',
         'auxiliary03',
-        'configurationflag',
-        'schemaid',
         'statusid',
     ];
 
@@ -44,24 +47,33 @@ class StorageResponsibleArea extends Model
         return $this->belongsTo(SystemStatus::class, 'statusid', 'statusid');
     }
 
-    public function created(): BelongsTo
+    public function stotagecategorysafety(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'created_by', 'userid');
+        return $this->belongsTo(StorageCategorySafety::class, 'storage_category_safety_id');
+    }
+
+    public function storagesafetycategorydetail(): BelongsTo
+    {
+        return $this->belongsTo(StorageSafetyCategoryDetail::class);
     }
 
     protected $attributes = [
-        'statusid' => 'E',
-        'schemaid' => 'STS',
+        'statusid' => 'IRS-01',
+        'schemaid' => 'IRS',
     ];
 
-    protected $casts = [
-        'configurationflag' => 'array',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'created_at' => 'timestamp',
+            'closed_at' => 'timestamp',
+        ];
+    }
 
     public static function controlAccessUser()
     {
         $centers = SecurityAccessWarehouse::Centers();
 
-        return InventoryArea::whereIn('inventory_areas.centerid', $centers);
+        return StorageCategorySafety::whereIn('storage_category_safeties.centerid', $centers);
     }
 }

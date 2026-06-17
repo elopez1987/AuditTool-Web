@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Models\SafetyTours;
+namespace App\Models\SafetyTours\Incidents;
 
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class StorageIncidenceSafety extends Model
+class StorageCategorySafety extends Model
 {
     use LogsActivity;
 
@@ -19,21 +20,15 @@ class StorageIncidenceSafety extends Model
         return LogOptions::defaults()->logFillable();
     }
 
-    protected $table = 'storage_incidence_safeties';
+    protected $table = 'storage_category_safeties';
 
     protected $fillable = [
         'centerid',
-        'stotage_category_safety_id',
-        'storage_safety_category_detail_id',
         'name',
-        'description',
-        'created_by',
-        'closed_by',
-        'closed_at',
-        'location',
         'auxiliary01',
         'auxiliary02',
         'auxiliary03',
+        'created_by',
         'statusid',
     ];
 
@@ -47,28 +42,19 @@ class StorageIncidenceSafety extends Model
         return $this->belongsTo(SystemStatus::class, 'statusid', 'statusid');
     }
 
-    public function stotagecategorysafety(): BelongsTo
+    public function category_details(): StorageCategorySafety|HasMany
     {
-        return $this->belongsTo(StorageCategorySafety::class, 'storage_category_safety_id');
-    }
-
-    public function storagesafetycategorydetail(): BelongsTo
-    {
-        return $this->belongsTo(StorageSafetyCategoryDetail::class);
+        return $this->hasMany(StorageSafetyCategoryDetail::class, 'storage_category_safety_id', 'id');
     }
 
     protected $attributes = [
-        'statusid' => 'IRS-01',
-        'schemaid' => 'IRS',
+        'statusid' => 'E',
+        'schemaid' => 'STS',
     ];
 
-    protected function casts(): array
-    {
-        return [
-            'created_at' => 'timestamp',
-            'closed_at' => 'timestamp',
-        ];
-    }
+    protected $casts = [
+        'configurationflag' => 'array',
+    ];
 
     public static function controlAccessUser()
     {

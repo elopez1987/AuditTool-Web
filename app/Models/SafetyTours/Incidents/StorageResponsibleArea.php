@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Models\SafetyTours;
+namespace App\Models\SafetyTours\Incidents;
 
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Security\Users\SecurityAccessWarehouse;
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class StorageCategorySafety extends Model
+class StorageResponsibleArea extends Model
 {
     use LogsActivity;
 
@@ -20,7 +20,7 @@ class StorageCategorySafety extends Model
         return LogOptions::defaults()->logFillable();
     }
 
-    protected $table = 'storage_category_safeties';
+    protected $table = 'storage_safety_responsible_areas';
 
     protected $fillable = [
         'centerid',
@@ -28,7 +28,8 @@ class StorageCategorySafety extends Model
         'auxiliary01',
         'auxiliary02',
         'auxiliary03',
-        'created_by',
+        'configurationflag',
+        'schemaid',
         'statusid',
     ];
 
@@ -42,9 +43,9 @@ class StorageCategorySafety extends Model
         return $this->belongsTo(SystemStatus::class, 'statusid', 'statusid');
     }
 
-    public function category_details(): StorageCategorySafety|HasMany
+    public function create_user(): BelongsTo
     {
-        return $this->hasMany(StorageSafetyCategoryDetail::class, 'storage_category_safety_id', 'id');
+        return $this->belongsTo(User::class, 'created_by', 'userid');
     }
 
     protected $attributes = [
@@ -60,6 +61,6 @@ class StorageCategorySafety extends Model
     {
         $centers = SecurityAccessWarehouse::Centers();
 
-        return StorageCategorySafety::whereIn('storage_category_safeties.centerid', $centers);
+        return StorageResponsibleArea::whereIn('storage_safety_responsible_areas.centerid', $centers);
     }
 }
