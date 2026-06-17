@@ -5,10 +5,10 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    Modificar Área
+                    Modificar
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{{url('responsible-area-security/' . $responsible_area_security->id)}}"
+                    <form method="POST" action="{{url('storage-incidence-safeties/' . $storage_incidence_safety->id)}}"
                           enctype="multipart/form-data">
                         {{ method_field('PUT') }}
                         @csrf
@@ -17,13 +17,13 @@
                                 <a href="">
                                     @include('buttons.save')
                                 </a>
-                                <a href="{{route('responsible-area-security.index')}}">
+                                <a href="{{route('storage-incidence-safeties.index')}}">
                                     @include('buttons.back')
                                 </a>
                             </div>
                         </div>
                         <hr class="mb-3">
-                        @include('SafetyTours.StorageResponsibleArea.partials.formEdit')
+                        @include('SafetyTours.StorageIncidenceSafety.partials.formEdit')
                     </form>
                 </div>
             </div>

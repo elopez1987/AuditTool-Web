@@ -27,10 +27,37 @@
                             </div>
                         </div>
                         <hr class="m-t-1">
-                        <div class="row">
-
-                        </div>
                     </form>
+
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="card border-success">
+                                <div class="card-header bg-success">
+                                    <h4 class="mb-0 ">Terminadas</h4></div>
+                                <div class="card-body">
+                                    <h3 class="card-title">45</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="card border-warning">
+                                <div class="card-header bg-warning">
+                                    <h4 class="mb-0 ">En Proceso</h4></div>
+                                <div class="card-body">
+                                    <h3 class="card-title">45</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="card border-danger">
+                                <div class="card-header bg-danger">
+                                    <h4 class="mb-0 ">Pendientes</h4></div>
+                                <div class="card-body">
+                                    <h3 class="card-title">45</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-12">
                             <table id="table-incidents" class="table table-bordered table-condensed table-hover">

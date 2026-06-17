@@ -4,7 +4,39 @@
             label="Nombre del área"
             required
             uppercase
-            :value="$responsible_area_security->name"
+            :value="$storage_incidence_safety->name"
+    />
+
+</div>
+<div class="row">
+    <x-text-input
+            name="description"
+            label="Descripción de la incidencia"
+            required
+            uppercase
+            colClass="col-lg-6 col-md-12"
+            :value="$storage_incidence_safety->description"
+    />
+</div>
+<div class="row">
+    <x-select2
+            name="priority"
+            label="Prioridad"
+            :selected="$storage_incidence_safety->priority"
+            valueField="id"
+            textField="name"
+            :options="[
+                ['id' => 'LOW', 'name' => 'LOW'],
+                ['id' => 'MEDIUM', 'name' => 'MEDIUM'],
+                ['id' => 'HIGH', 'name' => 'HIGH']
+            ]"
+    />
+    <x-text-input
+            name="location"
+            label="Ubicación de la incidencia"
+            required
+            uppercase
+            :value="$storage_incidence_safety->location"
     />
 </div>
 
@@ -13,19 +45,19 @@
             name="auxiliary01"
             label="Auxiliar 01"
             uppercase
-            :value="$responsible_area_security->auxiliary01"
+            :value="$storage_incidence_safety->auxiliary01"
     />
     <x-text-input
             name="auxiliary02"
             label="Auxiliar 02"
             uppercase
-            :value="$responsible_area_security->auxiliary02"
+            :value="$storage_incidence_safety->auxiliary02"
     />
     <x-text-input
             name="auxiliary03"
             label="Auxiliar 03"
             uppercase
-            :value="$responsible_area_security->auxiliary03"
+            :value="$storage_incidence_safety->auxiliary03"
     />
 </div>
 
@@ -36,6 +68,6 @@
             :options="$status"
             valueField="statusid"
             textField="name"
-            :selected="$responsible_area_security->statusid"
+            :selected="$storage_incidence_safety->statusid"
     />
 </div>

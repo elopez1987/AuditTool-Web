@@ -1,8 +1,10 @@
-@can('responsible-area-security.edit')
-    <a href="{{url('responsible-area-security/' . $id. '/edit')}}">
-        @include('buttons.edit')
-    </a>
-@endcan
+@if($statusid != 'IRS-03')
+    @can('storage-incidence-safeties.edit')
+        <a href="{{url('storage-incidence-safeties/' . $id. '/edit')}}">
+            @include('buttons.edit')
+        </a>
+    @endcan
+@endif
 
 {{--@can('responsible-area-security.destroy')--}}
 {{--    <a href="" data-target="#modal-destroy-{{$id}}" data-toggle="modal">--}}
