@@ -245,10 +245,11 @@
                             <div class="row">
                                 <div class="col-lg-4 col-md-6">
                                     <div class="card ">
+                                        <div class="card-header">
+                                            Datos de entrega
+                                        </div>
                                         <div class="card-body" style="height: 400px;">
-                                            <h6 class="font-weight-light  text-white padding-3 "
-                                                style="background-color: #607d8b;border-radius: 5px;">Datos de la
-                                                entrega</h6>
+
                                             <table class="table table-condensed table-hover table-bordered">
                                                 <tbody>
                                                 <tr>
@@ -311,13 +312,11 @@
                                 </div>
                                 <div class="col-lg-4 col-md-6">
                                     <div class="card ">
-                                        <div class="card-body" style="height: 400px;">
+                                        <div class="card-header">
                                             <div class="row">
                                                 <div class="col-lg-10">
-                                                    <h6 class="font-weight-light  text-white padding-3"
-                                                        style="border-radius: 5px;padding-left: 5px;background-color: #607d8b">
-                                                        Datos del
-                                                        transporte - Folio : {{$orderdelivery->folionumber}} </h6>
+                                                    Datos del
+                                                    transporte - Folio : {{$orderdelivery->folionumber}}
                                                 </div>
                                                 <div class="col-lg-2">
                                                     <a href="" data-target="#modal-kardexfolio" data-toggle="modal"
@@ -333,6 +332,8 @@
                                                     @include('Shipments.OrderDeliveries.kardexfolio')
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="card-body" style="height: 400px;">
                                             <table class="table table-condensed table-hover table-bordered">
                                                 <tr>
                                                     <td>Linea de transporte</td>
@@ -372,10 +373,10 @@
                                 </div>
                                 <div class="col-lg-4 col-md-6">
                                     <div class="card">
+                                        <div class="card-header">
+                                            Estatus del proceso
+                                        </div>
                                         <div class="card-body" style="height: 400px;">
-                                            <h6 class="font-weight-light text-white padding-3"
-                                                style="background-color: #607d8b;border-radius: 5px">Estatus del
-                                                proceso</h6>
                                             <div class="row">
                                                 <div class="col-lg-12">
                                                     <table class="table table-condensed table-hover table-bordered">
@@ -559,11 +560,11 @@
                             <div class="row">
                                 <div class="col-lg-4">
                                     <div class="card ">
+                                        <div class="card-header">
+                                            Datos del embarque
+                                        </div>
                                         <div class="card-body" style="height: 400px;">
-                                            <h6 class="font-weight-light text-white padding-3 "
-                                                style="background-color: #607d8b;border-radius: 5px"> Datos del
-                                                embarque</h6>
-                                            <table class="table table-condensed table-striped table-bordered">
+                                            <table class="table table-condensed  table-bordered">
                                                 <tr>
                                                     <td>Peso total</td>
                                                     <td>{{$orderdelivery->header ? $orderdelivery->header->totalweight : ''}}</td>
@@ -606,11 +607,11 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="card">
-                                        <div class="card-body" style="height: 280px;">
-                                            <h6 class="font-weight-light  text-white padding-3 "
-                                                style="background-color: #607d8b;border-radius: 5px"> Tiempos
-                                                operativos</h6>
-                                            <table class="table table-condensed table-bordered table-striped">
+                                        <div class="card-header">
+                                            Tiempos operativos
+                                        </div>
+                                        <div class="card-body" style="height: 400px;">
+                                            <table class="table table-condensed table-bordered ">
                                                 <tbody>
                                                 <tr>
                                                     <td>Inicio de preparación :</td>
@@ -664,26 +665,26 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="card ">
-                                        <div class="card-body" style="height: 280px;">
-                                            <h6 class="font-weight-light text-white padding-3 "
-                                                style="background-color: #607d8b;border-radius: 5px"> Datos
-                                                operativos</h6>
-                                            <table class="table table-condensed table-striped table-bordered">
+                                        <div class="card-header">
+                                            Datos operativos
+                                        </div>
+                                        <div class="card-body" style="height: 400px;">
+                                            <table class="table table-condensed table-bordered">
                                                 <tr>
-                                                    <td>Supervisor</td>
-                                                    <th>{{$orderdelivery->operation ? $orderdelivery->operation->supervisor : ''}}</th>
+                                                    <td>Supervisor:</td>
+                                                    <td>{{$orderdelivery->operation ? $orderdelivery->operation->supervisor : ''}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Verificador</td>
-                                                    <th>{{$orderdelivery->operation ? $orderdelivery->operation->checker : ''}}</th>
+                                                    <td>Verificador:</td>
+                                                    <td>{{$orderdelivery->operation ? $orderdelivery->operation->checker : ''}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Montacarguista</td>
-                                                    <th>{{$orderdelivery->operation ? $orderdelivery->operation->forklift : ''}}</th>
+                                                    <td>Montacarguista:</td>
+                                                    <td>{{$orderdelivery->operation ? $orderdelivery->operation->forklift : ''}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Analista Operativo</td>
-                                                    <th>{{$orderdelivery->header->user ? $orderdelivery->header->user->name : ''}}</th>
+                                                    <td>Analista Operativo:</td>
+                                                    <td>{{$orderdelivery->header->user ? $orderdelivery->header->user->name : ''}}</td>
                                                 </tr>
                                             </table>
                                         </div>
