@@ -29,11 +29,11 @@ class StorageIncidenceSafetiesController extends BaseController
 
     public function store(Request $request) {}
 
-    public function show(StorageIncidenceSafety $storageIncidenceSafety) {}
+    public function show(StorageIncidenceSafety $storage_incidence_safety) {}
 
-    public function edit(StorageIncidenceSafety $storageIncidenceSafety) {}
+    public function edit(StorageIncidenceSafety $storage_incidence_safety) {}
 
-    public function update(Request $request, StorageIncidenceSafety $storageIncidenceSafety) {}
+    public function update(Request $request, StorageIncidenceSafety $storage_incidence_safety) {}
 
-    public function destroy(StorageIncidenceSafety $storageIncidenceSafety) {}
+    public function destroy(StorageIncidenceSafety $storage_incidence_safety) {}
 }

@@ -245,7 +245,7 @@
                             <div class="row">
                                 <div class="col-lg-4 col-md-6">
                                     <div class="card ">
-                                        <div class="card-body" style="height: 280px;">
+                                        <div class="card-body" style="height: 400px;">
                                             <h6 class="font-weight-light  text-white padding-3 "
                                                 style="background-color: #607d8b;border-radius: 5px;">Datos de la
                                                 entrega</h6>
@@ -311,7 +311,7 @@
                                 </div>
                                 <div class="col-lg-4 col-md-6">
                                     <div class="card ">
-                                        <div class="card-body" style="height: 280px;">
+                                        <div class="card-body" style="height: 400px;">
                                             <div class="row">
                                                 <div class="col-lg-10">
                                                     <h6 class="font-weight-light  text-white padding-3"
@@ -372,7 +372,7 @@
                                 </div>
                                 <div class="col-lg-4 col-md-6">
                                     <div class="card">
-                                        <div class="card-body" style="height: 280px;">
+                                        <div class="card-body" style="height: 400px;">
                                             <h6 class="font-weight-light text-white padding-3"
                                                 style="background-color: #607d8b;border-radius: 5px">Estatus del
                                                 proceso</h6>
@@ -559,7 +559,7 @@
                             <div class="row">
                                 <div class="col-lg-4">
                                     <div class="card ">
-                                        <div class="card-body" style="height: 280px;">
+                                        <div class="card-body" style="height: 400px;">
                                             <h6 class="font-weight-light text-white padding-3 "
                                                 style="background-color: #607d8b;border-radius: 5px"> Datos del
                                                 embarque</h6>
