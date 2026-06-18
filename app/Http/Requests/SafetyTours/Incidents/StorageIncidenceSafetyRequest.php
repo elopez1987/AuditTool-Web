@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\SafetyTours;
+namespace App\Http\Requests\SafetyTours\Incidents;
 
 use Illuminate\Foundation\Http\FormRequest;
 

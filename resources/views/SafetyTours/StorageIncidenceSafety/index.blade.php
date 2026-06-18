@@ -33,9 +33,9 @@
                         @foreach($status_total as $status)
                             @php
                                 $statusColor = match($status->statusid) {
-                                    'IRS-01' => 'danger',
-                                    'IRS-02' => 'warning',
-                                    'IRS-03' => 'success',
+                                    'IRS-01' => 'red',
+                                    'IRS-02' => 'yellow',
+                                    'IRS-03' => 'green',
                                     default  => 'secondary',
                                 };
                             @endphp
