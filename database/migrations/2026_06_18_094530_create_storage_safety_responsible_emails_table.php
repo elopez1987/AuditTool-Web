@@ -15,7 +15,7 @@ return new class extends Migration
             $table->string('email', 100);
             $table->string('phone')->nullable();
             $table->integer('level');
-            $table->integer('attempts');
+            $table->integer('attempts')->nullable();
 
             $table->index('storage_safety_responsible_area_id');
             $table->index('name');

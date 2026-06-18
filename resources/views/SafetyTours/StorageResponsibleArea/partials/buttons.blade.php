@@ -4,6 +4,12 @@
     </a>
 @endcan
 
+@can('responsible-area-security.emails')
+    <a href="{{url('responsible-area-emails/' . $id. '/emails')}}">
+        <img src="{{asset('/ico/Email_30017.png')}}" alt="" class="img-16 ml-2 mr-2">
+    </a>
+@endcan
+
 {{--@can('responsible-area-security.destroy')--}}
 {{--    <a href="" data-target="#modal-destroy-{{$id}}" data-toggle="modal">--}}
 {{--        <img src="{{asset('/ico/destroy2.png')}}" alt=""--}}

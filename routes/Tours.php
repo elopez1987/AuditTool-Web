@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\SafetyTours\Incidents\StorageIncidenceSafetiesController;
 use App\Http\Controllers\SafetyTours\Incidents\StorageResponsibleAreaController;
+use App\Http\Controllers\SafetyTours\Incidents\StorageResponsibleEmailsController;
 use App\Http\Controllers\SafetyTours\StorageSafetyToursController;
 use App\Http\Controllers\SafetyTours\StorageSafetyTourTypeController;
 use App\Http\Controllers\SafetyTours\StorageSafetyTourTypeDetailController;
@@ -33,7 +34,11 @@ Route::middleware(['auth'])->group(function () {
     //	Modulo de Incidencias
     Route::resource('responsible-area-security', StorageResponsibleAreaController::class);
     Route::get('getResponsibleArea', [StorageResponsibleAreaController::class, 'getResponsibleArea'])->name('getResponsibleArea');
-
+    //	Configuracion del área
+    Route::get('responsible-area-emails/{id}/emails', [StorageResponsibleEmailsController::class, 'index'])->name('responsible-area-emails');
+    Route::put('responsible-area-emails-store/{id}', [StorageResponsibleEmailsController::class, 'store'])->name('responsible-area-emails-store');
+    Route::put('responsible-area-emails-update/{id}', [StorageResponsibleEmailsController::class, 'update'])->name('responsible-area-emails-update');
+    Route::delete('responsible-area-emails-delete/{id}', [StorageResponsibleEmailsController::class, 'destroy'])->name('responsible-area-emails-delete');
     //	Incidencias encontradas
     Route::resource('storage-incidence-safeties', StorageIncidenceSafetiesController::class);
     Route::get('getIncidenceSafeties', [StorageIncidenceSafetiesController::class, 'getIncidenceSafeties'])->name('getIncidenceSafeties');
