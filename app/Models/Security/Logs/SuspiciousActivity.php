@@ -5,6 +5,7 @@ namespace App\Models\Security\Logs;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
@@ -15,8 +16,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property bool $reviewed
  * @property string|null $reviewed_at
  * @property int|null $reviewed_by
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  * @property-read User|null $reviewedBy
  * @property-read User $user
  *

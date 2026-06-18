@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Inventory\InventoryFiscal;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Inventory\InventoryLocationRequest;
+use App\Imports\ImportLocationInventory;
 use App\Models\Inventory\InventoryFiscal\InventoryCard;
 use App\Models\Inventory\InventoryFiscal\InventoryLocation;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class InventoryLocationController extends BaseController
 {
@@ -14,8 +16,6 @@ class InventoryLocationController extends BaseController
     {
         $inventoryCard = InventoryCard::findOrFail($id);
         InventoryLocation::create([
-            'centerid' => $inventoryCard->centerid,
-            'warehouseid' => $inventoryCard->warehouseid,
             'inventory_card_id' => $inventoryCard->id,
             'name' => $request->input('name'),
             'inventoryunitsmeasure_id' => $request->input('inventoryunitsmeasure_id'),
@@ -32,8 +32,7 @@ class InventoryLocationController extends BaseController
 
     public function getLocationForCard(Request $request)
     {
-        $data = InventoryLocation::controlAccessUser()
-            ->with(['inventoryunitsmeasure:id,description', 'status:statusid,name,auxiliary01'])
+        $data = InventoryLocation::with(['inventoryunitsmeasure:id,description', 'status:statusid,name,auxiliary01'])
             ->withTrashed()
             ->where('inventory_card_id', $request->input('inventory_card_id'))
             ->get();
@@ -44,8 +43,7 @@ class InventoryLocationController extends BaseController
 
     public function show(InventoryLocation $inventorylocation)
     {
-        $location = InventoryLocation::controlAccessUser()
-            ->where('id', $inventorylocation->id)
+        $location = InventoryLocation::where('id', $inventorylocation->id)
             ->firstOrFail();
 
         return response()->json([
@@ -66,8 +64,7 @@ class InventoryLocationController extends BaseController
 
     public function update(InventoryLocationRequest $request, InventoryLocation $inventorylocation)
     {
-        $location = InventoryLocation::controlAccessUser()
-            ->where('id', $inventorylocation->id)
+        $location = InventoryLocation::where('id', $inventorylocation->id)
             ->firstOrFail();
 
         $location->update($request->validated());
@@ -87,8 +84,7 @@ class InventoryLocationController extends BaseController
         try {
             $this->authorize('inventorylocations.destroy');
 
-            $location = InventoryLocation::controlAccessUser()
-                ->withTrashed()
+            $location = InventoryLocation::withTrashed()
                 ->where('id', $id)
                 ->firstOrFail();
 
@@ -121,5 +117,14 @@ class InventoryLocationController extends BaseController
                 'message' => 'Error al procesar la ubicación: ' . $th->getMessage(),
             ], 500);
         }
+    }
+
+    public function importLocations(Request $request)
+    {
+        $file = $request->file('file');
+        Excel::import(new ImportLocationInventory, $file);
+
+        return $this->redirectBackSuccess();
+
     }
 }

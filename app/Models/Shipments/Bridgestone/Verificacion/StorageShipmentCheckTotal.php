@@ -10,9 +10,11 @@ use App\Models\Yard\StorageLocation;
 use App\User;
 use Auth;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Models\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
@@ -33,7 +35,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property string|null $value03
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read Collection<int, Activity> $activities
  * @property-read int|null $activities_count
  * @property-read SystemCenterDistribution $center
  * @property-read StorageLocation $location

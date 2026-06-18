@@ -2,8 +2,10 @@
 
 namespace App\Models\Maintenance;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Models\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
@@ -18,7 +20,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property string|null $value04
  * @property string|null $note
  * @property string $created_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read Collection<int, Activity> $activities
  * @property-read int|null $activities_count
  *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListDetailLiftTruck newModelQuery()

@@ -24,7 +24,7 @@ class WebServiceLogController extends BaseController
             ->with(['center:centerid,name,description', 'warehouse:warehouseid,name'])
             ->FolioNumber($request->get('folionumber'))
             ->BoxNumber($request->get('boxnumber'))
-            ->orderBy('id', 'desc')->limit(200)->get();
+            ->orderBy('id', 'desc')->get();
 
         return DataTables::of($data)
             ->addColumn('btn', 'Configuration.LogWebService.partials.buttons')

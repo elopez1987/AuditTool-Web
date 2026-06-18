@@ -3,9 +3,11 @@
 namespace App\Models\Configuration\Parameters;
 
 use App\Models\Configuration\Schemas\SystemStatus;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 
 /**
  * @property string $parameterid
@@ -23,10 +25,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string|null $auxiliary10
  * @property string $schemaid
  * @property string $statusid
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Configuration\Parameters\SystemDetailParameter> $detailparameter
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
+ * @property-read Collection<int, SystemDetailParameter> $detailparameter
  * @property-read int|null $detailparameter_count
  * @property-read SystemStatus $status
  *

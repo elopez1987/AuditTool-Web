@@ -204,7 +204,7 @@ Route::group(['middleware' => ['role:ADMINISTRADOR']], function () {
     Route::resource('storagereasons', StorageReasonController::class);
     Route::get('getDataTypeMovements', [StorageReasonController::class, 'getDataTypeMovements'])->name('getDataTypeMovements');
     //    Parametros de bodegas
-    Route::get('storagereasons/{id}/parameters', [ParameterReasonController::class, 'parameters'])->name('systemwarehouses.parameters');
+    Route::get('storagereasons/{id}/parameters', [ParameterReasonController::class, 'parameters'])->name('storagereasons.parameters');
     Route::put('storagereasons-parameter/{id}', [ParameterReasonController::class, 'update'])->name('storagereasons-parameter');
 
     //  Lista de tareras de WhatsApp pendientes de ejecutar

@@ -7,6 +7,7 @@ use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
@@ -23,13 +24,13 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null $userid
  * @property string $schemaid
  * @property string $statusid
- * @property \Illuminate\Support\Carbon $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property Carbon $created_at
+ * @property Carbon|null $updated_at
  * @property-read SystemStatus|null $categorytype
  * @property-read SystemCenterDistribution $center
  * @property-read SystemStatus|null $status
- * @property-read \App\Models\SafetyTours\StorageTags|null $tag
- * @property-read \App\Models\SafetyTours\StorageSafetyTours $tour
+ * @property-read StorageTags|null $tag
+ * @property-read StorageSafetyTours $tour
  * @property-read User|null $user
  *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSafetyTourDetail newModelQuery()

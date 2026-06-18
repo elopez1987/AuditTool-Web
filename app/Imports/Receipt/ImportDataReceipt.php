@@ -5,6 +5,7 @@ namespace App\Imports\Receipt;
 use App\Models\Inventory\Origin\InventoryStockCategory;
 use App\Models\Inventory\PartNumber\InventoryPartnumber;
 use App\Models\Receipt\ReceiptStock;
+use Carbon\Carbon;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
@@ -25,7 +26,7 @@ class ImportDataReceipt implements ToModel, WithBatchInserts, WithChunkReading, 
 
     public function model(array $row)
     {
-        $partnumberid = InventoryPartNumber::controlAccessUser()->where('prtnum', trim($row['sku']))->first();
+        $partnumberid = InventoryPartnumber::controlAccessUser()->where('prtnum', trim($row['sku']))->first();
         $category = InventoryStockCategory::where('stockcategoryid', $row['category'])->first();
         ReceiptStock::updateOrCreate([
             'centerid' => $this->receipt->centerid,
@@ -38,9 +39,9 @@ class ImportDataReceipt implements ToModel, WithBatchInserts, WithChunkReading, 
             'shipmentid' => $this->receipt->shipmentid,
             'category01id' => $partnumberid->category01id,
             'category02id' => $partnumberid->category02id,
-            'productiondate' => \Carbon\Carbon::now()->format('Y-m-d'),
+            'productiondate' => Carbon::now()->format('Y-m-d'),
             'stockcategoryid' => $category->id,
-            'expiredate' => \Carbon\Carbon::now()->addDays($partnumberid->shelflife)->format('Y-m-d'),
+            'expiredate' => Carbon::now()->addDays($partnumberid->shelflife)->format('Y-m-d'),
         ]);
     }
 

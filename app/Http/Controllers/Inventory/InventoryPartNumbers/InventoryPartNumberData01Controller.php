@@ -12,7 +12,7 @@ class InventoryPartNumberData01Controller extends BaseController
     public function index($id)
     {
 
-        $inventoryPartNumber = InventoryPartNumber::findOrFail($id);
+        $inventoryPartNumber = InventoryPartnumber::findOrFail($id);
         $inventoryPartNumberData01 = InventoryPartNumberData01::where('inventorypartnumber_id', $id)->first();
 
         return view('Inventory.InventoryPartnumbers.Data01.index',
@@ -23,7 +23,7 @@ class InventoryPartNumberData01Controller extends BaseController
     public function store(Request $request, $id)
     {
 
-        $inventoryPartNumber = InventoryPartNumber::findOrFail($id);
+        $inventoryPartNumber = InventoryPartnumber::findOrFail($id);
         InventoryPartNumberData01::updateOrCreate([
             'inventorypartnumber_id' => $inventoryPartNumber->id,
         ], [

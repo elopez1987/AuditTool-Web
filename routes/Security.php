@@ -86,7 +86,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('destroycategoryrole/{id}', [StorageCategoryRoleController::class, 'destroy'])->name('destroycategoryrole');
     //	  Parametrizar roles
     Route::get('securityroles/{id}/parameters', [ParameterRoleController::class, 'parameters'])->name('roles.parameters');
-    Route::put('securityroles-parameters/{id}', [ParameterRoleController::class, 'store'])->name('roles.parameters');
+    Route::put('securityroles-parameters/{id}', [ParameterRoleController::class, 'store'])->name('securityroles.parameters');
 
     //    Crear un permiso
     Route::put('createNewPermissionForFunction/{securityFunction}', [CreateNewPermissionController::class, 'createNewPermissionForFunction'])->name('createNewPermissionForFunction');

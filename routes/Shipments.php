@@ -108,7 +108,7 @@ Route::middleware(['auth'])->group(function () {
     //  Importar comentarios a los embarques
     Route::post('importcommentshipment', [ImportCommentShipmentController::class, 'importcommentshipment'])->name('importcommentshipment');
     //   Importar facturas de los embarques
-    Route::post('importbilling', [ImportbillingController::class, 'index'])->name('importbilling');
+    Route::post('importbilling', [ImportBillingController::class, 'index'])->name('importbilling');
     //  Importar solicitud de material para verificacion
     Route::post('uploadFileCheck', [ImportShipmentCheckController::class, 'index'])->name('uploadFileCheck');
     //  Importar embarques a cargar

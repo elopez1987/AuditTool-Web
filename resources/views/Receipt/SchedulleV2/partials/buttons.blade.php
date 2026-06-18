@@ -1,7 +1,7 @@
 @can('receiptasn.create')
     @if($shipmentid == null && $statusid != 'DPR-04')
         <a href="" data-target="#modal-create-{{$id}}" data-toggle="modal">
-            <img src="{{asset('/ico/addshipment.png')}}" alt="" class="img-16 text-center">
+            <img src="{{asset('/ico/addshipment.png')}}" alt="" class="img-16 text-center ml-2 mr-2">
         </a>
         @include('Receipt.SchedulleV2.partials.create')
     @endif
@@ -12,6 +12,15 @@
         <a href="{{url('receiptasn/' . $receiptid )}}">
             <img src="{{asset('/ico/viewdetail.png')}}" alt="" class="img-16 ml-2 mr-2">
         </a>
+    @endif
+@endcan
+
+@can('receiptasn.edit')
+    @if($shipmentid !== null && $statusidasn == 'PG')
+        <a href="" data-target="#modal-edit-{{$id}}" data-toggle="modal" data-placement="top" title="Editar recibo.">
+            <img src="{{asset('/ico/adedit.png')}}" alt="" class="img-16 ml-2 mr-2">
+        </a>
+        @include('Receipt.SchedulleV2.partials.edit')
     @endif
 @endcan
 
@@ -28,7 +37,7 @@
     @if($shipmentid !== null &&  $value01 == \Illuminate\Support\Facades\Auth::id() && $statusidasn == 'PG')
         <a href="" data-target="#modal-cancel-{{$id}}" data-toggle="modal" data-toggle="tooltip"
            data-placement="top" title="Cancelar registro.">
-            <img src="{{asset('/ico/4115230-cancel-close-cross-delete_114048.png')}}" alt="" class="img-16 text-center">
+            <img src="{{asset('/ico/4115230-cancel-close-cross-delete_114048.png')}}" alt="" class="img-16 text-center ml-2 mr-2">
         </a>
         @include('Receipt.SchedulleV2.cancelReceipt')
     @endif
@@ -39,11 +48,21 @@
     @can('receiptasn.move')
         <a href="" data-target="#modal-move-{{$id}}" data-toggle="modal" data-toggle="tooltip"
            data-placement="top" title="Reprogramar descarga.">
-            <img src="{{asset('/ico/reloadpage.png')}}" alt="" class="img-16 text-center">
+            <img src="{{asset('/ico/reloadpage.png')}}" alt="" class="img-16 text-center ml-2 mr-2">
         </a>
         @include('Receipt.SchedulleV2.move')
     @endcan
 @endif
+
+@can('receipans.clearblock')
+    @if($statusid == 'DPR-04')
+        <a href="" data-target="#modal-clear-{{$id}}" data-toggle="modal" data-toggle="tooltip"
+           data-placement="top" title="Liberar registro.">
+            <img src="{{asset('/ico/typemovements.png')}}" alt="" class="img-16 text-center ml-2 mr-2">
+        </a>
+        @include('Receipt.SchedulleV2.clear')
+    @endif
+@endcan
 
 
 @can('receiptasn.blocked')
@@ -51,7 +70,7 @@
         @if($statusid == 'DPR-04')
             <a href="" data-target="#modal-clear-{{$id}}" data-toggle="modal" data-toggle="tooltip"
                data-placement="top" title="Liberar registro.">
-                <img src="{{asset('/ico/reloadpage.png')}}" alt="" class="img-16 text-center">
+                <img src="{{asset('/ico/reloadpage.png')}}" alt="" class="img-16 text-center ml-2 mr-2">
             </a>
             @include('Receipt.SchedulleV2.clear')
         @endif
@@ -62,7 +81,7 @@
            data-placement="top" title="Bloquear registro.">
             <img src="{{asset('/ico/internet_lock_locked_padlock_password_secure_security_icon_127078.png')}}"
                  alt=""
-                 class="img-16 text-center">
+                 class="img-16 text-center ml-2 mr-2">
         </a>
         @include('Receipt.SchedulleV2.blocked')
     @endif

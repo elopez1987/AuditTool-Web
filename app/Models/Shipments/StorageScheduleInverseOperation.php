@@ -4,8 +4,11 @@ namespace App\Models\Shipments;
 
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use Auth;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Models\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
@@ -21,11 +24,11 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property string|null $username
  * @property string|null $statusid
  * @property string|null $schemaid
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read Collection<int, Activity> $activities
  * @property-read int|null $activities_count
- * @property-read \App\Models\Shipments\StorageScheduleInverseTraffic $traffic
+ * @property-read StorageScheduleInverseTraffic $traffic
  *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageScheduleInverseOperation newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageScheduleInverseOperation newQuery()

@@ -26,14 +26,10 @@ class InventoryCardController extends BaseController
 
     public function getInventoryCard(Request $request)
     {
-        $data = InventoryCard::controlAccessUser()
-            ->with(['status:statusid,name,auxiliary01',
-                'center:centerid,name,description',
-                'warehouse:warehouseid,name',
-                'inventoryarea:id,name',
-                'inventoryaisle:id,name',
-            ])
-            ->get();
+        $data = InventoryCard::with(['status:statusid,name,auxiliary01',
+            'inventoryarea:id,name',
+            'inventoryaisle:id,name',
+        ])->get();
 
         return $this->showDataToView($data,
             'Inventory.InventoryCard.partials.buttons');
@@ -41,13 +37,11 @@ class InventoryCardController extends BaseController
 
     public function create()
     {
-        $centers = $this->getCenterForSelect();
-        $warehouses = $this->getWarehouseForSelect();
         $areas = $this->getAreas();
         $aisles = $this->getAisles();
 
         return view('Inventory.InventoryCard.create',
-            compact('centers', 'warehouses', 'areas', 'aisles'));
+            compact('areas', 'aisles'));
     }
 
     public function store(InventoryCardRequest $request)
@@ -59,8 +53,7 @@ class InventoryCardController extends BaseController
 
     public function show(InventoryCard $inventorycard)
     {
-        $unitmeasures = InventoryUnitMeasure::controlAccessUser()
-            ->where('statusid', 'E')
+        $unitmeasures = InventoryUnitMeasure::where('statusid', 'E')
             ->select(['id', 'description'])
             ->get();
         $status = $this->getStatusSTS();

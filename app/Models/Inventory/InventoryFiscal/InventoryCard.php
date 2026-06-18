@@ -2,10 +2,7 @@
 
 namespace App\Models\Inventory\InventoryFiscal;
 
-use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Configuration\Schemas\SystemStatus;
-use App\Models\Configuration\Warehouses\SystemWarehouse;
-use App\Models\Security\Users\SecurityAccessWarehouse;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Activitylog\LogOptions;
@@ -23,8 +20,6 @@ class InventoryCard extends Model
     protected $table = 'inventory_cards';
 
     protected $fillable = [
-        'centerid',
-        'warehouseid',
         'name',
         'configurationflag',
         'auxiliary01',
@@ -34,16 +29,6 @@ class InventoryCard extends Model
         'inventory_area_id',
         'inventory_aisle_id',
     ];
-
-    public function center(): BelongsTo
-    {
-        return $this->belongsTo(SystemCenterDistribution::class, 'centerid', 'centerid');
-    }
-
-    public function warehouse(): BelongsTo
-    {
-        return $this->belongsTo(SystemWarehouse::class, 'warehouseid', 'warehouseid');
-    }
 
     public function status(): BelongsTo
     {
@@ -68,13 +53,4 @@ class InventoryCard extends Model
     protected $casts = [
         'configurationflag' => 'array',
     ];
-
-    public static function controlAccessUser()
-    {
-        $centers = SecurityAccessWarehouse::Centers();
-        $warehouses = SecurityAccessWarehouse::Warehouses();
-
-        return InventoryCard::whereIn('inventory_cards.centerid', $centers)
-            ->whereIn('inventory_cards.warehouseid', $warehouses);
-    }
 }

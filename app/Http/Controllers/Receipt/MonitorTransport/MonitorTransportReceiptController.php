@@ -104,7 +104,7 @@ class MonitorTransportReceiptController extends BaseController
             ->first();
 
         $fortmat = 'Receipt.MonitorTransport.partials.format';
-        $pdf = PDF::setOptions([
+        $pdf = Pdf::setOptions([
             'isRemoteEnabled' => true,
             'chroot' => [
                 realpath(base_path()),

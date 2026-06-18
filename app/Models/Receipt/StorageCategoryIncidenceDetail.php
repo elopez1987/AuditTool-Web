@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $auxiliary05
  * @property string|null $schemaid
  * @property string|null $statusid
- * @property-read \App\Models\Receipt\StorageCategoryIncidence $category
+ * @property-read StorageCategoryIncidence $category
  * @property-read SystemStatus|null $status
  *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageCategoryIncidenceDetail newModelQuery()

@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $auxiliary03
  * @property string|null $auxiliary04
  * @property string|null $auxiliary05
- * @property-read \App\Models\Shipments\OrderDeliverie|null $order
+ * @property-read OrderDeliverie|null $order
  *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentBilling newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageShipmentBilling newQuery()

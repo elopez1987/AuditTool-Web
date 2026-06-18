@@ -8,8 +8,10 @@ use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\Models\Yard\StorageZone\StorageZone;
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Models\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
@@ -30,13 +32,13 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property string $statusid
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read Collection<int, Activity> $activities
  * @property-read int|null $activities_count
  * @property-read SystemCenterDistribution|null $center
- * @property-read \App\Models\Yard\ReceiptUnit $folio
- * @property-read \App\Models\Yard\InventoryBox $inventory
- * @property-read \App\Models\Yard\StorageLocation|null $locationnew
- * @property-read \App\Models\Yard\StorageLocation|null $locationold
+ * @property-read ReceiptUnit $folio
+ * @property-read InventoryBox $inventory
+ * @property-read StorageLocation|null $locationnew
+ * @property-read StorageLocation|null $locationold
  * @property-read SystemStatus|null $status
  * @property-read User|null $user
  * @property-read StorageZone|null $zonenew

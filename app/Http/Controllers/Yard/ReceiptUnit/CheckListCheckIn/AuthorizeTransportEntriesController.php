@@ -131,7 +131,7 @@ class AuthorizeTransportEntriesController extends BaseController
             StorageUnitTrace::createTraceUnit($receiptunit, '23');
             DB::commit();
 
-            return redirect::back()->with(session()->flash('success', 'Datos agregados correctamente!!'));
+            return Redirect::back()->with(session()->flash('success', 'Datos agregados correctamente!!'));
         } catch (\Exception $e) {
             $error = $e->getMessage();
             DB::rollback();

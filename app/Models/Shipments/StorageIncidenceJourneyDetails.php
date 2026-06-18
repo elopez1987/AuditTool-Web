@@ -7,6 +7,7 @@ use App\Models\Inventory\PartNumber\InventoryPartnumber;
 use App\Models\Receipt\StorageCategoryIncidenceDetail;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -29,8 +30,8 @@ use Illuminate\Support\Facades\Auth;
  * @property string|null $auxiliary05
  * @property string $statusiddetail
  * @property string $schemaid
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  * @property-read StorageCategoryIncidenceDetail|null $category
  * @property-read InventoryPartnumber|null $partnumber
  * @property-read SystemStatus $status

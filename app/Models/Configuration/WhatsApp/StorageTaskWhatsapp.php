@@ -7,9 +7,11 @@ use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Configuration\Warehouses\SystemWarehouse;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Models\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
@@ -28,7 +30,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property string $created_at
  * @property string $schemaid
  * @property string|null $statusid
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read Collection<int, Activity> $activities
  * @property-read int|null $activities_count
  * @property-read SystemCenterDistribution $center
  * @property-read SystemStatus|null $status

@@ -5,6 +5,8 @@ namespace App\Models\Yard;
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\DatabaseNotification;
+use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
 
 /**
@@ -14,7 +16,7 @@ use Illuminate\Notifications\Notifiable;
  * @property int|null $E
  * @property int|null $D
  * @property-read SystemCenterDistribution|null $center
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
+ * @property-read DatabaseNotificationCollection<int, DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|LayoutCapacityZone newModelQuery()

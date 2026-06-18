@@ -40,8 +40,7 @@ class InventoryCardCountController extends BaseController
         $assignedCardIds = InventoryCardCount::where('inventory_head_id', $inventoryHead->id)
             ->pluck('inventory_card_id');
 
-        $cards = InventoryCard::controlAccessUser()
-            ->where('statusid', 'E')
+        $cards = InventoryCard::where('statusid', 'E')
             ->whereIn('inventory_aisle_id', $aislesPlanning)
             ->whereNotIn('id', $assignedCardIds)
             ->select(['id', 'name'])
@@ -70,7 +69,25 @@ class InventoryCardCountController extends BaseController
                     'inventory_card_id' => $inventoryCard->id,
                     'inventory_aisle_id' => $inventoryCard->inventory_aisle_id,
                 ]);
+
+                DB::table('inventory_location_counts')->insertUsing(
+                    ['inventory_head_id', 'inventory_aisle_id', 'inventory_card_id', 'inventory_location_id', 'statusid_count01', 'statusid_count02'],
+                    DB::table('inventory_locations as il')
+                        ->join('inventory_card_counts as icc', 'il.inventory_card_id', '=', 'icc.inventory_card_id')
+                        ->where('il.statusid', 'E')
+                        ->where('icc.inventory_head_id', $inventoryHead->id)
+                        ->where('il.inventory_card_id', $inventoryCard->id)
+                        ->select([
+                            'icc.inventory_head_id',
+                            'icc.inventory_aisle_id',
+                            'icc.inventory_card_id',
+                            'il.id as inventory_location_id',
+                            DB::raw("'F' as statusid_count01"),
+                            DB::raw("'F' as statusid_count02"),
+                        ])
+                );
             }
+
         });
 
         if ($request->ajax() || $request->wantsJson()) {

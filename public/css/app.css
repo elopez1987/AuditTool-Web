@@ -12462,12 +12462,6 @@ span.select2-container {
   border-color: black !important;
 }
 
-.card-header {
-  background-blend-mode: screen, overlay;
-  text-transform: uppercase !important;
-  border-bottom: 1px solid #e0e0e0;
-}
-
 .btn-outline-info {
   color: #0091ea !important;
   background: rgba(255, 255, 255, 0.6);
@@ -12497,13 +12491,6 @@ span.select2-container {
 
 .card-foto {
   border: 3px solid #e0e0e0 !important;
-}
-
-.card-header {
-  background: rgba(255, 255, 255, 0.6);
-  background: -webkit-gradient(left top, left bottom, color-stop(0%, rgb(255, 255, 255)), color-stop(47%, rgb(246, 246, 246)), color-stop(100%, rgb(237, 237, 237)));
-  background: linear-gradient(to bottom, rgb(255, 255, 255) 0%, rgb(246, 246, 246) 47%, rgb(237, 237, 237) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff", endColorstr="#ededed", GradientType=0);
 }
 
 .card-footer {

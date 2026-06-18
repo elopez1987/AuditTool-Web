@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $permission_id
  * @property int $role_id
  * @property-read Permission $permission
- * @property-read \App\Models\Security\Roles\Role $role
+ * @property-read Role $role
  *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RoleHasPermission newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RoleHasPermission newQuery()

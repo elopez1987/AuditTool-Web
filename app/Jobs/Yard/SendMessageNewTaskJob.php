@@ -128,7 +128,7 @@ class SendMessageNewTaskJob implements ShouldQueue
 
     public function getContact(StorageTask $task): ReceiptUnit|User
     {
-        return $task->assignedto === 1
+        return (int) $task->assignedto === 1
             ? ReceiptUnit::where('id', $task->receiptunitid)
                 ->select('phone')
                 ->firstOrFail()

@@ -58,7 +58,16 @@ class InventoryHeadController extends BaseController
         return $this->successResponse('inventoryheads.index');
     }
 
-    public function show($id) {}
+    public function show($id)
+    {
+        $inventoryhead = InventoryHead::controlAccessUser()
+            ->with(['status:statusid,name,auxiliary01'])
+            ->where('inventory_uuid', $id)
+            ->firstOrFail();
+
+        return view('Inventory.InventoryHead.show', compact('inventoryhead'));
+
+    }
 
     public function edit(InventoryHead $inventoryhead)
     {
@@ -74,8 +83,7 @@ class InventoryHeadController extends BaseController
             ->whereNotIn('id', $aislesPlanning)
             ->get();
 
-        $cards = InventoryCard::controlAccessUser()
-            ->where('statusid', 'E')
+        $cards = InventoryCard::where('statusid', 'E')
             ->whereIn('inventory_aisle_id', $aislesPlanning)
             ->whereNotIn('id', $cardsPlanning)
             ->select(['id', 'name'])

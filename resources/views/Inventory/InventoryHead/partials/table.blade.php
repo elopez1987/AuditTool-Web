@@ -21,6 +21,7 @@
         "columns": [
             {data: 'center.description',name: 'center.description'},
             {data: 'warehouse.name',name: 'warehouse.name'},
+            {data: 'id'},
             {data: 'name'},
             {data: 'created_at', name: 'created_at'},
             {data: 'created_by.name', name: 'created_by.name'},

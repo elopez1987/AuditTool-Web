@@ -10,6 +10,7 @@ use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\Models\Shipments\ShipmentTransport\StorageShipmentTransport;
 use App\Models\Yard\Carriers\ShipmentCarrier;
 use App\Models\Yard\Customer\OrderCustomer;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -38,12 +39,12 @@ use Illuminate\Database\Eloquent\Model;
  * @property SystemStatus|null $status
  * @property string $statusid
  * @property-read ShipmentCarrier|null $carrier
- * @property-read \Illuminate\Database\Eloquent\Collection<int, StorageComment> $comments
+ * @property-read Collection<int, StorageComment> $comments
  * @property-read int|null $comments_count
- * @property-read \App\Models\Shipments\ShipmentHeader|null $header
- * @property-read \App\Models\Shipments\OrderMonitor|null $monitor
- * @property-read \App\Models\Shipments\ShipmentDataOperation|null $operation
- * @property-read \App\Models\Shipments\OrderDeliverie|null $order
+ * @property-read ShipmentHeader|null $header
+ * @property-read OrderMonitor|null $monitor
+ * @property-read ShipmentDataOperation|null $operation
+ * @property-read OrderDeliverie|null $order
  * @property-read StorageShipmentTransport|null $transport
  * @property-read StorageTurn|null $turn
  * @property-read SystemWarehouse|null $warehouse

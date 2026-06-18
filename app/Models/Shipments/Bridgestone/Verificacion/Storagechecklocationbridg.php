@@ -8,16 +8,19 @@ use App\Models\Configuration\Warehouses\SystemWarehouse;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\Models\Shipments\OrderDeliverie;
 use App\Models\Yard\StorageLocation;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Models\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * @property int $id
  * @property string|null $centerid
  * @property string $warehouseid
- * @property \Illuminate\Support\Carbon|null $workday
+ * @property Carbon|null $workday
  * @property int $orderid
  * @property string|null $team
  * @property int $turnid
@@ -35,7 +38,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property string|null $value01
  * @property string|null $value02
  * @property string|null $value03
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read Collection<int, Activity> $activities
  * @property-read int|null $activities_count
  * @property-read SystemCenterDistribution|null $center
  * @property-read StorageLocation|null $location

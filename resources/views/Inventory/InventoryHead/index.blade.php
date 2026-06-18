@@ -57,6 +57,7 @@
                                 <tr>
                                     <th>C.Distribución</th>
                                     <th>Bodega</th>
+                                    <th>ID Inventario</th>
                                     <th>Nombre</th>
                                     <th>Fecha de creación</th>
                                     <th>Creado por</th>
