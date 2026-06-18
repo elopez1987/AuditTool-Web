@@ -15,8 +15,8 @@
 {{--@endcan--}}
 
 
-{{--@can('responsible-area-security.show')--}}
-{{--    <a href="{{url('responsible-area-security/' . $id)}}">--}}
-{{--        <img src="{{asset('/ico/storagepanel.png')}}" alt="" class="img-16 ml-1">--}}
-{{--    </a>--}}
-{{--@endcan--}}
+@can('storage-incidence-safeties.show')
+    <a href="{{url('storage-incidence-safeties/' . $id)}}">
+        <img src="{{asset('/ico/storagepanel.png')}}" alt="" class="img-16 ml-1">
+    </a>
+@endcan

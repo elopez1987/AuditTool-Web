@@ -4,6 +4,7 @@ namespace App\Http\Controllers\SafetyTours\Incidents;
 
 use App\Http\Controllers\BaseController;
 use App\Models\SafetyTours\Incidents\StorageIncidenceSafety;
+use App\Models\SafetyTours\Incidents\StoragePhotosIncidents;
 use Illuminate\Http\Request;
 
 class StorageIncidenceSafetiesController extends BaseController
@@ -33,7 +34,17 @@ class StorageIncidenceSafetiesController extends BaseController
 
     public function store(Request $request) {}
 
-    public function show(StorageIncidenceSafety $storage_incidence_safety) {}
+    public function show(StorageIncidenceSafety $storage_incidence_safety)
+    {
+        $photos = StoragePhotosIncidents::where('storage_incidence_safety_id', $storage_incidence_safety->id)
+            ->with('createuser:id,name')
+            ->get();
+
+        return view(
+            'SafetyTours.StorageIncidenceSafety.show',
+            compact('storage_incidence_safety', 'photos')
+        );
+    }
 
     public function edit(StorageIncidenceSafety $storage_incidence_safety)
     {
