@@ -19,9 +19,13 @@ class ImportIncidencesJourneyController extends BaseController
             return $this->errorResponse('El formato de archivo no es correcto.');
         }
 
-        Excel::import(new ImportIncidenceJourney, $request->file('file'),
-            '', \Maatwebsite\Excel\Excel::XLSX);
+        Excel::import(
+            new ImportIncidenceJourney,
+            $request->file('file'),
+            '',
+            \Maatwebsite\Excel\Excel::XLSX
+        );
 
-        return $this->successResponse('Incidencias importadas correctamente.');
+        return $this->redirectBackSuccessMessage('Datos importados con exito.');
     }
 }

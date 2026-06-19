@@ -21,7 +21,7 @@ class ImportIncidenceJourney implements ToCollection, WithHeadingRow
     /**
      * Estatus que se asigna a la incidencia recién importada.
      */
-    private const STATUS_INCIDENCE = 'CD';
+    private const STATUS_INCIDENCE = 'AB';
 
     /**
      * Etiqueta usada al inicio de cada mensaje de log para facilitar
@@ -68,6 +68,7 @@ class ImportIncidenceJourney implements ToCollection, WithHeadingRow
                 }
 
                 $orderDelivery = OrderDeliverie::controlAccessUser()
+                    ->select(['id', 'centerid', 'warehouseid', 'carrierid'])
                     ->where('shipmentid', $shipmentid)
                     ->first();
 
@@ -90,12 +91,12 @@ class ImportIncidenceJourney implements ToCollection, WithHeadingRow
                     continue;
                 }
 
-                $razoncodeDetail = $this->findRazoncode($row['auxiliary02'] ?? null);
+                $razoncodeDetail = $this->findRazoncode($row['razoncode'] ?? null);
                 if ($razoncodeDetail === null) {
-                    $this->logSkip($rowNumber, $shipmentid, 'Razon code detalle (auxiliary02) no encontrado', [
-                        'auxiliary02' => $row['auxiliary02'] ?? null,
+                    $this->logSkip($rowNumber, $shipmentid, 'Razon code detalle (razoncode) no encontrado', [
+                        'auxiliary02' => $row['razoncode'] ?? null,
                     ]);
-                    StorageLogInverse::createNewLog('No existe el razon code detalle (auxiliary02)', $shipmentid);
+                    StorageLogInverse::createNewLog('No existe el razon code detalle (razoncode)', $shipmentid);
                     $skipped++;
 
                     continue;
@@ -144,13 +145,15 @@ class ImportIncidenceJourney implements ToCollection, WithHeadingRow
                         'razoncode' => $razoncode->getKey(),
                         'downloaddate' => $downloadDate,
                         'partnumberiderror' => $row['partnumberiderror'] ?? null,
-                        'comment' => $row['comment'] ?? null,
-                        'auxiliary01' => $row['auxiliary01'] ?? null,
-                        'auxiliary02' => $razoncodeDetail->getKey(),
-                        'auxiliary03' => $row['auxiliary03'] ?? null,
-                        'auxiliary04' => $row['auxiliary04'] ?? null,
-                        'auxiliary05' => $row['auxiliary05'] ?? null,
-                        'statusiddetail' => $row['statusiddetail'] ?? null,
+
+                        //                        'comment' => $row['comment'] ?? null,
+                        //                        'auxiliary01' => $row['auxiliary01'] ?? null,
+                        //                        'auxiliary02' => $razoncodeDetail->getKey(),
+                        //                        'auxiliary03' => $row['auxiliary03'] ?? null,
+                        //                        'auxiliary04' => $row['auxiliary04'] ?? null,
+                        //                        'auxiliary05' => $row['auxiliary05'] ?? null,
+                        //                        'statusiddetail' => $row['statusiddetail'] ?? null,
+                        //                        'statusiddetail' => 'NA',
                     ]);
                 });
 
@@ -166,10 +169,10 @@ class ImportIncidenceJourney implements ToCollection, WithHeadingRow
                     'file' => $e->getFile(),
                     'line' => $e->getLine(),
                 ]);
-                StorageLogInverse::createNewLog(
-                    'Error al importar incidencia: ' . $e->getMessage(),
-                    $shipmentid !== '' ? $shipmentid : null,
-                );
+                //                StorageLogInverse::createNewLog(
+                //                    'Error al importar incidencia: ' . $e->getMessage(),
+                //                    $shipmentid !== '' ? $shipmentid : null,
+                //                );
             }
         }
 
