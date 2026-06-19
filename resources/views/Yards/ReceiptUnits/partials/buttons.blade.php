@@ -2,17 +2,17 @@
     <button type="button" class="btn waves-effect waves-light btn-outline-info btn-sm dropdown-toggle"
             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="ti ti-settings  mr-2 "></i>
-      <spam class="font-12"> Acciones </spam>
+        <spam class="font-12"> Acciones</spam>
     </button>
     <div class="dropdown-menu animated flipInX" style="z-index: 9999;">
-        @if ($statusid != 'OU')
-            @can('receiptunits.edit')
-                <a href="{{url('receiptunits/' . $id. '/edit')}}" class="dropdown-item">
-                    <img src="{{asset('/ico/edit-validated_40458.png')}}" alt="" class="img-16 ml-2 mr-2">
-                    <span style="text-transform: capitalize;">Modificar registro</span>
-                </a>
-            @endcan
-        @endif
+
+        @can('receiptunits.edit')
+            <a href="{{url('receiptunits/' . $id. '/edit')}}" class="dropdown-item">
+                <img src="{{asset('/ico/edit-validated_40458.png')}}" alt="" class="img-16 ml-2 mr-2">
+                <span style="text-transform: capitalize;">Modificar registro</span>
+            </a>
+        @endcan
+
         @can('generatelabel')
             @if ($statusid != 'OU')
                 <a href="{{url('generatelabel/' . $id)}}" class="dropdown-item">
@@ -24,13 +24,13 @@
         @can('generateinvoicetransport')
             <a href="{{url('generateinvoicetransport/' . $id)}}" class="dropdown-item">
                 <img src="{{asset('/ico/invoice.png')}}" alt="" class="img-16 ml-2 mr-2">
-                <span  style="text-transform: capitalize;">Generar folio de entrada</span>
+                <span style="text-transform: capitalize;">Generar folio de entrada</span>
             </a>
         @endcan
         @can('generateinterface')
             <a href="{{url('generateinterface/' . $id)}}" class="dropdown-item">
                 <img src="{{asset('/ico/time.png')}}" alt="" class="img-16 ml-2 mr-2">
-                <span  style="text-transform: capitalize;">Generar Interface a Wms Izel</span>
+                <span style="text-transform: capitalize;">Generar Interface a Wms Izel</span>
             </a>
         @endcan
         @can('receiptunits.uploadevidence')
@@ -46,7 +46,7 @@
         @can('tracereceiptunit.index')
             <a href="{{url('tracereceiptunit/' . $id )}}" class="dropdown-item" target="_blank">
                 <img src="{{asset('/ico/viewdetail.png')}}" alt="" class="img-16 ml-2 mr-2">
-                <span style="text-transform: capitalize;" >Kardex de unidad</span>
+                <span style="text-transform: capitalize;">Kardex de unidad</span>
             </a>
         @endcan
         @can('receiptunits.ticket')
