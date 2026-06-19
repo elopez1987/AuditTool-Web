@@ -1,4 +1,22 @@
 <div class="row">
+    <x-text-input
+            name="folio"
+            label="Folio de tracto"
+            disabled="disabled"
+            :value="$receipttruck->id"
+    />
+
+    <x-select2
+            name="warehouseid"
+            label="Bodega"
+            :options="$warehouses"
+            valueField="warehouseid"
+            textField="name"
+            :required="true"
+            :selected="$receipttruck->warehouseid"
+    />
+</div>
+<div class="row">
     <div class="col-lg-2 col-md-6 col-sm-12">
         <div class="form-group">
             <label for="barcodeoperator">Código de Barra Operador</label>

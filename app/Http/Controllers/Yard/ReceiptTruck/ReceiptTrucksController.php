@@ -83,13 +83,15 @@ class ReceiptTrucksController extends BaseController
     {
         $this->authorize('receipttrucks.edit');
         $carriers = $this->getCarriersForSelect();
+        $warehouses = $this->getWarehouseForSelect();
 
-        return view('Yards.ReceiptTrucks.edit', compact('carriers', 'receipttruck'));
+        return view('Yards.ReceiptTrucks.edit',
+            compact('carriers', 'receipttruck', 'warehouses'));
     }
 
     public function update(Request $request, ReceiptTruck $receipttruck)
     {
-        $receipttruck->update($request->except('centerid', 'warehouseid'));
+        $receipttruck->update($request->except('centerid'));
 
         return $this->redirectBackSuccessMessage('Registro actualizado con exito');
     }

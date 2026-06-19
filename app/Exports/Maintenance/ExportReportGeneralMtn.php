@@ -16,17 +16,11 @@ class ExportReportGeneralMtn implements FromCollection, ShouldAutoSize, WithEven
 {
     use Exportable;
 
-    private $workdayin;
+    private $request;
 
-    private $workdayout;
-
-    private $centerid;
-
-    public function __construct($workdayin, $workdayout, $centerid)
+    public function __construct($request)
     {
-        $this->workdayin = $workdayin;
-        $this->workdayout = $workdayout;
-        $this->centerid = $centerid;
+        $this->request = $request;
     }
 
     public function collection()
@@ -36,14 +30,14 @@ class ExportReportGeneralMtn implements FromCollection, ShouldAutoSize, WithEven
             'storagelifttrucks.numbertruck',
             'checklistlifttrucks.supervisorname',
             'checklistlifttrucks.horometro',
-            'users.auxiliary01 as comment',
+            'checklistlifttrucks.auxiliary01 as comment',
             'users.name',
-            'users.created_at',
+            'checklistlifttrucks.created_at',
         ])
             ->leftJoin('users', 'checklistlifttrucks.createuser', '=', 'users.username')
             ->leftJoin('storagelifttrucks', 'checklistlifttrucks.serialnumber', '=', 'storagelifttrucks.serialnumber')
-            ->where('checklistlifttrucks.centerid', $this->centerid)
-            ->whereBetween('checklistlifttrucks.created_at', [$this->workdayin, $this->workdayout])
+            ->where('checklistlifttrucks.centerid', $this->request->centerid)
+            ->whereBetween('checklistlifttrucks.created_at', [$this->request->workdayin, $this->request->workdayout])
             ->get();
     }
 

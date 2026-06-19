@@ -62,7 +62,7 @@ class DashboardController extends BaseController
     public function exportreportmtn(Request $request)
     {
         if ($request['type'] === 'RPG') {
-            return Excel::download(new ExportReportGeneralMtn($request['workdayin'], $request['workdayout'], $request['centerid']), 'Reporte de check list.xlsx')->deleteFileAfterSend();
+            return Excel::download(new ExportReportGeneralMtn($request), 'Reporte de check list.xlsx')->deleteFileAfterSend();
         }
         if ($request['type'] === 'RPL') {
             return Excel::download(new ExportReportLibMtn($request['workdayin'], $request['workdayout'], $request['centerid']), 'Reporte de liberaciones.xlsx')->deleteFileAfterSend();

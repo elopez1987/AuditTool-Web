@@ -52,8 +52,10 @@ class ReceiptUnitController extends BaseController
         $status = $this->getStatusForSchema('RUS');
         $unitstatus = StorageUnitStatus::select(['id', 'name'])->get();
 
-        return view('Yards.ReceiptUnits.index',
-            compact('carriers', 'warehouses', 'rason', 'status', 'unitstatus'));
+        return view(
+            'Yards.ReceiptUnits.index',
+            compact('carriers', 'warehouses', 'rason', 'status', 'unitstatus')
+        );
     }
 
     public function getDataReceipts(Request $request)
@@ -250,9 +252,19 @@ class ReceiptUnitController extends BaseController
         $trucks = $this->shipmentTruckActiveToSelect();
         $truckcategories = $this->getCateroriesTruckForSelects();
 
-        return view("{$this->viewPath}.edit",
-            compact('receiptunit', 'carriers', 'movents',
-                'unittypes', 'centers', 'warehouses', 'trucks', 'truckcategories'));
+        return view(
+            "{$this->viewPath}.edit",
+            compact(
+                'receiptunit',
+                'carriers',
+                'movents',
+                'unittypes',
+                'centers',
+                'warehouses',
+                'trucks',
+                'truckcategories'
+            )
+        );
     }
 
     public function update(ReceiptUnit $receiptunit, Request $request): RedirectResponse
@@ -266,7 +278,8 @@ class ReceiptUnitController extends BaseController
                 'phone' => $request->phone,
                 'trucknumber' => $request->trucknumber,
                 'econumber' => $request->ecotruck,
-            ]);
+            ]
+        );
 
         StorageUnitTrace::createTraceUnit($receiptunit, '6');
 
