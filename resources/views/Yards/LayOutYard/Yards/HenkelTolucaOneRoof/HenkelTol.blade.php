@@ -1597,7 +1597,7 @@
 
         {{--        Cortina 02--}}
         @foreach($receiptUnits as $unit)
-            @if($unit->locationid == '30143')
+            @if($unit->locationid == '12')
                <a data-html="true"
                 data-toggle="tooltip"
                 data-placement="bottom"
@@ -1914,7 +1914,7 @@
 
         {{--        Cortina 03--}}
         @foreach($receiptUnits as $unit)
-            @if($unit->locationid == '30144')
+            @if($unit->locationid == '13')
              <a data-html="true"
                 data-toggle="tooltip"
                 data-placement="bottom"
@@ -2233,7 +2233,7 @@
 
         {{--        Cortina 04--}}
         @foreach($receiptUnits as $unit)
-            @if($unit->locationid == '30145')
+            @if($unit->locationid == '14')
                <a data-html="true"
                 data-toggle="tooltip"
                 data-placement="bottom"
@@ -2551,7 +2551,7 @@
 
         {{--        Cortina 05--}}
         @foreach($receiptUnits as $unit)
-            @if($unit->locationid == '30146')
+            @if($unit->locationid == '15')
                <a data-html="true"
                 data-toggle="tooltip"
                 data-placement="bottom"
@@ -2869,7 +2869,7 @@
 
         {{--        Cortina 06--}}
         @foreach($receiptUnits as $unit)
-            @if($unit->locationid == '30147')
+            @if($unit->locationid == '16')
              <a data-html="true"
                 data-toggle="tooltip"
                 data-placement="bottom"
@@ -3188,7 +3188,7 @@
 
         {{--        Cortina 07--}}
         @foreach($receiptUnits as $unit)
-            @if($unit->locationid == '30148')
+            @if($unit->locationid == '17')
                 <a data-html="true"
                 data-toggle="tooltip"
                 data-placement="bottom"
@@ -3507,7 +3507,7 @@
 
         {{--        Cortina 08--}}
         @foreach($receiptUnits as $unit)
-            @if($unit->locationid == '30149')
+            @if($unit->locationid == '18')
               <a data-html="true"
                 data-toggle="tooltip"
                 data-placement="bottom"
@@ -3826,7 +3826,7 @@
 
         {{--        Cortina 09--}}
         @foreach($receiptUnits as $unit)
-            @if($unit->locationid == '30150')
+            @if($unit->locationid == '19')
             <a data-html="true"
                 data-toggle="tooltip"
                 data-placement="bottom"
@@ -4145,7 +4145,7 @@
 
         {{--        Cortina 10--}}
         @foreach($receiptUnits as $unit)
-            @if($unit->locationid == '30151')
+            @if($unit->locationid == '20')
                <a data-html="true"
                 data-toggle="tooltip"
                 data-placement="bottom"
@@ -4464,7 +4464,7 @@
 
         {{--        Cortina 11--}}
         @foreach($receiptUnits as $unit)
-            @if($unit->locationid == '30152')
+            @if($unit->locationid == '21')
                <a data-html="true"
                 data-toggle="tooltip"
                 data-placement="bottom"
@@ -4783,7 +4783,7 @@
 
         {{--        Cortina 12--}}
         @foreach($receiptUnits as $unit)
-            @if($unit->locationid == '30153')
+            @if($unit->locationid == '22')
                 <a data-html="true"
                 data-toggle="tooltip"
                 data-placement="bottom"
@@ -5102,7 +5102,7 @@
 
         {{--        Cortina 13--}}
         @foreach($receiptUnits as $unit)
-            @if($unit->locationid == '30154')
+            @if($unit->locationid == '23')
               <a data-html="true"
                 data-toggle="tooltip"
                 data-placement="bottom"
@@ -5420,7 +5420,7 @@
 
         {{--        Cortina 14--}}
         @foreach($receiptUnits as $unit)
-            @if($unit->locationid == '30155')
+            @if($unit->locationid == '24')
                <a data-html="true"
                 data-toggle="tooltip"
                 data-placement="bottom"
@@ -5739,7 +5739,7 @@
 
         {{--  Cortina 15--}}
         @foreach($receiptUnits as $unit)
-            @if($unit->locationid == '30156')
+            @if($unit->locationid == '25')
                <a data-html="true"
                 data-toggle="tooltip"
                 data-placement="bottom"
@@ -6058,7 +6058,7 @@
 
         {{--  Cortina 16--}}
         @foreach($receiptUnits as $unit)
-            @if($unit->locationid == '30157')
+            @if($unit->locationid == '26')
                 <a data-html="true"
                 data-toggle="tooltip"
                 data-placement="bottom"
@@ -6375,10 +6375,9 @@
             @endif
         @endforeach
 
-
         {{--  Cortina 17--}}
         @foreach($receiptUnits as $unit)
-            @if($unit->locationid == '30158')
+            @if($unit->locationid == '27')
                <a data-html="true"
                 data-toggle="tooltip"
                 data-placement="bottom"
@@ -6695,7 +6694,7 @@
 
         {{--  Cortina 18--}}
         @foreach($receiptUnits as $unit)
-            @if($unit->locationid == '30159')
+            @if($unit->locationid == '28')
                <a data-html="true"
                 data-toggle="tooltip"
                 data-placement="bottom"
@@ -7014,7 +7013,7 @@
 
  {{--  Cortina 19--}}
         @foreach($receiptUnits as $unit)
-            @if($unit->locationid == '30160')
+            @if($unit->locationid == '29')
                 <a data-html="true"
                 data-toggle="tooltip"
                 data-placement="bottom"
@@ -7334,7 +7333,7 @@
 
       {{--  Cortina 20--}}
         @foreach($receiptUnits as $unit)
-            @if($unit->locationid == '30161')
+            @if($unit->locationid == '30')
                <a data-html="true"
                 data-toggle="tooltip"
                 data-placement="bottom"
@@ -7654,7 +7653,7 @@
 
          {{--  Cortina 21--}}
         @foreach($receiptUnits as $unit)
-            @if($unit->locationid == '30162')
+            @if($unit->locationid == '31')
               <a data-html="true"
                 data-toggle="tooltip"
                 data-placement="bottom"
@@ -7973,7 +7972,7 @@
 
           {{--  Cortina 22--}}
         @foreach($receiptUnits as $unit)
-            @if($unit->locationid == '30163')
+            @if($unit->locationid == '32')
                <a data-html="true"
                 data-toggle="tooltip"
                 data-placement="bottom"
@@ -8290,10 +8289,9 @@
             @endif
         @endforeach
 
-
  {{--  Cortina 23--}}
         @foreach($receiptUnits as $unit)
-            @if($unit->locationid == '30164')
+            @if($unit->locationid == '33')
                <a data-html="true"
                 data-toggle="tooltip"
                 data-placement="bottom"
@@ -8610,10 +8608,9 @@
             @endif
         @endforeach
 
-
 {{--  Cortina 24--}}
         @foreach($receiptUnits as $unit)
-            @if($unit->locationid == '30165')
+            @if($unit->locationid == '34')
                <a data-html="true"
                 data-toggle="tooltip"
                 data-placement="bottom"
@@ -8932,7 +8929,7 @@
 
 {{--  Cortina 25--}}
         @foreach($receiptUnits as $unit)
-            @if($unit->locationid == '30166')
+            @if($unit->locationid == '35')
                <a data-html="true"
                 data-toggle="tooltip"
                 data-placement="bottom"
@@ -9251,7 +9248,7 @@
 
         {{--  Cortina 26--}}
         @foreach($receiptUnits as $unit)
-            @if($unit->locationid == '30167')
+            @if($unit->locationid == '36')
               <a data-html="true"
                 data-toggle="tooltip"
                 data-placement="bottom"
@@ -9570,7 +9567,7 @@
 
          {{--  Cortina 27--}}
         @foreach($receiptUnits as $unit)
-            @if($unit->locationid == '30168')
+            @if($unit->locationid == '37')
               <a data-html="true"
                 data-toggle="tooltip"
                 data-placement="bottom"
@@ -9889,7 +9886,7 @@
 
             {{--  Cortina 28--}}
         @foreach($receiptUnits as $unit)
-            @if($unit->locationid == '30169')
+            @if($unit->locationid == '38')
                 <a data-html="true"
                 data-toggle="tooltip"
                 data-placement="bottom"
@@ -10207,7 +10204,7 @@
 
           {{--  Cortina 29--}}
         @foreach($receiptUnits as $unit)
-            @if($unit->locationid == '30170')
+            @if($unit->locationid == '39')
              <a data-html="true"
                 data-toggle="tooltip"
                 data-placement="bottom"
@@ -10525,7 +10522,7 @@
 
          {{--  Cortina 30--}}
         @foreach($receiptUnits as $unit)
-            @if($unit->locationid == '30171')
+            @if($unit->locationid == '40')
               <a data-html="true"
                 data-toggle="tooltip"
                 data-placement="bottom"
@@ -10843,7 +10840,7 @@
 
          {{--  Cortina 31--}}
         @foreach($receiptUnits as $unit)
-            @if($unit->locationid == '30172')
+            @if($unit->locationid == '41')
              <a data-html="true"
                 data-toggle="tooltip"
                 data-placement="bottom"
@@ -11161,7 +11158,7 @@
 
 {{--  Cortina 32--}}
         @foreach($receiptUnits as $unit)
-            @if($unit->locationid == '30173')
+            @if($unit->locationid == '42')
           <a data-html="true"
                 data-toggle="tooltip"
                 data-placement="bottom"
@@ -11479,7 +11476,7 @@
 
         {{--  Cortina 33--}}
         @foreach($receiptUnits as $unit)
-            @if($unit->locationid == '30174')
+            @if($unit->locationid == '43')
             <a data-html="true"
                 data-toggle="tooltip"
                 data-placement="bottom"
@@ -11797,7 +11794,7 @@
 
  {{--  Cortina 34--}}
         @foreach($receiptUnits as $unit)
-            @if($unit->locationid == '30175')
+            @if($unit->locationid == '44')
           <a data-html="true"
                 data-toggle="tooltip"
                 data-placement="bottom"
@@ -12115,7 +12112,7 @@
 
  {{--  Cortina 35--}}
         @foreach($receiptUnits as $unit)
-            @if($unit->locationid == '30176')
+            @if($unit->locationid == '45')
              <a data-html="true"
                 data-toggle="tooltip"
                 data-placement="bottom"
@@ -12431,7 +12428,6 @@
               </a>
             @endif
         @endforeach
-
 
         <g
             inkscape:groupmode="layer"
