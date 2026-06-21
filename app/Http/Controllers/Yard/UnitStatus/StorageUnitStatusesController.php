@@ -22,10 +22,9 @@ class StorageUnitStatusesController extends BaseController
 
     public function getDataUnitStatus(Request $request)
     {
-        $data = StorageUnitStatus::with(['status'])
-            ->Name($request->get('name'))
-            ->Status($request->get('statusid'))
-            ->get();
+        $data = StorageUnitStatus::with(['status:statusid,name,auxiliary01'])
+            ->Name($request->input('name'))
+            ->Status($request->input('statusid'));
 
         return $this->showDataToView($data, 'Yards.StorageUnitStatus.partials.buttons');
     }

@@ -75,14 +75,12 @@
                                 <tr>
                                     <th class="bg-inverse text-white">C.Distribución</th>
                                     <th class="bg-inverse text-white">Bodega</th>
-                                    <th class="bg-inverse text-white">Zona</th>
                                     <th class="bg-inverse text-white">ID</th>
+                                    <th class="bg-inverse text-white">Zona</th>
                                     <th class="bg-inverse text-white">Nombre</th>
                                     <th class="bg-inverse text-white">Ubicacion WMS</th>
                                     <th class="bg-inverse text-white">C.Barra</th>
-                                    <th class="bg-inverse text-white">Auxiliar 01</th>
-                                    <th class="bg-inverse text-white">Auxiliar 02</th>
-                                    <th class="bg-inverse text-white">Auxiliar 03</th>
+                                    <th class="bg-inverse text-white">Placa asignada</th>
                                     <th class="bg-inverse text-white">Estatus</th>
                                     <th class="bg-inverse text-white">Opciones</th>
                                 </tr>

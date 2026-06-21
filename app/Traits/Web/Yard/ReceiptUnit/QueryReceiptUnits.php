@@ -3,7 +3,6 @@
 namespace App\Traits\Web\Yard\ReceiptUnit;
 
 use App\Models\Yard\ReceiptUnit;
-use App\Models\Yard\StorageBoxStock;
 use Illuminate\Http\Request;
 
 trait QueryReceiptUnits
@@ -22,17 +21,5 @@ trait QueryReceiptUnits
                 'receiptunits.warehouseid', 'receiptunits.id', 'receiptunits.barcode',
                 'receiptunits.boxnumber', 'receiptunits.carrierid', 'receiptunits.statusid',
             ]);
-    }
-
-    public function getDataMonitorUnit($request)
-    {
-        return StorageBoxStock::controlAccessUser()
-            ->leftJoin('receiptunits', 'vw_storageboxstock.id', '=', 'receiptunits.id')
-            ->Folio($request->get('folionumber'))
-            ->Shipment($request->get('shipmentid'))
-            ->Barcode($request->get('barcode'))
-            ->BoxNumber($request->get('boxnumber'))
-            ->Reason($request->get('razonstatusid'))
-            ->whereNotIn('vw_storageboxstock.statusid', ['TR'])->get();
     }
 }

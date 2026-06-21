@@ -32,16 +32,33 @@ class ReportStayController extends BaseController
                 'location:id,name', 'warehouse:warehouseid,name', 'reason:id,name', 'unittype:id,description',
                 'truckcategory:truckcategoryid,description', 'truck:id,name',
             ])
+            ->select([
+                'receiptunits.id',
+                'receiptunits.warehouseid',
+                'receiptunits.shipmentid',
+                'receiptunits.carrierid',
+                'receiptunits.boxnumber',
+                'receiptunits.econumber',
+                'receiptunits.unittypeid',
+                'receiptunits.unitstatusid',
+                'receiptunits.locationid',
+                'receiptunits.statusid',
+                'receiptunits.entrydate',
+                'receiptunits.autorizaoutputdate',
+                'receiptunits.razonstatusid',
+                'receiptunits.razonstatusid',
+                'receiptunits.truckcategoryid',
+                'receiptunits.truckid',
+            ])
             ->whereNotIn('receiptunits.statusid', ['TR'])
-            ->Folio($request->get('folionumber'))
-            ->Barcode($request->get('barcode'))
-            ->BoxNumber($request->get('boxnumber'))
-            ->Carrier($request->get('carrierid'))
-            ->Warehouse($request->get('warehouseid'))
-            ->Status($request->get('statusid'))
-            ->Rason($request->get('rasonid'))
-            ->UnitStatus($request->get('unitstatusid'))
-            ->get();
+            ->Folio($request->input('folionumber'))
+            ->Barcode($request->input('barcode'))
+            ->BoxNumber($request->input('boxnumber'))
+            ->Carrier($request->input('carrierid'))
+            ->Warehouse($request->input('warehouseid'))
+            ->Status($request->input('statusid'))
+            ->Rason($request->input('rasonid'))
+            ->UnitStatus($request->input('unitstatusid'));
 
         return DataTables::of($data)
             ->addColumn('stays', function ($data) {

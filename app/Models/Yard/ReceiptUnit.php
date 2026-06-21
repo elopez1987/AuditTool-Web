@@ -186,12 +186,12 @@ class ReceiptUnit extends Model
 
     public function truck()
     {
-        return $this->belongsTo(ShipmentTruck::class, 'truckid')->withTrashed();
+        return $this->belongsTo(ShipmentTruck::class, 'truckid', 'id');
     }
 
     public function unitstatus()
     {
-        return $this->belongsTo(StorageUnitStatus::class, 'unitstatusid');
+        return $this->belongsTo(StorageUnitStatus::class, 'unitstatusid', 'id');
     }
 
     public function truckcategory()
@@ -298,6 +298,13 @@ class ReceiptUnit extends Model
             $query->whereIn('receiptunits.carrierid', $carrierid);
         } elseif ($carrierid != '') {
             $query->where('receiptunits.carrierid', '=', $carrierid);
+        }
+    }
+
+    public function scopeCarrierArray($query, $carrier)
+    {
+        if (! empty($carrier)) {
+            $query->whereIn('receiptunits.carrierid', $carrier);
         }
     }
 
@@ -415,13 +422,6 @@ class ReceiptUnit extends Model
             $query->whereIn('receiptunits.statusid', $statusid);
         } elseif ($statusid != '') {
             $query->where('receiptunits.statusid', '=', $statusid);
-        }
-    }
-
-    public function scopeCarrierArray($query, $carrier)
-    {
-        if (! empty($carrier)) {
-            $query->whereIn('receiptunits.carrierid', $carrier);
         }
     }
 

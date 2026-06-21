@@ -18,8 +18,20 @@ class StorageUnitTypesController extends BaseController
     public function getStorageUnitTypes(Request $request)
     {
         $data = StorageUnitType::controlAccessUser()
-            ->Name($request->get('name'))
-            ->with('center', 'status')->get();
+            ->with(['center:centerid,name,description', 'status:statusid,name,auxiliary01'])
+            ->Name($request->input('name'))
+            ->select([
+                'storageunittypes.id',
+                'storageunittypes.centerid',
+                'storageunittypes.description',
+                'storageunittypes.statusid',
+                'storageunittypes.auxiliary01',
+                'storageunittypes.auxiliary02',
+                'storageunittypes.auxiliary03',
+                'storageunittypes.auxiliary04',
+                'storageunittypes.auxiliary05',
+                'storageunittypes.unittypeid',
+            ]);
 
         return $this->showDataToView($data, 'Yards.StorageUnitTypes.partials.buttons');
     }

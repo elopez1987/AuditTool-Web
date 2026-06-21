@@ -22,11 +22,20 @@ class StorageZoneController extends BaseController
     public function getDataZones(Request $request)
     {
         $data = StorageZone::controlAccessUser()
-            ->with(['center:centerid,name,description', 'status:statusid,name'])
+            ->with(['center:centerid,name,description', 'status:statusid,name,auxiliary01'])
             ->withTrashed()
-            ->Name($request->get('name'))
-            ->Warehouse($request->get('warehouseid'))
-            ->get();
+            ->select([
+                'storagezones.id',
+                'storagezones.centerid',
+                'storagezones.warehouseid',
+                'storagezones.name',
+                'storagezones.zoneid',
+                'storagezones.statusid',
+                'storagezones.auxiliary01',
+                'storagezones.capacity',
+            ])
+            ->Name($request->input('name'))
+            ->Warehouse($request->input('warehouseid'));
 
         return DataTables::of($data)
             ->addColumn('btn', 'Yards.StorageZones.partials.buttons')

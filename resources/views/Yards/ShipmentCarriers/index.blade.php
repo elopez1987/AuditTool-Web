@@ -47,7 +47,7 @@
                                 </div>
                                 <div class="col-lg-2 col-md-6 col-sm-12">
                                     <div class="form-group">
-                                        <label for="statusid">Estatus <span style="color: red">*</span></label>
+                                        <label for="statusid">Estatus</label>
                                         <select name="statusid" class="form-control select2">
                                             <option value="" selected>Selecciona una opción</option>
                                             @foreach($status as $model)
@@ -69,9 +69,6 @@
                                         <th class="bg-inverse text-white">Bodega</th>
                                         <th class="bg-inverse text-white">Nombre</th>
                                         <th class="bg-inverse text-white">Vendor</th>
-                                        <th class="bg-inverse text-white">Auxiliar 01</th>
-                                        <th class="bg-inverse text-white">Auxiliar 02</th>
-                                        <th class="bg-inverse text-white">Auxiliar 03</th>
                                         <th class="bg-inverse text-white">Estatus</th>
                                         <th class="bg-inverse text-white">Opciones</th>
                                     </tr>

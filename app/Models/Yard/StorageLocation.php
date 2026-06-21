@@ -169,10 +169,7 @@ class StorageLocation extends Model
     public function zone(): BelongsTo
     {
         return $this->belongsTo(StorageZone::class, 'zoneid', 'id')
-            ->withDefault([
-                'name' => ' ',
-            ],
-            );
+            ->withDefault(['name' => ' ']);
     }
 
     //    Filtros Scopes
@@ -183,14 +180,14 @@ class StorageLocation extends Model
         }
     }
 
-    public function scopeZone($query, $zoneid)
+    public function scopeForZone($query, $zoneid)
     {
         if ($zoneid != '') {
             $query->where('storagelocations.zoneid', $zoneid);
         }
     }
 
-    public function scopeStatus($query, $statusid)
+    public function scopeForStatus($query, $statusid)
     {
         if ($statusid != '') {
             $query->where('storagelocations.statusid', $statusid);

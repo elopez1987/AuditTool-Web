@@ -19,6 +19,18 @@ trait QueryReceiptTruck
         return ReceiptTruck::controlAccessUser()
             ->with(['center:centerid,name,description', 'warehouse:warehouseid,name', 'carrier:id,name',
                 'status:statusid,name,auxiliary01'])
+            ->select([
+                'receipttrucks.id',
+                'receipttrucks.centerid',
+                'receipttrucks.warehouseid',
+                'receipttrucks.carrierid',
+                'receipttrucks.trucknumber',
+                'receipttrucks.econumber',
+                'receipttrucks.operatorname',
+                'receipttrucks.phone',
+                'receipttrucks.barcode',
+                'receipttrucks.entrydate',
+            ])
             ->Folio($request->input('folionumber'))
             ->TruckNumber($request->input('trucknumber'))
             ->EcoNumber($request->input('econumber'))

@@ -27,33 +27,27 @@ class AssignShipmentController extends BaseController
     public function getDataTransport()
     {
         $data = ReceiptUnit::controlAccessUser()
+            ->leftjoin('shipmentcarriers', 'receiptunits.carrierid', '=', 'shipmentcarriers.id')
+            ->leftJoin('receipttrucks', 'receiptunits.foliotruck', '=', 'receipttrucks.id')
             ->Folio(request('folionumber'))
             ->Shipment(request('shipmentid'))
             ->Barcode(request('barcode'))
             ->BoxNumber(request('boxnumber'))
-            ->leftJoin('shipmentcarriers', 'receiptunits.carrierid', '=', 'shipmentcarriers.id')
-            ->leftJoin('storagereceiptunitticket', 'receiptunits.id', '=', 'storagereceiptunitticket.folionumber')
-//            ->leftJoin('users', 'storagereceiptunitticket.responsibleid', '=', 'users.id')
-//            ->leftJoin('storageareas', 'storagereceiptunitticket.areaid', '=', 'storageareas.id')
             ->whereNotIn('receiptunits.statusid', ['TR', 'OU'])
             ->select([
                 'receiptunits.id',
                 'receiptunits.barcode',
                 'receiptunits.entrydate',
-                'receiptunits.carrierid',
                 'receiptunits.boxnumber',
                 'receiptunits.econumber',
-                'receiptunits.operatorname',
                 'receiptunits.shipmentid',
-                //                'users.name as responsable',
-                //                'storageareas.name as areaname',
                 'shipmentcarriers.name as carriername',
+                'receipttrucks.operatorname',
             ]);
 
         return DataTables::of($data)
-            ->addColumn('shipmentbutton', 'Yards.ReceiptUnits.partials.shipment')
-            ->addColumn('addresponsible', 'Yards.AssignShipment.partials.responsable')
-            ->rawColumns(['shipmentbutton', 'addresponsible'])->toJson();
+            ->addColumn('shipmentbutton', 'Yards.AssignShipment.partials.shipment')
+            ->rawColumns(['shipmentbutton'])->toJson();
     }
 
     public function updateShipmentToUnit(Request $request, ReceiptUnit $receiptunit)

@@ -26,16 +26,6 @@
             {data: 'carrier.name',name:'carrier.name'},
             {data: 'boxnumber'},
             {data: 'econumber'},
-            {
-                data: 'typeid',
-                render: function(data) {
-                    if (data === 'BX') {
-                        return '<span class="label label-success" style="font-size: 0.675rem">CAJA</span>';
-                    } else {
-                        return '<span class="label label-warning" style="font-size: 0.675rem">TRACTO</span>';
-                    }
-                }
-            },
             {data: 'btn'},
         ],
         "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',

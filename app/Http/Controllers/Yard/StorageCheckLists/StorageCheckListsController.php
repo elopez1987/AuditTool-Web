@@ -28,10 +28,21 @@ class StorageCheckListsController extends BaseController
                 $join->on('storageunittypes.auxiliary01', '=', 'storagechecklists.auxiliary01')
                     ->on('storageunittypes.centerid', '=', 'storagechecklists.centerid');
             })
-            ->select('storagechecklists.*', 'storagereasons.name as reason', 'storageunittypes.description as unittype')
-            ->Warehouse($request->get('warehouseid'))
-            ->Name($request->get('name'))
-            ->get();
+            ->select([
+                'storagechecklists.id',
+                'storagechecklists.centerid',
+                'storagechecklists.warehouseid',
+                'storagechecklists.name',
+                'storagechecklists.type',
+                'storagechecklists.auxiliary01',
+                'storagechecklists.auxiliary02',
+                'storagechecklists.auxiliary03',
+                'storagechecklists.auxiliary04',
+                'storagechecklists.statusid',
+                'storagereasons.name as reason',
+                'storageunittypes.description as unittype'])
+            ->Warehouse($request->input('warehouseid'))
+            ->Name($request->input('name'));
 
         return DataTables::of($data)
             ->addColumn('btn', 'Yards.StorageCheckLists.partials.buttons')

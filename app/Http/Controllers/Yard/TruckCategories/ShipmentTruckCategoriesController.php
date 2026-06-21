@@ -20,9 +20,9 @@ class ShipmentTruckCategoriesController extends BaseController
 
     public function getDataTruckCategories(Request $request)
     {
-        $data = ShipmentTruckCategory::with('status')
-            ->Name($request->get('name'))
-            ->Status($request->get('statusid'))->get();
+        $data = ShipmentTruckCategory::with('status:statusid,name,auxiliary01')
+            ->Name($request->input('name'))
+            ->Status($request->input('statusid'));
 
         return DataTables::of($data)
             ->addColumn('btn', 'Yards.ShipmentTruckCategories.partials.buttons')

@@ -21,11 +21,22 @@ class StorageAreasController extends BaseController
     public function getDataAreas(Request $request)
     {
         $data = StorageAreas::controlAccessUser()->withTrashed()
-            ->with(['status', 'center', 'warehouse'])
-            ->Name($request->get('name'))
-            ->Status($request->get('statusid'))
-            ->Warehouse($request->get('warehouseid'))
-            ->get();
+            ->with(['status:statusid,name,auxiliary01',
+                'center:centerid,name,description', 'warehouse:warehouseid,name'])
+            ->select([
+                'storageareas.id',
+                'storageareas.slug',
+                'storageareas.centerid',
+                'storageareas.warehouseid',
+                'storageareas.name',
+                'storageareas.statusid',
+                'storageareas.auxiliary01',
+                'storageareas.auxiliary02',
+                'storageareas.auxiliary03',
+            ])
+            ->Name($request->input('name'))
+            ->Status($request->input('statusid'))
+            ->ForWarehouse($request->input('warehouseid'));
 
         return $this->showDataToView($data, 'Yards.StorageAreas.partials.buttons');
     }

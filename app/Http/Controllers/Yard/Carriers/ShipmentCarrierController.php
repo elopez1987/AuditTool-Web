@@ -27,10 +27,19 @@ class ShipmentCarrierController extends BaseController
     public function getDataCarriers(Request $request)
     {
         $data = ShipmentCarrier::controlAccessUser()
-            ->with(['center:centerid,name,description', 'status:statusid,name', 'warehouse:warehouseid,name'])
-            ->Name($request->get('name'))
-            ->Carrier($request->get('carrierid'))
-            ->Status($request->get('statusid'))->get();
+            ->with(['center:centerid,name,description',
+                'status:statusid,name', 'warehouse:warehouseid,name'])
+            ->select([
+                'shipmentcarriers.id',
+                'shipmentcarriers.name',
+                'shipmentcarriers.carrierid',
+                'shipmentcarriers.statusid',
+                'shipmentcarriers.warehouseid',
+                'shipmentcarriers.centerid',
+            ])
+            ->Name($request->input('name'))
+            ->Carrier($request->input('carrierid'))
+            ->Status($request->input('statusid'));
 
         return DataTables::of($data)
             ->addColumn('btn', 'Yards.ShipmentCarriers.partials.buttons')

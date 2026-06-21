@@ -26,7 +26,9 @@ class StorageSealLotoController extends BaseController
 
     public function getSealLotos(Request $request)
     {
-        $data = StorageSealLoto::controlAccessUser()->with(['center', 'status'])->Name($request->get('name'))->get();
+        $data = StorageSealLoto::controlAccessUser()
+            ->with(['center:centerid,name,description', 'status:statusid,name,auxiliary01'])
+            ->Name($request->input('name'));
 
         return DataTables::of($data)
             ->addColumn('btn', 'Yards.StorageSealLoto.partials.buttons')

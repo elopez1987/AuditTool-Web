@@ -25,7 +25,7 @@
         "columns": [
             {data: 'id'},
             {data: 'barcode'},
-            {data: 'shipmentbutton'},
+            {data: 'shipmentid'},
             {data: 'linea'},
             {data: 'boxnumber'},
             {data: 'econumber'},

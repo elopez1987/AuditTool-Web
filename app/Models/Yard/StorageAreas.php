@@ -138,7 +138,7 @@ class StorageAreas extends Model
         }
     }
 
-    public function scopeWarehouse($query, $warehouseid)
+    public function scopeForWarehouse($query, $warehouseid)
     {
         if (trim($warehouseid) != '') {
             $query->where('storageareas.warehouseid', '=', $warehouseid);

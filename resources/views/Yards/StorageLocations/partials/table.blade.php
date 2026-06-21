@@ -22,14 +22,12 @@
         "columns": [
             {data: 'center.description', name: 'center.description'},
             {data: 'warehouse.name', name: 'warehouse.name'},
-            {data: 'zone.name', name: 'zone.name'},
             {data: 'id'},
+            {data: 'zone.name', name: 'zone.name'},
             {data: 'name'},
             {data: 'locationid'},
             {data: 'barcode'},
             {data: 'auxiliary01'},
-            {data: 'auxiliary02'},
-            {data: 'auxiliary03'},
             {
                 data: 'status.name', name: 'status.name',
                 createdCell: function (td, cellData, rowData) {

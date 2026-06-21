@@ -75,8 +75,6 @@
                                     <th class="text-white">Operador</th>
                                     <th class="text-white">Hora de llegada</th>
                                     <th class="text-white">Embarque</th>
-{{--                                    <th class="text-white">Responsable</th>--}}
-{{--                                    <th class="text-white">Area</th>--}}
                                 </tr>
                                 </thead>
                             </table>

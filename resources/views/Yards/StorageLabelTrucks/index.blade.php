@@ -44,16 +44,6 @@
                                     >
                                 </div>
                             </div>
-                            <div class="col-lg-2 col-md-6 col-sm-12">
-                                <div class="form-group">
-                                    <label for="typeid">Tipo de registro<span style="color: red">*</span></label>
-                                    <select name="typeid" id="typeid" class="form-control select2">
-                                        <option value="" selected>Seleccione una opción</option>
-                                        <option value="BX">CAJA</option>
-                                        <option value="TR">TRACTO</option>
-                                    </select>
-                                </div>
-                            </div>
                             <x-select2
                                     name="carrierid"
                                     label="Lineas de transporte"
@@ -73,13 +63,12 @@
                                             <table id="table-label" class="table table-bordered  table-condensed">
                                                 <thead>
                                                 <tr>
-                                                    <th class="bg-inverse text-white">C.Distribución</th>
-                                                    <th class="bg-inverse text-white">C.Barra</th>
-                                                    <th class="bg-inverse text-white">Linea</th>
-                                                    <th class="bg-inverse text-white">Placas</th>
-                                                    <th class="bg-inverse text-white">Economico</th>
-                                                    <th class="bg-inverse text-white">Tipo de Registro</th>
-                                                    <th class="bg-inverse text-white">Opciones</th>
+                                                    <th>C.Distribución</th>
+                                                    <th>C.Barra</th>
+                                                    <th>Linea</th>
+                                                    <th>Placas</th>
+                                                    <th>Economico</th>
+                                                    <th>Opciones</th>
                                                 </tr>
                                                 </thead>
                                             </table>
