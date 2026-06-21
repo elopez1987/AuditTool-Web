@@ -22,11 +22,27 @@ class AuthorizeOutPutController extends Controller
     public function getDataAuthorized(Request $request)
     {
         $data = ReceiptUnit::controlAccessUser()
-            ->with(['carrier', 'zone', 'location', 'warehouse', 'event'])
-            ->Folio($request->get('folionumber'))
-            ->Shipment($request->get('shipmentid'))
-            ->Barcode($request->get('barcode'))
-            ->whereIn('statusid', ['OU'])->get();
+            ->with(['carrier:id,name', 'zone:id,name',
+                'location:id,name', 'tracto:id,operatorname,phone,trucknumber,econumber',
+                'warehouse:warehouseid,name', 'event:id,name'])
+            ->select([
+                'receiptunits.id',
+                'receiptunits.warehouseid',
+                'receiptunits.carrierid',
+                'receiptunits.boxnumber',
+                'receiptunits.econumber',
+                'receiptunits.barcode',
+                'receiptunits.shipmentid',
+                'receiptunits.entrydate',
+                'receiptunits.razonstatusid',
+                'receiptunits.foliotruck',
+                'receiptunits.statusid',
+                'receiptunits.autorizaoutputdate',
+            ])
+            ->Folio($request->input('folionumber'))
+            ->Shipment($request->input('shipmentid'))
+            ->Barcode($request->input('barcode'))
+            ->whereIn('receiptunits.statusid', ['OU']);
 
         return DataTables::of($data)->addColumn('stays', function ($data) {
             return Carbon::now()->diff($data->autorizaoutputdate)->format('%d d %H:%i h/m');
