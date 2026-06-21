@@ -40,12 +40,12 @@ class ReceiptAsnsController extends BaseController
                 'carrier:carrierid,name,id', 'provider:id,providerid,name',
                 'turn:id,name', 'reason:id,name', 'inventorystock:id,description',
             ])
-            ->Name($request->get('name'))
-            ->Shipment($request->get('shipmentid'))
-            ->FolioNumber($request->get('folionumber'))
-            ->OC($request->get('oc'))
-            ->Status($request->get('statusid'))
-            ->select('receiptasn.*')->get();
+            ->Name($request->input('name'))
+            ->Shipment($request->input('shipmentid'))
+            ->FolioNumber($request->input('folionumber'))
+            ->OC($request->input('oc'))
+            ->Status($request->input('statusid'))
+            ->select('receiptasn.*');
 
         return DataTables::of($data)
             ->addColumn('btn', 'Receipt.ReceiptAsn.partials.buttons')

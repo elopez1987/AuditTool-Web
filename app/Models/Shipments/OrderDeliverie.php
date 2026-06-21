@@ -27,6 +27,11 @@ class OrderDeliverie extends Model
 {
     use LogsActivity;
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
+
     protected $table = 'orderdeliveries';
 
     protected $fillable = ['centerid', 'warehouseid', 'shipmentid', 'workday',
@@ -38,7 +43,6 @@ class OrderDeliverie extends Model
     protected $hidden = [
         'created_at',
         'updated_at',
-        'schemaid',
     ];
 
     protected $attributes = [
@@ -46,17 +50,12 @@ class OrderDeliverie extends Model
         'schemaid' => 'KLE',
     ];
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
-
     public static function controlAccessUser()
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
 
-        return OrderDeliverie::whereIn('orderdeliveries.warehouseid', $warehouses)
+        return static::whereIn('orderdeliveries.warehouseid', $warehouses)
             ->whereIn('orderdeliveries.centerid', $centers);
     }
 
@@ -237,7 +236,7 @@ class OrderDeliverie extends Model
     public function scopeTurn($query, $turnid)
     {
         if (trim($turnid) != '') {
-            $query->where('orderdeliveries.turnid', '=', $turnid);
+            $query->where('storageturns.turnid', '=', $turnid);
         }
     }
 

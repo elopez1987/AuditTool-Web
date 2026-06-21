@@ -159,6 +159,11 @@ Route::middleware(['auth'])->group(function () {
     Route::put('storeLabelDetail/{id}', [InventoryLabelDetailsController::class, 'storeLabelDetail'])->name('storeLabelDetail');
 });
 
+// ---------------------------------------- Procesar interfaces --------------------------------------------------
+
+Route::get('senddatatorcontrol', [CommandController::class, 'senddatatorcontrol'])->name('senddatatorcontrol');
+Route::get('senddatatoizel', [CommandController::class, 'senddatatoizel'])->name('senddatatoizel');
+
 Route::group(['middleware' => ['role:ADMINISTRADOR']], function () {
     Route::resource('databaseupdate', DataBaseController::class)->only(['index', 'store']);
     //    ---------------------------------------------------- Log de errores del sistema  ----------------------------------------------------
@@ -175,8 +180,6 @@ Route::group(['middleware' => ['role:ADMINISTRADOR']], function () {
     //    ---------------------------------------------------- Comandos del sistema  ----------------------------------------------------
     Route::get('commandmenu', [CommandController::class, 'commandmenu'])->name('commandmenu');
     Route::get('clearcachesystem', [CommandController::class, 'clearcachesystem'])->name('clearcachesystem');
-    Route::get('senddatatorcontrol', [CommandController::class, 'senddatatorcontrol'])->name('senddatatorcontrol');
-    Route::get('senddatatoizel', [CommandController::class, 'senddatatoizel'])->name('senddatatoizel');
     Route::get('cleartablelogwebservice', [CommandController::class, 'cleartablelogwebservice'])->name('cleartablelogwebservice');
     Route::get('newincidencejourneys', [CommandController::class, 'newincidencejourneys'])->name('newincidencejourneys');
     Route::get('sendmessagenotarriveunittoshipment', [CommandController::class, 'sendmessagenotarriveunittoshipment'])->name('sendmessagenotarriveunittoshipment');

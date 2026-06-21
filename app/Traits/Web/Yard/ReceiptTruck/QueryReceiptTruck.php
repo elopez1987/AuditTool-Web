@@ -19,13 +19,13 @@ trait QueryReceiptTruck
         return ReceiptTruck::controlAccessUser()
             ->with(['center:centerid,name,description', 'warehouse:warehouseid,name', 'carrier:id,name',
                 'status:statusid,name,auxiliary01'])
-            ->Folio($request->get('folionumber'))
-            ->TruckNumber($request->get('trucknumber'))
-            ->EcoNumber($request->get('econumber'))
-            ->Carrier($request->get('carrierid'))
-            ->Barcode($request->get('barcode'))
-            ->Name($request->get('name'))
-            ->Warehouse($request->get('warehouseid'))
+            ->Folio($request->input('folionumber'))
+            ->TruckNumber($request->input('trucknumber'))
+            ->EcoNumber($request->input('econumber'))
+            ->Carrier($request->input('carrierid'))
+            ->Barcode($request->input('barcode'))
+            ->Name($request->input('name'))
+            ->Warehouse($request->input('warehouseid'))
             ->whereNotIn('receipttrucks.statusid', ['TR']);
     }
 

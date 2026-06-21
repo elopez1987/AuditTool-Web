@@ -23,8 +23,7 @@ class WebServiceLogController extends BaseController
         $data = SystemEventWebServiceIzel::controlAccessUser()
             ->with(['center:centerid,name,description', 'warehouse:warehouseid,name'])
             ->FolioNumber($request->get('folionumber'))
-            ->BoxNumber($request->get('boxnumber'))
-            ->orderBy('id', 'desc')->get();
+            ->BoxNumber($request->get('boxnumber'));
 
         return DataTables::of($data)
             ->addColumn('btn', 'Configuration.LogWebService.partials.buttons')

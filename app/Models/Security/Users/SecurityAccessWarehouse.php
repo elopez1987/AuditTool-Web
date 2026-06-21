@@ -60,8 +60,7 @@ class SecurityAccessWarehouse extends Model
 
     public static function Centers()
     {
-        return (new SecurityAccessWarehouse)
-            ->where('username', Auth::user()->username)
+        return SecurityAccessWarehouse::where('username', Auth::user()->username)
             ->select('centerid')
             ->get()
             ->toArray();
@@ -69,8 +68,7 @@ class SecurityAccessWarehouse extends Model
 
     public static function Warehouses()
     {
-        return (new SecurityAccessWarehouse)
-            ->where('username', Auth::user()->username)
+        return SecurityAccessWarehouse::where('username', Auth::user()->username)
             ->select('warehouseid')
             ->get()
             ->toArray();

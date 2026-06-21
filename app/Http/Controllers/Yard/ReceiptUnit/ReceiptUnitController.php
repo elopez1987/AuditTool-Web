@@ -54,35 +54,55 @@ class ReceiptUnitController extends BaseController
 
         return view(
             'Yards.ReceiptUnits.index',
-            compact('carriers', 'warehouses', 'rason', 'status', 'unitstatus')
+            compact('carriers', 'rason', 'status', 'unitstatus', 'warehouses')
         );
     }
 
     public function getDataReceipts(Request $request)
     {
         $data = ReceiptUnit::controlAccessUser()
-            ->with(['carrier:id,carrierid,name', 'zone:id,name', 'location:id,name',
-                'warehouse:warehouseid,name', 'event:id,name',
-                'tracto:id,operatorname,phone,trucknumber,econumber', 'center:centerid,description',
+            ->with(['carrier:id,carrierid,name', 'zone:id,name', 'location:id,name', 'event:id,name',
+                'tracto:id,operatorname,phone,trucknumber,econumber', 'center:centerid,description,name', 'warehouse:warehouseid,name',
                 'unittype:id,description', 'truckcategory:truckcategoryid,description',
                 'unitstatus:id,name', 'status:statusid,name,auxiliary01', 'truck:id,name'])
-            ->whereNotIn('statusid', ['TR', 'ES'])
-            ->Folio($request->get('folionumber'))
-            ->Barcode($request->get('barcode'))
-            ->Location($request->get('location'))
-            ->BoxNumber($request->get('boxnumber'))
-            ->EcoNumber($request->get('econumber'))
-            ->TruckNumber($request->get('trucknumber'))
-            ->Rason($request->get('rasonid'))
-            ->Carrier($request->get('carrierid'))
-            ->Warehouse($request->get('warehouseid'))
-            ->Shipment($request->get('shipmentid'))
-            ->Status($request->get('statusid'))
-            ->UnitStatus($request->get('unitstatusid'))
-            ->get();
+            ->select([
+                'receiptunits.id',
+                'receiptunits.centerid',
+                'receiptunits.warehouseid',
+                'receiptunits.barcode',
+                'receiptunits.shipmentid',
+                'receiptunits.carrierid',
+                'receiptunits.truckid',
+                'receiptunits.boxnumber',
+                'receiptunits.econumber',
+                'receiptunits.containerseal',
+                'receiptunits.entrydate',
+                'receiptunits.zoneid',
+                'receiptunits.locationid',
+                'receiptunits.unitstatusid',
+                'receiptunits.razonstatusid',
+                'receiptunits.unittypeid',
+                'receiptunits.truckcategoryid',
+                'receiptunits.foliotruck',
+                'receiptunits.statusid',
+            ])
+            ->whereNotIn('receiptunits.statusid', ['TR', 'ES'])
+            ->Folio($request->input('folio'))
+            ->Barcode($request->input('barcode'))
+            ->Location($request->input('location'))
+            ->BoxNumber($request->input('boxnumber'))
+            ->EcoNumber($request->input('econumber'))
+            ->TruckNumber($request->input('trucknumber'))
+            ->Rason($request->input('rasonid'))
+            ->Carrier($request->input('carrierid'))
+            ->Warehouse($request->input('warehouseid'))
+            ->Shipment($request->input('shipmentid'))
+            ->Status($request->input('statusid'))
+            ->UnitStatus($request->input('unitstatusid'));
 
         return DataTables::of($data)
-            ->addColumn('btn', 'Yards.ReceiptUnits.partials.buttons')->rawColumns(['btn'])->toJson();
+            ->addColumn('btn', 'Yards.ReceiptUnits.partials.buttons')
+            ->rawColumns(['btn'])->toJson();
     }
 
     public function create()

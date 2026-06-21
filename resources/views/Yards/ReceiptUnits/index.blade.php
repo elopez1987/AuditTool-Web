@@ -34,6 +34,17 @@
                         </div>
                         <hr class="m-t-1">
                         <div class="row">
+                            <div class="col-lg-2 col-md-6 col-sm-12 ">
+                                <div class="form-group">
+                                    <label for="warehouseid">Bodega </label>
+                                    <select name="warehouseid" id="warehouseid" class="form-control select2">
+                                        <option value="" selected>Seleccione una opción</option>
+                                        @foreach($warehouses as $warehouse)
+                                            <option value="{{$warehouse->warehouseid}}"> {{$warehouse->name}} </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label for="folionumber">Número de folio</label>
@@ -154,9 +165,6 @@
                 dropdownParent: $("#modal-filter")
             });
             $("#rasonid").select2({
-                dropdownParent: $("#modal-filter")
-            });
-            $("#warehouseid").select2({
                 dropdownParent: $("#modal-filter")
             });
             $("#statusid").select2({
