@@ -30,9 +30,9 @@ class StorageIncidenceJourneysController extends BaseController
         return view('Shipments.StorageIncidenceJourneys.index');
     }
 
-    public function getDataIncidenceShipments()
+    public function getDataIncidenceShipments(Request $request)
     {
-        $data = $this->getAllIncidenceJourneys();
+        $data = $this->getAllIncidenceJourneys($request);
 
         return DataTables::query($data)
             ->addColumn('btn', 'Shipments.StorageIncidenceJourneys.partials.buttons')

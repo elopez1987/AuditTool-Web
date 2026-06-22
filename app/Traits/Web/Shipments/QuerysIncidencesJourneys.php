@@ -62,7 +62,7 @@ trait QuerysIncidencesJourneys
             ->where('storageincidencejourneys.statusid', 'AB')
             ->where('orderdeliveries.statusid', 'DH')
             ->when(! empty($carriers), function ($q) {
-                $q->whereIn('orderdeliveries.carrierid', $carriers);
+                $q->whereIn('orderdeliveries.carrierid', $this->getCarriers());
             })
             ->when($request->filled('shipmentid'), function ($q) use ($request) {
                 $q->where('orderdeliveries.shipmentid', $request->input('shipmentid'));
