@@ -84,7 +84,7 @@ class FollowupIncidenceJournyesController extends BaseController
             })
             ->where('storageincidencejourneys.statusid', 'CD')
             ->where('orderdeliveries.statusid', 'DH')
-            ->when($request->filled('orderdeliveries.shipmentid'), function ($q) use ($request) {
+            ->when($request->filled('shipmentid'), function ($q) use ($request) {
                 $q->where('orderdeliveries.shipmentid', $request->input('shipmentid'));
             });
     }
