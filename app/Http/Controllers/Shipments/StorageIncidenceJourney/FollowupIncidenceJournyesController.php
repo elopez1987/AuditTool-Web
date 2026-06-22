@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Shipments\StorageIncidenceJourney;
 
 use App\Http\Controllers\BaseController;
+use App\Models\Security\Users\AccessCarrier;
 use App\Traits\Web\Shipments\QuerysIncidencesJourneys;
+use Auth;
 use DataTables;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -33,6 +35,8 @@ class FollowupIncidenceJournyesController extends BaseController
 
     public function getIncidence(Request $request)
     {
+        $carriers = $this->getCarriers();
+
         return DB::table('storageincidencejourneys')
             ->distinct()
             ->select([
@@ -84,8 +88,18 @@ class FollowupIncidenceJournyesController extends BaseController
             })
             ->where('storageincidencejourneys.statusid', 'CD')
             ->where('orderdeliveries.statusid', 'DH')
+            ->when(! empty($carriers), function ($q) {
+                $q->whereIn('orderdeliveries.carrierid', $this->getCarriers());
+            })
             ->when($request->filled('shipmentid'), function ($q) use ($request) {
                 $q->where('orderdeliveries.shipmentid', $request->input('shipmentid'));
             });
+    }
+
+    public function getCarriers(): array
+    {
+        return AccessCarrier::where('username', Auth::user()->username)
+            ->pluck('securityaccesscarriers.carrierid')
+            ->toArray();
     }
 }

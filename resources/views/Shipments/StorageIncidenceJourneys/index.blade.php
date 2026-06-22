@@ -16,12 +16,23 @@
                                     @include('buttons.add')
                                 </a>
                                 <a>
+                                    @include('buttons.search')
+                                </a>
+                                <a>
                                     @include('buttons.reloadajax')
                                 </a>
                                 <a href="{{route('menushipment')}}">
                                     @include('buttons.cancel')
                                 </a>
                             </div>
+                        </div>
+                        <hr class="mt-4">
+                        <div class="row">
+                            <x-text-input
+                                    name="shipmentid"
+                                    label="Número de embarque"
+                                    autofocus
+                            />
                         </div>
                     </form>
                 </div>
@@ -35,7 +46,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-12 col-md-10 col-xs-12">
-                            <table id="table-monitorincidences"
+                            <table id="table-monitorincidences" width="100%"
                                    class="table table-bordered table-hover table-condensed">
                                 <thead>
                                 <tr>

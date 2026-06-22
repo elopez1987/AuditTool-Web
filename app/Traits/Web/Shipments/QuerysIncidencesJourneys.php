@@ -8,6 +8,7 @@ use App\Models\Security\Users\AccessCarrier;
 use App\Models\Shipments\OrderDeliverie;
 use Auth;
 use DB;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
 trait QuerysIncidencesJourneys
@@ -28,24 +29,11 @@ trait QuerysIncidencesJourneys
             }))->select(['id', 'shipmentid'])->get();
     }
 
-    public function getAllIncidenceJourneys()
+    public function getAllIncidenceJourneys(Request $request)
     {
+        $carriers = $this->getCarriers();
+
         return DB::table('storageincidencejourneys')
-            ->join('orderdeliveries', function ($join) {
-                $join->on('storageincidencejourneys.orderid', '=', 'orderdeliveries.id')
-                    ->on('storageincidencejourneys.centerid', '=', 'orderdeliveries.centerid')
-                    ->on('storageincidencejourneys.warehouseid', '=', 'orderdeliveries.warehouseid')
-                    ->where('orderdeliveries.statusid', 'DH');
-            })
-            ->leftJoin('ordercustomers as c', function ($join) {
-                $join->on('orderdeliveries.customerid', '=', 'c.id')
-                    ->on('orderdeliveries.centerid', '=', 'c.centerid');
-            })
-            ->leftJoin('shipmentcarriers as sc', function ($join) {
-                $join->on('orderdeliveries.carrierid', '=', 'sc.id')
-                    ->on('orderdeliveries.centerid', '=', 'sc.centerid');
-            })
-            ->where('storageincidencejourneys.statusid', 'AB')
             ->select([
                 'storageincidencejourneys.folioid',
                 'storageincidencejourneys.statusid',
@@ -57,7 +45,28 @@ trait QuerysIncidencesJourneys
                 'orderdeliveries.downloaddate',
                 'orderdeliveries.loadingdate',
                 'storageincidencejourneys.created_at',
-            ]);
+            ])
+            ->join('orderdeliveries', function ($join) {
+                $join->on('storageincidencejourneys.orderid', '=', 'orderdeliveries.id')
+                    ->on('storageincidencejourneys.centerid', '=', 'orderdeliveries.centerid')
+                    ->on('storageincidencejourneys.warehouseid', '=', 'orderdeliveries.warehouseid');
+            })
+            ->leftJoin('ordercustomers as c', function ($join) {
+                $join->on('orderdeliveries.customerid', '=', 'c.id')
+                    ->on('orderdeliveries.centerid', '=', 'c.centerid');
+            })
+            ->leftJoin('shipmentcarriers as sc', function ($join) {
+                $join->on('orderdeliveries.carrierid', '=', 'sc.id')
+                    ->on('orderdeliveries.centerid', '=', 'sc.centerid');
+            })
+            ->where('storageincidencejourneys.statusid', 'AB')
+            ->where('orderdeliveries.statusid', 'DH')
+            ->when(! empty($carriers), function ($q) {
+                $q->whereIn('orderdeliveries.carrierid', $this->getCarriers());
+            })
+            ->when($request->filled('shipmentid'), function ($q) use ($request) {
+                $q->where('orderdeliveries.shipmentid', $request->input('shipmentid'));
+            });
     }
 
     public function getCarriers(): array
@@ -95,7 +104,7 @@ trait QuerysIncidencesJourneys
                 'storageincidencejourneydetails.quantity',
                 'storageincidencejourneydetails.downloaddate',
                 'storageincidencejourneydetails.unitmeasure',
-                'storagecategoryincidencedetails.description as motivo'
+                'storagecategoryincidencedetails.description as motivo',
             )
             ->leftJoin('orderdeliveries', 'orderdeliveries.id', '=', 'storageincidencejourneydetails.orderid')
             ->leftJoin('inventorypartnumbers', function ($join) {
@@ -125,7 +134,7 @@ trait QuerysIncidencesJourneys
                 'storageincidencejourneydetails.unitmeasure',
                 'storagecategoryincidencedetails.description as code',
                 'storagecategoryincidencedetails.auxiliary02 as type',
-                'storageincidencejourneydetails.partnumberiderror'
+                'storageincidencejourneydetails.partnumberiderror',
             )
             ->leftJoin('storageincidencejourneydetails', function ($join) {
                 $join->on('storageincidencejourneys.orderid', '=', 'storageincidencejourneydetails.orderid')
