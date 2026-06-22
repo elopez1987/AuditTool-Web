@@ -1,9 +1,9 @@
 <script>
     var oTable = $("#table-monitoroperation").DataTable({
         "paging": true,
-        "searching": true,
+        "searching": false,
         "ordering": true,
-        "sScrollY": "450px",
+        "sScrollY": "650px",
         "sScrollX": true,
         "processing": true,
         "serverSide": true,

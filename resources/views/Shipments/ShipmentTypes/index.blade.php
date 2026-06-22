@@ -48,15 +48,15 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-8">
-                            <table id="table-types" class="table table-bordered table-hover table-condensed">
+                            <table id="table-types" width="100%" class="table table-bordered table-hover table-condensed">
                                 <thead>
-                                <tr>
-                                    <th>C.Distribución</th>
-                                    <th>Bodega</th>
-                                    <th>Nombre</th>
-                                    <th>Estatus</th>
-                                    <th>Opciones</th>
-                                </tr>
+                                    <tr>
+                                        <th>C.Distribución</th>
+                                        <th>Bodega</th>
+                                        <th>Nombre</th>
+                                        <th>Estatus</th>
+                                        <th>Opciones</th>
+                                    </tr>
                                 </thead>
                             </table>
                         </div>

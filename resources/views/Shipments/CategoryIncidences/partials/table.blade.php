@@ -28,7 +28,7 @@
         "columnDefs": [
             {"width": "250px", "targets": 0},
             {"width": "250px", "targets": 1},
-            {"width": "250px", "targets": 2},
+            {"width": "350px", "targets": 2},
             {"width": "320px", "targets": 3},
             {"width": "220px", "targets": 4},
             {"width": "220px", "targets": 5},

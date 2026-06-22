@@ -45,7 +45,7 @@
                             </div>
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="statusid">Estatus <span style="color: red">*</span></label>
+                                    <label for="statusid">Estatus</label>
                                     <select name="statusid" id="statusid" class="form-control select2">
                                         <option value="" selected>Seleeciona un valor</option>
                                         @foreach($status as $model)
@@ -82,7 +82,7 @@
                     <div class="row">
                         <div class="col-12">
                             <table id="table-schedullebrid"
-                                   class="table table-bordered table-condensed table-list table-hover table-uppercase">
+                                   class="table table-bordered table-condensed table-list table-hover table-uppercase" style="width:100%">
                                 <thead>
                                 <tr>
                                     <th>Opciones</th>
