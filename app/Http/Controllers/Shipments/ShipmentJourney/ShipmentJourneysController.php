@@ -47,13 +47,10 @@ class ShipmentJourneysController extends BaseController
                 'shipmentjourneys.auxiliary04',
                 'orderdeliveries.loadingdate',
             ])
-            ->Shipmentid($request->get('shipmentid'))
-            ->ForCarrier($request->get('carrierid'))
-            ->ForCustomer($request->get('customername'))
-            ->whereNotIn('shipmentjourneys.statusid', ['ET'])
-            ->latest('orderdeliveries.shipmentid')
-            ->take(100)
-            ->get();
+            ->Shipmentid($request->input('shipmentid'))
+            ->ForCarrier($request->input('carrierid'))
+            ->ForCustomer($request->input('customername'))
+            ->whereNotIn('shipmentjourneys.statusid', ['ET']);
 
         return DataTables::of($data)
             ->addColumn('btn', 'Shipments.ShipmentJourneys.partials.buttons')

@@ -77,6 +77,7 @@ use App\Http\Controllers\Shipments\StorageIncidenceJourney\StorageScheduleInvers
 use App\Http\Controllers\Shipments\StorageIncidenceJourney\StorageScheduleInverseOperationsController;
 use App\Http\Controllers\Shipments\StorageIncidenceJourney\StorageScheduleInversesController;
 use App\Http\Controllers\Shipments\StorageIncidenceJourney\StorageScheduleInverseTrafficController;
+use App\Http\Controllers\Yard\DoorAndStage\LayOutDoorAndStageController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->group(function () {
@@ -265,6 +266,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('stagesanddoors', function () {
         return view('Shipments.LayoutStagesDoors.index');
     })->name('stagesanddoors');
+
+    //  Vista de cortinas y stages
+    Route::get('layout-stages', [LayOutDoorAndStageController::class, 'index'])->name('layout-stages');
     //  -----------------------------------------------  Monitor de interfaces a procesar  ----------------------------------------
     Route::resource('edishipments', EdiShipmentsController::class)->only(['index', 'destroy']);
 

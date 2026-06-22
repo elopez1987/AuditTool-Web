@@ -2,33 +2,33 @@
 
 @section('content')
     <div class="row">
-        <div class="col-lg-6" style="height: 700px;overflow-y: scroll;">
+        <div class="col-lg-6" style="overflow-y: scroll;">
             <div class="card">
                 <div class="card-header">
                     <span style="font-size: 12px !important;">    Cortinas  </span> -- <span class="badge badge-danger " style="font-size: 12px !important;">Embarque</span> -- <span class="badge badge-success " style="font-size: 12px !important;">Descarga</span>
                 </div>
                 <div class="card-body">
-                    <table class="table table-condensed table-hover table-bordered tablegeneral">
+                    <table class="table table-condensed table-bordered tablegeneral">
                         <thead style="position: sticky;top: 0;">
                             <tr>
                                 <th style="width: 20%;font-size: 12px !important;">Cortina</th>
-                                <th style="height: 30px !important;font-size: 12px !important;">Linea</th>
-                                <th style="height: 30px !important;font-size: 12px !important;">Embarque</th>
+                                <th style="height: 20px !important;font-size: 12px !important;">Linea</th>
+                                <th style="height: 20px !important;font-size: 12px !important;">Embarque</th>
                             </tr>
                         </thead>
                         <tbody>
                         @foreach($locations as $location)
                             @if($location->zoneid == 'CO')
                                 <tr>
-                                    <td class="td-events" style="height: 30px !important;font-size: 12px !important;">{{$location->name}}</td>
-                                    <td class="td-events" style="height: 30px !important;font-size: 12px !important;">
+                                    <td class="td-events" style="height: 20px !important;font-size: 12px !important;">{{$location->name}}</td>
+                                    <td class="td-events" style="height: 20px !important;font-size: 12px !important;">
                                         @foreach($units as $unit)
                                             @if ($unit->locationid == $location->id)
                                                 {{$unit->carrier->name}}
                                             @endif
                                         @endforeach
                                     </td>
-                                    <td class="td-events" style="height: 30px !important;font-size: 12px !important;">
+                                    <td class="td-events" style="height: 20px !important;font-size: 12px !important;">
                                         @foreach($units as $unit)
                                             @if ($unit->locationid == $location->id)
                                                 <span
@@ -68,15 +68,15 @@
                         <thead style="position: sticky;top: 0;">
                             <tr>
                                 <th style="width: 20%;font-size: 12px !important;">Precargas</th>
-                                <th style="height: 30px !important;font-size: 12px !important;">Embarque</th>
+                                <th style="height: 20px !important;font-size: 12px !important;">Embarque</th>
                             </tr>
                         </thead>
                         <tbody>
                         @foreach($locations as $location)
                             @if($location->zoneid == 'ST')
                                 <tr>
-                                    <td class="td-events" style="height: 30px !important;font-size: 12px !important;">{{$location->name}}</td>
-                                    <td class="td-events" style="height: 30px !important;font-size: 12px !important;">
+                                    <td class="td-events" style="height: 20px !important;font-size: 12px !important;">{{$location->name}}</td>
+                                    <td class="td-events" style="height: 20px !important;font-size: 12px !important;">
                                         @foreach($shipments as $shipment)
                                             @if ($shipment->locationid == $location->id)
                                                 <a href="{{url('monitoroperation/' . $shipment->id . '/edit')}}">

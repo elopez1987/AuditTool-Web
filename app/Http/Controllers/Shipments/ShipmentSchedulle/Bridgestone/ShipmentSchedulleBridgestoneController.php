@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Shipments\ShipmentSchedulle\Bridgestone;
 
 use App\Http\Controllers\BaseController;
-use App\Models\Shipments\OrderDeliverie;
+use App\Models\Security\Users\SecurityAccessWarehouse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
@@ -21,10 +21,10 @@ class ShipmentSchedulleBridgestoneController extends BaseController
 
     public function getDataSchedulleShipmentBridgestone(Request $request)
     {
-        $data = OrderDeliverie::controlAccessUser()
-            ->ForStatus($request->get('statusid'))
-            ->Shipmentid($request->get('shipmentid'))
-            ->Workday($request->get('workday'))
+        $centers = SecurityAccessWarehouse::Centers();
+        $warehouses = SecurityAccessWarehouse::Warehouses();
+
+        $data = DB::table('orderdeliveries')
             ->leftJoin('ordercustomers as oc', function ($join) {
                 $join->on('orderdeliveries.customerid', '=', 'oc.id')
                     ->on('orderdeliveries.centerid', '=', 'oc.centerid')
@@ -89,11 +89,39 @@ class ShipmentSchedulleBridgestoneController extends BaseController
                 'ru.entrydate',
                 'orderdeliveries.statusid',
             ])
+            ->whereIn('orderdeliveries.centerid', $centers)
+            ->whereIn('orderdeliveries.warehouseid', $warehouses)
             ->whereNotIn('orderdeliveries.statusid', ['CA'])
-            ->orderBy('orderdeliveries.id', 'desc')->limit(200)->get();
+            ->when($request->filled('statusid'), function ($q) use ($request) {
+                $q->where('orderdeliveries.statusid', $request->input('statusid'));
+            })
+            ->when($request->filled('shipmentid'), function ($q) use ($request) {
+                $q->where('orderdeliveries.shipmentid', $request->input('shipmentid'));
+            })
+            ->when($request->filled('workday'), function ($q) use ($request) {
+                $q->whereDate('orderdeliveries.workday', $request->input('workday'));
+            });
 
-        return DataTables::of($data)
+        return DataTables::query($data)
             ->addColumn('btn', 'Shipments.OrderMonitor.MonitorOperation.partials.btnoperation')
+            ->filterColumn('customername', function ($query, $keyword) {
+                $query->where('oc.name', 'like', "%{$keyword}%");
+            })
+            ->filterColumn('carriername', function ($query, $keyword) {
+                $query->where('sc.name', 'like', "%{$keyword}%");
+            })
+            ->filterColumn('shipmenttype', function ($query, $keyword) {
+                $query->where('st.name', 'like', "%{$keyword}%");
+            })
+            ->filterColumn('status', function ($query, $keyword) {
+                $query->where('se.name', 'like', "%{$keyword}%");
+            })
+            ->filterColumn('truckname', function ($query, $keyword) {
+                $query->where('t.name', 'like', "%{$keyword}%");
+            })
+            ->filterColumn('eta', function ($query, $keyword) {
+                $query->whereRaw("FORMAT(orderdeliveries.loadingdate, 'HH:mm') like ?", ["%{$keyword}%"]);
+            })
             ->rawColumns(['btn'])
             ->toJson();
     }

@@ -1,7 +1,7 @@
 <script>
     var oTable = $("#table-schedullebrid").DataTable({
         "paging": true,
-        "searching": true,
+        "searching": false,
         "ordering": true,
         "sScrollY": "750px",
         "sScrollX": true,

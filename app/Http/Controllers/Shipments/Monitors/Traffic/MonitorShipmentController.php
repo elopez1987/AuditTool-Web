@@ -26,17 +26,16 @@ class MonitorShipmentController extends BaseController
                 'c.name as carrier',
                 'orderdeliveries.loadingdate',
                 DB::raw("
-            CASE
-                WHEN GETDATE() >= orderdeliveries.loadingdate
-                    THEN CASE
-                        WHEN GETDATE() < DATEADD(minute, 30, orderdeliveries.loadingdate)
-                        THEN 'Validar Transporte'
-                        ELSE 'Fuera de tiempo'
-                    END
-                ELSE 'En tiempo'
-            END as status
-        "),
-            ])
+					CASE
+						WHEN GETDATE() >= orderdeliveries.loadingdate
+							THEN CASE
+								WHEN GETDATE() < DATEADD(minute, 30, orderdeliveries.loadingdate)
+								THEN 'Validar Transporte'
+								ELSE 'Fuera de tiempo'
+							END
+						ELSE 'En tiempo'
+					END as status
+				"), ])
             ->leftJoin('ordercustomers as b', function ($join) {
                 $join->on('orderdeliveries.customerid', '=', 'b.id')
                     ->on('orderdeliveries.centerid', '=', 'b.centerid');
@@ -46,9 +45,7 @@ class MonitorShipmentController extends BaseController
                     ->on('orderdeliveries.centerid', '=', 'c.centerid');
             })
             ->whereNotIn('orderdeliveries.statusid', ['DH', 'CA'])
-            ->whereNull('orderdeliveries.folionumber')
-            ->orderByDesc('orderdeliveries.loadingdate')
-            ->get();
+            ->whereNull('orderdeliveries.folionumber');
 
         return DataTables::of($data)->toJson();
     }

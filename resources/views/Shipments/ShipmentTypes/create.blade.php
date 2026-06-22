@@ -2,10 +2,9 @@
 
 @section('content')
     <div class="row">
-        <div class="col-12">
+        <div class="col-8">
             <div class="card">
-                <div class="card-header">
-
+                <div class="card-header">Registrar tipo de embarque.
                 </div>
                 <div class="card-body">
                     <form method="POST" action="{{url('shipmenttypes')}}" enctype="multipart/form-data">

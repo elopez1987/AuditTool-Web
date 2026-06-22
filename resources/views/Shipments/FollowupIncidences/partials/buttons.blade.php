@@ -2,7 +2,7 @@
     @if($statusid != 'CD')
         <a href="{{url('storageincidencesjourneys/' . $folioid. '/edit')}}" data-toggle="tooltip" data-placement="top"
            title="Modificar incidencia">
-            <img src="{{asset('/ico/adedit.png')}}" alt="" class="img-16 ml-1">
+            <img src="{{asset('/ico/adedit.png')}}" alt="" class="img-16 ml-2 mr-2">
         </a>
     @endif
 @endcan
@@ -10,7 +10,7 @@
 @can('storageincidencesjourneys.show')
     <a href="{{url('storageincidencesjourneys/' . $folioid)}}" data-toggle="tooltip" data-placement="top"
        title="Ver detalles">
-        <img src="{{asset('/ico/viewdetail.png')}}" alt="" class="img-16 ml-2">
+        <img src="{{asset('/ico/viewdetail.png')}}" alt="" class="img-16 ml-2 mr-2">
     </a>
 @endcan
 
@@ -31,7 +31,7 @@
         <a href="{{url('storageincidencesjourneysgeneratepdf/' . $folioid)}}" data-toggle="tooltip"
            data-placement="top"
            title="Imprimir PDF">
-            <img src="{{asset('/ico/invoice.png')}}" alt="" class="img-16 ml-2">
+            <img src="{{asset('/ico/invoice.png')}}" alt="" class="img-16 ml-2 mr-2">
         </a>
     @endif
 @endcan

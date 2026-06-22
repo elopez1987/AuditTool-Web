@@ -27,7 +27,8 @@ class MonitorOperationController extends BaseController
             ->select(['statusid', DB::raw('COUNT(statusid) as total')])
             ->groupBy('statusid')->orderByDesc('total')->get();
 
-        return view('Shipments.OrderMonitor.MonitorOperation.index',
+        return view(
+            'Shipments.OrderMonitor.MonitorOperation.index',
             compact('status', 'turns', 'warehouses', 'statusQuantitys'),
         );
     }
@@ -70,7 +71,8 @@ class MonitorOperationController extends BaseController
         $locations = $this->getLocations();
         $orderDelivery = $monitoroperation;
 
-        return view('Shipments.OrderMonitor.MonitorOperation.edit',
+        return view(
+            'Shipments.OrderMonitor.MonitorOperation.edit',
             compact('orderDelivery', 'materials', 'locations'),
         );
     }
