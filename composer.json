@@ -25,6 +25,7 @@
         "rap2hpoutre/laravel-log-viewer": "^3.0",
         "spatie/laravel-activitylog": "^4.12",
         "spatie/laravel-permission": "^6.2.0",
+        "symfony/dependency-injection": "^8.1.0",
         "yajra/laravel-datatables-oracle": "^13.0"
     },
     "require-dev": {
