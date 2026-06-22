@@ -13,6 +13,7 @@ use App\Models\Shipments\OrderDeliverie;
 use App\Models\Shipments\StorageIncidenceJourney;
 use App\Models\Shipments\StorageIncidenceJourneyDetails;
 use App\Traits\Web\Shipments\QuerysIncidencesJourneys;
+use Carbon\Carbon;
 use DataTables;
 use DB;
 use Exception;
@@ -33,10 +34,12 @@ class StorageIncidenceJourneysController extends BaseController
     {
         $data = $this->getAllIncidenceJourneys();
 
-        return DataTables::collection($data)
+        return DataTables::query($data)
             ->addColumn('btn', 'Shipments.StorageIncidenceJourneys.partials.buttons')
-            ->addColumn('time', 'Shipments.StorageIncidenceJourneys.partials.duration')
-            ->rawColumns(['btn', 'time'])->toJson();
+            ->addColumn('time', function ($row) {
+                return Carbon::now()->diff($row->created_at)->format('%m m %d d %H:%i h/m');
+            })
+            ->rawColumns(['btn'])->toJson();
     }
 
     public function create()

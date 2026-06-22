@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Shipments\StorageIncidenceJourney;
 
 use App\Http\Controllers\BaseController;
-use App\Models\Shipments\StorageIncidenceJourney;
 use App\Traits\Web\Shipments\QuerysIncidencesJourneys;
 use DataTables;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class FollowupIncidenceJournyesController extends BaseController
 {
@@ -21,21 +21,23 @@ class FollowupIncidenceJournyesController extends BaseController
     {
         $data = $this->getIncidence($request);
 
-        return DataTables::collection($data)
+        return DataTables::query($data)
+            ->filterColumn('shipmentid', function ($query, $keyword) {
+                $query->where('orderdeliveries.shipmentid', 'like', "%{$keyword}%");
+            })
             ->addColumn('btn', 'Shipments.FollowupIncidences.partials.buttons')
             ->addColumn('keystatus', 'Shipments.FollowupIncidences.partials.keystatus')
             ->addColumn('keytransport', 'Shipments.FollowupIncidences.partials.keytransport')
-            ->editColumn('statuspod', function (StorageIncidenceJourney $storageIncidenceJourney) {
-                return '<i class="ti ti-' . ($storageIncidenceJourney->statuspod === 'CON' ? 'check' : 'close') . '" aria-hidden="true"></i>';
+            ->editColumn('statuspod', function ($row) {
+                return '<i class="ti ti-' . ($row->statuspod === 'CON' ? 'check' : 'close') . '" aria-hidden="true"></i>';
             })
             ->rawColumns(['btn', 'statuspod', 'keystatus', 'keytransport'])->toJson();
     }
 
     public function getIncidence(Request $request)
     {
-        return StorageIncidenceJourney::query()
+        return DB::table('storageincidencejourneys')
             ->distinct()
-            ->ForShipment($request->get('shipmentid'))
             ->select([
                 'storageincidencejourneys.centerid',
                 'storageincidencejourneys.warehouseid',
@@ -54,13 +56,13 @@ class FollowupIncidenceJournyesController extends BaseController
                 'shipmentpods.statusid as statuspod',
                 'storageincidencejourneys.statuskeyid',
                 'storageincidencejourneys.statuskeytrid',
-                'storageincidencejourneys.statusdevid',
                 'statusdev.name as statusdev',
             ])
             ->leftJoin('orderdeliveries', function ($join) {
                 $join->on('storageincidencejourneys.orderid', '=', 'orderdeliveries.id')
                     ->on('storageincidencejourneys.centerid', '=', 'orderdeliveries.centerid')
-                    ->on('storageincidencejourneys.warehouseid', '=', 'orderdeliveries.warehouseid');
+                    ->on('storageincidencejourneys.warehouseid', '=', 'orderdeliveries.warehouseid')
+                    ->where('orderdeliveries.statusid', 'DH');
             })
             ->leftJoin('ordercustomers', function ($join) {
                 $join->on('orderdeliveries.customerid', '=', 'ordercustomers.id')
@@ -85,9 +87,8 @@ class FollowupIncidenceJournyesController extends BaseController
                     ->on('storageincidencejourneys.schemadevid', '=', 'statusdev.schemaid');
             })
             ->where('storageincidencejourneys.statusid', 'CD')
-            ->where('orderdeliveries.statusid', 'DH')
-            ->orderBy('storageincidencejourneys.folioid', 'desc')
-            ->limit(100)
-            ->get();
+            ->when($request->filled('orderdeliveries.shipmentid'), function ($q) use ($request) {
+                $q->where('orderdeliveries.shipmentid', $request->input('shipmentid'));
+            });
     }
 }

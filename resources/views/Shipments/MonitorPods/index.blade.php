@@ -52,7 +52,7 @@
                             </div>
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="statusid">Estatus <span style="color: red">*</span></label>
+                                    <label for="statusid">Estatus</label>
                                     <select name="statusid" id="statusid" class="form-control select2">
                                         <option value="" selected>Seleccione un valor</option>
                                         @foreach($status as $model)
@@ -75,16 +75,16 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-12 col-md-10 col-xs-12">
-                            <table width="100%" id="table-monitorpods" class="table table-bordered table-hover table-condensed">
+                            <table id="table-monitorpods" class="table table-bordered table-hover table-condensed">
                                 <thead>
                                 <tr>
-                                    <th class="bg-inverse text-white">Transporte</th>
-                                    <th class="bg-inverse text-white">Embarque</th>
-                                    <th class="bg-inverse text-white">Cliente</th>
-                                    <th class="bg-inverse text-white">Ciudad</th>
-                                    <th class="bg-inverse text-white">Cita de entrega</th>
-                                    <th class="bg-inverse text-white">Estatus</th>
-                                    <th class="bg-inverse text-white">Opciones</th>
+                                    <th>Transporte</th>
+                                    <th>Embarque</th>
+                                    <th>Cliente</th>
+                                    <th>Ciudad</th>
+                                    <th>Cita de entrega</th>
+                                    <th>Estatus</th>
+                                    <th>Opciones</th>
                                 </tr>
                                 </thead>
                             </table>

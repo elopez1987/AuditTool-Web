@@ -19,7 +19,7 @@ class StorageCategoryIncidencesController extends BaseController
     public function getdatacategoryincidences(Request $request)
     {
         $data = StorageCategoryIncidence::controlAccessUser()
-            ->ForDescription($request->get('description'))
+            ->ForDescription($request->input('description'))
             ->leftJoin('systemstatus as se', 'storagecategoryincidences.statusid', '=', 'se.statusid')
             ->leftJoin('systemcenterdistributions as cd', 'storagecategoryincidences.centerid', '=', 'cd.centerid')
             ->leftjoin('systemwarehouses as sw', 'storagecategoryincidences.warehouseid', '=', 'sw.warehouseid')

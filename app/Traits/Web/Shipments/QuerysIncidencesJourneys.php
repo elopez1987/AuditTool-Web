@@ -5,9 +5,7 @@ namespace App\Traits\Web\Shipments;
 use App\Models\Configuration\Parameters\SystemDetailParameter;
 use App\Models\Receipt\StorageCategoryIncidenceDetail;
 use App\Models\Security\Users\AccessCarrier;
-use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\Models\Shipments\OrderDeliverie;
-use App\Models\Shipments\StorageIncidenceJourney;
 use Auth;
 use DB;
 use Illuminate\Support\Collection;
@@ -17,15 +15,12 @@ trait QuerysIncidencesJourneys
     //    Consulta para buscar embarque que pueden registrar incidencias
     public function getShipmentsForCreateNewIncidence()
     {
-        $centers = SecurityAccessWarehouse::Centers();
         $carrier = $this->getCarriers();
-        $days = $this->getDays($centers);
 
         return OrderDeliverie::controlAccessUser()
             ->select(['id', 'shipmentid'])
             ->CarrierIn($carrier)
             ->where('statusid', '=', 'DH')
-//            ->where('downloaddate', '>', Carbon::now()->subDays(intval($days))->format('Y-m-d'))
             ->whereNotIn('id', (function ($query) {
                 $query->from('storageincidencejourneys')
                     ->select('orderid')
@@ -33,13 +28,14 @@ trait QuerysIncidencesJourneys
             }))->select(['id', 'shipmentid'])->get();
     }
 
-    public function getAllIncidenceJourneys(): \Illuminate\Database\Eloquent\Collection
+    public function getAllIncidenceJourneys()
     {
-        return StorageIncidenceJourney::controlAccessUser()
-            ->leftJoin('orderdeliveries', function ($join) {
+        return DB::table('storageincidencejourneys')
+            ->join('orderdeliveries', function ($join) {
                 $join->on('storageincidencejourneys.orderid', '=', 'orderdeliveries.id')
                     ->on('storageincidencejourneys.centerid', '=', 'orderdeliveries.centerid')
-                    ->on('storageincidencejourneys.warehouseid', '=', 'orderdeliveries.warehouseid');
+                    ->on('storageincidencejourneys.warehouseid', '=', 'orderdeliveries.warehouseid')
+                    ->where('orderdeliveries.statusid', 'DH');
             })
             ->leftJoin('ordercustomers as c', function ($join) {
                 $join->on('orderdeliveries.customerid', '=', 'c.id')
@@ -50,8 +46,6 @@ trait QuerysIncidencesJourneys
                     ->on('orderdeliveries.centerid', '=', 'sc.centerid');
             })
             ->where('storageincidencejourneys.statusid', 'AB')
-            ->where('orderdeliveries.statusid', 'DH')
-            ->CarrierIn($this->getCarriers())
             ->select([
                 'storageincidencejourneys.folioid',
                 'storageincidencejourneys.statusid',
@@ -63,8 +57,7 @@ trait QuerysIncidencesJourneys
                 'orderdeliveries.downloaddate',
                 'orderdeliveries.loadingdate',
                 'storageincidencejourneys.created_at',
-            ])
-            ->get();
+            ]);
     }
 
     public function getCarriers(): array

@@ -40,23 +40,24 @@
                         </div>
                     </form>
                     <div class="row">
-                        <div class="col-12">
-                            <table id="table-categories" class="table table-bordered table-hover table-condensed">
-                                <thead>
-                                <tr>
-                                    <th class="bg-inverse text-white">C.Distribución</th>
-                                    <th class="bg-inverse text-white">Bodega</th>
-                                    <th class="bg-inverse text-white">Nombre</th>
-                                    <th class="bg-inverse text-white">Tipo</th>
-                                    <th class="bg-inverse text-white">Auxiliar 02</th>
-                                    <th class="bg-inverse text-white">Auxiliar 03</th>
-                                    <th class="bg-inverse text-white">Auxiliar 04</th>
-                                    <th class="bg-inverse text-white">Auxiliar 05</th>
-                                    <th class="bg-inverse text-white">Estatus</th>
-                                    <th class="bg-inverse text-white">Opciones</th>
-                                </tr>
-                                </thead>
-                            </table>
+                        <div class="col-8">
+                            <div class="card">
+                                <div class="card-header"></div>
+                                <div class="card-body">
+                                    <table id="table-categories" width="100%" class="table table-bordered table-hover table-condensed">
+                                        <thead>
+                                        <tr>
+                                            <th>C.Distribución</th>
+                                            <th>Bodega</th>
+                                            <th>Nombre</th>
+                                            <th>Tipo</th>
+                                            <th>Estatus</th>
+                                            <th>Opciones</th>
+                                        </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
 

@@ -18,8 +18,8 @@ trait QueryShipmentTransport
             ->leftJoin('shipmentcarriers', 'orderdeliveries.carrierid', '=', 'shipmentcarriers.id')
             ->leftJoin('systemstatus', 'orderdeliveries.statusid', '=', 'systemstatus.statusid')
             ->whereNotIn('orderdeliveries.statusid', ['DH', 'CA', 'EJ', 'FO', 'IF', 'DT', 'SO'])
-            ->Shipmentid($request->get('shipmentid'))
-            ->Carrier($request->get('carrierid'))
+            ->Shipmentid($request->input('shipmentid'))
+            ->Carrier($request->input('carrierid'))
             ->CarrierIn($carriers)
             ->CustomerIn($customers)
             ->select([

@@ -20,8 +20,17 @@ class ShipmentTypesController extends BaseController
     public function getDataShipmentTypes(Request $request)
     {
         $data = ShipmentType::controlAccessUser()
-            ->with(['status:statusid,name', 'center:centerid,name,description', 'warehouse:warehouseid,name'])
-            ->Name($request->get('name'))->get();
+            ->with(['status:statusid,name',
+                'center:centerid,name,description',
+                'warehouse:warehouseid,name'])
+            ->select([
+                'shipmenttypes.id',
+                'shipmenttypes.centerid',
+                'shipmenttypes.warehouseid',
+                'shipmenttypes.name',
+                'shipmenttypes.statusid',
+            ])
+            ->Name($request->input('name'));
 
         return $this->showDataToView($data, 'Shipments.ShipmentTypes.partials.buttons');
     }

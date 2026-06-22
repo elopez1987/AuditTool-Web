@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-12">
+        <div class="col-8">
             <div class="card">
                 <div class="card-body">
                     <form method="GET" id="search" role="form">
@@ -35,20 +35,25 @@
                         </div>
                         <hr class="mt-4">
                     </form>
-
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header">
+                    Datos
+                </div>
+                <div class="card-body">
                     <div class="row">
-                        <div class="col-lg-12">
-                            <table id="table-types" class="table table-bordered table-hover table-condensed" width="100%">
+                        <div class="col-lg-8">
+                            <table id="table-types" class="table table-bordered table-hover table-condensed">
                                 <thead>
                                 <tr>
                                     <th>C.Distribución</th>
                                     <th>Bodega</th>
                                     <th>Nombre</th>
-                                    <th>Auxiliar 01</th>
-                                    <th>Auxiliar 02</th>
-                                    <th>Auxiliar 03</th>
-                                    <th>Auxiliar 04</th>
-                                    <th>Auxiliar 05</th>
                                     <th>Estatus</th>
                                     <th>Opciones</th>
                                 </tr>

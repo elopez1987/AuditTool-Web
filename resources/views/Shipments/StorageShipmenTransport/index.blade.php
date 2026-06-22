@@ -34,7 +34,7 @@
                             </div>
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="carrierid">Linea de transporte<span style="color: red">*</span></label>
+                                    <label for="carrierid">Linea de transporte</label>
                                     <select name="carrierid" class="form-control select2">
                                         <option value="" selected>Seleccione una opción</option>
                                         @foreach($carriers as $model)

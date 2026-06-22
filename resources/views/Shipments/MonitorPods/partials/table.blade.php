@@ -49,7 +49,7 @@
         "columnDefs": [
             {"width": "280px", "targets": 0},
             {"width": "220px", "targets": 1},
-            {"width": "280px", "targets": 2},
+            {"width": "380px", "targets": 2},
             {"width": "250px", "targets": 3},
             {"width": "250px", "targets": 4},
             {"width": "250px", "targets": 5},

@@ -29,9 +29,18 @@ class MonitorOperationHenkelController extends BaseController
         $customers = $this->getOrderCustomerForSelect();
         $status = $this->getStatusForSchema('KLE');
 
-        return view('Shipments.MonitorShipments.MonitorOperation.index',
-            compact('statusQuantitys', 'monitorStatus',
-                'totalPallets', 'shipmentsStatus', 'carriers', 'customers', 'status'));
+        return view(
+            'Shipments.MonitorShipments.MonitorOperation.index',
+            compact(
+                'statusQuantitys',
+                'monitorStatus',
+                'totalPallets',
+                'shipmentsStatus',
+                'carriers',
+                'customers',
+                'status'
+            )
+        );
     }
 
     public function getDataMonitorOperation()
@@ -142,6 +151,7 @@ class MonitorOperationHenkelController extends BaseController
 			where od.statusid not in ('CA', 'DH')
 			group by od.workday, se.name
 			order by od.workday
-		");
+		"
+        );
     }
 }

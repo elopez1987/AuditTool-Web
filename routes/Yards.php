@@ -10,7 +10,6 @@ use App\Http\Controllers\Yard\Customers\OrderCustomerController;
 use App\Http\Controllers\Yard\Customers\ParameterCustomerController;
 use App\Http\Controllers\Yard\DashboardYardController;
 use App\Http\Controllers\Yard\Destination\StorageDestinationController;
-use App\Http\Controllers\Yard\DoorAndStage\LayOutDoorAndStageController;
 use App\Http\Controllers\Yard\LabelTrucks\StorageLabelTrucksController;
 use App\Http\Controllers\Yard\RControl\SearchOperatorInRC;
 use App\Http\Controllers\Yard\ReceiptProviders\ImportProvidersController;
@@ -360,8 +359,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('exportDataLocationsForStatus', [CapacityYardController::class, 'exportDataLocationsForStatus'])->name('exportDataLocationsForStatus');
     //  Patio de virtual
     Route::get('vitualyard', [YardHenkelTolController::class, 'index'])->name('vitualyard');
-    //  Vista de cortinas y stages
-    Route::get('layout-stages', [LayOutDoorAndStageController::class, 'index'])->name('layout-stages');
+
     //  Ticket de pesos de báscula
     Route::resource('receiptunitticket', ReceiptUnitTicketController::class);
     Route::get('getUnitTickets', [ReceiptUnitTicketController::class, 'getUnitTickets'])->name('getUnitTickets');
