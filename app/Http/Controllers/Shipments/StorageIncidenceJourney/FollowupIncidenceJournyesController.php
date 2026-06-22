@@ -22,9 +22,6 @@ class FollowupIncidenceJournyesController extends BaseController
         $data = $this->getIncidence($request);
 
         return DataTables::query($data)
-            ->filterColumn('shipmentid', function ($query, $keyword) {
-                $query->where('orderdeliveries.shipmentid', 'like', "%{$keyword}%");
-            })
             ->addColumn('btn', 'Shipments.FollowupIncidences.partials.buttons')
             ->addColumn('keystatus', 'Shipments.FollowupIncidences.partials.keystatus')
             ->addColumn('keytransport', 'Shipments.FollowupIncidences.partials.keytransport')
