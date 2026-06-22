@@ -31,11 +31,19 @@ class StorageLabelTrucksController extends BaseController
             ->select('carrierid')->get()->toArray();
         $data = StorageLabelTruck::controlAccessUser()
             ->with(['center', 'status', 'carrier'])
+            ->select([
+                'storagelabeltrucks.id',
+                'storagelabeltrucks.centerid',
+                'storagelabeltrucks.barcode',
+                'storagelabeltrucks.carrierid',
+                'storagelabeltrucks.boxnumber',
+                'storagelabeltrucks.econumber',
+            ])
             ->ForCarrierOperator($carrier)
-            ->Label($request->get('label'))
-            ->BoxNumber($request->get('boxnumber'))
-            ->Carrier($request->get('carrierid'))
-            ->Type($request->get('typeid'))->orderBy('id', 'desc')->limit(200)->get();
+            ->Label($request->input('label'))
+            ->BoxNumber($request->input('boxnumber'))
+            ->Carrier($request->input('carrierid'))
+            ->Type($request->input('typeid'));
 
         return DataTables::of($data)
             ->addColumn('btn', 'Yards.StorageLabelTrucks.partials.buttons')

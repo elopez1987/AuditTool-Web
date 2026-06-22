@@ -14,7 +14,7 @@
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="form-group">
-                                <label for="folionumbert">Folio de patio<span style="color: red">*</span></label>
+                                <label for="folionumbert">Folio de patio</label>
                                 <input type="text" class="form-control" readonly id="folionumbert" name="folionumbert"
                                        value="{{$id}}"
                                        onKeyUp=this.value=this.value.toUpperCase()
@@ -23,35 +23,14 @@
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="form-group">
-                                <label for="operatornamet">Nombre de operador<span style="color: red">*</span></label>
-                                <input type="text" class="form-control" readonly id="operatornamet" name="operatornamet"
-                                       value="{{$operatorname}}"
-                                       onKeyUp=this.value=this.value.toUpperCase()
-                                >
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-12">
-                            <div class="form-group">
-                                <label for="boxnumbert">Placa de caja<span style="color: red">*</span></label>
+                                <label for="boxnumbert">Placa de caja</label>
                                 <input type="text" class="form-control" readonly id="boxnumbert" name="boxnumbert"
                                        value="{{$boxnumber}}"
                                        onKeyUp=this.value=this.value.toUpperCase()
                                 >
                             </div>
                         </div>
-                        <div class="col-lg-6 col-md-6 col-sm-12">
-                            <div class="form-group">
-                                <label for="trucknumbert">Placa de tracto<span style="color: red">*</span></label>
-                                <input type="text" class="form-control" readonly id="trucknumbert" name="trucknumbert"
-                                       value="{{$trucknumber}}"
-                                       onKeyUp=this.value=this.value.toUpperCase()
-                                >
-                            </div>
-                        </div>
                     </div>
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary btn-sm  waves-effect waves-light"

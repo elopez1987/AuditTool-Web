@@ -93,8 +93,8 @@ class ReceiptProvider extends Model
         $warehouses = SecurityAccessWarehouse::Warehouses();
         $centers = SecurityAccessWarehouse::Centers();
 
-        return ReceiptProvider::whereIn('warehouseid', $warehouses)
-            ->whereIn('centerid', $centers);
+        return ReceiptProvider::whereIn('receiptproviders.warehouseid', $warehouses)
+            ->whereIn('receiptproviders.centerid', $centers);
     }
 
     public function center()

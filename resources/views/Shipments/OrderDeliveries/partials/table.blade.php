@@ -15,23 +15,23 @@
             url: 'getDataSchedule',
             data: function (d) {
                 d.statusid = $('select[name=statusid]').val();
-                d.turnid = $('select[name=turnid]').val();
+                // d.turnid = $('select[name=turnid]').val();
                 d.shipmentid = $('input[name=shipmentid]').val();
                 d.workday = $('input[name=workday]').val();
             }
         },
         "columns": [
-            {data: 'warehousename'},
-            {data: 'workday'},
-            {data: 'turn',},
-            {data: 'shipmentid'},
-            {data: 'carriername', },
-            {data: 'customername'},
-            {data: 'city',},
-            {data: 'downloaddate'},
-            {data: 'confirmation'},
-            {data: 'status'},
-            {data: 'btn'},
+            {data: 'warehouse.name',name: 'warehouse.name'},
+            {data: 'workday',name: 'workday'},
+            {data: 'turns.name',name: 'turns.name'},
+            {data: 'shipmentid',name: 'shipmentid'},
+            {data: 'carrier.name',name: 'carrier.name',},
+            {data: 'customer.name',name: 'customer.name'},
+            {data: 'customer.city',name: 'customer.city',},
+            {data: 'downloaddate',name: 'downloaddate'},
+            {data: 'confirmation',name: 'confirmation'},
+            {data: 'status.name',name: 'status.name'},
+            {data: 'btn',name: 'btn'},
         ],
         "columnDefs": [
             {"width": "200px", "targets": 0},
@@ -52,23 +52,23 @@
         buttons: [
             {
                 "extend": "colvis",
-                "text": "<img src=\"{{asset('/pics/adbuscar.png')}}\"  alt=''><span  style='font-size: 11px;'> Mostar/Ocultar</span>",
+                "text": "<img src=\"{{asset('/pics/adbuscar.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span> Mostar/Ocultar</span>",
                 "className": "btn btn-outline-info btn-md  btn-bold",
                 columns: ':not(:first):not(:last)'
             },
             {
                 "extend": "copy",
-                "text": "<img src=\"{{asset('/pics/adcopiar.png')}}\"  alt=''><span  style='font-size: 11px;'> Copiar</span>",
+                "text": "<img src=\"{{asset('/pics/adcopiar.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span> Copiar</span>",
                 "className": "btn btn-outline-info btn-md  btn-bold",
             },
             {
                 "extend": "csv",
-                "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16'><span  style='font-size: 11px;'> Csv</span>",
+                "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span> Csv</span>",
                 "className": "btn btn-outline-info btn-md  btn-bold",
             },
             {
                 "extend": "excel",
-                "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt=''><span  style='font-size: 11px;'> Excel</span>",
+                "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span> Excel</span>",
                 "className": "btn btn-outline-info btn-md  btn-bold",
             }
         ],

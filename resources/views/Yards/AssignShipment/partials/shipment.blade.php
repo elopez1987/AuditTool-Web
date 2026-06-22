@@ -5,7 +5,7 @@
             <span style="font-size: 0.675rem " class="ml-3"> Agregar</span>
         </button>
     </a>
-    @include('Yards.ReceiptUnits.addshipmenttoreceiptunit')
+    @include('Yards.AssignShipment.partials.addshipmenttoreceiptunit')
 @else
     {{$shipmentid}}
 @endif

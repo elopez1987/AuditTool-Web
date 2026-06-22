@@ -45,22 +45,22 @@
                     </form>
                     <div class="row">
                         <div class="col-lg-12 col-xs-12">
-                            <table id="table-authorize" width="100%" class="table table-bordered  table-condensed">
+                            <table id="table-authorize"  class="table table-bordered  table-condensed">
                                 <thead>
                                 <tr>
-                                    <th class="bg-inverse text-white">C.Distribución</th>
-                                    <th class="bg-inverse text-white">Bodega</th>
-                                    <th class="bg-inverse text-white">Folio</th>
-                                    <th class="bg-inverse text-white">C.Barra</th>
-                                    <th class="bg-inverse text-white">Linea</th>
-                                    <th class="bg-inverse text-white">Operador</th>
-                                    <th class="bg-inverse text-white">Placa de Caja</th>
-                                    <th class="bg-inverse text-white">Placa de tracto</th>
-                                    <th class="bg-inverse text-white">Sello</th>
-                                    <th class="bg-inverse text-white">Fecha de registro</th>
-                                    <th class="bg-inverse text-white">Concepto de entrada</th>
-                                    <th class="bg-inverse text-white">Origen</th>
-                                    <th class="bg-inverse text-white">Opciones</th>
+                                    <th>C.Distribución</th>
+                                    <th>Bodega</th>
+                                    <th>Folio</th>
+                                    <th>C.Barra</th>
+                                    <th>Linea</th>
+                                    <th>Operador</th>
+                                    <th>Placa de Caja</th>
+                                    <th>Placa de tracto</th>
+                                    <th>Sello</th>
+                                    <th>Fecha de registro</th>
+                                    <th>Concepto de entrada</th>
+                                    <th>Origen</th>
+                                    <th>Opciones</th>
                                 </tr>
                                 </thead>
                             </table>

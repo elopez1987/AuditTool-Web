@@ -57,11 +57,6 @@
                                     <th class="bg-inverse text-white">Bodega</th>
                                     <th class="bg-inverse text-white">Nombre</th>
                                     <th class="bg-inverse text-white">Clave de Proveedor</th>
-                                    <th class="bg-inverse text-white">Auxiliar 01</th>
-                                    <th class="bg-inverse text-white">Auxiliar 02</th>
-                                    <th class="bg-inverse text-white">Auxiliar 03</th>
-                                    <th class="bg-inverse text-white">Auxiliar 04</th>
-                                    <th class="bg-inverse text-white">Auxiliar 05</th>
                                     <th class="bg-inverse text-white">Estatus</th>
                                     <th class="bg-inverse text-white">Opciones</th>
                                 </tr>
@@ -82,15 +77,10 @@
                         @include('Yards.ReceiptProviders.uploadfile')
                     @endcan
                 </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        @include('layouts.Partials.Errors')
-                    </div>
-                </div>
             </div>
         </div>
     </div>
-
+    @include('layouts.Partials.Errors')
 @endsection
 
 @section('css')

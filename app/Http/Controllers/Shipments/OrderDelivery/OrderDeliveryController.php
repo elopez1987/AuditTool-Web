@@ -34,37 +34,33 @@ class OrderDeliveryController extends BaseController
     {
         $this->authorize('orderdeliveries.index');
         $status = $this->getStatusForSchema('KLE');
-        $turns = $this->getTurns();
 
-        return view('Shipments.OrderDeliveries.index', compact('status', 'turns'));
+        return view('Shipments.OrderDeliveries.index', compact('status'));
     }
 
     public function getDataSchedule(Request $request)
     {
         $data = OrderDeliverie::controlAccessUser()
-            ->ForStatus($request->get('statusid'))
-            ->Shipmentid($request->get('shipmentid'))
-            ->Workday($request->get('workday'))
-            ->Turn($request->get('turnid'))
-            ->select(['s.description as centername', 's2.name as warehousename', 'orderdeliveries.id', 'orderdeliveries.workday', 's3.name as turn', 'orderdeliveries.auxiliary05 as token',
-                DB::raw("concat(orderdeliveries.shipmentid, '|', orderdeliveries.auxiliary03) as shipmentid"), 's4.name as carriername',
-                'o2.name as customername', 'o2.city', 'orderdeliveries.downloaddate', 'orderdeliveries.confirmation', 'orderdeliveries.statusid', 'orderdeliveries.evidencefile',
-                's5.name as status',
+            ->with(['status:statusid,name,auxiliary01', 'carrier:id,carrierid,name',
+                'turns:id,name', 'warehouse:warehouseid,name',
+                'customer:id,customerid,name,city'])
+            ->select([
+                'orderdeliveries.id',
+                'orderdeliveries.warehouseid',
+                'orderdeliveries.workday',
+                'orderdeliveries.turnid',
+                'orderdeliveries.shipmentid',
+                'orderdeliveries.carrierid',
+                'orderdeliveries.customerid',
+                'orderdeliveries.downloaddate',
+                'orderdeliveries.confirmation',
+                'orderdeliveries.statusid',
+                'orderdeliveries.evidencefile',
             ])
-            ->leftJoin('systemcenterdistributions as s', 'orderdeliveries.centerid', '=', 's.centerid')
-            ->leftJoin('systemwarehouses as s2', 'orderdeliveries.warehouseid', '=', 's2.warehouseid')
-            ->leftJoin('storageturns as s3', 'orderdeliveries.turnid', '=', 's3.id')
-            ->leftJoin('shipmentcarriers as s4', function ($join) {
-                $join->on('orderdeliveries.carrierid', '=', 's4.id')
-                    ->on('orderdeliveries.centerid', '=', 's4.centerid');
-            })
-            ->leftJoin('ordercustomers as o2', function ($join) {
-                $join->on('orderdeliveries.customerid', '=', 'o2.id')
-                    ->on('orderdeliveries.centerid', '=', 'o2.centerid');
-            })
-            ->leftJoin('systemstatus as s5', 'orderdeliveries.statusid', '=', 's5.statusid')
-            ->orderBy('orderdeliveries.id', 'desc')
-            ->limit(300)->get();
+            ->ForStatus($request->input('statusid'))
+            ->Shipmentid($request->input('shipmentid'))
+            ->Workday($request->input('workday'))
+            ->Turn($request->input('turnid'));
 
         return $this->showDataToView($data, 'Shipments.OrderDeliveries.partials.buttons');
     }
@@ -129,9 +125,20 @@ class OrderDeliveryController extends BaseController
         $countsTotals = Storageverificationpending::with(['status:statusid,name'])
             ->where('orderid', $orderdelivery->id)->get();
 
-        return view('Shipments.OrderDeliveries.show',
-            compact('orderdelivery', 'evidences', 'traces',
-                'conteos', 'comments', 'conteosVig', 'events', 'tracesShipment', 'countsTotals'));
+        return view(
+            'Shipments.OrderDeliveries.show',
+            compact(
+                'orderdelivery',
+                'evidences',
+                'traces',
+                'conteos',
+                'comments',
+                'conteosVig',
+                'events',
+                'tracesShipment',
+                'countsTotals'
+            )
+        );
     }
 
     public function edit(OrderDeliverie $orderdelivery)

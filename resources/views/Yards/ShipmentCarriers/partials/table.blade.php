@@ -26,9 +26,6 @@
             {data: 'warehouse.name', name: 'warehouse.name'},
             {data: 'name'},
             {data: 'carrierid'},
-            {data: 'auxiliary01'},
-            {data: 'auxiliary02'},
-            {data: 'auxiliary03'},
             {
                 data: 'status.name', name: 'status.name',
                 createdCell: function (td, cellData, rowData) {

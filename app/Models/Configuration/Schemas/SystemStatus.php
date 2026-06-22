@@ -55,10 +55,10 @@ class SystemStatus extends Model
     protected $dateFormat = 'Y-m-d H:i:s';
 
     protected $fillable = [
-        'schemaid',
-        'statusid',
         'centerid',
         'warehouseid',
+        'schemaid',
+        'statusid',
         'name',
         'comment',
         'auxiliary01',

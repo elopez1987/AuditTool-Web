@@ -43,13 +43,28 @@ class AuthorizeTransportEntriesController extends BaseController
         $data = ReceiptUnit::controlAccessUser()
             ->with(['unittype:id,description', 'warehouse:warehouseid,name',
                 'carrier:id,name', 'reason:id,name',
-                'center:centerid,description', 'status:statusid,name', 'unittype:id,description',
+                'center:centerid,description',
+                'tracto:id,operatorname,phone,trucknumber,econumber',
+                'status:statusid,name', 'unittype:id,description',
             ])
-            ->Folio($request->get('folionumber'))
-            ->BoxNumber($request->get('boxnumber'))
-            ->Barcode($request->get('barcode'))
-            ->where('receiptunits.statusid', 'ES')
-            ->get();
+            ->select([
+                'receiptunits.id',
+                'receiptunits.centerid',
+                'receiptunits.warehouseid',
+                'receiptunits.barcode',
+                'receiptunits.carrierid',
+                'receiptunits.foliotruck',
+                'receiptunits.boxnumber',
+                'receiptunits.containerseal',
+                'receiptunits.entrydate',
+                'receiptunits.razonstatusid',
+                'receiptunits.statusid',
+                'receiptunits.unittypeid',
+            ])
+            ->Folio($request->input('folionumber'))
+            ->BoxNumber($request->input('boxnumber'))
+            ->Barcode($request->input('barcode'))
+            ->where('receiptunits.statusid', 'ES');
 
         return $this->showDataToView($data, 'Yards.AuthorizeTransportEntry.partials.buttons');
     }

@@ -23,15 +23,12 @@
         "columns": [
             {data: 'id'},
             {data: 'barcode'},
-            {data: 'carriername'},
+            {data: 'carriername',name: 'carriername'},
             {data: 'boxnumber'},
             {data: 'econumber'},
-            {data: 'operatorname'},
+            {data: 'operatorname',name: 'operatorname'},
             {data: 'entrydate'},
             {data: 'shipmentbutton'},
-            // {data: 'addresponsible'},
-            // {data: 'areaname'},
-
         ],
         "order": [[2, 'desc']],
         "columnDefs": [
@@ -43,8 +40,6 @@
             {"width": "180px", "targets": 5},
             {"width": "180px", "targets": 6},
             {"width": "180px", "targets": 7},
-            // {"width": "180px", "targets": 8},
-            // {"width": "250px", "targets": 9},
         ],
         "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
         "lengthMenu": [[10, 30, 50, 100, 150, 200, 250, -1], [10, 30, 50, 100, 150, 200, 250, "Todos"]],

@@ -26,10 +26,19 @@ class OrderCustomerController extends BaseController
     {
         $data = OrderCustomer::controlAccessUser()
             ->with(['center:centerid,description', 'warehouse:warehouseid,name', 'status:statusid,name'])
-            ->Name($request->get('name'))
-            ->Shipto($request->get('shiptoid'))
-            ->Warehouse($request->get('warehouseid'))
-            ->select('ordercustomers.*');
+            ->Name($request->input('name'))
+            ->Shipto($request->input('shiptoid'))
+            ->Warehouse($request->input('warehouseid'))
+            ->select([
+                'ordercustomers.id',
+                'ordercustomers.centerid',
+                'ordercustomers.warehouseid',
+                'ordercustomers.name',
+                'ordercustomers.shiptoid',
+                'ordercustomers.city',
+                'ordercustomers.timetransfer',
+                'ordercustomers.statusid',
+            ]);
 
         return $this->showDataToView($data, "{$this->viewPath}.partials.buttons");
     }

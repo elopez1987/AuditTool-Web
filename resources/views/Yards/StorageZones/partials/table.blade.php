@@ -23,13 +23,8 @@
             {data: 'warehousename',name: 'warehousename'},
             {data: 'id'},
             {data: 'name'},
-            {data: 'zoneid'},
-            {data: 'capacity'},
             {data: 'auxiliary01'},
-            {data: 'auxiliary02'},
-            {data: 'auxiliary03'},
-            // {data: 'auxiliary04'},
-            // {data: 'auxiliary05'},
+            {data: 'capacity'},
             {
                 data: 'status.name', name: 'status.name',
                 createdCell: function (td, cellData, rowData) {

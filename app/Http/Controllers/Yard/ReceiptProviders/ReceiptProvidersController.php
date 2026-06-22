@@ -22,9 +22,16 @@ class ReceiptProvidersController extends BaseController
     {
         $data = ReceiptProvider::controlAccessUser()
             ->with(['status:statusid,name', 'center:centerid,description,name', 'warehouse:warehouseid,name'])
-            ->Name($request->get('name'))
-            ->Warehouse($request->get('warehouseid'))
-            ->get();
+            ->Name($request->input('name'))
+            ->Warehouse($request->input('warehouseid'))
+            ->select([
+                'receiptproviders.id',
+                'receiptproviders.centerid',
+                'receiptproviders.warehouseid',
+                'receiptproviders.name',
+                'receiptproviders.providerid',
+                'receiptproviders.statusid',
+            ]);
 
         return $this->showDataToView($data, 'Yards.ReceiptProviders.partials.buttons');
     }

@@ -122,7 +122,7 @@ trait Responser
         $centers = SecurityAccessWarehouse::Centers();
         $warehouses = SecurityAccessWarehouse::Warehouses();
 
-        return (new SystemWarehouse)->whereStatusid('E')
+        return SystemWarehouse::whereStatusid('E')
             ->whereIn('systemwarehouses.centerid', $centers)
             ->whereIn('systemwarehouses.warehouseid', $warehouses)
             ->select(['name', 'warehouseid'])->get();
@@ -141,11 +141,15 @@ trait Responser
     {
         $userId = auth()->id();
 
-        $centers = Cache::remember("security_centers_{$userId}", 300,
+        $centers = Cache::remember(
+            "security_centers_{$userId}",
+            300,
             fn () => SecurityAccessWarehouse::Centers()
         );
 
-        $warehouses = Cache::remember("security_warehouses_{$userId}", 300,
+        $warehouses = Cache::remember(
+            "security_warehouses_{$userId}",
+            300,
             fn () => SecurityAccessWarehouse::Warehouses()
         );
 

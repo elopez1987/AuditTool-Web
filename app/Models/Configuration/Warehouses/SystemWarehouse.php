@@ -98,7 +98,6 @@ class SystemWarehouse extends Model
     protected $hidden = [
         'created_at',
         'updated_at',
-        'schemaid',
     ];
 
     protected $attributes = [
@@ -116,8 +115,7 @@ class SystemWarehouse extends Model
     {
         $warehouses = SecurityAccessWarehouse::Warehouses();
 
-        return SystemWarehouse::whereIn('systemwarehouses.warehouseid', $warehouses)
-            ->where('systemwarehouses.statusid', 'E');
+        return SystemWarehouse::whereIn('systemwarehouses.warehouseid', $warehouses);
     }
 
     //    Relaciones
@@ -134,7 +132,7 @@ class SystemWarehouse extends Model
     //    Scopes
     public function scopeForName($query, $name)
     {
-        if (trim($name) !== '') {
+        if (trim($name) != '') {
             $query->where('systemwarehouses.name', 'like', "%{$name}%");
         }
     }

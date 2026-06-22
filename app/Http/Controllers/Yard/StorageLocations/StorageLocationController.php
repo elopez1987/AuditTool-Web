@@ -36,10 +36,10 @@ class StorageLocationController extends BaseController
                 'warehouse:warehouseid,name',
             ])
             ->select('storagelocations.*')
-            ->Name($request->get('name'))
-            ->Zone($request->get('zoneid'))
-            ->Warehouse($request->get('warehouseid'))
-            ->Status($request->get('statusid'));
+            ->Name($request->input('name'))
+            ->ForZone($request->input('zoneid'))
+            ->Warehouse($request->input('warehouseid'))
+            ->ForStatus($request->input('statusid'));
 
         return DataTables::eloquent($query)
             ->addColumn('btn', 'Yards.StorageLocations.partials.buttons')

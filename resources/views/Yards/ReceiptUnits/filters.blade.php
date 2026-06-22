@@ -8,17 +8,7 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-lg-6 col-md-6 col-sm-12 ">
-                        <div class="form-group">
-                            <label for="warehouseid">Bodega </label>
-                            <select name="warehouseid" id="warehouseid" class="form-control select2">
-                                <option value="" selected>Seleccione una opción</option>
-                                @foreach($warehouses as $warehouse)
-                                    <option value="{{$warehouse->warehouseid}}"> {{$warehouse->name}} </option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
+
                     <div class="col-lg-6 col-md-6 col-sm-12 ">
                         <div class="form-group">
                             <label for="rasonid">Concepto de entrada </label>

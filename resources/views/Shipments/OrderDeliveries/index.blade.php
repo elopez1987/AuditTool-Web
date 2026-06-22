@@ -33,36 +33,26 @@
                         <div class="row">
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="turnid">Turno<span style="color: red">*</span></label>
-                                    <select name="turnid" id="turnid" class="form-control select2">
-                                        <option value="" selected>Seleecione un valor</option>
-                                        @foreach($turns as $model)
-                                            <option value="{{$model->id}}"> {{$model->name}} </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-2 col-md-6 col-sm-12">
-                                <div class="form-group">
                                     <label for="shipmentid">Embarque</label>
                                     <input type="text" class="form-control" id="shipmentid" name="shipmentid">
                                 </div>
                             </div>
+
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="statusid">Estatus <span style="color: red">*</span></label>
+                                    <label for="workday">Fecha de trabajo</label>
+                                    <input type="text" class="form-control" id="workday" name="workday">
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="statusid">Estatus </label>
                                     <select name="statusid" id="statusid" class="form-control select2">
                                         <option value="" selected>Seleccione un valor</option>
                                         @foreach($status as $model)
                                             <option value="{{$model->statusid}}"> {{$model->name}} </option>
                                         @endforeach
                                     </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-2 col-md-6 col-sm-12">
-                                <div class="form-group">
-                                    <label for="workday">Fecha de trabajo</label>
-                                    <input type="text" class="form-control" id="workday" name="workday">
                                 </div>
                             </div>
                         </div>
@@ -80,7 +70,7 @@
                         <div class="col-lg-12">
                             <table id="table-orders"
                                    class="table table-bordered  table-condensed table-hover table-uppercase">
-                                <thead >
+                                <thead>
                                 <tr>
                                     <th class="text-white">Bodega</th>
                                     <th class="text-white">Fecha</th>
@@ -144,26 +134,22 @@
                         </a>
                         @include('Shipments.OrderDeliveries.uploadbilling')
                     @endcan
-                        @can('orderdeliveries.importcomment')
-                            <a href="" data-target="#modal-comment" data-toggle="modal" data-placement="top">
-                                <button type="button"
-                                        class="btn waves-effect waves-light btn-outline-info btn-md"
-                                        data-toggle="tooltip" data-placement="top" title="Importar archivo">
-                                    <img src="{{asset('/ico/uploadcsv.png')}}" alt="" class="img-16">
-                                    <span class="text-button"> Importar comentarios </span>
-                                </button>
-                            </a>
-                            @include('Shipments.OrderDeliveries.importcomment')
-                        @endcan
+                    @can('orderdeliveries.importcomment')
+                        <a href="" data-target="#modal-comment" data-toggle="modal" data-placement="top">
+                            <button type="button"
+                                    class="btn waves-effect waves-light btn-outline-info btn-md"
+                                    data-toggle="tooltip" data-placement="top" title="Importar archivo">
+                                <img src="{{asset('/ico/uploadcsv.png')}}" alt="" class="img-16">
+                                <span class="text-button"> Importar comentarios </span>
+                            </button>
+                        </a>
+                        @include('Shipments.OrderDeliveries.importcomment')
+                    @endcan
                 </div>
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-lg-12">
-            @include('layouts.Partials.Errors')
-        </div>
-    </div>
+    @include('layouts.Partials.Errors')
 @endsection
 
 @section('css')
@@ -175,7 +161,7 @@
 @section('script')
     <script src="{{asset('/theme/assets/libs/moment/moment.js')}}"></script>
     <script
-        src="{{asset('/theme/assets/libs/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker-custom.js')}}"></script>
+            src="{{asset('/theme/assets/libs/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker-custom.js')}}"></script>
     <script src="{{asset('/theme/assets/libs/quill/dist/quill.min.js')}}"></script>
     @include('Shipments.OrderDeliveries.partials.table')
     <script>

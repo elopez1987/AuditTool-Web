@@ -23,13 +23,13 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>{{$id}}</td>
-                                    <td>{{$barcode}}</td>
-                                    <td>{{$carriername}}</td>
-                                    <td>{{$boxnumber}}</td>
-                                    <td>{{$operatorname}}</td>
-                                </tr>
+                                    <tr>
+                                        <td>{{$id}}</td>
+                                        <td>{{$barcode}}</td>
+                                        <td>{{$carriername}}</td>
+                                        <td>{{$boxnumber}}</td>
+                                        <td>{{$operatorname}}</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
