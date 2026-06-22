@@ -20,8 +20,6 @@ trait QueryShipmentTransport
             ->whereNotIn('orderdeliveries.statusid', ['DH', 'CA', 'EJ', 'FO', 'IF', 'DT', 'SO'])
             ->Shipmentid($request->input('shipmentid'))
             ->Carrier($request->input('carrierid'))
-            ->CarrierIn($carriers)
-            ->CustomerIn($customers)
             ->select([
                 'orderdeliveries.id',
                 'orderdeliveries.shipmentid',
@@ -36,7 +34,13 @@ trait QueryShipmentTransport
                 'shipmenttransport.boxnumber',
                 'shipmenttransport.trucknumber',
                 'shipmenttransport.has_data as statustransport',
-            ]);
+            ])
+            ->when(! empty($carriers), function ($q) {
+                $q->whereIn('orderdeliveries.carrierid', $carriers);
+            })
+            ->when(! empty($customers), function ($q) {
+                $q->whereIn('orderdeliveries.customerid', $customers);
+            });
     }
 
     public function getModelTransportEdit($id)
