@@ -66,7 +66,21 @@
 
 @endsection
 
+@section('css')
+    <style>
+        #map {
+            height: 900px;
+            width: 100%;
+        }
+    </style>
+    <link rel="stylesheet" href="{{asset('/theme/assets/extra-libs/prism/prism.css')}}">
+    <link rel="stylesheet" href="{{asset('/theme/assets/libs/magnific-popup/dist/magnific-popup.css')}}">
+@endsection
+
 @section('script')
+    <script src="{{asset('theme/assets/extra-libs/prism/prism.js')}}"></script>
+    <script src="{{asset('theme/assets/libs/magnific-popup/dist/jquery.magnific-popup.min.js')}}"></script>
+    <script src="{{asset('theme/assets/libs/magnific-popup/meg.init.js')}}"></script>
     @include('Inventory.MigrationSap.table')
     <script>
         function reloadtable() {
