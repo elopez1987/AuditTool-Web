@@ -7,6 +7,7 @@ use App\Models\Shipments\OrderDeliverie;
 use App\Models\Shipments\ShipmentTransport\StorageShipmentTransport;
 use App\Models\Yard\ReceiptUnit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Log;
 
@@ -30,8 +31,8 @@ class AsssignTransportToShipmentController extends BaseController
             ->whereNotIn('statusid', ['CA', 'DH'])
             ->whereNull('folionumber')
             ->whereHas('transport', function ($query) {
-                $query->whereNull('auxiliary01')
-                    ->whereNull('auxiliary02');
+                $query->whereNull('has_data')
+                    ->whereNull('has_registered');
             })
             ->CarrierIn($carriers)
             ->get([
@@ -105,8 +106,8 @@ class AsssignTransportToShipmentController extends BaseController
             StorageShipmentTransport::controlAccessUser()
                 ->where('orderid', $shipment->id)
                 ->update([
-                    'auxiliary01' => '1',
-                    'auxiliary02' => '1',
+                    'has_registered' => 1,
+                    'has_data' => 1,
                 ]);
 
             DB::commit();
@@ -115,7 +116,13 @@ class AsssignTransportToShipmentController extends BaseController
 
         } catch (\Throwable $e) {
             DB::rollBack();
-            Log::error($e->getMessage());
+            Log::error('Error al procesar la solicitud AsssignTransportToShipmentController', [
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'user_id' => Auth::id(),
+                'trace' => $e->getTraceAsString(),
+            ]);
 
             return $this->errorResponse('Ocurrió un error al asignar el transporte');
         }

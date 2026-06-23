@@ -220,4 +220,6 @@ Route::group(['middleware' => ['role:ADMINISTRADOR']], function () {
 
     // Diccionario de label
     Route::resource('label-dictionary', UiLabelsController::class);
+
+    Route::get('logs', [LogViewerController::class, 'index']);
 });

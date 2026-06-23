@@ -89,6 +89,15 @@
                     </div>
                 </a>
             @endcan
+                @can('inventory-sap-migration')
+                    <a href="{{route('inventory-sap-migration')}}">
+                        <div class="box">
+                            <i class="lni lni-list"></i>
+                            <h5>Migración SAP</h5>
+                            <h4>Migración SAP</h4>
+                        </div>
+                    </a>
+                @endcan
 
         </div>
     </main>

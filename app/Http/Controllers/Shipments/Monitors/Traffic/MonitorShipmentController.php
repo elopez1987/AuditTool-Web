@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Shipments\Monitors\Traffic;
 use App\Http\Controllers\BaseController;
 use App\Models\Shipments\OrderDeliverie;
 use DB;
+use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class MonitorShipmentController extends BaseController
@@ -16,7 +17,7 @@ class MonitorShipmentController extends BaseController
         return view('Shipments.MonitorShipments.MonitorTrafico.index');
     }
 
-    public function getDataMonitorTrafico()
+    public function getDataMonitorTrafico(Request $request)
     {
         $data = OrderDeliverie::controlAccessUser()
             ->select([
@@ -45,6 +46,9 @@ class MonitorShipmentController extends BaseController
                     ->on('orderdeliveries.centerid', '=', 'c.centerid');
             })
             ->whereNotIn('orderdeliveries.statusid', ['DH', 'CA'])
+            ->when($request->input('shipmentid'), function ($q) use ($request) {
+                $q->where('shipmentid', $request->input('shipmentid'));
+            })
             ->whereNull('orderdeliveries.folionumber');
 
         return DataTables::of($data)->toJson();
