@@ -60,6 +60,16 @@
                 "className": "btn btn-outline-info btn-md  btn-bold",
             }
         ],
+        "drawCallback": function () {
+            $('.image-popup-vertical-fit').magnificPopup({
+                type: 'image',
+                closeOnContentClick: true,
+                mainClass: 'mfp-img-mobile',
+                image: {
+                    verticalFit: true
+                }
+            });
+        },
         language: {
             "decimal": "",
             "emptyTable": "No hay información",

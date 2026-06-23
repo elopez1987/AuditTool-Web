@@ -1,19 +1,7 @@
 @if(!empty($photo))
-    <div class="el-card-item">
-        <div class="el-card-avatar el-overlay-1">
-            <div class="el-overlay">
-                <ul class="list-style-none el-info">
-                    <li class="el-item bg-grey">
-                        <a class="btn default btn-outline image-popup-vertical-fit el-link"
-                           href="{{asset('storage/' . $photo)}}">
-                            Ver
-                            <i class="icon-magnifier"></i>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
+    <a class="btn btn-sm btn-outline-info image-popup-vertical-fit" href="{{asset('storage/' . $photo)}}" alt="Evidencia" >
+        <i class="ti ti-camera"></i> Ver foto
+    </a>
 @else
-    Sin Evidencia
+    <span class="text-muted">Sin Evidencia</span>
 @endif
