@@ -23,6 +23,15 @@
                                 </a>
                             </div>
                         </div>
+                        <hr class="mt-4">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <x-text-input
+                                        name="shipmentid"
+                                        label="Número de embarque"
+                                />
+                            </div>
+                        </div>
                     </form>
                     <hr class="m-t-1">
 

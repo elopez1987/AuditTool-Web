@@ -1,7 +1,7 @@
 <script>
     var oTable = $("#table-monitortrafico").DataTable({
         "paging": true,
-        "searching": true,
+        "searching": false,
         "ordering": true,
         "sScrollY": "650px",
         "serverSide": true,
