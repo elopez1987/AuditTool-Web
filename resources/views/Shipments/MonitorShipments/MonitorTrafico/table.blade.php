@@ -19,9 +19,9 @@
         },
         "columns": [
             {data: 'shipmentid',},
-            {data: 'customer'},
-            {data: 'city'},
-            {data: 'carrier'},
+            {data: 'customer',searchable:false,orderable:false},
+            {data: 'city',searchable:false,orderable:false},
+            {data: 'carrier',searchable:false,orderable:false},
             {data: 'loadingdate'},
             {
                 data: 'status',

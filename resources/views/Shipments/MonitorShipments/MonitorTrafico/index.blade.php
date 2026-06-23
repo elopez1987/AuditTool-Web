@@ -30,14 +30,14 @@
                         <div class="col-lg-12">
                             <table id="table-monitortrafico" class="table table-bordered  table-condensed table-hover">
                                 <thead>
-                                <tr>
-                                    <th class="bg-inverse text-white">Embarque</th>
-                                    <th class="bg-inverse text-white">Cliente</th>
-                                    <th class="bg-inverse text-white">Ciudad</th>
-                                    <th class="bg-inverse text-white">Linea de transporte</th>
-                                    <th class="bg-inverse text-white">Fecha de carga</th>
-                                    <th class="bg-inverse text-white">Estatus</th>
-                                </tr>
+                                    <tr>
+                                        <th>Embarque</th>
+                                        <th>Cliente</th>
+                                        <th>Ciudad</th>
+                                        <th>Linea de transporte</th>
+                                        <th>Fecha de carga</th>
+                                        <th>Estatus</th>
+                                    </tr>
                                 </thead>
                             </table>
                         </div>

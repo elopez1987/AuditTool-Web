@@ -236,7 +236,7 @@ class OrderDeliverie extends Model
     public function scopeTurn($query, $turnid)
     {
         if (trim($turnid) != '') {
-            $query->where('storageturns.turnid', '=', $turnid);
+            $query->where('orderdeliveries.turnid', '=', $turnid);
         }
     }
 
