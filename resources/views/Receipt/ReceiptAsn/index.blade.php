@@ -30,6 +30,13 @@
                         </div>
                         <hr class="mb-3">
                         <div class="row">
+                            <x-select2
+                                    name="warehouseid"
+                                    label="Centros de distribución"
+                                    :options="$warehouses"
+                                    valueField="warehouseid"
+                                    textField="name"
+                            />
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label for="shipmentid">{{ ui_label('receiptasn_shipmentid_index','Recibo') }} </label>
@@ -107,7 +114,7 @@
         }
     </script>
     <script>
-        $("#statusid").change(function () {
+        $("#statusid,#warehouseid").change(function () {
             reloadtable();
         });
         $("#folionumber,#oc,#shipmentid").blur(function () {

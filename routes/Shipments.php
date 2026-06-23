@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Shipments\AsignarTransporte\AsssignTransportToShipmentController;
 use App\Http\Controllers\Shipments\Bridgestone\StorageShipmentFoliosController;
 use App\Http\Controllers\Shipments\Bridgestone\StorageVerificationPendingController;
 use App\Http\Controllers\Shipments\CategoryIncidences\StorageCategoryIncidenceDetailController;
@@ -382,5 +383,9 @@ Route::middleware(['auth'])->group(function () {
 
     //	Reabrir conteo
     Route::put('reopencount-orderdelivery/{id}', [StorageVerificationPendingController::class, 'update'])->name('reopencount-orderdelivery');
+
+    //	Asingar transporte a embarques por la línea de transporte
+    Route::resource('asssigntransporttoshipment', AsssignTransportToShipmentController::class)->only(['index', 'edit', 'update']);
+    Route::get('getShipmentsForUnassignedTransport', [AsssignTransportToShipmentController::class, 'getShipmentsForUnassignedTransport'])->name('getShipmentsForUnassignedTransport');
 
 });

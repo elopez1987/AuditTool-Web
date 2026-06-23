@@ -14,9 +14,6 @@
         "ajax": {
             url: 'getDataStorageReceiptPeriod',
             data: function (d) {
-                // d.shipmentid = $('input[name=shipmentid]').val();
-                // d.oc = $('input[name=oc]').val();
-                // d.folionumber = $('input[name=folionumber]').val();
                 d.statusid = $('select[name=statusid]').val();
             }
         },
@@ -38,13 +35,13 @@
             {data: 'btn'},
         ],
         "columnDefs": [
-            {"width": "180px", "targets": 0},
-            {"width": "180px", "targets": 1},
-            {"width": "180px", "targets": 2},
-            {"width": "180px", "targets": 3},
-            {"width": "180px", "targets": 4},
-            {"width": "180px", "targets": 5},
-            {"width": "180px", "targets": 6},
+            {"width": "280px", "targets": 0},
+            {"width": "280px", "targets": 1},
+            {"width": "280px", "targets": 2},
+            {"width": "280px", "targets": 3},
+            {"width": "280px", "targets": 4},
+            {"width": "280px", "targets": 5},
+            {"width": "280px", "targets": 6},
         ],
 
         "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',

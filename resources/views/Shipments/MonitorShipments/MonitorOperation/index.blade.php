@@ -55,7 +55,7 @@
 
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="statusid">Estatus <span style="color: red">*</span></label>
+                                    <label for="statusid">Estatus</label>
                                     <select name="statusid[]" id="statusid" class="form-control select2"
                                             multiple="multiple">
                                         @foreach($status as $model)
@@ -86,8 +86,7 @@
                     <hr class="mt-3 mb-3">
                     <div class="row">
                         <div class="col-lg-8">
-                            <table id="table-monitortrafico"
-                                   class="table table-bordered table-striped table-condensed table-hover">
+                            <table id="table-monitortrafico" class="table table-bordered  table-condensed table-hover">
                                 <thead>
                                 <tr>
                                     <th class="bg-inverse text-white">Embarque</th>
@@ -107,7 +106,7 @@
                             </table>
                         </div>
                         <div class="col-lg-4">
-                            <table class="table table-bordered table-striped table-condensed table-hover tablegeneral"
+                            <table class="table table-bordered table-condensed table-hover tablegeneral"
                                    width="100%">
                                 <thead>
                                 <tr>
@@ -139,7 +138,7 @@
 
                     <div class="row">
                         <div class="col-lg-6">
-                            <table class="table table-bordered table-striped table-condensed table-hover tablegeneral"
+                            <table class="table table-bordered table-condensed table-hover tablegeneral"
                                    width="100%">
                                 <thead>
                                 <tr>
@@ -174,7 +173,7 @@
                             </table>
                         </div>
                         <div class="col-lg-6">
-                            <table class="table table-bordered table-striped table-condensed table-hover tablegeneral"
+                            <table class="table table-bordered  table-condensed table-hover tablegeneral"
                                    width="100%">
                                 <thead>
                                 <tr>

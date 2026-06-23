@@ -167,6 +167,17 @@
                 </a>
             @endcan
 
+            @can('asssigntransporttoshipment.index')
+                <a href="{{route('asssigntransporttoshipment.index')}}">
+                    <div class="box" data-toggle="tooltip" data-placement="top"
+                         title="Valide el estatus de su transporte en base a su cita de carga en el centro de distribución.">
+                        <i class="lni lni-train"></i>
+                        <h5>Asignar transporte</h5>
+                        <h4>Asignar transporte</h4>
+                    </div>
+                </a>
+            @endcan
+
             @can('inventorybox.index')
                 <a href="{{route('inventorybox.index')}}">
                     <div class="box" data-toggle="tooltip" data-placement="top"
@@ -187,9 +198,6 @@
                     </div>
                 </a>
             @endcan
-
-
-
 
             @can('storagelabeltrucks.index')
                 <a href="{{route('storagelabeltrucks.index')}}">
@@ -299,26 +307,26 @@
                     </div>
                 </a>
             @endcan
-                @can('adjustmentbox')
-                    <a href="{{route('adjustmentbox')}}">
-                        <div class="box" data-toggle="tooltip" data-placement="top"
-                             title="Realiza la salida de unidad por ajuste de inventario de su patio.">
-                            <i class="lni lni-shift-right"></i>
-                            <h5>Salida directa</h5>
-                            <h4>Salida directa</h4>
-                        </div>
-                    </a>
-                @endcan
-                @can('receiptunits.adjustmentunit')
-                    <a href="{{route('adjustmentunit')}}">
-                        <div class="box" data-toggle="tooltip" data-placement="top"
-                             title="Actualice valores de las unidades registradas.">
-                            <i class="lni lni-files"></i>
-                            <h5>Ajuste de unidad</h5>
-                            <h4>Ajuste de unidad</h4>
-                        </div>
-                    </a>
-                @endcan
+            @can('adjustmentbox')
+                <a href="{{route('adjustmentbox')}}">
+                    <div class="box" data-toggle="tooltip" data-placement="top"
+                         title="Realiza la salida de unidad por ajuste de inventario de su patio.">
+                        <i class="lni lni-shift-right"></i>
+                        <h5>Salida directa</h5>
+                        <h4>Salida directa</h4>
+                    </div>
+                </a>
+            @endcan
+            @can('receiptunits.adjustmentunit')
+                <a href="{{route('adjustmentunit')}}">
+                    <div class="box" data-toggle="tooltip" data-placement="top"
+                         title="Actualice valores de las unidades registradas.">
+                        <i class="lni lni-files"></i>
+                        <h5>Ajuste de unidad</h5>
+                        <h4>Ajuste de unidad</h4>
+                    </div>
+                </a>
+            @endcan
         </div>
 
         <h5 class="name-menu"> Catalogos</h5>
@@ -333,126 +341,126 @@
                     </div>
                 </a>
             @endcan
-                @can('storageareas.index')
-                    <a href="{{route('storageareas.index')}}">
-                        <div class="box" data-toggle="tooltip" data-placement="top"
-                             title="Catalogo de los diferentes tipos de check list que se usan en los diferentes modulos del sistema.">
-                            <i class="lni lni-text-align-left"></i>
-                            <h5>Areas</h5>
-                            <h4>Areas</h4>
-                        </div>
-                    </a>
-                @endcan
-                @can('storageunittypes.index')
-                    <a href="{{route('storageunittypes.index')}}">
-                        <div class="box" data-toggle="tooltip" data-placement="top"
-                             title="Catalogo de los diferentes tipos de check list que se usan en los diferentes modulos del sistema.">
-                            <i class="lni lni-text-align-left"></i>
-                            <h5>Origenes</h5>
-                            <h4>Origenes</h4>
-                        </div>
-                    </a>
-                @endcan
-                @can('shipmenttrucks.index')
-                    <a href="{{route('shipmenttrucks.index')}}">
-                        <div class="box" data-toggle="tooltip" data-placement="top"
-                             title="Catalogo de tipos de unidad (Capacidad)">
-                            <i class="lni lni-library"></i>
-                            <h5>Tipos de Unidad</h5>
-                            <h4>Tipos de Unidad</h4>
-                        </div>
-                    </a>
-                @endcan
-                @can('storageoperators.index')
-                    <a href="{{route('storageoperators.index')}}">
-                        <div class="box" data-toggle="tooltip" data-placement="top"
-                             title="Catalogo de operadores registrados en sistema.">
-                            <i class="lni lni-layout"></i>
-                            <h5>Operadores</h5>
-                            <h4>Operadores</h4>
-                        </div>
-                    </a>
-                @endcan
-                @can('receiptproviders.index')
-                    <a href="{{route('receiptproviders.index')}}">
-                        <div class="box" data-toggle="tooltip" data-placement="top"
-                             title="Catalogo de proveedores para el modulo de recibo de material.">
-                            <i class="lni lni-users"></i>
-                            <h5>Proveedores</h5>
-                            <h4>Proveedores</h4>
-                        </div>
-                    </a>
-                @endcan
-                @can('shipmentcarriers.index')
-                    <a href="{{route('shipmentcarriers.index')}}">
-                        <div class="box" data-toggle="tooltip" data-placement="top"
-                             title="Catalogo de lineas de transporte, permite la alta,baja,actualización y parametrización de cada registro.">
-                            <i class="lni lni-layout"></i>
-                            <h5>Lineas de Trans.</h5>
-                            <h4>Lineas de Trans.</h4>
-                        </div>
-                    </a>
-                @endcan
-                @can('shipmenttruckcategories.index')
-                    <a href="{{route('shipmenttruckcategories.index')}}">
-                        <div class="box" data-toggle="tooltip" data-placement="top"
-                             title="Catalogo de categorias de transporte (Tipos), permite la alta,baja,actualización y parametrización de cada registro.">
-                            <i class="lni lni-notepad"></i>
-                            <h5>Categ. de Trans.</h5>
-                            <h4>Categ. de Trans.</h4>
-                        </div>
-                    </a>
-                @endcan
-                @can('storagezones.index')
-                    <a href="{{route('storagezones.index')}}">
-                        <div class="box" data-toggle="tooltip" data-placement="top"
-                             title="Catalogo de zonas en las cuales se encuentra dividio el patio de maniobras, cortinas, patios, precargas, etc.">
-                            <i class="lni lni-grid"></i>
-                            <h5>Zonas.</h5>
-                            <h4>Zonas.</h4>
-                        </div>
-                    </a>
-                @endcan
-                @can('storagelocations.index')
-                    <a href="{{route('storagelocations.index')}}">
-                        <div class="box" data-toggle="tooltip" data-placement="top"
-                             title="Catalogo de ubicaciones del patio de maniobras.">
-                            <i class="lni lni-stop"></i>
-                            <h5>Ubicaciones</h5>
-                            <h4>Ubicaciones</h4>
-                        </div>
-                    </a>
-                @endcan
-                @can('storageunitstatus.index')
-                    <a href="{{route('storageunitstatus.index')}}">
-                        <div class="box" data-toggle="tooltip" data-placement="top"
-                             title="Catalogo de estatus de unidades.">
-                            <i class="lni lni-radio-button"></i>
-                            <h5>Est. De Unidad</h5>
-                            <h4>Est. De Unidad</h4>
-                        </div>
-                    </a>
-                @endcan
-                @can('storagechecklists.index')
-                    <a href="{{route('storagechecklists.index')}}">
-                        <div class="box" data-toggle="tooltip" data-placement="top"
-                             title="Catalogo de los diferentes tipos de check list que se usan en los diferentes modulos del sistema.">
-                            <i class="lni lni-text-align-left "></i>
-                            <h5>Check List</h5>
-                            <h4>Check List</h4>
-                        </div>
-                    </a>
-                @endcan
-                @can('storagesealloto.index')
-                    <a href="{{route('storagesealloto.index')}}">
-                        <div class="box" data-toggle="tooltip" data-placement="top"
-                             title="Catalogo de etiquetas de cajas y tractos registrados en sistema.">
-                            <i class="lni lni-lock"></i>
-                            <h5>Candados LOTO</h5>
-                            <h4>Candados LOTO</h4>
-                        </div>
-                    </a>
-                @endcan
+            @can('storageareas.index')
+                <a href="{{route('storageareas.index')}}">
+                    <div class="box" data-toggle="tooltip" data-placement="top"
+                         title="Catalogo de los diferentes tipos de check list que se usan en los diferentes modulos del sistema.">
+                        <i class="lni lni-text-align-left"></i>
+                        <h5>Areas</h5>
+                        <h4>Areas</h4>
+                    </div>
+                </a>
+            @endcan
+            @can('storageunittypes.index')
+                <a href="{{route('storageunittypes.index')}}">
+                    <div class="box" data-toggle="tooltip" data-placement="top"
+                         title="Catalogo de los diferentes tipos de check list que se usan en los diferentes modulos del sistema.">
+                        <i class="lni lni-text-align-left"></i>
+                        <h5>Origenes</h5>
+                        <h4>Origenes</h4>
+                    </div>
+                </a>
+            @endcan
+            @can('shipmenttrucks.index')
+                <a href="{{route('shipmenttrucks.index')}}">
+                    <div class="box" data-toggle="tooltip" data-placement="top"
+                         title="Catalogo de tipos de unidad (Capacidad)">
+                        <i class="lni lni-library"></i>
+                        <h5>Tipos de Unidad</h5>
+                        <h4>Tipos de Unidad</h4>
+                    </div>
+                </a>
+            @endcan
+            @can('storageoperators.index')
+                <a href="{{route('storageoperators.index')}}">
+                    <div class="box" data-toggle="tooltip" data-placement="top"
+                         title="Catalogo de operadores registrados en sistema.">
+                        <i class="lni lni-layout"></i>
+                        <h5>Operadores</h5>
+                        <h4>Operadores</h4>
+                    </div>
+                </a>
+            @endcan
+            @can('receiptproviders.index')
+                <a href="{{route('receiptproviders.index')}}">
+                    <div class="box" data-toggle="tooltip" data-placement="top"
+                         title="Catalogo de proveedores para el modulo de recibo de material.">
+                        <i class="lni lni-users"></i>
+                        <h5>Proveedores</h5>
+                        <h4>Proveedores</h4>
+                    </div>
+                </a>
+            @endcan
+            @can('shipmentcarriers.index')
+                <a href="{{route('shipmentcarriers.index')}}">
+                    <div class="box" data-toggle="tooltip" data-placement="top"
+                         title="Catalogo de lineas de transporte, permite la alta,baja,actualización y parametrización de cada registro.">
+                        <i class="lni lni-layout"></i>
+                        <h5>Lineas de Trans.</h5>
+                        <h4>Lineas de Trans.</h4>
+                    </div>
+                </a>
+            @endcan
+            @can('shipmenttruckcategories.index')
+                <a href="{{route('shipmenttruckcategories.index')}}">
+                    <div class="box" data-toggle="tooltip" data-placement="top"
+                         title="Catalogo de categorias de transporte (Tipos), permite la alta,baja,actualización y parametrización de cada registro.">
+                        <i class="lni lni-notepad"></i>
+                        <h5>Categ. de Trans.</h5>
+                        <h4>Categ. de Trans.</h4>
+                    </div>
+                </a>
+            @endcan
+            @can('storagezones.index')
+                <a href="{{route('storagezones.index')}}">
+                    <div class="box" data-toggle="tooltip" data-placement="top"
+                         title="Catalogo de zonas en las cuales se encuentra dividio el patio de maniobras, cortinas, patios, precargas, etc.">
+                        <i class="lni lni-grid"></i>
+                        <h5>Zonas.</h5>
+                        <h4>Zonas.</h4>
+                    </div>
+                </a>
+            @endcan
+            @can('storagelocations.index')
+                <a href="{{route('storagelocations.index')}}">
+                    <div class="box" data-toggle="tooltip" data-placement="top"
+                         title="Catalogo de ubicaciones del patio de maniobras.">
+                        <i class="lni lni-stop"></i>
+                        <h5>Ubicaciones</h5>
+                        <h4>Ubicaciones</h4>
+                    </div>
+                </a>
+            @endcan
+            @can('storageunitstatus.index')
+                <a href="{{route('storageunitstatus.index')}}">
+                    <div class="box" data-toggle="tooltip" data-placement="top"
+                         title="Catalogo de estatus de unidades.">
+                        <i class="lni lni-radio-button"></i>
+                        <h5>Est. De Unidad</h5>
+                        <h4>Est. De Unidad</h4>
+                    </div>
+                </a>
+            @endcan
+            @can('storagechecklists.index')
+                <a href="{{route('storagechecklists.index')}}">
+                    <div class="box" data-toggle="tooltip" data-placement="top"
+                         title="Catalogo de los diferentes tipos de check list que se usan en los diferentes modulos del sistema.">
+                        <i class="lni lni-text-align-left "></i>
+                        <h5>Check List</h5>
+                        <h4>Check List</h4>
+                    </div>
+                </a>
+            @endcan
+            @can('storagesealloto.index')
+                <a href="{{route('storagesealloto.index')}}">
+                    <div class="box" data-toggle="tooltip" data-placement="top"
+                         title="Catalogo de etiquetas de cajas y tractos registrados en sistema.">
+                        <i class="lni lni-lock"></i>
+                        <h5>Candados LOTO</h5>
+                        <h4>Candados LOTO</h4>
+                    </div>
+                </a>
+            @endcan
 
         </div>
     </main>

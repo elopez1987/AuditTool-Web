@@ -18,7 +18,7 @@ class StorageShipmentTransportsController extends BaseController
     {
         $this->authorize('datatransport.index');
         $carriers = $this->getCarriersForSelect();
-
+		
         return view('Shipments.StorageShipmenTransport.index', compact('carriers'));
     }
 

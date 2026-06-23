@@ -25,7 +25,17 @@ class StorageReceiptPeriodsController extends BaseController
     public function getDataStorageReceiptPeriod(Request $request)
     {
         $this->authorize('storagereceiptperiods.index');
-        $data = StorageReceiptPeriod::controlAccessUser()->with(['center', 'warehouse', 'status'])
+        $data = StorageReceiptPeriod::controlAccessUser()
+            ->with(['center:centerid,name,description', 'warehouse:warehouseid,name', 'status:statusid,name,auxiliary01'])
+            ->select([
+                'storagereceiptperiods.id',
+                'storagereceiptperiods.centerid',
+                'storagereceiptperiods.warehouseid',
+                'storagereceiptperiods.name',
+                'storagereceiptperiods.startdate',
+                'storagereceiptperiods.finishdate',
+                'storagereceiptperiods.statusid',
+            ])
             ->Name($request->get('name'))->get();
 
         return $this->showDataToView($data, 'Receipt.StorageReceiptPeriod.partials.buttons');
@@ -90,7 +100,9 @@ class StorageReceiptPeriodsController extends BaseController
     {
         $this->authorize('storagereceiptperiods.show');
         $status = $this->getStatusForSchema('EPR');
-        $periods = StorageReceiptPeriod::controlAccessUser()->where('id', $id)->first();
+        $periods = StorageReceiptPeriod::controlAccessUser()
+            ->with(['status:statusid,name,auxiliary01'])
+            ->where('id', $id)->first();
         $detalle = StorageSchedulleReceipt::controlAccessUser()
             ->with(['center', 'warehouse', 'status', 'statussecuence', 'receipt', 'period'])
             ->where('periodid', $id)->get();

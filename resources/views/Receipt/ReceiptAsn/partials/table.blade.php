@@ -1,7 +1,7 @@
 <script>
     var oTable = $("#table-receipts").DataTable({
         "paging": true,
-        "searching": true,
+        "searching": false,
         "ordering": true,
         "sScrollY": "400px",
         "serverSide": true,
@@ -18,6 +18,7 @@
                 d.oc = $('input[name=oc]').val();
                 d.folionumber = $('input[name=folionumber]').val();
                 d.statusid = $('select[name=statusid]').val();
+                d.warehouseid = $('select[name=warehouseid]').val();
             }
         },
         order: [[2, 'desc']],
@@ -82,23 +83,23 @@
         buttons: [
             {
                 "extend": "colvis",
-                "text": "<img src=\"{{asset('/pics/adbuscar.png')}}\"  alt=''><span  style='font-size: 11px;'> Mostar/Ocultar</span>",
+                "text": "<img src=\"{{asset('/pics/adbuscar.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span> Mostar/Ocultar</span>",
                 "className": "btn btn-outline-info btn-md  btn-bold",
                 columns: ':not(:first):not(:last)'
             },
             {
                 "extend": "copy",
-                "text": "<img src=\"{{asset('/pics/adcopiar.png')}}\"  alt=''><span  style='font-size: 11px;'> Copiar</span>",
+                "text": "<img src=\"{{asset('/pics/adcopiar.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span> Copiar</span>",
                 "className": "btn btn-outline-info btn-md  btn-bold",
             },
             {
                 "extend": "csv",
-                "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16'><span  style='font-size: 11px;'> Csv</span>",
+                "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span> Csv</span>",
                 "className": "btn btn-outline-info btn-md  btn-bold",
             },
             {
                 "extend": "excel",
-                "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt=''><span  style='font-size: 11px;'> Excel</span>",
+                "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span> Excel</span>",
                 "className": "btn btn-outline-info btn-md  btn-bold",
             }
         ],

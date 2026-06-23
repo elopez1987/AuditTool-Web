@@ -35,16 +35,16 @@
                     </div>
                 </a>
             @endcan
-                @can('monitoroperation.index')
-                    <a href="{{route('monitoroperation.index')}}">
-                        <div class="box" data-toggle="tooltip" data-placement="top"
-                             title="Realice su seguimiento de eventos logisticos de cada embarque, proceso de verificación,etc.">
-                            <i class="lni lni-display-alt"></i>
-                            <h5>Monitor Operativo</h5>
-                            <h4>Monitor Operativo</h4>
-                        </div>
-                    </a>
-                @endcan
+            @can('monitoroperation.index')
+                <a href="{{route('monitoroperation.index')}}">
+                    <div class="box" data-toggle="tooltip" data-placement="top"
+                         title="Realice su seguimiento de eventos logisticos de cada embarque, proceso de verificación,etc.">
+                        <i class="lni lni-display-alt"></i>
+                        <h5>Monitor Operativo</h5>
+                        <h4>Monitor Operativo</h4>
+                    </div>
+                </a>
+            @endcan
             @can('monitoranalistatrafico.index')
                 <a href="{{route('monitor-customer-service')}}">
                     <div class="box" data-toggle="tooltip" data-placement="top"
@@ -184,57 +184,57 @@
         </div>
 
         @can('storageevidenceprocess.index')
-        <h5 class="name-menu"> Embarques</h5>
-        <div class="container__box">
-            @can('storageevidenceprocess.index')
-                <a href="{{route('storageevidenceprocess.index')}}">
-                    <div class="box">
-                        <i class="lni lni-travel"></i>
-                        <h5>Embarques</h5>
-                        <h4>Embarques</h4>
-                    </div>
-                </a>
-            @endcan
-            @can('storageevidenceprocess.dashboard')
-                <a href="{{route('storageevidenceprocess.dashboard')}}">
-                    <div class="box">
-                        <i class="lni lni-dashboard"></i>
-                        <h5>Seguimiento Emb.</h5>
-                        <h4>Seguimiento Emb.</h4>
-                    </div>
-                </a>
-            @endcan
+            <h5 class="name-menu"> Embarques</h5>
+            <div class="container__box">
+                @can('storageevidenceprocess.index')
+                    <a href="{{route('storageevidenceprocess.index')}}">
+                        <div class="box">
+                            <i class="lni lni-travel"></i>
+                            <h5>Embarques</h5>
+                            <h4>Embarques</h4>
+                        </div>
+                    </a>
+                @endcan
+                @can('storageevidenceprocess.dashboard')
+                    <a href="{{route('storageevidenceprocess.dashboard')}}">
+                        <div class="box">
+                            <i class="lni lni-dashboard"></i>
+                            <h5>Seguimiento Emb.</h5>
+                            <h4>Seguimiento Emb.</h4>
+                        </div>
+                    </a>
+                @endcan
 
-            @can('reportevidence.index')
-                <a href="{{route('reportevidence.index')}}">
-                    <div class="box">
-                        <i class="lni lni-select"></i>
-                        <h5>Reporte Embarque</h5>
-                        <h4>Reporte Embarque</h4>
-                    </div>
-                </a>
-            @endcan
+                @can('reportevidence.index')
+                    <a href="{{route('reportevidence.index')}}">
+                        <div class="box">
+                            <i class="lni lni-select"></i>
+                            <h5>Reporte Embarque</h5>
+                            <h4>Reporte Embarque</h4>
+                        </div>
+                    </a>
+                @endcan
 
-            @can('reportauditshipments.index')
-                <a href="{{route('reportauditshipments.index')}}">
-                    <div class="box">
-                        <i class="lni lni-search"></i>
-                        <h5>Reporte Auditoria</h5>
-                        <h4>Reporte Auditoria</h4>
-                    </div>
-                </a>
-            @endcan
+                @can('reportauditshipments.index')
+                    <a href="{{route('reportauditshipments.index')}}">
+                        <div class="box">
+                            <i class="lni lni-search"></i>
+                            <h5>Reporte Auditoria</h5>
+                            <h4>Reporte Auditoria</h4>
+                        </div>
+                    </a>
+                @endcan
 
-            @can('reportauditshipments.dashboard')
-                <a href="{{route('reportdashboard')}}">
-                    <div class="box">
-                        <i class="lni lni-layout"></i>
-                        <h5>Seguimiento DC</h5>
-                        <h4>Seguimiento DC</h4>
-                    </div>
-                </a>
-            @endcan
-        </div>
+                @can('reportauditshipments.dashboard')
+                    <a href="{{route('reportdashboard')}}">
+                        <div class="box">
+                            <i class="lni lni-layout"></i>
+                            <h5>Seguimiento DC</h5>
+                            <h4>Seguimiento DC</h4>
+                        </div>
+                    </a>
+                @endcan
+            </div>
         @endcan
 
 
@@ -355,16 +355,17 @@
                     </div>
                 </a>
             @endcan
-                @can('storagedoorstage.index')
-                    <a href="{{route('storagedoorstage.index')}}">
-                        <div class="box" data-toggle="tooltip" data-placement="top"
-                             title="Catálogo de categorias de incidencia en los modulos de recibo y embarques.">
-                            <i class="lni lni-layers"></i>
-                            <h5>Cortinas / Stages</h5>
-                            <h4>Cortinas / Stages</h4>
-                        </div>
-                    </a>
-                @endcan
+            @can('storagedoorstage.index')
+                <a href="{{route('storagedoorstage.index')}}">
+                    <div class="box" data-toggle="tooltip" data-placement="top"
+                         title="Catálogo de categorias de incidencia en los modulos de recibo y embarques.">
+                        <i class="lni lni-layers"></i>
+                        <h5>Cortinas / Stages</h5>
+                        <h4>Cortinas / Stages</h4>
+                    </div>
+                </a>
+            @endcan
+
         </div>
     </main>
 

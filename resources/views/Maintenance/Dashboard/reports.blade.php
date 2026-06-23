@@ -18,7 +18,7 @@
                                             title="Regresar a la pagina principal"
                                     >
                                         <img src="{{asset('/ico/adexportar.png')}}" alt="" class="img-16">
-                                        <span style="font-size: 0.675rem  !important;"> Exportar</span>
+                                        <span > Exportar</span>
                                     </button>
                                 </a>
                                 <a href="{{route('menushipment')}}" class=" m-1">
