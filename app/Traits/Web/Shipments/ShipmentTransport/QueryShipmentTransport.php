@@ -2,15 +2,20 @@
 
 namespace App\Traits\Web\Shipments\ShipmentTransport;
 
+use App\Models\Security\Users\AccessCarrier;
+use App\Models\Security\Users\SecurityAccessCustomer;
 use App\Models\Shipments\OrderDeliverie;
 use App\Models\Shipments\ShipmentTransport\StorageShipmentTransport;
+use Auth;
 
 trait QueryShipmentTransport
 {
     public function getShipmentInProcess($request)
     {
-        $carriers = $this->getCarrierForUser();
-        $customers = $this->getCustomerForUser();
+        $carriers = AccessCarrier::where('username', Auth::user()->username)
+            ->select('carrierid')->get()->toArray();
+        $customers = SecurityAccessCustomer::where('username', '=', Auth::user()->username)
+            ->select('customerid')->get()->toArray();
 
         return OrderDeliverie::controlAccessUser()
             ->leftJoin('ordercustomers', 'orderdeliveries.customerid', '=', 'ordercustomers.id')
@@ -20,8 +25,6 @@ trait QueryShipmentTransport
             ->whereNotIn('orderdeliveries.statusid', ['DH', 'CA', 'EJ', 'FO', 'IF', 'DT', 'SO'])
             ->Shipmentid($request->input('shipmentid'))
             ->Carrier($request->input('carrierid'))
-            ->CarrierIn($carriers)
-            ->CustomerIn($customers)
             ->select([
                 'orderdeliveries.id',
                 'orderdeliveries.shipmentid',
@@ -36,7 +39,13 @@ trait QueryShipmentTransport
                 'shipmenttransport.boxnumber',
                 'shipmenttransport.trucknumber',
                 'shipmenttransport.has_data as statustransport',
-            ]);
+            ])
+            ->when(! empty($carriers), function ($q) use ($carriers) {
+                $q->whereIn('orderdeliveries.carrierid', $carriers);
+            })
+            ->when(! empty($customers), function ($q) use ($customers) {
+                $q->whereIn('orderdeliveries.customerid', $customers);
+            });
     }
 
     public function getModelTransportEdit($id)

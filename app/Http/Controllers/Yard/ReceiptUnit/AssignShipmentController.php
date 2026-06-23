@@ -12,6 +12,7 @@ use App\Models\Yard\StorageUnitTrace;
 use DB;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -26,6 +27,7 @@ class AssignShipmentController extends BaseController
 
     public function getDataTransport()
     {
+        $carriers = $this->getCarrierForUser();
         $data = ReceiptUnit::controlAccessUser()
             ->leftjoin('shipmentcarriers', 'receiptunits.carrierid', '=', 'shipmentcarriers.id')
             ->leftJoin('receipttrucks', 'receiptunits.foliotruck', '=', 'receipttrucks.id')
@@ -34,6 +36,9 @@ class AssignShipmentController extends BaseController
             ->Barcode(request('barcode'))
             ->BoxNumber(request('boxnumber'))
             ->whereNotIn('receiptunits.statusid', ['TR', 'OU'])
+            ->when(! empty($carriers), function ($query) use ($carriers) {
+                $query->whereIn('receiptunits.carrierid', $carriers);
+            })
             ->select([
                 'receiptunits.id',
                 'receiptunits.barcode',
@@ -71,7 +76,8 @@ class AssignShipmentController extends BaseController
                 }
 
                 // 2. Validar existencia del embarque
-                $shipment = OrderDeliverie::controlAccessUser()->where('shipmentid', $request->shipmentid)->first();
+                $shipment = OrderDeliverie::controlAccessUser()->where('shipmentid', $request->shipmentid)
+                    ->select('id', 'shipmentid', 'folionumber', 'carrierid', 'customerid')->first();
                 if (! $shipment) {
                     return $this->errorResponse('El número de embarque no existe, favor de validar');
                 }
@@ -86,12 +92,12 @@ class AssignShipmentController extends BaseController
                     ->where('orderid', $shipment->id)
                     ->first();
 
-                if (optional($shipmenttransport)->auxiliary01 == '1') {
+                if (optional($shipmenttransport)->has_registered == '1') {
                     return $this->errorResponse('El embarque ya cuenta con transporte, favor de validar');
                 }
 
                 // Si todo está correcto, actualiza todo lo relacionado al embarque
-                $this->updateOrderForAssingShipmentToUnit($shipment, $receiptunit);
+                $this->updateOrderForAssignShipmentToUnit($shipment, $receiptunit);
                 $this->updateTransportForAssignShipmentToUnit($shipmenttransport, $receiptunit);
             }
 
@@ -107,7 +113,13 @@ class AssignShipmentController extends BaseController
 
         } catch (Exception $e) {
             DB::rollBack();
-            Log::error($e->getMessage());
+            Log::error('Error al procesar la solicitud', [
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'user_id' => Auth::id(),
+                'trace' => $e->getTraceAsString(),
+            ]);
 
             return $this->errorResponse('Error al procesar la solicitud: ' . $e->getMessage());
         }
@@ -115,30 +127,42 @@ class AssignShipmentController extends BaseController
 
     private function updateUnitForAssignShipment($receiptunit, $request)
     {
-        $receiptunit->shipmentid = $request['shipmentid'];
-        $receiptunit->save();
+        $receiptunit->update([
+            'shipmentid' => $request['shipmentid'],
+        ]);
+
     }
 
     private function updateTransportForAssignShipmentToUnit($shipmenttransport, $unit)
     {
-        $shipmenttransport->operatorname = $unit->operatorname;
-        $shipmenttransport->boxnumber = $unit->boxnumber;
-        $shipmenttransport->auxiliary01 = '1';
-        $shipmenttransport->auxiliary02 = '1';
-        $shipmenttransport->save();
+        $shipmenttransport->update([
+            'operatorname' => $unit->operatorname,
+            'boxnumber' => $unit->boxnumber,
+            'has_registered' => '1',
+            'has_assigned' => '1',
+        ]);
     }
 
-    private function updateOrderForAssingShipmentToUnit($shipment, $receiptunit)
+    private function updateOrderForAssignShipmentToUnit($shipment, ReceiptUnit $receiptUnit): void
     {
-        $shipment->folionumber = $receiptunit->id;
-        $shipment->save();
+        $shipment->update([
+            'folionumber' => $receiptUnit->id,
+        ]);
 
-        $receiptData = ReceiptUnitData::where('folionumber', $receiptunit->id)->first();
-        if (! empty($receiptData)) {
-            $customer = OrderCustomer::where('id', $shipment->customerid)->first();
-            $receiptData->customername = $customer->name;
-            $receiptData->save();
+        $receiptData = ReceiptUnitData::where('folionumber', $receiptUnit->id)->first();
+
+        if (is_null($receiptData)) {
+            return;
         }
 
+        $customer = OrderCustomer::find($shipment->customerid);
+
+        if (is_null($customer)) {
+            return;
+        }
+
+        $receiptData->update([
+            'customername' => $customer->name,
+        ]);
     }
 }

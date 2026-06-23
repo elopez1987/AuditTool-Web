@@ -12,11 +12,6 @@
                         {{csrf_field()}}
                         <div class="row">
                             <div class="col-md-12">
-                                @can('storagereceiptperiods.create')
-                                    <a href="{{route('storagereceiptperiods.create')}}">
-                                        @include('buttons.add')
-                                    </a>
-                                @endcan
                                 <a href="">
                                     @include('buttons.search')
                                 </a>
@@ -38,7 +33,7 @@
                             </div>
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="statusid">Estatus <span style="color: red">*</span></label>
+                                    <label for="statusid">Estatus</label>
                                     <select name="statusid" id="statusid" class="form-control select2">
                                         <option value="" selected>Selecione una opción</option>
                                         @foreach($status as $model)
@@ -52,24 +47,20 @@
                     <div class="row">
                         <div class="col-lg-10">
                             <table id="table-receiptperiods"
-                                   class="table table-bordered table-striped table-condensed table-hover tablegeneral">
+                                   class="table table-bordered table-condensed table-hover tablegeneral">
                                 <thead>
                                 <tr>
-                                    <th class="bg-inverse text-white">C.Distribución</th>
-                                    <th class="bg-inverse text-white">Bodega</th>
-                                    <th class="bg-inverse text-white">Periodo</th>
-                                    <th class="bg-inverse text-white">Fecha de trabajo</th>
-                                    <th class="bg-inverse text-white">Secuencia</th>
-                                    <th class="bg-inverse text-white">Recibo</th>
-                                    <th class="bg-inverse text-white">Estatus</th>
-                                    <th class="bg-inverse text-white">Opciones</th>
+                                    <th>Nombre</th>
+                                    <th>Fecha de trabajo</th>
+                                    <th>Secuencia</th>
+                                    <th>Recibo</th>
+                                    <th>Estatus</th>
+                                    <th>Opciones</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($detalle as $item)
                                     <tr>
-                                        <td>{{$item->center ? $item->center->description : ''}}</td>
-                                        <td>{{$item->warehouse ? $item->warehouse->name  : ''}}</td>
                                         <td>{{$item->period ? $item->period->name : ''}}</td>
                                         <td>{{$item->workday}}</td>
                                         <td>{{$item->statussecuence ? $item->statussecuence->name : ''}}</td>

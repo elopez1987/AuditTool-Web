@@ -14,15 +14,7 @@
                     </div>
                 </a>
             @endcan
-            @can('monitortransportreceipt')
-                <a href="{{route('monitortransportreceipt')}}">
-                    <div class="box">
-                        <i class="mdi mdi-qrcode"></i>
-                        <h5>Generar QR</h5>
-                        <h4>Generar QR</h4>
-                    </div>
-                </a>
-            @endcan
+
             @can('schedulereceipt.index')
                 <a href="{{route('schedulereceipt.index')}}">
                     <div class="box">
@@ -68,6 +60,15 @@
                     </div>
                 </a>
             @endcan
+                @can('monitortransportreceipt')
+                    <a href="{{route('monitortransportreceipt')}}">
+                        <div class="box">
+                            <i class="mdi mdi-qrcode"></i>
+                            <h5>Generar QR</h5>
+                            <h4>Generar QR</h4>
+                        </div>
+                    </a>
+                @endcan
         </div>
     </main>
 

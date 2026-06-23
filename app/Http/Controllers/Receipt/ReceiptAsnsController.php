@@ -29,8 +29,9 @@ class ReceiptAsnsController extends BaseController
     {
         $this->authorize('receiptasn.index');
         $status = $this->getStatusForSchema('SRE');
+        $warehouses = $this->getWarehouseForSelect();
 
-        return view('Receipt.ReceiptAsn.index', compact('status'));
+        return view('Receipt.ReceiptAsn.index', compact('status', 'warehouses'));
     }
 
     public function getDataAsns(Request $request)
@@ -45,7 +46,28 @@ class ReceiptAsnsController extends BaseController
             ->FolioNumber($request->input('folionumber'))
             ->OC($request->input('oc'))
             ->Status($request->input('statusid'))
-            ->select('receiptasn.*');
+            ->ForWarehouse($request->input('warehouseid'))
+            ->select([
+                'receiptasn.id',
+                'receiptasn.centerid',
+                'receiptasn.warehouseid',
+                'receiptasn.folionumber',
+                'receiptasn.shipmentid',
+                'receiptasn.billoflading',
+                'receiptasn.oc',
+                'receiptasn.providerid',
+                'receiptasn.razonstatusid',
+                'receiptasn.stockcategoryid',
+                'receiptasn.carrierid',
+                'receiptasn.auxiliary01',
+                'receiptasn.addasndate',
+                'receiptasn.arriveddate',
+                'receiptasn.unloadstartdate',
+                'receiptasn.unloadfinishdate',
+                'receiptasn.goodissuedate',
+                'receiptasn.cancellationdate',
+                'receiptasn.statusid',
+            ]);
 
         return DataTables::of($data)
             ->addColumn('btn', 'Receipt.ReceiptAsn.partials.buttons')
