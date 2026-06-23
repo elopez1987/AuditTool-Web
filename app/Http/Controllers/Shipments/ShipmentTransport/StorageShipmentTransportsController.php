@@ -18,7 +18,7 @@ class StorageShipmentTransportsController extends BaseController
     {
         $this->authorize('datatransport.index');
         $carriers = $this->getCarriersForSelect();
-		
+
         return view('Shipments.StorageShipmenTransport.index', compact('carriers'));
     }
 
@@ -50,7 +50,7 @@ class StorageShipmentTransportsController extends BaseController
             'boxnumber',
             'trucknumber',
             'ecobox',
-            'ecotruck',
+            'ecotruck'
         ) + ['has_data' => '1']);
         if ($request['validateoperator'] === 'on') {
             StorageValidateOperator::create([
