@@ -19,6 +19,8 @@ class MigrationWms extends Model
         return LogOptions::defaults()->logFillable();
     }
 
+    protected $table = 'migration_wms';
+
     protected $fillable = [
         'centerid',
         'warehouseid',

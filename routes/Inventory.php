@@ -24,6 +24,7 @@ use App\Http\Controllers\Inventory\InventoryPartNumbers\InventoryPartnumbersCont
 use App\Http\Controllers\Inventory\InventoryPartNumbers\ParameterPartNumberController;
 use App\Http\Controllers\Inventory\InventoryStockCategoriesController;
 use App\Http\Controllers\Inventory\InventoryUnitMeasureController;
+use App\Http\Controllers\Inventory\MigrationSap\MigrationSapController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->group(function () {
@@ -144,4 +145,9 @@ Route::middleware(['auth'])->group(function () {
 
     // Asignar cedulas de conteo a cada contador
     Route::get('inventory-accountants-cards/{id}', [InventoryAccountantCardController::class, 'index'])->name('inventory-accountants-cards');
+
+    // Migracion de SAP
+    Route::get('inventory-sap-migration', [MigrationSapController::class, 'index'])->name('inventory-sap-migration');
+    Route::get('getMigrationSap', [MigrationSapController::class, 'getMigrationSap'])->name('getMigrationSap');
+
 });
