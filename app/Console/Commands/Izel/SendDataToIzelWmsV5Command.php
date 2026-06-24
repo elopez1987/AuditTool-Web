@@ -7,7 +7,6 @@ use App\Http\Resources\IzelWms\CheckOutResource;
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Configuration\EDI\EdiConfig;
 use App\Models\Configuration\EDI\SystemEventWebServiceIzel;
-use App\Models\Configuration\Parameters\SystemDetailParameter;
 use App\Models\Shipments\EdiShipment;
 use App\Models\Yard\ReceiptUnit;
 use Exception;
@@ -95,7 +94,7 @@ class SendDataToIzelWmsV5Command extends Command
         }
     }
 
-    private function processShipments($shipments, SystemDetailParameter $ediConfig, string $token, string $centerId): void
+    private function processShipments($shipments, $ediConfig, string $token, string $centerId): void
     {
         $processed = 0;
         $failed = 0;
@@ -119,7 +118,7 @@ class SendDataToIzelWmsV5Command extends Command
         $this->info("Centro {$centerId} — Procesados: {$processed} | Fallidos: {$failed}");
     }
 
-    private function processSingleShipment($shipment, SystemDetailParameter $ediConfig, string $token): void
+    private function processSingleShipment($shipment, $ediConfig, string $token): void
     {
         $receiptUnit = ReceiptUnit::findOrFail($shipment->shipmentid);
 
@@ -220,6 +219,10 @@ class SendDataToIzelWmsV5Command extends Command
             $code = $body['Code'] ?? null;
             $status = $body['Status'] ?? null;
 
+            Log::info($body);
+            Log::info($code);
+            Log::info($status);
+
             if ($code !== self::HTTP_OK || $status !== 'SUCCESS') {
                 Log::error('Error obteniendo token WMS V5', [
                     'center' => $config->centersender,
@@ -265,9 +268,10 @@ class SendDataToIzelWmsV5Command extends Command
     private function getEdiConfig(string $centerid)
     {
         $config = EdiConfig::where('edi', 'IZEL')
+            ->select(['centersender', 'client_id', 'client_secret', 'api_key', 'instance_name'])
             ->where('centersender', $centerid)
             ->first();
-
+        Log::info($config);
         if (! $config) {
             throw new Exception("Configuración EDI no encontrada para tipo IZEL y centro {$centerid}");
         }
