@@ -23,10 +23,10 @@
         },
         "columns": [
             {data: 'shipmentid'},
-            {data: 'customer.name','name':'customer.name'},
-            {data: 'carrier.name','name':'carrier.name'},
-            {data: 'status.name','name':'status.name'},
-            {data: 'folio.staytime','name':'folio.staytime'},
+            {data: 'customer.name',name:'customer.name'},
+            {data: 'carrier.name',name:'carrier.name'},
+            {data: 'status.name',name:'status.name'},
+            {data: 'folio.staytime',name:'folio.staytime'},
 
         ],
         "columnDefs": [
