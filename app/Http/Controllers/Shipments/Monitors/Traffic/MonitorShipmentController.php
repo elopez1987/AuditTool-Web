@@ -13,12 +13,18 @@ class MonitorShipmentController extends BaseController
     public function monitortrafico()
     {
         $this->authorize('monitortrafico');
+        $carriers = $this->getCarriersForSelect();
+        $customers = $this->getOrderCustomerForSelect();
 
-        return view('Shipments.MonitorShipments.MonitorTrafico.index');
+        return view(
+            'Shipments.MonitorShipments.MonitorTrafico.index',
+            compact('carriers', 'customers')
+        );
     }
 
     public function getDataMonitorTrafico(Request $request)
     {
+
         $data = OrderDeliverie::controlAccessUser()
             ->select([
                 'orderdeliveries.shipmentid',
@@ -26,6 +32,8 @@ class MonitorShipmentController extends BaseController
                 DB::raw('UPPER(b.city) as city'),
                 'c.name as carrier',
                 'orderdeliveries.loadingdate',
+                'systemstatus.name as statusname',
+                'systemstatus.auxiliary01 as colorstatus',
                 DB::raw("
 					CASE
 						WHEN GETDATE() >= orderdeliveries.loadingdate
@@ -49,6 +57,13 @@ class MonitorShipmentController extends BaseController
             ->when($request->input('shipmentid'), function ($q) use ($request) {
                 $q->where('shipmentid', $request->input('shipmentid'));
             })
+            ->when($request->input('customerid'), function ($q) use ($request) {
+                $q->where('orderdeliveries.customerid', $request->input('customerid'));
+            })
+            ->when($request->input('carrierid'), function ($q) use ($request) {
+                $q->where('orderdeliveries.carrierid', $request->input('carrierid'));
+            })
+            ->join('systemstatus', 'orderdeliveries.statusid', '=', 'systemstatus.statusid')
             ->whereNull('orderdeliveries.folionumber');
 
         return DataTables::of($data)->toJson();
