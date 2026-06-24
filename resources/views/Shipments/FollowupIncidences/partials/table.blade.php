@@ -3,7 +3,7 @@
         "paging": true,
         "orderClasses": false,
         "deferRender": true,
-        "searching": true,
+        "searching": false,
         "ordering": true,
         "sScrollY": "450px",
         "processing": true,

@@ -139,7 +139,7 @@
                                                     <th>Embarque</th>
                                                     <th>Cliente</th>
                                                     <th>Ciudad</th>
-                                                    <th>Linea de transporte</th>
+                                                    <th>Línea de transporte</th>
                                                     <th>Estatus Almacén</th>
                                                     <th>Estatus de unidad</th>
                                                     <th>Comentarios</th>
@@ -201,6 +201,7 @@
                                         <tr>
                                             <th>Embarque</th>
                                             <th>Cliente</th>
+                                            <th>Línea de transporte</th>
                                             <th>Estatus</th>
                                             <th>Estadia</th>
                                         </tr>

@@ -35,7 +35,7 @@ class MonitorOperationHenkelController extends BaseController
     {
         $data = OrderDeliverie::controlAccessUser()
             ->select(['orderdeliveries.shipmentid', 'orderdeliveries.statusid', 'orderdeliveries.customerid', 'orderdeliveries.folionumber'])
-            ->with(['status:statusid,name,auxiliary01', 'customer:id,name', 'folio:id,entrydate'])
+            ->with(['status:statusid,name,auxiliary01', 'customer:id,name', 'folio:id,entrydate', 'carrier:id,name'])
             ->whereNotIn('orderdeliveries.statusid', ['DH', 'CA'])
             ->whereNotNull('orderdeliveries.folionumber')
             ->when($request->input('customerid'), function ($q) use ($request) {
