@@ -87,7 +87,7 @@ class ReceiptUnitController extends BaseController
                 'receiptunits.statusid',
             ])
             ->whereNotIn('receiptunits.statusid', ['TR', 'ES'])
-            ->Folio($request->input('folio'))
+            ->Folio($request->input('folionumber'))
             ->Barcode($request->input('barcode'))
             ->Location($request->input('location'))
             ->BoxNumber($request->input('boxnumber'))

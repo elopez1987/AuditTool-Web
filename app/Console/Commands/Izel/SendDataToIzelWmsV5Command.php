@@ -5,8 +5,8 @@ namespace App\Console\Commands\Izel;
 use App\Http\Resources\IzelWms\CheckInResource;
 use App\Http\Resources\IzelWms\CheckOutResource;
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
+use App\Models\Configuration\EDI\EdiConfig;
 use App\Models\Configuration\EDI\SystemEventWebServiceIzel;
-use App\Models\Configuration\Parameters\SystemDetailParameter;
 use App\Models\Shipments\EdiShipment;
 use App\Models\Yard\ReceiptUnit;
 use Exception;
@@ -94,7 +94,7 @@ class SendDataToIzelWmsV5Command extends Command
         }
     }
 
-    private function processShipments($shipments, SystemDetailParameter $ediConfig, string $token, string $centerId): void
+    private function processShipments($shipments, $ediConfig, string $token, string $centerId): void
     {
         $processed = 0;
         $failed = 0;
@@ -118,7 +118,7 @@ class SendDataToIzelWmsV5Command extends Command
         $this->info("Centro {$centerId} — Procesados: {$processed} | Fallidos: {$failed}");
     }
 
-    private function processSingleShipment($shipment, SystemDetailParameter $ediConfig, string $token): void
+    private function processSingleShipment($shipment, $ediConfig, string $token): void
     {
         $receiptUnit = ReceiptUnit::findOrFail($shipment->shipmentid);
 
@@ -129,10 +129,10 @@ class SendDataToIzelWmsV5Command extends Command
             throw new Exception("Tipo de movimiento no soportado: {$shipment->typeMovement}");
         }
 
-        $response = $this->sendToWms($url, $data, $token, $ediConfig->value01, $ediConfig->value02);
+        $response = $this->sendToWms($url, $data, $token, $ediConfig->api_key, $ediConfig->instance_name);
         $body = $response->json();
 
-        $this->createRegisterLog($receiptUnit, $body, $data);
+        $this->createRegisterLog($receiptUnit, $body, $data, $shipment->typeMovement);
 
         $code = $body['Code'] ?? null;
         $status = $body['Status'] ?? null;
@@ -193,13 +193,13 @@ class SendDataToIzelWmsV5Command extends Command
             ->post($url, $data->resolve());
     }
 
-    private function getTokenWms(SystemDetailParameter $config): ?string
+    private function getTokenWms($config): ?string
     {
-        $cacheKey = self::TOKEN_CACHE_PREFIX . $config->value05;
+        $cacheKey = self::TOKEN_CACHE_PREFIX . $config->centersender;
 
         $cached = Cache::get($cacheKey);
         if ($cached) {
-            $this->line("Token válido en caché para centro: {$config->value05}");
+            $this->line("Token válido en caché para centro: {$config->centersender}");
 
             return $cached;
         }
@@ -208,26 +208,30 @@ class SendDataToIzelWmsV5Command extends Command
             $response = Http::timeout(30)
                 ->withHeaders([
                     'Content-Type' => 'application/json',
-                    'SID-API-KEY' => $config->value01,
+                    'SID-API-KEY' => $config->api_key,
                 ])
                 ->post(self::TOKEN_URL, [
-                    'client_id' => $config->value03,
-                    'client_secret' => $config->value04,
+                    'client_id' => $config->client_id,
+                    'client_secret' => $config->client_secret,
                 ]);
 
             $body = $response->json();
             $code = $body['Code'] ?? null;
             $status = $body['Status'] ?? null;
 
+            Log::info($body);
+            Log::info($code);
+            Log::info($status);
+
             if ($code !== self::HTTP_OK || $status !== 'SUCCESS') {
                 Log::error('Error obteniendo token WMS V5', [
-                    'center' => $config->value05,
+                    'center' => $config->centersender,
                     'code' => $code,
                     'status' => $status,
                     'description' => $body['Description'] ?? null,
                 ]);
 
-                $this->error("Error al obtener token para centro {$config->value05}: [{$code}] {$body['Description']}");
+                $this->error("Error al obtener token para centro {$config->centersender}: [{$code}] {$body['Description']}");
 
                 return null;
             }
@@ -247,13 +251,13 @@ class SendDataToIzelWmsV5Command extends Command
             // Guardar el token con 60 segundos de margen antes del vencimiento
             Cache::put($cacheKey, $token, now()->addSeconds($ttl - 60));
 
-            $this->info("Token obtenido y almacenado en caché para centro: {$config->value05} (vigencia: {$ttl}s)");
+            $this->info("Token obtenido y almacenado en caché para centro: {$config->centersender} (vigencia: {$ttl}s)");
 
             return $token;
 
         } catch (Exception $e) {
             Log::error('Excepción obteniendo token WMS V5', [
-                'center' => $config->value05,
+                'center' => $config->centersender,
                 'message' => $e->getMessage(),
             ]);
 
@@ -261,12 +265,13 @@ class SendDataToIzelWmsV5Command extends Command
         }
     }
 
-    private function getEdiConfig(string $centerid): SystemDetailParameter
+    private function getEdiConfig(string $centerid)
     {
-        $config = SystemDetailParameter::where('parameterid', 'IZEL')
-            ->where('value05', $centerid)
+        $config = EdiConfig::where('edi', 'IZEL')
+            ->select(['centersender', 'client_id', 'client_secret', 'api_key', 'instance_name'])
+            ->where('centersender', $centerid)
             ->first();
-
+        Log::info($config);
         if (! $config) {
             throw new Exception("Configuración EDI no encontrada para tipo IZEL y centro {$centerid}");
         }
@@ -292,14 +297,20 @@ class SendDataToIzelWmsV5Command extends Command
             ->get();
     }
 
-    private function createRegisterLog($receiptunit, array $body, $data): void
+    private function createRegisterLog($receiptunit, array $body, $data, $type): void
     {
+        if ($type == 'IN') {
+            $service = 'receiptunitadd';
+        } else {
+            $service = 'receiptunitout';
+        }
+
         SystemEventWebServiceIzel::create([
             'centerid' => $receiptunit->centerid,
             'warehouseid' => $receiptunit->warehouseid,
             'folionumber' => $receiptunit->id,
             'boxnumber' => $receiptunit->boxnumber,
-            'servicename' => $body['Status'] ?? $body['error'] ?? null,
+            'servicename' => $service,
             'processdate' => now(),
             'code' => $body['Code'] ?? $body['status'] ?? null,
             'type' => 'IZEL',

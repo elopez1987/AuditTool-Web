@@ -2,7 +2,7 @@
     $(document).ready(function () {
         let oTable = $("#table-boxsotck").DataTable({
             "paging": true,
-            "searching": true,
+            "searching": false,
             "ordering": true,
             "sScrollY": "450px",
             "sScrollX": true,

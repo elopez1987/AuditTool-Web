@@ -34,8 +34,9 @@ class OrderDeliveryController extends BaseController
     {
         $this->authorize('orderdeliveries.index');
         $status = $this->getStatusForSchema('KLE');
+        $warehouses = $this->getWarehouseForSelect();
 
-        return view('Shipments.OrderDeliveries.index', compact('status'));
+        return view('Shipments.OrderDeliveries.index', compact('status', 'warehouses'));
     }
 
     public function getDataSchedule(Request $request)
@@ -60,6 +61,7 @@ class OrderDeliveryController extends BaseController
             ->ForStatus($request->input('statusid'))
             ->Shipmentid($request->input('shipmentid'))
             ->Workday($request->input('workday'))
+            ->Warehouse($request->input('warehouseid'))
             ->Turn($request->input('turnid'));
 
         return $this->showDataToView($data, 'Shipments.OrderDeliveries.partials.buttons');

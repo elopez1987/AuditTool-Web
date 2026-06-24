@@ -147,8 +147,7 @@ class ReceiptUnit extends Model
 
     public function center(): BelongsTo
     {
-        return $this->belongsTo(SystemCenterDistribution::class, 'centerid', 'centerid')
-            ->selectRaw('centerid,name,description');
+        return $this->belongsTo(SystemCenterDistribution::class, 'centerid', 'centerid');
     }
 
     public function warehouse(): BelongsTo
