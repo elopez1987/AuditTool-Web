@@ -257,6 +257,7 @@ Route::middleware(['auth'])->group(function () {
     //  --------------------------------------------------  Monitor de operaciones  ----------------------------------------------------
     Route::get('monitoroperationhenkel', [MonitorOperationHenkelController::class, 'monitoroperationhenkel'])->name('monitoroperationhenkel');
     Route::get('getDataMonitorOperation', [MonitorOperationHenkelController::class, 'getDataMonitorOperation'])->name('getDataMonitorOperation');
+    Route::get('getShipmentStatus', [MonitorOperationHenkelController::class, 'getShipmentStatus'])->name('getShipmentStatus');
     //  -----------------------------------  Monitor de estatus de los embarques para las líneas de transporte --------------------------------
     Route::get('shipmentstatustransport', [MonitorShipmentStatusController::class, 'index'])->name('shipmentstatustransport');
     Route::get('getStatusShipmentTransport', [MonitorShipmentStatusController::class, 'getStatusShipmentTransport'])->name('getStatusShipmentTransport');
