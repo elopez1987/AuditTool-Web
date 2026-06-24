@@ -34,7 +34,11 @@ class MonitorOperationHenkelController extends BaseController
     public function getShipmentStatus(Request $request)
     {
         $data = OrderDeliverie::controlAccessUser()
-            ->select(['orderdeliveries.shipmentid', 'orderdeliveries.statusid', 'orderdeliveries.customerid', 'orderdeliveries.folionumber'])
+            ->select(['orderdeliveries.shipmentid',
+                'orderdeliveries.statusid',
+                'orderdeliveries.carrierid',
+                'orderdeliveries.customerid',
+                'orderdeliveries.folionumber'])
             ->with(['status:statusid,name,auxiliary01', 'customer:id,name', 'folio:id,entrydate', 'carrier:id,name'])
             ->whereNotIn('orderdeliveries.statusid', ['DH', 'CA'])
             ->whereNotNull('orderdeliveries.folionumber')
