@@ -11,7 +11,6 @@ use App\Models\Shipments\EdiShipment;
 use App\Models\Yard\ReceiptUnit;
 use Exception;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
@@ -195,14 +194,14 @@ class SendDataToIzelWmsV5Command extends Command
 
     private function getTokenWms($config): ?string
     {
-        $cacheKey = self::TOKEN_CACHE_PREFIX . $config->centersender;
-
-        $cached = Cache::get($cacheKey);
-        if ($cached) {
-            $this->line("Token válido en caché para centro: {$config->centersender}");
-
-            return $cached;
-        }
+        //        $cacheKey = self::TOKEN_CACHE_PREFIX . $config->centersender;
+        //
+        //        $cached = Cache::get($cacheKey);
+        //        if ($cached) {
+        //            $this->line("Token válido en caché para centro: {$config->centersender}");
+        //
+        //            return $cached;
+        //        }
 
         try {
             $response = Http::timeout(30)
@@ -218,10 +217,6 @@ class SendDataToIzelWmsV5Command extends Command
             $body = $response->json();
             $code = $body['Code'] ?? null;
             $status = $body['Status'] ?? null;
-
-            Log::info($body);
-            Log::info($code);
-            Log::info($status);
 
             if ($code !== self::HTTP_OK || $status !== 'SUCCESS') {
                 Log::error('Error obteniendo token WMS V5', [
@@ -241,7 +236,7 @@ class SendDataToIzelWmsV5Command extends Command
 
             if (! $token) {
                 Log::error('Token no encontrado en Data de la respuesta V5', [
-                    'center' => $config->value05,
+                    'center' => $config->centersender,
                     'response' => $body,
                 ]);
 
@@ -249,7 +244,7 @@ class SendDataToIzelWmsV5Command extends Command
             }
 
             // Guardar el token con 60 segundos de margen antes del vencimiento
-            Cache::put($cacheKey, $token, now()->addSeconds($ttl - 60));
+            //            Cache::put($cacheKey, $token, now()->addSeconds($ttl - 60));
 
             $this->info("Token obtenido y almacenado en caché para centro: {$config->centersender} (vigencia: {$ttl}s)");
 

@@ -45,13 +45,19 @@ class MonitorTransportReceiptController extends BaseController
             ->first();
         $carriers = $this->getCarriersForSelect();
 
-        return view('Receipt.MonitorTransport.edit',
-            compact('receipt', 'carriers', 'transport'));
+        return view(
+            'Receipt.MonitorTransport.edit',
+            compact('receipt', 'carriers', 'transport')
+        );
     }
 
     public function update(Request $request, $id)
     {
         $receipt = ReceiptAsn::findOrFail($id);
+        $receipt->update([
+            'carrierid' => $request->input('carrierid'),
+        ]);
+
         StorageShipmentTransport::updateOrCreate(
             [
                 'centerid' => $receipt->centerid,

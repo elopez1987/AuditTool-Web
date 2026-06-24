@@ -25,12 +25,24 @@
                         </div>
                         <hr class="mt-4">
                         <div class="row">
-                            <div class="col-lg-12">
                                 <x-text-input
                                         name="shipmentid"
                                         label="Número de embarque"
                                 />
-                            </div>
+                                <x-select2
+                                        name="carrierid"
+                                        label="Linea de transporte"
+                                        :options="$carriers"
+                                        valueField="id"
+                                        textField="name"
+                                />
+                                <x-select2
+                                        name="customerid"
+                                        label="Cliente"
+                                        :options="$customers"
+                                        valueField="id"
+                                        textField="name"
+                                />
                         </div>
                     </form>
                     <hr class="m-t-1">
@@ -45,6 +57,7 @@
                                         <th>Ciudad</th>
                                         <th>Linea de transporte</th>
                                         <th>Fecha de carga</th>
+                                        <th>Estatus operativo</th>
                                         <th>Estatus</th>
                                     </tr>
                                 </thead>
@@ -64,6 +77,9 @@
 @section('script')
     @include('Shipments.MonitorShipments.MonitorTrafico.table')
     <script>
+        $("#carrierid,#customerid").change(function () {
+            reloadtable();
+        });
         function reloadtable() {
             $('#table-monitortrafico').DataTable().ajax.reload();
         }

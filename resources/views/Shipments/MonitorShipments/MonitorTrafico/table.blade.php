@@ -15,6 +15,8 @@
             url: 'getDataMonitorTrafico',
             data: function (d) {
                 d.shipmentid = $('input[name=shipmentid]').val();
+                d.carrierid = $('select[name=carrierid]').val();
+                d.customerid = $('select[name=customerid]').val();
             }
         },
         "columns": [
@@ -23,6 +25,15 @@
             {data: 'city',searchable:false,orderable:false},
             {data: 'carrier',searchable:false,orderable:false},
             {data: 'loadingdate'},
+            {
+                data: 'statusname', name: 'statusname',
+                createdCell: function (td, cellData, rowData) {
+                    $(td).css({
+                        'background-color': (rowData.colorstatus),
+                        'color': 'black'
+                    });
+                }
+            },
             {
                 data: 'status',
                 render: function (data, type) {
@@ -59,7 +70,8 @@
             {"width": "280px", "targets": 2},
             {"width": "150px", "targets": 3},
             {"width": "150px", "targets": 4},
-            {"width": "150px", "targets": 5, "defaultContent": "-"},
+            {"width": "150px", "targets": 5},
+            {"width": "150px", "targets": 6, "defaultContent": "-"},
         ],
         "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
         "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
