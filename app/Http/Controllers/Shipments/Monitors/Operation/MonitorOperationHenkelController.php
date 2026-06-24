@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Shipments\Monitors\Operation;
 
 use App\Http\Controllers\BaseController;
-use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\Models\Shipments\OrderDeliverie;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -13,9 +12,6 @@ class MonitorOperationHenkelController extends BaseController
 {
     public function monitoroperationhenkel()
     {
-        //        $monitorStatus = $this->getDataMonitor();
-        //        $totalPallets = $this->getTotalPallets();
-
         $this->authorize('monitoroperationhenkel');
         $carriers = $this->getCarriersForSelect();
         $customers = $this->getOrderCustomerForSelect();
@@ -24,32 +20,44 @@ class MonitorOperationHenkelController extends BaseController
             ->select(['statusid', DB::raw('COUNT(statusid) as total')])
             ->groupBy('statusid')->orderByDesc('total')->get();
 
-        $shipmentsStatus = OrderDeliverie::controlAccessUser()
-            ->select(['orderdeliveries.shipmentid', 'orderdeliveries.statusid', 'orderdeliveries.customerid', 'orderdeliveries.folionumber'])
-            ->with(['status:statusid,name,auxiliary01', 'customer:id,name', 'folio:id,entrydate'])
-            ->whereNotIn('orderdeliveries.statusid', ['DH', 'CA'])
-            ->whereNotNull('orderdeliveries.folionumber')
-            ->get();
-
         return view(
-            'Shipments.MonitorShipments.MonitorOperation.index',
+            'Shipments.MonitorShipments.MonitorOperation.MonDeOper.index',
             compact(
                 'statusQuantitys',
-                //                'monitorStatus',
-                //                'totalPallets',
-                'shipmentsStatus',
                 'carriers',
                 'customers',
-                'status'
-            )
+                'status',
+            ),
         );
     }
 
-    public function getDataMonitorOperation()
+    public function getShipmentStatus(Request $request)
     {
-        $userAccess = SecurityAccessWarehouse::where('username', Auth::user()->username)->first();
-        $data = OrderDeliverie::where('orderdeliveries.centerid', $userAccess->centerid)
-            ->where('orderdeliveries.warehouseid', $userAccess->warehouseid)
+        $data = OrderDeliverie::controlAccessUser()
+            ->select(['orderdeliveries.shipmentid',
+                'orderdeliveries.statusid',
+                'orderdeliveries.carrierid',
+                'orderdeliveries.customerid',
+                'orderdeliveries.folionumber'])
+            ->with(['status:statusid,name,auxiliary01', 'customer:id,name', 'folio:id,entrydate', 'carrier:id,name,centerid'])
+            ->whereNotIn('orderdeliveries.statusid', ['DH', 'CA'])
+            ->whereNotNull('orderdeliveries.folionumber')
+            ->when($request->input('customerid'), function ($q) use ($request) {
+                $q->where('orderdeliveries.customerid', $request->input('customerid'));
+            })
+            ->when($request->input('carrierid'), function ($q) use ($request) {
+                $q->where('orderdeliveries.carrierid', $request->input('carrierid'));
+            })
+            ->when($request->input('shipmentid'), function ($q) use ($request) {
+                $q->where('orderdeliveries.shipmentid', $request->input('shipmentid'));
+            });
+
+        return $this->showDataToView($data, '');
+    }
+
+    public function getDataMonitorOperation(Request $request)
+    {
+        $data = OrderDeliverie::controlAccessUser()
             ->select(['orderdeliveries.id', 'orderdeliveries.customerid', 'orderdeliveries.carrierid', 'loadingdate',
                 'orderdeliveries.downloaddate', 'orderdeliveries.statusid', 'orderdeliveries.centerid',
                 'orderdeliveries.shipmentid', 'orderdeliveries.folionumber'])
@@ -61,14 +69,14 @@ class MonitorOperationHenkelController extends BaseController
                 'monitor:id,outputdate,orderid',
                 'status:statusid,name,auxiliary01'])
             ->whereNotIn('orderdeliveries.statusid', ['DH', 'CA'])
-            ->when(request()->filled('customerid'), function ($q) {
-                $q->where('orderdeliveries.customerid', request('customerid'));
+            ->when($request->input('customerid'), function ($q) use ($request) {
+                $q->where('orderdeliveries.customerid', $request->input('customerid'));
             })
-            ->when(request()->filled('carrierid'), function ($q) {
-                $q->where('orderdeliveries.carrierid', request('carrierid'));
+            ->when($request->input('carrierid'), function ($q) use ($request) {
+                $q->where('orderdeliveries.carrierid', $request->input('carrierid'));
             })
-            ->when(request()->filled('shipmentid'), function ($q) {
-                $q->where('orderdeliveries.shipmentid', request('shipmentid'));
+            ->when($request->input('shipmentid'), function ($q) use ($request) {
+                $q->where('orderdeliveries.shipmentid', $request->input('shipmentid'));
             });
 
         return DataTables::eloquent($data)
@@ -77,15 +85,15 @@ class MonitorOperationHenkelController extends BaseController
                     $name = $row->folio->status->name ?? 'SIN ESTATUS';
                     $color = $row->folio->status->auxiliary01 ?? '#cccccc';
 
-                    return '<span class="label" style="font-size:0.675rem; color:black; padding:3px; background-color:' . $color . ';">' . $name . '</span>';
+                    return '<span class="label" style="font-size:11px !important; color:black; padding:3px; background-color:' . $color . ';">' . $name . '</span>';
                 }
 
                 return '';
             })
             ->addColumn('key', function ($row) {
                 return $row->folio?->keydate ?
-                    '<span class="label label-success" style="font-size: 0.655rem;padding: 3px">Entregado</span>'
-                    : '<span class="label label-danger" style="font-size: 0.655rem;color:white;padding: 3px">Pendiente</span>';
+                    '<span class="label label-success" style="padding: 3px;font-size:11px !important">Entregado</span>'
+                    : '<span class="label label-danger p-l-5 p-r-5" style="color:white;padding: 3px;font-size:11px !important">Pendiente</span>';
             })
             ->rawColumns(['statusunit', 'key'])
             ->toJson();

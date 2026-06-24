@@ -52,19 +52,19 @@
                                    class="table table-bordered  table-condensed table-hover">
                                     <thead>
                                         <tr>
-                                            <th class="bg-inverse text-white">Embarque</th>
-                                            <th class="bg-inverse text-white">Transporte</th>
-                                            <th class="bg-inverse text-white">Cliente</th>
-                                            <th class="bg-inverse text-white">Ciudad</th>
-                                            <th class="bg-inverse text-white">Cita de entrega</th>
-                                            <th class="bg-inverse text-white">Estatus</th>
-                                            <th class="bg-inverse text-white">Fecha de alta</th>
-                                            <th class="bg-inverse text-white">Fecha de respuesta</th>
-                                            <th class="bg-inverse text-white">Estatus POD</th>
-                                            <th class="bg-inverse text-white">Firma Almacén</th>
-                                            <th class="bg-inverse text-white">Firma Transporte</th>
-                                            <th class="bg-inverse text-white">Cita de entrega</th>
-                                            <th class="bg-inverse text-white">Opciones</th>
+                                            <th>Embarque</th>
+                                            <th>Transporte</th>
+                                            <th>Cliente</th>
+                                            <th>Ciudad</th>
+                                            <th>Cita de entrega</th>
+                                            <th>Estatus</th>
+                                            <th>Fecha de alta</th>
+                                            <th>Fecha de respuesta</th>
+                                            <th>Estatus POD</th>
+                                            <th>Firma Almacén</th>
+                                            <th>Firma Transporte</th>
+                                            <th>Cita de entrega</th>
+                                            <th>Opciones</th>
                                         </tr>
                                     </thead>
                             </table>

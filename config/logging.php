@@ -98,6 +98,7 @@ return [
 
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
+            'days' => 2,
         ],
 
         'security' => [

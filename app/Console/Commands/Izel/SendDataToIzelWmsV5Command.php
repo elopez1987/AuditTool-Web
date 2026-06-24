@@ -266,7 +266,6 @@ class SendDataToIzelWmsV5Command extends Command
             ->select(['centersender', 'client_id', 'client_secret', 'api_key', 'instance_name'])
             ->where('centersender', $centerid)
             ->first();
-        Log::info($config);
         if (! $config) {
             throw new Exception("Configuración EDI no encontrada para tipo IZEL y centro {$centerid}");
         }
