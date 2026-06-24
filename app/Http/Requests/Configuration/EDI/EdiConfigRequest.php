@@ -18,12 +18,18 @@ class EdiConfigRequest extends FormRequest
             'warehousesender' => ['nullable'],
             'centerrecipient' => ['nullable'],
             'warehouserecipient' => ['nullable'],
-            'url' => ['nullable'],
-            'userid' => ['nullable'],
-            'password' => ['nullable'],
             'version' => ['nullable'],
             'enviroment' => ['required'],
             'systemclient' => ['required'],
+
+            'url' => ['nullable'],
+            'userid' => ['nullable'],
+            'password' => ['nullable'],
+
+            'client_id' => ['nullable'],
+            'client_secret' => ['nullable'],
+            'api_key' => ['nullable'],
+            'instance_name' => ['nullable'],
         ];
     }
 

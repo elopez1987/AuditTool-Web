@@ -26,5 +26,9 @@ class EdiConfig extends Model
         'version',
         'enviroment',
         'systemclient',
+        'client_id',
+        'client_secret',
+        'api_key',
+        'instance_name',
     ];
 }

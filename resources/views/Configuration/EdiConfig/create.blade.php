@@ -13,10 +13,10 @@
 
                         <div class="row">
                             <div class="col-12">
-                                <a href="{{route('editokens.create')}}">
+                                <a href="{{route('edi-configurations.create')}}">
                                     @include('buttons.save')
                                 </a>
-                                <a href="{{route('editokens.index')}}">
+                                <a href="{{route('edi-configurations.index')}}">
                                     @include('buttons.back')
                                 </a>
                             </div>

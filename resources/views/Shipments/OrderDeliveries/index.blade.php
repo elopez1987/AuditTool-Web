@@ -31,6 +31,16 @@
                         </div>
                         <hr class="m-t-0">
                         <div class="row">
+
+                            <x-select2
+                                    name="warehouseid"
+                                    label="Bodega"
+                                    :options="$warehouses"
+                                    valueField="warehouseid"
+                                    textField="name"
+                            />
+
+
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label for="shipmentid">Embarque</label>
@@ -69,7 +79,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <table id="table-orders"
-                                   class="table table-bordered  table-condensed table-hover table-uppercase">
+                                   class="table table-bordered  table-condensed table-hover table-uppercase" style="width: 100%;">
                                 <thead>
                                 <tr>
                                     <th class="text-white">Bodega</th>
@@ -172,7 +182,7 @@
         }
     </script>
     <script>
-        $("#statusid,#turnid").change(function () {
+        $("#statusid,#turnid,#warehouseid").change(function () {
             reloadtable();
         });
     </script>

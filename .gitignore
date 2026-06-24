@@ -86,3 +86,5 @@ pnpm-lock.yaml
 /pint.json
 /install-git-hooks.sh
 /README-git-hooks.md
+/.claude/skills/
+/.claude/

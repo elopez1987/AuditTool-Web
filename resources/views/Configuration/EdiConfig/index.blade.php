@@ -45,9 +45,6 @@
                                         <th>Bodega remitente</th>
                                         <th>C.Distribución receptor</th>
                                         <th>Bodega receptor</th>
-                                        <th>Url</th>
-                                        <th>Usuario</th>
-                                        <th>Contraseña</th>
                                         <th>Version</th>
                                         <th>Entorno</th>
                                         <th>Sistema cliente</th>
@@ -66,9 +63,6 @@
                                                 <td>{{$item->warehousesender}}</td>
                                                 <td>{{$item->centerrecipient}}</td>
                                                 <td>{{$item->warehouserecipient}}</td>
-                                                <td>{{$item->url}}</td>
-                                                <td>{{$item->userid}}</td>
-                                                <td>{{$item->password}}</td>
                                                 <td>{{$item->version}}</td>
                                                 <td>{{$item->enviroment}}</td>
                                                 <td>{{$item->systemclient}}</td>

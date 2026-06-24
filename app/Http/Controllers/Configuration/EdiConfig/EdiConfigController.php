@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Configuration\EdiConfig;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Configuration\EDI\EdiConfigRequest;
 use App\Models\Configuration\EDI\EdiConfig;
+use Illuminate\Http\Request;
 
 class EdiConfigController extends BaseController
 {
@@ -35,16 +36,16 @@ class EdiConfigController extends BaseController
         return view('Configuration.EdiConfig.edit', compact('ediConfig'));
     }
 
-    public function update(EdiConfigRequest $request, EdiConfig $ediConfig)
+    public function update(Request $request, EdiConfig $edi_configuration)
     {
-        $ediConfig->update($request->validated());
+        $edi_configuration->update($request->all());
 
         return $this->redirectBackSuccess();
     }
 
-    public function destroy(EdiConfig $ediConfig)
+    public function destroy(EdiConfig $edi_configuration)
     {
-        $ediConfig->delete();
+        $edi_configuration->delete();
 
         return $this->redirectBackSuccess();
     }

@@ -3,7 +3,7 @@
         "paging": true,
         "searching": true,
         "ordering": true,
-        "sScrollY": "250px",
+        "sScrollY": "650px",
         "sScrollX": true,
         "processing": true,
         "serverSide": true,
@@ -15,7 +15,7 @@
             url: 'getDataSchedule',
             data: function (d) {
                 d.statusid = $('select[name=statusid]').val();
-                // d.turnid = $('select[name=turnid]').val();
+                d.warehouseid = $('select[name=warehouseid]').val();
                 d.shipmentid = $('input[name=shipmentid]').val();
                 d.workday = $('input[name=workday]').val();
             }
@@ -35,9 +35,9 @@
         ],
         "columnDefs": [
             {"width": "200px", "targets": 0},
-            {"width": "230px", "targets": 1},
-            {"width": "220px", "targets": 2},
-            {"width": "220px", "targets": 3},
+            {"width": "200px", "targets": 1},
+            {"width": "200px", "targets": 2},
+            {"width": "200px", "targets": 3},
             {"width": "280px", "targets": 4},
             {"width": "280px", "targets": 5},
             {"width": "280px", "targets": 6},
