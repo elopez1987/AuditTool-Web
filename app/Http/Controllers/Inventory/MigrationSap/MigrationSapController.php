@@ -21,8 +21,15 @@ class MigrationSapController extends BaseController
             ->select('migration_wms.*');
 
         return DataTables::of($data)
-            ->addColumn('evidence', 'Inventory.MigrationSap.evidence')
-            ->rawColumns(['evidence'])
+            ->addColumn('btn', 'Inventory.MigrationSap.buttons')
+            ->rawColumns(['btn'])
             ->toJson();
+    }
+
+    public function show($id)
+    {
+        $data = MigrationWms::findOrFail($id);
+
+        return view('Inventory.MigrationSap.show', compact('data'));
     }
 }

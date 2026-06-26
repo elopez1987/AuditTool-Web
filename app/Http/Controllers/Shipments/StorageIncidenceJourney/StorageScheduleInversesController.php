@@ -18,6 +18,7 @@ use DB;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class StorageScheduleInversesController extends BaseController
 {
@@ -39,8 +40,8 @@ class StorageScheduleInversesController extends BaseController
             ->leftJoin('shipmentcarriers', 'shipmentcarriers.id', '=', 'orderdeliveries.carrierid')
             ->leftJoin('systemstatus', 'systemstatus.statusid', '=', 'storagescheduleinverse.statusid')
             ->leftJoin('receiptunits', 'receiptunits.id', '=', 'storagescheduleinverse.folionumber')
-            ->ForStatus($request->get('statusid'))
-            ->ForShipment($request->get('shipmentid'))
+            ->ForStatus($request->input('statusid'))
+            ->ForShipment($request->input('shipmentid'))
             ->select([
                 'systemcenterdistributions.name as center',
                 'systemwarehouses.name as warehouse',
@@ -54,12 +55,13 @@ class StorageScheduleInversesController extends BaseController
                 'systemstatus.name as status',
                 'receiptunits.id as folio',
                 'receiptunits.entrydate',
-            ])
-            ->orderBy('storagescheduleinverse.id', 'desc')
-            ->limit(200)
-            ->get();
+            ]);
 
-        return $this->showDataToView($data, 'Shipments.StorageScheduleInverse.partials.buttons');
+        //        return $this->showDataToView($data, );
+        return DataTables::of($data)
+            ->addColumn('btn', 'Shipments.StorageScheduleInverse.partials.buttons')
+            ->rawColumns(['btn'])
+            ->toJson();
     }
 
     public function create()

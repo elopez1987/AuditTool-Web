@@ -26,8 +26,8 @@
             {data: 'lpnizel'},
             {data: 'lpnsap'},
             {data: 'createduser.name', name: 'createduser.name'},
-            {data: 'evidence',},
             {data: 'created_at'},
+            {data: 'btn'},
         ],
         "columnDefs": [
             {"width": "250px", "targets": 0},

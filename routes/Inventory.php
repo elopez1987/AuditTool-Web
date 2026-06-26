@@ -148,6 +148,7 @@ Route::middleware(['auth'])->group(function () {
 
     // Migracion de SAP
     Route::get('inventory-sap-migration', [MigrationSapController::class, 'index'])->name('inventory-sap-migration');
+    Route::get('inventory-sap-details/{id}', [MigrationSapController::class, 'show'])->name('inventory-sap-details');
     Route::get('getMigrationSap', [MigrationSapController::class, 'getMigrationSap'])->name('getMigrationSap');
 
 });
