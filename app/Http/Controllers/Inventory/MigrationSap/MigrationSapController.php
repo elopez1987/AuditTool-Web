@@ -18,6 +18,15 @@ class MigrationSapController extends BaseController
     {
         $data = MigrationWms::with(['center:centerid,name,description',
             'warehouse:warehouseid,name', 'createduser:id,name'])
+            ->when($request->input('lpnid'), function ($query) use ($request) {
+                $query->where('migration_wms.locationid', '=', $request->input('locationid'));
+            })
+            ->when($request->input('lpnizel'), function ($query) use ($request) {
+                $query->where('migration_wms.lpnizel', '=', $request->input('lpnizel'));
+            })
+            ->when($request->input('lpnsap'), function ($query) use ($request) {
+                $query->where('migration_wms.lpnsap', '=', $request->input('lpnsap'));
+            })
             ->select('migration_wms.*');
 
         return DataTables::of($data)

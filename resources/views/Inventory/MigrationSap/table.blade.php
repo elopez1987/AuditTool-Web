@@ -60,16 +60,6 @@
                 "className": "btn btn-outline-info btn-md  btn-bold",
             }
         ],
-        "drawCallback": function () {
-            $('.image-popup-vertical-fit').magnificPopup({
-                type: 'image',
-                closeOnContentClick: true,
-                mainClass: 'mfp-img-mobile',
-                image: {
-                    verticalFit: true
-                }
-            });
-        },
         language: {
             "decimal": "",
             "emptyTable": "No hay información",
@@ -80,7 +70,6 @@
             "thousands": ",",
             "lengthMenu": "Mostrar _MENU_ Entradas",
             "loadingRecords": "Cargando...",
-            // "processing": '<i class="fa fa-spinner fa-spin fa-4x fa-fw text-info"></i><span class="sr-only">Loading...</span> ',
             "processing": '<img src=\"{{asset('/img/loading-truck.gif')}}\" >',
             "search": "Buscar:",
             "zeroRecords": "Sin resultados encontrados",
