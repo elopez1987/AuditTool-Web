@@ -15,8 +15,8 @@
             url: 'getMigrationSap',
             data: function (d) {
                 d.lpnizel = $('input[name=lpnizel]').val();
-                d.lpnsap = $('select[name=lpnsap]').val();
-                d.locationid = $('select[name=locationid]').val();
+                d.lpnsap = $('input[name=lpnsap]').val();
+                d.locationid = $('input[name=locationid]').val();
             }
         },
         "columns": [

@@ -34,12 +34,10 @@
                                     </h4>
                                 </div>
                                 <div class="card-body">
-                                    <h3 class="card-title">{{$data->locationid  }}</h3>
-                                    <p class="card-text">Lpn de Wms : {{$data->lpnizel}}</p>
-                                    <p class="card-text">Lpn de SAP : {{$data->lpnsap}}</p>
-{{--                                    <span class="text-muted float-right">{{$data->closed_at}}</span>--}}
-{{--                                    <span class="label label-rounded label-primary">{{$data->status->name}}</span>--}}
-{{--                                    <span class="action-icons"></span>--}}
+                                    <h3 class="card-title">Ubicación: {{$data->locationid  }}</h3>
+                                    <h3 class="card-title">Lpn de Wms: {{$data->lpnizel  }}</h3>
+                                    <h3 class="card-title">Lpn de SAP: {{$data->lpnsap  }}</h3>
+
                                 </div>
                             </div>
                         </div>
