@@ -6,9 +6,11 @@ use App\Http\Controllers\BaseController;
 use App\Http\Services\Security\ServiceUser;
 use App\Models\Receipt\ReceiptProvider;
 use App\Models\Security\Users\AccessProvider;
+use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\Traits\Web\Security\QueryUser;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AccessProviderController extends BaseController
 {
@@ -24,10 +26,15 @@ class AccessProviderController extends BaseController
     public function index($uuiduser)
     {
         $user = User::where('uuiduser', $uuiduser)->firstOrFail();
-        $providers = ReceiptProvider::controlAccessUser()->where('statusid', 'E')
-            ->select(['id', 'name'])->get();
+
         $listProviders = AccessProvider::with('provider:id,name,providerid')
             ->where('username', $user->username)->get();
+
+        $assignedProviderIds = $listProviders->pluck('provider.id');
+
+        $providers = ReceiptProvider::controlAccessUser()->where('statusid', 'E')
+            ->whereNotIn('id', $assignedProviderIds)
+            ->select(['id', 'name'])->get();
 
         return view(
             'Security.Users.AccessProviders.index',
@@ -37,8 +44,37 @@ class AccessProviderController extends BaseController
 
     public function update(Request $request)
     {
-        $centerProvider = $this->getCenterForProvider($request['providerid']);
-        $this->serviceUser->assignProviderToUser($request, $centerProvider);
+        $providerIds = collect($request->input('providerid', []))
+            ->filter()
+            ->map(fn ($id) => (int) $id)
+            ->unique()
+            ->values();
+
+        if ($providerIds->isEmpty()) {
+            return $this->errorResponse('Debe seleccionar al menos un proveedor.');
+        }
+
+        $username = $request->input('username');
+
+        $centerProvider = SecurityAccessWarehouse::where('username', $username)
+            ->pluck('centerid')
+            ->first();
+
+        if (is_null($centerProvider)) {
+            return $this->errorResponse('No se encontró el centro asociado al usuario.');
+        }
+
+        DB::transaction(function () use ($centerProvider, $providerIds, $username) {
+            foreach ($providerIds as $providerId) {
+                AccessProvider::updateOrCreate(
+                    [
+                        'centerid' => $centerProvider,
+                        'username' => $username,
+                        'providerid' => $providerId,
+                    ]
+                );
+            }
+        });
 
         return $this->redirectBackSuccessMessage('Proveedor asignado correctamente');
     }

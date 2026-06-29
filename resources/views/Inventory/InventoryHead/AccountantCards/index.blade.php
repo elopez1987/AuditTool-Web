@@ -124,8 +124,7 @@
                                                                     name="inventory_card01_id[]"
                                                                     id="inventory_card01_id" required>
                                                                 @foreach($cardscount02 as $card01)
-                                                                    <option value="{{$card01->id}}"
-                                                                            style="font-size: 14px !important;text-transform: uppercase">
+                                                                    <option value="{{$card01->id}}" style="font-size: 14px !important;text-transform: uppercase">
                                                                         {{$card01->name}}
                                                                     </option>
                                                                 @endforeach

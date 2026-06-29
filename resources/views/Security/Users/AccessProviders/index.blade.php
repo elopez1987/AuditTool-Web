@@ -50,13 +50,14 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-lg-2 col-md-6 col-sm-12">
+                                <div class="col-lg-6 col-md-6 col-sm-12">
                                     <div class="form-group">
                                         <label for="providerid">Proveedor <span style="color: red">*</span></label>
-                                        <select name="providerid" required class="form-control select2">
-                                            <option value="">Seleeciona un proveedor</option>
+                                        <select name="providerid[]" id="providerid[]" required class="duallistbox-with-filter" multiple="multiple" size="20">
                                             @foreach($providers as $model)
-                                                <option value="{{$model->id}}">{{$model->providerid}} - {{$model->name}} </option>
+                                                <option value="{{$model->id}}" style="font-size: 12px !important;text-transform: uppercase">
+                                                    {{$model->providerid}} - {{$model->name}}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -113,14 +114,30 @@
     </div>
 @endsection
 @section('css')
-    <link rel="stylesheet"
-          href="{{asset('/theme/assets/libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css')}}">
+{{--    <link rel="stylesheet" href="{{asset('/theme/assets/libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css')}}">--}}
+<link rel="stylesheet" href="{{asset('theme/assets/libs/bootstrap-duallistbox/dist/bootstrap-duallistbox.min.css')}}">
 @endsection
 
 @section('script')
     @include('layouts.Partials.DataTable')
-    <script src="{{asset('/theme/assets/libs/bootstrap-switch/dist/js/bootstrap-switch.min.js')}}"></script>
-    <script type="text/javascript">
-        $(".radio-switch input[type='radio']").bootstrapSwitch();
+    <script src="{{asset('theme/assets/libs/bootstrap-duallistbox/dist/jquery.bootstrap-duallistbox.min.js')}}"></script>
+    <script>
+        const dualListbox = $('.duallistbox-with-filter').bootstrapDualListbox({
+            nonSelectedListLabel: 'No hay registros selecionados:',
+            selectedListLabel: 'Seleccionado',
+            preserveSelectionOnMove: 'Mover',
+            moveOnSelect: false,
+        });
+        $(function () {
+            $('.moveall i').removeClass().addClass('fas fa-angle-right');
+            $('.removeall i').removeClass().addClass('fas fa-angle-left');
+            $('.move i').removeClass().addClass('fas fa-angle-right');
+            $('.remove i').removeClass().addClass('fas fa-angle-left');
+        });
+
     </script>
+{{--    <script src="{{asset('/theme/assets/libs/bootstrap-switch/dist/js/bootstrap-switch.min.js')}}"></script>--}}
+{{--    <script type="text/javascript">--}}
+{{--        $(".radio-switch input[type='radio']").bootstrapSwitch();--}}
+{{--    </script>--}}
 @endsection
