@@ -68,12 +68,16 @@ class StorageIncidenceJourneysController extends BaseController
                 ], 422);
             }
 
-            $statusSku = StorageIncidenceJourneyDetails::controlAccessUser()
+            $statusSkuExists = StorageIncidenceJourneyDetails::controlAccessUser()
                 ->where('partnumberid', $request['partnumberid'])
-                ->where('orderid', $shipment->id)->where('delivery', $request['delivery'])->first();
-            if (! empty($statusSku)) {
+                ->where('orderid', $shipment->id)
+                ->where('delivery', $request['delivery'])
+                ->where('razoncode', $request['razoncode'])
+                ->exists();
+
+            if ($statusSkuExists) {
                 return response()->json([
-                    'message' => 'Numero de Sku y factura ya se encuentran registrados.',
+                    'message' => 'Número de Sku, factura y cateogría ya se encuentran registrados.',
                 ], 422);
             }
 
