@@ -1,4 +1,5 @@
 @extends('layouts.app')
+
 @section('content')
     <div class="row">
         <div class="col-lg-12">
@@ -9,389 +10,262 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-6">
-                            <form method="POST" action="{{url('addaislecounttoinventory/' . $inventoryhead->id)}}" id="form-add-aisle-count">
-                                {{ method_field('PUT') }}
-                                @csrf
-                                <div class="row">
-                                    <div class="col-2">
-                                        <button type="submit" class="btn waves-effect waves-light btn-outline-success btn-block btn-md" id="btn-save-aisle-count">
-                                            <img src="{{asset('/ico/save02.png')}}" alt="" class="img-16">
-                                            <span class="text-button"> Guardar</span>
-                                        </button>
+                            <div class="card">
+                                <div class="card-header">Asignación de conteo 1</div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <form method="POST"
+                                                  action="{{url('save-accountant-cards/' . $inventoryhead->id)}}"
+                                                  id="form-add-aisle-count">
+                                                {{ method_field('PUT') }}
+                                                @csrf
+                                                <div class="row">
+                                                    <div class="col-lg-4">
+                                                        <button type="submit"
+                                                                class="btn waves-effect waves-light btn-outline-success btn-block btn-md"
+                                                                id="btn-save-aisle-count">
+                                                            <img src="{{asset('/ico/save02.png')}}" alt=""
+                                                                 class="img-16">
+                                                            <span class="text-button"> Guardar</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <hr class="mb-3">
+                                                <div class="row">
+                                                    <x-select2
+                                                            name="user_id"
+                                                            label="Contador"
+                                                            :options="$usersAccountants"
+                                                            valueField="user_id"
+                                                            textField="name"
+                                                            :required="true"
+                                                            colClass="col-lg-6 col-md-12"
+                                                    />
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="card p-3">
+                                                            <select multiple="multiple" size="30"
+                                                                    class="duallistbox-with-filter"
+                                                                    name="inventory_card01_id[]"
+                                                                    id="inventory_card01_id" required>
+                                                                @foreach($cardscount01 as $card01)
+                                                                    <option value="{{$card01->id}}"
+                                                                            style="font-size: 14px !important;text-transform: uppercase">
+                                                                        {{$card01->name}}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="card p-3">
+                                                <table class="table table-bordered table-condensed" id="table-count-01">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Contador</th>
+                                                        <th>Cédula para contar</th>
+{{--                                                        <th>Opciones</th>--}}
+                                                    </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <hr class="mb-3">
-                                <div class="row">
-                                    <x-select2
-                                            name="user_id"
-                                            label="Contador"
-                                            :options="$usersAccountants"
-                                            valueField="user_id"
-                                            textField="name"
-                                            :required="true"
-                                    />
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <select multiple="multiple" size="30"  class="duallistbox-with-filter" name="inventory_aisle_id[]" id="inventory_aisle_id" required>
-                                            @foreach($cards as $aisle)
-                                                <option value="{{$aisle->id}}" style="font-size: 14px !important;text-transform: uppercase">
-                                                    {{$aisle->name}}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                            </form>
+                            </div>
                         </div>
+                        <div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-header">Asignación de conteo 2</div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <form method="POST"
+                                                  action="{{url('save-accountant-cards-02/' . $inventoryhead->id)}}"
+                                                  id="form-add-aisle-count">
+                                                {{ method_field('PUT') }}
+                                                @csrf
+                                                <div class="row">
+                                                    <div class="col-lg-4">
+                                                        <button type="submit"
+                                                                class="btn waves-effect waves-light btn-outline-success btn-block btn-md"
+                                                                id="btn-save-aisle-count">
+                                                            <img src="{{asset('/ico/save02.png')}}" alt=""
+                                                                 class="img-16">
+                                                            <span class="text-button"> Guardar</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <hr class="mb-3">
+                                                <div class="row">
+                                                    <x-select2
+                                                            name="user_id"
+                                                            label="Contador"
+                                                            :options="$usersAccountants"
+                                                            valueField="user_id"
+                                                            textField="name"
+                                                            :required="true"
+                                                            colClass="col-lg-6 col-md-12"
+                                                    />
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="card p-3">
+                                                            <select multiple="multiple" size="30"
+                                                                    class="duallistbox-with-filter"
+                                                                    name="inventory_card01_id[]"
+                                                                    id="inventory_card01_id" required>
+                                                                @foreach($cardscount02 as $card01)
+                                                                    <option value="{{$card01->id}}"
+                                                                            style="font-size: 14px !important;text-transform: uppercase">
+                                                                        {{$card01->name}}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="card p-3">
+                                                <table class="table table-bordered table-condensed" id="table-count-01">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Contador</th>
+                                                        <th>Cédula para contar</th>
+                                                        {{--                                                        <th>Opciones</th>--}}
+                                                    </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-    </div>
-    </div>
-    <hr class="mb-3">
-{{--    <div class="row">--}}
-{{--        <div class="col-lg-12">--}}
-{{--            <div class="card">--}}
-{{--                <div class="card-header">--}}
-{{--                    Editar Encabezado de Inventario - Cédulas--}}
-{{--                </div>--}}
-{{--                <div class="card-body">--}}
-{{--                    <div class="row">--}}
-{{--                        <div class="col-lg-6">--}}
-{{--                            <form method="POST" action="{{url('addcardcounttoinventory/' . $inventoryhead->id)}}" id="form-add-card-count">--}}
-{{--                                {{ method_field('PUT') }}--}}
-{{--                                @csrf--}}
-{{--                                <div class="row">--}}
-{{--                                    <div class="col-2">--}}
-{{--                                        <button type="submit" class="btn waves-effect waves-light btn-outline-success btn-block btn-md" id="btn-save-card-count">--}}
-{{--                                            <img src="{{asset('/ico/save02.png')}}" alt="" class="img-16">--}}
-{{--                                            <span class="text-button"> Guardar</span>--}}
-{{--                                        </button>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                                <hr class="mb-3">--}}
-{{--                                <div class="row">--}}
-{{--                                    <div class="col-lg-12">--}}
-{{--                                        <select multiple="multiple" size="30"  class="duallistbox-with-filter" name="inventory_card_id[]" id="inventory_card_id" required>--}}
-{{--                                            @foreach($cards as $card)--}}
-{{--                                                <option value="{{$card->id}}" style="font-size: 14px !important;text-transform: uppercase">--}}
-{{--                                                    {{$card->name}}--}}
-{{--                                                </option>--}}
-{{--                                            @endforeach--}}
-{{--                                        </select>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </form>--}}
-{{--                        </div>--}}
-{{--                        <div class="col-lg-6">--}}
-{{--                            <div class="row">--}}
-{{--                                <div class="col-lg-12">--}}
-{{--                                    <table class="table table-bordered table-condensed " id="table-card-inventory-count" width="100%">--}}
-{{--                                        <thead>--}}
-{{--                                        <tr>--}}
-{{--                                            <th>Cédula</th>--}}
-{{--                                            <th>Actions</th>--}}
-{{--                                        </tr>--}}
-{{--                                        </thead>--}}
-{{--                                    </table>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
 
-{{--        </div>--}}
+        <hr class="mb-3">
+        @include('layouts.Partials.Errors')
+        @endsection
 
-{{--    </div>--}}
+        @section('css')
+            <link rel="stylesheet"
+                  href="{{asset('theme/assets/libs/bootstrap-duallistbox/dist/bootstrap-duallistbox.min.css')}}">
+        @endsection
 
-     @include('layouts.Partials.Errors')
-@endsection
-
-@section('css')
-    <link rel="stylesheet" href="{{asset('theme/assets/libs/bootstrap-duallistbox/dist/bootstrap-duallistbox.min.css')}}">
-@endsection
-
-@section('script')
-    <script src="{{asset('theme/assets/libs/bootstrap-duallistbox/dist/jquery.bootstrap-duallistbox.min.js')}}"></script>
-{{--    @include('Inventory.InventoryHead.partials.table-aisle-inventory-count')--}}
-{{--    @include('Inventory.InventoryHead.partials.table-card-inventory-count')--}}
-    <script>
-        const dualListbox = $('.duallistbox-with-filter').bootstrapDualListbox({
-            nonSelectedListLabel: 'No hay registros selecionados:',
-            selectedListLabel: 'Seleccionado',
-            preserveSelectionOnMove: 'Mover',
-            moveOnSelect: false,
-        });
-        const getAvailableAislesForInventoryUrl = "{{ route('getAvailableAislesForInventory', ['id' => $inventoryhead->id]) }}";
-        const getAvailableCardsForInventoryUrl = "{{ route('getAvailableCardsForInventory', ['id' => $inventoryhead->id]) }}";
-        $(function () {
-            $('.moveall i').removeClass().addClass('fas fa-angle-right');
-            $('.removeall i').removeClass().addClass('fas fa-angle-left');
-            $('.move i').removeClass().addClass('fas fa-angle-right');
-            $('.remove i').removeClass().addClass('fas fa-angle-left');
-        });
-
-        function refreshAislesDualListbox() {
-            $.ajax({
-                url: getAvailableAislesForInventoryUrl,
-                type: 'GET',
-                headers: {
-                    'Accept': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest'
-                },
-                success: function (response) {
-                    const aisles = response.data || [];
-                    const select = $('#inventory_aisle_id');
-                    select.empty();
-
-                    aisles.forEach((aisle) => {
-                        select.append(
-                            $('<option>', {
-                                value: aisle.id,
-                                text: aisle.name
-                            })
-                        );
-                    });
-
-                    select.bootstrapDualListbox('refresh', true);
-                },
-                error: function (xhr) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: getAjaxErrorMessage(xhr, 'Error al actualizar la lista de pasillos')
-                    });
-                }
-            });
-        }
-
-        function refreshCardsDualListbox() {
-            $.ajax({
-                url: getAvailableCardsForInventoryUrl,
-                type: 'GET',
-                headers: {
-                    'Accept': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest'
-                },
-                success: function (response) {
-                    const cards = response.data || [];
-                    const select = $('#inventory_card_id');
-                    select.empty();
-
-                    cards.forEach((card) => {
-                        select.append(
-                            $('<option>', {
-                                value: card.id,
-                                text: card.name
-                            })
-                        );
-                    });
-
-                    select.bootstrapDualListbox('refresh', true);
-                },
-                error: function (xhr) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: getAjaxErrorMessage(xhr, 'Error al actualizar la lista de cédulas')
-                    });
-                }
-            });
-        }
-
-        function getAjaxErrorMessage(xhr, defaultMessage) {
-            let message = defaultMessage;
-
-            if (xhr.responseJSON) {
-                if (xhr.responseJSON.errors) {
-                    const firstKey = Object.keys(xhr.responseJSON.errors)[0];
-                    if (firstKey && xhr.responseJSON.errors[firstKey].length > 0) {
-                        message = xhr.responseJSON.errors[firstKey][0];
-                    }
-                } else if (xhr.responseJSON.message) {
-                    message = xhr.responseJSON.message;
-                }
-            }
-
-            return message;
-        }
-
-        $('#form-add-aisle-count').on('submit', function (e) {
-            e.preventDefault();
-
-            const form = $(this);
-            const submitBtn = $('#btn-save-aisle-count');
-
-            submitBtn.prop('disabled', true);
-
-            $.ajax({
-                url: form.attr('action'),
-                type: 'POST',
-                data: form.serialize(),
-                headers: {
-                    'Accept': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest'
-                },
-                success: function (response) {
-                    Swal.fire({
-                        icon: 'success',
-                        text: response.message || 'Pasillos asignados al inventario con éxito!!',
-                        timer: 2000,
-                        showConfirmButton: false
-                    });
-                    refreshAislesDualListbox();
-                    reloadAisleInventoryCountTable();
-
-                    refreshCardsDualListbox();
-                    reloadCardInventoryCountTable();
-                },
-                error: function (xhr) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: getAjaxErrorMessage(xhr, 'Error al guardar los pasillos del inventario')
-                    });
-                },
-                complete: function () {
-                    submitBtn.prop('disabled', false);
-                }
-            });
-        });
-
-        function deleteAisleCountFromInventory(id) {
-            Swal.fire({
-                text: '¿Deseas eliminar este registro?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Aceptar',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (!result.isConfirmed) {
-                    return;
-                }
-
-                $.ajax({
-                    url: `{{ url('deleteAisleCountFromInventory') }}/${id}`,
-                    type: 'DELETE',
-                    data: {
-                        _token: '{{ csrf_token() }}'
-                    },
-                    headers: {
-                        'Accept': 'application/json',
-                        'X-Requested-With': 'XMLHttpRequest'
-                    },
-                    success: function (response) {
-                        Swal.fire({
-                            icon: 'success',
-                            text: response.message || 'Pasillo eliminado del conteo con éxito!!',
-                            timer: 2000,
-                            showConfirmButton: false
-                        });
-                        refreshAislesDualListbox();
-                        reloadAisleInventoryCountTable();
-                        refreshCardsDualListbox();
-                        reloadCardInventoryCountTable();
-                    },
-                    error: function (xhr) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: getAjaxErrorMessage(xhr, 'Error al eliminar el pasillo del conteo')
-                        });
-                    }
+        @section('script')
+            <script src="{{asset('theme/assets/libs/bootstrap-duallistbox/dist/jquery.bootstrap-duallistbox.min.js')}}"></script>
+            <script>
+                const dualListbox = $('.duallistbox-with-filter').bootstrapDualListbox({
+                    nonSelectedListLabel: 'No hay registros selecionados:',
+                    selectedListLabel: 'Seleccionado',
+                    preserveSelectionOnMove: 'Mover',
+                    moveOnSelect: false,
                 });
-            });
-        }
-
-        $('#form-add-card-count').on('submit', function (e) {
-            e.preventDefault();
-
-            const form = $(this);
-            const submitBtn = $('#btn-save-card-count');
-
-            submitBtn.prop('disabled', true);
-
-            $.ajax({
-                url: form.attr('action'),
-                type: 'POST',
-                data: form.serialize(),
-                headers: {
-                    'Accept': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest'
-                },
-                success: function (response) {
-                    Swal.fire({
-                        icon: 'success',
-                        text: response.message || 'Cédulas asignadas al inventario con éxito!!',
-                        timer: 2000,
-                        showConfirmButton: false
-                    });
-                    refreshCardsDualListbox();
-                    reloadCardInventoryCountTable();
-                },
-                error: function (xhr) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: getAjaxErrorMessage(xhr, 'Error al guardar las cédulas del inventario')
-                    });
-                },
-                complete: function () {
-                    submitBtn.prop('disabled', false);
-                }
-            });
-        });
-
-        function deleteCardCountFromInventory(id) {
-            Swal.fire({
-                text: '¿Deseas eliminar este registro?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Aceptar',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (!result.isConfirmed) {
-                    return;
-                }
-
-                $.ajax({
-                    url: `{{ url('deleteCardCountFromInventory') }}/${id}`,
-                    type: 'DELETE',
-                    data: {
-                        _token: '{{ csrf_token() }}'
-                    },
-                    headers: {
-                        'Accept': 'application/json',
-                        'X-Requested-With': 'XMLHttpRequest'
-                    },
-                    success: function (response) {
-                        Swal.fire({
-                            icon: 'success',
-                            text: response.message || 'Cédula eliminada del conteo con éxito!!',
-                            timer: 2000,
-                            showConfirmButton: false
-                        });
-                        refreshCardsDualListbox();
-                        reloadCardInventoryCountTable();
-                    },
-                    error: function (xhr) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: getAjaxErrorMessage(xhr, 'Error al eliminar la cédula del conteo')
-                        });
-                    }
+                $(function () {
+                    $('.moveall i').removeClass().addClass('fas fa-angle-right');
+                    $('.removeall i').removeClass().addClass('fas fa-angle-left');
+                    $('.move i').removeClass().addClass('fas fa-angle-right');
+                    $('.remove i').removeClass().addClass('fas fa-angle-left');
                 });
-            });
-        }
-    </script>
+
+            </script>
+
+            <script>
+                var oTable = $("#table-count-01").DataTable({
+                    "paging": true,
+                    "searching": true,
+                    "ordering": true,
+                    "sScrollY": "500px",
+                    "processing": true,
+                    "serverSide": true,
+                    "autoFill": true,
+                    "colReorder": true,
+                    "stateSave": true,
+                    "stateDuration": 0,
+                    "responsive": true,
+
+                    "ajax": {
+                        url: '{{ route("getAccountantCards01", $inventoryhead->id) }}',
+                        data: function (d) {
+                            d.folionumber = $('input[name=folionumber]').val();
+                            d.boxnumber = $('input[name=boxnumber]').val();
+                            d.barcode = $('input[name=barcode]').val();
+                            d.carrierid = $('select[name=carrierid]').val();
+                        }
+                    },
+                    "columns": [
+                        {data: 'user_count01.name', name: 'user_count01.name'},
+                        {data: 'inventorycard.name', name: 'inventorycard.name'},
+                        // {data: 'btn'},
+                    ],
+                    "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
+                    "lengthMenu": [[25, 50, -1], [25, 50, "All"]],
+
+                    buttons: [
+                        {
+                            "extend": "colvis",
+                            "text": "<img src=\"{{asset('/pics/adbuscar.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span> Mostar/Ocultar</span>",
+                            "className": "btn btn-outline-info btn-md  btn-bold",
+                            columns: ':not(:first):not(:last)'
+                        },
+                        {
+                            "extend": "csv",
+                            "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span> Csv</span>",
+                            "className": "btn btn-outline-info btn-md  btn-bold",
+                        },
+                        {
+                            "extend": "excel",
+                            "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span> Excel</span>",
+                            "className": "btn btn-outline-info btn-md  btn-bold",
+                        }
+                    ],
+
+                    language: {
+                        "decimal": "",
+                        "emptyTable": "No hay información",
+                        "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                        "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                        "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                        "infoPostFix": "",
+                        "thousands": ",",
+                        "lengthMenu": "Mostrar _MENU_ Entradas",
+                        "loadingRecords": "Cargando...",
+                        "processing": '<i class="fa fa-spinner fa-spin fa-4x fa-fw text-info"></i><span class="sr-only">Loading...</span> ',
+                        "search": "Buscar:",
+                        "zeroRecords": "Sin resultados encontrados",
+                        "paginate": {
+                            "first": "Primero",
+                            "last": "Ultimo",
+                            "next": "Siguiente",
+                            "previous": "Anterior"
+                        }
+                    },
+                });
+                $('#search').on('submit', function (e) {
+                    oTable.draw();
+                    e.preventDefault();
+                });
+
+            </script>
+
 
 
 @endsection

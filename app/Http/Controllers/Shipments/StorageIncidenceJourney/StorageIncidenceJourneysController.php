@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Shipments\StorageIncidenceJourney;
 use App\Http\Controllers\BaseController;
 use App\Http\Services\Shipment\IncidecesJourney\ServiceIncidenceJourney;
 use App\Http\Services\Shipment\IncidecesJourney\ServiceIncidenceJourneyDetail;
+use App\Jobs\Embarques\Incidencias\SendEmailNewIncidenceJourneyJob;
 use App\Models\General\EvidencePhoto;
 use App\Models\General\StorageComment;
 use App\Models\Inventory\PartNumber\InventoryPartnumber;
@@ -59,14 +60,16 @@ class StorageIncidenceJourneysController extends BaseController
         DB::beginTransaction();
         try {
             $shipment = OrderDeliverie::findOrFail($request['shipmentid']);
-            $partnumberid = InventoryPartnumber::controlAccessUser()->where('prtnum', $request['partnumberid'])->first();
+            $partnumberid = InventoryPartnumber::controlAccessUser()
+                ->where('prtnum', $request['partnumberid'])->first();
             if (empty($partnumberid)) {
                 return response()->json([
                     'message' => 'Numero de Sku no existe, favor de verificar.',
                 ], 422);
             }
 
-            $statusSku = StorageIncidenceJourneyDetails::controlAccessUser()->where('partnumberid', $request['partnumberid'])
+            $statusSku = StorageIncidenceJourneyDetails::controlAccessUser()
+                ->where('partnumberid', $request['partnumberid'])
                 ->where('orderid', $shipment->id)->where('delivery', $request['delivery'])->first();
             if (! empty($statusSku)) {
                 return response()->json([
@@ -76,6 +79,12 @@ class StorageIncidenceJourneysController extends BaseController
 
             $incidence = $serviceIncidenceJourney->addNewIncidence($shipment);
             $serviceIncidenceJourney->addDetailToIncidence($request, $incidence);
+
+            $parameterWarehouse = $this->getParameterNotificacionWarehouse($shipment->warehouseid);
+            if (! empty($parameterWarehouse) && in_array('MWH-05', (array) $parameterWarehouse)) {
+                SendEmailNewIncidenceJourneyJob::dispatch($incidence->folioid)->onQueue('yms-web');
+            }
+
             DB::commit();
 
             return response()->json(['message' => 'Incidencia registrado con exito', 200]);

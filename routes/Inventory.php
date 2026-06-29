@@ -146,6 +146,14 @@ Route::middleware(['auth'])->group(function () {
     // Asignar cedulas de conteo a cada contador
     Route::get('inventory-accountants-cards/{id}', [InventoryAccountantCardController::class, 'index'])->name('inventory-accountants-cards');
 
+    //	Asignacion de conteo 1
+    Route::put('save-accountant-cards/{id}', [InventoryAccountantCardController::class, 'saveAccountantCards'])->name('save-accountant-cards');
+    Route::get('getAccountantCards01/{id}', [InventoryAccountantCardController::class, 'getAccountantCards01'])->name('getAccountantCards01');
+
+    //	Asignacion de conteo 2
+    Route::put('save-accountant-cards-02/{id}', [InventoryAccountantCardController::class, 'saveAccountantCards'])->name('save-accountant-cards');
+    Route::get('getAccountantCards02/{id}', [InventoryAccountantCardController::class, 'getAccountantCards02'])->name('getAccountantCards02');
+
     // Migracion de SAP
     Route::get('inventory-sap-migration', [MigrationSapController::class, 'index'])->name('inventory-sap-migration');
     Route::get('inventory-sap-details/{id}', [MigrationSapController::class, 'show'])->name('inventory-sap-details');

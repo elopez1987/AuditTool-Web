@@ -72,12 +72,12 @@ class InventoryCardCount extends Model
 
     public function user_count01(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_count01_id', 'id');
+        return $this->belongsTo(User::class, 'user_count01_id', 'id')->withDefault(['name' => '']);
     }
 
     public function user_count02(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_count02_id', 'id');
+        return $this->belongsTo(User::class, 'user_count02_id', 'id')->withDefault(['name' => '']);
     }
 
     protected static function boot()
