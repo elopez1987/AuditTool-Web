@@ -13,6 +13,7 @@ use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Throwable;
 
 class SendDataToIzelWmsV5Command extends Command
 {
@@ -64,7 +65,6 @@ class SendDataToIzelWmsV5Command extends Command
                     }
 
                     $token = $this->getTokenWms($ediConfig);
-                    Log::info('Token WMS V5', ['token' => $token]);
 
                     if (! $token) {
                         $this->error("No se pudo obtener el token para centro {$center->centerid}.");
@@ -74,16 +74,13 @@ class SendDataToIzelWmsV5Command extends Command
 
                     $this->processShipments($shipments, $ediConfig, $token, $center->centerid);
 
-                    $this->info('Proceso completado exitosamente.');
-
-                    return Command::SUCCESS;
+                    $this->info("Proceso completado para centro {$center->centerid}.");
                 }
-                $this->info("Centro {$center->centerid} NO tiene flag SDC-07, se omite.");
             }
 
             return Command::SUCCESS;
 
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             $this->error("Error en el proceso: {$e->getMessage()}");
             Log::error('Error en SendDataToIzelWmsV5Command', [
                 'message' => $e->getMessage(),
@@ -104,7 +101,7 @@ class SendDataToIzelWmsV5Command extends Command
                 $this->processSingleShipment($shipment, $ediConfig, $token);
                 $processed++;
                 $this->info("Procesado shipment ID: {$shipment->shipmentid}");
-            } catch (Exception $e) {
+            } catch (Throwable $e) {
                 $failed++;
                 $this->error("Error procesando shipment ID {$shipment->shipmentid}: {$e->getMessage()}");
                 Log::error('Error procesando shipment V5', [
@@ -130,7 +127,7 @@ class SendDataToIzelWmsV5Command extends Command
         }
 
         $response = $this->sendToWms($url, $data, $token, $ediConfig->api_key, $ediConfig->instance_name);
-        $body = $response->json();
+        $body = $response->json() ?? [];
 
         $this->createRegisterLog($receiptUnit, $body, $data, $shipment->typeMovement);
 
@@ -181,7 +178,7 @@ class SendDataToIzelWmsV5Command extends Command
         };
     }
 
-    private function sendToWms(string $url, $data, string $token, string $apiKey, string $instance)
+    private function sendToWms(string $url, $data, string $token, ?string $apiKey, ?string $instance)
     {
         return Http::timeout(30)
             ->withHeaders([
@@ -251,7 +248,7 @@ class SendDataToIzelWmsV5Command extends Command
 
             return $token;
 
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             Log::error('Excepción obteniendo token WMS V5', [
                 'center' => $config->centersender,
                 'message' => $e->getMessage(),
