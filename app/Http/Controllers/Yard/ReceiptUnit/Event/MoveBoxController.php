@@ -39,6 +39,14 @@ class MoveBoxController extends BaseController
                     'message' => 'El número de folio no existe!!',
                 ], 422);
             }
+
+            if ($receiptunit->unitstatus->unitstatusid == 'RE') {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'La unidad no puede ser reubicada, ya se encuentra en estado RECHAZADO!!.',
+                ], 422);
+            }
+
             $parameter = $this->getParametersOfWarehouse($receiptunit->warehouseid);
             $zone = $this->getZone($request['zoneid']);
             if (! empty($parameter) && in_array('SWH-39', $parameter)) {

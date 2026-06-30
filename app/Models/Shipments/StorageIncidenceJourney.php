@@ -2,11 +2,14 @@
 
 namespace App\Models\Shipments;
 
+use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Configuration\Schemas\SystemStatus;
+use App\Models\Configuration\Warehouses\SystemWarehouse;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
@@ -126,6 +129,16 @@ class StorageIncidenceJourney extends Model
     protected $casts = [
         //        'created_at' => 'datetime:Y-m-d H:s',
     ];
+
+    public function center()
+    {
+        return $this->belongsTo(SystemCenterDistribution::class, 'centerid', 'centerid');
+    }
+
+    public function warehouse(): BelongsTo
+    {
+        return $this->belongsTo(SystemWarehouse::class, 'warehouseid', 'warehouseid');
+    }
 
     public function order()
     {

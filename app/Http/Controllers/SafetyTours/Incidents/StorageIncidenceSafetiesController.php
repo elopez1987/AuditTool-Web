@@ -24,8 +24,7 @@ class StorageIncidenceSafetiesController extends BaseController
         $data = StorageIncidenceSafety::controlAccessUser()
             ->with(['status:statusid,name,auxiliary01', 'category:id,name',
                 'categorydetail:id,name', 'center:centerid,name,description',
-                'createuser:id,name', 'closeduser:id,name'])
-            ->get();
+                'createuser:id,name', 'closeduser:id,name']);
 
         return $this->showDataToView($data, 'SafetyTours.StorageIncidenceSafety.partials.buttons');
     }

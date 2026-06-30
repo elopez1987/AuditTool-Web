@@ -34,6 +34,8 @@ class CorreoSolicitudCartaPorteJob implements ShouldQueue
                 'line' => $e->getLine(),
                 'trace' => $e->getTraceAsString(),
             ]);
+
+            return;
         }
 
         $contacts = Shipmentcarrierscontact::query()

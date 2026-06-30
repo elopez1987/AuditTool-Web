@@ -69,13 +69,13 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h4>DETALLE GENERAL DEL INVENTARIO</h4>
+                    <h6>DETALLE GENERAL DEL INVENTARIO</h6>
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-3">
                             <div class="card border-info">
-                                <div class="card-header bg-info">
+                                <div class="card-header bg-grey">
                                     <h5 class="m-b-0 text-black-50">Pasillos</h5></div>
                                 <div class="card-body">
                                     <h4 class="card-title">Total de Pasillos</h4>
@@ -87,7 +87,7 @@
                         </div>
                         <div class="col-lg-3">
                             <div class="card border-info">
-                                <div class="card-header bg-info">
+                                <div class="card-header bg-grey">
                                     <h4 class="m-b-0 text-black-50">Cedulas</h4></div>
                                 <div class="card-body">
                                     <h4 class="card-title">Total de cédulas</h4>
@@ -99,7 +99,7 @@
                         </div>
                         <div class="col-lg-3">
                             <div class="card border-info">
-                                <div class="card-header bg-info">
+                                <div class="card-header bg-grey">
                                     <h4 class="m-b-0 text-black-50">Ubicaciones</h4>
                                 </div>
                                 <div class="card-body">
@@ -112,7 +112,7 @@
 
                         <div class="col-lg-3">
                             <div class="card border-info">
-                                <div class="card-header bg-info">
+                                <div class="card-header bg-grey">
                                     <h4 class="m-b-0 text-black-50">Errores</h4>
                                 </div>
                                 <div class="card-body ">
@@ -141,7 +141,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header d-flex align-items-center gap-2">
-                    <h4 class="mb-0">DETALLE DE CONTEO</h4>
+                    <h6 class="mb-0">DETALLE DE CONTEO</h6>
                     <button onclick="reloadtableAisles()" class="btn waves-effect waves-light btn-outline-info btn-md">
                         <img src="{{ asset('/ico/reloadpage.png') }}" alt="" class="img-16 ml-1">
                     </button>
@@ -150,6 +150,7 @@
                     <div class="row">
                         <div class="col-lg-8">
                             <div class="card">
+                                <div class="card-header"></div>
                                 <div class="card-body">
                                     <div class="table-responsive">
                                         <table id="inventoryDetailTable" class="table table-bordered" WIDTH="100%">
@@ -173,6 +174,7 @@
                         </div>
                         <div class="col-lg-4">
                             <div class="card">
+                                <div class="card-header"></div>
                                 <div class="card-body">
                                     <ul class="list-style-none">
                                         <li class="m-t-20">
