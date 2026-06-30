@@ -64,6 +64,7 @@ class SendDataToIzelWmsV5Command extends Command
                     }
 
                     $token = $this->getTokenWms($ediConfig);
+                    Log::info('Token WMS V5', ['token' => $token]);
 
                     if (! $token) {
                         $this->error("No se pudo obtener el token para centro {$center->centerid}.");
