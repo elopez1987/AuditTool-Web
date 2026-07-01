@@ -74,7 +74,8 @@
 <div class="row">
     <table class="border-none">
         <th style="height: 20px;width: 25%;">
-            INVENTARIO : {{$inventoryCardCount->inventory_head_id}}
+            <img src='{{asset('storage/' . $inventoryCardCount->key_user_count_01 )}}'
+                 style="width: 50px;height:50px; z-index: 999; top:0; left:0;position: relative">
         </th>
         <th style="height: 20px;width: 50%;text-align: center;font-size: 20px;">
             CÉDULA PARA TOMA FÍSICA DE INVENTARIOS
