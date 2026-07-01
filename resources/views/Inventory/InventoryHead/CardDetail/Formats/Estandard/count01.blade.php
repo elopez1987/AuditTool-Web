@@ -73,9 +73,13 @@
 
 <div class="row">
     <table class="border-none">
-        <th style="height: 20px;width: 25%;">
-            <img src='{{asset('storage/' . $inventoryCardCount->key_user_count_01 )}}'
-                 style="width: 50px;height:50px; z-index: 999; top:0; left:0;position: relative">
+        <th style="height: 20px; width: 25%; text-align: center;">
+            <img src="{{ asset('storage/' . $inventoryCardCount->key_user_count_01) }}"
+                 style="width: 50px; height: 50px; display: block; margin: 0 auto;">
+
+            <span style="display: block; margin-top: 5px;">
+                Firma del contador:
+            </span>
         </th>
         <th style="height: 20px;width: 50%;text-align: center;font-size: 20px;">
             CÉDULA PARA TOMA FÍSICA DE INVENTARIOS
@@ -83,20 +87,21 @@
         <th style="height: 20px;width: 25%;text-align: left;">
             Código: GSID-16-SIGEO-FO-47 <br>
             Nivel de Revisión: 00 <br>
-            Fecha de Aplicación: 15.09.2023 <br>
-            Fecha de vigencia: 15.09.2024 <br><br>
+            Fecha de Aplicación: 15.09.2026 <br>
+            Fecha de vigencia: 15.09.2027 <br><br>
         </th>
     </table>
 </div>
 <div class="row" style="margin-top: 5px">
     <table class="border-none">
-        <th style="height: 20px;width: 20%;">PRIMER CONTEO </th>
+        <th style="height: 20px;width: 20%;">PRIMER CONTEO</th>
         <th style="height: 20px;width: 50%;text-align: left;"> NOMBRE: {{$inventoryCardCount->inventoryhead->name}}</th>
     </table>
 </div>
 <div class="row" style="margin-top: 5px">
     <table class="border-none">
-        <th style="height: 20px;width: 50%;text-align: left;"> CONTADOR: {{$inventoryCardCount->user_count01->name}}</th>
+        <th style="height: 20px;width: 50%;text-align: left;">
+            CONTADOR: {{$inventoryCardCount->user_count01->name}}</th>
     </table>
 </div>
 <div class="row">

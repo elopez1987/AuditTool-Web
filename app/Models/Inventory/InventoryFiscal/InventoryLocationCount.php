@@ -50,19 +50,9 @@ class InventoryLocationCount extends Model
         return $this->belongsTo(InventoryPartnumber::class, 'inventorypartnumber01_id', 'id');
     }
 
-    public function quantity01(): BelongsTo
-    {
-        return $this->belongsTo(string::class, 'quantity01');
-    }
-
     public function inventorypartnumber02(): BelongsTo
     {
         return $this->belongsTo(InventoryPartnumber::class, 'inventorypartnumber02_id');
-    }
-
-    public function quantity02(): BelongsTo
-    {
-        return $this->belongsTo(string::class, 'quantity02');
     }
 
     public function userCount01(): BelongsTo
