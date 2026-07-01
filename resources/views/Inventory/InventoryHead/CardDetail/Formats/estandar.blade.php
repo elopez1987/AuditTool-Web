@@ -90,7 +90,12 @@
 <div class="row" style="margin-top: 5px">
     <table class="border-none">
         <th style="height: 20px;width: 20%;">PRIMER CONTEO </th>
-        <th style="height: 20px;width: 50%;text-align: left;"> NOMBRE: {{$inventoryCardCount->user_count01->name}}</th>
+        <th style="height: 20px;width: 50%;text-align: left;"> NOMBRE: {{$inventoryCardCount->inventoryhead->name}}</th>
+    </table>
+</div>
+<div class="row" style="margin-top: 5px">
+    <table class="border-none">
+        <th style="height: 20px;width: 50%;text-align: left;"> CONTADOR: {{$inventoryCardCount->user_count01->name}}</th>
     </table>
 </div>
 <div class="row">

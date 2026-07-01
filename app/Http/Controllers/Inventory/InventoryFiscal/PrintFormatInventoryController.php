@@ -20,7 +20,7 @@ class PrintFormatInventoryController extends BaseController
 
         $locations = InventoryLocationCount::where('inventory_head_id', $inventoryCardCount->inventory_head_id)
             ->where('inventory_card_id', $inventoryCardCount->inventory_card_id)
-            ->with(['inventorylocation:id,name', 'inventorypartnumber01:id,prtnum,lngdsc'])
+            ->with(['inventorylocation:id,name,inventoryunitsmeasure_id', 'inventorypartnumber01:id,prtnum,lngdsc'])
             ->select(['id', 'inventory_location_id', 'inventory_head_id',
                 'inventory_card_id', 'inventorypartnumber01_id', 'quantity01', 'user_count01_id'])
             ->get();
