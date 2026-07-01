@@ -1,12 +1,13 @@
 <?php
 
+use App\Http\Controllers\SafetyTours\Incidents\StorageCategorySafetyController;
 use App\Http\Controllers\SafetyTours\Incidents\StorageIncidenceSafetiesController;
 use App\Http\Controllers\SafetyTours\Incidents\StorageResponsibleAreaController;
 use App\Http\Controllers\SafetyTours\Incidents\StorageResponsibleEmailsController;
-use App\Http\Controllers\SafetyTours\StorageSafetyToursController;
-use App\Http\Controllers\SafetyTours\StorageSafetyTourTypeController;
-use App\Http\Controllers\SafetyTours\StorageSafetyTourTypeDetailController;
-use App\Http\Controllers\SafetyTours\StorageTagController;
+use App\Http\Controllers\SafetyTours\Tours\StorageSafetyToursController;
+use App\Http\Controllers\SafetyTours\Tours\StorageSafetyTourTypeController;
+use App\Http\Controllers\SafetyTours\Tours\StorageSafetyTourTypeDetailController;
+use App\Http\Controllers\SafetyTours\Tours\StorageTagController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->group(function () {
@@ -42,5 +43,9 @@ Route::middleware(['auth'])->group(function () {
     //	Incidencias encontradas
     Route::resource('storage-incidence-safeties', StorageIncidenceSafetiesController::class);
     Route::get('getIncidenceSafeties', [StorageIncidenceSafetiesController::class, 'getIncidenceSafeties'])->name('getIncidenceSafeties');
+
+    // Categorias de incidencias
+    Route::resource('storage-category-safeties', StorageCategorySafetyController::class)->except(['destroy']);
+    Route::get('getCategoriesSafeties', [StorageCategorySafetyController::class, 'getCategoriesSafeties'])->name('getCategoriesSafeties');
 
 });

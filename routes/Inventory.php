@@ -16,6 +16,7 @@ use App\Http\Controllers\Inventory\InventoryFiscal\InventoryHeadEventController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryLocationCardController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryLocationController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventorySupervisorController;
+use App\Http\Controllers\Inventory\InventoryFiscal\PrintFormatInventoryController;
 use App\Http\Controllers\Inventory\InventoryPartNumberCategory01sController;
 use App\Http\Controllers\Inventory\InventoryPartNumberCategory02sController;
 use App\Http\Controllers\Inventory\InventoryPartNumbers\ImportPartNumbersController;
@@ -153,6 +154,10 @@ Route::middleware(['auth'])->group(function () {
     //	Asignacion de conteo 2
     Route::put('save-accountant-cards-02/{id}', [InventoryAccountantCardController::class, 'saveAccountantCards'])->name('save-accountant-cards');
     Route::get('getAccountantCards02/{id}', [InventoryAccountantCardController::class, 'getAccountantCards02'])->name('getAccountantCards02');
+
+    //	Impresion de formatos de conteo
+    Route::get('print-format-inventory-01/{id}', [PrintFormatInventoryController::class, 'printFormat01'])->name('print-format-inventory-01');
+    Route::get('print-format-inventory-02/{id}', [PrintFormatInventoryController::class, 'printFormat02'])->name('print-format-inventory-02');
 
     // Migracion de SAP
     Route::get('inventory-sap-migration', [MigrationSapController::class, 'index'])->name('inventory-sap-migration');

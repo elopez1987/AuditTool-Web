@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\SafetyTours;
+namespace App\Http\Controllers\SafetyTours\Tours;
 
 use App\Http\Controllers\BaseController;
 use App\Models\SafetyTours\StorageSafetyTourType;

@@ -2,16 +2,37 @@
     <a href="{{url('inventorylocations-card/' . $row->id )}}">
         <button type="button" class="btn waves-effect waves-light btn-outline-info btn-sm">
             <img src="{{asset('/ico/viewdetail.png')}}" alt="" class="img-16 ml-2 mr-2">
-            <span > Detalle</span>
+            <span> Detalle</span>
         </button>
     </a>
 @endcan
 
+@can('inventorylocations-card.printformat01')
+    @if($row->statusid01 == 'C')
+        <a href="{{url('print-format-inventory-01/' . $row->id )}}">
+            <button type="button" class="btn waves-effect waves-light btn-outline-info btn-sm">
+                <img src="{{asset('/ico/pdf.png')}}" alt="" class="img-16 ml-2 mr-2">
+                <span> Formato 01</span>
+            </button>
+        </a>
+    @endif
+@endcan
+
+@can('inventorylocations-card.printformat02')
+    @if($row->statusid02 == 'C')
+        <a href="{{url('print-format-inventory-02/' . $row->id )}}">
+            <button type="button" class="btn waves-effect waves-light btn-outline-info btn-sm">
+                <img src="{{asset('/ico/pdf.png')}}" alt="" class="img-16 ml-2 mr-2">
+                <span> Formato 02</span>
+            </button>
+        </a>
+    @endif
+@endcan
 
 @can('inventoryheads.destroy')
     <button type="button" class="btn waves-effect waves-light btn-outline-info btn-sm btn-delete"
             data-id="{{ $row->id }}">
         <img src="{{asset('/ico/refuseunit.png')}}" alt="" class="img-16 ml-2 mr-2">
-        <span > Eliminar</span>
+        <span> Eliminar</span>
     </button>
 @endcan

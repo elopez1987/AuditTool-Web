@@ -37,6 +37,8 @@ class InventoryCardDetailController extends BaseController
             ->select([
                 'icc.id',
                 'icc.inventory_head_id',
+                'icc.statusid_count01 as statusid01',
+                'icc.statusid_count02 as statusid02',
                 'ia.name as pasillo',
                 'ic.name as cedula',
                 'u.name as user_count01',

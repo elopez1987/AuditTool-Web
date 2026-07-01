@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\SafetyTours;
+namespace App\Http\Controllers\SafetyTours\Tours;
 
 use App\Http\Controllers\BaseController;
+use App\Http\Controllers\SafetyTours\Exception;
 use App\Http\Requests\Web\SafetyTours\CreateSafetyTourRequest;
 use App\Models\SafetyTours\StorageSafetyTourDetail;
 use App\Models\SafetyTours\StorageSafetyTours;
