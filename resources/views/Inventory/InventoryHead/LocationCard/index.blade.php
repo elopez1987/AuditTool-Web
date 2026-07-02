@@ -5,7 +5,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    Detalla de cédula
+                    Detalla de cédula sdfdsf
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -23,7 +23,7 @@
                                                 <span class="text-button"> Refrescar</span>
                                             </button>
                                         </a>
-                                        <a href="{{url('inventoryhead-cards/' . $inventoryCardCount->inventory_head_id)}}">
+                                        <a href="{{url('inventoryhead-cards/' . $inventoryHead->inventory_uuid)}}">
                                             @include('buttons.cancel')
                                         </a>
                                     </div>

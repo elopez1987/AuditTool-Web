@@ -16,6 +16,7 @@ use App\Http\Controllers\Inventory\InventoryFiscal\InventoryHeadEventController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryLocationCardController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryLocationController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventorySupervisorController;
+use App\Http\Controllers\Inventory\InventoryFiscal\InventoryValidateLocationController;
 use App\Http\Controllers\Inventory\InventoryFiscal\PrintFormatInventoryController;
 use App\Http\Controllers\Inventory\InventoryPartNumberCategory01sController;
 use App\Http\Controllers\Inventory\InventoryPartNumberCategory02sController;
@@ -115,6 +116,8 @@ Route::middleware(['auth'])->group(function () {
     //	Reiniciar conteo 1
     Route::put('reset-count-1/{id}', [InventoryLocationCardController::class, 'initializeCount1'])->name('reset-count-1');
     Route::put('reset-count-2/{id}', [InventoryLocationCardController::class, 'initializeCount2'])->name('reset-count-2');
+    // Validar evidencias de conteo de drones
+    Route::get('validate-location/{id}', [InventoryValidateLocationController::class, 'index'])->name('validate-location');
 
     //	Detalle de errores de conteo
     Route::get('inventoryhead-errors/{id}', [InventoryErrorsController::class, 'index'])->name('inventoryhead-errors');

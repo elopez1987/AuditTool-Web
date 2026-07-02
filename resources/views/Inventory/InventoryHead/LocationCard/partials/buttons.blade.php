@@ -1,0 +1,24 @@
+{{--@can('inventoryheads.validatelocation')--}}
+@if($type === 'D')
+    <a href="{{url('validate-location/' . $id )}}" data-toggle="tooltip" data-placement="top"
+       title="Validar fotografias">
+        <button type="button" class="btn waves-effect waves-light btn-outline-info btn-sm"
+                data-toggle="tooltip" data-placement="top" title="Modificar">
+            <img src="{{asset('/ico/viewdetail.png')}}" alt="" class="img-16">
+            <span> Validar </span>
+        </button>
+    </a>
+@endif
+{{--@endcan--}}
+
+{{--@can('inventoryheads.activate')--}}
+{{--    <a href="" data-target="#modal-activate-{{$id}}" data-toggle="modal" data-placement="top">--}}
+{{--        <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md"--}}
+{{--                data-toggle="tooltip" data-placement="top" title="Activar Inventario">--}}
+{{--            <img src="{{asset('/ico/typemovements.png')}}" alt="" class="img-16">--}}
+{{--            <span style="font-size: 11px;"> Activar </span>--}}
+{{--        </button>--}}
+{{--    </a>--}}
+{{--    @include('Inventory.InventoryHead.Events.activate-inventory')--}}
+{{--@endcan--}}
+

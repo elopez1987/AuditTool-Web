@@ -23,21 +23,22 @@ class InventoryLocationCount extends Model
         'statusid_count01',
         'statusid_count02',
         'statusid_location',
+        'type',
     ];
 
     public function inventoryhead(): BelongsTo
     {
-        return $this->belongsTo(InventoryHead::class);
+        return $this->belongsTo(InventoryHead::class, 'inventory_head_id', 'id');
     }
 
     public function inventoryaisle(): BelongsTo
     {
-        return $this->belongsTo(InventoryAisle::class);
+        return $this->belongsTo(InventoryAisle::class, 'inventory_aisle_id', 'id');
     }
 
     public function inventorycard(): BelongsTo
     {
-        return $this->belongsTo(InventoryCard::class);
+        return $this->belongsTo(InventoryCard::class, 'inventory_card_id', 'id');
     }
 
     public function inventorylocation(): BelongsTo
