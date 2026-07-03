@@ -138,37 +138,35 @@
 
                                 </div>
                             </div>
-{{--                            @if($locationCount->statusid_count01 === 'C')--}}
-{{--                                @if($locationCount->statusid_count02 !== 'C')--}}
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="card">
-                                                <div class="card-header"></div>
-                                                <div class="card-body d-flex justify-content-center">
-                                                    <a id="saveSuccess">
-                                                        <button type="submit"
-                                                                class="btn waves-effect waves-light btn-outline-secondary btn-md"
-                                                                value="0">
-                                                            <img src="{{asset('/ico/accept.png')}}" alt=""
-                                                                 class="img-16 ml-1">
-                                                            <span style="font-size: 11px;"> Ubicación correcta</span>
-                                                        </button>
-                                                    </a>
-                                                    <a id="saveErrorLocation" style="margin-left: 20px">
-                                                        <button type="submit"
-                                                                class="btn waves-effect waves-light btn-outline-secondary btn-md"
-                                                                value="1">
-                                                            <img src="{{asset('/ico/refuseunit.png')}}" alt=""
-                                                                 class="img-16 ml-1">
-                                                            <span style="font-size: 11px;"> Ubicación con error</span>
-                                                        </button>
-                                                    </a>
-                                                </div>
+                            @if($locationCount->statusid_count01 === 'C' && $locationCount->statusid_count02 !== 'C')
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="card">
+                                            <div class="card-header"></div>
+                                            <div class="card-body d-flex justify-content-center">
+                                                <a id="saveSuccess">
+                                                    <button type="submit"
+                                                            class="btn waves-effect waves-light btn-outline-secondary btn-md"
+                                                            value="0">
+                                                        <img src="{{asset('/ico/accept.png')}}" alt=""
+                                                             class="img-16 ml-1">
+                                                        <span style="font-size: 11px;"> Ubicación correcta</span>
+                                                    </button>
+                                                </a>
+                                                <a id="saveErrorLocation" style="margin-left: 20px">
+                                                    <button type="submit"
+                                                            class="btn waves-effect waves-light btn-outline-secondary btn-md"
+                                                            value="1">
+                                                        <img src="{{asset('/ico/refuseunit.png')}}" alt=""
+                                                             class="img-16 ml-1">
+                                                        <span style="font-size: 11px;"> Ubicación con error</span>
+                                                    </button>
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
-{{--                                @endif--}}
-{{--                            @endif--}}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>

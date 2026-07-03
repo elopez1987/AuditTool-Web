@@ -18,7 +18,9 @@
                                             @include('buttons.search')
                                         </a>
                                         <a>
-                                            <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md" onclick="reloadtable();">
+                                            <button type="button"
+                                                    class="btn waves-effect waves-light btn-outline-info btn-md"
+                                                    onclick="reloadtable();">
                                                 <img src="{{asset('/ico/reloadpage.png')}}" alt="" class="img-16 ml-1">
                                                 <span class="text-button"> Refrescar</span>
                                             </button>
@@ -144,22 +146,20 @@
                 {data: 'quantity02'},
                 {data: 'user_count02', name: 'user_count02'},
                 {
-                    data: 'statusid_count01', name: 'statusid_count01',
-                    createdCell: function (td, cellData, rowData) {
-                        $(td).css({
-                            'background-color': (rowData.color_count01),
-                            'color': 'black'
-                        });
-                    }
+                    data: 'statusid01', name: 'statusid01',
+                    render: function (data, type, row) {
+                        return (data == 'C' )
+                            ? '<span class="badge bg-green font-12 font-light text-black">Terminado</span>'
+                            : '<span class="badge bg-red font-12 font-light">Pendiente</span>';
+                    },
                 },
                 {
-                    data: 'statusid_count02', name: 'statusid_count02',
-                    createdCell: function (td, cellData, rowData) {
-                        $(td).css({
-                            'background-color': (rowData.color_count02),
-                            'color': 'black'
-                        });
-                    }
+                    data: 'statusid02', name: 'statusid02',
+                    render: function (data, type, row) {
+                        return (data == 'C' )
+                            ? '<span class="badge bg-green font-12 font-light text-black">Terminado</span>'
+                            : '<span class="badge bg-red font-12 font-light">Pendiente</span>';
+                    },
                 },
                 {
                     data: 'statusid_location',

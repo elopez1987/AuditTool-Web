@@ -43,6 +43,7 @@ class InventoryLocationCardController extends BaseController
             ->select([
                 'ilc.id',
                 'ilc.type',
+                'ilc.statusid_count01 as statusid01',
                 'ilc.statusid_count02 as statusid02',
                 'ia.name as pasillo',
                 'ic.name as cedula',
@@ -55,9 +56,9 @@ class InventoryLocationCardController extends BaseController
                 'ipn2.lngdsc as description02',
                 'ilc.quantity02',
                 'u2.name as user_count02',
-                's.name as statusid_count01',
+                //                's.name as statusid_count01',
                 's.auxiliary01 as color_count01',
-                's2.name as statusid_count02',
+                //                's2.name as statusid_count02',
                 's2.auxiliary01 as color_count02',
                 'ilc.statusid_location',
             ]);
