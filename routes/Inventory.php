@@ -118,6 +118,8 @@ Route::middleware(['auth'])->group(function () {
     Route::put('reset-count-2/{id}', [InventoryLocationCardController::class, 'initializeCount2'])->name('reset-count-2');
     // Validar evidencias de conteo de drones
     Route::get('validate-location/{id}', [InventoryValidateLocationController::class, 'index'])->name('validate-location');
+    Route::post('saveResponseSuccessLocation/{id}', [InventoryValidateLocationController::class, 'saveResponseSuccessLocation'])->name('saveResponseSuccessLocation');
+    Route::post('saveResponseErrorLocation/{id}', [InventoryValidateLocationController::class, 'saveResponseErrorLocation'])->name('saveResponseErrorLocation');
 
     //	Detalle de errores de conteo
     Route::get('inventoryhead-errors/{id}', [InventoryErrorsController::class, 'index'])->name('inventoryhead-errors');

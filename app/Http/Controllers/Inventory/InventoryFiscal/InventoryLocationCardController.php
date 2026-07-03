@@ -43,6 +43,7 @@ class InventoryLocationCardController extends BaseController
             ->select([
                 'ilc.id',
                 'ilc.type',
+                'ilc.statusid_count02 as statusid02',
                 'ia.name as pasillo',
                 'ic.name as cedula',
                 'il.name as ubicacion',

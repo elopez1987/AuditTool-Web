@@ -161,7 +161,19 @@
                         });
                     }
                 },
-                {data: 'statusid_location'},
+                {
+                    data: 'statusid_location',
+                    render: function (data, type, row) {
+
+                        if (row.statusid02 !== 'C') {
+                            return '<span class="badge bg-secondary font-12 font-light"></span>';
+                        }
+
+                        return (data == 1 || data === true)
+                            ? '<span class="badge bg-green font-12 font-light text-black">Correcto</span>'
+                            : '<span class="badge bg-red font-12 font-light">Con Error</span>';
+                    }
+                },
                 {data: 'btn', orderable: false, searchable: false},
             ],
             "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',

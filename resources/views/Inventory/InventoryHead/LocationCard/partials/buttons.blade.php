@@ -4,8 +4,8 @@
        title="Validar fotografias">
         <button type="button" class="btn waves-effect waves-light btn-outline-info btn-sm"
                 data-toggle="tooltip" data-placement="top" title="Modificar">
-            <img src="{{asset('/ico/viewdetail.png')}}" alt="" class="img-16">
-            <span> Validar </span>
+            <img src="{{asset('/ico/galeria-de-fotos.png')}}" alt="" class="img-16 ml-2  mr-2">
+            <span> Validar Ubicación</span>
         </button>
     </a>
 @endif
