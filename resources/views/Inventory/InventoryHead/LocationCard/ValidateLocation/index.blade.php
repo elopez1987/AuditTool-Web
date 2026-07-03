@@ -34,24 +34,22 @@
                                                 <div class="carousel-item @if ($loop->first) active @endif ">
                                                     <img class="img-fluid align-items-lg-center"
                                                          src="{{asset('storage/' . $evidence->path)}}" alt=""
-                                                         style="height: 600px;max-width: 600px">
+                                                         style="max-height: 900px;max-width: 1300px">
                                                     <div class="carousel-caption d-none d-md-block">
                                                         <h2 class="text-danger ">Foto : {{$loop->iteration}}
                                                             / {{$loop->count}}</h2>
                                                         <p class="text-danger font-14">
-                                                            Piloto: {{$evidence->user_id}} </p>
+                                                            Piloto: {{$evidence->usercreated ? $evidence->usercreated->name : ''}} </p>
                                                     </div>
                                                 </div>
                                             @endforeach
                                         </div>
                                         <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button"
-                                           data-slide="prev"> <span class="carousel-control-prev-icon"
-                                                                    aria-hidden="true"></span>
+                                           data-slide="prev"> <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                             <span class="sr-only">Previous</span> </a>
                                         <a class="carousel-control-next" href="#carouselExampleIndicators" role="button"
-                                           data-slide="next"> <span class="carousel-control-next-icon"
-                                                                    aria-hidden="true"></span>
-                                            <span class="sr-only">Next</span> </a>
+                                           data-slide="next"> <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span class="sr-only text-red" style="color: red">Next</span> </a>
                                     </div>
                                 </div>
                             </div>

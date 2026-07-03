@@ -27,7 +27,7 @@ class InventoryValidateLocationController extends BaseController
         if (is_null($locationCount)) {
             return $this->errorResponse('Location count not found');
         }
-        //		dd($locationCount);
+
         $evidences = InventoryLocationEvidences::where('inventory_location_count_id', $id)->get();
 
         return view('Inventory.InventoryHead.LocationCard.ValidateLocation.index',
