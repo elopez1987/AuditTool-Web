@@ -46,10 +46,12 @@
                                         </div>
                                         <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button"
                                            data-slide="prev"> <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                            <span class="sr-only">Previous</span> </a>
+                                            <span class="sr-only">Anterior</span>
+                                        </a>
                                         <a class="carousel-control-next" href="#carouselExampleIndicators" role="button"
                                            data-slide="next"> <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                            <span class="sr-only text-red" style="color: red">Next</span> </a>
+                                            <span class="sr-only">Siguiente</span>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -163,6 +165,14 @@
 @section('css')
     <link rel="stylesheet" href="{{asset('/theme/assets/extra-libs/prism/prism.css')}}">
     <link rel="stylesheet" href="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.min.css')}}">
+    <style>
+        .carousel-control-prev-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23ff0000' viewBox='0 0 8 8'%3e%3cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3e%3c/svg%3e");
+        }
+        .carousel-control-next-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23ff0000' viewBox='0 0 8 8'%3e%3cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3e%3c/svg%3e");
+        }
+    </style>
 @endsection
 
 @section('script')
