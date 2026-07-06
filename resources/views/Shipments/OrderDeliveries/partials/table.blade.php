@@ -11,6 +11,7 @@
         "colReorder": true,
         "stateSave": true,
         "stateDuration": 0,
+        "deferLoading": 0,
         "ajax": {
             url: 'getDataSchedule',
             data: function (d) {
@@ -48,7 +49,8 @@
             {"width": "200px", "targets": 10},
         ],
         "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
-        "lengthMenu": [[1,5,10, 30, 50, 100, 150], [1,5,10, 30, 50, 100, 150]],
+        // "lengthMenu": [[1,5,10, 30, 50, 100, 150], [1,5,10, 30, 50, 100, 150]],
+        "lengthMenu": [[1,5,10, 30, 50], [1,5,10, 30, 50]],
         buttons: [
             {
                 "extend": "colvis",
@@ -98,5 +100,8 @@
         oTable.draw();
         e.preventDefault();
     });
+    // $('#btnFiltrar').on('click', function() {
+    //     $('#tabla').DataTable().ajax.reload();
+    // });
 </script>
 

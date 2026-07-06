@@ -75,17 +75,17 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-12 col-md-10 col-xs-12">
-                            <table id="table-monitorpods" class="table table-bordered table-hover table-condensed">
+                            <table id="table-monitorpods" class="table table-bordered table-hover table-condensed" width="100%">
                                 <thead>
-                                <tr>
-                                    <th>Transporte</th>
-                                    <th>Embarque</th>
-                                    <th>Cliente</th>
-                                    <th>Ciudad</th>
-                                    <th>Cita de entrega</th>
-                                    <th>Estatus</th>
-                                    <th>Opciones</th>
-                                </tr>
+                                    <tr>
+                                        <th>Transporte</th>
+                                        <th>Embarque</th>
+                                        <th>Cliente</th>
+                                        <th>Ciudad</th>
+                                        <th>Cita de entrega</th>
+                                        <th>Estatus</th>
+                                        <th>Opciones</th>
+                                    </tr>
                                 </thead>
                             </table>
                         </div>

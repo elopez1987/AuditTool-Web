@@ -29,7 +29,7 @@
                                 <div class="form-group">
                                     <label for="turnid">Turno</label>
                                     <select name="turnid" id="turnid" class="form-control select2">
-                                        <option value="" selected>Seleecione una opción</option>
+                                        <option value="" selected>Seleccione una opción</option>
                                         @foreach($turns as $model)
                                             <option value="{{$model->id}}"> {{$model->name}} </option>
                                         @endforeach
@@ -46,7 +46,7 @@
                                 <div class="form-group">
                                     <label for="statusid">Estatus</label>
                                     <select name="statusid" id="statusid" class="form-control select2">
-                                        <option value="" selected>Seleecione una opción</option>
+                                        <option value="" selected>Seleccione una opción</option>
                                         @foreach($status as $model)
                                             <option value="{{$model->statusid}}"> {{$model->name}} </option>
                                         @endforeach
