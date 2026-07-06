@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Shipments\OrderDelivery\Imports;
 
 use App\Http\Controllers\BaseController;
-use App\Imports\Shipments\OrderDelivery\OrderImport;
+use App\Imports\Shipments\OrderDelivery\OrderImportV2;
 use App\Models\Shipments\OrderDelivery\LogImportFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -19,7 +19,7 @@ class ImportOrderPlanController extends BaseController
             return $this->errorResponse('El archivo es incorrecto, favor de validar');
         }
         $file = $request->file('file');
-        Excel::import(new OrderImport, $file);
+        Excel::import(new OrderImportV2, $file);
         $data = LogImportFile::get();
 
         return view('Configuration.EdiLogs.LogImportFile.index', compact('data'));
