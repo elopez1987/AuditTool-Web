@@ -283,6 +283,10 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
+                                                    <td>Confirmación de entrega</td>
+                                                    <td>{{$orderdelivery->confirmation ?? ''}}</td>
+                                                </tr>
+                                                <tr>
                                                     <td>Evidencia documental</td>
                                                     <td>
                                                         @if ($orderdelivery->evidencefile != null)

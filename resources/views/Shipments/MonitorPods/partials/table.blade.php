@@ -1,7 +1,7 @@
 <script>
     var oTable = $("#table-monitorpods").DataTable({
         "paging": true,
-        "searching": true,
+        "searching": false,
         "ordering": true,
         "sScrollY": "450px",
         "processing": true,
@@ -56,7 +56,7 @@
             {"width": "250px", "targets": 6},
         ],
         "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
-        "lengthMenu": [[1, 5, 10, 30, 50, 100, 150, 200, 250, -1], [1, 5, 10, 30, 50, 100, 150, 200, 250, "Todos"]],
+        "lengthMenu": [[1, 5, 10, 30, 50, 100, 150, 200], [1, 5, 10, 30, 50, 100, 150, 200, 250]],
         buttons: [
             {
                 "extend": "colvis",

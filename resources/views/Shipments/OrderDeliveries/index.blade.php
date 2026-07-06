@@ -89,8 +89,8 @@
                                     <th class="text-white">Linea de Transporte</th>
                                     <th class="text-white">Cliente</th>
                                     <th class="text-white">Destino</th>
-                                    <th class="text-white">F.Cita</th>
-                                    <th class="text-white">N°. de Confirmación</th>
+                                    <th class="text-white">Cita de carga</th>
+                                    <th class="text-white">Cita de entrega</th>
                                     <th class="text-white">Estatus</th>
                                     <th class="text-white">Detalle</th>
                                 </tr>
