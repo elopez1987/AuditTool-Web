@@ -6,6 +6,7 @@ use App\Http\Controllers\BaseController;
 use App\Http\Requests\SafetyTours\Incidents\SaveCategorySafetyRequest;
 use App\Models\SafetyTours\Incidents\StorageCategorySafety;
 use App\Models\SafetyTours\Incidents\StorageResponsibleArea;
+use App\Models\SafetyTours\Incidents\StorageSafetyCategoryDetail;
 use Illuminate\Http\Request;
 
 class StorageCategorySafetyController extends BaseController
@@ -49,12 +50,20 @@ class StorageCategorySafetyController extends BaseController
 
     public function show(StorageCategorySafety $storage_category_safety)
     {
+
         $responsible = StorageResponsibleArea::controlAccessUser()
             ->where('statusid', 'E')
             ->select(['id', 'name'])->get();
 
+        $details = StorageSafetyCategoryDetail::where('storage_category_safety_id', $storage_category_safety->id)
+            ->with(['stotagecategorysafety:id,name',
+                'storagesafetyresponsiblearea:id,name',
+                'status:statusid,name'])
+            ->where('statusid', 'E')
+            ->get();
+
         return view('SafetyTours.StorageCategorySafety.show',
-            compact('storage_category_safety', 'responsible'));
+            compact('storage_category_safety', 'responsible', 'details'));
     }
 
     public function edit(StorageCategorySafety $storage_category_safety)
