@@ -11,7 +11,7 @@
         "colReorder": true,
         "stateSave": true,
         "stateDuration": 0,
-        "deferLoading": 0,
+        // "deferLoading": 0,
         "ajax": {
             url: 'getDataSchedule',
             data: function (d) {
