@@ -41,6 +41,12 @@ class InventoryLocationCount extends Model
         return $this->belongsTo(InventoryCard::class, 'inventory_card_id', 'id');
     }
 
+    public function inventorycardcount()
+    {
+        return $this->belongsTo(InventoryCardCount::class, 'inventory_card_id', 'inventory_card_id')
+            ->where('inventory_head_id', $this->inventoryhead->id);
+    }
+
     public function inventorylocation(): BelongsTo
     {
         return $this->belongsTo(InventoryLocation::class, 'inventory_location_id', 'id');

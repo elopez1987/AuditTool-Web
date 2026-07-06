@@ -12,7 +12,7 @@
                         {{csrf_field()}}
                         <div class="row">
                             <div class="col-md-12">
-                                <a href="{{url('inventorylocations-card/' . $locationCount->inventorycard->id)}}">
+                                <a href="{{url('inventorylocations-card/' . $locationCount->inventorycardcount->id)}}">
                                     <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
                                         <img src="{{asset('/ico/back.png')}}" alt="" class="img-16 ml-1">
                                         <span class="text-button"> Regresar</span>
