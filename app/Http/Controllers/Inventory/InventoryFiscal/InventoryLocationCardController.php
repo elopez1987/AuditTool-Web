@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Inventory\InventoryFiscal;
 
 use App\Http\Controllers\BaseController;
 use App\Models\Inventory\InventoryFiscal\InventoryCardCount;
+use App\Models\Inventory\InventoryFiscal\InventoryHead;
 use App\Models\Inventory\InventoryFiscal\InventoryLocationCount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -14,9 +15,10 @@ class InventoryLocationCardController extends BaseController
     public function index($id)
     {
         $inventoryCardCount = InventoryCardCount::with('inventoryhead:id,name')->findOrFail($id);
+        $inventoryHead = InventoryHead::where('id', $inventoryCardCount->inventory_head_id)->first();
 
         return view('Inventory.InventoryHead.LocationCard.index',
-            compact('inventoryCardCount'));
+            compact('inventoryCardCount', 'inventoryHead'));
     }
 
     public function getLocationCardInventory(Request $request, $id)
@@ -40,6 +42,9 @@ class InventoryLocationCardController extends BaseController
             })
             ->select([
                 'ilc.id',
+                'ilc.type',
+                'ilc.statusid_count01 as statusid01',
+                'ilc.statusid_count02 as statusid02',
                 'ia.name as pasillo',
                 'ic.name as cedula',
                 'il.name as ubicacion',
@@ -51,15 +56,15 @@ class InventoryLocationCardController extends BaseController
                 'ipn2.lngdsc as description02',
                 'ilc.quantity02',
                 'u2.name as user_count02',
-                's.name as statusid_count01',
+                //                's.name as statusid_count01',
                 's.auxiliary01 as color_count01',
-                's2.name as statusid_count02',
+                //                's2.name as statusid_count02',
                 's2.auxiliary01 as color_count02',
                 'ilc.statusid_location',
             ]);
 
         return DataTables::of($query)
-            ->addColumn('btn', '')
+            ->addColumn('btn', 'Inventory.InventoryHead.LocationCard.partials.buttons')
             ->rawColumns(['btn'])
             ->toJson();
     }

@@ -10,7 +10,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <a href="{{route('home')}}">
+                            <a href="{{route('orderdeliveries.index')}}">
                                 @include('buttons.back')
                             </a>
                         </div>

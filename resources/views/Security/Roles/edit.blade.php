@@ -106,7 +106,7 @@
                     <div class="card">
                         <div class="card-header">Permisos Asignados</div>
                         <div class="card-body">
-                            <table class="table table-condensed table-bordered table-striped" id="table-assing">
+                            <table class="table table-condensed table-bordered " id="table-assing">
                                 <thead>
                                 <tr>
                                     <th>Modulo</th>

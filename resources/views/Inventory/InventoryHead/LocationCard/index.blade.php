@@ -5,7 +5,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    Detalla de cédula
+                    Detalla de cédula sdfdsf
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -18,12 +18,14 @@
                                             @include('buttons.search')
                                         </a>
                                         <a>
-                                            <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md" onclick="reloadtable();">
+                                            <button type="button"
+                                                    class="btn waves-effect waves-light btn-outline-info btn-md"
+                                                    onclick="reloadtable();">
                                                 <img src="{{asset('/ico/reloadpage.png')}}" alt="" class="img-16 ml-1">
                                                 <span class="text-button"> Refrescar</span>
                                             </button>
                                         </a>
-                                        <a href="{{url('inventoryhead-cards/' . $inventoryCardCount->inventory_head_id)}}">
+                                        <a href="{{url('inventoryhead-cards/' . $inventoryHead->inventory_uuid)}}">
                                             @include('buttons.cancel')
                                         </a>
                                     </div>
@@ -144,24 +146,34 @@
                 {data: 'quantity02'},
                 {data: 'user_count02', name: 'user_count02'},
                 {
-                    data: 'statusid_count01', name: 'statusid_count01',
-                    createdCell: function (td, cellData, rowData) {
-                        $(td).css({
-                            'background-color': (rowData.color_count01),
-                            'color': 'black'
-                        });
-                    }
+                    data: 'statusid01', name: 'statusid01',
+                    render: function (data, type, row) {
+                        return (data == 'C' )
+                            ? '<span class="badge bg-green font-12 font-light text-black">Terminado</span>'
+                            : '<span class="badge bg-red font-12 font-light">Pendiente</span>';
+                    },
                 },
                 {
-                    data: 'statusid_count02', name: 'statusid_count02',
-                    createdCell: function (td, cellData, rowData) {
-                        $(td).css({
-                            'background-color': (rowData.color_count02),
-                            'color': 'black'
-                        });
+                    data: 'statusid02', name: 'statusid02',
+                    render: function (data, type, row) {
+                        return (data == 'C' )
+                            ? '<span class="badge bg-green font-12 font-light text-black">Terminado</span>'
+                            : '<span class="badge bg-red font-12 font-light">Pendiente</span>';
+                    },
+                },
+                {
+                    data: 'statusid_location',
+                    render: function (data, type, row) {
+
+                        if (row.statusid02 !== 'C') {
+                            return '<span class="badge bg-secondary font-12 font-light"></span>';
+                        }
+
+                        return (data == 1 || data === true)
+                            ? '<span class="badge bg-green font-12 font-light text-black">Correcto</span>'
+                            : '<span class="badge bg-red font-12 font-light">Con Error</span>';
                     }
                 },
-                {data: 'statusid_location'},
                 {data: 'btn', orderable: false, searchable: false},
             ],
             "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',

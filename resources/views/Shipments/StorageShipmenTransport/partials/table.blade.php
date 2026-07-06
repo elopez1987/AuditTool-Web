@@ -1,7 +1,7 @@
 <script>
     var oTable = $("#table-journeytransport").DataTable({
         "paging": true,
-        "searching": true,
+        "searching": false,
         "ordering": true,
         "sScrollY": "400px",
         "processing": true,
@@ -64,7 +64,7 @@
             {"width": "200px", "targets": 11},
         ],
         "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
-        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
+        "lengthMenu": [[10, 25, 50,100,200,300], [10, 25, 50,100,200,300]],
 
         buttons: [
             {

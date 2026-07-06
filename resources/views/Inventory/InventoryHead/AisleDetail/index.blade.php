@@ -8,9 +8,6 @@
                     Inventario Fiscal
                 </div>
                 <div class="card-body">
-
-
-
                     <div class="row">
                         <div class="col-lg-12">
                             <form method="GET" id="search" role="form">

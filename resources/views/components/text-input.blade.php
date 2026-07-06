@@ -54,4 +54,5 @@
 {{--        label="Nombre completo"--}}
 {{--        required--}}
 {{--        uppercase--}}
+{{--        colClass="col-lg-6 col-md-12"--}}
 {{--/>--}}

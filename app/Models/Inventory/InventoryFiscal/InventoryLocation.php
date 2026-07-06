@@ -40,7 +40,7 @@ class InventoryLocation extends Model
 
     public function inventoryunitsmeasure(): BelongsTo
     {
-        return $this->belongsTo(InventoryUnitMeasure::class, 'inventoryunitsmeasure_id');
+        return $this->belongsTo(InventoryUnitMeasure::class, 'inventoryunitsmeasure_id', 'id');
     }
 
     public function center(): BelongsTo

@@ -23,46 +23,43 @@ class InventoryLocationCount extends Model
         'statusid_count01',
         'statusid_count02',
         'statusid_location',
+        'type',
     ];
 
-    public function inventoryHead(): BelongsTo
+    public function inventoryhead(): BelongsTo
     {
-        return $this->belongsTo(InventoryHead::class);
+        return $this->belongsTo(InventoryHead::class, 'inventory_head_id', 'id');
     }
 
-    public function inventoryAisle(): BelongsTo
+    public function inventoryaisle(): BelongsTo
     {
-        return $this->belongsTo(InventoryAisle::class);
+        return $this->belongsTo(InventoryAisle::class, 'inventory_aisle_id', 'id');
     }
 
-    public function inventoryCard(): BelongsTo
+    public function inventorycard(): BelongsTo
     {
-        return $this->belongsTo(InventoryCard::class);
+        return $this->belongsTo(InventoryCard::class, 'inventory_card_id', 'id');
     }
 
-    public function inventoryLocation(): BelongsTo
+    public function inventorycardcount()
     {
-        return $this->belongsTo(InventoryLocation::class);
+        return $this->belongsTo(InventoryCardCount::class, 'inventory_card_id', 'inventory_card_id')
+            ->where('inventory_head_id', $this->inventoryhead->id);
+    }
+
+    public function inventorylocation(): BelongsTo
+    {
+        return $this->belongsTo(InventoryLocation::class, 'inventory_location_id', 'id');
     }
 
     public function inventorypartnumber01(): BelongsTo
     {
-        return $this->belongsTo(InventoryPartnumber::class, 'inventorypartnumber01_id');
-    }
-
-    public function quantity01(): BelongsTo
-    {
-        return $this->belongsTo(string::class, 'quantity01');
+        return $this->belongsTo(InventoryPartnumber::class, 'inventorypartnumber01_id', 'id');
     }
 
     public function inventorypartnumber02(): BelongsTo
     {
         return $this->belongsTo(InventoryPartnumber::class, 'inventorypartnumber02_id');
-    }
-
-    public function quantity02(): BelongsTo
-    {
-        return $this->belongsTo(string::class, 'quantity02');
     }
 
     public function userCount01(): BelongsTo

@@ -16,6 +16,8 @@ use App\Http\Controllers\Inventory\InventoryFiscal\InventoryHeadEventController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryLocationCardController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryLocationController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventorySupervisorController;
+use App\Http\Controllers\Inventory\InventoryFiscal\InventoryValidateLocationController;
+use App\Http\Controllers\Inventory\InventoryFiscal\PrintFormatInventoryController;
 use App\Http\Controllers\Inventory\InventoryPartNumberCategory01sController;
 use App\Http\Controllers\Inventory\InventoryPartNumberCategory02sController;
 use App\Http\Controllers\Inventory\InventoryPartNumbers\ImportPartNumbersController;
@@ -114,6 +116,10 @@ Route::middleware(['auth'])->group(function () {
     //	Reiniciar conteo 1
     Route::put('reset-count-1/{id}', [InventoryLocationCardController::class, 'initializeCount1'])->name('reset-count-1');
     Route::put('reset-count-2/{id}', [InventoryLocationCardController::class, 'initializeCount2'])->name('reset-count-2');
+    // Validar evidencias de conteo de drones
+    Route::get('validate-location/{id}', [InventoryValidateLocationController::class, 'index'])->name('validate-location');
+    Route::post('saveResponseSuccessLocation/{id}', [InventoryValidateLocationController::class, 'saveResponseSuccessLocation'])->name('saveResponseSuccessLocation');
+    Route::post('saveResponseErrorLocation/{id}', [InventoryValidateLocationController::class, 'saveResponseErrorLocation'])->name('saveResponseErrorLocation');
 
     //	Detalle de errores de conteo
     Route::get('inventoryhead-errors/{id}', [InventoryErrorsController::class, 'index'])->name('inventoryhead-errors');
@@ -153,6 +159,10 @@ Route::middleware(['auth'])->group(function () {
     //	Asignacion de conteo 2
     Route::put('save-accountant-cards-02/{id}', [InventoryAccountantCardController::class, 'saveAccountantCards'])->name('save-accountant-cards');
     Route::get('getAccountantCards02/{id}', [InventoryAccountantCardController::class, 'getAccountantCards02'])->name('getAccountantCards02');
+
+    //	Impresion de formatos de conteo
+    Route::get('print-format-inventory-01/{id}', [PrintFormatInventoryController::class, 'printFormat01'])->name('print-format-inventory-01');
+    Route::get('print-format-inventory-02/{id}', [PrintFormatInventoryController::class, 'printFormat02'])->name('print-format-inventory-02');
 
     // Migracion de SAP
     Route::get('inventory-sap-migration', [MigrationSapController::class, 'index'])->name('inventory-sap-migration');

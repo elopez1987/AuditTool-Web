@@ -8,6 +8,7 @@ use App\Models\Security\Users\SecurityAccessWarehouse;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -31,6 +32,16 @@ class StorageCategorySafety extends Model
         'created_by',
         'statusid',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (StorageCategorySafety $model) {
+                $model->created_by = Auth::id();
+            });
+        }
+    }
 
     public function center(): BelongsTo
     {

@@ -28,15 +28,17 @@ class InventoryCardDetailController extends BaseController
             ->leftJoin('systemstatus as s', 'icc.statusid_count01', '=', 's.statusid')
             ->leftJoin('systemstatus as s2', 'icc.statusid_count02', '=', 's2.statusid')
             ->where('icc.inventory_head_id', $id)
-            ->when($request->filled('name'), function ($q) use ($request) {
-                $q->where('ia.name', 'like', '%' . $request->name . '%');
+            ->when($request->input('name'), function ($q) use ($request) {
+                $q->where('ia.name', 'like', '%' . $request->input('name') . '%');
             })
-//            ->when($request->filled('cardname'), function ($q) use ($request) {
-//                $q->where('ic.name', 'like', '%' . $request->cardname . '%');
-//            })
+            ->when($request->input('cardname'), function ($q) use ($request) {
+                $q->where('ic.name', 'like', '%' . $request->input('cardname') . '%');
+            })
             ->select([
                 'icc.id',
                 'icc.inventory_head_id',
+                'icc.statusid_count01 as statusid01',
+                'icc.statusid_count02 as statusid02',
                 'ia.name as pasillo',
                 'ic.name as cedula',
                 'u.name as user_count01',

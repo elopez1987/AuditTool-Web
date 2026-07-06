@@ -54,6 +54,7 @@ class OrderDeliveryController extends BaseController
                 'orderdeliveries.carrierid',
                 'orderdeliveries.customerid',
                 'orderdeliveries.downloaddate',
+                'orderdeliveries.loadingdate',
                 'orderdeliveries.confirmation',
                 'orderdeliveries.statusid',
                 'orderdeliveries.evidencefile',

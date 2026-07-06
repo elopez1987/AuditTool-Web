@@ -72,11 +72,9 @@
             </div>
         </div>
     </div>
-
 @endsection
 
 @section('script')
-
     {{-- Variables dinámicas de Blade expuestas al JS externo --}}
     <script>
         var CardDetail = {
