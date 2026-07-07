@@ -184,13 +184,16 @@
                 @foreach($folders as $folder)
                     <div class="list-group-item">
                             <?php
-                            \Rap2hpoutre\LaravelLogViewer\LaravelLogViewer::DirectoryTreeStructure($storage_path, $structure);
+                            \Rap2hpoutre\LaravelLogViewer\LaravelLogViewer::DirectoryTreeStructure(
+                                $storage_path,
+                                $structure
+                            );
                             ?>
 
                     </div>
                 @endforeach
                 @foreach($files as $file)
-                    <a href="?l={{ \Illuminate\Support\Facades\Crypt::encrypt($file) }}"
+                    <a href="?l={{ \Illuminate\Support\Facades\Crypt::encryptString($file) }}"
                        class="list-group-item @if ($current_file == $file) llv-active @endif">
                         {{$file}}
                     </a>
@@ -254,23 +257,23 @@
             @endif
             <div class="p-3">
                 @if($current_file)
-                    <a href="?dl={{ \Illuminate\Support\Facades\Crypt::encrypt($current_file) }}{{ ($current_folder) ? '&f=' . \Illuminate\Support\Facades\Crypt::encrypt($current_folder) : '' }}">
+                    <a href="?dl={{ \Illuminate\Support\Facades\Crypt::encryptString($current_file) }}{{ ($current_folder) ? '&f=' . \Illuminate\Support\Facades\Crypt::encryptString($current_folder) : '' }}">
                         <span class="fa fa-download"></span> Descargar Archivo
                     </a>
                     -
                     <a id="clean-log"
-                       href="?clean={{ \Illuminate\Support\Facades\Crypt::encrypt($current_file) }}{{ ($current_folder) ? '&f=' . \Illuminate\Support\Facades\Crypt::encrypt($current_folder) : '' }}">
+                       href="?clean={{ \Illuminate\Support\Facades\Crypt::encryptString($current_file) }}{{ ($current_folder) ? '&f=' . \Illuminate\Support\Facades\Crypt::encryptString($current_folder) : '' }}">
                         <span class="fa fa-sync"></span> Limpiar Archivo
                     </a>
                     -
                     <a id="delete-log"
-                       href="?del={{ \Illuminate\Support\Facades\Crypt::encrypt($current_file) }}{{ ($current_folder) ? '&f=' . \Illuminate\Support\Facades\Crypt::encrypt($current_folder) : '' }}">
+                       href="?del={{ \Illuminate\Support\Facades\Crypt::encryptString($current_file) }}{{ ($current_folder) ? '&f=' . \Illuminate\Support\Facades\Crypt::encryptString($current_folder) : '' }}">
                         <span class="fa fa-trash"></span> Borrar Archivo
                     </a>
                     @if(count($files) > 1)
                         -
                         <a id="delete-all-log"
-                           href="?delall=true{{ ($current_folder) ? '&f=' . \Illuminate\Support\Facades\Crypt::encrypt($current_folder) : '' }}">
+                           href="?delall=true{{ ($current_folder) ? '&f=' . \Illuminate\Support\Facades\Crypt::encryptString($current_folder) : '' }}">
                             <span class="fa fa-trash-alt"></span> Borrar todos los archivos
                         </a>
                     @endif
