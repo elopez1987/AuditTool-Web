@@ -54,11 +54,6 @@
                                 <tr>
                                     <th>Mensaje</th>
                                     <th>Descripción</th>
-                                    <th>Auxiliar 01</th>
-                                    <th>Auxiliar 02</th>
-                                    <th>Auxiliar 03</th>
-{{--                                    <th class="bg-inverse text-white">Auxiliar 04</th>--}}
-{{--                                    <th class="bg-inverse text-white">Auxiliar 05</th>--}}
                                     <th>Estatus</th>
                                     <th>Opciones</th>
                                 </tr>

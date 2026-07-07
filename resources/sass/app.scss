@@ -63,12 +63,12 @@ a {
 //Colores principales
 #main-wrapper[data-layout="horizontal"] .topbar .navbar-collapse[data-navbarbg="skin1"],
 #main-wrapper[data-layout="horizontal"] .topbar[data-navbarbg="skin1"] {
-  background: #63666A !important;
+  background: #607d8b !important;
   text-decoration: none;
 }
 
 #main-wrapper[data-layout="horizontal"] .topbar .top-navbar .navbar-header[data-logobg="skin1"] {
-  background: #63666A;
+  background: #607d8b;
 }
 
 #main-wrapper[data-layout="horizontal"] .left-sidebar[data-sidebarbg="skin6"] .sidebar-nav ul .sidebar-item .sidebar-link {
@@ -250,7 +250,7 @@ thead, tbody, tfoot, tr, td, th {
 table.dataTable thead th {
   color: black !important;
   padding: 6px;
-  background: #D0D0CE;
+  background: #eceff1;
   border-color: #c1d5e0;
   text-transform: uppercase !important;
 }

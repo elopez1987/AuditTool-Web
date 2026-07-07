@@ -23,18 +23,29 @@
             {data: 'btn'},
         ],
         "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
-        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        "lengthMenu": [[10,25,50,100], [10,25,50,100]],
 
         buttons: [
             {
+                "extend": "colvis",
+                "text": "<img src=\"{{asset('/pics/adbuscar.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span> Mostar/Ocultar</span>",
+                "className": "btn btn-outline-info btn-md  btn-bold",
+                columns: ':not(:first):not(:last)'
+            },
+            {
+                "extend": "copy",
+                "text": "<img src=\"{{asset('/pics/adcopiar.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span> Copiar</span>",
+                "className": "btn btn-outline-info btn-md  btn-bold",
+            },
+            {
                 "extend": "csv",
-                "text": "<i class='fa fa-database'></i> <span  style='font-size: 10px;'> Exportar Csv</span>",
-                "className": "btn waves-effect waves-light btn-outline-secondary btn-sm"
+                "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span> Csv</span>",
+                "className": "btn btn-outline-info btn-md  btn-bold",
             },
             {
                 "extend": "excel",
-                "text": "<i class='fa fa-file'></i> <span  style='font-size: 10px'> Exportar Excel</span>",
-                "className": "btn waves-effect waves-light btn-outline-secondary btn-sm"
+                "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span> Excel</span>",
+                "className": "btn btn-outline-info btn-md  btn-bold",
             }
         ],
 

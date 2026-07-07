@@ -32,7 +32,7 @@
                         <div class="row">
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="parameterid">Parametro <span style="color: red">*</span></label>
+                                    <label for="parameterid">Parametro</label>
                                     <input type="text" class="form-control"  id="parameterid" name="parameterid"
                                            aria-describedby="parameterid" onKeyUp=this.value=this.value.toUpperCase();
                                            value="{{old('parameterid')}}">
@@ -40,7 +40,7 @@
                             </div>
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="name">Nombre <span style="color: red">*</span></label>
+                                    <label for="name">Nombre</label>
                                     <input type="text" class="form-control"  id="name" name="name"
                                            aria-describedby="name" onKeyUp=this.value=this.value.toUpperCase();
                                            value="{{old('name')}}">
