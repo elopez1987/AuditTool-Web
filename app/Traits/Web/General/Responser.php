@@ -102,7 +102,9 @@ trait Responser
     public function getStatusForSchema($schemaid)
     {
         return SystemStatus::whereSchemaid($schemaid)
-            ->select(['statusid', 'name', 'comment'])->get();
+            ->select(['statusid', 'name', 'comment'])
+            ->orderBy('statusid')
+            ->get();
     }
 
     public function getCenters()

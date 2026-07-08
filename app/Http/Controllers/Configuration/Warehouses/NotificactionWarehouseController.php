@@ -12,7 +12,9 @@ class NotificactionWarehouseController extends BaseController
     public function index($id)
     {
         $warehouse = SystemWarehouse::findOrFail($id);
-        $parameters = $this->getParameterForWarehouses();
+        $parameters = SystemStatus::whereSchemaid('MWH')->select(['statusid', 'name', 'comment'])
+            ->orderBy('statusid')
+            ->get();
 
         return view(
             'Configuration.SystemWarehouses.Notifications.create',
@@ -23,14 +25,10 @@ class NotificactionWarehouseController extends BaseController
     public function systemwarehousenotifications(Request $request, $id)
     {
         $warehouse = SystemWarehouse::findOrFail($id);
-        $warehouse->notificationsflags = $request['parameter'];
-        $warehouse->save();
+        $warehouse->update([
+            'configurationflag' => $request->input('configurationflag'),
+        ]);
 
         return $this->redirectBackSuccess();
-    }
-
-    public function getParameterForWarehouses()
-    {
-        return SystemStatus::whereSchemaid('MWH')->select(['statusid', 'name', 'comment'])->get();
     }
 }

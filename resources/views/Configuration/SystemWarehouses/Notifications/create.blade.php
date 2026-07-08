@@ -114,22 +114,22 @@
                 "ordering": true,
                 "sScrollY": "700px",
                 "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
-                "lengthMenu": [[1,5,10, 25, 50,100, -1], [1,5,10, 25, 50,100, "Todos"]],
+                "lengthMenu": [[ 25, 50,100, -1], [25, 50,100, "Todos"]],
                 buttons: [
                     {
                         "extend": "colvis",
-                        "text": "<img src=\"{{asset('/pics/adbuscar.png')}}\"  alt=''><span  style='font-size: 11px;'> Mostar/Ocultar</span>",
+                        "text": "<img src=\"{{asset('/pics/adbuscar.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span> Mostar/Ocultar</span>",
                         "className": "btn btn-outline-info btn-md  btn-bold",
                         columns: ':not(:first):not(:last)'
                     },
                     {
                         "extend": "csv",
-                        "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16'><span  style='font-size: 11px;'> Csv</span>",
+                        "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span> Csv</span>",
                         "className": "btn btn-outline-info btn-md  btn-bold",
                     },
                     {
                         "extend": "excel",
-                        "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt=''><span  style='font-size: 11px;'> Excel</span>",
+                        "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span> Excel</span>",
                         "className": "btn btn-outline-info btn-md  btn-bold",
                     }
                 ],

@@ -13,7 +13,9 @@ class ParameterWarehousesController extends BaseController
     {
         $this->authorize('systemwarehouses.parameters');
         $warehouse = SystemWarehouse::findOrFail($id);
-        $parameters = $this->getParameterForWarehouses();
+        $parameters = SystemStatus::whereSchemaid('SWH')->select(['statusid', 'name', 'comment'])
+            ->orderBy('statusid')
+            ->get();
 
         return view(
             'Configuration.SystemWarehouses.Parameters.create',
@@ -24,14 +26,12 @@ class ParameterWarehousesController extends BaseController
     public function systemwarehouseparameters(Request $request, $id)
     {
         $warehouse = SystemWarehouse::findOrFail($id);
-        $warehouse->configurationflag = $request['parameter'];
-        $warehouse->save();
+        $warehouse->update(
+            [
+                'configurationflag' => $request->configurationflag,
+            ]
+        );
 
         return $this->redirectBackSuccess();
-    }
-
-    public function getParameterForWarehouses()
-    {
-        return SystemStatus::whereSchemaid('SWH')->select(['statusid', 'name', 'comment'])->get();
     }
 }
