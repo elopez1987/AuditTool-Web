@@ -134,8 +134,17 @@ a {
 }
 
 @media (min-width: 1025px) {
+  /* La barra superior del menu se ajusta al ancho de pantalla: los items
+     se envuelven en varias filas en lugar de recortarse. El sidebar es
+     absoluto (no fijo), por lo que crecer en alto no tapa el contenido. */
+  #main-wrapper[data-layout="horizontal"] .left-sidebar,
   #main-wrapper[data-layout="horizontal"] .left-sidebar .scroll-sidebar {
-    height: 50px !important;
+    height: auto !important;
+    min-height: 50px;
+  }
+
+  #main-wrapper[data-layout="horizontal"] .sidebar-nav #sidebarnav {
+    flex-wrap: wrap;
   }
 }
 
@@ -460,10 +469,25 @@ span.select2-container {
 
 .sidebar-nav ul .sidebar-item .sidebar-link {
   color: black;
-  white-space: nowrap;
+  white-space: normal;
   line-height: 25px;
   font-weight: lighter !important;
   opacity: 3 !important;
+}
+
+/* Ancho dinamico de las etiquetas del menu: el texto largo se ajusta
+   dentro del sidebar-item en lugar de desbordarse */
+.sidebar-nav ul .sidebar-item .sidebar-link > i,
+.sidebar-nav ul .sidebar-item .sidebar-link > img {
+  flex: 0 0 auto;
+}
+
+.sidebar-nav ul .sidebar-item .sidebar-link .hide-menu {
+  flex: 1 1 auto;
+  min-width: 0;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .sidebar-nav ul .sidebar-item .first-level .sidebar-item.active .sidebar-link {
