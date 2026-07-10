@@ -47,11 +47,4 @@
                    aria-describedby="auxiliary05" value="{{$securitymodule->auxiliary05}}">
         </div>
     </div>
-    <div class="col-lg-2 col-md-6 col-sm-12">
-        <div class="form-group">
-            <label for="auxiliary06">Auxiliar 06 </label>
-            <input type="text" class="form-control" id="auxiliary06" name="auxiliary06" maxlength="100"
-                   aria-describedby="auxiliary06" value="{{$securitymodule->auxiliary06}}">
-        </div>
-    </div>
 </div>

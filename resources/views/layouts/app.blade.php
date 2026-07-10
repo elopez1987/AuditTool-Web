@@ -20,8 +20,8 @@
                         <li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark"
                                                     href="javascript:void(0)" aria-expanded="false">
                                 {{--                                <i class="mdi mdi-collage"></i>--}}
-                                <img src="{{asset('ico/engine_gear_internet_option_security_setting_web_icon_127066.png')}}"
-                                     alt="" class="img-16">
+                                <img src="{{asset('ico/carga.png')}}"
+                                     alt="" class="img-16 ml-2 mr-2">
                                 <span class="hide-menu"> Control de patios</span></a>
                             <ul aria-expanded="false" class="collapse first-level">
 
@@ -472,8 +472,7 @@
                         <li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark"
                                                     href="javascript:void(0)" aria-expanded="false">
                                 {{--                                <i class="mdi mdi-collage"></i>--}}
-                                <img src="{{asset('ico/engine_gear_internet_option_security_setting_web_icon_127066.png')}}"
-                                     alt="" class="img-16">
+                                <img src="{{asset('ico/cadena-de-suministro.png')}}" alt="" class="img-16 ml-2 mr-2">
                                 <span class="hide-menu"> Embarques</span></a>
                             <ul aria-expanded="false" class="collapse first-level">
 
@@ -835,8 +834,8 @@
                         <li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark"
                                                     href="javascript:void(0)" aria-expanded="false">
                                 {{--                                <i class="mdi mdi-collage"></i>--}}
-                                <img src="{{asset('ico/engine_gear_internet_option_security_setting_web_icon_127066.png')}}"
-                                     alt="" class="img-16">
+                                <img src="{{asset('ico/logistica.png')}}"
+                                     alt="" class="img-16 ml-2 mr-2">
                                 <span class="hide-menu"> Recibo</span></a>
                             <ul aria-expanded="false" class="collapse first-level">
 
@@ -943,8 +942,8 @@
                         <li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark"
                                                     href="javascript:void(0)" aria-expanded="false">
                                 {{--                                <i class="mdi mdi-collage"></i>--}}
-                                <img src="{{asset('ico/engine_gear_internet_option_security_setting_web_icon_127066.png')}}"
-                                     alt="" class="img-16">
+                                <img src="{{asset('ico/caja-de-entrega.png')}}"
+                                     alt="" class="img-16 ml-2 mr-2">
                                 <span class="hide-menu"> Inventario</span></a>
                             <ul aria-expanded="false" class="collapse first-level">
 
@@ -1061,8 +1060,7 @@
                         <li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark"
                                                     href="javascript:void(0)" aria-expanded="false">
                                 {{--                                <i class="mdi mdi-collage"></i>--}}
-                                <img src="{{asset('ico/engine_gear_internet_option_security_setting_web_icon_127066.png')}}"
-                                     alt="" class="img-16">
+                                <img src="{{asset('ico/maquina-elevadora.png')}}" alt="" class="img-16 ml-2 mr-2">
                                 <span class="hide-menu"> Mantenimiento</span></a>
                             <ul aria-expanded="false" class="collapse first-level">
 
@@ -1153,9 +1151,8 @@
                     @can('SafetyTours')
                         <li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark"
                                                     href="javascript:void(0)" aria-expanded="false">
-                                {{--                                <i class="mdi mdi-collage"></i>--}}
-                                <img src="{{asset('ico/engine_gear_internet_option_security_setting_web_icon_127066.png')}}"
-                                     alt="" class="img-16">
+                                <img src="{{asset('ico/reporte-de-negocios.png')}}"
+                                     alt="" class="img-16 ml-2 mr-2">
                                 <span class="hide-menu">Recorridos de Seguridad</span></a>
                             <ul aria-expanded="false" class="collapse first-level">
 
@@ -1190,7 +1187,8 @@
                                     </ul>
                                 </li>
 
-                                <li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark"
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link has-arrow waves-effect waves-dark"
                                                             href="javascript:void(0)" aria-expanded="false"><i
                                                 class="mdi mdi-receipt"></i><span
                                                 class="hide-menu">Recorridos internos</span></a>
@@ -1223,7 +1221,6 @@
                                     </ul>
                                 </li>
 
-
                             </ul>
                         </li>
                     @endcan
@@ -1232,9 +1229,9 @@
                         <li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark"
                                                     href="javascript:void(0)" aria-expanded="false">
                                 {{--                                <i class="mdi mdi-collage"></i>--}}
-                                <img src="{{asset('ico/engine_gear_internet_option_security_setting_web_icon_127066.png')}}"
-                                     alt="" class="img-16">
-                                <span class="hide-menu">Seguridad</span></a>
+                                <img src="{{asset('ico/datos-seguros.png')}}"
+                                     alt="" class="img-16 ml-2 mr-2">
+                                <span class="hide-menu"> Seguridad</span></a>
                             <ul aria-expanded="false" class="collapse first-level">
                                 <li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark"
                                                             href="javascript:void(0)" aria-expanded="false"><i
@@ -1348,9 +1345,9 @@
                         <li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark"
                                                     href="javascript:void(0)" aria-expanded="false">
                                 {{--                                <i class="mdi mdi-collage"></i>--}}
-                                <img src="{{asset('ico/engine_gear_internet_option_security_setting_web_icon_127066.png')}}"
-                                     alt="" class="img-16">
-                                <span class="hide-menu">Configuración</span></a>
+                                <img src="{{asset('ico/configuracion-del-navegador.png')}}"
+                                     alt="" class="img-16 ml-2 mr-2">
+                                <span class="hide-menu"> Configuración</span></a>
                             <ul aria-expanded="false" class="collapse first-level">
                                 <li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark"
                                                             href="javascript:void(0)" aria-expanded="false"><i
@@ -1508,23 +1505,23 @@
                                         @role('ADMINISTRADOR')
                                         @can('databaseupdate')
                                             <li class="sidebar-item"><a href="{{route('databaseupdate.index')}}"
-                                                                        class="sidebar-link"><i
-                                                            class="mdi mdi-vector-difference-ba"></i><span
-                                                            class="hide-menu"> Mantenimiento</span></a>
+                                                                        class="sidebar-link">
+                                                    <i class="mdi mdi-arrow-right text-trax"></i>
+                                                    <span class="hide-menu"> Mantenimiento</span></a>
                                             </li>
                                         @endcan
                                         @can('systemtables.index')
                                             <li class="sidebar-item"><a href="{{route('systemtables.index')}}"
-                                                                        class="sidebar-link"><i
-                                                            class="mdi mdi-file-document-box"></i><span
-                                                            class="hide-menu"> Tablas</span></a>
+                                                                        class="sidebar-link">
+                                                    <i class="mdi mdi-arrow-right text-trax"></i>
+                                                    <span class="hide-menu"> Tablas</span></a>
                                             </li>
                                         @endcan
                                         @can('label-dictionary.index')
                                             <li class="sidebar-item"><a href="{{route('label-dictionary.index')}}"
-                                                                        class="sidebar-link"><i
-                                                            class="mdi mdi-file-document-box"></i><span
-                                                            class="hide-menu"> Diccionario de etiquetas</span></a>
+                                                                        class="sidebar-link">
+                                                    <i class="mdi mdi-arrow-right text-trax"></i>
+                                                    <span class="hide-menu"> Diccionario de etiquetas</span></a>
                                             </li>
                                         @endcan
                                         @endrole

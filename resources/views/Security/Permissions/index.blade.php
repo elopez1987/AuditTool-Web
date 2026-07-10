@@ -75,6 +75,7 @@
                                     <tr>
                                         <th>Modulo</th>
                                         <th>Función</th>
+                                        <th>ID</th>
                                         <th>Nombre</th>
                                         <th>Descripción</th>
                                         <th>Guard</th>

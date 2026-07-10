@@ -49,18 +49,11 @@ trait QuerySecurityRoles
             ->where('statusid', '=', 'E')->get();
     }
 
-    //    public function getModulesForRole($securityrole)
-    //    {
-    //        return DB::select('select * from securitymodules
-    //                        where moduleid in (select moduleid from securitydetailsmenustructure where menustrucid =?)
-    //                    ', [$securityrole->menustrucid]);
-    //    }
-
     public function getModulesForRole(Role $securityrole): Collection
     {
-        return SecurityModule::whereIn('moduleid',
-            SecurityDetailsMenuStructure::where('menustrucid', $securityrole->menustrucid)->select('moduleid')
-        )->get();
+        return SecurityModule::whereIn('moduleid', SecurityDetailsMenuStructure::where('menustrucid', $securityrole->menustrucid)->select('moduleid'))
+            ->select(['moduleid', 'description', 'auxiliary01'])
+            ->get();
     }
 
     public function getFunctionForRole(Role $securityrole): Collection
@@ -69,15 +62,10 @@ trait QuerySecurityRoles
             'functionid',
             SecurityFunctionsMenuStructure::where('menustrucid', $securityrole->menustrucid)
                 ->select('functionid')
-        )->get();
+        )
+            ->select(['moduleid', 'functionid', 'description', 'auxiliary01'])
+            ->get();
     }
-
-    //    public function getFunctionForRole($securityrole)
-    //    {
-    //        return DB::select('select * from securityfunctions s
-    //                                    where functionid in (select functionid from securityfunctionsmenustructure
-    //                                        s2 where menustrucid=?)', [$securityrole->menustrucid]);
-    //    }
 
     public function getStructureMenus()
     {
