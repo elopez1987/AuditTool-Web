@@ -12073,8 +12073,6 @@ a {
 
 #main-wrapper[data-layout=horizontal] .left-sidebar[data-sidebarbg=skin6] .sidebar-nav ul .sidebar-item .sidebar-link {
   color: #212529;
-  font-size: 12px;
-  font-weight: 700;
 }
 
 #main-wrapper[data-layout=vertical] .left-sidebar[data-sidebarbg=skin6],
@@ -12451,10 +12449,12 @@ span.select2-container {
   color: black;
   white-space: nowrap;
   line-height: 25px;
+  font-weight: lighter !important;
+  opacity: 3 !important;
 }
 
 .sidebar-nav ul .sidebar-item .first-level .sidebar-item.active .sidebar-link {
-  opacity: 1;
+  opacity: 0.7 !important;
   margin-left: 10px;
 }
 
