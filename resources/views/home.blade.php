@@ -5,8 +5,10 @@
 
         <div class="row">
             <div class="card">
+                <div class="card-header">
+                    Filtros
+                </div>
                 <div class="card-body" id="filtros">
-                    <h5 class="card-title mb-3">Filtros</h5>
                     <form id="filter-form">
                         <div class="row">
                             <div class="col-md-3">
@@ -48,7 +50,7 @@
                                     <label class="d-block">&nbsp;</label>
                                     <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md"
                                             id="apply-filters">
-                                        <i class="fas fa-filter"></i> <span class="text-button">Aplicar Filtros </span>
+                                        <i class="fas fa-filter"></i> <span class="text-button ">Aplicar Filtros </span>
                                     </button>
                                     <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md"
                                             id="clear-filters">
@@ -72,8 +74,8 @@
                                         <div class="d-flex align-items-center justify-content-center">
                                             <div class="text-center">
                                                 <span class="font-14 font-weight-bold text-uppercase">Total Unidades en Patio</span>
-                                                <h2 class="font-medium m-b-0"
-                                                    style="font-size: 42px !important;font-weight: 700 !important;color: #ff1744">{{$locationsBusy}}</h2>
+                                                <h2 class="font-medium m-b-0 text-black-50"
+                                                    style="font-size: 42px !important;font-weight: 700 !important;">{{$locationsBusy}}</h2>
                                             </div>
                                         </div>
                                     </div>
@@ -87,8 +89,8 @@
                                                 <div class="d-flex align-items-center justify-content-center">
                                                     <div class="text-center">
                                                         <span class="font-14 font-weight-bold text-uppercase">{{$status->unitstatus->name}}</span>
-                                                        <h2 class="font-medium m-b-0"
-                                                            style="font-size: 42px !important;font-weight: 700 !important;color: #17a2b8">{{$status->total}}</h2>
+                                                        <h2 class="font-medium m-b-0 text-black-50"
+                                                            style="font-size: 42px !important;font-weight: 700 !important;">{{$status->total}}</h2>
                                                     </div>
                                                 </div>
                                             </div>
@@ -423,8 +425,8 @@
                 title: {
                     text: 'Unidades en Patio por Línea de Transporte',
                     style: {
-                        fontSize: '18px',
-                        fontWeight: 'bold'
+                        fontSize: '12px',
+                        // fontWeight: 'bold'
                     }
                 },
                 subtitle: {
@@ -510,8 +512,8 @@
                 title: {
                     text: 'Unidades por Concepto de Entrada',
                     style: {
-                        fontSize: '18px',
-                        fontWeight: 'bold'
+                        fontSize: '12px',
+                        // fontWeight: 'bold'
                     }
                 },
                 subtitle: {
@@ -594,8 +596,8 @@
                 title: {
                     text: 'Unidades por Origen',
                     style: {
-                        fontSize: '18px',
-                        fontWeight: 'bold'
+                        fontSize: '12px',
+                        // fontWeight: 'bold'
                     }
                 },
                 subtitle: {
@@ -678,8 +680,8 @@
                 title: {
                     text: 'Unidades por Capacidad',
                     style: {
-                        fontSize: '18px',
-                        fontWeight: 'bold'
+                        fontSize: '12px',
+                        // fontWeight: 'bold'
                     }
                 },
                 subtitle: {
@@ -762,8 +764,8 @@
                 title: {
                     text: 'Unidades por Categoría de Camión',
                     style: {
-                        fontSize: '18px',
-                        fontWeight: 'bold'
+                        fontSize: '12px',
+                        // fontWeight: 'bold'
                     }
                 },
                 subtitle: {
@@ -845,8 +847,8 @@
                 title: {
                     text: 'Unidades por Estatus',
                     style: {
-                        fontSize: '18px',
-                        fontWeight: 'bold'
+                        fontSize: '12px',
+                        // fontWeight: 'bold'
                     }
                 },
                 subtitle: {
@@ -936,8 +938,8 @@
                 title: {
                     text: 'Unidades por Estatus de Proceso',
                     style: {
-                        fontSize: '18px',
-                        fontWeight: 'bold'
+                        fontSize: '12px',
+                        // fontWeight: 'bold'
                     }
                 },
                 subtitle: {
@@ -1020,8 +1022,8 @@
                 title: {
                     text: 'Unidades por Zona de Almacenamiento',
                     style: {
-                        fontSize: '18px',
-                        fontWeight: 'bold'
+                        fontSize: '12px',
+                        // fontWeight: 'bold'
                     }
                 },
                 subtitle: {

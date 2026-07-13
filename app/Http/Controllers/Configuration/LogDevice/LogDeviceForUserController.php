@@ -19,11 +19,10 @@ class LogDeviceForUserController extends BaseController
     {
 
         $data = StorageUserDevice::join('users', 'securitydeviceforuser.username', 'users.id')
-            ->select(['users.name as user', 'securitydeviceforuser.serialnumber', 'securitydeviceforuser.created_at']);
+            ->select(['users.name as user', 'securitydeviceforuser.serialnumber', 'securitydeviceforuser.created_at'])
+            ->ForSerialNumber($request->input('serialnumber'));
 
-        //            ->ForSerialNumber($request->input('serialnumber');
-
-        return $this->showDataToView($data, []);
+        return $this->showDataToView($data, '');
 
     }
 }

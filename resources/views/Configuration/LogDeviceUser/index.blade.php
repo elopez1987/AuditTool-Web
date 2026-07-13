@@ -42,11 +42,11 @@
                         <div class="col-lg-6">
                             <table width="100%" id="table-devices" class="table table-condensed table-hover table-bordered">
                                 <thead>
-                                <tr>
-                                    <th>Número de serie</th>
-                                    <th>Usurio</th>
-                                    <th>Fecha de registro</th>
-                                </tr>
+                                    <tr>
+                                        <th>Número de serie</th>
+                                        <th>Usurio</th>
+                                        <th>Fecha de registro</th>
+                                    </tr>
                                 </thead>
                             </table>
                         </div>
@@ -84,7 +84,7 @@
                 "ajax": {
                     url: 'getDevicesForUser',
                     data: function (d) {
-                        d.folionumber = $('input[name=folionumber]').val();
+                        d.serialnumber = $('input[name=serialnumber]').val();
                     }
                 },
                 "columns": [
@@ -99,7 +99,7 @@
                 ],
 
                 "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
-                "lengthMenu": [[1,5,10, 30, 50, 100, 150, 200, 250, -1], [1,5,10, 30, 50, 100, 150, 200, 250, "Todos"]],
+                "lengthMenu": [[1,5,10, 30, 50, 100, -1], [1,5,10, 30, 50, 100, "Todos"]],
                 buttons: [
                     {
                         "extend": "colvis",
