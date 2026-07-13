@@ -175,7 +175,7 @@
                                         por
                                         tiempo en patio</p>
                                     <div class="table-responsive">
-                                        <table class="table table-striped table-hover">
+                                        <table class="table table-bordered table-hover">
                                             <thead class="bg-primary text-white">
                                             <tr>
                                                 <th style="font-size: 12px;">Folio de Unidad</th>
@@ -186,11 +186,11 @@
                                             <tbody>
                                             @foreach($topEstadias as $estadia)
                                                 <tr>
-                                                    <td style="font-size: 14px !important;" class="font-weight-bold">
+                                                    <td style="font-size: 11px !important;" class="font-weight-bold">
                                                         #{{ $estadia->id }}</td>
-                                                    <td style="font-size: 14px !important;">{{ $estadia->carrier ? $estadia->carrier->name : 'Sin Asignar' }}</td>
-                                                    <td style="font-size: 12px !important;" class="text-right"><span
-                                                                class="badge badge-warning "
+                                                    <td style="font-size: 11px !important;">{{ $estadia->carrier ? $estadia->carrier->name : 'Sin Asignar' }}</td>
+                                                    <td style="font-size: 11px !important;" class="text-right"><span
+                                                                class="badge badge-grey text-black-50 "
                                                                 style="font-size: 14px !important;">{{ $estadia->estadia_formato }}</span>
                                                     </td>
                                                 </tr>
@@ -394,8 +394,8 @@
                                             <div class="card-body">
                                                 <div class="d-flex align-items-center justify-content-center">
                                                     <div class="text-center">
-                                                        <span class="font-14 font-weight-bold text-uppercase">${status.unitstatus.name}</span>
-                                                        <h2 class="font-medium m-b-0" style="font-size: 42px !important;font-weight: 700 !important;color: #17a2b8">${status.total}</h2>
+                                                        <span class="font-12 font-weight-bold text-uppercase">${status.unitstatus.name}</span>
+                                                        <h2 class="font-medium m-b-0" style="font-size: 30px !important;font-weight: 500 !important;color: #17a2b8">${status.total}</h2>
                                                     </div>
                                                 </div>
                                             </div>
@@ -484,9 +484,8 @@
                         @endforeach
                     ],
                     colors: [
-                        '#3d5afe', '#00c853', '#ff1744', '#ffc107', '#17a2b8',
-                        '#6c757d', '#dc3545', '#28a745', '#007bff', '#fd7e14',
-                        '#6f42c1', '#e83e8c', '#20c997', '#343a40', '#f8f9fa'
+                        '#d0df00', '#63666a', '#b5bd00', '#97999b',
+                        '#e3e935', '#d0d0ce', '#000000'
                     ]
                 }],
                 exporting: {
@@ -566,9 +565,8 @@
                         @endforeach
                     ],
                     colors: [
-                        '#3d5afe', '#00c853', '#ff1744', '#ffc107', '#17a2b8',
-                        '#6c757d', '#dc3545', '#28a745', '#007bff', '#fd7e14',
-                        '#6f42c1', '#e83e8c', '#20c997', '#343a40', '#adb5bd'
+                        '#d0df00', '#63666a', '#b5bd00', '#97999b',
+                        '#e3e935', '#d0d0ce', '#000000'
                     ]
                 }],
                 credits: {
@@ -637,8 +635,8 @@
                     }
                 },
                 colors: [
-                    '#1a237e', '#283593', '#303f9f', '#3949ab', '#3f51b5',
-                    '#5c6bc0', '#7986cb', '#9fa8da', '#c5cae9', '#e8eaf6'
+                    '#d0df00', '#63666a', '#b5bd00', '#97999b',
+                    '#e3e935', '#d0d0ce', '#000000'
                 ],
                 series: [{
                     name: 'Unidades',
@@ -735,8 +733,8 @@
                         @endforeach
                     ],
                     colors: [
-                        '#3d5afe', '#00c853', '#ff1744', '#ffc107', '#17a2b8',
-                        '#6c757d', '#dc3545', '#28a745', '#007bff', '#fd7e14'
+                        '#d0df00', '#63666a', '#b5bd00', '#97999b',
+                        '#e3e935', '#d0d0ce', '#000000'
                     ]
                 }],
                 credits: {
@@ -818,8 +816,8 @@
                         @endforeach
                     ],
                     colors: [
-                        '#3d5afe', '#00c853', '#ff1744', '#ffc107', '#17a2b8',
-                        '#6c757d', '#dc3545', '#28a745', '#007bff', '#fd7e14'
+                        '#d0df00', '#63666a', '#b5bd00', '#97999b',
+                        '#e3e935', '#d0d0ce', '#000000'
                     ]
                 }],
                 credits: {
@@ -912,8 +910,8 @@
                         @endforeach
                     ],
                     colors: [
-                        '#3d5afe', '#00c853', '#ff1744', '#ffc107', '#17a2b8',
-                        '#6c757d', '#dc3545', '#28a745', '#007bff', '#fd7e14'
+                        '#d0df00', '#63666a', '#b5bd00', '#97999b',
+                        '#e3e935', '#d0d0ce', '#000000'
                     ]
                 }],
                 exporting: {
@@ -993,8 +991,8 @@
                         @endforeach
                     ],
                     colors: [
-                        '#3d5afe', '#00c853', '#ff1744', '#ffc107', '#17a2b8',
-                        '#6c757d', '#dc3545', '#28a745', '#007bff', '#fd7e14'
+                        '#d0df00', '#63666a', '#b5bd00', '#97999b',
+                        '#e3e935', '#d0d0ce', '#000000'
                     ]
                 }],
                 credits: {
@@ -1083,9 +1081,8 @@
                         @endforeach
                     ],
                     colors: [
-                        '#3d5afe', '#00c853', '#ff1744', '#ffc107', '#17a2b8',
-                        '#6c757d', '#dc3545', '#28a745', '#007bff', '#fd7e14',
-                        '#6f42c1', '#e83e8c', '#20c997', '#343a40', '#adb5bd'
+                        '#d0df00', '#63666a', '#b5bd00', '#97999b',
+                        '#e3e935', '#d0d0ce', '#000000'
                     ]
                 }],
                 exporting: {
