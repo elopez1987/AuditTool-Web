@@ -234,25 +234,57 @@ class TraceReceiptUnitController extends BaseController
         return $pdf->download('Folio_De_Calidad-' . $receiptunit->id . '.pdf');
     }
 
-    public function downloadfiles($id)
+    public function downloadFiles($id)
     {
-        $receiptunit = ReceiptUnit::controlAccessUser()->findOrFail($id);
-        $zip = new \ZipArchive;
-        $zip->open($receiptunit->id . '.zip', \ZipArchive::CREATE);
+        $receiptUnit = ReceiptUnit::controlAccessUser()->findOrFail($id);
+
         $files = EvidencePhoto::where('model_type', '=', 'ReceiptUnit')
-            ->where('model_id', $receiptunit->id)->get();
+            ->where('model_id', $receiptUnit->id)
+            ->get();
+
+        if ($files->isEmpty()) {
+            return $this->errorResponse('No hay archivos para descargar.');
+        }
+
+        // Ruta absoluta y consistente, dentro de storage (writable garantizado)
+        $zipFileName = $receiptUnit->id . '_' . uniqid() . '.zip';
+        $zipPath = storage_path('app/tmp/' . $zipFileName);
+
+        // Asegura que exista el directorio temporal
+        if (! file_exists(storage_path('app/tmp'))) {
+            mkdir(storage_path('app/tmp'), 0755, true);
+        }
+
+        $zip = new \ZipArchive;
+
+        if ($zip->open($zipPath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) !== true) {
+            return response()->json(['message' => 'No se pudo crear el archivo ZIP.'], 500);
+        }
+
+        $addedAny = false;
+
         foreach ($files as $file) {
-            $filepath = storage_path() . '/app/' . $file->path;
+            $filepath = storage_path('app/' . $file->path);
+
+            if (! file_exists($filepath)) {
+                continue; // evita fallar si algún archivo referenciado no existe
+            }
+
             $ultimo = strrpos($file->path, '/');
             $newPath = substr($file->path, $ultimo + 1);
+
             $zip->addFile($filepath, $newPath);
+            $addedAny = true;
         }
 
         $zip->close();
-        header('Content-type: application/octet-stream');
-        header("Content-disposition: attachment; filename={$receiptunit->id}.zip");
-        readfile($receiptunit->id . '.zip');
-        unlink($receiptunit->id . '.zip');
+
+        if (! $addedAny || ! file_exists($zipPath)) {
+            return $this->errorResponse('No se encontraron archivos válidos para comprimir.');
+        }
+
+        return response()->download($zipPath, $receiptUnit->id . '.zip')
+            ->deleteFileAfterSend(true);
     }
 
     public function downloadticket($id)

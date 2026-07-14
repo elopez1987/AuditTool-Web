@@ -17,425 +17,458 @@
                 <ul id="sidebarnav">
 
                     @can('CONTROL DE PATIOS')
-                        <li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark"
-                                                    href="javascript:void(0)" aria-expanded="false">
-                                {{--                                <i class="mdi mdi-collage"></i>--}}
+                        <li class="sidebar-item">
+
+                            <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)"
+                               aria-expanded="false">
                                 <img src="{{asset('ico/carga.png')}}"
                                      alt="" class="img-16 ml-2 mr-2">
-                                <span class="hide-menu"> Control de patios</span></a>
+                                <span class="hide-menu"> Control de patios</span>
+                            </a>
+
                             <ul aria-expanded="false" class="collapse first-level">
+                                @can('yard.dashboard')
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link has-arrow waves-effect waves-dark"
+                                           href="javascript:void(0)" aria-expanded="false"><i
+                                                    class="mdi mdi-receipt"></i><span
+                                                    class="hide-menu">Dashboard</span>
+                                        </a>
+                                        <ul aria-expanded="false" class="collapse second-level">
 
-                                <li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark"
-                                                            href="javascript:void(0)" aria-expanded="false"><i
-                                                class="mdi mdi-receipt"></i><span
-                                                class="hide-menu">Dashboard</span></a>
-                                    <ul aria-expanded="false" class="collapse second-level">
+                                            @can('dashboardyard')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('dashboardyard')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-display"></i>
+                                                        <span class="hide-menu"> Dashboard 1 </span></a>
+                                                </li>
+                                            @endcan
 
-                                        @can('dashboardyard')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('dashboardyard')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-display"></i>
-                                                    <span class="hide-menu"> Dashboard 1 </span></a>
-                                            </li>
-                                        @endcan
-
-                                        @can('vitualyard')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('vitualyard')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-delivery"></i>
-                                                    <span class="hide-menu"> Yard</span></a>
-                                            </li>
-                                        @endcan
-
-
-                                    </ul>
-                                </li>
+                                            @can('vitualyard')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('vitualyard')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-delivery"></i>
+                                                        <span class="hide-menu"> Yard</span></a>
+                                                </li>
+                                            @endcan
 
 
-                                <li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark"
-                                                            href="javascript:void(0)" aria-expanded="false"><i
-                                                class="mdi mdi-receipt"></i><span
-                                                class="hide-menu">Existencia</span></a>
-                                    <ul aria-expanded="false" class="collapse second-level">
+                                        </ul>
+                                    </li>
+                                @endcan
 
-                                        @can('receiptunits.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('receiptunits.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-display"></i>
-                                                    <span class="hide-menu"> Existencia de cajas </span></a>
-                                            </li>
-                                        @endcan
+                                @can('yard.stock')
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link has-arrow waves-effect waves-dark"
+                                           href="javascript:void(0)" aria-expanded="false"><i
+                                                    class="mdi mdi-receipt"></i><span
+                                                    class="hide-menu">Existencia</span>
+                                        </a>
+                                        <ul aria-expanded="false" class="collapse second-level">
 
-                                        @can('receipttrucks.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('receipttrucks.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-delivery"></i>
-                                                    <span class="hide-menu"> Existencia de tractos</span></a>
-                                            </li>
-                                        @endcan
+                                            @can('receiptunits.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('receiptunits.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-display"></i>
+                                                        <span class="hide-menu"> Existencia de cajas </span></a>
+                                                </li>
+                                            @endcan
 
-                                        @can('authorizetransportentry.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('authorizetransportentry.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-alarm-clock"></i>
-                                                    <span class="hide-menu"> Pendiente de entrada</span></a>
-                                            </li>
-                                        @endcan
+                                            @can('receipttrucks.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('receipttrucks.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-delivery"></i>
+                                                        <span class="hide-menu"> Existencia de tractos</span></a>
+                                                </li>
+                                            @endcan
 
-                                        @can('reportauthorizedoutputs')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('reportauthorizedoutputs')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-delivery"></i>
-                                                    <span class="hide-menu"> Pendiente de salida</span></a>
-                                            </li>
-                                        @endcan
+                                            @can('authorizetransportentry.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('authorizetransportentry.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-alarm-clock"></i>
+                                                        <span class="hide-menu"> Pendiente de entrada</span></a>
+                                                </li>
+                                            @endcan
 
-                                        @can('inventorybox.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('inventorybox.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-layout"></i>
-                                                    <span class="hide-menu"> Programar inventario</span></a>
-                                            </li>
-                                        @endcan
-                                    </ul>
-                                </li>
+                                            @can('reportauthorizedoutputs')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('reportauthorizedoutputs')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-delivery"></i>
+                                                        <span class="hide-menu"> Pendiente de salida</span></a>
+                                                </li>
+                                            @endcan
 
-                                <li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark"
-                                                            href="javascript:void(0)" aria-expanded="false"><i
-                                                class="mdi mdi-receipt"></i><span
-                                                class="hide-menu"> Seguimiento</span></a>
-                                    <ul aria-expanded="false" class="collapse second-level">
+                                            @can('inventorybox.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('inventorybox.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-layout"></i>
+                                                        <span class="hide-menu"> Programar inventario</span></a>
+                                                </li>
+                                            @endcan
+                                        </ul>
+                                    </li>
+                                @endcan
 
-                                        @can('monitorunitsyard')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('monitorunitsyard')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Monitor de cajas</span></a>
-                                            </li>
-                                        @endcan
-                                        @can('monitorunitsyard')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('processmonitoring.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Seguimiento de procesos</span></a>
-                                            </li>
-                                        @endcan
-                                        @can('assignshipment')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('assignshipment')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Asignación de embarques</span></a>
-                                            </li>
-                                        @endcan
-                                        @can('asssigntransporttoshipment.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('asssigntransporttoshipment.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Asignar transporte</span></a>
-                                            </li>
-                                        @endcan
-                                    </ul>
-                                </li>
+                                @can('yard.follow-up')
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link has-arrow waves-effect waves-dark"
+                                           href="javascript:void(0)" aria-expanded="false"><i
+                                                    class="mdi mdi-receipt"></i><span
+                                                    class="hide-menu"> Seguimiento</span>
+                                        </a>
+                                        <ul aria-expanded="false" class="collapse second-level">
 
-                                <li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark"
-                                                            href="javascript:void(0)" aria-expanded="false"><i
-                                                class="mdi mdi-receipt"></i><span
-                                                class="hide-menu"> Circuito</span></a>
-                                    <ul aria-expanded="false" class="collapse second-level">
-                                        @can('monitorcircuitplant')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('monitorcircuitplant')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Monitor de circuito</span></a>
-                                            </li>
-                                        @endcan
-                                        @can('generateaccesswarehouse.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('generateaccesswarehouse.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Crear Qr de acceso</span></a>
-                                            </li>
-                                        @endcan
-                                    </ul>
-                                </li>
+                                            @can('monitorunitsyard')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('monitorunitsyard')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Monitor de cajas</span></a>
+                                                </li>
+                                            @endcan
+                                            @can('monitorunitsyard')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('processmonitoring.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Seguimiento de procesos</span></a>
+                                                </li>
+                                            @endcan
+                                            @can('assignshipment')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('assignshipment')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Asignación de embarques</span></a>
+                                                </li>
+                                            @endcan
+                                            @can('asssigntransporttoshipment.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('asssigntransporttoshipment.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Asignar transporte</span></a>
+                                                </li>
+                                            @endcan
+                                        </ul>
+                                    </li>
+                                @endcan
 
-                                <li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark"
-                                                            href="javascript:void(0)" aria-expanded="false"><i
-                                                class="mdi mdi-receipt"></i><span
-                                                class="hide-menu">Reportes</span></a>
-                                    <ul aria-expanded="false" class="collapse second-level">
-                                        @can('reportsyards')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('reportsyards')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Reportes</span></a>
-                                            </li>
-                                        @endcan
+                                @can('yard.circuit')
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link has-arrow waves-effect waves-dark"
+                                           href="javascript:void(0)" aria-expanded="false"><i
+                                                    class="mdi mdi-receipt"></i><span
+                                                    class="hide-menu"> Circuito</span>
+                                        </a>
+                                        <ul aria-expanded="false" class="collapse second-level">
+                                            @can('monitorcircuitplant')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('monitorcircuitplant')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Monitor de circuito</span></a>
+                                                </li>
+                                            @endcan
+                                            @can('generateaccesswarehouse.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('generateaccesswarehouse.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Crear Qr de acceso</span></a>
+                                                </li>
+                                            @endcan
+                                        </ul>
+                                    </li>
+                                @endcan
 
-                                        @can('layoutcapacitycenter')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('layoutcapacitycenter')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Ocupación</span></a>
-                                            </li>
-                                        @endcan
+                                @can('yard.reports')
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link has-arrow waves-effect waves-dark"
+                                           href="javascript:void(0)" aria-expanded="false"><i
+                                                    class="mdi mdi-receipt"></i><span
+                                                    class="hide-menu">Reportes</span>
+                                        </a>
+                                        <ul aria-expanded="false" class="collapse second-level">
+                                            @can('reportsyards')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('reportsyards')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Reportes</span></a>
+                                                </li>
+                                            @endcan
 
-                                        @can('reportstays')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('reportstays')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Estadia</span></a>
-                                            </li>
-                                        @endcan
+                                            @can('layoutcapacitycenter')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('layoutcapacitycenter')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Ocupación</span></a>
+                                                </li>
+                                            @endcan
 
-                                        @can('tracereceiptunit.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('tracereceiptunit.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Kardex de folio</span></a>
-                                            </li>
-                                        @endcan
+                                            @can('reportstays')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('reportstays')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Estadia</span></a>
+                                                </li>
+                                            @endcan
 
-                                        @can('receipttrucktrace.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('receipttrucktrace.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Kardex de tracto</span></a>
-                                            </li>
-                                        @endcan
+                                            @can('tracereceiptunit.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('tracereceiptunit.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Kardex de folio</span></a>
+                                                </li>
+                                            @endcan
+
+                                            @can('receipttrucktrace.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('receipttrucktrace.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Kardex de tracto</span></a>
+                                                </li>
+                                            @endcan
 
 
-                                    </ul>
-                                </li>
+                                        </ul>
+                                    </li>
+                                @endcan
 
-                                <li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark"
-                                                            href="javascript:void(0)" aria-expanded="false"><i
-                                                class="mdi mdi-receipt"></i><span
-                                                class="hide-menu"> Eventos</span></a>
-                                    <ul aria-expanded="false" class="collapse second-level">
+                                @can('yard.events')
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link has-arrow waves-effect waves-dark"
+                                           href="javascript:void(0)" aria-expanded="false"><i
+                                                    class="mdi mdi-receipt"></i><span
+                                                    class="hide-menu"> Eventos</span>
+                                        </a>
+                                        <ul aria-expanded="false" class="collapse second-level">
 
-                                        @can('movebox')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('movebox')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Reubicar unidad</span></a>
-                                            </li>
-                                        @endcan
-                                        @can('viewkeyreception')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('viewkeyreception')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Recepción de llaves</span></a>
-                                            </li>
-                                        @endcan
-                                        @can('viewmovementsofbox')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('viewmovementsofbox')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Registrar llegada</span></a>
-                                            </li>
-                                        @endcan
-                                        @can('autorizeoutput')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('autorizeoutput')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Autorizar salida</span></a>
-                                            </li>
-                                        @endcan
-                                        @can('refuseunit')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('refuseunit')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Rechazar unidad</span></a>
-                                            </li>
-                                        @endcan
-                                        @can('storagejointrucktobox.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('storagejointrucktobox.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Emparejar remolque</span></a>
-                                            </li>
-                                        @endcan
-                                        @can('receiptunits.autorizeunit')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('receiptunits.autorizeunit')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Reutilizar unidad</span></a>
-                                            </li>
-                                        @endcan
-                                    </ul>
-                                </li>
+                                            @can('movebox')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('movebox')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Reubicar unidad</span></a>
+                                                </li>
+                                            @endcan
+                                            @can('viewkeyreception')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('viewkeyreception')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Recepción de llaves</span></a>
+                                                </li>
+                                            @endcan
+                                            @can('viewmovementsofbox')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('viewmovementsofbox')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Registrar llegada</span></a>
+                                                </li>
+                                            @endcan
+                                            @can('autorizeoutput')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('autorizeoutput')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Autorizar salida</span></a>
+                                                </li>
+                                            @endcan
+                                            @can('refuseunit')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('refuseunit')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Rechazar unidad</span></a>
+                                                </li>
+                                            @endcan
+                                            @can('storagejointrucktobox.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('storagejointrucktobox.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Emparejar remolque</span></a>
+                                                </li>
+                                            @endcan
+                                            @can('receiptunits.autorizeunit')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('receiptunits.autorizeunit')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Reutilizar unidad</span></a>
+                                                </li>
+                                            @endcan
+                                        </ul>
+                                    </li>
+                                @endcan
 
-                                <li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark"
-                                                            href="javascript:void(0)" aria-expanded="false"><i
-                                                class="mdi mdi-receipt"></i><span
-                                                class="hide-menu"> Administración</span></a>
-                                    <ul aria-expanded="false" class="collapse second-level">
+                                @can('yard.administration')
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link has-arrow waves-effect waves-dark"
+                                           href="javascript:void(0)" aria-expanded="false"><i
+                                                    class="mdi mdi-receipt"></i><span
+                                                    class="hide-menu"> Administración</span>
+                                        </a>
+                                        <ul aria-expanded="false" class="collapse second-level">
 
-                                        @can('adjustmentbox')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('adjustmentbox')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Salida directa</span></a>
-                                            </li>
-                                        @endcan
-                                        @can('receiptunits.adjustmentunit')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('adjustmentunit')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Ajuste de unidad</span></a>
-                                            </li>
-                                        @endcan
-                                        @can('storagelabeltrucks.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('storagelabeltrucks.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Etiquetas de caja</span></a>
-                                            </li>
-                                        @endcan
-                                    </ul>
-                                </li>
+                                            @can('adjustmentbox')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('adjustmentbox')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Salida directa</span></a>
+                                                </li>
+                                            @endcan
+                                            @can('receiptunits.adjustmentunit')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('adjustmentunit')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Ajuste de unidad</span></a>
+                                                </li>
+                                            @endcan
+                                            @can('storagelabeltrucks.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('storagelabeltrucks.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Etiquetas de caja</span></a>
+                                                </li>
+                                            @endcan
+                                        </ul>
+                                    </li>
+                                @endcan
 
-                                <li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark"
-                                                            href="javascript:void(0)" aria-expanded="false"><i
-                                                class="mdi mdi-receipt"></i><span
-                                                class="hide-menu">Catalogos</span></a>
-                                    <ul aria-expanded="false" class="collapse second-level">
+                                @can('yard.catalogs')
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link has-arrow waves-effect waves-dark"
+                                           href="javascript:void(0)" aria-expanded="false"><i
+                                                    class="mdi mdi-receipt"></i><span
+                                                    class="hide-menu">Catalogos</span>
+                                        </a>
+                                        <ul aria-expanded="false" class="collapse second-level">
 
-                                        @can('ordercustomers.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('ordercustomers.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-customer"></i>
-                                                    <span class="hide-menu"> Clientes</span></a>
-                                            </li>
-                                        @endcan
-                                        @can('storageareas.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('storageareas.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-text-align-left"></i>
-                                                    <span class="hide-menu"> Areas</span></a>
-                                            </li>
-                                        @endcan
-                                        @can('storageunittypes.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('storageunittypes.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-text-align-left"></i>
-                                                    <span class="hide-menu"> Origenes</span></a>
-                                            </li>
-                                        @endcan
-                                        @can('shipmenttrucks.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('shipmenttrucks.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Tipos de unidad</span></a>
-                                            </li>
-                                        @endcan
-                                        @can('storageoperators.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('storageoperators.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Operadores</span></a>
-                                            </li>
-                                        @endcan
-                                        @can('receiptproviders.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('receiptproviders.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Proveedores</span></a>
-                                            </li>
-                                        @endcan
-                                        @can('shipmentcarriers.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('shipmentcarriers.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Lineas de transporte</span></a>
-                                            </li>
-                                        @endcan
-                                        @can('shipmenttruckcategories.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('shipmenttruckcategories.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Categorias de transporte</span></a>
-                                            </li>
-                                        @endcan
-                                        @can('storagezones.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('storagezones.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Zonas</span></a>
-                                            </li>
-                                        @endcan
-                                        @can('storagelocations.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('storagelocations.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Ubicaciones</span></a>
-                                            </li>
-                                        @endcan
-                                        @can('storageunitstatus.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('storageunitstatus.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Estatus de unidad</span></a>
-                                            </li>
-                                        @endcan
-                                        @can('storagechecklists.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('storagechecklists.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Check List</span></a>
-                                            </li>
-                                        @endcan
-                                        @can('storagesealloto.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('storagesealloto.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Candados LOTO</span></a>
-                                            </li>
-                                        @endcan
-                                    </ul>
-                                </li>
+                                            @can('ordercustomers.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('ordercustomers.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-customer"></i>
+                                                        <span class="hide-menu"> Clientes</span></a>
+                                                </li>
+                                            @endcan
+                                            @can('storageareas.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('storageareas.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-text-align-left"></i>
+                                                        <span class="hide-menu"> Areas</span></a>
+                                                </li>
+                                            @endcan
+                                            @can('storageunittypes.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('storageunittypes.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-text-align-left"></i>
+                                                        <span class="hide-menu"> Origenes</span></a>
+                                                </li>
+                                            @endcan
+                                            @can('shipmenttrucks.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('shipmenttrucks.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Tipos de unidad</span></a>
+                                                </li>
+                                            @endcan
+                                            @can('storageoperators.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('storageoperators.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Operadores</span></a>
+                                                </li>
+                                            @endcan
+                                            @can('receiptproviders.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('receiptproviders.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Proveedores</span></a>
+                                                </li>
+                                            @endcan
+                                            @can('shipmentcarriers.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('shipmentcarriers.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Lineas de transporte</span></a>
+                                                </li>
+                                            @endcan
+                                            @can('shipmenttruckcategories.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('shipmenttruckcategories.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Categorias de transporte</span></a>
+                                                </li>
+                                            @endcan
+                                            @can('storagezones.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('storagezones.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Zonas</span></a>
+                                                </li>
+                                            @endcan
+                                            @can('storagelocations.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('storagelocations.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Ubicaciones</span></a>
+                                                </li>
+                                            @endcan
+                                            @can('storageunitstatus.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('storageunitstatus.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Estatus de unidad</span></a>
+                                                </li>
+                                            @endcan
+                                            @can('storagechecklists.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('storagechecklists.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Check List</span></a>
+                                                </li>
+                                            @endcan
+                                            @can('storagesealloto.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('storagesealloto.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Candados LOTO</span></a>
+                                                </li>
+                                            @endcan
+                                        </ul>
+                                    </li>
+                                @endcan
 
                                 @can('storagetask')
                                     <li class="sidebar-item"><a
@@ -469,335 +502,364 @@
                     @endcan
 
                     @can('EMBARQUES')
-                        <li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark"
-                                                    href="javascript:void(0)" aria-expanded="false">
-                                {{--                                <i class="mdi mdi-collage"></i>--}}
+                        <li class="sidebar-item">
+                            <a class="sidebar-link has-arrow waves-effect waves-dark"
+                               href="javascript:void(0)" aria-expanded="false">
                                 <img src="{{asset('ico/cadena-de-suministro.png')}}" alt="" class="img-16 ml-2 mr-2">
-                                <span class="hide-menu"> Embarques</span></a>
+                                <span class="hide-menu"> Embarques</span>
+                            </a>
                             <ul aria-expanded="false" class="collapse first-level">
 
+                                @can('EMBARQUES.schedulle')
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link has-arrow waves-effect waves-dark"
+                                           href="javascript:void(0)" aria-expanded="false"><i
+                                                    class="mdi mdi-receipt"></i><span
+                                                    class="hide-menu">Horarios</span>
+                                        </a>
+                                        <ul aria-expanded="false" class="collapse second-level">
 
-                                <li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark"
-                                                            href="javascript:void(0)" aria-expanded="false"><i
-                                                class="mdi mdi-receipt"></i><span
-                                                class="hide-menu">Horarios</span></a>
-                                    <ul aria-expanded="false" class="collapse second-level">
+                                            @can('orderdeliveries.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('orderdeliveries.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-calendar"></i>
+                                                        <span class="hide-menu"> Planeación </span></a>
+                                                </li>
+                                            @endcan
 
-                                        @can('orderdeliveries.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('orderdeliveries.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-calendar"></i>
-                                                    <span class="hide-menu"> Planeación </span></a>
-                                            </li>
-                                        @endcan
+                                            @can('monitoroperationbrid')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('monitoroperationbrid')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-calendar"></i>
+                                                        <span class="hide-menu"> Horario de carga</span></a>
+                                                </li>
+                                            @endcan
 
-                                        @can('monitoroperationbrid')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('monitoroperationbrid')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-calendar"></i>
-                                                    <span class="hide-menu"> Horario de carga</span></a>
-                                            </li>
-                                        @endcan
+                                            @can('monitoranalistatrafico.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('monitoranalistatrafico.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Monitor de trafico</span></a>
+                                                </li>
+                                            @endcan
+                                            @can('monitoroperation.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('monitoroperation.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Monitor de operaciones</span></a>
+                                                </li>
+                                            @endcan
+                                            @can('ordermonitor.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('ordermonitor.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Monitor general</span></a>
+                                                </li>
+                                            @endcan
+                                            @can('statusshipmentchek')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('statusshipmentchek')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-dashboard"></i>
+                                                        <span class="hide-menu"> Monitor de verificación</span></a>
+                                                </li>
+                                            @endcan
 
-                                        @can('monitoranalistatrafico.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('monitoranalistatrafico.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Monitor de trafico</span></a>
-                                            </li>
-                                        @endcan
-                                        @can('monitoroperation.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('monitoroperation.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Monitor de operaciones</span></a>
-                                            </li>
-                                        @endcan
-                                        @can('ordermonitor.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('ordermonitor.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Monitor general</span></a>
-                                            </li>
-                                        @endcan
-                                        @can('statusshipmentchek')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('statusshipmentchek')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-dashboard"></i>
-                                                    <span class="hide-menu"> Monitor de verificación</span></a>
-                                            </li>
-                                        @endcan
+                                        </ul>
+                                    </li>
+                                @endcan
 
-                                    </ul>
-                                </li>
+                                @can('EMBARQUES.follow-up')
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link has-arrow waves-effect waves-dark"
+                                           href="javascript:void(0)" aria-expanded="false"><i
+                                                    class="mdi mdi-receipt"></i><span
+                                                    class="hide-menu"> Seguimiento</span>
+                                        </a>
+                                        <ul aria-expanded="false" class="collapse second-level">
+                                            @can('monitoranalistatrafico.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('monitor-customer-service')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Customer Service</span></a>
+                                                </li>
+                                            @endcan
+                                            @can('monitoranalistatrafico.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('monitor-backlog')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> BackLog</span></a>
+                                                </li>
+                                            @endcan
+                                            @can('shipmentjourney')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('shipmentjourney.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Seguimiento de entrega</span></a>
+                                                </li>
+                                            @endcan
+                                            @can('monitoroperationhenkel')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('monitoroperationhenkel')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Monitor de operaciones</span></a>
+                                                </li>
+                                            @endcan
+                                            @can('monitortrafico')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('monitortrafico')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Monitor de arribos</span></a>
+                                                </li>
+                                            @endcan
+                                        </ul>
+                                    </li>
+                                @endcan
 
-                                <li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark"
-                                                            href="javascript:void(0)" aria-expanded="false"><i
-                                                class="mdi mdi-receipt"></i><span
-                                                class="hide-menu"> Seguimiento</span></a>
-                                    <ul aria-expanded="false" class="collapse second-level">
-                                        @can('monitoranalistatrafico.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('monitor-customer-service')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Customer Service</span></a>
-                                            </li>
-                                        @endcan
-                                        @can('monitoranalistatrafico.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('monitor-backlog')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> BackLog</span></a>
-                                            </li>
-                                        @endcan
-                                        @can('shipmentjourney')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('shipmentjourney.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Seguimiento de entrega</span></a>
-                                            </li>
-                                        @endcan
-                                        @can('monitoroperationhenkel')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('monitoroperationhenkel')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Monitor de operaciones</span></a>
-                                            </li>
-                                        @endcan
-                                        @can('monitortrafico')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('monitortrafico')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Monitor de arribos</span></a>
-                                            </li>
-                                        @endcan
-                                    </ul>
-                                </li>
+                                @can('EMBARQUES.journeys')
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link has-arrow waves-effect waves-dark"
+                                           href="javascript:void(0)" aria-expanded="false"><i
+                                                    class="mdi mdi-receipt"></i><span
+                                                    class="hide-menu"> Viajes</span>
+                                        </a>
+                                        <ul aria-expanded="false" class="collapse second-level">
+                                            @can('datatransport.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('datatransport.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Asignar viaje</span></a>
+                                                </li>
+                                            @endcan
+                                            @can('shipmentstatustransport')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('shipmentstatustransport')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Estatus de embarque</span></a>
+                                                </li>
+                                            @endcan
+                                        </ul>
+                                    </li>
+                                @endcan
 
-                                <li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark"
-                                                            href="javascript:void(0)" aria-expanded="false"><i
-                                                class="mdi mdi-receipt"></i><span
-                                                class="hide-menu"> Viajes</span></a>
-                                    <ul aria-expanded="false" class="collapse second-level">
-                                        @can('datatransport.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('datatransport.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Asignar viaje</span></a>
-                                            </li>
-                                        @endcan
-                                        @can('shipmentstatustransport')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('shipmentstatustransport')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Estatus de embarque</span></a>
-                                            </li>
-                                        @endcan
-                                    </ul>
-                                </li>
+                                @can('EMBARQUES.reports')
+                                    <li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark"
+                                                                href="javascript:void(0)" aria-expanded="false"><i
+                                                    class="mdi mdi-receipt"></i><span
+                                                    class="hide-menu">Reportes</span></a>
+                                        <ul aria-expanded="false" class="collapse second-level">
+                                            @can('reporteshipments')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('reporteshipments')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Reportes</span></a>
+                                                </li>
+                                            @endcan
+                                        </ul>
+                                    </li>
+                                @endcan
 
-                                <li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark"
-                                                            href="javascript:void(0)" aria-expanded="false"><i
-                                                class="mdi mdi-receipt"></i><span
-                                                class="hide-menu">Reportes</span></a>
-                                    <ul aria-expanded="false" class="collapse second-level">
-                                        @can('reporteshipments')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('reporteshipments')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Reportes</span></a>
-                                            </li>
-                                        @endcan
-                                    </ul>
-                                </li>
+                                @can('EMBARQUES.incidents')
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link has-arrow waves-effect waves-dark"
+                                           href="javascript:void(0)" aria-expanded="false"><i
+                                                    class="mdi mdi-receipt"></i><span
+                                                    class="hide-menu"> Incidencias en entrega</span>
+                                        </a>
+                                        <ul aria-expanded="false" class="collapse second-level">
 
-                                <li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark"
-                                                            href="javascript:void(0)" aria-expanded="false"><i
-                                                class="mdi mdi-receipt"></i><span
-                                                class="hide-menu"> Incidencias en entrega</span></a>
-                                    <ul aria-expanded="false" class="collapse second-level">
+                                            @can('storageincidencesjourneys.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('storageincidencesjourneys.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Reportar incidencias</span></a>
+                                                </li>
+                                            @endcan
 
-                                        @can('storageincidencesjourneys.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('storageincidencesjourneys.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Reportar incidencias</span></a>
-                                            </li>
-                                        @endcan
+                                            @can('followupofincidences.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('followupofincidences.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Seguimiento de incidencias</span></a>
+                                                </li>
+                                            @endcan
+                                            @can('monitorpods.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('monitorpods.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Monitor de PODs</span></a>
+                                                </li>
+                                            @endcan
+                                            @can('storagekeyincidencesopetations.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('storagekeyincidencesopetations.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Firmas de almacen</span></a>
+                                                </li>
+                                            @endcan
+                                            @can('storagekeyincidencestransport.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('storagekeyincidencestransport.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Firma de transporte</span></a>
+                                                </li>
+                                            @endcan
+                                        </ul>
+                                    </li>
+                                @endcan
 
-                                        @can('followupofincidences.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('followupofincidences.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Seguimiento de incidencias</span></a>
-                                            </li>
-                                        @endcan
-                                        @can('monitorpods.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('monitorpods.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Monitor de PODs</span></a>
-                                            </li>
-                                        @endcan
-                                        @can('storagekeyincidencesopetations.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('storagekeyincidencesopetations.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Firmas de almacen</span></a>
-                                            </li>
-                                        @endcan
-                                        @can('storagekeyincidencestransport.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('storagekeyincidencestransport.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Firma de transporte</span></a>
-                                            </li>
-                                        @endcan
-                                    </ul>
-                                </li>
+                                @can('EMBARQUES.inverse')
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link has-arrow waves-effect waves-dark"
+                                           href="javascript:void(0)" aria-expanded="false"><i
+                                                    class="mdi mdi-receipt"></i><span
+                                                    class="hide-menu"> Logística Inversa</span>
+                                        </a>
+                                        <ul aria-expanded="false" class="collapse second-level">
 
-                                <li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark"
-                                                            href="javascript:void(0)" aria-expanded="false"><i
-                                                class="mdi mdi-receipt"></i><span
-                                                class="hide-menu"> Logística Inversa</span></a>
-                                    <ul aria-expanded="false" class="collapse second-level">
+                                            @can('storagescheduleinverse.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('storagescheduleinverse.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Logística Inversa</span></a>
+                                                </li>
+                                            @endcan
+                                            @can('scheduleinverse.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('scheduleinverse.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Horario de descarga</span></a>
+                                                </li>
+                                            @endcan
+                                            @can('reserveschedulleinverse.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('reserveschedulleinverse.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Generar Cita</span></a>
+                                                </li>
+                                            @endcan
+                                        </ul>
+                                    </li>
+                                @endcan
 
-                                        @can('storagescheduleinverse.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('storagescheduleinverse.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Logística Inversa</span></a>
-                                            </li>
-                                        @endcan
-                                        @can('scheduleinverse.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('scheduleinverse.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Horario de descarga</span></a>
-                                            </li>
-                                        @endcan
-                                        @can('reserveschedulleinverse.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('reserveschedulleinverse.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Generar Cita</span></a>
-                                            </li>
-                                        @endcan
-                                    </ul>
-                                </li>
+                                @can('EMBARQUES.garrett')
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link has-arrow waves-effect waves-dark"
+                                           href="javascript:void(0)" aria-expanded="false"><i
+                                                    class="mdi mdi-receipt"></i><span
+                                                    class="hide-menu"> Garrett Mxl</span>
+                                        </a>
+                                        <ul aria-expanded="false" class="collapse second-level">
 
-                                <li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark"
-                                                            href="javascript:void(0)" aria-expanded="false"><i
-                                                class="mdi mdi-receipt"></i><span
-                                                class="hide-menu"> Garrett Mxl</span></a>
-                                    <ul aria-expanded="false" class="collapse second-level">
+                                            @can('storageevidenceprocess.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('storageevidenceprocess.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Embarques </span></a>
+                                                </li>
+                                            @endcan
+                                            @can('storageevidenceprocess.dashboard')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('storageevidenceprocess.dashboard')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Seguimiento de embarque</span></a>
+                                                </li>
+                                            @endcan
+                                            @can('reportauditshipments.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('reportauditshipments.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Reporte de auditoria</span></a>
+                                                </li>
+                                            @endcan
+                                            @can('reportauditshipments.dashboard')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('reportdashboard')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Seguimiento DC</span></a>
+                                                </li>
+                                            @endcan
+                                            @can('reportevidence.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('reportevidence.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Reportes</span></a>
+                                                </li>
+                                            @endcan
+                                        </ul>
+                                    </li>
+                                @endcan
 
-                                        @can('storageevidenceprocess.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('storageevidenceprocess.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Embarques </span></a>
-                                            </li>
-                                        @endcan
-                                        @can('storageevidenceprocess.dashboard')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('storageevidenceprocess.dashboard')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Seguimiento de embarque</span></a>
-                                            </li>
-                                        @endcan
-                                        @can('reportauditshipments.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('reportauditshipments.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Reporte de auditoria</span></a>
-                                            </li>
-                                        @endcan
-                                        @can('reportauditshipments.dashboard')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('reportdashboard')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Seguimiento DC</span></a>
-                                            </li>
-                                        @endcan
-                                        @can('reportevidence.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('reportevidence.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Reportes</span></a>
-                                            </li>
-                                        @endcan
-                                    </ul>
-                                </li>
+                                @can('EMBARQUES.catalogs')
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link has-arrow waves-effect waves-dark"
+                                           href="javascript:void(0)" aria-expanded="false"><i
+                                                    class="mdi mdi-receipt"></i><span
+                                                    class="hide-menu">Catalogos</span>
+                                        </a>
+                                        <ul aria-expanded="false" class="collapse second-level">
 
-
-                                <li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark"
-                                                            href="javascript:void(0)" aria-expanded="false"><i
-                                                class="mdi mdi-receipt"></i><span
-                                                class="hide-menu">Catalogos</span></a>
-                                    <ul aria-expanded="false" class="collapse second-level">
-
-                                        @can('storagecategoryincidences.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('storagecategoryincidences.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Categorias de incidencias</span></a>
-                                            </li>
-                                        @endcan
-                                        @can('shipmenttypes.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('shipmenttypes.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Tipo de embarque</span></a>
-                                            </li>
-                                        @endcan
-                                        @can('ordercustomers.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('ordercustomers.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Clientes</span></a>
-                                            </li>
-                                        @endcan
-                                        @can('storagedoorstage.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('storagedoorstage.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Cortinas / Stages</span></a>
-                                            </li>
-                                        @endcan
-                                    </ul>
-                                </li>
+                                            @can('storagecategoryincidences.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('storagecategoryincidences.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Categorias de incidencias</span></a>
+                                                </li>
+                                            @endcan
+                                            @can('shipmenttypes.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('shipmenttypes.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Tipo de embarque</span></a>
+                                                </li>
+                                            @endcan
+                                            @can('ordercustomers.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('ordercustomers.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Clientes</span></a>
+                                                </li>
+                                            @endcan
+                                            @can('storagedoorstage.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('storagedoorstage.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Cortinas / Stages</span></a>
+                                                </li>
+                                            @endcan
+                                        </ul>
+                                    </li>
+                                @endcan
 
                                 @can('layoutyard')
                                     <li class="sidebar-item"><a
@@ -831,90 +893,100 @@
                     @endcan
 
                     @can('RECIBO')
-                        <li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark"
-                                                    href="javascript:void(0)" aria-expanded="false">
-                                {{--                                <i class="mdi mdi-collage"></i>--}}
-                                <img src="{{asset('ico/logistica.png')}}"
-                                     alt="" class="img-16 ml-2 mr-2">
-                                <span class="hide-menu"> Recibo</span></a>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link has-arrow waves-effect waves-dark"
+                               href="javascript:void(0)" aria-expanded="false">
+                                <img src="{{asset('ico/logistica.png')}}" alt="" class="img-16 ml-2 mr-2">
+                                <span class="hide-menu"> Recibo</span>
+                            </a>
                             <ul aria-expanded="false" class="collapse first-level">
 
+                                @can('RECIBO.schedulle')
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link has-arrow waves-effect waves-dark"
+                                           href="javascript:void(0)" aria-expanded="false"><i
+                                                    class="mdi mdi-receipt"></i><span
+                                                    class="hide-menu">Horarios</span>
+                                        </a>
+                                        <ul aria-expanded="false" class="collapse second-level">
+                                            @can('receiptasn.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('receiptasn.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-layers"></i>
+                                                        <span class="hide-menu"> Planeación </span></a>
+                                                </li>
+                                            @endcan
 
-                                <li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark"
-                                                            href="javascript:void(0)" aria-expanded="false"><i
-                                                class="mdi mdi-receipt"></i><span
-                                                class="hide-menu">Horarios</span></a>
-                                    <ul aria-expanded="false" class="collapse second-level">
+                                            @can('schedulereceipt.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('schedulereceipt.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Horario V1</span></a>
+                                                </li>
+                                            @endcan
 
-                                        @can('receiptasn.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('receiptasn.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-layers"></i>
-                                                    <span class="hide-menu"> Planeación </span></a>
-                                            </li>
-                                        @endcan
+                                            @can('appointmentschedule')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('appointmentschedule')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Horario V2</span></a>
+                                                </li>
+                                            @endcan
 
-                                        @can('schedulereceipt.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('schedulereceipt.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Horario V1</span></a>
-                                            </li>
-                                        @endcan
+                                        </ul>
+                                    </li>
+                                @endcan
 
-                                        @can('appointmentschedule')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('appointmentschedule')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Horario V2</span></a>
-                                            </li>
-                                        @endcan
+                                @can('RECIBO.reports')
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link has-arrow waves-effect waves-dark"
+                                           href="javascript:void(0)" aria-expanded="false"><i
+                                                    class="mdi mdi-receipt"></i><span
+                                                    class="hide-menu">Reportes</span>
+                                        </a>
+                                        <ul aria-expanded="false" class="collapse second-level">
+                                            @can('reportreceipts')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('reportreceipts')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Reportes</span></a>
+                                                </li>
+                                            @endcan
+                                        </ul>
+                                    </li>
+                                @endcan
 
-                                    </ul>
-                                </li>
-
-                                <li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark"
-                                                            href="javascript:void(0)" aria-expanded="false"><i
-                                                class="mdi mdi-receipt"></i><span
-                                                class="hide-menu">Reportes</span></a>
-                                    <ul aria-expanded="false" class="collapse second-level">
-                                        @can('reportreceipts')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('reportreceipts')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Reportes</span></a>
-                                            </li>
-                                        @endcan
-                                    </ul>
-                                </li>
-
-                                <li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark"
-                                                            href="javascript:void(0)" aria-expanded="false"><i
-                                                class="mdi mdi-receipt"></i><span
-                                                class="hide-menu">Catalogos</span></a>
-                                    <ul aria-expanded="false" class="collapse second-level">
-                                        @can('receiptproviders.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('receiptproviders.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Proveedores</span></a>
-                                            </li>
-                                        @endcan
-                                        @can('storagereceiptperiods.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('storagereceiptperiods.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Periodos</span></a>
-                                            </li>
-                                        @endcan
-                                    </ul>
-                                </li>
+                                @can('RECIBO.catalogs')
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link has-arrow waves-effect waves-dark"
+                                           href="javascript:void(0)" aria-expanded="false"><i
+                                                    class="mdi mdi-receipt"></i><span
+                                                    class="hide-menu">Catalogos</span>
+                                        </a>
+                                        <ul aria-expanded="false" class="collapse second-level">
+                                            @can('receiptproviders.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('receiptproviders.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Proveedores</span></a>
+                                                </li>
+                                            @endcan
+                                            @can('storagereceiptperiods.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('storagereceiptperiods.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Periodos</span></a>
+                                                </li>
+                                            @endcan
+                                        </ul>
+                                    </li>
+                                @endcan
 
                                 @can('monitorreceiptplant')
                                     <li class="sidebar-item"><a
@@ -941,108 +1013,115 @@
                     @can('INVENTARIO')
                         <li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark"
                                                     href="javascript:void(0)" aria-expanded="false">
-                                {{--                                <i class="mdi mdi-collage"></i>--}}
                                 <img src="{{asset('ico/caja-de-entrega.png')}}"
                                      alt="" class="img-16 ml-2 mr-2">
                                 <span class="hide-menu"> Inventario</span></a>
                             <ul aria-expanded="false" class="collapse first-level">
 
+                                @can('INVENTARIO.inventoryfiscal')
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link has-arrow waves-effect waves-dark"
+                                           href="javascript:void(0)" aria-expanded="false"><i
+                                                    class="mdi mdi-receipt"></i><span
+                                                    class="hide-menu">Inventario Fiscal</span>
+                                        </a>
+                                        <ul aria-expanded="false" class="collapse second-level">
 
-                                <li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark"
-                                                            href="javascript:void(0)" aria-expanded="false"><i
-                                                class="mdi mdi-receipt"></i><span
-                                                class="hide-menu">Inventario Fiscal</span></a>
-                                    <ul aria-expanded="false" class="collapse second-level">
+                                            @can('inventoryheads.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('inventoryheads.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-layers"></i>
+                                                        <span class="hide-menu"> Inventarios</span></a>
+                                                </li>
+                                            @endcan
 
-                                        @can('inventoryheads.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('inventoryheads.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-layers"></i>
-                                                    <span class="hide-menu"> Inventarios</span></a>
-                                            </li>
-                                        @endcan
+                                            @can('inventorycards.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('inventorycards.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Cédulas de conteo</span></a>
+                                                </li>
+                                            @endcan
 
-                                        @can('inventorycards.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('inventorycards.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Cédulas de conteo</span></a>
-                                            </li>
-                                        @endcan
+                                            @can('inventoryaisles.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('inventoryaisles.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Pasillos</span></a>
+                                                </li>
+                                            @endcan
 
-                                        @can('inventoryaisles.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('inventoryaisles.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Pasillos</span></a>
-                                            </li>
-                                        @endcan
+                                            @can('inventoryareas.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('inventoryareas.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Areas</span></a>
+                                                </li>
+                                            @endcan
+                                        </ul>
+                                    </li>
+                                @endcan
 
-                                        @can('inventoryareas.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('inventoryareas.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Areas</span></a>
-                                            </li>
-                                        @endcan
-                                    </ul>
-                                </li>
-                                <li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark"
-                                                            href="javascript:void(0)" aria-expanded="false"><i
-                                                class="mdi mdi-receipt"></i><span
-                                                class="hide-menu">Catalogos</span></a>
-                                    <ul aria-expanded="false" class="collapse second-level">
+                                @can('INVENTARIO.catalogs')
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link has-arrow waves-effect waves-dark"
+                                           href="javascript:void(0)" aria-expanded="false"><i
+                                                    class="mdi mdi-receipt"></i><span
+                                                    class="hide-menu">Catalogos</span>
+                                        </a>
+                                        <ul aria-expanded="false" class="collapse second-level">
 
-                                        @can('inventorypartnumbers.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('inventorypartnumbers.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-layers"></i>
-                                                    <span class="hide-menu"> Maestro de materiales</span></a>
-                                            </li>
-                                        @endcan
+                                            @can('inventorypartnumbers.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('inventorypartnumbers.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-layers"></i>
+                                                        <span class="hide-menu"> Maestro de materiales</span></a>
+                                                </li>
+                                            @endcan
 
-                                        @can('inventoryunitmeasure.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('inventoryunitmeasure.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-layers"></i>
-                                                    <span class="hide-menu"> Unidad de medida</span></a>
-                                            </li>
-                                        @endcan
+                                            @can('inventoryunitmeasure.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('inventoryunitmeasure.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-layers"></i>
+                                                        <span class="hide-menu"> Unidad de medida</span></a>
+                                                </li>
+                                            @endcan
 
-                                        @can('inventorypartnumbercategory01.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('inventorypartnumbercategory01.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Tipo de material 1</span></a>
-                                            </li>
-                                        @endcan
+                                            @can('inventorypartnumbercategory01.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('inventorypartnumbercategory01.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Tipo de material 1</span></a>
+                                                </li>
+                                            @endcan
 
-                                        @can('inventorypartnumbercategory02.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('inventorypartnumbercategory02.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Tipo de material 2</span></a>
-                                            </li>
-                                        @endcan
+                                            @can('inventorypartnumbercategory02.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('inventorypartnumbercategory02.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Tipo de material 2</span></a>
+                                                </li>
+                                            @endcan
 
-                                        @can('inventorystockcategories.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('inventorystockcategories.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Origenes</span></a>
-                                            </li>
-                                        @endcan
-                                    </ul>
-                                </li>
+                                            @can('inventorystockcategories.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('inventorystockcategories.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Origenes</span></a>
+                                                </li>
+                                            @endcan
+                                        </ul>
+                                    </li>
+                                @endcan
 
                                 @can('inventory-sap-migration')
                                     <li class="sidebar-item"><a
@@ -1074,12 +1153,16 @@
                                     </li>
                                 @endcan
 
-                                <li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark"
-                                                            href="javascript:void(0)" aria-expanded="false"><i
-                                                class="mdi mdi-receipt"></i><span
-                                                class="hide-menu">Reportes</span></a>
-                                    <ul aria-expanded="false" class="collapse second-level">
+                                <li class="sidebar-item">
+                                    @can('MTNTRUCK.reports')
+                                        <a class="sidebar-link has-arrow waves-effect waves-dark"
+                                           href="javascript:void(0)" aria-expanded="false"><i
+                                                    class="mdi mdi-receipt"></i><span
+                                                    class="hide-menu">Reportes</span>
+                                        </a>
+                                    @endcan
 
+                                    <ul aria-expanded="false" class="collapse second-level">
                                         @can('checklistlifttrucks.index')
                                             <li class="sidebar-item"><a
                                                         href="{{route('checklistlifttrucks.index')}}"
@@ -1088,7 +1171,6 @@
                                                     <span class="hide-menu"> Check list realizados</span></a>
                                             </li>
                                         @endcan
-
                                         @can('storageassignlifttrucks.index')
                                             <li class="sidebar-item"><a
                                                         href="{{route('storageassignlifttrucks.index')}}"
@@ -1097,7 +1179,6 @@
                                                     <span class="hide-menu"> Asignación de equipos</span></a>
                                             </li>
                                         @endcan
-
                                         @can('storagelifttrucks.reports')
                                             <li class="sidebar-item"><a
                                                         href="{{route('storagelifttrucksreports')}}"
@@ -1110,12 +1191,15 @@
                                 </li>
 
 
-                                <li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark"
-                                                            href="javascript:void(0)" aria-expanded="false"><i
-                                                class="mdi mdi-receipt"></i><span
-                                                class="hide-menu">Configuración</span></a>
+                                <li class="sidebar-item">
+                                    @can('MTNTRUCK.configuration')
+                                        <a class="sidebar-link has-arrow waves-effect waves-dark"
+                                           href="javascript:void(0)" aria-expanded="false"><i
+                                                    class="mdi mdi-receipt"></i><span
+                                                    class="hide-menu">Configuración</span>
+                                        </a>
+                                    @endcan
                                     <ul aria-expanded="false" class="collapse second-level">
-
                                         @can('storagechecklistlifttrucks.index')
                                             <li class="sidebar-item"><a
                                                         href="{{route('storagechecklistlifttrucks.index')}}"
@@ -1143,95 +1227,104 @@
                                     </ul>
                                 </li>
 
-
                             </ul>
                         </li>
                     @endcan
 
                     @can('SafetyTours')
-                        <li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark"
-                                                    href="javascript:void(0)" aria-expanded="false">
+                        <li class="sidebar-item">
+                            <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)"
+                               aria-expanded="false">
                                 <img src="{{asset('ico/reporte-de-negocios.png')}}"
                                      alt="" class="img-16 ml-2 mr-2">
-                                <span class="hide-menu">Recorridos de Seguridad</span></a>
+                                <span class="hide-menu">Recorridos de Seguridad</span>
+                            </a>
                             <ul aria-expanded="false" class="collapse first-level">
+                                @can('SafetyTours.security')
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link has-arrow waves-effect waves-dark"
+                                           href="javascript:void(0)" aria-expanded="false"><i
+                                                    class="mdi mdi-collage"></i><span class="hide-menu">Recorridos vigilancia</span>
+                                        </a>
+                                        <ul aria-expanded="false" class="collapse second-level">
 
-                                <li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark"
-                                                            href="javascript:void(0)" aria-expanded="false"><i
-                                                class="mdi mdi-collage"></i><span class="hide-menu">Recorridos vigilancia</span></a>
-                                    <ul aria-expanded="false" class="collapse second-level">
+                                            @can('storagesafetytours.index')
+                                                <li class="sidebar-item"><a href="{{route('storagesafetytours.index')}}"
+                                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Recorridos</span></a>
+                                                </li>
+                                            @endcan
 
-                                        @can('storagesafetytours.index')
-                                            <li class="sidebar-item"><a href="{{route('storagesafetytours.index')}}"
-                                                                        class="sidebar-link">
-                                                    <i class="lni lni-list"></i>
-                                                    <span class="hide-menu"> Recorridos</span></a>
-                                            </li>
-                                        @endcan
+                                            @can('storagesafetytourtype.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('storagesafetytourtype.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-lock"></i>
+                                                        <span class="hide-menu"> Rutas </span></a>
+                                                </li>
+                                            @endcan
 
-                                        @can('storagesafetytourtype.index')
-                                            <li class="sidebar-item"><a href="{{route('storagesafetytourtype.index')}}"
-                                                                        class="sidebar-link">
-                                                    <i class="lni lni-lock"></i>
-                                                    <span class="hide-menu"> Rutas </span></a>
-                                            </li>
-                                        @endcan
+                                            @can('storagetags.index')
+                                                <li class="sidebar-item"><a href="{{route('storagetags.index')}}"
+                                                                            class="sidebar-link">
+                                                        <i class="lni lni-tag"></i>
+                                                        <span class="hide-menu"> Registrar Tag</span></a>
+                                                </li>
+                                            @endcan
+                                        </ul>
+                                    </li>
+                                @endcan
+                                @can('SafetyTours.operation')
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link has-arrow waves-effect waves-dark"
+                                           href="javascript:void(0)" aria-expanded="false"><i
+                                                    class="mdi mdi-receipt"></i><span
+                                                    class="hide-menu">Recorridos internos</span></a>
+                                        <ul aria-expanded="false" class="collapse second-level">
 
-                                        @can('storagetags.index')
-                                            <li class="sidebar-item"><a href="{{route('storagetags.index')}}"
-                                                                        class="sidebar-link">
-                                                    <i class="lni lni-tag"></i>
-                                                    <span class="hide-menu"> Registrar Tag</span></a>
-                                            </li>
-                                        @endcan
-                                    </ul>
-                                </li>
-
-                                <li class="sidebar-item">
-                                    <a class="sidebar-link has-arrow waves-effect waves-dark"
-                                                            href="javascript:void(0)" aria-expanded="false"><i
-                                                class="mdi mdi-receipt"></i><span
-                                                class="hide-menu">Recorridos internos</span></a>
-                                    <ul aria-expanded="false" class="collapse second-level">
-
-                                        @can('storage-incidence-safeties.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('storage-incidence-safeties.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-archive"></i>
-                                                    <span class="hide-menu"> Incidencias</span></a>
-                                            </li>
-                                        @endcan
-                                        @can('storage-category-safeties.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('storage-category-safeties.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-package"></i>
-                                                    <span class="hide-menu"> Categorías y subcategorías</span></a>
-                                            </li>
-                                        @endcan
-                                        @can('responsible-area-security.index')
-                                            <li class="sidebar-item"><a
-                                                        href="{{route('responsible-area-security.index')}}"
-                                                        class="sidebar-link">
-                                                    <i class="lni lni-layout"></i>
-                                                    <span class="hide-menu"> Areas</span></a>
-                                            </li>
-                                        @endcan
-                                    </ul>
-                                </li>
-
+                                            @can('storage-incidence-safeties.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('storage-incidence-safeties.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-archive"></i>
+                                                        <span class="hide-menu"> Incidencias</span></a>
+                                                </li>
+                                            @endcan
+                                            @can('storage-category-safeties.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('storage-category-safeties.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-package"></i>
+                                                        <span class="hide-menu"> Categorías y subcategorías</span></a>
+                                                </li>
+                                            @endcan
+                                            @can('responsible-area-security.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('responsible-area-security.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-layout"></i>
+                                                        <span class="hide-menu"> Areas</span></a>
+                                                </li>
+                                            @endcan
+                                        </ul>
+                                    </li>
+                                @endcan
                             </ul>
                         </li>
                     @endcan
 
+
                     @can('security')
-                        <li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark"
-                                                    href="javascript:void(0)" aria-expanded="false">
-                                {{--                                <i class="mdi mdi-collage"></i>--}}
+                        <li class="sidebar-item">
+
+                            <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)"
+                               aria-expanded="false">
                                 <img src="{{asset('ico/datos-seguros.png')}}"
                                      alt="" class="img-16 ml-2 mr-2">
-                                <span class="hide-menu"> Seguridad</span></a>
+                                <span class="hide-menu"> Seguridad</span>
+                            </a>
+
                             <ul aria-expanded="false" class="collapse first-level">
                                 <li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark"
                                                             href="javascript:void(0)" aria-expanded="false"><i

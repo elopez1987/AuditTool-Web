@@ -23,6 +23,7 @@ trait QueryShipmentTransport
             ->leftJoin('shipmentcarriers', 'orderdeliveries.carrierid', '=', 'shipmentcarriers.id')
             ->leftJoin('systemstatus', 'orderdeliveries.statusid', '=', 'systemstatus.statusid')
             ->whereNotIn('orderdeliveries.statusid', ['DH', 'CA', 'EJ', 'FO', 'IF', 'DT', 'SO'])
+            ->where('shipmenttransport.auxiliary04', 'OrderDelivery')
             ->Shipmentid($request->input('shipmentid'))
             ->Carrier($request->input('carrierid'))
             ->select([
@@ -52,6 +53,7 @@ trait QueryShipmentTransport
     {
         return StorageShipmentTransport::where('orderid', $id)
             ->leftJoin('orderdeliveries', 'shipmenttransport.orderid', '=', 'orderdeliveries.id')
+            ->where('shipmenttransport.auxiliary04', 'OrderDelivery')
             ->select([
                 'orderdeliveries.shipmentid', 'orderdeliveries.workday', 'orderdeliveries.loadingdate',
                 'orderdeliveries.downloaddate', 'orderdeliveries.id',
