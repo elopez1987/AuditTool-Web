@@ -261,6 +261,10 @@ Route::middleware(['auth'])->group(function () {
     //  -----------------------------------  Monitor de estatus de los embarques para las líneas de transporte --------------------------------
     Route::get('shipmentstatustransport', [MonitorShipmentStatusController::class, 'index'])->name('shipmentstatustransport');
     Route::get('getStatusShipmentTransport', [MonitorShipmentStatusController::class, 'getStatusShipmentTransport'])->name('getStatusShipmentTransport');
+    //  -----------------------------------  Panel de alarmas de unidades sin arribar a carga  --------------------------------
+    Route::get('shipments-panels', [MonitorShipmentStatusController::class, 'panel'])->name('shipments-panels');
+    Route::get('getShipmentStatusWithoutArrival', [MonitorShipmentStatusController::class, 'getShipmentStatusWithoutArrival'])->name('getShipmentStatusWithoutArrival');
+
     //  -------------------------------------------------  Monitor de seguimiento de verificacion --------------------------------
     Route::get('statusshipmentchek', [MonitorVerificationProcessController::class, 'statusshipmentchek'])->name('statusshipmentchek');
     Route::get('getDataStatusShipmentchek', [MonitorVerificationProcessController::class, 'getDataStatusShipmentchek'])->name('getDataStatusShipmentchek');

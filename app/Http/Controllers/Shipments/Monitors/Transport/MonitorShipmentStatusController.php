@@ -44,4 +44,41 @@ class MonitorShipmentStatusController extends BaseController
 
         return response()->json($data);
     }
+
+    //	Panel de alarmas de unidades sin arribar a carga
+
+    public function panel()
+    {
+        $this->authorize('shipmentstatustransport');
+
+        return view('Shipments.MonitorStatusTransport.panel');
+    }
+
+    public function getShipmentStatusWithoutArrival(Request $request)
+    {
+        $data = OrderDeliverie::controlAccessUser()
+            ->leftJoin('shipmentcarriers', 'orderdeliveries.carrierid', 'shipmentcarriers.id')
+            ->leftJoin('ordercustomers', 'orderdeliveries.customerid', 'ordercustomers.id')
+            ->leftJoin('systemstatus', 'orderdeliveries.statusid', 'systemstatus.statusid')
+            ->leftJoin('receiptunits', 'orderdeliveries.folionumber', 'receiptunits.id')
+            ->Shipmentid($request->get('shipmentid'))
+            ->select([
+                'ordercustomers.name as customername',
+                'ordercustomers.city',
+                'systemstatus.name as status',
+                'shipmentcarriers.name as carriername',
+                'orderdeliveries.shipmentid',
+                'orderdeliveries.id',
+                'orderdeliveries.loadingdate',
+                'orderdeliveries.downloaddate',
+                'receiptunits.operatorname',
+            ])
+            ->whereNull('orderdeliveries.folionumber')
+            ->where('orderdeliveries.loadingdate', '<', now())
+            ->whereNotIn('orderdeliveries.statusid', ['DH', 'CA'])
+            ->get();
+        $data = json_encode($data);
+
+        return response()->json($data);
+    }
 }
