@@ -16,10 +16,11 @@
             <nav class="sidebar-nav">
                 <ul id="sidebarnav">
 
-                    <li class="sidebar-item"><a
-                                class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="{{route('home')}}" aria-expanded="false"><i
-                                    class="mdi mdi-view-dashboard"></i><span class="hide-menu">Dashboard</span></a>
+                    <li class="sidebar-item"><a class="sidebar-link waves-effect waves-dark sidebar-link"
+                                href="{{route('home')}}" aria-expanded="false">
+                            <img src="{{asset('ico/dashboard.png')}}"
+                                 alt="" class="img-16 ml-2 mr-2">
+                            <span class="hide-menu">Dashboard</span></a>
                     </li>
 
                     @can('CONTROL DE PATIOS')
@@ -1661,6 +1662,15 @@
                             </ul>
                         </li>
                     @endcan
+
+                    <li class="sidebar-item">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" aria-expanded="false">
+                            <img src="{{asset('ico/folder_contacts_15440.png')}}"
+                                 alt="" class="img-16 ml-2 mr-2">
+                            <span class="hide-menu">Contacto</span>
+                        </a>
+                    </li>
+
                 </ul>
             </nav>
         </div>
