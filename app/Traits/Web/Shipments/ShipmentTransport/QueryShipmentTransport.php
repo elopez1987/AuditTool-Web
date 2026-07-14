@@ -29,6 +29,8 @@ trait QueryShipmentTransport
             ->select([
                 'orderdeliveries.id',
                 'orderdeliveries.shipmentid',
+                'orderdeliveries.carrierid',
+                'orderdeliveries.customerid',
                 'orderdeliveries.loadingdate',
                 'orderdeliveries.downloaddate',
                 'orderdeliveries.confirmation',

@@ -5,6 +5,7 @@ namespace App\Traits\Web\Shipments;
 use App\Models\Configuration\Parameters\SystemDetailParameter;
 use App\Models\Receipt\StorageCategoryIncidenceDetail;
 use App\Models\Security\Users\AccessCarrier;
+use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\Models\Shipments\OrderDeliverie;
 use Auth;
 use DB;
@@ -32,6 +33,8 @@ trait QuerysIncidencesJourneys
     public function getAllIncidenceJourneys(Request $request)
     {
         $carriers = $this->getCarriers();
+        $centers = SecurityAccessWarehouse::Centers();
+        $warehouses = SecurityAccessWarehouse::Warehouses();
 
         return DB::table('storageincidencejourneys')
             ->select([
@@ -59,6 +62,8 @@ trait QuerysIncidencesJourneys
                 $join->on('orderdeliveries.carrierid', '=', 'sc.id')
                     ->on('orderdeliveries.centerid', '=', 'sc.centerid');
             })
+            ->whereIn('orderdeliveries.centerid', $centers)
+            ->whereIn('orderdeliveries.warehouseid', $warehouses)
             ->where('storageincidencejourneys.statusid', 'AB')
             ->where('orderdeliveries.statusid', 'DH')
             ->when(! empty($carriers), function ($q) {
