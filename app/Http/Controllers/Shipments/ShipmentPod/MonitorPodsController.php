@@ -6,6 +6,7 @@ use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Shipments\ShipmentPod\CreateShipmentPodRequest;
 use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Security\Users\AccessCarrier;
+use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\Models\Shipments\OrderDeliverie;
 use App\Models\Shipments\ShipmentPod\ShipmentPod;
 use App\Models\Shipments\StorageShipmentsPods;
@@ -65,6 +66,9 @@ class MonitorPodsController extends BaseController
         $carrier = AccessCarrier::where('username', Auth::user()->username)
             ->pluck('carrierid');
 
+        $centers = SecurityAccessWarehouse::Centers();
+        $warehouses = SecurityAccessWarehouse::Warehouses();
+
         return DB::table('shipmentpods')
             ->leftJoin('orderdeliveries', function ($join) {
                 $join->on('shipmentpods.orderid', '=', 'orderdeliveries.id')
@@ -80,6 +84,8 @@ class MonitorPodsController extends BaseController
             })
             ->leftJoin('systemstatus as s3', 'shipmentpods.statusid', '=', 's3.statusid')
             ->where('orderdeliveries.statusid', 'DH')
+            ->whereIn('shipmentpods.centerid', $centers)
+            ->whereIn('shipmentpods.warehouseid', $warehouses)
             ->select([
                 'shipmentpods.id',
                 'shipmentpods.statusid',
