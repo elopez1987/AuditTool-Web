@@ -628,6 +628,14 @@
                                                         <span class="hide-menu"> Monitor de arribos</span></a>
                                                 </li>
                                             @endcan
+                                            @can('shipments-panels')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('shipments-panels')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Unidades sin arribar a carga</span></a>
+                                                </li>
+                                            @endcan
                                         </ul>
                                     </li>
                                 @endcan
