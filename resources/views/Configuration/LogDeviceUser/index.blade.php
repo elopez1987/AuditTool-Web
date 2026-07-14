@@ -15,18 +15,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <a>
-                                            <button id="searchData" type="button"
-                                                    class="btn waves-effect waves-light btn-outline-info btn-md">
-                                                <img src="{{asset('/ico/reloadpage.png')}}" alt="" class="img-16 ml-1">
-                                                <span style="font-size: 11px;"> Buscar</span>
-                                            </button>
-                                        </a>
-                                        <a>
-                                            <button id="clearinput" type="button"
-                                                    class="btn waves-effect waves-light btn-outline-info btn-md">
-                                                <img src="{{asset('/ico/closemodal.png')}}" alt="" class="img-16 ml-1">
-                                                <span style="font-size: 11px;"> Limpiar filtros</span>
-                                            </button>
+                                          @include('buttons.search')
                                         </a>
                                         <a href="{{route('home')}}">
                                             @include('buttons.cancel')
@@ -48,16 +37,16 @@
                             </form>
                         </div>
                     </div>
+                    <hr class="mt-4">
                     <div class="row">
                         <div class="col-lg-6">
-                            <table width="100%" id="table-devices"
-                                   class="table table-condensed table-hover table-bordered">
+                            <table width="100%" id="table-devices" class="table table-condensed table-hover table-bordered">
                                 <thead>
-                                <tr>
-                                    <th>Número de serie</th>
-                                    <th>Usurio</th>
-                                    <th>Fecha de registro</th>
-                                </tr>
+                                    <tr>
+                                        <th>Número de serie</th>
+                                        <th>Usurio</th>
+                                        <th>Fecha de registro</th>
+                                    </tr>
                                 </thead>
                             </table>
                         </div>
@@ -73,107 +62,96 @@
 @endsection
 
 @section('css')
-    <link rel="stylesheet" href="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.min.css')}}">
 @endsection
 
 
 
 @section('script')
-    <script src="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.all.min.js')}}"></script>
     <script>
-        $('#searchData').on('click', function () {
-            let serialnumber = $('#serialnumber').val();
+        $(document).ready(function () {
+            let oTable = $("#table-devices").DataTable({
+                "paging": true,
+                "searching": false,
+                "ordering": true,
+                "sScrollY": "450px",
+                "sScrollX": true,
+                "processing": true,
+                "serverSide": true,
+                "responsive": true,
+                "colReorder": true,
+                "stateSave": true,
+                "stateDuration": 0,
+                "ajax": {
+                    url: 'getDevicesForUser',
+                    data: function (d) {
+                        d.serialnumber = $('input[name=serialnumber]').val();
+                    }
+                },
+                "columns": [
+                    {data: 'serialnumber'},
+                    {data: 'user',},
+                    {data: 'created_at'},
+                ],
+                "columnDefs": [
+                    {"width": "200px"},
+                    {"width": "200px"},
+                    {"width": "200px"},
+                ],
 
-            if (serialnumber != '') {
-
-                $("#table-devices").dataTable().fnDestroy();
-                let oTable = $("#table-devices").DataTable({
-                    bDestroy: true,
-                    "paging": true,
-                    "searching": true,
-                    "ordering": true,
-                    "sScrollY": "350px",
-                    "sScrollX": true,
-                    "processing": true,
-                    "serverSide": true,
-                    "responsive": true,
-                    "colReorder": true,
-                    "stateSave": true,
-                    "stateDuration": 0,
-                    "ajax": {
-                        url: 'getDevicesForUser',
-                        dataType: 'json',
-                        data: function (d) {
-                            d.serialnumber = $('input[name=serialnumber]').val();
-                        }
+                "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
+                "lengthMenu": [[1,5,10, 30, 50, 100, -1], [1,5,10, 30, 50, 100, "Todos"]],
+                buttons: [
+                    {
+                        "extend": "colvis",
+                        "text": "<img src=\"{{asset('/pics/adbuscar.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span> Mostar/Ocultar</span>",
+                        "className": "btn btn-outline-info btn-md  btn-bold",
+                        columns: ':not(:first):not(:last)'
                     },
-
-                    "columns": [
-                        {data: 'serialnumber'},
-                        {data: 'user'},
-                        {data: 'created_at'},
-                    ],
-                    "columnDefs": [
-                        {"width": "150px", "targets": 0},
-                        {"width": "280px", "targets": 1},
-                        {"width": "280px", "targets": 2},
-                    ],
-                    "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
-                    "lengthMenu": [[1, 5, 10, 30, 50, 100, 150, 200, 250, -1], [1, 5, 10, 30, 50, 100, 150, 200, 250, "Todos"]],
-                    buttons: [
-                        {
-                            "extend": "colvis",
-                            "text": "<img src=\"{{asset('/pics/adbuscar.png')}}\"  alt=''><span  style='font-size: 11px;'> Mostar/Ocultar</span>",
-                            "className": "btn btn-outline-info btn-md  btn-bold",
-                            columns: ':not(:first):not(:last)'
-                        },
-                        {
-                            "extend": "csv",
-                            "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16'><span  style='font-size: 11px;'> Csv</span>",
-                            "className": "btn btn-outline-info btn-md  btn-bold",
-                        },
-                        {
-                            "extend": "excel",
-                            "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt=''><span  style='font-size: 11px;'> Excel</span>",
-                            "className": "btn btn-outline-info btn-md  btn-bold",
-                        }
-                    ],
-                    language: {
-                        "decimal": "",
-                        "emptyTable": "No hay información",
-                        "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-                        "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-                        "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-                        "infoPostFix": "",
-                        "thousands": ",",
-                        "lengthMenu": "Mostrar _MENU_ Entradas",
-                        "loadingRecords": "Cargando...",
-                        "processing": '<i class="fa fa-spinner fa-spin fa-4x fa-fw text-info"></i><span class="sr-only">Loading...</span> ',
-                        "search": "Buscar:",
-                        "zeroRecords": "Sin resultados encontrados",
-                        "paginate": {
-                            "first": "Primero",
-                            "last": "Ultimo",
-                            "next": "Siguiente",
-                            "previous": "Anterior"
-                        }
+                    {
+                        "extend": "csv",
+                        "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span> Csv</span>",
+                        "className": "btn btn-outline-info btn-md  btn-bold",
                     },
-                });
-            } else {
-                Swal.fire({
-                    type: 'error',
-                    title: 'Oops...',
-                    text: 'Inserte un valor de busqueda.!',
-                })
-            }
+                    {
+                        "extend": "excel",
+                        "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span> Excel</span>",
+                        "className": "btn btn-outline-info btn-md  btn-bold",
+                    }
+                ],
+                language: {
+                    "decimal": "",
+                    "emptyTable": "No hay información",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Registros",
+                    "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "Mostrar _MENU_ Registros",
+                    "loadingRecords": "Cargando...",
+                    "processing": '<img src=\"{{asset('/img/loading-truck.gif')}}\" >',
+                    "search": "Buscar:",
+                    "zeroRecords": "Sin resultados encontrados",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Ultimo",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                },
+
+            });
+
+            $('#search').on('submit', function (e) {
+                oTable.draw();
+                e.preventDefault();
+            });
+            //
+            // $('#table-devices').on('blur', function () {
+            //     $('#table-devices tfoot input').val(''); // Limpia el footer
+            //     oTable.draw(); // Redibuja la tabla
+            // });
         });
     </script>
-    <script>
-        $('#clearinput').on('click', function () {
-            $('input[type="text"]').val('');
 
-            $("#table-devices").dataTable().fnDestroy();
-            $('#table-devices tbody').empty();
-        });
-    </script>
+
 @endsection

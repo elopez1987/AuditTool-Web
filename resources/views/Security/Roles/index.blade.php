@@ -32,7 +32,7 @@
                         <div class="row">
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="roleid">Perfil de usuario<span style="color: red">*</span></label>
+                                    <label for="roleid">Perfil de usuario</label>
                                     <select name="roleid" id="roleid" class="form-control select2">
                                         <option value="">Seleccione un perfil</option>
                                         @foreach($roles as $rol)
@@ -43,13 +43,13 @@
                             </div>
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="name">Nombre del perfil <span style="color: red">*</span></label>
+                                    <label for="name">Nombre del perfil </label>
                                     <input type="text" class="form-control" id="name" name="name">
                                 </div>
                             </div>
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="statusid">Estatus del perfil<span style="color: red">*</span></label>
+                                    <label for="statusid">Estatus del perfil</label>
                                     <select id="statusid" name="statusid" class="form-control select2">
                                         <option value="">Seleccione un estatus</option>
                                         @foreach($status as $model)

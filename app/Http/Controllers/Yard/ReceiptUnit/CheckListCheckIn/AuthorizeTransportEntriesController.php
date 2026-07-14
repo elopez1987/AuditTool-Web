@@ -97,7 +97,6 @@ class AuthorizeTransportEntriesController extends BaseController
         DB::beginTransaction();
         try {
             $receiptunit = ReceiptUnit::findOrFail($id);
-            $parameter = $this->getParametersOfWarehouse($receiptunit->warehouseid);
             $this->clearCheckListTransport($id, 'IN');
             $this->createCheckListToUnitV2($request, $receiptunit, 'IN');
             $this->validateCheckListCheckInTransport($receiptunit, 'WEB');
@@ -133,14 +132,17 @@ class AuthorizeTransportEntriesController extends BaseController
             if (! empty($receipttruck)) {
                 $this->generateOutTruck($receipttruck, 'Salida por rechazo de unidad al entrar');
             }
-            $receiptunit->statusid = 'TR';
-            $receiptunit->outputdate = Carbon::now();
-            $receiptunit->updateuser = Auth::id();
-            $receiptunit->save();
-            if ($receiptunit->razonstatusid === 1) {
+
+            $receiptunit->update([
+                'statusid' => 'TR',
+                'outputdate' => Carbon::now(),
+                'updated_by' => Auth::user()->id,
+            ]);
+
+            if ((int) $receiptunit->razonstatusid === 1) {
                 $this->declineUnitForShipment($receiptunit);
             }
-            if ($receiptunit->razonstatusid === 2) {
+            if ((int) $receiptunit->razonstatusid === 2) {
                 $this->declineUnitForReceipt($receiptunit->id);
             }
             StorageUnitTrace::createTraceUnit($receiptunit, '23');

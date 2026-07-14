@@ -10,18 +10,18 @@ return new class extends Migration
     {
         Schema::create('storage_safety_responsible_configurations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('storage_safety_responsible_area_id');
+            $table->foreignId('storage_safety_category_detail_id');
             $table->string('level01');
             $table->integer('timeout01');
-            $table->integer('attempts01');
+            $table->integer('attempts01')->nullable();
             $table->string('level02');
             $table->integer('timeout02');
-            $table->integer('attempts02');
+            $table->integer('attempts02')->nullable();
             $table->string('level03')->nullable();
             $table->integer('timeout03')->nullable();
             $table->integer('attempts03')->nullable();
 
-            $table->index('storage_safety_responsible_area_id');
+            $table->index('storage_safety_category_detail_id');
         });
     }
 

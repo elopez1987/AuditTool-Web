@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SafetyTours\Incidents\StorageCategoryDetailConfigurationController;
 use App\Http\Controllers\SafetyTours\Incidents\StorageCategorySafetyController;
 use App\Http\Controllers\SafetyTours\Incidents\StorageIncidenceSafetiesController;
 use App\Http\Controllers\SafetyTours\Incidents\StorageResponsibleAreaController;
@@ -47,5 +48,7 @@ Route::middleware(['auth'])->group(function () {
     // Categorias de incidencias
     Route::resource('storage-category-safeties', StorageCategorySafetyController::class)->except(['destroy']);
     Route::get('getCategoriesSafeties', [StorageCategorySafetyController::class, 'getCategoriesSafeties'])->name('getCategoriesSafeties');
+    // Configuracion de tiempos de respuesta de las subcategorias
+    Route::put('storage-category-detail-configuration/{id}', [StorageCategoryDetailConfigurationController::class, 'update']);
 
 });

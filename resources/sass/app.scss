@@ -63,18 +63,16 @@ a {
 //Colores principales
 #main-wrapper[data-layout="horizontal"] .topbar .navbar-collapse[data-navbarbg="skin1"],
 #main-wrapper[data-layout="horizontal"] .topbar[data-navbarbg="skin1"] {
-  background: #63666A !important;
+  background: #607d8b !important;
   text-decoration: none;
 }
 
 #main-wrapper[data-layout="horizontal"] .topbar .top-navbar .navbar-header[data-logobg="skin1"] {
-  background: #63666A;
+  background: #607d8b;
 }
 
 #main-wrapper[data-layout="horizontal"] .left-sidebar[data-sidebarbg="skin6"] .sidebar-nav ul .sidebar-item .sidebar-link {
   color: #212529;
-  font-size: 12px;
-  font-weight: 700;
 }
 
 #main-wrapper[data-layout="vertical"] .left-sidebar[data-sidebarbg="skin6"],
@@ -86,7 +84,6 @@ a {
 
 .sidebar-nav ul .sidebar-item .sidebar-link:hover {
   background: #D0DF00;
-
 }
 
 .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
@@ -137,8 +134,17 @@ a {
 }
 
 @media (min-width: 1025px) {
+  /* La barra superior del menu se ajusta al ancho de pantalla: los items
+     se envuelven en varias filas en lugar de recortarse. El sidebar es
+     absoluto (no fijo), por lo que crecer en alto no tapa el contenido. */
+  #main-wrapper[data-layout="horizontal"] .left-sidebar,
   #main-wrapper[data-layout="horizontal"] .left-sidebar .scroll-sidebar {
-    height: 50px !important;
+    height: auto !important;
+    min-height: 50px;
+  }
+
+  #main-wrapper[data-layout="horizontal"] .sidebar-nav #sidebarnav {
+    flex-wrap: wrap;
   }
 }
 
@@ -197,6 +203,52 @@ a {
   }
 }
 
+/* Cajon lateral en movil y tablet: los submenus se despliegan como acordeon
+   al tocar. En layout horizontal los submenus son dropdowns absolutos que solo
+   aparecen con hover (no funciona en pantallas tactiles) y ademas Bootstrap 5
+   usa la clase .show mientras el tema/JS usa .in. sidebarmenu.js ya alterna la
+   clase .in al tocar; aqui forzamos que el submenu con .in se muestre. */
+@media (max-width: 1024px) {
+  #main-wrapper .sidebar-nav #sidebarnav .sidebar-item ul {
+    position: static !important;
+    float: none !important;
+    width: 100% !important;
+    left: auto !important;
+    top: auto !important;
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+
+  #main-wrapper .sidebar-nav #sidebarnav .sidebar-item ul:not(.in) {
+    display: none !important;
+  }
+
+  #main-wrapper .sidebar-nav #sidebarnav .sidebar-item ul.in {
+    display: block !important;
+  }
+
+  /* Indentacion por nivel para diferenciar la jerarquia */
+  #main-wrapper .sidebar-nav #sidebarnav .first-level .sidebar-link {
+    padding-left: 30px !important;
+  }
+
+  #main-wrapper .sidebar-nav #sidebarnav .second-level .sidebar-link {
+    padding-left: 45px !important;
+  }
+
+  /* Flecha indicadora visible y con giro (cerrado -> derecha, abierto -> abajo) */
+  #main-wrapper[data-layout="horizontal"] .sidebar-nav #sidebarnav .has-arrow::after {
+    display: block !important;
+    transform: rotate(135deg) translate(0, -50%) !important;
+  }
+
+  #main-wrapper[data-layout="horizontal"] .sidebar-nav #sidebarnav li.active > .has-arrow::after,
+  #main-wrapper[data-layout="horizontal"] .sidebar-nav #sidebarnav .has-arrow.active::after,
+  #main-wrapper[data-layout="horizontal"] .sidebar-nav #sidebarnav .has-arrow[aria-expanded="true"]::after {
+    transform: rotate(-135deg) translate(0, -50%) !important;
+  }
+}
+
 label {
   color: black !important;
 }
@@ -250,7 +302,7 @@ thead, tbody, tfoot, tr, td, th {
 table.dataTable thead th {
   color: black !important;
   padding: 6px;
-  background: #D0D0CE;
+  background: #eceff1;
   border-color: #c1d5e0;
   text-transform: uppercase !important;
 }
@@ -463,24 +515,35 @@ span.select2-container {
 
 .sidebar-nav ul .sidebar-item .sidebar-link {
   color: black;
-  white-space: nowrap;
+  white-space: normal;
   line-height: 25px;
+  font-weight: lighter !important;
+  opacity: 3 !important;
+}
+
+/* Ancho dinamico de las etiquetas del menu: el texto largo se ajusta
+   dentro del sidebar-item en lugar de desbordarse */
+.sidebar-nav ul .sidebar-item .sidebar-link > i,
+.sidebar-nav ul .sidebar-item .sidebar-link > img {
+  flex: 0 0 auto;
+}
+
+.sidebar-nav ul .sidebar-item .sidebar-link .hide-menu {
+  flex: 1 1 auto;
+  min-width: 0;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .sidebar-nav ul .sidebar-item .first-level .sidebar-item.active .sidebar-link {
-  opacity: 1;
+  opacity: 0.7 !important;
   margin-left: 10px;
 }
 
 .sidebar-nav .has-arrow::after {
   border-color: black !important;
 }
-
-//.card-header {
-//  background-blend-mode: screen, overlay;
-//  text-transform: uppercase !important;
-//  //border-bottom: 1px solid #e0e0e0;
-//}
 
 .btn-outline-info {
   color: #0091ea !important;

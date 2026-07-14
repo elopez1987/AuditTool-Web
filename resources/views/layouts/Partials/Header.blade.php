@@ -59,17 +59,17 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="d-none d-md-block text-white font-12">BIENVENIDO:
+                        <span class="d-none d-md-block text-white ">BIENVENIDO:
                          @if(Auth::check())
                                 {{Auth::user()->name}}
                                 ||  {!! Auth::user()->access ? Auth::user()->access->center->name : '' !!}
                                 ||
                                 @if(App::environment('production'))
-                                    <span class="badge badge-success ml-2" style="font-style: normal; text-transform: uppercase;font-size: 12px;padding-left: 10px !important;padding-right: 10px !important;">
-                                            PRODUCCIÓN
+                                    <span class="badge badge-success ml-2" style="font-style: italic; text-transform: uppercase;font-size: 11px;padding-left: 10px !important;padding-right: 10px !important;font-weight: lighter">
+                                          {{ app()->environment() }}
                                         </span>
                                  @else
-                                         <span class="badge badge-danger ml-2" style="font-style: normal; text-transform: uppercase;font-size: 12px;padding-left: 10px !important;padding-right: 10px !important;">
+                                         <span class="badge badge-danger ml-2" style="font-style: normal; text-transform: uppercase;font-size: 11px;padding-left: 10px !important;padding-right: 10px !important;font-weight: lighter">
                                             {{ app()->environment() }}
                                         </span>
                                 @endif

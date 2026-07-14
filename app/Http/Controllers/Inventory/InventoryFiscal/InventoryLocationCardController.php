@@ -84,6 +84,7 @@ class InventoryLocationCardController extends BaseController
                 'inventorypartnumber01_id' => null,
                 'quantity01' => null,
                 'statusid_count01' => 'F',
+                'user_count01_id' => null,
             ]);
 
         return $this->redirectBackSuccessMessage('Conteo inicializado con exito.');
@@ -104,6 +105,7 @@ class InventoryLocationCardController extends BaseController
                 'inventorypartnumber02_id' => null,
                 'quantity02' => null,
                 'statusid_count02' => 'F',
+                'user_count02_id' => null,
             ]);
 
         return $this->redirectBackSuccessMessage('Conteo inicializado con exito.');

@@ -24,6 +24,7 @@
         "columns": [
             {data: 'module', name: 'module'},
             {data: 'function', name: 'function'},
+            {data: 'id'},
             {data: 'name'},
             {data: 'description'},
             {data: 'guard_name'},

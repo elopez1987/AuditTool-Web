@@ -40,21 +40,14 @@
                         </div>
                     </form>
                     <div class="row">
-                        <div class="col-12">
-                            <table id="table-reasons"
-                                   class="table table-bordered table-condensed table-hover">
+                        <div class="col-10">
+                            <table id="table-reasons" class="table table-bordered table-condensed table-hover" width="100%">
                                 <thead>
                                 <tr>
                                     <th>Código</th>
                                     <th>Nombre</th>
                                     <th>Evento WMS</th>
                                     <th>Tipo de movimiento</th>
-                                    <th>Auxiliar 01</th>
-                                    <th>Auxiliar 02</th>
-                                    <th>Auxiliar 03</th>
-                                    <th>Auxiliar 04</th>
-                                    <th>Auxiliar 05</th>
-                                    <th>Estatus</th>
                                     <th>Opciones</th>
                                 </tr>
                                 </thead>

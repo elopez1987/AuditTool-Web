@@ -38,17 +38,12 @@
                     </form>
                     <div class="row">
                         <div class="col-12">
-                            <table id="table-checklistlift" class="table table-bordered table-condensed">
+                            <table id="table-checklistlift" class="table table-bordered table-condensed" width="100%">
                                 <thead>
                                 <tr>
                                     <th class="bg-inverse text-white">C.Distribución</th>
                                     <th class="bg-inverse text-white">Nombre</th>
                                     <th class="bg-inverse text-white">Tipo de equipo</th>
-                                    <th class="bg-inverse text-white">Auxiliar 01</th>
-                                    <th class="bg-inverse text-white">Auxiliar 02</th>
-                                    <th class="bg-inverse text-white">Auxiliar 03</th>
-                                    <th class="bg-inverse text-white">Auxiliar 04</th>
-                                    <th class="bg-inverse text-white">Auxiliar 05</th>
                                     <th class="bg-inverse text-white">Estatus</th>
                                     <th class="bg-inverse text-white">Opciones</th>
                                 </tr>

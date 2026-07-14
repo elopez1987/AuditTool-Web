@@ -37,17 +37,13 @@
                     </form>
                     <hr class="mb-3">
                     <div class="row">
-                        <div class="col-12">
+                        <div class="col-8">
                             <table id="table-modules" class="table table-bordered table-hover table-condensed">
                                 <thead>
                                     <tr>
                                         <th class="bg-inverse text-white">Secuencia</th>
                                         <th class="bg-inverse text-white">Descripción</th>
-                                        <th class="bg-inverse text-white">Auxiliar 01</th>
-                                        <th class="bg-inverse text-white">Auxiliar 02</th>
-                                        <th class="bg-inverse text-white">Auxiliar 03</th>
-                                        <th class="bg-inverse text-white">Auxiliar 04</th>
-                                        <th class="bg-inverse text-white">Auxiliar 05</th>
+                                        <th class="bg-inverse text-white">Permiso</th>
                                         <th class="bg-inverse text-white">Opciones</th>
                                     </tr>
                                 </thead>

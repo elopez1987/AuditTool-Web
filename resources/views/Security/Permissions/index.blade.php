@@ -31,7 +31,7 @@
                             <div class="row mt-4">
                                 <div class="col-lg-2 col-md-6 col-sm-12">
                                     <div class="form-group">
-                                        <label for="moduleid">Modulo<span style="color: red">*</span></label>
+                                        <label for="moduleid">Modulo</label>
                                         <select name="moduleid" id='moduleid' class="form-control select2">
                                             <option value="" selected>Seleccione un valor</option>
                                             @foreach($modules as $model)
@@ -42,7 +42,7 @@
                                 </div>
                                 <div class="col-lg-2 col-md-6 col-sm-12">
                                     <div class="form-group">
-                                        <label for="functionid">Función<span style="color: red">*</span></label>
+                                        <label for="functionid">Función</label>
                                         <select name="functionid" id='functionid' class="form-control select2">
                                             <option value="">Seleccione una función</option>
                                         </select>
@@ -75,6 +75,7 @@
                                     <tr>
                                         <th>Modulo</th>
                                         <th>Función</th>
+                                        <th>ID</th>
                                         <th>Nombre</th>
                                         <th>Descripción</th>
                                         <th>Guard</th>

@@ -359,9 +359,8 @@
                     });
                     Highcharts.chart('getForTotalForDays', {
                         colors: [
-                            '#3d5afe', '#00c853', '#ff1744', '#ffc107', '#17a2b8',
-                            '#6c757d', '#dc3545', '#28a745', '#007bff', '#fd7e14',
-                            '#6f42c1', '#e83e8c', '#20c997', '#343a40', '#f8f9fa'
+                            '#d0df00', '#63666a', '#b5bd00', '#97999b',
+                            '#e3e935', '#d0d0ce', '#000000'
                         ],
                         chart: {
                             type: 'line'
@@ -429,9 +428,8 @@
                     });
                     Highcharts.chart('ForTypeTruck', {
                         colors: [
-                            '#3d5afe', '#00c853', '#ff1744', '#ffc107', '#17a2b8',
-                            '#6c757d', '#dc3545', '#28a745', '#007bff', '#fd7e14',
-                            '#6f42c1', '#e83e8c', '#20c997', '#343a40', '#f8f9fa'
+                            '#d0df00', '#63666a', '#b5bd00', '#97999b',
+                            '#e3e935', '#d0d0ce', '#000000'
                         ],
                         chart: {
                             type: 'column'
@@ -507,9 +505,8 @@
                     });
                     Highcharts.chart('ForType', {
                         colors: [
-                            '#3d5afe', '#00c853', '#ff1744', '#ffc107', '#17a2b8',
-                            '#6c757d', '#dc3545', '#28a745', '#007bff', '#fd7e14',
-                            '#6f42c1', '#e83e8c', '#20c997', '#343a40', '#f8f9fa'
+                            '#d0df00', '#63666a', '#b5bd00', '#97999b',
+                            '#e3e935', '#d0d0ce', '#000000'
                         ],
                         chart: {
                             type: 'pie',
@@ -579,9 +576,8 @@
                     });
                     Highcharts.chart('ForCarrier', {
                         colors: [
-                            '#3d5afe', '#00c853', '#ff1744', '#ffc107', '#17a2b8',
-                            '#6c757d', '#dc3545', '#28a745', '#007bff', '#fd7e14',
-                            '#6f42c1', '#e83e8c', '#20c997', '#343a40', '#f8f9fa'
+                            '#d0df00', '#63666a', '#b5bd00', '#97999b',
+                            '#e3e935', '#d0d0ce', '#000000'
                         ],
                         chart: {
                             type: 'pie',
@@ -652,9 +648,8 @@
 
                     Highcharts.chart('ForStatus', {
                         colors: [
-                            '#3d5afe', '#00c853', '#ff1744', '#ffc107', '#17a2b8',
-                            '#6c757d', '#dc3545', '#28a745', '#007bff', '#fd7e14',
-                            '#6f42c1', '#e83e8c', '#20c997', '#343a40', '#f8f9fa'
+                            '#d0df00', '#63666a', '#b5bd00', '#97999b',
+                            '#e3e935', '#d0d0ce', '#000000'
                         ],
                         chart: {
                             plotBackgroundColor: null,

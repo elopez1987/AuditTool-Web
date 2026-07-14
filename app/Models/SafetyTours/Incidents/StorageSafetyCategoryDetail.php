@@ -20,7 +20,7 @@ class StorageSafetyCategoryDetail extends Model
     protected $table = 'storage_safety_category_details';
 
     protected $fillable = [
-        'stotage_category_safety_id',
+        'storage_category_safety_id',
         'name',
         'storage_safety_responsible_area_id',
         'configurationflag',
@@ -31,14 +31,19 @@ class StorageSafetyCategoryDetail extends Model
         'statusid',
     ];
 
+    protected $attributes = [
+        'statusid' => 'E',
+        'schemaid' => 'STS',
+    ];
+
     public function stotagecategorysafety(): BelongsTo
     {
-        return $this->belongsTo(StorageCategorySafety::class);
+        return $this->belongsTo(StorageCategorySafety::class, 'storage_category_safety_id', 'id');
     }
 
     public function storagesafetyresponsiblearea(): BelongsTo
     {
-        return $this->belongsTo(StorageResponsibleArea::class, 'storage_safety_responsible_area_id');
+        return $this->belongsTo(StorageResponsibleArea::class, 'storage_safety_responsible_area_id', 'id');
     }
 
     public function status(): BelongsTo
