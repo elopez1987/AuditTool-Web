@@ -64,7 +64,6 @@
                                     <th>Ciudad</th>
                                     <th>Cita de carga</th>
                                     <th>Cita de entrega</th>
-                                    <th>Confirmación</th>
                                     <th>Linea de transporte</th>
                                     <th>Operador</th>
                                     <th>Placa de caja</th>
