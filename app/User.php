@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Configuration\DeviceToken;
 use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Security\Modules\ModelHasRole;
 use App\Models\Security\Users\SecurityAccessWarehouse;
@@ -190,6 +191,13 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     }
 
     //    Relaciones entre modelos
+
+    // En User.php agrega la relación inversa
+    public function deviceTokens()
+    {
+        return $this->hasMany(DeviceToken::class);
+    }
+
     public function sessions()
     {
         return $this->hasOne(SecurityUsersSession::class, 'username', 'username');
