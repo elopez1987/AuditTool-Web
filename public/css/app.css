@@ -12082,6 +12082,17 @@ a {
   border: 1px solid rgba(255, 255, 255, 0.35); /* borde suave */
 }
 
+@media (min-width: 768px) {
+  #main-wrapper[data-layout=horizontal] .sidebar-nav #sidebarnav > .sidebar-item ul {
+    width: 280px;
+    padding-bottom: 0px;
+  }
+}
+@media (min-width: 768px) {
+  #main-wrapper[data-layout=horizontal] .sidebar-nav #sidebarnav > .sidebar-item ul.second-level {
+    left: 280px;
+  }
+}
 .sidebar-nav ul .sidebar-item .sidebar-link:hover {
   background: #D0DF00;
 }

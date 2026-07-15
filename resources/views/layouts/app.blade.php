@@ -586,7 +586,7 @@
                                         <a class="sidebar-link has-arrow waves-effect waves-dark"
                                            href="javascript:void(0)" aria-expanded="false"><i
                                                     class="mdi mdi-receipt"></i><span
-                                                    class="hide-menu"> Seguimiento</span>
+                                                    class="hide-menu"> Seguimiento <span class="label label-rounded label-danger ml-5">New</span> </span>
                                         </a>
                                         <ul aria-expanded="false" class="collapse second-level">
                                             @can('monitoranalistatrafico.index')
@@ -634,7 +634,7 @@
                                                             href="{{route('shipments-panels')}}"
                                                             class="sidebar-link">
                                                         <i class="lni lni-list"></i>
-                                                        <span class="hide-menu"> Unidades sin arribar a carga</span></a>
+                                                        <span class="hide-menu"> Semáforo de arribos <span class="label label-rounded label-danger ml-2">New</span>  </span></a>
                                                 </li>
                                             @endcan
                                         </ul>
