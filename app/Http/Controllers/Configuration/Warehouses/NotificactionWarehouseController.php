@@ -26,7 +26,7 @@ class NotificactionWarehouseController extends BaseController
     {
         $warehouse = SystemWarehouse::findOrFail($id);
         $warehouse->update([
-            'configurationflag' => $request->input('configurationflag'),
+            'notificationsflags' => $request->input('parameter'),
         ]);
 
         return $this->redirectBackSuccess();

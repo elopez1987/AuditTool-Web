@@ -16,10 +16,11 @@
             <nav class="sidebar-nav">
                 <ul id="sidebarnav">
 
-                    <li class="sidebar-item"><a
-                                class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="{{route('home')}}" aria-expanded="false"><i
-                                    class="mdi mdi-view-dashboard"></i><span class="hide-menu">Dashboard</span></a>
+                    <li class="sidebar-item"><a class="sidebar-link waves-effect waves-dark sidebar-link"
+                                href="{{route('home')}}" aria-expanded="false">
+                            <img src="{{asset('ico/dashboard.png')}}"
+                                 alt="" class="img-16 ml-2 mr-2">
+                            <span class="hide-menu">Dashboard</span></a>
                     </li>
 
                     @can('CONTROL DE PATIOS')
@@ -585,7 +586,7 @@
                                         <a class="sidebar-link has-arrow waves-effect waves-dark"
                                            href="javascript:void(0)" aria-expanded="false"><i
                                                     class="mdi mdi-receipt"></i><span
-                                                    class="hide-menu"> Seguimiento</span>
+                                                    class="hide-menu"> Seguimiento <span class="label label-rounded label-danger ml-5">New</span> </span>
                                         </a>
                                         <ul aria-expanded="false" class="collapse second-level">
                                             @can('monitoranalistatrafico.index')
@@ -633,7 +634,7 @@
                                                             href="{{route('shipments-panels')}}"
                                                             class="sidebar-link">
                                                         <i class="lni lni-list"></i>
-                                                        <span class="hide-menu"> Unidades sin arribar a carga</span></a>
+                                                        <span class="hide-menu"> Semáforo de arribos <span class="label label-rounded label-danger ml-2">New</span>  </span></a>
                                                 </li>
                                             @endcan
                                         </ul>
@@ -1661,6 +1662,15 @@
                             </ul>
                         </li>
                     @endcan
+
+                    <li class="sidebar-item">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" aria-expanded="false">
+                            <img src="{{asset('ico/folder_contacts_15440.png')}}"
+                                 alt="" class="img-16 ml-2 mr-2">
+                            <span class="hide-menu">Contacto</span>
+                        </a>
+                    </li>
+
                 </ul>
             </nav>
         </div>

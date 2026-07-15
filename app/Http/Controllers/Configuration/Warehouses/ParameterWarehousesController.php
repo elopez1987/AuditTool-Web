@@ -28,7 +28,7 @@ class ParameterWarehousesController extends BaseController
         $warehouse = SystemWarehouse::findOrFail($id);
         $warehouse->update(
             [
-                'configurationflag' => $request->configurationflag,
+                'configurationflag' => $request->input('configurationflag'),
             ]
         );
 

@@ -82,6 +82,7 @@
                                 <thead>
                                 <tr>
                                     <th>Categoria</th>
+                                    <th>ID</th>
                                     <th>Sub-categoria</th>
                                     <th>Tipo</th>
                                     <th>Auxiliar 02</th>
@@ -96,6 +97,7 @@
                                 @foreach($details as $detail)
                                     <tr>
                                         <td>{{$detail->category->description}}</td>
+                                        <td>{{$detail->categoryincdetailid}}</td>
                                         <td>{{$detail->description}}</td>
                                         <td>{{$detail->auxiliary01}}</td>
                                         <td>{{$detail->auxiliary02}}</td>
