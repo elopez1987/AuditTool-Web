@@ -572,6 +572,7 @@
                                             <th>Cantidad</th>
                                             <th>Categoría</th>
                                             <th>Sub Categoría</th>
+                                            <th>Lpn</th>
                                             <th>Verificador</th>
                                             <th>Fecha de creación</th>
                                         </tr>
@@ -584,6 +585,7 @@
                                                 <td>{{$incidence->quantity}}</td>
                                                 <td>{{$incidence->categoryincidence ? $incidence->categoryincidence->description : ''}}</td>
                                                 <td>{{$incidence->subcategoryincidence ? $incidence->subcategoryincidence->description : ''}}</td>
+                                                <td>{{$incidence->lpnid ?? ''}}</td>
                                                 <td>{{$incidence->user ? $incidence->user->name : ''}}</td>
                                                 <td>{{$incidence->created_at}}</td>
                                             </tr>
