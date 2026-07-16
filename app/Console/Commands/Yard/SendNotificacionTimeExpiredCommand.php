@@ -58,9 +58,9 @@ class SendNotificacionTimeExpiredCommand extends Command
                     'Linea de transporte :' => (string) $unit->carriername,
                     'Embarque:' => (string) $unit->shipmentid,
                     'Cliente :' => (string) $unit->customername,
-
                 ],
-            );
+            )->onQueue('yms-web');
+            $messagesSent++;
         }
 
         return $messagesSent;
