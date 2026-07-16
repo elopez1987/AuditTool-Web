@@ -5,6 +5,8 @@
 namespace App\Services\Notifications;
 
 use App\Models\Configuration\DeviceToken;
+use App\Models\Configuration\NotificationSubscription;
+use App\Models\Configuration\NotificationType;
 use App\User;
 use Kreait\Firebase\Messaging\CloudMessage;
 use Kreait\Firebase\Messaging\Notification as FirebaseNotification;
@@ -42,6 +44,50 @@ class PushNotificationService
         }
 
         $this->sendToTokens($tokens, $title, $body, $data);
+    }
+
+    /**
+     * Para un solo usuario, valida su suscripción antes de mandar
+     */
+    public function sendTypeToUser(string $typeKey, User $user, string $title, string $body, array $data = [])
+    {
+        if (! $user->isSubscribedTo($typeKey)) {
+            return;
+        }
+
+        $this->sendTypeToUsers($typeKey, [$user->id], $title, $body, $data);
+    }
+
+    /**
+     * Envía un tipo de notificación a una lista de usuarios,
+     * pero SOLO a los que estén suscritos a ese tipo.
+     */
+    public function sendTypeToUsers(string $typeKey, iterable $userIds, string $title, string $body, array $data = [])
+    {
+        $type = NotificationType::where('key_notification', $typeKey)->where('statusid', 'E')->first();
+
+        if (! $type) {
+            return; // tipo inexistente o desactivado, no se manda nada
+        }
+
+        // Filtra: de la lista de candidatos, solo los suscritos a este tipo
+        $subscribedUserIds = NotificationSubscription::where('notification_type_id', $type->id)
+            ->whereIn('user_id', $userIds)
+            ->pluck('user_id');
+
+        if ($subscribedUserIds->isEmpty()) {
+            return;
+        }
+
+        $tokens = DeviceToken::whereIn('user_id', $subscribedUserIds)
+            ->pluck('token')
+            ->toArray();
+
+        if (empty($tokens)) {
+            return;
+        }
+
+        $this->sendToTokens($tokens, $title, $body, array_merge($data, ['type' => $typeKey]));
     }
 
     /**

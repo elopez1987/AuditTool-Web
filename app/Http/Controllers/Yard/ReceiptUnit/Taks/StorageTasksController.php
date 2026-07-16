@@ -61,8 +61,7 @@ class StorageTasksController extends BaseController
                 $q->BoxNumber($request->get('boxnumber'));
             })
             ->ForStatusTask($request->get('statusid'))
-            ->whereNotIn('storagetasks.statusid', ['CO'])
-            ->orderBy('storagetasks.id', 'desc')->latest()->take(100)->get();
+            ->whereNotIn('storagetasks.statusid', ['CO']);
 
         return DataTables::of($data)
             ->addColumn('cancelledbtn', 'Yards.StorageTask.partials.cancelled')
@@ -103,8 +102,8 @@ class StorageTasksController extends BaseController
                 }
                 $push->sendToUser(
                     $user,
-                    'Nueva tarea asignada',
-                    'Tu pedido va en camino 🚚',
+                    'Alerta :',
+                    'Movimiento de unidad requerida.',
                     ['task_id' => (string) $task->id],
                 );
             }

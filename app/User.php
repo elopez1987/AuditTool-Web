@@ -3,6 +3,8 @@
 namespace App;
 
 use App\Models\Configuration\DeviceToken;
+use App\Models\Configuration\NotificationSubscription;
+use App\Models\Configuration\NotificationType;
 use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Security\Modules\ModelHasRole;
 use App\Models\Security\Users\SecurityAccessWarehouse;
@@ -192,11 +194,32 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     //    Relaciones entre modelos
 
-    // En User.php agrega la relación inversa
+    // ##############################################################################
+    // En User.php agrega la relación para notificaciones push con firebase
     public function deviceTokens()
     {
         return $this->hasMany(DeviceToken::class);
     }
+
+    public function notificationSubscriptions()
+    {
+        return $this->hasMany(NotificationSubscription::class);
+    }
+
+    public function notificationTypes()
+    {
+        return $this->belongsToMany(
+            NotificationType::class,
+            'notification_subscriptions'
+        );
+    }
+
+    public function isSubscribedTo(string $typeKey): bool
+    {
+        return $this->notificationTypes()->where('key_notification', $typeKey)->exists();
+    }
+
+    // ################################################################################
 
     public function sessions()
     {
