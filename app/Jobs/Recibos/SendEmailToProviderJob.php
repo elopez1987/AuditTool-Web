@@ -38,9 +38,10 @@ class SendEmailToProviderJob implements ShouldQueue
 
         $contacts = ReceiptProviderContacts::where('providerid', $receiptAsn->providerid)
             ->pluck('email')->toArray();
+
         if (empty($contacts)) {
             Log::error('No se encontraron contactos para el correo de peso con el Centro y Bodega seleccionado', [
-                'receiptUnitId' => $receipt->id,
+                'receiptUnitId' => $receiptAsn->id,
             ]);
 
             return;
