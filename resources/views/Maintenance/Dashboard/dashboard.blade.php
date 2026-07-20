@@ -64,8 +64,8 @@
             color: #1b7a4b;
         }
         .badge-warning {
-            background: #fdeccd;
-            color: #a56a00;
+            background: #aed581;
+            color: #33691e;
         }
         .badge-blocked {
             background: #fbdfe6;

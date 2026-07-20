@@ -61,7 +61,7 @@
                                 @foreach($photos as $photo)
                                     <div class="col-lg-6">
                                         <div class="card">
-                                            <img class="card-img-top img-responsive"  src="{{asset('storage/' . $photo->path)}}" alt="Card image">
+                                            <img class="card-img-top img-responsive"  src="{{asset('storage/' . $photo->path)}}" alt="Card image" style="max-height: 400px;max-width: 400px">
                                             <div class="card-body">
                                                 <h6 class="card-title">{{$photo->createuser->name}}</h6>
                                                 <p class="card-text">
