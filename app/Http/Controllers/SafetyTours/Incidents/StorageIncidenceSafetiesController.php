@@ -22,9 +22,13 @@ class StorageIncidenceSafetiesController extends BaseController
     public function getIncidenceSafeties(Request $request)
     {
         $data = StorageIncidenceSafety::controlAccessUser()
+            ->join('storage_safety_category_details', 'storage_incidence_safeties.storage_safety_category_detail_id', 'storage_safety_category_details.id')
+            ->join('storage_safety_responsible_areas', 'storage_safety_category_details.storage_safety_responsible_area_id', 'storage_safety_responsible_areas.id')
             ->with(['status:statusid,name,auxiliary01', 'category:id,name',
                 'categorydetail:id,name', 'center:centerid,name,description',
-                'createuser:id,name', 'closeduser:id,name']);
+                'createuser:id,name', 'closeduser:id,name'])
+            ->select(['storage_incidence_safeties.*',
+                'storage_safety_responsible_areas.name as responsible_area']);
 
         return $this->showDataToView($data, 'SafetyTours.StorageIncidenceSafety.partials.buttons');
     }

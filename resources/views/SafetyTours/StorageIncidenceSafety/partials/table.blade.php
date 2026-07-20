@@ -22,17 +22,14 @@
             {data: 'categorydetail.name', name: 'categorydetail.name'},
             {data: 'priority'},
             {data: 'location'},
-            {data: 'auxiliary02'},
+            {data: 'responsible_area'},
             {data: 'createuser.name', name: 'createuser.name'},
             {data: 'closeduser.name', name: 'closeduser.name'},
             {data: 'created_at'},
             {
                 data: 'status.name', name: 'status.name',
-                createdCell: function (td, cellData, rowData) {
-                    $(td).css({
-                        'background-color': (rowData.status.auxiliary01),
-                        'color': 'black'
-                    });
+                render: function (data, type, rowData) {
+                    return '<span style="background-color:' + rowData.status.auxiliary01 + '; color: black; padding: 2px 8px; border-radius: 4px; display: inline-block;">' + data + '</span>';
                 }
             },
             {data: 'btn'},
