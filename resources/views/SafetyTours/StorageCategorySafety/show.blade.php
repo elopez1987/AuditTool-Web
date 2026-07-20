@@ -36,7 +36,7 @@
                                         <div class="row">
                                             <x-select2
                                                     name="storage_safety_responsible_area_id"
-                                                    label="Centros de distribución"
+                                                    label="Area responsable"
                                                     :options="$responsible"
                                                     valueField="id"
                                                     textField="name"
@@ -56,6 +56,8 @@
                                                     name="level01"
                                                     label="Nivel 1"
                                                     colClass="col-lg-2 col-md-12"
+                                                    value="1"
+                                                    readonly="readonly"
                                             />
                                             <x-text-input
                                                     name="timeout01"
@@ -68,6 +70,8 @@
                                                     name="level02"
                                                     label="Nivel 2"
                                                     colClass="col-lg-2 col-md-12"
+                                                    value="2"
+                                                    readonly="readonly"
                                             />
                                             <x-text-input
                                                     name="timeout02"
@@ -80,6 +84,8 @@
                                                     name="level03"
                                                     label="Nivel 3"
                                                     colClass="col-lg-2 col-md-12"
+                                                    value="3"
+                                                    readonly="readonly"
                                             />
                                             <x-text-input
                                                     name="timeout03"

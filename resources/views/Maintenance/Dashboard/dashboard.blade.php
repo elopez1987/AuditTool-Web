@@ -27,16 +27,16 @@
                     </div>
                     <div class="row">
                         <div class="col-lg-12">
-                            <table width="100%" id="table-lifttruck" class="table table-bordered table-hover table-condensed ">
+                            <table width="100%" id="table-lifttruck" class="table table-bordered table-hover ">
                                 <thead>
                                     <tr>
-                                        <th class="bg-inverse text-white">Número de serie</th>
-                                        <th class="bg-inverse text-white">Número de equipo</th>
-                                        <th class="bg-inverse text-white">Tipo</th>
-                                        <th class="bg-inverse text-white">Estatus de equipo</th>
-                                        <th class="bg-inverse text-white">Asignado</th>
-                                        <th class="bg-inverse text-white">F. Asignación</th>
-                                        <th class="bg-inverse text-white">Tiempo transcurrido</th>
+                                        <th>Número de serie</th>
+                                        <th>Número de equipo</th>
+                                        <th>Tipo</th>
+                                        <th>Estatus de equipo</th>
+                                        <th>Asignado</th>
+                                        <th>F. Asignación</th>
+                                        <th>Tiempo transcurrido</th>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>

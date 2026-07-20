@@ -27,13 +27,12 @@ class StorageSafetyCategoryDetail extends Model
         'auxiliary01',
         'auxiliary02',
         'auxiliary03',
-        'schamaid',
         'statusid',
     ];
 
     protected $attributes = [
         'statusid' => 'E',
-        'schemaid' => 'STS',
+        'schamaid' => 'STS',
     ];
 
     public function stotagecategorysafety(): BelongsTo
