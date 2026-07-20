@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Yard\ReceiptUnit\Taks;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Yard\Task\CreateTaksOperator;
-use App\Jobs\Yard\SendMessageNewTaskJob;
 use App\Models\Yard\ReceiptUnit;
 use App\Models\Yard\StorageTask;
 use App\Models\Yard\StorageUnitTrace;
 use App\Models\Yard\StorageZone\StorageZone;
+use App\Services\Notifications\PushNotificationService;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -61,8 +61,7 @@ class StorageTasksController extends BaseController
                 $q->BoxNumber($request->get('boxnumber'));
             })
             ->ForStatusTask($request->get('statusid'))
-            ->whereNotIn('storagetasks.statusid', ['CO'])
-            ->orderBy('storagetasks.id', 'desc')->latest()->take(100)->get();
+            ->whereNotIn('storagetasks.statusid', ['CO']);
 
         return DataTables::of($data)
             ->addColumn('cancelledbtn', 'Yards.StorageTask.partials.cancelled')
@@ -71,7 +70,7 @@ class StorageTasksController extends BaseController
             })->rawColumns(['cancelledbtn'])->toJson();
     }
 
-    public function store(CreateTaksOperator $request)
+    public function store(CreateTaksOperator $request, PushNotificationService $push)
     {
         try {
             $receiptunit = ReceiptUnit::searchForId($request['folionumber']);
@@ -92,7 +91,21 @@ class StorageTasksController extends BaseController
             $parameterNotificacionWarehouse = $this->getParameterNotificacionWarehouse($receiptunit->warehouseid);
 
             if (! empty($parameterNotificacionWarehouse) && in_array('MWH-01', (array) $parameterNotificacionWarehouse)) {
-                SendMessageNewTaskJob::dispatch($task->id)->onQueue('yms-web');
+                //                SendMessageNewTaskJob::dispatch($task->id)->onQueue('yms-web');
+                $user = User::find($task->operatoryard);
+
+                if (is_null($user)) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'El operador no existe!!',
+                    ], 404);
+                }
+                $push->sendToUser(
+                    $user,
+                    'Alerta :',
+                    'Movimiento de unidad requerida.',
+                    ['task_id' => (string) $task->id],
+                );
             }
 
             if ($request->ajax() || $request->wantsJson()) {

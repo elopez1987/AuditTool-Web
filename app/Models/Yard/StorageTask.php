@@ -41,7 +41,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read SystemWarehouse $warehouse
  * @property-read StorageZone|null $zone
  *
- * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTask forStatusTask($statusid)
+
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTask newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTask newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageTask query()

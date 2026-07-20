@@ -112,7 +112,7 @@ class TiempoExcedidoParaSalirDePatio extends Command
     {
         $timeMinutes = (int) SystemDetailParameter::where('parameterid', self::PARAMETER_ID)
             ->where('value01', $warehouse->centerid)
-            ->value('value02');
+            ->value('value04');
 
         if (! $timeMinutes) {
             Log::warning('No se encontró configuración de tiempo para la bodega', [
