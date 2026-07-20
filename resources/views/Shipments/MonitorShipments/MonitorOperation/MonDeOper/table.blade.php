@@ -28,11 +28,8 @@
             {data: 'carrier.name','name':'carrier.name'},
             {
                 data: 'status.name', name: 'status.name',
-                createdCell: function (td, cellData, rowData) {
-                    $(td).css({
-                        'background-color': (rowData.status.auxiliary01),
-                        'color': 'black'
-                    });
+                render: function (data, type, rowData) {
+                    return '<span style="background-color:' + rowData.status.auxiliary01 + '; color: black; padding: 2px 8px; border-radius: 4px; display: inline-block;">' + data + '</span>';
                 }
             },
             {data: 'statusunit'},

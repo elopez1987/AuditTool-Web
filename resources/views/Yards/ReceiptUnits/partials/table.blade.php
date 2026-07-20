@@ -49,11 +49,8 @@
                 {data: 'unitstatus.name',name:'unitstatus.name'},
                 {
                     data: 'status.name', name: 'status.name',
-                    createdCell: function (td, cellData, rowData) {
-                        $(td).css({
-                            'background-color': (rowData.status.auxiliary01),
-                            'color': 'black'
-                        });
+                    render: function (data, type, rowData) {
+                        return '<span style="background-color:' + rowData.status.auxiliary01 + '; color: black; padding: 2px 8px; border-radius: 4px; display: inline-block;">' + data + '</span>';
                     }
                 },
                 {data: 'truckcategory.description',name:'truckcategory.description'},
@@ -64,10 +61,6 @@
                 {data: 'staytime',searchable: false},
                 {data: 'tracto.id',name:'tracto.id'},
             ],
-            // fixedColumns: {
-            //     left: 6,   // columnas fijas a la izquierda
-            //     // right: 1   // opcional: fijas a la derecha
-            // },
             "order": [[2, 'desc']],
             "columnDefs": [
                 {"width": "100px", "targets": 0},
