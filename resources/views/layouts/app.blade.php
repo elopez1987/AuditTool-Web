@@ -17,7 +17,7 @@
                 <ul id="sidebarnav">
 
                     <li class="sidebar-item"><a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="{{route('home')}}" aria-expanded="false">
+                                                href="{{route('home')}}" aria-expanded="false">
                             <img src="{{asset('ico/dashboard.png')}}"
                                  alt="" class="img-16 ml-2 mr-2">
                             <span class="hide-menu">Dashboard</span></a>
@@ -522,7 +522,9 @@
                                         <a class="sidebar-link has-arrow waves-effect waves-dark"
                                            href="javascript:void(0)" aria-expanded="false"><i
                                                     class="mdi mdi-receipt"></i><span
-                                                    class="hide-menu">Horarios</span>
+                                                    class="hide-menu">Horarios  <span
+                                                        class="label label-rounded label-danger ml-5">New</span>
+                                            </span>
                                         </a>
                                         <ul aria-expanded="false" class="collapse second-level">
 
@@ -576,7 +578,15 @@
                                                         <span class="hide-menu"> Monitor de verificación</span></a>
                                                 </li>
                                             @endcan
-
+                                                @can('calculatetimeshipment')
+                                                    <li class="sidebar-item"><a
+                                                                href="{{route('calculatetimeshipment')}}"
+                                                                class="sidebar-link">
+                                                            <i class="lni lni-calculator"></i>
+                                                            <span class="hide-menu"> Calcular tiempo de embarque <span
+                                                                        class="label label-rounded label-danger ml-2">New</span>  </span></a>
+                                                    </li>
+                                                @endcan
                                         </ul>
                                     </li>
                                 @endcan
@@ -586,7 +596,8 @@
                                         <a class="sidebar-link has-arrow waves-effect waves-dark"
                                            href="javascript:void(0)" aria-expanded="false"><i
                                                     class="mdi mdi-receipt"></i><span
-                                                    class="hide-menu"> Seguimiento <span class="label label-rounded label-danger ml-5">New</span> </span>
+                                                    class="hide-menu"> Seguimiento <span
+                                                        class="label label-rounded label-danger ml-5">New</span> </span>
                                         </a>
                                         <ul aria-expanded="false" class="collapse second-level">
                                             @can('monitoranalistatrafico.index')
@@ -634,9 +645,11 @@
                                                             href="{{route('shipments-panels')}}"
                                                             class="sidebar-link">
                                                         <i class="lni lni-list"></i>
-                                                        <span class="hide-menu"> Semáforo de arribos <span class="label label-rounded label-danger ml-2">New</span>  </span></a>
+                                                        <span class="hide-menu"> Semáforo de arribos <span
+                                                                    class="label label-rounded label-danger ml-2">New</span>  </span></a>
                                                 </li>
                                             @endcan
+
                                         </ul>
                                     </li>
                                 @endcan

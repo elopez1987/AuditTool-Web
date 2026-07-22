@@ -13,6 +13,7 @@ use App\Console\Commands\RecursoConfiable\ObtenerETAdeRecursoConfiable;
 use App\Console\Commands\RecursoConfiable\SendEventForShipmentCommand;
 use App\Console\Commands\RecursoConfiable\SendPlanForShipmentCommand;
 use App\Console\Commands\Yard\MensajeDeCapacidadDePatio;
+use App\Console\Commands\Yard\SendNotificacionTimeExpiredCommand;
 use App\Console\Commands\Yard\TiempoExcedidoParaSalirDePatio;
 use App\Console\Commands\Yard\UnidadesSinLLegarEmbarques;
 use Illuminate\Console\Scheduling\Schedule;
@@ -32,6 +33,7 @@ class Kernel extends ConsoleKernel
         ClearReceiptAsnCommand::class,
 
         TiempoExcedidoParaSalirDePatio::class,
+        SendNotificacionTimeExpiredCommand::class,
         ObtenerETAdeRecursoConfiable::class,
         UnidadesSinLLegarEmbarques::class,
         MensajeDeCapacidadDePatio::class,
@@ -68,7 +70,8 @@ class Kernel extends ConsoleKernel
         //      Comandos del módulo de Control de Patios
 
         //		Envia mensaje de unidades sin salida de patio por tiempo excedido por autorización
-        $schedule->command('command:TiempoExcedidoParaSalirDePatio')->everyFifteenMinutes();
+        //        $schedule->command('command:TiempoExcedidoParaSalirDePatio')->everyFifteenMinutes();
+        $schedule->command('send:notificacion-time-expired')->everyThirtyMinutes();
         //        Envia mensajes de a unidades sin llegada para embarques
         $schedule->command('command:UnidadesSinLLegarEmbarques')->hourly();
 

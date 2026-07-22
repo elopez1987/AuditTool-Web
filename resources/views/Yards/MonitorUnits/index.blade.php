@@ -85,8 +85,8 @@
                                     <th class="text-white">Concepto de entrada</th>
                                     <th class="text-white">Hora de llegada</th>
                                     <th class="text-white">R. mesa de control</th>
-                                    <th class="text-white">Registro de llaves</th>
                                     <th class="text-white">Hora de enrampe</th>
+                                    <th class="text-white">Registro de llaves</th>
                                     <th class="text-white">Inicio de proceso</th>
                                     <th class="text-white">Fin de proceso</th>
                                     <th class="text-white">Liberación de unidad</th>
