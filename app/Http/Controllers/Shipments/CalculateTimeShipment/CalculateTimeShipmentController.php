@@ -65,6 +65,7 @@ class CalculateTimeShipmentController extends BaseController
         }
 
         $hour = $outputDateMax->format('H:i');
+
         $date = $outputDateMax->toDateString();
 
         return match (true) {
