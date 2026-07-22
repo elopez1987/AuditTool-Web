@@ -163,7 +163,8 @@ class OrderDeliveryController extends BaseController
         DB::beginTransaction();
         try {
             $orderdelivery->update($request->all());
-            $this->updateMaximunOutPutShipment($orderdelivery);
+            //            $this->updateMaximunOutPutShipment($orderdelivery);
+            $this->createNewRegisterMonitor($orderdelivery);
             $this->editOrderDelivery($orderdelivery, $request);
             DB::commit();
 

@@ -291,7 +291,7 @@
             });
             @endforeach
 
-            // DataTable para {{$center->description}}
+            {{--// DataTable para {{$center->description}}--}}
             $("#table-capacity-{{$center->centerid}}").DataTable({
                 "paging": true,
                 "searching": true,

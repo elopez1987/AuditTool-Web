@@ -37,7 +37,7 @@ class OrderMonitorController extends BaseController
             ->addColumn('iniciofact', 'Shipments.OrderMonitor.MonitorGeneral.time.iniciofact')
             ->addColumn('doctufac', 'Shipments.OrderMonitor.MonitorGeneral.time.doctufac')
             ->addColumn('carga', 'Shipments.OrderMonitor.MonitorGeneral.time.carga')
-            ->addColumn('arribo', 'Shipments.OrderMonitor.MonitorGeneral.time.carga')
+            ->addColumn('arribo', 'Shipments.OrderMonitor.MonitorGeneral.time.arribo')
             ->addColumn('preparacion', 'Shipments.OrderMonitor.MonitorGeneral.time.preparacion')
             ->rawColumns(['autorizarsalida', 'iniciofact', 'doctufac', 'carga', 'arribo', 'preparacion'])
             ->toJson();
