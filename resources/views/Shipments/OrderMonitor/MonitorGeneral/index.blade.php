@@ -59,11 +59,13 @@
                                     <th>Fecha</th>
                                     <th>Embarque</th>
                                     <th>Estatus</th>
-                                    <th>Cita con cliente</th>
+                                    <th>Arribo de transporte</th>
+                                    <th>Inicio de carga</th>
                                     <th>Enviar a Facturación</th>
                                     <th>Inicio de Facturación</th>
                                     <th>Autorizar Salida</th>
                                     <th>Salida maxima</th>
+                                    <th>Cita con cliente</th>
                                 </tr>
                                 </thead>
                             </table>

@@ -49,18 +49,17 @@
                                     >
                                 </div>
                             </div>
-                            <div class="col-lg-2 col-md-6 col-sm-12">
-                                <div class="form-group">
-                                    <label for="razonstatusid">Concepto de entrada<span
-                                            style="color: red">*</span></label>
-                                    <select name="razonstatusid" id="razonstatusid" class="form-control select2">
-                                        <option value="" selected>Seleccione una opción</option>
-                                        @foreach($razon as $model)
-                                            <option value="{{$model->id}}"> {{$model->name}} </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
+{{--                            <div class="col-lg-2 col-md-6 col-sm-12">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="razonstatusid">Concepto de entrada</label>--}}
+{{--                                    <select name="razonstatusid" id="razonstatusid" class="form-control select2">--}}
+{{--                                        <option value="" selected>Seleccione una opción</option>--}}
+{{--                                        @foreach($razon as $model)--}}
+{{--                                            <option value="{{$model->id}}"> {{$model->name}} </option>--}}
+{{--                                        @endforeach--}}
+{{--                                    </select>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                         </div>
                     </form>
                 </div>
@@ -83,7 +82,7 @@
                                     <th class="text-white">Linea de transporte</th>
                                     <th class="text-white">Placas de caja</th>
                                     <th class="text-white">Eco. De caja</th>
-                                    <th class="text-white">Operador</th>
+                                    <th class="text-white">Concepto de entrada</th>
                                     <th class="text-white">Hora de llegada</th>
                                     <th class="text-white">R. mesa de control</th>
                                     <th class="text-white">Registro de llaves</th>
@@ -91,10 +90,11 @@
                                     <th class="text-white">Inicio de proceso</th>
                                     <th class="text-white">Fin de proceso</th>
                                     <th class="text-white">Liberación de unidad</th>
-                                    <th class="text-white">T.Entrada</th>
-                                    <th class="text-white">T. Inicio de carga</th>
-                                    <th class="text-white">T.de carga</th>
-                                    <th class="text-white">T.de salida</th>
+{{--                                    <th class="text-white">T.Entrada</th>--}}
+{{--                                    <th class="text-white">T. Inicio de carga</th>--}}
+{{--                                    <th class="text-white">T.de carga</th>--}}
+                                    <th class="text-white">Tiempo de proceso</th>
+                                    <th class="text-white">Estadia total</th>
                                 </tr>
                                 </thead>
                             </table>

@@ -10,6 +10,17 @@ use Illuminate\Support\Facades\Auth;
 
 trait CreateNewOrderMonitorShipment
 {
+    // 01 - CENTERID
+    // 02 -WAREHOUSEID
+    // 03-TIEMPO DE SALIDA DE PATIO
+    // 04-FACTURACIÓN
+    // 05-ENTREGA DE DOC A FAC
+    // 06-CIERRE DE MATERIAL
+    // 07-TIEMPO DE CARGA
+    // 08-TIEMPO DE VERIFICACIÓN
+    // 09-TIEMPO DE PREPARACIÓN
+    // 10-ARRIBO DE LA UNIDAD
+
     public function createNewRegisterMonitor($shipment)
     {
         $customer = self::getCustomerOfShipment($shipment);
@@ -32,32 +43,20 @@ trait CreateNewOrderMonitorShipment
 
     private static function getMaximumClientOutput($shipment, OrderCustomer $customer): string
     {
-        $outputdatemax = Carbon::parse($shipment->downloaddate)->subMinutes($customer->timetransfer)->toDateTimeString();
-        $parameter = OrderCustomer::whereId($customer->id)->value('configurationflag');
-        //        Agregar validacion de zona roja para el sureste con maximo de salida de 12 pm
-        if (in_array('OCF-01', (array) $parameter)) {
-            $date = Carbon::parse($outputdatemax)->toDateString();
-            $hour = Carbon::parse($outputdatemax)->format('H:i');
-            $bloque01inicio = '12:00';
-            $bloque01fin = '23:59';
-            $bloque02inicio = '00:00';
-            $bloque02fin = '04:00';
-            $bloque03inicio = '04:01';
-            $bloque03fin = '11:59';
-            if (($hour >= $bloque01inicio) && ($hour <= $bloque01fin)) {
-                $newdate = "{$date} 12:00";
-            } elseif (($hour >= $bloque02inicio) && ($hour <= $bloque02fin)) {
-                $date02 = Carbon::parse($date)->subDay()->toDateString();
-                $newdate = "{$date02} 12:00";
-            } elseif (($hour >= $bloque03inicio) && ($hour <= $bloque03fin)) {
-                $newdate = Carbon::parse($shipment->downloaddate)->subMinutes($customer->timetransfer)->toDateTimeString();
-            }
-            $datemax = Carbon::parse($newdate)->toDateTimeString();
-        } else {
-            $datemax = Carbon::parse($shipment->downloaddate)->subMinutes($customer->timetransfer)->toDateTimeString();
+        $outputDateMax = Carbon::parse($shipment->downloaddate)->subMinutes($customer->timetransfer);
+
+        if (! in_array('OCF-01', (array) $customer->configurationflag)) {
+            return $outputDateMax->toDateTimeString();
         }
 
-        return $datemax;
+        $hour = $outputDateMax->format('H:i');
+        $date = $outputDateMax->toDateString();
+
+        return match (true) {
+            $hour >= '12:00' && $hour <= '23:59' => "{$date} 12:00:00",
+            $hour >= '00:00' && $hour <= '04:00' => Carbon::parse($date)->subDay()->toDateString() . ' 12:00:00',
+            default => $outputDateMax->toDateTimeString(), // bloque03: 04:01–11:59, sin cambios
+        };
     }
 
     private static function registerNewShipment($shipment, string $datemax): OrderMonitor
@@ -80,24 +79,19 @@ trait CreateNewOrderMonitorShipment
 
     private static function updateTimeToShipmentInMonitor(OrderMonitor $monitor, SystemDetailParameter $timeWarehouse): void
     {
-        $autorizeoutput = Carbon::parse($monitor->outputdate)->subMinutes($timeWarehouse->value03)->toDateTimeString();
-        $startbillingdate = Carbon::parse($autorizeoutput)->subMinutes($timeWarehouse->value04)->toDateTimeString();
-        $startdatedoctofac = Carbon::parse($startbillingdate)->subMinutes($timeWarehouse->value05)->toDateTimeString();
-        //        $startdateclosematerial = Carbon::parse($startdatedoctofac)->subMinutes($timeWarehouse->value06)->toDateTimeString();
-        //        $loadstartdate = Carbon::parse($startdatedoctofac)->subMinutes($timeWarehouse->value07)->toDateTimeString();
-        //        $arrivetransportdate = Carbon::parse($loadstartdate)->subMinutes($timeWarehouse->value10)->toDateTimeString();
-        //        $startcheckdate = Carbon::parse($arrivetransportdate)->subMinutes($timeWarehouse->value08)->toDateTimeString();
-        //        $startbulkdate = Carbon::parse($startcheckdate)->subMinutes($timeWarehouse->value09)->toDateTimeString();
+        $autorizeoutput = Carbon::parse($monitor->outputdate)->subMinutes($timeWarehouse->value03);
+        $startbillingdate = $autorizeoutput->copy()->subMinutes($timeWarehouse->value04);
+        $startdatedoctofac = $startbillingdate->copy()->subMinutes($timeWarehouse->value05);
+        $loadstartdate = $startdatedoctofac->copy()->subMinutes($timeWarehouse->value07);
+        $arrivetransportdate = $loadstartdate->copy()->subMinutes($timeWarehouse->value10);
 
-        //      Autorizacion tiempos de monitor
-        $monitor->autorizeoutput = $autorizeoutput;
-        $monitor->startbillingdate = $startbillingdate;
-        $monitor->startdatedoctofac = $startdatedoctofac;
-        //        $monitor->startdateclosematerial = $startdateclosematerial;
-        //        $monitor->loadstartdate = $loadstartdate;
-        //        $monitor->arrivetransportdate = $arrivetransportdate;
-        //        $monitor->startcheckdate = $startcheckdate;
-        //        $monitor->startbulkdate = $startbulkdate;
-        $monitor->save();
+        $monitor->update([
+            'autorizeoutput' => $autorizeoutput,
+            'startbillingdate' => $startbillingdate,
+            'startdatedoctofac' => $startdatedoctofac,
+            'loadstartdate' => $loadstartdate,
+            'arrivetransportdate' => $arrivetransportdate,
+        ]);
+
     }
 }

@@ -86,11 +86,11 @@ class ReceiptUnit extends Model
         'statusid' => 'ES',
     ];
 
-    protected $casts = [
-    ];
+    // ################################################## Inicio  de columas calculadas ######################################
 
     protected $appends = [
         'staytime',
+        'processtime',
     ];
 
     public function getStaytimeAttribute(): string
@@ -99,31 +99,56 @@ class ReceiptUnit extends Model
             return 'N/A';
         }
 
-        $entryDate = Carbon::parse($this->entrydate);
-        $now = Carbon::now();
+        return $this->formatDuration(Carbon::parse($this->entrydate), Carbon::now());
+    }
 
-        $diff = $entryDate->diff($now);
+    public function getProcesstimeAttribute(): string
+    {
+        if (empty($this->startdate) || empty($this->finishdate)) {
+            return '';
+        }
 
-        $days = $diff->days;
-        $hours = $diff->h;
-        $minutes = $diff->i;
+        return $this->formatDuration(Carbon::parse($this->startdate), Carbon::parse($this->finishdate));
+    }
+
+    private function formatDuration(Carbon $start, Carbon $end): string
+    {
+        $diff = $start->diff($end);
+
+        $units = [
+            'día' => $diff->days,
+            'hora' => $diff->h,
+            'minuto' => $diff->i,
+        ];
 
         $parts = [];
 
-        if ($days > 0) {
-            $parts[] = $days . ($days === 1 ? ' día' : ' días');
+        foreach ($units as $label => $value) {
+            if ($value > 0) {
+                $parts[] = $value . ' ' . $this->pluralize($label, $value);
+            }
         }
 
-        if ($hours > 0) {
-            $parts[] = $hours . ($hours === 1 ? ' hora' : ' horas');
-        }
-
-        if ($minutes > 0 || empty($parts)) {
-            $parts[] = $minutes . ($minutes === 1 ? ' minuto' : ' minutos');
+        if (empty($parts)) {
+            $parts[] = '0 minutos';
         }
 
         return implode(', ', $parts);
     }
+
+    private function pluralize(string $label, int $value): string
+    {
+        if ($value === 1) {
+            return $label;
+        }
+
+        return match ($label) {
+            'día' => 'días',
+            default => $label . 's',
+        };
+    }
+
+    // ################################################## Fin de columas calculadas ######################################
 
     public static function controlAccessUser()
     {
@@ -139,11 +164,13 @@ class ReceiptUnit extends Model
         parent::boot();
         if (! app()->runningInConsole()) {
             self::creating(function (ReceiptUnit $model) {
-                $model->createuser = Auth::user()->id;
+                $model->createuser = Auth::id();
                 $model->entrydate = Carbon::now();
             });
         }
     }
+
+    // ################################################## Relaciones entre modelos ######################################
 
     public function center(): BelongsTo
     {
@@ -269,7 +296,9 @@ class ReceiptUnit extends Model
         return $this->belongsTo(OrderDeliverie::class, 'id', 'folionumber');
     }
 
-    //    ----------------------------------Scopes para filtros de tabla  ----------------------------------------
+    // ################################################## Fin de relaciones entre modelos ######################################
+
+    // ################################################## Inicio de Scopes para filtros  ######################################
     public function scopeFolio($query, $folionumber)
     {
         if ($folionumber != '') {
@@ -423,6 +452,8 @@ class ReceiptUnit extends Model
             $query->where('receiptunits.statusid', '=', $statusid);
         }
     }
+
+    // ################################################## Fin de Scopes  ######################################
 
     // ----------------------------------------------------- Filtros del modelo -----------------------
     public static function searchForBarcode($barcode)
