@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Yard\ReceiptUnit\Event;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Yard\RefuseUnit\RegisterRefuseUnitRequest;
 use App\Models\Yard\ReceiptUnit;
+use App\Models\Yard\StorageUnitStatus;
 use App\Models\Yard\StorageUnitTrace;
 use App\Traits\Web\General\GetParameters;
 use App\Traits\Web\Yard\ReceiptUnit\DeclineUnit\DeclineUnitForReceipt;
@@ -66,11 +67,14 @@ class RefuseUnitController extends BaseController
 
     private function updateUnitForRefuse(ReceiptUnit $unit): ReceiptUnit
     {
+        $unitStatus = StorageUnitStatus::where('unitstatusid', 'RE')
+            ->select(['id', 'name'])
+            ->first();
         $unit->update([
             'autorizaoutputdate' => now(),
             'statusid' => 'OU',
             'shipmentid' => null,
-            'unitstatusid' => '1',
+            'unitstatusid' => $unitStatus->id,
         ]);
 
         StorageUnitTrace::createTraceUnit($unit, '23');
