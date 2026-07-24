@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Yard\ReceiptUnit\Taks;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Yard\Task\CreateTaksOperator;
+use App\Jobs\Yard\SendMessageNewTaskJob;
 use App\Models\Yard\ReceiptUnit;
 use App\Models\Yard\StorageTask;
 use App\Models\Yard\StorageUnitTrace;
@@ -91,7 +92,7 @@ class StorageTasksController extends BaseController
             $parameterNotificacionWarehouse = $this->getParameterNotificacionWarehouse($receiptunit->warehouseid);
 
             if (! empty($parameterNotificacionWarehouse) && in_array('MWH-01', (array) $parameterNotificacionWarehouse)) {
-                //                SendMessageNewTaskJob::dispatch($task->id)->onQueue('yms-web');
+                SendMessageNewTaskJob::dispatch($task->id)->onQueue('yms-web');
                 $user = User::find($task->operatoryard);
 
                 if (is_null($user)) {
