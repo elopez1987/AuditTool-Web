@@ -21,9 +21,8 @@ class NotificationCenterController extends BaseController
     public function systemcenternotifications(Request $request, $id)
     {
         $model = SystemCenterDistribution::findOrFail($id);
-        $model->update([
-            'notificationsflags' => $request->parameter,
-        ]);
+        $model->notificationsflags = $request->parameter;
+        $model->update();
 
         return $this->redirectBackSuccess();
     }

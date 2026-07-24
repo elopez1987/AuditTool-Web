@@ -18,10 +18,10 @@ class CenterParameterController extends BaseController
 
     public function systemcenterdistributionsparameters(Request $request, $id)
     {
+
         $center = SystemCenterDistribution::findOrFail($id);
-        $center->update([
-            'configurationflag' => $request->input('parameter'),
-        ]);
+        $center->configurationflag = $request['parameter'];
+        $center->update();
 
         return $this->redirectBackSuccess();
     }
@@ -37,9 +37,9 @@ class CenterParameterController extends BaseController
     public function systemparametersapp(Request $request, $id)
     {
         $center = SystemCenterDistribution::findOrFail($id);
-        $center->update([
-            'auxiliary05' => $request->input('parameter'),
-        ]);
+        $center->auxiliary05 = $request->input('parameter');
+        $center->notificationsflags = $request->input('parameter');
+        $center->update();
 
         return $this->redirectBackSuccess();
     }
