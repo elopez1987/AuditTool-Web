@@ -5,197 +5,319 @@
         @php
             $centerZones = $zonesByCenter->get($center->centerid, collect());
             $centerCapacity = $centerZones->sum('capacity');
-//            $centerBusy = $centerZones->sum(fn($zone) => $locationfill->get($zone->id, 0));
+            $centerBusy = $centerZones->sum(fn($zone) => $locationfill->get($zone->id, 0));
+            $centerFree = max(0, $centerCapacity - $centerBusy);
+            $centerPercent = $centerCapacity > 0 ? round((100 * $centerBusy) / $centerCapacity) : 0;
         @endphp
+
+        <div class="d-flex justify-content-between align-items-center mb-3 mt-2">
+            <h4 class="mb-0 capacity-title">Ocupación de patio — {{$center->description}}</h4>
+            <span class="text-muted small">Umbral de saturación: {{$center->capacityyard}}%</span>
+        </div>
+
+        <div class="row mb-1">
+            <div class="col-6 col-lg-3 mb-3">
+                <div class="card kpi-card kpi-capacity h-100">
+                    <div class="card-body">
+                        <div class="kpi-label">Capacidad de patio</div>
+                        <div class="kpi-value text-capacity">{{$centerCapacity}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3 mb-3">
+                <div class="card kpi-card kpi-busy h-100">
+                    <div class="card-body">
+                        <div class="kpi-label">Unidades en patio</div>
+                        <div class="kpi-value text-busy">{{$centerBusy}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3 mb-3">
+                <div class="card kpi-card kpi-free h-100">
+                    <div class="card-body">
+                        <div class="kpi-label">Espacios libres</div>
+                        <div class="kpi-value text-free">{{$centerFree}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3 mb-3">
+                <div class="card kpi-card kpi-occupation h-100">
+                    <div class="card-body">
+                        <div class="kpi-label">Ocupación</div>
+                        <div class="kpi-value text-occupation">{{$centerPercent}} %</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header font-18 font-weight-bold">
-                        Ocupación - {{$center->description}}
-                    </div>
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-sm-12 col-lg-12">
-                                <div class="card">
-                                    <div class="card-body">
-
-                                        <div class="row mb-3" id="cards-total">
-                                            <div class="col-md-6 col-sm-12 col-lg-4">
-                                                <div class="card border-left-success shadow h-100 py-2">
-                                                    <div class="card-body">
-                                                        <div class="d-flex align-items-center justify-content-center">
-                                                            <div class="text-center">
-                                                                <span class="font-14 font-weight-bold text-uppercase">Capacidad de Patio</span>
-                                                                <h2 class="font-medium m-b-0" style="font-size: 42px !important;font-weight: 700 !important;color: #00c853">{{$centerCapacity}}</h2>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6 col-sm-12 col-lg-4">
-                                                <div class="card border-left-danger shadow h-100 py-2">
-                                                    <div class="card-body">
-                                                        <div class="d-flex align-items-center justify-content-center">
-                                                            <div class="text-center">
-                                                                <span class="font-14 font-weight-bold text-uppercase">Unidades en Patio</span>
-                                                                <h2 class="font-medium m-b-0" style="font-size: 42px !important;font-weight: 700 !important;color: #ff1744">{{$centerBusy}}</h2>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6 col-sm-12 col-lg-4">
-                                                <div class="card border-left-primary shadow h-100 py-2">
-                                                    <div class="card-body">
-                                                        <div class="d-flex align-items-center justify-content-center">
-                                                            <div class="text-center">
-                                                                <span class="font-14 font-weight-bold text-uppercase">Ocupación</span>
-                                                                @php
-                                                                    $porcentajeOcupacion = $centerCapacity > 0 ? round((100 * $centerBusy) / $centerCapacity) : 0;
-                                                                @endphp
-                                                                <h2 class="font-medium m-b-0" style="font-size: 42px !important;font-weight: 700 !important;color: #3d5afe">
-                                                                    {{ $porcentajeOcupacion }} %
-                                                                </h2>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row mt-4">
-                                            <div class="col-md-12">
-                                                <table id="table-capacity-{{$center->centerid}}" class="table table-bordered table-condensed table-capacity font-14">
-                                                    <thead>
-                                                    <tr>
-                                                        <th class="text-white"
-                                                            style="font-size: 13px !important;font-weight: 600; background-color: #78909c;color: #ffffff !important;">
-                                                            C.Distribución
-                                                        </th>
-                                                        <th class="text-white"
-                                                            style="font-size: 13px !important;font-weight: 600; background-color: #78909c;color: #ffffff !important;">Zona
-                                                        </th>
-                                                        <th class="text-white"
-                                                            style="font-size: 13px !important;font-weight: 600; background-color: #00c853;color: #ffffff !important;">
-                                                            Capacidad
-                                                        </th>
-                                                        <th class="text-white"
-                                                            style="font-size: 13px !important;font-weight: 600; background-color: #ff1744;color: #ffffff !important;">Ocupado
-                                                        </th>
-                                                        <th class="text-white"
-                                                            style="font-size: 13px !important;font-weight: 600; background-color: #ffea00;color: black !important;">Libre
-                                                        </th>
-                                                        <th class="text-white"
-                                                            style="font-size: 13px !important;font-weight: 600; background-color: #3d5afe;color: #ffffff !important;">Estatus
-                                                        </th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    @foreach($centerZones as $zone)
-                                                        @php
-                                                            $ocupado = $locationfill->get($zone->id, 0);
-                                                            $libre = $zone->capacity > 0 ? $zone->capacity - $ocupado : 0;
-                                                            $porcentaje = $zone->capacity > 0 ? round((100 / $zone->capacity) * $ocupado) : 0;
-                                                        @endphp
-                                                        <tr class="table-row-hover">
-                                                            <td style="font-size: 13px !important; font-weight: 500;">{{$zone->center->description}}</td>
-                                                            <td style="font-size: 13px !important; font-weight: 500;">{{$zone->name}}</td>
-                                                            <td style="font-size: 13px !important; font-weight: 600; color: #00c853;text-align: center">{{$zone->capacity}}</td>
-                                                            <td style="font-size: 13px !important; font-weight: 600; color: #ff1744;text-align: center">{{$ocupado}}</td>
-                                                            <td style="font-size: 13px !important; font-weight: 600; color: #00e676;text-align: center">{{$libre}}</td>
-                                                            <td style="font-size: 13px !important;">
-                                                                @if($zone->capacity > 0)
-                                                                    @if($porcentaje > $center->capacityyard)
-                                                                        <span class="badge badge-danger font-weight-bold" style="font-size: 13px !important; background-color: #ff1744;text-align: center">{{$porcentaje}}%</span>
-                                                                    @else
-                                                                        <span class="badge badge-success font-weight-bold" style="font-size: 13px !important; background-color: #00e676; color: #000;text-align: center">{{$porcentaje}}%</span>
-                                                                    @endif
-                                                                @else
-                                                                    <span class="badge badge-primary font-weight-bold" style="font-size: 13px !important; background-color: #3d5afe;text-align: center">0%</span>
-                                                                @endif
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                        <hr class="m-t-5 m-b-5" style="border-color: #1a237e">
-
-                                        <div class="row mt-4">
-                                            @foreach($centerZones as $zone)
-                                                <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                                                    <div class="card">
-                                                        <div class="card-body">
-                                                            <div id="chart-zone-{{$zone->id}}" style="min-height: 300px;"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            @endforeach
-                                        </div>
-
-                                        <div class="row mt-3">
-                                            <div class="col-lg-2 col-sm-12 col-xs-12">
-                                                <a href="{{route('layoutinventoryforzone')}}">
-                                                    <button type="submit" class="btn waves-effect waves-light btn-outline-info btn-md">
-                                                        <img src="{{asset('/ico/adbuscar.png')}}" alt="" class="img-16 ml-1">
-                                                        <span style="font-size: 0.675rem "> Ver detalles</span>
-                                                    </button>
-                                                </a>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
+                        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+                            <div class="type-filters" data-center="{{$center->centerid}}">
+                                <span class="type-chip active" data-filter="ALL">Todas</span>
+                                <span class="type-chip" data-filter="ok">Disponibles</span>
+                                <span class="type-chip" data-filter="full">Saturadas</span>
+                            </div>
+                            <div class="capacity-search-wrap">
+                                <input type="text" class="form-control capacity-search"
+                                       data-center="{{$center->centerid}}" placeholder="Buscar zona...">
                             </div>
                         </div>
+
+                        <div class="table-responsive">
+                            <table width="100%" id="table-capacity-{{$center->centerid}}"
+                                   class="table table-hover capacity-table mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>C. Distribución</th>
+                                        <th>Zona</th>
+                                        <th class="text-center">Capacidad</th>
+                                        <th class="text-center">Ocupado</th>
+                                        <th class="text-center">Libre</th>
+                                        <th class="text-center">Estatus</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($centerZones as $zone)
+                                    @php
+                                        $ocupado = $locationfill->get($zone->id, 0);
+                                        $libre = $zone->capacity > 0 ? max(0, $zone->capacity - $ocupado) : 0;
+                                        $porcentaje = $zone->capacity > 0 ? round((100 / $zone->capacity) * $ocupado) : 0;
+                                        $rowState = ($zone->capacity > 0 && $porcentaje > $center->capacityyard) ? 'full' : 'ok';
+                                    @endphp
+                                    <tr class="capacity-row" data-state="{{$rowState}}"
+                                        data-zone="{{ strtolower($zone->name) }}">
+                                        <td>{{$zone->center->description}}</td>
+                                        <td><span class="zona-name">{{$zone->name}}</span></td>
+                                        <td class="text-center text-capacity font-weight-bold">{{$zone->capacity}}</td>
+                                        <td class="text-center text-busy font-weight-bold">{{$ocupado}}</td>
+                                        <td class="text-center text-free font-weight-bold">{{$libre}}</td>
+                                        <td class="text-center">
+                                            @if($zone->capacity > 0)
+                                                @if($porcentaje > $center->capacityyard)
+                                                    <span class="badge-estatus badge-blocked">{{$porcentaje}}%</span>
+                                                @else
+                                                    <span class="badge-estatus badge-ok">{{$porcentaje}}%</span>
+                                                @endif
+                                            @else
+                                                <span class="badge-estatus badge-idle">0%</span>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <div class="row">
+                            @foreach($centerZones as $zone)
+                                <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                                    <div class="card h-100">
+                                        <div class="card-body">
+                                            <div id="chart-zone-{{$zone->id}}" style="min-height: 300px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col-lg-2 col-sm-12 col-xs-12">
+                                <a href="{{route('layoutinventoryforzone')}}">
+                                    <button type="submit" class="btn waves-effect waves-light btn-outline-info btn-md">
+                                        <img src="{{asset('/ico/adbuscar.png')}}" alt="" class="img-16 ml-1">
+                                        <span style="font-size: 0.675rem "> Ver detalles</span>
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
     @endforeach
-
-
 @endsection
 
 @section('css')
     <style>
+        /* Paleta de colores Traxión */
+        :root {
+            --traxion-primary: #CCFF00;      /* Pantone 389 C */
+            --traxion-secondary: #B3D900;    /* Pantone 387 C */
+            --traxion-accent: #8BC000;       /* Pantone 390 C */
+            --traxion-dark: #2B2F33;         /* Gray oscuro */
+            --traxion-gray-light: #E8E8E8;   /* Cool Gray 2 C */
+            --traxion-gray-medium: #5A5A5A;  /* Cool Gray 7 C */
+            --traxion-white: #FFFFFF;        /* Blanco */
+            --traxion-black: #000000;        /* Negro */
+        }
+
         .highcharts-credits {
             display: none !important;
         }
-        .table-capacity {
-            border: 2px solid #dee2e6 !important;
+
+        /* Encabezado con acento de marca */
+        .capacity-title {
+            position: relative;
+            padding-left: .75rem;
+            font-weight: 700;
+            color: var(--traxion-dark);
         }
-        .table-capacity tbody td {
-            font-size: 14px !important;
+        .capacity-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 5px;
+            height: 1.4em;
+            background: var(--traxion-primary);
+            border-radius: 3px;
+        }
+
+        /* KPI cards modernizadas con paleta Traxión */
+        .kpi-card .card-body {
+            padding: 1.5rem;
+        }
+        .kpi-card {
+            border: 0;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--traxion-white) 0%, #f9f9f9 100%);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+        .kpi-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--traxion-primary);
+        }
+        .kpi-card.kpi-capacity::before {
+            background: var(--traxion-primary);
+        }
+        .kpi-card.kpi-busy::before {
+            background: var(--traxion-secondary);
+        }
+        .kpi-card.kpi-free::before {
+            background: var(--traxion-accent);
+        }
+        .kpi-card.kpi-occupation::before {
+            background: var(--traxion-dark);
+        }
+        .kpi-card .kpi-label {
+            font-size: .72rem;
+            color: var(--traxion-gray-medium);
+            text-transform: uppercase;
+            letter-spacing: .03em;
+            margin-bottom: .5rem;
+            font-weight: 600;
+        }
+        .kpi-card .kpi-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1;
+            color: var(--traxion-dark);
+        }
+        /* Tonos legibles sobre fondo blanco (la paleta verde brillante se usa en barras/acentos) */
+        .text-capacity {
+            color: var(--traxion-dark);
+        }
+        .text-busy {
+            color: var(--traxion-gray-medium);
+        }
+        .text-free {
+            color: #6f8a00;
+        }
+        .text-occupation {
+            color: var(--traxion-dark);
+        }
+
+        /* Chips de filtro */
+        .type-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .4rem;
+        }
+        .type-chip {
+            display: inline-flex;
+            align-items: center;
+            padding: .35rem .9rem;
+            border-radius: 999px;
+            background: var(--traxion-gray-light);
+            color: var(--traxion-dark);
+            cursor: pointer;
+            font-size: .82rem;
+            font-weight: 600;
+            border: 1px solid transparent;
+            transition: all .15s ease;
+        }
+        .type-chip:hover {
+            background: #d8d8d8;
+        }
+        .type-chip.active {
+            background: var(--traxion-dark);
+            color: var(--traxion-primary);
+        }
+        .capacity-search-wrap {
+            min-width: 220px;
+        }
+        .capacity-search:focus {
+            border-color: var(--traxion-accent);
+            box-shadow: 0 0 0 .2rem rgba(139, 192, 0, 0.25);
+        }
+
+        /* Badges de estatus */
+        .badge-estatus {
+            display: inline-block;
+            padding: .3rem .75rem;
+            border-radius: 999px;
+            font-size: .78rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .badge-ok {
+            background: #eef8c2;
+            color: #556b00;
+        }
+        .badge-blocked {
+            background: var(--traxion-dark);
+            color: var(--traxion-primary);
+        }
+        .badge-idle {
+            background: var(--traxion-gray-light);
+            color: var(--traxion-gray-medium);
+        }
+
+        /* Tabla limpia estilo nuevo diseño */
+        .zona-name {
+            font-weight: 600;
+            color: var(--traxion-dark);
+        }
+        .capacity-table thead th {
+            font-size: .72rem;
+            letter-spacing: .03em;
+            color: var(--traxion-gray-medium);
+            text-transform: uppercase;
+            font-weight: 600;
+            border: 0 !important;
+            border-bottom: 2px solid var(--traxion-gray-light) !important;
+        }
+        .capacity-table td {
             vertical-align: middle;
-            border: 1px solid #dee2e6 !important;
+            border: 0 !important;
+            border-bottom: 1px solid var(--traxion-gray-light) !important;
         }
-        .table-capacity thead th {
-            border: 1px solid #dee2e6 !important;
-            text-align: center;
-            vertical-align: middle;
-        }
-        .table-capacity tbody tr:hover {
-            background-color: #f8f9fa;
-            transition: background-color 0.2s ease;
-        }
-        .table-capacity tbody tr {
-            transition: background-color 0.2s ease;
-        }
-        .border-left-success {
-            border-left: 4px solid #28a745 !important;
-        }
-        .border-left-danger {
-            border-left: 4px solid #dc3545 !important;
-        }
-        .border-left-primary {
-            border-left: 4px solid #007bff !important;
-        }
-        .border-left-info {
-            border-left: 4px solid #17a2b8 !important;
+        .capacity-table tbody tr:hover {
+            background-color: #faffe0;
         }
     </style>
 @endsection
@@ -204,6 +326,7 @@
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     <script>
         $(document).ready(function () {
             @foreach($centers as $center)
@@ -215,7 +338,7 @@
             @foreach($centerZones as $zone)
             @php
                 $ocupado = $locationfill->get($zone->id, 0);
-                $libre = $zone->capacity > 0 ? $zone->capacity - $ocupado : 0;
+                $libre = $zone->capacity > 0 ? max(0, $zone->capacity - $ocupado) : 0;
                 $porcentaje = $zone->capacity > 0 ? round((100 / $zone->capacity) * $ocupado) : 0;
             @endphp
             Highcharts.chart('chart-zone-{{$zone->id}}', {
@@ -226,17 +349,20 @@
                         fontFamily: 'inherit'
                     }
                 },
+                colors: ['#2B2F33', '#D0DF00'],
                 title: {
                     text: '{{$zone->name}}',
                     style: {
                         fontSize: '14px',
-                        fontWeight: 'bold'
+                        fontWeight: 'bold',
+                        color: '#2B2F33'
                     }
                 },
                 subtitle: {
                     text: 'Capacidad: {{$zone->capacity}} | Ocupación: {{$porcentaje}}%',
                     style: {
-                        fontSize: '11px'
+                        fontSize: '11px',
+                        color: '#5A5A5A'
                     }
                 },
                 tooltip: {
@@ -268,13 +394,13 @@
                     data: [{
                         name: 'Ocupado',
                         y: {{$ocupado}},
-                        color: '#ff1744',
+                        color: '#2B2F33',
                         sliced: {{$porcentaje > $center->capacityyard ? 'true' : 'false'}},
                         selected: {{$porcentaje > $center->capacityyard ? 'true' : 'false'}}
                     }, {
                         name: 'Libre',
                         y: {{$libre}},
-                        color: '#00e676'
+                        color: '#D0DF00'
                     }]
                 }],
                 credits: {
@@ -290,76 +416,49 @@
                 }
             });
             @endforeach
-
-            {{--// DataTable para {{$center->description}}--}}
-            $("#table-capacity-{{$center->centerid}}").DataTable({
-                "paging": true,
-                "searching": true,
-                "ordering": true,
-                "sScrollY": "300px",
-                "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
-                "lengthMenu": [[25, 50, -1], [25, 50, "All"]],
-                buttons: [
-                    {
-                        "extend": "colvis",
-                        "text": "<img src=\"{{asset('/pics/adbuscar.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span> Mostar/Ocultar</span>",
-                        "className": "btn btn-outline-info btn-md  btn-bold",
-                        columns: ':not(:first):not(:last)'
-                    },
-                    {
-                        "extend": "copy",
-                        "text": "<img src=\"{{asset('/pics/adcopiar.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span> Copiar</span>",
-                        "className": "btn btn-outline-info btn-md  btn-bold",
-                    },
-                    {
-                        "extend": "csv",
-                        "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span> Csv</span>",
-                        "className": "btn btn-outline-info btn-md  btn-bold",
-                    },
-                    {
-                        "extend": "excel",
-                        "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span> Excel</span>",
-                        "className": "btn btn-outline-info btn-md  btn-bold",
-                    }
-                ],
-                language: {
-                    "decimal": "",
-                    "emptyTable": "No hay información",
-                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-                    "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-                    "infoPostFix": "",
-                    "thousands": ",",
-                    "lengthMenu": "Mostrar _MENU_ Entradas",
-                    "loadingRecords": "Cargando...",
-                    "processing": "Procesando...",
-                    "search": "Buscar:",
-                    "zeroRecords": "Sin resultados encontrados",
-                    "paginate": {
-                        "first": "Primero",
-                        "last": "Ultimo",
-                        "next": "Siguiente",
-                        "previous": "Anterior"
-                    }
-                },
-            });
             @endforeach
-        })
+
+            // Filtros de la tabla (chips + búsqueda por zona)
+            function applyCapacityFilters(centerid) {
+                var $chips = $('.type-filters[data-center="' + centerid + '"]');
+                var state = $chips.find('.type-chip.active').data('filter');
+                var term = ($('.capacity-search[data-center="' + centerid + '"]').val() || '').toLowerCase();
+                var $rows = $('#table-capacity-' + centerid + ' tbody tr.capacity-row');
+                var visible = 0;
+
+                $rows.each(function () {
+                    var $row = $(this);
+                    var matchState = state === 'ALL' || $row.data('state') === state;
+                    var matchTerm = ($row.data('zone') + '').indexOf(term) > -1;
+                    var show = matchState && matchTerm;
+                    $row.toggle(show);
+                    if (show) {
+                        visible++;
+                    }
+                });
+
+                var $empty = $('#table-capacity-' + centerid + ' tbody tr.capacity-empty');
+                if (visible === 0) {
+                    if ($empty.length === 0) {
+                        $('#table-capacity-' + centerid + ' tbody').append(
+                            '<tr class="capacity-empty"><td colspan="6" class="text-center text-muted py-4">Sin resultados</td></tr>'
+                        );
+                    }
+                } else {
+                    $empty.remove();
+                }
+            }
+
+            $('.type-filters').on('click', '.type-chip', function () {
+                var centerid = $(this).closest('.type-filters').data('center');
+                $(this).closest('.type-filters').find('.type-chip').removeClass('active');
+                $(this).addClass('active');
+                applyCapacityFilters(centerid);
+            });
+
+            $('.capacity-search').on('keyup', function () {
+                applyCapacityFilters($(this).data('center'));
+            });
+        });
     </script>
-
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/highcharts-3d.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
-    <script src="https://code.highcharts.com/modules/export-data.js"></script>
-    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-    <script src="https://code.highcharts.com/modules/cylinder.js"></script>
-    <script src="https://code.highcharts.com/modules/funnel3d.js"></script>
-    <script src="https://code.highcharts.com/highcharts-more.js"></script>
-    <script src="https://code.highcharts.com/modules/dumbbell.js"></script>
-    <script src="https://code.highcharts.com/modules/lollipop.js"></script>
-
-    <script src="{{asset('/theme/assets/libs/daterangepicker/daterangepicker.js')}}"></script>
-    <script src="{{asset('/theme/assets/libs/moment/moment.js')}}"></script>
-
-
 @endsection
