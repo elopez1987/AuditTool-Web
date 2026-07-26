@@ -552,7 +552,8 @@ $(document).ready(function () {
                 { name: 'Mesa control',  val: u.deliverdate },
                 { name: 'Enrampe',       val: u.ensnare },
                 { name: 'Llaves',        val: u.keydate },
-                { name: 'Proceso',       val: u.startdate },
+                { name: 'Inicia Proceso',       val: u.startdate },
+                { name: 'Termina Proceso',       val: u.finishdate },
                 { name: 'Liberación',    val: u.autorizaoutputdate },
             ];
 
