@@ -477,7 +477,7 @@
                                     </li>
                                 @endcan
 
-                                @can('storagetask')
+                                @can('storagetask.index')
                                     <li class="sidebar-item"><a
                                                 class="sidebar-link waves-effect waves-dark sidebar-link"
                                                 href="{{route('storagetask.index')}}" aria-expanded="false"><i
