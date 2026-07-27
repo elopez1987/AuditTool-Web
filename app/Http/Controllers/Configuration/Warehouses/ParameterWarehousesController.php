@@ -26,11 +26,8 @@ class ParameterWarehousesController extends BaseController
     public function systemwarehouseparameters(Request $request, $id)
     {
         $warehouse = SystemWarehouse::findOrFail($id);
-        $warehouse->update(
-            [
-                'configurationflag' => $request->input('configurationflag'),
-            ]
-        );
+        $warehouse->configurationflag = $request->input('parameter');
+        $warehouse->update();
 
         return $this->redirectBackSuccess();
     }

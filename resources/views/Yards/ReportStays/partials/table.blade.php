@@ -1,119 +1,117 @@
 <script>
-    var oTable = $("#table-stays").DataTable({
-        "paging": true,
-        "searching": true,
-        "ordering": true,
-        "sScrollY": "450px",
-        "sScrollX": true,
-        "processing": true,
-        "serverSide": true,
-        "responsive": true,
-        "colReorder": true,
-        "stateSave": true,
-        "stateDuration": 0,
-        "ajax": {
-            url: 'getDataStays',
-            data: function (d) {
-                d.folionumber = $('input[name=folionumber]').val();
-                d.boxnumber = $('input[name=boxnumber]').val();
-                d.location = $('input[name=location]').val();
-                d.econumber = $('input[name=econumber]').val();
-                d.trucknumber = $('input[name=trucknumber]').val();
-                d.barcode = $('input[name=barcode]').val();
-                d.shipmentid = $('input[name=shipmentid]').val();
-                d.carrierid = $('select[name=carrierid]').val();
-                d.centerid = $('select[name=centerid]').val();
-                d.warehouseid = $('select[name=warehouseid]').val();
-                d.rasonid = $('select[name=rasonid]').val();
-                d.statusid = $('select[name=statusid]').val();
-                d.unitstatusid = $('select[name=unitstatusid]').val();
-            }
+/**
+ * Determina la clase CSS del badge de estadía.
+ * El formato de entrada es "X m Y d HH:MM h/m" (meses, días, horas).
+ */
+function stayBadgeClass(stayStr) {
+    if (!stayStr) { return 'stay-green'; }
+    var match = stayStr.match(/(\d+)\s*m\s*(\d+)\s*d/);
+    if (!match) { return 'stay-green'; }
+    var totalDays = parseInt(match[1]) * 30 + parseInt(match[2]);
+    if (totalDays > 60) { return 'stay-red'; }
+    if (totalDays > 30) { return 'stay-amber'; }
+    if (totalDays > 15) { return 'stay-yellow'; }
+    return 'stay-green';
+}
+
+/** Formatea datetime de BD a "YYYY-MM-DD HH:mm". */
+function fmtDT(val) {
+    if (!val) { return '<span class="cell-dash">—</span>'; }
+    var str = String(val).replace(' ', 'T');
+    try {
+        var d = new Date(str);
+        if (isNaN(d.getTime())) { return val; }
+        var z = function (n) { return n < 10 ? '0' + n : n; };
+        return d.getFullYear() + '-' + z(d.getMonth() + 1) + '-' + z(d.getDate()) +
+               ' ' + z(d.getHours()) + ':' + z(d.getMinutes());
+    } catch (e) { return val; }
+}
+
+/*
+ * Columnas mostradas (9) — deben coincidir exactamente con los 9 <th> del thead.
+ * El servidor devuelve todos los campos; aquí usamos solo los relevantes.
+ */
+var oTable = $('#table-stays').DataTable({
+    paging    : true,
+    searching : false,   /* búsqueda controlada por formulario externo */
+    ordering  : true,
+    processing: true,
+    serverSide: true,
+    stateSave : false,
+    ajax: {
+        url : '{{ url("getDataStays") }}',
+        data: function (d) {
+            d.folionumber  = $('input[name=folionumber]').val();
+            d.boxnumber    = $('input[name=boxnumber]').val();
+            d.barcode      = $('input[name=barcode]').val();
+            d.shipmentid   = $('input[name=shipmentid]').val();
+            d.carrierid    = $('select[name=carrierid]').val();
+            d.rasonid      = $('select[name=rasonid]').val();
+            d.statusid     = $('select[name=statusid]').val();
+            d.unitstatusid = $('select[name=unitstatusid]').val();
+        }
+    },
+    columns: [
+        /* Folio */
+        { data: 'id',
+          render: function (v) { return '<span class="stays-folio">' + v + '</span>'; } },
+        /* Embarque */
+        { data: 'shipmentid', defaultContent: '<span class="cell-dash">—</span>' },
+        /* Línea de transporte */
+        { data: 'carrier.name', name: 'carrier.name', defaultContent: '<span class="cell-dash">—</span>' },
+        /* Placa de caja */
+        { data: 'boxnumber', defaultContent: '<span class="cell-dash">—</span>' },
+        /* Concepto de entrada */
+        { data: 'reason.name', name: 'reason.name', defaultContent: '<span class="cell-dash">—</span>' },
+        /* Estatus de folio */
+        { data: 'status.name', name: 'status.name', defaultContent: '<span class="cell-dash">—</span>' },
+        /* Estatus de unidad */
+        { data: 'unitstatus.name', name: 'unitstatus.name', defaultContent: '<span class="cell-dash">—</span>' },
+        /* Fecha de entrada */
+        { data: 'entrydate', render: function (v) { return fmtDT(v); } },
+        /* Estadía total — con badge de color */
+        { data: 'stays',
+          render: function (v) {
+              if (!v) { return '<span class="cell-dash">—</span>'; }
+              var cls = stayBadgeClass(v);
+              return '<span class="stay-badge ' + cls + '">' + v + '</span>';
+          }
         },
-        "columns": [
-            {data:'warehouse.name',name:'warehouse.name'},
-            {data: 'id'},
-            {data: 'shipmentid'},
-            {data: 'carrier.name',name:'carrier.name'},
-            {data: 'boxnumber'},
-            {data: 'econumber'},
-            {data: 'truckcategory.description',name:'truckcategory.description'},
-            {data: 'truck.name',name:'truck.name'},
-            {data: 'location.name',name:'location.name'},
-            {data: 'unitstatus.name',name:'unitstatus.name'},
-            {data: 'status.name',name:'status.name'},
-            {data: 'reason.name',name:'reason.name'},
-            {data: 'unittype.description',name:'unittype.description'},
-            {data: 'entrydate'},
-            {data: 'autorizaoutputdate'},
-            {data: 'stays'},
-            {data: 'autorize'},
-        ],
-        "columnDefs": [
-            {"width": "200px", "targets": 0},
-            {"width": "180px", "targets": 1},
-            {"width": "180px", "targets": 2},
-            {"width": "320px", "targets": 3},
-            {"width": "200px", "targets": 4},
-            {"width": "200px", "targets": 5},
-            {"width": "220px", "targets": 6},
-            {"width": "250px", "targets": 7},
-            {"width": "180px", "targets": 8},
-            {"width": "180px", "targets": 9},
-            {"width": "280px", "targets": 10},
-            {"width": "150px", "targets": 11},
-            {"width": "150px", "targets": 12},
-            {"width": "250px", "targets": 13},
-            {"width": "150px", "targets": 14},
-            {"width": "220px", "targets": 15},
-            {"width": "220px", "targets": 16},
-        ],
-        "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
-        "lengthMenu": [[10, 30, 50, 100, 150, 200, 250, -1], [10, 30, 50, 100, 150, 200, 250, "Todos"]],
-
-        buttons: [
-            {
-                "extend": "colvis",
-                "text": "<img src=\"{{asset('/pics/adbuscar.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span> Mostar/Ocultar</span>",
-                "className": "btn btn-outline-info btn-md  btn-bold",
-                columns: ':not(:first):not(:last)'
-            },
-            {
-                "extend": "csv",
-                "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span> Csv</span>",
-                "className": "btn btn-outline-info btn-md  btn-bold",
-            },
-            {
-                "extend": "excel",
-                "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span> Excel</span>",
-                "className": "btn btn-outline-info btn-md  btn-bold",
+    ],
+    dom: '<"d-none"B>rt<"d-flex justify-content-between align-items-center mt-3"<"text-muted small"i><p>>',
+    pageLength: 25,
+    lengthMenu: [[25, 50, 100, 200, -1], [25, 50, 100, 200, 'Todos']],
+    buttons: [
+        {
+            extend    : 'excel',
+            className : 'buttons-excel d-none',
+            text      : 'Excel',
+            title     : 'Estadías de patio',
+            exportOptions: {
+                /* Exportar también columnas ocultas del servidor si fuera necesario */
+                columns: ':visible'
             }
-        ],
+        }
+    ],
+    language: {
+        emptyTable  : 'No hay información',
+        info        : 'Mostrando _START_ a _END_ de _TOTAL_ registros',
+        infoEmpty   : 'Sin registros',
+        infoFiltered: '(filtrado de _MAX_ total)',
+        processing  : '<i class="fa fa-spinner fa-spin fa-2x"></i>',
+        zeroRecords : 'Sin resultados encontrados',
+        paginate: {
+            first    : '«',
+            last     : '»',
+            next     : '›',
+            previous : '‹',
+        }
+    },
+});
 
-        language: {
-            "decimal": "",
-            "emptyTable": "No hay información",
-            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-            "infoPostFix": "",
-            "thousands": ",",
-            "lengthMenu": "Mostrar _MENU_ Entradas",
-            "loadingRecords": "Cargando...",
-            "processing": "Procesando...",
-            "search": "Buscar:",
-            "zeroRecords": "Sin resultados encontrados",
-            "paginate": {
-                "first": "Primero",
-                "last": "Ultimo",
-                "next": "Siguiente",
-                "previous": "Anterior"
-            }
-        },
-    });
-
-    $('#search').on('submit', function (e) {
-        oTable.draw();
-        e.preventDefault();
-    });
+/* El formulario dispara un redraw del DataTable */
+$('#search').on('submit', function (e) {
+    oTable.draw();
+    e.preventDefault();
+});
 </script>
-

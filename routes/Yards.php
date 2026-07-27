@@ -347,6 +347,7 @@ Route::middleware(['auth'])->group(function () {
     //  Monitor de cajas en patio con cálculo de tiempos
     Route::get('monitorunitsyard', [MonitorUnitsController::class, 'index'])->name('monitorunitsyard');
     Route::get('getDataStockBox', [MonitorUnitsController::class, 'getDataStockBox'])->name('getDataStockBox');
+    Route::get('getMonitorKpis', [MonitorUnitsController::class, 'getMonitorKpis'])->name('getMonitorKpis');
 
     //	Proceso de unidades
     Route::resource('processmonitoring', ProcessMonitoringController::class);
