@@ -15,11 +15,13 @@
             url: 'getDataTransportShipment',
             data: function (d) {
                 d.shipmentid = $('input[name=shipmentid]').val();
+                d.confirmation = $('input[name=confirmation]').val();
                 d.carrierid = $('select[name=carrierid]').val();
             }
         },
         "columns": [
             {data: 'shipmentid'},
+            {data: 'confirmation'},
             {data: 'customername',name:'customername'},
             {data: 'city',name:'city'},
             {data: 'loadingdate'},
@@ -50,8 +52,8 @@
         ],
         "columnDefs": [
             {"width": "120px", "targets": 0},
-            {"width": "380px", "targets": 1},
-            {"width": "250px", "targets": 2},
+            {"width": "280px", "targets": 1},
+            {"width": "350px", "targets": 2},
             {"width": "150px", "targets": 3},
             {"width": "150px", "targets": 4},
             {"width": "200px", "targets": 5},
@@ -60,6 +62,7 @@
             {"width": "280px", "targets": 8},
             {"width": "200px", "targets": 9},
             {"width": "200px", "targets": 10},
+            {"width": "200px", "targets": 11},
         ],
         "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
         "lengthMenu": [[10, 25, 50,100,200,300], [10, 25, 50,100,200,300]],

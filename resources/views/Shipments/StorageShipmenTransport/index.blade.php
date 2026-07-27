@@ -34,6 +34,13 @@
                             </div>
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
+                                    <label for="confirmation">Confirmación</label>
+                                    <input type="text" class="form-control"  id="confirmation" name="confirmation"
+                                           onKeyUp=this.value=this.value.toUpperCase()>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-6 col-sm-12">
+                                <div class="form-group">
                                     <label for="carrierid">Linea de transporte</label>
                                     <select name="carrierid" class="form-control select2">
                                         <option value="" selected>Seleccione una opción</option>
@@ -60,6 +67,7 @@
                                 <thead>
                                 <tr>
                                     <th>Embarque</th>
+                                    <th>Confirmación</th>
                                     <th>Cliente</th>
                                     <th>Ciudad</th>
                                     <th>Cita de carga</th>
