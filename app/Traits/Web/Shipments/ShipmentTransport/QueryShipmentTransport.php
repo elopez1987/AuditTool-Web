@@ -16,6 +16,7 @@ trait QueryShipmentTransport
             ->select('carrierid')->get()->toArray();
         $customers = SecurityAccessCustomer::where('username', '=', Auth::user()->username)
             ->select('customerid')->get()->toArray();
+        $confirmation = $request->input('confirmation');
 
         return OrderDeliverie::controlAccessUser()
             ->leftJoin('ordercustomers', 'orderdeliveries.customerid', '=', 'ordercustomers.id')
@@ -45,6 +46,9 @@ trait QueryShipmentTransport
             ])
             ->when(! empty($carriers), function ($q) use ($carriers) {
                 $q->whereIn('orderdeliveries.carrierid', $carriers);
+            })
+            ->when(! empty($confirmation), function ($q) use ($confirmation) {
+                $q->where('orderdeliveries.confirmation', $confirmation);
             })
             ->when(! empty($customers), function ($q) use ($customers) {
                 $q->whereIn('orderdeliveries.customerid', $customers);
