@@ -393,7 +393,7 @@
             if (operPhone) { sub += ' &middot; ' + esc(operPhone); }
 
             html +=
-                '<div class="col-lg-4 col-md-6 col-sm-12 mb-3">' +
+                '<div class="col-lg-3 col-md-6 col-sm-12 mb-3">' +
                   '<div class="ship-card">' +
 
                     /* Encabezado */
