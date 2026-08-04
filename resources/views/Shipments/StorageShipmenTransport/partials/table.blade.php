@@ -54,7 +54,7 @@
             {"width": "120px", "targets": 0},
             {"width": "280px", "targets": 1},
             {"width": "350px", "targets": 2},
-            {"width": "150px", "targets": 3},
+            {"width": "350px", "targets": 3},
             {"width": "150px", "targets": 4},
             {"width": "200px", "targets": 5},
             {"width": "320px", "targets": 6},
