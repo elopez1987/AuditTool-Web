@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Inventory\InventoryFiscal;
 
 use App\Http\Controllers\BaseController;
+use App\Models\Inventory\InventoryFiscal\ImportInventoryWms;
 use App\Models\Inventory\InventoryFiscal\InventoryLocationCount;
 use App\Models\Inventory\InventoryFiscal\InventoryLocationEvidences;
 use Auth;
@@ -38,10 +39,14 @@ class InventoryValidateLocationController extends BaseController
             return $this->errorResponse('Location count not found');
         }
 
+        $locationStock = ImportInventoryWms::where('inventory_location_id', $locationCount->inventory_location_id)
+            ->select(['id', 'inventorypartnumber_id', 'quantity_lpns', 'quantity_location'])
+            ->first();
+
         $evidences = InventoryLocationEvidences::where('inventory_location_count_id', $id)->get();
 
         return view('Inventory.InventoryHead.LocationCard.ValidateLocation.index',
-            compact('locationCount', 'evidences'));
+            compact('locationCount', 'evidences', 'locationStock'));
     }
 
     public function saveResponseSuccessLocation($id)

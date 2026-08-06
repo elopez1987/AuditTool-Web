@@ -90,7 +90,11 @@
                                                         </h3>
                                                     </div>
                                                     <div>
-                                                        <span class="text-red display-6"><i class="ti-check-box text-danger"></i></span>
+                                                        @if($locationStock && $locationCount)
+                                                            <span class="text-red display-6">
+                                                                <i class="{{ $locationStock->inventorypartnumber_id == $locationCount->inventorypartnumber01_id ? 'ti-check-box text-success' : 'ti-close text-danger' }}"></i>
+                                                            </span>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
@@ -126,7 +130,11 @@
                                                         </h3>
                                                     </div>
                                                     <div>
-                                                        <span class="text-red display-6"><i class="ti-check-box text-success"></i></span>
+                                                        @if($locationStock && $locationCount)
+                                                            <span class="text-red display-6">
+                                                                <i class="{{ $locationStock->quantity_lpns == $locationCount->quantity01 ? 'ti-check-box text-success' : 'ti-close text-danger' }}"></i>
+                                                            </span>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>

@@ -20,18 +20,18 @@ class ImportInventoryWms extends Model
         'quantity_lpns',
     ];
 
-    public function inventoryHead(): BelongsTo
+    public function inventoryhead(): BelongsTo
     {
-        return $this->belongsTo(InventoryHead::class);
+        return $this->belongsTo(InventoryHead::class, 'inventory_head_id', 'id');
     }
 
-    public function inventoryLocation(): BelongsTo
+    public function inventorylocation(): BelongsTo
     {
-        return $this->belongsTo(InventoryLocation::class);
+        return $this->belongsTo(InventoryLocation::class, 'inventory_location_id', 'id');
     }
 
     public function inventorypartnumber(): BelongsTo
     {
-        return $this->belongsTo(InventoryPartnumber::class, 'inventorypartnumber_id');
+        return $this->belongsTo(InventoryPartnumber::class, 'inventorypartnumber_id', 'id');
     }
 }

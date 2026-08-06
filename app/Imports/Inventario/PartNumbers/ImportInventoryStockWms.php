@@ -37,9 +37,6 @@ class ImportInventoryStockWms implements ShouldQueue, ToCollection, WithChunkRea
         $locationNames = $rows->pluck('location_name')->filter()->unique()->values();
         $partNumbers = $rows->pluck('prtnum')->filter()->unique()->values();
 
-        Log::info($locationNames);
-        Log::info($partNumbers);
-
         // --- 2. UNA sola query por lookup, para TODO el chunk (en vez de 1 por fila) ---
         $locations = InventoryLocation::whereIn('name', $locationNames)
             ->pluck('id', 'name');
@@ -75,7 +72,6 @@ class ImportInventoryStockWms implements ShouldQueue, ToCollection, WithChunkRea
                 'quantity_lpns' => $row['quantity_lpn'],
             ];
 
-            Log::info($upsertData);
         }
 
         // --- 4. UN solo upsert masivo para todo el chunk, dentro de transacción ---
@@ -105,6 +101,6 @@ class ImportInventoryStockWms implements ShouldQueue, ToCollection, WithChunkRea
 
     public function chunkSize(): int
     {
-        return 500; // ahora que no hay N+1, un chunk más grande es más eficiente
+        return 1000; // ahora que no hay N+1, un chunk más grande es más eficiente
     }
 }

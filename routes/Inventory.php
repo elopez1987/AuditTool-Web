@@ -167,8 +167,8 @@ Route::middleware(['auth'])->group(function () {
 
     // Importar existencia de WMS
     Route::get('import-inventory-wms/{id}', [ImportInventoryWmsController::class, 'index'])->name('import-inventory-wms');
-    Route::get('import-inventory-wms-details/{id}', [ImportInventoryWmsController::class, 'show'])->name('import-inventory-wms-details');
     Route::post('import-inventory-wms-excel', [ImportInventoryWmsController::class, 'importStockWms'])->name('import-inventory-wms-excel');
+    Route::get('getInventoryStockWms/{id}', [ImportInventoryWmsController::class, 'getInventoryStockWms'])->name('getInventoryStockWms');
 
     // Migracion de SAP
     Route::get('inventory-sap-migration', [MigrationSapController::class, 'index'])->name('inventory-sap-migration');

@@ -74,9 +74,6 @@
             }
             @endif
 
-
-
-
         ],
         language: {
             "decimal": "",

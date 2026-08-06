@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Inventory\InventoryFiscal;
 
 use App\Http\Controllers\BaseController;
 use App\Imports\Inventario\PartNumbers\ImportInventoryStockWms;
+use App\Models\Inventory\InventoryFiscal\ImportInventoryWms;
 use App\Models\Inventory\InventoryFiscal\InventoryHead;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Maatwebsite\Excel\Excel;
 
 class ImportInventoryWmsController extends BaseController
 {
@@ -20,11 +20,23 @@ class ImportInventoryWmsController extends BaseController
             return $this->errorResponse('Inventory head not found');
         }
 
-        return view('Inventory.InventoryHead.ImportInventoryWms.index', compact('inventoryHead'));
+        return view('Inventory.InventoryHead.ImportInventoryWms.index',
+            compact('inventoryHead'));
 
     }
 
-    public function show($id) {}
+    public function getInventoryStockWms($id)
+    {
+        $data = ImportInventoryWms::with([
+            'inventoryhead:id,name',
+            'inventorylocation:id,name',
+            'inventorypartnumber:id,prtnum,lngdsc',
+        ])
+            ->select('inventory_stock_wms.*')
+            ->where('inventory_head_id', $id);
+
+        return $this->showDataToView($data, '');
+    }
 
     public function importStockWms(Request $request)
     {
@@ -42,10 +54,8 @@ class ImportInventoryWmsController extends BaseController
         }
 
         try {
-            Excel::import(new ImportInventoryStockWms($inventoryHead), $request->file('file'));
-            //			(new ImportInventoryStockWms($inventoryHead))
-            //				->queue($request->file('file'))
-            //				->allOnQueue('yms-web');
+            \Excel::import(new ImportInventoryStockWms($inventoryHead), $request->file('file'));
+
         } catch (\Throwable $e) {
             Log::error('Error al encolar import de inventario', [
                 'inventory_head_id' => $inventoryHead->id,
@@ -56,7 +66,7 @@ class ImportInventoryWmsController extends BaseController
         }
 
         return $this->redirectBackSuccessMessage(
-            'Tu archivo se está procesando en segundo plano. Te notificaremos cuando termine.'
+            'Tu archivo se está procesando en segundo plano. Te notificaremos cuando termine.',
         );
     }
 }
