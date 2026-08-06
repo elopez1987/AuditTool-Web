@@ -90,8 +90,7 @@
                                                         </h3>
                                                     </div>
                                                     <div>
-                                                        <span class="text-red display-6"><i
-                                                                    class="ti-check-box text-danger"></i></span>
+                                                        <span class="text-red display-6"><i class="ti-check-box text-danger"></i></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -127,18 +126,17 @@
                                                         </h3>
                                                     </div>
                                                     <div>
-                                                        <span class="text-red display-6"><i
-                                                                    class="ti-check-box text-success"></i></span>
+                                                        <span class="text-red display-6"><i class="ti-check-box text-success"></i></span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
-
                                 </div>
                             </div>
-                            @if($locationCount->statusid_count01 === 'C' && $locationCount->statusid_count02 !== 'C')
+
+
+                            @if($locationCount->statusid_count01 === 'C')
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="card">
@@ -167,6 +165,8 @@
                                     </div>
                                 </div>
                             @endif
+
+
                         </div>
                     </div>
                 </div>
