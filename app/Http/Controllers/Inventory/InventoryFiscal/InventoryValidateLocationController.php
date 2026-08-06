@@ -32,7 +32,7 @@ class InventoryValidateLocationController extends BaseController
                 'inventory_location_counts.statusid_count02',
                 'inventory_location_counts.statusid_location',
             ])
-            ->where('inventory_card_counts.inventory_head_id', $id)
+//            ->where('inventory_card_counts.inventory_head_id', $id)
             ->first();
         if (is_null($locationCount)) {
             return $this->errorResponse('Location count not found');
