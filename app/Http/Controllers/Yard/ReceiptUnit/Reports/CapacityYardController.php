@@ -27,6 +27,7 @@ class CapacityYardController extends BaseController
             ->select(['id', 'name', 'capacity', 'centerid'])
             ->whereRaw("charindex('ZO-01', configurationflag) > 0")
             ->where('statusid', '=', 'E')
+            ->whereNotIn('zoneid', ['ST'])
             ->whereNull('deleted_at')
             ->get();
 

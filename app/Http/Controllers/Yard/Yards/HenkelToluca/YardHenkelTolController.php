@@ -41,6 +41,7 @@ class YardHenkelTolController extends BaseController
         $total_ubicaciones = StorageZone::controlAccessUser()
             ->whereNotIn('zoneid', ['ST'])
             ->where('statusid', 'E')
+            ->whereRaw("charindex('ZO-01', configurationflag) > 0")
             ->whereNull('deleted_at')->sum('capacity');
 
         $total_ocupadas = ReceiptUnit::controlAccessUser()
