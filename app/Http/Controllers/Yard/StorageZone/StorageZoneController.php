@@ -33,6 +33,7 @@ class StorageZoneController extends BaseController
                 'storagezones.statusid',
                 'storagezones.auxiliary01',
                 'storagezones.capacity',
+                'storagezones.deleted_at',
             ])
             ->Name($request->input('name'))
             ->Warehouse($request->input('warehouseid'));

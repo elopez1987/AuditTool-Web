@@ -21,7 +21,7 @@ class CreateUserRequest extends FormRequest
                 ->uncompromised()->symbols()->letters()->numbers(),
             ],
             'role_id' => 'required|exists:roles,name',
-            'username' => 'required|min:4|max:8|string|unique:users,username',
+            'username' => 'required|min:4|max:12|string|unique:users,username',
             'auxiliary01' => 'nullable|string|max:190|regex:/^[a-zA-Z0-9\s]+$/',
             'auxiliary02' => 'nullable|string|max:190|regex:/^[a-zA-Z0-9\s]+$/',
             'auxiliary03' => 'nullable|string|max:190|regex:/^[a-zA-Z0-9\s]+$/',

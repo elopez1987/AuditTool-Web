@@ -1,7 +1,7 @@
 <script>
     $(document).ready(function () {
-        // let oTable = $("#table-boxsotck").DataTable({
-        const oTable = new DataTable('#table-boxsotck', {
+        let oTable = $("#table-boxsotck").DataTable({
+        // const oTable = new DataTable('#table-boxsotck', {
             "paging": true,
             "searching": false,
             "ordering": true,

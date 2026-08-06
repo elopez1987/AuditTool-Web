@@ -23,7 +23,7 @@
                     <div class="form-group">
                         <label for="username">Nombre de usuario</label>
                         <input type="text" class="form-control" readonly id="username" name="username"
-                               value="{{$user->username}}"
+                               value="{{$user->username}}" maxlength="12"
                         >
                     </div>
                 </div>

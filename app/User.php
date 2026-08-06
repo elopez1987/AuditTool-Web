@@ -187,10 +187,10 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         $this->attributes['name'] = strtolower($value);
     }
 
-    public function setUserNameAttribute($value)
-    {
-        $this->attributes['username'] = strtolower($value);
-    }
+    //    public function setUserNameAttribute($value)
+    //    {
+    //        $this->attributes['username'] = strtolower($value);
+    //    }
 
     //    Relaciones entre modelos
 

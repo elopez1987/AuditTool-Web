@@ -1,4 +1,5 @@
-<script src="{{asset('/theme/assets/libs/jquery/dist/jquery.min.js')}}"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
 <script src="{{asset('/theme/assets/libs/popper.js/dist/umd/popper.min.js')}}"></script>
 <script src="{{asset('/theme/assets/libs/bootstrap/dist/js/bootstrap.min.js')}}"></script>
 
@@ -28,22 +29,22 @@
     .select2-container {
         width: 100% !important;
     }
-    
+
     /* Select2 dropdown that appears in the body should be above modal backdrop */
     .select2-container--open {
         z-index: 1056 !important;
     }
-    
+
     /* Select2 dropdown rendered in body above modal backdrop (1055) and modal (1050) */
     .select2-dropdown {
         z-index: 1056 !important;
     }
-    
+
     /* Ensure SweetAlert2 appears above Select2 and everything else */
     .swal2-container {
         z-index: 9999 !important;
     }
-    
+
     .swal2-popup {
         z-index: 10000 !important;
     }
@@ -79,6 +80,7 @@
 
 
 <script src="https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.11.4/b-2.2.2/b-colvis-2.2.2/b-html5-2.2.2/b-print-2.2.2/cr-1.5.5/fc-4.0.2/fh-3.2.2/r-2.2.9/rg-1.1.4/rr-1.2.8/sc-2.0.5/sr-1.1.0/datatables.min.js"></script>
+
 
 {{--<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.8/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>--}}
 {{--<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js" integrity="sha384-VFQrHzqBh5qiJIU0uGU5CIW3+OWpdGGJM9LBnGbuIH2mkICcFZ7lPd/AAtI7SNf7" crossorigin="anonymous"></script>--}}
