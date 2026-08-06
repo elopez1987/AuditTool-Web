@@ -61,7 +61,7 @@
                             @enderror
                         </label>
                         <input type="text" class="form-control @error('username') is-invalid @enderror" required
-                               id="username" name="username" maxlength="8"
+                               id="username" name="username" maxlength="12"
                                aria-describedby="username" value="{{old('username')}}">
                     </div>
 

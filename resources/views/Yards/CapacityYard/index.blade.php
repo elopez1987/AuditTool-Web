@@ -231,7 +231,8 @@
     @php
         $centerZones   = $zonesByCenter->get($center->centerid, collect());
         $centerCapacity = $centerZones->sum('capacity');
-        $centerBusy    = $centerZones->sum(fn($z) => $locationfill->get($z->id, 0));
+//        $centerBusy    = $centerZones->sum(fn($z) => $locationfill->get($z->id, 0));
+        $centerBusy    = $centerBusy;
         $centerFree    = max(0, $centerCapacity - $centerBusy);
         $centerPercent = $centerCapacity > 0 ? round((100 * $centerBusy) / $centerCapacity) : 0;
         $threshold     = $center->capacityyard;
