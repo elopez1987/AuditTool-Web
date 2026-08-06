@@ -136,7 +136,7 @@
                             </div>
 
 
-                            @if($locationCount->statusid_count01 === 'C')
+                            @if($locationCount->statusid_count01 === 'C' && $locationCount->statusid_count02 !== 'C')
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="card">
@@ -199,7 +199,7 @@
                 }
             });
 
-            const redirectUrl = "{{ url('inventorylocations-card/' . $locationCount->inventorycardcount->id) }}";
+            const redirectUrl = "{{ url('inventorylocations-card/' . $locationCount->card_id) }}";
 
             $('#saveSuccess').click(function (e) {
                 e.preventDefault();

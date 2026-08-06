@@ -13,15 +13,18 @@ class InventoryValidateLocationController extends BaseController
 {
     public function index($id)
     {
-        $locationCount = InventoryLocationCount::where('id', $id)
+        $locationCount = InventoryLocationCount::where('inventory_location_counts.id', $id)
             ->with(['inventoryhead:id,name,inventory_uuid', 'inventoryaisle:id,name',
-                'inventorycard:id,name', 'inventorylocation:id,name', 'inventorycardcount:id,inventorycard_id,inventory_uuid',
+                'inventorycard:id,name', 'inventorylocation:id,name',
+                //				'inventorycardcount:id,inventorycard_id,inventory_uuid,inventory_head_id',
                 'inventorypartnumber01:id,prtnum,lngdsc', 'userCount01:id,name'])
+            ->leftJoin('inventory_card_counts', 'inventory_location_counts.inventory_card_id', '=', 'inventory_card_counts.inventory_card_id')
             ->select([
-                'inventory_location_counts.id',
+                'inventory_location_counts.id as id',
                 'inventory_location_counts.inventory_head_id',
                 'inventory_location_counts.inventory_aisle_id',
                 'inventory_location_counts.inventory_card_id',
+                'inventory_card_counts.id as card_id',
                 'inventory_location_counts.inventory_location_id',
                 'inventory_location_counts.inventorypartnumber01_id',
                 'inventory_location_counts.user_count01_id',
@@ -29,7 +32,9 @@ class InventoryValidateLocationController extends BaseController
                 'inventory_location_counts.statusid_count01',
                 'inventory_location_counts.statusid_count02',
                 'inventory_location_counts.statusid_location',
-            ])->first();
+            ])
+//			->where('inventory_card_counts.inventory_head_id', $id)
+            ->first();
         if (is_null($locationCount)) {
             return $this->errorResponse('Location count not found');
         }
