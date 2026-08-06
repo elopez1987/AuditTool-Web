@@ -26,6 +26,7 @@ class InventoryValidateLocationController extends BaseController
                 'inventory_location_counts.inventorypartnumber01_id',
                 'inventory_location_counts.user_count01_id',
                 'inventory_location_counts.quantity01',
+                'inventory_location_counts.statusid_count01',
                 'inventory_location_counts.statusid_count02',
                 'inventory_location_counts.statusid_location',
             ])->first();
