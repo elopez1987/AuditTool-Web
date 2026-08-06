@@ -81,7 +81,7 @@ class InventoryDashboardController extends BaseController
             ->join('inventory_cards as ic', 'ilc.inventory_card_id', '=', 'ic.id')
             ->join('inventory_locations as il', 'ilc.inventory_location_id', '=', 'il.id')
             ->where('ilc.inventory_head_id', $request->inventory_head_id)
-            ->where('ilc.statusid_location', 1)
+            ->where('ilc.statusid_location', 0)
             ->select([
                 'ia.name as pasillo',
                 'ic.name as cedula',

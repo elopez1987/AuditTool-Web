@@ -16,7 +16,6 @@ class InventoryValidateLocationController extends BaseController
         $locationCount = InventoryLocationCount::where('inventory_location_counts.id', $id)
             ->with(['inventoryhead:id,name,inventory_uuid', 'inventoryaisle:id,name',
                 'inventorycard:id,name', 'inventorylocation:id,name',
-                //				'inventorycardcount:id,inventorycard_id,inventory_uuid,inventory_head_id',
                 'inventorypartnumber01:id,prtnum,lngdsc', 'userCount01:id,name'])
             ->leftJoin('inventory_card_counts', 'inventory_location_counts.inventory_card_id', '=', 'inventory_card_counts.inventory_card_id')
             ->select([
@@ -33,7 +32,7 @@ class InventoryValidateLocationController extends BaseController
                 'inventory_location_counts.statusid_count02',
                 'inventory_location_counts.statusid_location',
             ])
-//			->where('inventory_card_counts.inventory_head_id', $id)
+            ->where('inventory_card_counts.inventory_head_id', $id)
             ->first();
         if (is_null($locationCount)) {
             return $this->errorResponse('Location count not found');
