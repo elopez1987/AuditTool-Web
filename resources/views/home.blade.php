@@ -214,12 +214,12 @@
                 <div class="card">
                     <div class="card-body">
                         @if(!empty($image->auxiliary05))
+                            <img src="{{asset('storage/' . $image->auxiliary05)}}"
+                                 class="align-self-center img-responsive" alt="" style="width: 100%;height: 80%">
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div style=" display: grid;margin: 0;padding: 0;">
                                         <div style="margin: auto;text-align: center">
-                                            <img src="{{asset('storage/' . $image->auxiliary05)}}"
-                                                 class="align-self-center img-responsive" alt="" style="width: 100%;height: 80%">
                                         </div>
                                     </div>
                                 </div>
