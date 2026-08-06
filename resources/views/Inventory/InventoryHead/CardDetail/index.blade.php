@@ -51,7 +51,7 @@
 
                     <div class="row">
                         <div class="col-12">
-                            <table width="100%" id="table-cards" class="table table-bordered  table-condensed">
+                            <table width="100%" id="table-cards" class="table table-bordered  table-condensed table-hover">
                                 <thead>
                                     <tr>
                                         <th>ID Inventario</th>

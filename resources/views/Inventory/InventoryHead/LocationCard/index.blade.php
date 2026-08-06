@@ -51,7 +51,7 @@
                     <div class="row">
                         <div class="col-12">
                             <table width="100%" id="table-cards-locations"
-                                   class="table table-bordered  table-condensed">
+                                   class="table table-bordered  table-condensed table-hover">
                                 <thead>
                                 <tr>
                                     <th>Pasillo</th>
@@ -117,7 +117,7 @@
     <script>
         var oTable = $("#table-cards-locations").DataTable({
             "paging": true,
-            "searching": true,
+            "searching": false,
             "ordering": true,
             "sScrollY": "650px",
             "sScrollX": true,

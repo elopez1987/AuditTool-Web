@@ -153,7 +153,7 @@
                                 <div class="card-header"></div>
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table id="inventoryDetailTable" class="table table-bordered" WIDTH="100%">
+                                        <table id="inventoryDetailTable" class="table table-bordered table-hover table-condensed" WIDTH="100%">
                                             <thead>
                                             <tr>
                                                 <th>Pasillo</th>

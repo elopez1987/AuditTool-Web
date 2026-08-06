@@ -51,7 +51,7 @@ class SystemWarehouseController extends BaseController
 
         return view(
             'Configuration.SystemWarehouses.edit',
-            compact('status', 'systemwarehouse')
+            compact('status', 'systemwarehouse'),
         );
     }
 
@@ -69,6 +69,8 @@ class SystemWarehouseController extends BaseController
 
         return $this->infoResponse('systemwarehouses.index');
     }
+
+    public function show(SystemWarehouse $systemwarehouse) {}
 
     public function getAllWarehouses($request)
     {
