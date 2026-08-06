@@ -93,7 +93,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('systemcenternotifications/{id}', [NotificationCenterController::class, 'systemcenternotifications'])->name('systemcenternotifications');
 
     //    ---------------------------------------------------- Bodegas  ----------------------------------------------------
-    Route::resource('systemwarehouses', SystemWarehouseController::class);
+    Route::resource('systemwarehouses', SystemWarehouseController::class)->except('show');
     Route::get('getDataWarehouses', [SystemWarehouseController::class, 'getDataWarehouses'])->name('getDataWarehouses');
     //    Parametros de bodegas
     Route::get('systemwarehouses/{id}/parameters', [ParameterWarehousesController::class, 'parameters'])->name('systemwarehouses.parameters');
