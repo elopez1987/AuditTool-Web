@@ -15,7 +15,7 @@ class InventoryValidateLocationController extends BaseController
     {
         $locationCount = InventoryLocationCount::where('id', $id)
             ->with(['inventoryhead:id,name,inventory_uuid', 'inventoryaisle:id,name',
-                'inventorycard:id,name', 'inventorylocation:id,name',
+                'inventorycard:id,name', 'inventorylocation:id,name', 'inventorycardcount:id,inventorycard_id,inventory_uuid',
                 'inventorypartnumber01:id,prtnum,lngdsc', 'userCount01:id,name'])
             ->select([
                 'inventory_location_counts.id',

@@ -199,7 +199,7 @@
                 }
             });
 
-            const redirectUrl = "{{ url('inventorylocations-card/' . $locationCount->inventorycard->id) }}";
+            const redirectUrl = "{{ url('inventorylocations-card/' . $locationCount->inventorycardcount->id) }}";
 
             $('#saveSuccess').click(function (e) {
                 e.preventDefault();
