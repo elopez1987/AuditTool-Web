@@ -170,6 +170,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('import-inventory-wms-excel', [ImportInventoryWmsController::class, 'importStockWms'])->name('import-inventory-wms-excel');
     Route::get('getInventoryStockWms/{id}', [ImportInventoryWmsController::class, 'getInventoryStockWms'])->name('getInventoryStockWms');
 
+    //	Importa existencia de SAP para el inventario
+
     // Migracion de SAP
     Route::get('inventory-sap-migration', [MigrationSapController::class, 'index'])->name('inventory-sap-migration');
     Route::get('inventory-sap-details/{id}', [MigrationSapController::class, 'show'])->name('inventory-sap-details');
