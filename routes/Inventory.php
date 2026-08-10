@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Inventory\InventoryFiscal\ImportInventoryWmsController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryAccountantCardController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryAccountantController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryAisleController;
@@ -163,6 +164,13 @@ Route::middleware(['auth'])->group(function () {
     //	Impresion de formatos de conteo
     Route::get('print-format-inventory-01/{id}', [PrintFormatInventoryController::class, 'printFormat01'])->name('print-format-inventory-01');
     Route::get('print-format-inventory-02/{id}', [PrintFormatInventoryController::class, 'printFormat02'])->name('print-format-inventory-02');
+
+    // Importar existencia de WMS
+    Route::get('import-inventory-wms/{id}', [ImportInventoryWmsController::class, 'index'])->name('import-inventory-wms');
+    Route::post('import-inventory-wms-excel', [ImportInventoryWmsController::class, 'importStockWms'])->name('import-inventory-wms-excel');
+    Route::get('getInventoryStockWms/{id}', [ImportInventoryWmsController::class, 'getInventoryStockWms'])->name('getInventoryStockWms');
+
+    //	Importa existencia de SAP para el inventario
 
     // Migracion de SAP
     Route::get('inventory-sap-migration', [MigrationSapController::class, 'index'])->name('inventory-sap-migration');

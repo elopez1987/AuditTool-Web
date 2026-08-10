@@ -140,11 +140,23 @@
                 {data: 'sku01', name: 'sku01'},
                 {data: 'description01', name: 'description01'},
                 {data: 'quantity01'},
-                {data: 'user_count01', name: 'user_count01'},
+                {
+                    data: 'user_count01',
+                    name: 'user_count01',
+                    render: function (data, type, rowData) {
+                        return data ? data.toUpperCase() : '';
+                    }
+                },
                 {data: 'sku02', name: 'sku02'},
                 {data: 'description02', name: 'description02'},
                 {data: 'quantity02'},
-                {data: 'user_count02', name: 'user_count02'},
+                {
+                    data: 'user_count02',
+                    name: 'user_count02',
+                    render: function (data, type, rowData) {
+                        return data ? data.toUpperCase() : '';
+                    }
+                },
                 {
                     data: 'statusid01', name: 'statusid01',
                     render: function (data, type, row) {

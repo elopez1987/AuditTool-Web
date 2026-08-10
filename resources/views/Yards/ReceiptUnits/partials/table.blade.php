@@ -1,4 +1,24 @@
 <script>
+    /* Filtros que se muestran en pantalla y los del modal Yards.ReceiptUnits.filters.
+       Es compartido por el datatable, las tarjetas de medibles y la exportación
+       completa para que todos respeten exactamente los mismos criterios. */
+    function getReceiptUnitsFilterParams() {
+        return {
+            folionumber: $('input[name=folionumber]').val(),
+            boxnumber: $('input[name=boxnumber]').val(),
+            location: $('input[name=location]').val(),
+            econumber: $('input[name=econumber]').val(),
+            trucknumber: $('input[name=trucknumber]').val(),
+            barcode: $('input[name=barcode]').val(),
+            shipmentid: $('input[name=shipmentid]').val(),
+            carrierid: $('select[name=carrierid]').val(),
+            warehouseid: $('select[name=warehouseid]').val(),
+            rasonid: $('select[name=rasonid]').val(),
+            statusid: $('select[name=statusid]').val(),
+            unitstatusid: $('select[name=unitstatusid]').val(),
+        };
+    }
+
     $(document).ready(function () {
         let oTable = $("#table-boxsotck").DataTable({
         // const oTable = new DataTable('#table-boxsotck', {
@@ -17,19 +37,7 @@
             "ajax": {
                 url: 'getDataReceipts',
                 data: function (d) {
-                    d.folionumber = $('input[name=folionumber]').val();
-                    d.boxnumber = $('input[name=boxnumber]').val();
-                    d.location = $('input[name=location]').val();
-                    d.econumber = $('input[name=econumber]').val();
-                    d.trucknumber = $('input[name=trucknumber]').val();
-                    d.barcode = $('input[name=barcode]').val();
-                    d.shipmentid = $('input[name=shipmentid]').val();
-                    d.carrierid = $('select[name=carrierid]').val();
-                    d.centerid = $('select[name=centerid]').val();
-                    d.warehouseid = $('select[name=warehouseid]').val();
-                    d.rasonid = $('select[name=rasonid]').val();
-                    d.statusid = $('select[name=statusid]').val();
-                    d.unitstatusid = $('select[name=unitstatusid]').val();
+                    $.extend(d, getReceiptUnitsFilterParams());
                 }
             },
             "columns": [
@@ -134,6 +142,9 @@
 
         $('#search').on('submit', function (e) {
             oTable.draw();
+            if (typeof loadReceiptUnitsKpis === 'function') {
+                loadReceiptUnitsKpis();
+            }
             e.preventDefault();
         });
 

@@ -5,7 +5,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Inventario  - {{$inventoryhead->name}}</h4>
+                    <h4 class="card-title">Inventario - {{$inventoryhead->name}}</h4>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -16,30 +16,33 @@
                                     <span class="text-button ml-3 mr-3"> Salir</span>
                                 </button>
                             </a>
+                            
                             <a href="{{url('inventoryheads')}}">
                                 <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
                                     <img src="{{asset('/ico/sap.png')}}" alt="" class="img-16 ml-1">
                                     <span class="text-button ml-3 mr-3"> Existencia SAP</span>
                                 </button>
                             </a>
-                            <a href="{{url('inventoryheads')}}">
-                                <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
-                                    <img src="{{asset('/ico/wms.png')}}" alt="" class="img-16 ml-1">
-                                    <span class="text-button ml-3 mr-3"> Existencia WMS</span>
-                                </button>
-                            </a>
+                            @can('import-inventory-wms')
+                                <a href="{{url('import-inventory-wms/' . $inventoryhead->inventory_uuid)}}">
+                                    <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
+                                        <img src="{{asset('/ico/wms.png')}}" alt="" class="img-16 ml-1">
+                                        <span class="text-button ml-3 mr-3"> Existencia WMS</span>
+                                    </button>
+                                </a>
+                            @endcan
                             <a href="{{url('inventoryheads')}}">
                                 <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
                                     <img src="{{asset('/ico/reportshipments.png')}}" alt="" class="img-16 ml-1">
                                     <span class="text-button ml-3 mr-3"> Conciliación</span>
                                 </button>
                             </a>
-{{--                            <a href="{{url('inventoryheads')}}">--}}
-{{--                                <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">--}}
-{{--                                    <img src="{{asset('/ico/importdata.png')}}" alt="" class="img-16 ml-1">--}}
-{{--                                    <span class="text-button ml-3 mr-3"> Tareas 3er Conteo</span>--}}
-{{--                                </button>--}}
-{{--                            </a>--}}
+                            {{--                            <a href="{{url('inventoryheads')}}">--}}
+                            {{--                                <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">--}}
+                            {{--                                    <img src="{{asset('/ico/importdata.png')}}" alt="" class="img-16 ml-1">--}}
+                            {{--                                    <span class="text-button ml-3 mr-3"> Tareas 3er Conteo</span>--}}
+                            {{--                                </button>--}}
+                            {{--                            </a>--}}
 
                             <a href="{{url('inventory-supervisors/' . $inventoryhead->inventory_uuid)}}">
                                 <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
@@ -119,14 +122,17 @@
                                     <div class="row">
                                         <div class="col-6">
                                             <h4 class="card-title">Errores de conteo</h4>
-                                            <h2 class="text-danger font-bold m-b-0" id="totalErrors" data-id="{{ $inventoryhead->id }}"></h2>
+                                            <h2 class="text-danger font-bold m-b-0" id="totalErrors"
+                                                data-id="{{ $inventoryhead->id }}"></h2>
                                         </div>
                                         <div class="col-6">
                                             <h4 class="card-title">% de Error</h4>
-                                            <h2 class="text-danger font-bold m-b-0" id="errorPercentage" data-id="{{ $inventoryhead->id }}"></h2>
+                                            <h2 class="text-danger font-bold m-b-0" id="errorPercentage"
+                                                data-id="{{ $inventoryhead->id }}"></h2>
                                         </div>
                                     </div>
-                                    <a href="{{url('inventoryhead-errors/' . $inventoryhead->inventory_uuid)}}" class="btn btn-inverse" style="margin-top: 6px">Ver Detalle</a>
+                                    <a href="{{url('inventoryhead-errors/' . $inventoryhead->inventory_uuid)}}"
+                                       class="btn btn-inverse" style="margin-top: 6px">Ver Detalle</a>
                                 </div>
                             </div>
                         </div>
@@ -153,7 +159,8 @@
                                 <div class="card-header"></div>
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table id="inventoryDetailTable" class="table table-bordered table-hover table-condensed" WIDTH="100%">
+                                        <table id="inventoryDetailTable"
+                                               class="table table-bordered table-hover table-condensed" WIDTH="100%">
                                             <thead>
                                             <tr>
                                                 <th>Pasillo</th>
@@ -188,7 +195,7 @@
                                                 </span>
                                                 </div>
                                             </div>
-                                            <div class="progress" style="height: 40px !important;" >
+                                            <div class="progress" style="height: 40px !important;">
                                                 <div class="progress" style="height: 40px;">
                                                     <div class="progress-bar bg-success p-4"
                                                          role="progressbar"
@@ -213,7 +220,7 @@
                                                 </span>
                                                 </div>
                                             </div>
-                                            <div class="progress" style="height: 40px !important;" >
+                                            <div class="progress" style="height: 40px !important;">
                                                 <div class="progress" style="height: 40px;">
                                                     <div class="progress-bar bg-success p-4"
                                                          role="progressbar"
@@ -236,8 +243,6 @@
             </div>
         </div>
     </div>
-
-
 
 @endsection
 
@@ -269,9 +274,9 @@
             ).done(function (locationsRes, errorsRes, totalCount01Res, totalCount02Res) {
 
                 const totalLocations = locationsRes[0].totalLocations;
-                const totalErrors    = errorsRes[0].totalErrors;
-                const totalCount01   = totalCount01Res[0].totalCount01;
-                const totalCount02   = totalCount02Res[0].totalCount02;
+                const totalErrors = errorsRes[0].totalErrors;
+                const totalCount01 = totalCount01Res[0].totalCount01;
+                const totalCount02 = totalCount02Res[0].totalCount02;
 
                 // console.log(totalCount01, totalCount02);
 
@@ -324,6 +329,5 @@
     </script>
 
     @include('Inventory.InventoryHead.partials.table-details-aisles')
-
 
 @endsection

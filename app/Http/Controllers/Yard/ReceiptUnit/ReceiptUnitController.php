@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Yard\ReceiptUnit;
 
 use AllowDynamicProperties;
+use App\Exports\Yard\ReceiptUnit\ExportAllReceiptUnits;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Yard\ReceiptUnit\CreateReceiptUnitRequest;
 use App\Http\Services\Receipt\ServiceReceiptUnit;
@@ -15,11 +16,13 @@ use App\Traits\Web\Receipt\ReceiptAsn\ValidateReceiptInCheckInProcess;
 use App\Traits\Web\Shipments\OrderDelivery\ValidateShipmentInCheckInProcess;
 use App\Traits\Web\Yard\ReceiptTruck\QueryReceiptTruck;
 use App\Traits\Web\Yard\ReceiptUnit\ValidateCapacity\ValidateCapacityYard;
+use Carbon\Carbon;
 use DB;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
 
 #[AllowDynamicProperties]
@@ -58,9 +61,34 @@ class ReceiptUnitController extends BaseController
         );
     }
 
+    /**
+     * Aplica a la consulta base de existencia de cajas los filtros que se
+     * muestran en pantalla y los del modal Yards.ReceiptUnits.filters.
+     * Es utilizado por el datatable, las tarjetas de medibles y la
+     * exportación completa para garantizar que todos respeten los mismos
+     * criterios de búsqueda.
+     */
+    private function filteredReceiptUnits(Request $request)
+    {
+        return ReceiptUnit::controlAccessUser()
+            ->whereNotIn('receiptunits.statusid', ['TR', 'ES'])
+            ->Folio($request->input('folionumber'))
+            ->Barcode($request->input('barcode'))
+            ->Location($request->input('location'))
+            ->BoxNumber($request->input('boxnumber'))
+            ->EcoNumber($request->input('econumber'))
+            ->TruckNumber($request->input('trucknumber'))
+            ->Rason($request->input('rasonid'))
+            ->Carrier($request->input('carrierid'))
+            ->Warehouse($request->input('warehouseid'))
+            ->Shipment($request->input('shipmentid'))
+            ->Status($request->input('statusid'))
+            ->UnitStatus($request->input('unitstatusid'));
+    }
+
     public function getDataReceipts(Request $request)
     {
-        $data = ReceiptUnit::controlAccessUser()
+        $data = $this->filteredReceiptUnits($request)
             ->with(['carrier:id,carrierid,name', 'zone:id,name', 'location:id,name', 'event:id,name',
                 'tracto:id,operatorname,phone,trucknumber,econumber', 'center:centerid,description,name', 'warehouse:warehouseid,name',
                 'unittype:id,description', 'truckcategory:truckcategoryid,description',
@@ -85,24 +113,43 @@ class ReceiptUnitController extends BaseController
                 'receiptunits.truckcategoryid',
                 'receiptunits.foliotruck',
                 'receiptunits.statusid',
-            ])
-            ->whereNotIn('receiptunits.statusid', ['TR', 'ES'])
-            ->Folio($request->input('folionumber'))
-            ->Barcode($request->input('barcode'))
-            ->Location($request->input('location'))
-            ->BoxNumber($request->input('boxnumber'))
-            ->EcoNumber($request->input('econumber'))
-            ->TruckNumber($request->input('trucknumber'))
-            ->Rason($request->input('rasonid'))
-            ->Carrier($request->input('carrierid'))
-            ->Warehouse($request->input('warehouseid'))
-            ->Shipment($request->input('shipmentid'))
-            ->Status($request->input('statusid'))
-            ->UnitStatus($request->input('unitstatusid'));
+            ]);
 
         return DataTables::of($data)
             ->addColumn('btn', 'Yards.ReceiptUnits.partials.buttons')
             ->rawColumns(['btn'])->toJson();
+    }
+
+    /**
+     * Medibles principales de la existencia de cajas, respetando los
+     * filtros actualmente aplicados en pantalla.
+     */
+    public function getReceiptUnitsKpis(Request $request)
+    {
+        $this->authorize('receiptunits.index');
+
+        $base = $this->filteredReceiptUnits($request);
+
+        return response()->json([
+            'total' => (clone $base)->count(),
+            'critical_stay' => (clone $base)->where('receiptunits.entrydate', '<=', Carbon::now()->subDays(30))->count(),
+            'no_location' => (clone $base)->whereNull('receiptunits.locationid')->count(),
+            'entries_today' => (clone $base)->whereDate('receiptunits.entrydate', Carbon::today())->count(),
+        ]);
+    }
+
+    /**
+     * Exporta a Excel todos los registros que cumplen con los filtros
+     * aplicados, sin limitarse a lo que se muestra paginado en la tabla.
+     */
+    public function exportAllReceiptUnits(Request $request)
+    {
+        $this->authorize('receiptunits.index');
+
+        return Excel::download(
+            new ExportAllReceiptUnits($request),
+            'existencia-cajas-' . Carbon::now()->format('Y-m-d_His') . '.xlsx'
+        );
     }
 
     public function create()

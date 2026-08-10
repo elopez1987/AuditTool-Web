@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Inventory\InventoryFiscal;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Inventory\InventoryLocationRequest;
-use App\Imports\ImportLocationInventory;
+use App\Imports\Inventario\PartNumbers\ImportLocationInventory;
 use App\Models\Inventory\InventoryFiscal\InventoryCard;
 use App\Models\Inventory\InventoryFiscal\InventoryLocation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 
 class InventoryLocationController extends BaseController
@@ -121,10 +122,23 @@ class InventoryLocationController extends BaseController
 
     public function importLocations(Request $request)
     {
-        $file = $request->file('file');
-        Excel::import(new ImportLocationInventory, $file);
+        $validated = $request->validate([
+            'file' => ['required', 'file', 'mimes:xlsx,xls', 'max:10240'],
+        ]);
 
-        return $this->redirectBackSuccess();
+        try {
+            Excel::import(new ImportLocationInventory, $validated['file']);
+        } catch (\Throwable $e) {
+            Log::error('Error al encolar import de ubicaciones de inventario', [
+                'message' => $e->getMessage(),
+            ]);
+
+            return $this->errorResponse('No se pudo iniciar la importación.');
+        }
+
+        return $this->redirectBackSuccessMessage(
+            'Tu archivo se está procesando en segundo plano. Te notificaremos cuando termine.',
+        );
 
     }
 }

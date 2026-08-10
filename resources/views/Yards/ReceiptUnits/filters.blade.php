@@ -79,9 +79,7 @@
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-outline-secondary btn-md  waves-effect waves-light"
-                        data-dismiss="modal" onclick="function reloadtable() {
-                             $('#table-boxsotck').DataTable().ajax.reload();
-                        }">
+                        data-dismiss="modal" onclick="reloadtable()">
                     <i class="ti ti-search text-success"></i>
                     Buscar
                 </button>

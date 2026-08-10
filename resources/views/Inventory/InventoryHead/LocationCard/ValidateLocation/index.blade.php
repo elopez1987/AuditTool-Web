@@ -90,8 +90,11 @@
                                                         </h3>
                                                     </div>
                                                     <div>
-                                                        <span class="text-red display-6"><i
-                                                                    class="ti-check-box text-danger"></i></span>
+                                                        @if($locationStock && $locationCount)
+                                                            <span class="text-red display-6">
+                                                                <i class="{{ $locationStock->inventorypartnumber_id == $locationCount->inventorypartnumber01_id ? 'ti-check-box text-success' : 'ti-close text-danger' }}"></i>
+                                                            </span>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
@@ -127,17 +130,20 @@
                                                         </h3>
                                                     </div>
                                                     <div>
-                                                        <span class="text-red display-6"><i
-                                                                    class="ti-check-box text-success"></i></span>
+                                                        @if($locationStock && $locationCount)
+                                                            <span class="text-red display-6">
+                                                                <i class="{{ $locationStock->quantity_lpns == $locationCount->quantity01 ? 'ti-check-box text-success' : 'ti-close text-danger' }}"></i>
+                                                            </span>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
-
                                 </div>
                             </div>
+
+
                             @if($locationCount->statusid_count01 === 'C' && $locationCount->statusid_count02 !== 'C')
                                 <div class="row">
                                     <div class="col-lg-12">
@@ -167,6 +173,8 @@
                                     </div>
                                 </div>
                             @endif
+
+
                         </div>
                     </div>
                 </div>
@@ -199,7 +207,7 @@
                 }
             });
 
-            const redirectUrl = "{{ url('inventorylocations-card/' . $locationCount->inventory_card_id) }}";
+            const redirectUrl = "{{ url('inventorylocations-card/' . $locationCount->card_id) }}";
 
             $('#saveSuccess').click(function (e) {
                 e.preventDefault();
