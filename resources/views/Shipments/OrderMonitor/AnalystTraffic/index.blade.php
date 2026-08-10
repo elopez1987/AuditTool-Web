@@ -3,7 +3,7 @@
 @section('content')
     <div class="row">
         <div class="col-lg-12">
-            <div class="card">
+            <div class="card filter-card">
                 <div class="card-header">
                     Monitor de tráfico y facturación
                 </div>
@@ -66,6 +66,45 @@
         </div>
     </div>
 
+    <div class="row mb-3" id="traffic-kpis">
+        <div class="col-6 col-md-4 col-lg-2 mb-2">
+            <div class="kpi-mini kpi-total h-100">
+                <div class="kpi-lbl">Total registros</div>
+                <div class="kpi-val" id="kpi-mt-total">—</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2 mb-2">
+            <div class="kpi-mini kpi-released h-100">
+                <div class="kpi-lbl">Con llaves entregadas</div>
+                <div class="kpi-val" id="kpi-mt-with-keys">—</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2 mb-2">
+            <div class="kpi-mini kpi-nokey h-100">
+                <div class="kpi-lbl">Llaves pendientes</div>
+                <div class="kpi-val" id="kpi-mt-without-keys">—</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2 mb-2">
+            <div class="kpi-mini kpi-released h-100">
+                <div class="kpi-lbl">En tiempo</div>
+                <div class="kpi-val" id="kpi-mt-ontime">—</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2 mb-2">
+            <div class="kpi-mini kpi-critical h-100">
+                <div class="kpi-lbl">Fuera de tiempo</div>
+                <div class="kpi-val" id="kpi-mt-late">—</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2 mb-2">
+            <div class="kpi-mini kpi-nokey h-100">
+                <div class="kpi-lbl">Sin reportarse</div>
+                <div class="kpi-val" id="kpi-mt-not-reported">—</div>
+            </div>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -73,7 +112,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-12">
-                            <table id="table-traffics" class="table table-bordered  table-condensed  table-hover table-uppercase">
+                            <table id="table-traffics" class="table table-bordered  table-condensed  table-hover table-uppercase monitor-table">
                                 <thead>
                                 <tr>
                                     <th >Opciones</th>
@@ -94,6 +133,7 @@
                                     <th>Operador</th>
                                     <th >Placa de caja</th>
                                     <th >F.Entrada</th>
+                                    <th >Estadia</th>
                                     <th >Cita con cliente</th>
                                     <th >Salida maxima</th>
                                 </tr>
@@ -113,6 +153,48 @@
 @section('css')
     <link rel="stylesheet" href="{{asset('/theme/assets/libs/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css')}}">
     <link rel="stylesheet" href="{{asset('/theme/assets/libs/quill/dist/quill.snow.css')}}">
+    <style>
+        .filter-card {
+            border-radius: 8px;
+            border: 1px solid #E8E8E8;
+            box-shadow: 0 1px 4px rgba(0,0,0,.05);
+        }
+        .kpi-mini {
+            border-radius: 10px;
+            padding: 1.1rem 1.25rem;
+            border: 1px solid transparent;
+        }
+        .kpi-mini .kpi-lbl {
+            font-size: .72rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: .03em;
+            margin-bottom: .4rem;
+        }
+        .kpi-mini .kpi-val {
+            font-size: 2.2rem; font-weight: 700; line-height: 1;
+        }
+        .kpi-total    { background: #fff; border-color: #E8E8E8; }
+        .kpi-total    .kpi-lbl { color: #5A5A5A; }
+        .kpi-total    .kpi-val { color: #2B2F33; }
+
+        .kpi-critical { background: #FEE2E2; border-color: #FCA5A5; }
+        .kpi-critical .kpi-lbl { color: #EF4444; }
+        .kpi-critical .kpi-val { color: #DC2626; }
+
+        .kpi-nokey    { background: #FEF3C7; border-color: #FCD34D; }
+        .kpi-nokey    .kpi-lbl { color: #D97706; }
+        .kpi-nokey    .kpi-val { color: #B45309; }
+
+        .kpi-released { background: #D1FAE5; border-color: #6EE7B7; }
+        .kpi-released .kpi-lbl { color: #059669; }
+        .kpi-released .kpi-val { color: #047857; }
+
+        .monitor-table thead th {
+            font-size: .70rem;
+            letter-spacing: .03em;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+    </style>
 @endsection
 
 @section('script')
@@ -126,11 +208,35 @@
     <script>
         function reloadtable() {
             $('#table-traffics').DataTable().ajax.reload();
+            loadMonitorTrafficKpis();
+        }
+
+        /* Medibles principales del monitor de tráfico (llaves y estatus de
+           llegada), respetando los filtros que se muestran en la parte
+           superior de la vista. */
+        function loadMonitorTrafficKpis() {
+            $.ajax({
+                url: '{{ route("getmonitortrafickpis") }}',
+                data: getMonitorTrafficFilterParams(),
+                success: function (r) {
+                    $('#kpi-mt-total').text(r.total);
+                    $('#kpi-mt-with-keys').text(r.with_keys);
+                    $('#kpi-mt-without-keys').text(r.without_keys);
+                    $('#kpi-mt-ontime').text(r.on_time);
+                    $('#kpi-mt-late').text(r.late);
+                    $('#kpi-mt-not-reported').text(r.not_reported);
+                }
+            });
         }
     </script>
     <script>
         $("#statusid,#turnid,#warehouseid").change(function () {
             reloadtable();
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            loadMonitorTrafficKpis();
         });
     </script>
 @endsection

@@ -168,6 +168,7 @@ Route::middleware(['auth'])->group(function () {
     //    ---------------------------------------------  Monitor de trafico ---------------------------------------------
     Route::resource('monitoranalistatrafico', MonitorTrafficController::class)->except('destroy', 'show', 'create');
     Route::get('getdatamonitortraffic', [MonitorTrafficController::class, 'getDataMonitorTraffic'])->name('getdatamonitortraffic');
+    Route::get('getmonitortrafickpis', [MonitorTrafficController::class, 'getMonitorTrafficKpis'])->name('getmonitortrafickpis');
     //	Guardar los sellos del embarque
     Route::put('savesealstoshipment/{id}', [SaveSealController::class, 'index'])->name('savesealstoshipment');
     //	Guardar comentarios de facturacion

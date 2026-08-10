@@ -1,4 +1,17 @@
 <script>
+    /* Filtros que se muestran en la parte superior de la vista. Es
+       compartido por el datatable y las tarjetas de medibles para que
+       ambos respeten exactamente los mismos criterios. */
+    function getMonitorTrafficFilterParams() {
+        return {
+            statusid: $('select[name=statusid]').val(),
+            warehouseid: $('select[name=warehouseid]').val(),
+            turnid: $('select[name=turnid]').val(),
+            shipmentid: $('input[name=shipmentid]').val(),
+            workday: $('input[name=workday]').val(),
+        };
+    }
+
     var oTable = $("#table-traffics").DataTable({
         "paging": true,
         "searching": true,
@@ -14,11 +27,7 @@
         "ajax": {
             url: 'getdatamonitortraffic',
             data: function (d) {
-                d.statusid = $('select[name=statusid]').val();
-                d.warehouseid = $('select[name=warehouseid]').val();
-                d.turnid = $('select[name=turnid]').val();
-                d.shipmentid = $('input[name=shipmentid]').val();
-                d.workday = $('input[name=workday]').val();
+                $.extend(d, getMonitorTrafficFilterParams());
             }
         },
         "columns": [
@@ -45,6 +54,13 @@
             {data: 'operador',name: 'operador'},
             {data: 'folio.boxnumber',name:'folio.boxnumber'},
             {data: 'folio.entrydate',name:'folio.entrydate'},
+            {
+                data: 'folio.staytime', name: 'folio.staytime',
+                render: function (data, type, rowData) {
+                    /* Solo se muestra la estadia cuando el registro tiene una unidad relacionada */
+                    return (rowData.folio && rowData.folio.id) ? data : '';
+                }
+            },
             {data: 'downloaddate'},
             {data: 'monitor.outputdate', name: 'monitor.outputdate'},
         ],
@@ -67,8 +83,9 @@
             {"width": "280px", "targets": 15},
             {"width": "120px", "targets": 16},
             {"width": "120px", "targets": 17},
-            {"width": "120px", "targets": 18},
+            {"width": "180px", "targets": 18},
             {"width": "120px", "targets": 19},
+            {"width": "120px", "targets": 20},
         ],
         "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
         "lengthMenu": [[1, 5, 10, 30, 50, 100, 150, 200, 250, -1], [1, 5, 10, 30, 50, 100, 150, 200, 250, "Todos"]],
@@ -118,6 +135,9 @@
     });
     $('#search').on('submit', function (e) {
         oTable.draw();
+        if (typeof loadMonitorTrafficKpis === 'function') {
+            loadMonitorTrafficKpis();
+        }
         e.preventDefault();
     });
 </script>

@@ -24,6 +24,41 @@ class MonitorTrafficController extends BaseController
         return view('Shipments.OrderMonitor.AnalystTraffic.index', compact('status', 'turns'));
     }
 
+    /**
+     * Medibles principales del monitor de tráfico: unidades con llaves
+     * entregadas/pendientes y unidades por estatus de llegada, respetando
+     * los mismos filtros que se muestran en la parte superior de la vista.
+     */
+    public function getMonitorTrafficKpis(Request $request)
+    {
+        $this->authorize('monitoranalistatrafico.index');
+
+        $base = $this->getshipmentsformonitortraffic($request);
+
+        $total = (clone $base)->count();
+
+        $withKeys = (clone $base)->whereHas('folio', function ($q) {
+            $q->whereNotNull('keydate');
+        })->count();
+
+        $onTime = (clone $base)->whereHas('folio', function ($q) {
+            $q->whereNotNull('entrydate')->whereColumn('receiptunits.entrydate', '<=', 'orderdeliveries.loadingdate');
+        })->count();
+
+        $late = (clone $base)->whereHas('folio', function ($q) {
+            $q->whereNotNull('entrydate')->whereColumn('receiptunits.entrydate', '>', 'orderdeliveries.loadingdate');
+        })->count();
+
+        return response()->json([
+            'total' => $total,
+            'with_keys' => $withKeys,
+            'without_keys' => $total - $withKeys,
+            'on_time' => $onTime,
+            'late' => $late,
+            'not_reported' => $total - $onTime - $late,
+        ]);
+    }
+
     public function getdatamonitortraffic(Request $request)
     {
         $data = $this->getshipmentsformonitortraffic($request);
@@ -32,26 +67,26 @@ class MonitorTrafficController extends BaseController
             ->addColumn('btn', 'Shipments.OrderMonitor.AnalystTraffic.partials.btn')
             ->addColumn('statustransport', function ($row) {
                 return $row->transport?->has_data == 1
-                    ? '<span class="label label-success" style="font-size: 0.655rem;padding: 3px">Con datos</span>'
-                    : '<span class="label label-danger" style="font-size: 0.655rem;color:white;padding: 3px">Sin datos</span>';
+                    ? '<span class="badge bg-success" style="padding: 3px;font-size: 10px">Con datos</span>'
+                    : '<span class="badge bg-danger" style="color:white;padding: 3px;font-size: 10px">Sin datos</span>';
             })
             ->addColumn('key', function ($row) {
                 return $row->folio?->keydate
-                    ? '<span class="label label-success" style="font-size: 0.655rem;padding: 3px">Entregado</span>'
-                    : '<span class="label label-danger" style="font-size: 0.655rem;color:white;padding: 3px">Pendiente</span>';
+                    ? '<span class="badge bg-success" style="padding: 3px;font-size: 10px">Entregado</span>'
+                    : '<span class="badge bg-danger" style="color:white;padding: 3px;font-size: 10px">Pendiente</span>';
             })
             ->addColumn('precarga', fn ($row) => $row->header->location->name ?? '')
             ->addColumn('cortina', fn ($row) => $row->folio->location->name ?? '')
             ->addColumn('operador', fn ($row) => $row->folio->operatorname ?? '')
+            ->addColumn('staytime', fn ($row) => $row->folio->staytime ?? '')
             ->addColumn('statusunit', function ($row) {
                 if (! $row->folio?->entrydate) {
-                    return '<span class="label label-warning" 
-                        style="font-size: 0.675rem;color:black;padding: 3px">Sin reportarse</span>';
+                    return '<span class="badge bg-warning" style="font-size: 10px;color:white;padding: 3px">Sin reportarse</span>';
                 }
 
                 return $row->folio?->entrydate > $row->loadingdate
-                    ? '<span class="label label-danger" style="font-size: 0.675rem;padding: 3px">Fuera de tiempo</span>'
-                    : '<span class="label label-success" style="font-size: 0.675rem;padding: 3px">En tiempo</span>';
+                    ? '<span class="badge bg-danger" style="font-size: 10px !important;padding: 3px">Fuera de tiempo</span>'
+                    : '<span class="badge bg-success" style="font-size: 10px !important;padding: 3px">En tiempo</span>';
             })
             ->rawColumns(['statusunit', 'btn', 'statustransport', 'key'])
             ->toJson();

@@ -82,6 +82,8 @@ Route::middleware(['auth'])->group(function () {
     //   Registro de folios metodo estandar con lectura de QR de operador, caja y tracto
     Route::resource('receiptunits', ReceiptUnitController::class);
     Route::get('getDataReceipts', [ReceiptUnitController::class, 'getDataReceipts'])->name('getDataReceipts');
+    Route::get('getReceiptUnitsKpis', [ReceiptUnitController::class, 'getReceiptUnitsKpis'])->name('getReceiptUnitsKpis');
+    Route::get('exportallreceiptunits', [ReceiptUnitController::class, 'exportAllReceiptUnits'])->name('exportallreceiptunits');
 
     //    Realizar cambios a unidad en existencia
     Route::get('adjustmentunit', [ReceiptUnitAdjustmentController::class, 'index'])->name('adjustmentunit');
