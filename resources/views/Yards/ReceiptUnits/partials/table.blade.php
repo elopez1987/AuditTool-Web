@@ -72,7 +72,7 @@
             ],
             // "order": [[2, 'desc']],
             "columnDefs": [
-                {"width": "100px", "targets": 0,"visible": false},
+                {"width": "100px", "targets": 0},
                 {"width": "200px", "targets": 1,"visible": false},
                 {"width": "200px", "targets": 2},
                 {"width": "180px", "targets": 3},
