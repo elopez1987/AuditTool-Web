@@ -1,4 +1,17 @@
 <script>
+    /* Filtros que se muestran en la parte superior de la vista. Es
+       compartido por el datatable y las tarjetas de medibles para que
+       ambos respeten exactamente los mismos criterios. */
+    function getMonitorOperationFilterParams() {
+        return {
+            statusid: $('select[name="statusid[]"]').val(),
+            warehouseid: $('select[name=warehouseid]').val(),
+            turnid: $('select[name=turnid]').val(),
+            shipmentid: $('input[name=shipmentid]').val(),
+            workday: $('input[name=workday]').val(),
+        };
+    }
+
     var oTable = $("#table-monitoroperation").DataTable({
         "paging": true,
         "searching": false,
@@ -13,11 +26,7 @@
         "ajax": {
             url: 'getdataoperationmonitor',
             data: function (d) {
-                d.statusid = $('select[name="statusid[]"]').val();
-                d.warehouseid = $('select[name=warehouseid]').val();
-                d.turnid = $('select[name=turnid]').val();
-                d.shipmentid = $('input[name=shipmentid]').val();
-                d.workday = $('input[name=workday]').val();
+                $.extend(d, getMonitorOperationFilterParams());
             }
         },
         "columns": [
@@ -28,11 +37,8 @@
             {data: 'shipmentid'},
             {
                 data: 'status.name', name: 'status.name',
-                createdCell: function (td, cellData, rowData) {
-                    $(td).css({
-                        'background-color': (rowData.status.auxiliary01),
-                        'color': 'black'
-                    });
+                render: function (data, type, rowData) {
+                    return '<span style="background-color:' + rowData.status.auxiliary01 + '; color: black; padding: 2px 8px; border-radius: 4px; display: inline-block;">' + data + '</span>';
                 }
             },
             {data: 'customer.name',name:'customer.name'},
@@ -121,6 +127,9 @@
     });
     $('#search').on('submit', function (e) {
         oTable.draw();
+        if (typeof loadMonitorOperationKpis === 'function') {
+            loadMonitorOperationKpis();
+        }
         e.preventDefault();
     });
 </script>

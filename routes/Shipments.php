@@ -131,6 +131,7 @@ Route::middleware(['auth'])->group(function () {
     //    ---------------------------------------------  Monitor de operaciones ---------------------------------------------
     Route::resource('monitoroperation', MonitorOperationController::class)->except('destroy', 'show', 'store');
     Route::get('getdataoperationmonitor', [MonitorOperationController::class, 'getDataOperationMonitor'])->name('getdataoperationmonitor');
+    Route::get('getmonitoroperationkpis', [MonitorOperationController::class, 'getMonitorOperationKpis'])->name('getmonitoroperationkpis');
     Route::put('savepalletstoshipment/{id}', [MonitorOperationController::class, 'savepalletstoshipment'])->name('savepalletstoshipment');
     Route::put('savecommentoperation/{id}', [MonitorOperationController::class, 'savecommentoperation'])->name('savecommentoperation');
 

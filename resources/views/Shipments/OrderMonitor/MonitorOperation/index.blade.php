@@ -5,7 +5,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    Monitor de operaciones
+                    Monitor de operaciones.
                 </div>
                 <div class="card-body">
                     <form method="GET" id="search" role="form" class="r-separator">
@@ -65,20 +65,9 @@
             <div class="card">
                 <div class="card-header"></div>
                 <div class="card-body">
-                    <div class="row">
-                        @foreach($statusQuantitys as $status)
-                            <div class="col-lg-1 col-md-3">
-                                <div class="card card-shipment">
-                                        <div class="d-flex flex-row">
-                                            <div class="p-10">
-                                                <h3 class="text-black-50 m-b-0 ">{{$status->total}}</h3>
-                                                <span class="text-black">{{$status->status->name}}</span>
-                                            </div>
-                                        </div>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
+                    {{-- Las tarjetas se cargan vía AJAX (ver partials.table) respetando
+                         los filtros seleccionados, sin bloquear la carga inicial de la vista. --}}
+                    <div class="row" id="operation-status-cards"></div>
                 </div>
             </div>
         </div>
@@ -131,7 +120,9 @@
     <link rel="stylesheet" href="{{asset('/theme/assets/libs/quill/dist/quill.snow.css')}}">
     <style>
         .card-shipment{
-            border-left: 3px solid #b0bec5 !important;
+            border-left-width: 3px;
+            border-left-style: solid;
+            border-left-color: #b0bec5;
         }
     </style>
 @endsection
@@ -146,6 +137,40 @@
     <script>
         function reloadtable() {
             $('#table-monitoroperation').DataTable().ajax.reload();
+            loadMonitorOperationKpis();
+        }
+
+        /* Tarjetas con la cantidad de embarques por estatus del monitor de
+           operaciones, respetando los filtros que se muestran en la parte
+           superior de la vista. */
+        function renderOperationStatusCards(items) {
+            let $container = $('#operation-status-cards');
+            $container.empty();
+            $.each(items, function (index, item) {
+                $container.append(
+                    $('<div class="col-lg-1 col-md-3"></div>').append(
+                        $('<div class="card card-shipment"></div>')
+                            .css('border-left-color', item.color || '#b0bec5')
+                            .append(
+                                $('<div class="d-flex flex-row"></div>').append(
+                                    $('<div class="p-10"></div>')
+                                        .append($('<h3 class="text-black-50 m-b-0"></h3>').text(item.total))
+                                        .append($('<span class="text-black"></span>').text(item.name))
+                                )
+                            )
+                    )
+                );
+            });
+        }
+
+        function loadMonitorOperationKpis() {
+            $.ajax({
+                url: '{{ route("getmonitoroperationkpis") }}',
+                data: getMonitorOperationFilterParams(),
+                success: function (r) {
+                    renderOperationStatusCards(r);
+                }
+            });
         }
     </script>
     <script>

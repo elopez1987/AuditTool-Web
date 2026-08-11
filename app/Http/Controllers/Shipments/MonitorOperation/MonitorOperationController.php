@@ -23,13 +23,43 @@ class MonitorOperationController extends BaseController
         $status = $this->getStatusForSchema('KLE');
         $turns = $this->getTurns();
         $warehouses = $this->getWarehouseForSelect();
-        $statusQuantitys = OrderDeliverie::controlAccessUser()->whereNotIn('orderdeliveries.statusid', ['DH', 'CA'])
-            ->select(['statusid', DB::raw('COUNT(statusid) as total')])
-            ->groupBy('statusid')->orderByDesc('total')->get();
 
         return view(
             'Shipments.OrderMonitor.MonitorOperation.index',
-            compact('status', 'turns', 'warehouses', 'statusQuantitys'),
+            compact('status', 'turns', 'warehouses'),
+        );
+    }
+
+    /**
+     * Cantidad de embarques por estatus para las tarjetas del monitor de
+     * operaciones, respetando los mismos filtros que se muestran en la
+     * parte superior de la vista. Se consulta vía AJAX para no bloquear
+     * la carga inicial de la vista.
+     */
+    public function getMonitorOperationKpis(Request $request)
+    {
+        $this->authorize('monitoroperation.index');
+
+        $statusQuantitys = OrderDeliverie::controlAccessUser()
+            ->when($request->statusid, fn ($q) => $q->ForStatus($request->statusid))
+            ->when($request->shipmentid, fn ($q) => $q->Shipmentid($request->shipmentid))
+            ->when($request->workday, fn ($q) => $q->Workday($request->workday))
+            ->when($request->turnid, fn ($q) => $q->Turn($request->turnid))
+            ->when($request->warehouseid, fn ($q) => $q->Warehouse($request->warehouseid))
+            ->whereNotIn('orderdeliveries.statusid', ['DH', 'CA'])
+            ->select(['statusid', DB::raw('COUNT(statusid) as total')])
+            ->groupBy('statusid')
+            ->orderByDesc('total')
+            ->with('status:statusid,name,auxiliary01')
+            ->get();
+
+        return response()->json(
+            $statusQuantitys->map(fn ($row) => [
+                'statusid' => $row->statusid,
+                'name' => $row->status->name ?? $row->statusid,
+                'color' => $row->status->auxiliary01 ?? '#b0bec5',
+                'total' => $row->total,
+            ]),
         );
     }
 
@@ -41,27 +71,28 @@ class MonitorOperationController extends BaseController
             ->addColumn('btnoperation', 'Shipments.OrderMonitor.MonitorOperation.partials.btnoperation')
             ->addColumn('key', function ($row) {
                 return $row->folio?->keydate
-                    ? '<span class="label label-success" style="font-size: 0.655rem;padding: 3px">Entregado</span>'
-                    : '<span class="label label-danger" style="font-size: 0.655rem;color:white;padding: 3px">Pendiente</span>';
+                    ? '<span class="badge bg-success" style="font-size: 10px;padding: 3px">Entregado</span>'
+                    : '<span class="badge bg-danger" style="font-size: 10px;color:white;padding: 3px">Pendiente</span>';
             })
             ->addColumn('precarga', fn ($row) => $row->header->location->name ?? '')
             ->addColumn('cortina', fn ($row) => $row->folio->location->name ?? '')
             ->addColumn('priority', fn ($row) => $row->operation->auxiliary01 ?? '')
             ->addColumn('armado', fn ($row) => $row->operation->auxiliary02 ?? '')
             ->addColumn('enrampado', function ($row) {
-                return $row->folio?->ensnare != null ? 'Si' : 'No';
+                return $row->folio?->ensnare != null
+                    ? '<span class="badge bg-success" style="font-size: 10px;padding: 3px">SI</span>'
+                    : '<span class="badge bg-danger" style="font-size: 10px;padding: 3px">NO</span>';
             })
             ->addColumn('statusunit', function ($row) {
                 if (! $row->folio?->entrydate) {
-                    return '<span class="label label-warning" 
-                        style="font-size: 0.675rem;color:black;padding: 3px">Sin reportarse</span>';
+                    return '<span class="badge bg-warning"  style="font-size: 10px;color:black;padding: 3px">Sin reportarse</span>';
                 }
 
                 return $row->folio?->entrydate > $row->loadingdate
-                    ? '<span class="label label-danger" style="font-size: 0.675rem;padding: 3px">Fuera de tiempo</span>'
-                    : '<span class="label label-success" style="font-size: 0.675rem;padding: 3px">En tiempo</span>';
+                    ? '<span class="badge bg-danger" style="font-size: 10px;padding: 3px">Fuera de tiempo</span>'
+                    : '<span class="badge bg-success" style="font-size: 10px;padding: 3px">En tiempo</span>';
             })
-            ->rawColumns(['statusunit', 'btnoperation', 'statustransport', 'key'])
+            ->rawColumns(['statusunit', 'btnoperation', 'statustransport', 'key', 'enrampado'])
             ->toJson();
     }
 
