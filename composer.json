@@ -32,7 +32,6 @@
     "require-dev": {
         "laravel/boost": "^2.0",
         "laravel/pint": "^1.25",
-        "laravel/telescope": "^5.18",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.0",
         "nunomaduro/phpinsights": "^2.13",
@@ -81,13 +80,6 @@
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "pestphp/pest-plugin": true,
             "php-http/discovery": true
-        }
-    },
-    "extra": {
-        "laravel": {
-            "dont-discover": [
-              "laravel/telescope"
-            ]
         }
     },
     "autoload": {

@@ -38,7 +38,7 @@ final class UserRepository extends UserRepositoryAbstract implements UserReposit
             return null;
         }
 
-        $cached = $this->withoutRecording(fn () => Cache::get(self::CACHE_PREFIX . $identifier));
+        $cached = Cache::get(self::CACHE_PREFIX . $identifier);
 
         if ($cached instanceof Authenticatable) {
             return $cached;
@@ -56,9 +56,7 @@ final class UserRepository extends UserRepositoryAbstract implements UserReposit
             return null;
         }
 
-        $this->withoutRecording(
-            fn () => Cache::put(self::CACHE_PREFIX . $identifier, $localUser, self::CACHE_TTL_SECONDS)
-        );
+        Cache::put(self::CACHE_PREFIX . $identifier, $localUser, self::CACHE_TTL_SECONDS);
 
         return $localUser;
     }
@@ -80,21 +78,5 @@ final class UserRepository extends UserRepositoryAbstract implements UserReposit
         }
 
         return User::where('email', $email)->first();
-    }
-
-    /**
-     * Workaround for Laravel Telescope potentially causing an infinite loop.
-     *
-     * @link https://github.com/auth0/laravel-auth0/tree/main/docs/Telescope.md
-     */
-    private function withoutRecording(callable $callback): mixed
-    {
-        $telescope = '\Laravel\Telescope\Telescope';
-
-        if (class_exists($telescope) && method_exists($telescope, 'withoutRecording')) {
-            return $telescope::withoutRecording($callback);
-        }
-
-        return $callback();
     }
 }
