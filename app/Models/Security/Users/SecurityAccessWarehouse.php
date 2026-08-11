@@ -74,6 +74,25 @@ class SecurityAccessWarehouse extends Model
             ->toArray();
     }
 
+    /**
+     * Igual que llamar a Centers() y Warehouses(), pero en una sola consulta.
+     * Úsalo en lugares donde ambos arreglos se necesiten juntos (p.ej.
+     * controlAccessUser) para evitar un round-trip extra a la base de datos.
+     *
+     * @return array{centers: array<int, string>, warehouses: array<int, string>}
+     */
+    public static function AccessScope(): array
+    {
+        $rows = SecurityAccessWarehouse::where('username', Auth::user()->username)
+            ->select('centerid', 'warehouseid')
+            ->get();
+
+        return [
+            'centers' => $rows->pluck('centerid')->all(),
+            'warehouses' => $rows->pluck('warehouseid')->all(),
+        ];
+    }
+
     public static function getCenterForUser()
     {
         return SecurityAccessWarehouse::where('username', Auth::user()->username)->value('centerid');

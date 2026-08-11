@@ -14,7 +14,7 @@
 
     var oTable = $("#table-traffics").DataTable({
         "paging": true,
-        "searching": true,
+        "searching": false,
         "ordering": true,
         "sScrollY": "450px",
         "sScrollX": true,

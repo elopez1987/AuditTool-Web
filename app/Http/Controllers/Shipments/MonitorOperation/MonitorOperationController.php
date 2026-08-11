@@ -78,7 +78,8 @@ class MonitorOperationController extends BaseController
             ->addColumn('key', function ($row) {
                 return $row->folio?->keydate
                     ? '<span class="badge bg-success" style="font-size: 10px;padding: 3px">Entregado</span>'
-                    : '<span class="badge bg-danger" style="font-size: 10px;color:white;padding: 3px">Pendiente</span>';
+//                    : '<span class="badge bg-danger" style="font-size: 10px;color:white;padding: 3px">Pendiente</span>';
+                    : '-';
             })
             ->addColumn('precarga', fn ($row) => $row->header->location->name ?? '')
             ->addColumn('cortina', fn ($row) => $row->folio->location->name ?? '')
@@ -87,11 +88,12 @@ class MonitorOperationController extends BaseController
             ->addColumn('enrampado', function ($row) {
                 return $row->folio?->ensnare != null
                     ? '<span class="badge bg-success" style="font-size: 10px;padding: 3px">SI</span>'
-                    : '<span class="badge bg-danger" style="font-size: 10px;padding: 3px">NO</span>';
+                    : '-';
             })
             ->addColumn('statusunit', function ($row) {
                 if (! $row->folio?->entrydate) {
-                    return '<span class="badge bg-warning"  style="font-size: 10px;color:black;padding: 3px">Sin reportarse</span>';
+                    //                    return '<span class="badge bg-warning"  style="font-size: 10px;color:black;padding: 3px">Sin reportarse</span>';
+                    return '-';
                 }
 
                 return $row->folio?->entrydate > $row->loadingdate
