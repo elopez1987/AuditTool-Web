@@ -36,7 +36,7 @@ class InventoryDashboardController extends BaseController
     public function getTotalErrors($id)
     {
         $totalErrors = InventoryLocationCount::where('inventory_head_id', $id)
-            ->where('statusid_location', true)->count();
+            ->where('statusid_location', false)->count();
 
         return response()->json(['totalErrors' => $totalErrors]);
     }
