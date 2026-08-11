@@ -84,6 +84,14 @@ class AuthorizeTransportEntriesController extends BaseController
             ->select(['id', 'auxiliary02'])->first();
 
         if (! $checkList) {
+            $checkList = StorageCheckList::where('centerid', $receiptunit->centerid)
+                ->where('statusid', 'E')
+                ->where('auxiliary04', 'S')
+                ->select(['id', 'auxiliary02'])
+                ->first();
+        }
+
+        if (! $checkList) {
             return $this->errorResponse('No existe el check list para la unidad, favor de validar el Origen y Concepto de Entrada');
         }
         $checklistdetails = StorageCheckListDetail::query()->where('checklistid', $checkList->id)
