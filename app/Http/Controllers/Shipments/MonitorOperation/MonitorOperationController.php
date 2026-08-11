@@ -65,7 +65,13 @@ class MonitorOperationController extends BaseController
 
     public function getdataoperationmonitor(Request $request)
     {
-        $data = $this->getshipmentsformonitortraffic($request);
+        // Se precarga 'operation' porque las columnas priority/armado la
+        // consultan por fila; sin esto, Yajra dispara un lazy-load N+1
+        // (una query extra por cada uno de los registros) al construir
+        // el datatable, lo cual es la causa de la lentitud vs
+        // getdatamonitortraffic (que no usa esta relación).
+        $data = $this->getshipmentsformonitortraffic($request)
+            ->with(['operation:id,orderid,auxiliary01,auxiliary02']);
 
         return DataTables::of($data)
             ->addColumn('btnoperation', 'Shipments.OrderMonitor.MonitorOperation.partials.btnoperation')

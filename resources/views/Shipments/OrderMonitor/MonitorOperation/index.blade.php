@@ -81,7 +81,7 @@
                     <div class="row">
                         <div class="col-12">
                             <table id="table-monitoroperation"
-                                   class="table table-bordered table-condensed table-list table-hover table-uppercase">
+                                   class="table table-bordered table-condensed table-list table-hover table-uppercase monitor-table">
                                 <thead>
                                 <tr>
                                     <th >Opciones</th>
@@ -123,6 +123,12 @@
             border-left-width: 3px;
             border-left-style: solid;
             border-left-color: #b0bec5;
+        }
+        .monitor-table thead th {
+            font-size: .70rem;
+            letter-spacing: .03em;
+            text-transform: uppercase;
+            font-weight: 700;
         }
     </style>
 @endsection
