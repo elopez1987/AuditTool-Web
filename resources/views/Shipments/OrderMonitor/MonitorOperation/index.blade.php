@@ -155,7 +155,7 @@
                                 $('<div class="d-flex flex-row"></div>').append(
                                     $('<div class="p-10"></div>')
                                         .append($('<h3 class="text-black-50 m-b-0"></h3>').text(item.total))
-                                        .append($('<span class="text-black"></span>').text(item.name))
+                                        .append($('<span class="text-black font-10"></span>').text(item.name))
                                 )
                             )
                     )

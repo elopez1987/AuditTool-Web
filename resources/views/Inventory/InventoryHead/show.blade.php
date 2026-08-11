@@ -188,7 +188,7 @@
                                             <div class="d-flex align-items-center">
                                                 <i class="mdi mdi-apps display-5 text-muted"></i>
                                                 <div class="m-l-10">
-                                                    <h5 class="m-b-0">Avance del segundo conteo</h5>
+                                                    <h5 class="m-b-0">Avance del primer conteo</h5>
                                                     <span class="font-20">
                                                     <span id="totalCount01Display">0</span> Ubicaciones -
                                                     <span id="progressCount01Percentage">0</span>%
@@ -196,17 +196,15 @@
                                                 </div>
                                             </div>
                                             <div class="progress" style="height: 40px !important;">
-                                                <div class="progress" style="height: 40px;">
-                                                    <div class="progress-bar bg-success p-4"
+                                                    <div class="progress-bar bg-success"
                                                          role="progressbar"
                                                          id="progressCount01"
-                                                         style="width: 0%; height: 40px !important;"
+                                                         style="width: 0%; height: 40px !important; overflow: hidden; min-width: 0;"
                                                          aria-valuenow="0"
                                                          aria-valuemin="0"
                                                          aria-valuemax="100">
                                                         0%
                                                     </div>
-                                                </div>
                                             </div>
                                         </li>
                                         <li class="m-t-20 m-b-20">
@@ -221,17 +219,15 @@
                                                 </div>
                                             </div>
                                             <div class="progress" style="height: 40px !important;">
-                                                <div class="progress" style="height: 40px;">
-                                                    <div class="progress-bar bg-success p-4"
+                                                    <div class="progress-bar bg-success"
                                                          role="progressbar"
                                                          id="progressCount02"
-                                                         style="width: 0%; height: 40px !important;"
+                                                         style="width: 0%; height: 40px !important; overflow: hidden; min-width: 0;"
                                                          aria-valuenow="0"
                                                          aria-valuemin="0"
                                                          aria-valuemax="100">
                                                         0%
                                                     </div>
-                                                </div>
                                             </div>
                                         </li>
                                     </ul>
@@ -289,8 +285,9 @@
                     : 0;
 
                 const progressCount01 = totalLocations > 0
-                    ? ((totalCount01 / totalLocations) * 100).toFixed(2)
+                    ? ((100 / totalLocations) * totalCount01).toFixed(2)
                     : 0;
+
                 $('#totalCount01Display').text(totalCount01);
                 $('#progressCount01Percentage').text(progressCount01);
 
