@@ -152,11 +152,12 @@ class ReceiptUnit extends Model
 
     public static function controlAccessUser()
     {
-        $warehouses = SecurityAccessWarehouse::Warehouses();
-        $centers = SecurityAccessWarehouse::Centers();
+        // Una sola consulta en lugar de Warehouses()+Centers() por separado,
+        // para ahorrar un round-trip a la base de datos en cada listado.
+        $access = SecurityAccessWarehouse::AccessScope();
 
-        return ReceiptUnit::whereIn('receiptunits.warehouseid', $warehouses)
-            ->whereIn('receiptunits.centerid', $centers);
+        return ReceiptUnit::whereIn('receiptunits.warehouseid', $access['warehouses'])
+            ->whereIn('receiptunits.centerid', $access['centers']);
     }
 
     protected static function boot()
@@ -315,8 +316,14 @@ class ReceiptUnit extends Model
 
     public function scopeLocation($query, $location)
     {
+        // OJO: antes filtraba por 'sl.name' sin que exista ningún join con ese
+        // alias, lo que generaba un error SQL en cuanto se usaba este filtro.
+        // whereHas reutiliza la relación 'location' (ya definida en el modelo)
+        // y genera un WHERE EXISTS indexado por locationid, sin necesitar joins.
         if ($location != '') {
-            $query->where('sl.name', 'like', "%{$location}%");
+            $query->whereHas('location', function ($q) use ($location) {
+                $q->where('name', 'like', "%{$location}%");
+            });
         }
     }
 

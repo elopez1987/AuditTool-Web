@@ -88,9 +88,13 @@ class ReceiptUnitController extends BaseController
 
     public function getDataReceipts(Request $request)
     {
+        // Solo se seleccionan las columnas que realmente consume el partial
+        // Yards.ReceiptUnits.partials.table (p.ej. 'center.description' no se
+        // usa en la vista), para reducir el payload de cada una de las
+        // consultas de precarga.
         $data = $this->filteredReceiptUnits($request)
-            ->with(['carrier:id,carrierid,name', 'zone:id,name', 'location:id,name', 'event:id,name',
-                'tracto:id,operatorname,phone,trucknumber,econumber', 'center:centerid,description,name', 'warehouse:warehouseid,name',
+            ->with(['carrier:id,name', 'zone:id,name', 'location:id,name', 'event:id,name',
+                'tracto:id,operatorname,phone,trucknumber,econumber', 'center:centerid,name', 'warehouse:warehouseid,name',
                 'unittype:id,description', 'truckcategory:truckcategoryid,description',
                 'unitstatus:id,name', 'status:statusid,name,auxiliary01', 'truck:id,name'])
             ->select([

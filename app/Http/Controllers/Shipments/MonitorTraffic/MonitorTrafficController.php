@@ -68,12 +68,12 @@ class MonitorTrafficController extends BaseController
             ->addColumn('statustransport', function ($row) {
                 return $row->transport?->has_data == 1
                     ? '<span class="badge bg-success" style="padding: 3px;font-size: 10px">Con datos</span>'
-                    : '<span class="badge bg-danger" style="color:white;padding: 3px;font-size: 10px">Sin datos</span>';
+                    : '-';
             })
             ->addColumn('key', function ($row) {
                 return $row->folio?->keydate
                     ? '<span class="badge bg-success" style="padding: 3px;font-size: 10px">Entregado</span>'
-                    : '<span class="badge bg-danger" style="color:white;padding: 3px;font-size: 10px">Pendiente</span>';
+                    : '-';
             })
             ->addColumn('precarga', fn ($row) => $row->header->location->name ?? '')
             ->addColumn('cortina', fn ($row) => $row->folio->location->name ?? '')
@@ -81,7 +81,8 @@ class MonitorTrafficController extends BaseController
             ->addColumn('staytime', fn ($row) => $row->folio->staytime ?? '')
             ->addColumn('statusunit', function ($row) {
                 if (! $row->folio?->entrydate) {
-                    return '<span class="badge bg-warning" style="font-size: 10px;color:white;padding: 3px">Sin reportarse</span>';
+                    //                    return '<span class="badge bg-warning" style="font-size: 10px;color:white;padding: 3px">Sin reportarse</span>';
+                    return '-';
                 }
 
                 return $row->folio?->entrydate > $row->loadingdate
