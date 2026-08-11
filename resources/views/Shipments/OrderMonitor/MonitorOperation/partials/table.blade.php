@@ -12,10 +12,23 @@
         };
     }
 
-    var oTable = $("#table-monitoroperation").DataTable({
+    var oTable;
+
+    /* La construcción del DataTable se difiere a una función para que se
+       ejecute una sola vez, después de restaurar los filtros guardados en
+       sessionStorage (ver index.blade.php). De lo contrario, "serverSide"
+       dispara automáticamente una petición inicial con filtros vacíos y
+       luego otra al restaurar los filtros, duplicando la carga. */
+    function initMonitorOperationTable() {
+        if (oTable) {
+            return oTable;
+        }
+
+        oTable = $("#table-monitoroperation").DataTable({
         "paging": true,
         "searching": false,
         "ordering": true,
+        "order": [],
         "sScrollY": "650px",
         "sScrollX": true,
         "processing": true,
@@ -55,6 +68,7 @@
             {data: 'header.totalpieces',name:'header.totalpieces'},
         ],
         "columnDefs": [
+            {"orderable": false, "targets": 0},
             {"width": "130px", "targets": 0},
             {"width": "130px", "targets": 1},
             {"width": "130px", "targets": 2},
@@ -124,9 +138,13 @@
         },
         "decimal": ",",
         "thousands": "."
-    });
+        });
+
+        return oTable;
+    }
+
     $('#search').on('submit', function (e) {
-        oTable.draw();
+        initMonitorOperationTable().draw();
         if (typeof loadMonitorOperationKpis === 'function') {
             loadMonitorOperationKpis();
         }

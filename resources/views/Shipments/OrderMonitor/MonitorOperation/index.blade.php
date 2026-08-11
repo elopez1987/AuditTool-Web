@@ -135,8 +135,16 @@
         $('#workday').bootstrapMaterialDatePicker({format: 'YYYY-MM-DD', weekStart: 1, time: false});
     </script>
     <script>
+        /* Evita que reloadtable() se dispare por eventos "change" generados
+           al restaurar los filtros guardados en sessionStorage durante la
+           carga inicial (ver bloque de restauración más abajo). */
+        var isRestoringMonitorOperationFilters = false;
+
         function reloadtable() {
-            $('#table-monitoroperation').DataTable().ajax.reload();
+            if (isRestoringMonitorOperationFilters) {
+                return;
+            }
+            initMonitorOperationTable().ajax.reload();
             loadMonitorOperationKpis();
         }
 
@@ -199,16 +207,24 @@
     </script>
     <script>
         $(document).ready(function () {
+            // Restaurar filtros guardados ANTES de inicializar el DataTable,
+            // para que la única petición inicial a getdataoperationmonitor
+            // ya incluya los filtros correctos (evita la doble petición).
+            isRestoringMonitorOperationFilters = true;
+
             document.getElementById("shipmentid").value = sessionStorage.getItem('shipmentidop');
-            
+
             // Cargar valores guardados de statusid
             let savedStatus = sessionStorage.getItem('statusidop');
             if (savedStatus) {
                 let statusValues = JSON.parse(savedStatus);
                 $('#statusid').val(statusValues).trigger('change');
             }
-            
-            reloadtable();
+
+            isRestoringMonitorOperationFilters = false;
+
+            initMonitorOperationTable();
+            loadMonitorOperationKpis();
         });
     </script>
 @endsection
