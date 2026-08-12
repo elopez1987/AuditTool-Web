@@ -132,7 +132,7 @@ class InventoryLocationCardController extends BaseController
         (clone $base)
             ->whereColumn('quantity01', 'quantity02')
             ->whereColumn('inventorypartnumber01_id', 'inventorypartnumber02_id')
-            ->update(['statusid_location' => false]);
+            ->update(['statusid_location' => true]);
 
         // Columnas diferentes → ERROR
         (clone $base)
@@ -140,7 +140,7 @@ class InventoryLocationCardController extends BaseController
                 ->whereColumn('quantity01', '!=', 'quantity02')
                 ->orWhereColumn('inventorypartnumber01_id', '!=', 'inventorypartnumber02_id')
             )
-            ->update(['statusid_location' => true]);
+            ->update(['statusid_location' => false]);
 
         return $this->redirectBackSuccessMessage('Conteo inicializado con exito.');
     }
