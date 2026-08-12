@@ -98,6 +98,16 @@
                                     </button>
                                 </a>
                                 @include('Inventory.InventoryHead.LocationCard.initialize-count2')
+
+                                <a href="" data-target="#modal-validateCard-{{$inventoryCardCount->id}}"
+                                   data-toggle="modal" data-placement="top">
+                                    <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md"
+                                            data-toggle="tooltip" data-placement="top" title="Cerrar Inventario">
+                                        <img src="{{asset('/ico/adreload.png')}}" alt="" class="img-16">
+                                        <span style="font-size: 11px;"> Validar ubicaciones</span>
+                                    </button>
+                                </a>
+                                @include('Inventory.InventoryHead.LocationCard.validataCard')
                             @endcan
                         </div>
                     </div>

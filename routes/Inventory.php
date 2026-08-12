@@ -117,6 +117,7 @@ Route::middleware(['auth'])->group(function () {
     //	Reiniciar conteo 1
     Route::put('reset-count-1/{id}', [InventoryLocationCardController::class, 'initializeCount1'])->name('reset-count-1');
     Route::put('reset-count-2/{id}', [InventoryLocationCardController::class, 'initializeCount2'])->name('reset-count-2');
+    Route::put('validateCard/{id}', [InventoryLocationCardController::class, 'validateCard'])->name('validateCard');
     // Validar evidencias de conteo de drones
     Route::get('validate-location/{id}', [InventoryValidateLocationController::class, 'index'])->name('validate-location');
     Route::post('saveResponseSuccessLocation/{id}', [InventoryValidateLocationController::class, 'saveResponseSuccessLocation'])->name('saveResponseSuccessLocation');
