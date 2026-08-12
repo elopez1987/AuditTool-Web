@@ -67,7 +67,7 @@
                 {data: 'event.name',name:'event.name'},
                 {data: 'entrydate'},
                 {data: 'unittype.description',name:'unittype.description'},
-                {data: 'staytime',searchable: false},
+                {data: 'staytime',searchable: false,ordenable: false,},
                 {data: 'tracto.id',name:'tracto.id'},
             ],
             // "order": [[2, 'desc']],

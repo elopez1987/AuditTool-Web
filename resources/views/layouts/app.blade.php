@@ -578,15 +578,15 @@
                                                         <span class="hide-menu"> Monitor de verificación</span></a>
                                                 </li>
                                             @endcan
-                                                @can('calculatetimeshipment')
-                                                    <li class="sidebar-item"><a
-                                                                href="{{route('calculatetimeshipment')}}"
-                                                                class="sidebar-link">
-                                                            <i class="lni lni-calculator"></i>
-                                                            <span class="hide-menu"> Calcular tiempo de embarque <span
-                                                                        class="label label-rounded label-danger ml-2">New</span>  </span></a>
-                                                    </li>
-                                                @endcan
+                                            @can('calculatetimeshipment')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('calculatetimeshipment')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-calculator"></i>
+                                                        <span class="hide-menu"> Calcular tiempo de embarque <span
+                                                                    class="label label-rounded label-danger ml-2">New</span>  </span></a>
+                                                </li>
+                                            @endcan
                                         </ul>
                                     </li>
                                 @endcan
@@ -1712,6 +1712,9 @@
                         @endif
                         @if(Auth::user()->access->center->centerid == 'BARRYTOL')
                             <img src="{{asset('/img/Barry.png')}}" alt="" style="width: 280px;height: 80px">
+                        @endif
+                        @if(Auth::user()->access->center->centerid == 'MX10')
+                            <img src="{{asset('/img/yokohama/yoko.jpeg')}}" alt="" style="width: 280px;height: 80px">
                         @endif
                     @endif
                 </div>
