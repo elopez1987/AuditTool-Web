@@ -8,11 +8,24 @@
                     Asignación de cédulas
                 </div>
                 <div class="card-body">
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <a href="{{url('inventoryheads/' . $inventoryhead->inventory_uuid)}}">
+                                <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
+                                    <img src="{{asset('/ico/back.png')}}" alt="" class="img-16 ml-1">
+                                    <span class="text-button ml-3 mr-3"> Salir</span>
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                    <hr class="mt-4">
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="card">
                                 <div class="card-header">Asignación de conteo 1</div>
                                 <div class="card-body">
+
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <form method="POST"

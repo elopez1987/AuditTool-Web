@@ -115,6 +115,7 @@ Route::middleware(['auth'])->group(function () {
     //	Detalle de ubicaciones por cedula para su validacion en drones y comparacion en APP
     Route::get('inventorylocations-card/{id}', [InventoryLocationCardController::class, 'index'])->name('inventorylocations-card');
     Route::get('getLocationCardInventory/{id}', [InventoryLocationCardController::class, 'getLocationCardInventory'])->name('getLocationCardInventory');
+    Route::get('getLocationCardKpis/{id}', [InventoryLocationCardController::class, 'getLocationCardKpis'])->name('getLocationCardKpis');
     //	Reiniciar conteo 1
     Route::put('reset-count-1/{id}', [InventoryLocationCardController::class, 'initializeCount1'])->name('reset-count-1');
     Route::put('reset-count-2/{id}', [InventoryLocationCardController::class, 'initializeCount2'])->name('reset-count-2');
