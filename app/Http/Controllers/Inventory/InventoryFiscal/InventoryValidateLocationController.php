@@ -60,7 +60,7 @@ class InventoryValidateLocationController extends BaseController
             return $this->errorResponse('Location count not found');
         }
 
-        $inventoryCardCount = InventoryCardCount::when('inventory_head_id', $locationCount->inventory_head_id)
+        $inventoryCardCount = InventoryCardCount::where('inventory_head_id', $locationCount->inventory_head_id)
             ->where('inventory_card_id', $locationCount->inventory_card_id)
             ->select(['id', 'user_count02_id'])
             ->first();
