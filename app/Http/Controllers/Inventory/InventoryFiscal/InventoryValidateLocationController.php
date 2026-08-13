@@ -62,7 +62,7 @@ class InventoryValidateLocationController extends BaseController
 
         $inventoryCardCount = InventoryCardCount::when('inventory_head_id', $locationCount->inventory_head_id)
             ->where('inventory_card_id', $locationCount->inventory_card_id)
-            ->select(['id', 'key_user_count_02'])
+            ->select(['id', 'user_count02_id'])
             ->first();
 
         if (is_null($inventoryCardCount)) {
@@ -77,7 +77,7 @@ class InventoryValidateLocationController extends BaseController
                 'statusid_count02' => 'C',
                 'statusid_location' => true,
             ]);
-            if ($inventoryCardCount->key_user_count_02 == null) {
+            if ($inventoryCardCount->user_count02_id == null) {
                 $inventoryCardCount->update([
                     'user_count02_id' => Auth::id(),
                 ]);
