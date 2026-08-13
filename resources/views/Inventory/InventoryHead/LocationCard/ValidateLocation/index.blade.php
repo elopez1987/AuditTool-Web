@@ -86,7 +86,7 @@
                                                         </span>
                                                         <h3 class="m-b-0 m-t-5"
                                                             style="font-size: 25px; color: #3f51b5; line-height: 1;">
-                                                            {{$locationCount->inventorypartnumber01->prtnum}}
+                                                            {{$locationCount->inventorypartnumber01 ? $locationCount->inventorypartnumber01->prtnum : ''}}
                                                         </h3>
                                                     </div>
                                                     <div>

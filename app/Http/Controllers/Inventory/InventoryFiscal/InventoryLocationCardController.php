@@ -21,11 +21,6 @@ class InventoryLocationCardController extends BaseController
             compact('inventoryCardCount', 'inventoryHead'));
     }
 
-    /**
-     * Consulta base de ubicaciones de conteo para una cédula, compartida
-     * por el datatable (getLocationCardInventory) y las cards de KPIs
-     * (getLocationCardKpis) para que ambos respeten los mismos filtros.
-     */
     private function baseLocationCardQuery(Request $request, InventoryCardCount $inventoryCardCount)
     {
         return DB::table('inventory_location_counts as ilc')
@@ -77,11 +72,6 @@ class InventoryLocationCardController extends BaseController
             ->toJson();
     }
 
-    /**
-     * Cards del div #cards-locations: pendientes/terminados de cada conteo
-     * y ubicaciones correctas/con error, respetando el mismo filtro de
-     * ubicación (name) que usa el datatable.
-     */
     public function getLocationCardKpis(Request $request, $id)
     {
         $inventoryCardCount = InventoryCardCount::findOrFail($id);
