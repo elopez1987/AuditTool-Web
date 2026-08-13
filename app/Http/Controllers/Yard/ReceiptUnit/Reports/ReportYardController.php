@@ -8,6 +8,8 @@ use App\Exports\Yard\ReceiptUnit\ReportUnitEvidences;
 use App\Exports\Yard\ReceiptUnit\StorageBoxStockExport;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Yard\Reports\FilterReportYardRequest;
+use App\Models\Yard\Carriers\ShipmentCarrier;
+use App\Models\Yard\ReceiptUnit;
 use App\Models\Yard\StorageReason;
 use App\Models\Yard\StorageUnitType;
 use Maatwebsite\Excel\Facades\Excel;
@@ -17,10 +19,19 @@ class ReportYardController extends BaseController
     public function index()
     {
         $centers = $this->getCenterForSelect();
+        $carriersFilter = $this->getCarrierForUser();
         $warehouses = $this->getWarehouseForSelect();
-        $carriers = $this->getCarriersForSelect();
+
+        $carriers = ShipmentCarrier::controlAccessUser()
+            ->whereStatusid('E')
+            ->Carriers($carriersFilter)
+            ->whereIn('id', ReceiptUnit::controlAccessUser()
+                ->select('carrierid')->distinct())
+            ->select(['name', 'id'])->get();
+
         $reasons = StorageReason::where('type', 'IN')->select(['id', 'name'])->get();
-        $origins = StorageUnitType::controlAccessUser()->where('statusid', 'E')->select(['id', 'description'])->get();
+        $origins = StorageUnitType::controlAccessUser()
+            ->where('statusid', 'E')->select(['id', 'description'])->get();
 
         return view('Yards.Reports.index',
             compact('centers', 'carriers', 'reasons', 'origins', 'warehouses'));

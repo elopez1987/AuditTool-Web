@@ -129,7 +129,7 @@
                                                     <th>Cliente</th>
                                                     <th>Ciudad</th>
                                                     <th>Línea de transporte</th>
-                                                    <th>Estatus Almacén</th>
+                                                    <th>Estatus de embarque</th>
                                                     <th>Estatus de unidad</th>
                                                     <th>Comentarios</th>
                                                     <th>Ingreso de Unidad</th>
