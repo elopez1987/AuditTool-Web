@@ -49,6 +49,49 @@
     </div>
 
     <div class="row">
+        <div class="col-lg-3 col-md-6 col-sm-12">
+            <div class="card border-info">
+                <div class="card-header bg-grey">
+                    <h5 class="m-b-0 text-black-50">Ubicaciones</h5>
+                </div>
+                <div class="card-body">
+                    <h2 class="text-red" id="totalLocationsWms" data-id="{{ $inventoryHead->id }}"></h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12">
+            <div class="card border-info">
+                <div class="card-header bg-grey">
+                    <h5 class="m-b-0 text-black-50">Números de parte</h5>
+                </div>
+                <div class="card-body">
+                    <h2 class="text-red" id="totalPartNumbersWms" data-id="{{ $inventoryHead->id }}"></h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12">
+            <div class="card border-info">
+                <div class="card-header bg-grey">
+                    <h5 class="m-b-0 text-black-50">Cantidad</h5>
+                </div>
+                <div class="card-body">
+                    <h2 class="text-red" id="totalQuantityLocationWms" data-id="{{ $inventoryHead->id }}"></h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12">
+            <div class="card border-info">
+                <div class="card-header bg-grey">
+                    <h5 class="m-b-0 text-black-50">Lpns</h5>
+                </div>
+                <div class="card-body">
+                    <h2 class="text-red" id="totalQuantityLpnsWms" data-id="{{ $inventoryHead->id }}"></h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
@@ -81,6 +124,19 @@
 
 @section('script')
     <script>
+        function loadInventoryStockWmsKpis() {
+            $.get('{{ route("getInventoryStockWmsKpis", $inventoryHead->id) }}')
+                .done(function (data) {
+                    $('#totalLocationsWms').text(data.totalLocations);
+                    $('#totalPartNumbersWms').text(data.totalPartNumbers);
+                    $('#totalQuantityLocationWms').text(data.totalQuantityLocation);
+                    $('#totalQuantityLpnsWms').text(data.totalQuantityLpns);
+                })
+                .fail(function () {
+                    $('#totalLocationsWms, #totalPartNumbersWms, #totalQuantityLocationWms, #totalQuantityLpnsWms').text('-');
+                });
+        }
+
         var oTable = $("#inventoryStockWmsTable").DataTable({
             "paging": true,
             "searching": false,
@@ -153,6 +209,10 @@
         $('#search').on('submit', function (e) {
             oTable.draw();
             e.preventDefault();
+        });
+
+        $(document).ready(function () {
+            loadInventoryStockWmsKpis();
         });
     </script>
 @endsection

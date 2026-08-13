@@ -53,6 +53,17 @@
                                     <input type="text" class="form-control"  id="shiptoid" name="shiptoid">
                                 </div>
                             </div>
+                            <div class="col-lg-2 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="statusid">Estatus</label>
+                                    <select name="statusid" id='statusid' class="form-control select2">
+                                        <option value="" selected>Seleccione una opción</option>
+                                        @foreach($status as $model)
+                                            <option value="{{$model->statusid}}"> {{$model->name}} </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </form>
                     <div class="row">
@@ -111,6 +122,11 @@
     </script>
     <script>
         $("#statusid,#warehouseid").change(function () {
+            reloadtable();
+        });
+        /* Recarga automatica al salir de los campos de texto, sin esperar a
+           que se presione "Buscar". */
+        $("#name,#shiptoid").on('blur', function () {
             reloadtable();
         });
     </script>

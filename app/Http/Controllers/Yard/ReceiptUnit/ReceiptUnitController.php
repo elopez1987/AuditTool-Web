@@ -49,7 +49,7 @@ class ReceiptUnitController extends BaseController
     public function index()
     {
         $this->authorize('receiptunits.index');
-        $carriers = $this->getCarriersForSelect();
+        $carriers = $this->getCarriersForSelectStock();
         $warehouses = $this->getWarehouseForSelect();
         $rason = $this->typeReasonInActiveToSelect();
         $status = $this->getStatusForSchema('RUS');
@@ -152,7 +152,7 @@ class ReceiptUnitController extends BaseController
 
         return Excel::download(
             new ExportAllReceiptUnits($request),
-            'existencia-cajas-' . Carbon::now()->format('Y-m-d_His') . '.xlsx'
+            'Existencia-Cajas-' . Carbon::now()->format('Y-m-d_His') . '.xlsx'
         );
     }
 

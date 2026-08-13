@@ -20,7 +20,7 @@ class ReceiptTrucksController extends BaseController
     public function index()
     {
         $this->authorize('receipttrucks.index');
-        $carriers = $this->getCarriersForSelect();
+        $carriers = $this->getCarriersForSelectStock();
         $warehouses = $this->getWarehouseForSelect();
 
         return view('Yards.ReceiptTrucks.index', compact('carriers', 'warehouses'));

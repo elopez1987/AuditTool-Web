@@ -522,8 +522,7 @@
                                         <a class="sidebar-link has-arrow waves-effect waves-dark"
                                            href="javascript:void(0)" aria-expanded="false"><i
                                                     class="mdi mdi-receipt"></i><span
-                                                    class="hide-menu">Horarios  <span
-                                                        class="label label-rounded label-danger ml-5">New</span>
+                                                    class="hide-menu">Horarios
                                             </span>
                                         </a>
                                         <ul aria-expanded="false" class="collapse second-level">
@@ -583,8 +582,7 @@
                                                             href="{{route('calculatetimeshipment')}}"
                                                             class="sidebar-link">
                                                         <i class="lni lni-calculator"></i>
-                                                        <span class="hide-menu"> Calcular tiempo de embarque <span
-                                                                    class="label label-rounded label-danger ml-2">New</span>  </span></a>
+                                                        <span class="hide-menu"> Calcular tiempo de embarque  </span></a>
                                                 </li>
                                             @endcan
                                         </ul>
@@ -596,8 +594,7 @@
                                         <a class="sidebar-link has-arrow waves-effect waves-dark"
                                            href="javascript:void(0)" aria-expanded="false"><i
                                                     class="mdi mdi-receipt"></i><span
-                                                    class="hide-menu"> Seguimiento <span
-                                                        class="label label-rounded label-danger ml-5">New</span> </span>
+                                                    class="hide-menu"> Seguimiento </span>
                                         </a>
                                         <ul aria-expanded="false" class="collapse second-level">
                                             @can('monitoranalistatrafico.index')
@@ -645,8 +642,7 @@
                                                             href="{{route('shipments-panels')}}"
                                                             class="sidebar-link">
                                                         <i class="lni lni-list"></i>
-                                                        <span class="hide-menu"> Semáforo de arribos <span
-                                                                    class="label label-rounded label-danger ml-2">New</span>  </span></a>
+                                                        <span class="hide-menu"> Semáforo de arribos  </span></a>
                                                 </li>
                                             @endcan
 

@@ -142,11 +142,12 @@ class OrderCustomer extends Model
 
     public static function controlAccessUser()
     {
-        $centers = SecurityAccessWarehouse::Centers();
-        $warehouses = SecurityAccessWarehouse::Warehouses();
+        // Una sola consulta en lugar de Warehouses()+Centers() por separado,
+        // para ahorrar un round-trip a la base de datos en cada listado.
+        $access = SecurityAccessWarehouse::AccessScope();
 
-        return OrderCustomer::whereIn('ordercustomers.centerid', $centers)
-            ->whereIn('ordercustomers.warehouseid', $warehouses);
+        return OrderCustomer::whereIn('ordercustomers.centerid', $access['centers'])
+            ->whereIn('ordercustomers.warehouseid', $access['warehouses']);
     }
 
     public function status(): BelongsTo
@@ -182,6 +183,13 @@ class OrderCustomer extends Model
     {
         if (trim($warehouseid) != '') {
             $query->where('ordercustomers.warehouseid', '=', $warehouseid);
+        }
+    }
+
+    public function scopeStatus($query, $statusid)
+    {
+        if (trim($statusid) != '') {
+            $query->where('ordercustomers.statusid', '=', $statusid);
         }
     }
 }
