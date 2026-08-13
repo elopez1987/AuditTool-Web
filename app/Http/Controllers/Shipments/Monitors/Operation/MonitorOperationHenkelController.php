@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Shipments\Monitors\Operation;
 
 use App\Http\Controllers\BaseController;
 use App\Models\Shipments\OrderDeliverie;
+use App\Models\Yard\Carriers\ShipmentCarrier;
+use App\Models\Yard\Customer\OrderCustomer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
@@ -13,17 +15,19 @@ class MonitorOperationHenkelController extends BaseController
     public function monitoroperationhenkel()
     {
         $this->authorize('monitoroperationhenkel');
-        $carriers = $this->getCarriersForSelect();
-        $customers = $this->getOrderCustomerForSelect();
         $status = $this->getStatusForSchema('KLE');
-        $statusQuantitys = OrderDeliverie::controlAccessUser()->whereNotIn('orderdeliveries.statusid', ['DH', 'CA'])
-            ->select(['statusid', DB::raw('COUNT(statusid) as total')])
-            ->groupBy('statusid')->orderByDesc('total')->get();
+
+        // Los selects se llenan solo con las lineas de transporte y clientes
+        // que realmente aparecen en los embarques del monitor (no con el
+        // catalogo completo), para que el filtro siempre tenga opciones
+        // utiles. Las tarjetas de estatus se cargan aparte via AJAX (ver
+        // getMonitorOperationHenkelKpis) para no bloquear la carga inicial.
+        $carriers = $this->getCarriersFromMonitorShipments();
+        $customers = $this->getCustomersFromMonitorShipments();
 
         return view(
             'Shipments.MonitorShipments.MonitorOperation.MonDeOper.index',
             compact(
-                'statusQuantitys',
                 'carriers',
                 'customers',
                 'status',
@@ -31,17 +35,14 @@ class MonitorOperationHenkelController extends BaseController
         );
     }
 
-    public function getShipmentStatus(Request $request)
+    /**
+     * Base de embarques del monitor de operaciones Henkel, compartida por
+     * los datatables, las tarjetas de KPIs y el llenado de los selects.
+     */
+    private function baseMonitorShipments(Request $request)
     {
-        $data = OrderDeliverie::controlAccessUser()
-            ->select(['orderdeliveries.shipmentid',
-                'orderdeliveries.statusid',
-                'orderdeliveries.carrierid',
-                'orderdeliveries.customerid',
-                'orderdeliveries.folionumber'])
-            ->with(['status:statusid,name,auxiliary01', 'customer:id,name', 'folio:id,entrydate', 'carrier:id,name,centerid'])
+        return OrderDeliverie::controlAccessUser()
             ->whereNotIn('orderdeliveries.statusid', ['DH', 'CA'])
-            ->whereNotNull('orderdeliveries.folionumber')
             ->when($request->input('customerid'), function ($q) use ($request) {
                 $q->where('orderdeliveries.customerid', $request->input('customerid'));
             })
@@ -51,32 +52,99 @@ class MonitorOperationHenkelController extends BaseController
             ->when($request->input('shipmentid'), function ($q) use ($request) {
                 $q->where('orderdeliveries.shipmentid', $request->input('shipmentid'));
             });
+    }
 
-        return $this->showDataToView($data, '');
+    private function getCarriersFromMonitorShipments()
+    {
+        $carrierIds = OrderDeliverie::controlAccessUser()
+            ->whereNotIn('orderdeliveries.statusid', ['DH', 'CA'])
+            ->whereNotNull('orderdeliveries.carrierid')
+            ->distinct()
+            ->pluck('orderdeliveries.carrierid');
+
+        return ShipmentCarrier::whereIn('id', $carrierIds)
+            ->select(['id', 'name'])
+            ->orderBy('name')
+            ->get();
+    }
+
+    private function getCustomersFromMonitorShipments()
+    {
+        $customerIds = OrderDeliverie::controlAccessUser()
+            ->whereNotIn('orderdeliveries.statusid', ['DH', 'CA'])
+            ->whereNotNull('orderdeliveries.customerid')
+            ->distinct()
+            ->pluck('orderdeliveries.customerid');
+
+        return OrderCustomer::whereIn('id', $customerIds)
+            ->select(['id', 'name'])
+            ->orderBy('name')
+            ->get();
+    }
+
+    /**
+     * Cantidad de embarques por estatus para las tarjetas de la parte
+     * superior de la vista, respetando los mismos filtros que el
+     * datatable (sin el propio statusid, para poder ver el desglose
+     * completo aunque ya se haya seleccionado una tarjeta).
+     */
+    public function getMonitorOperationHenkelKpis(Request $request)
+    {
+        $this->authorize('monitoroperationhenkel');
+
+        $statusQuantitys = $this->baseMonitorShipments($request)
+            ->select(['statusid', DB::raw('COUNT(statusid) as total')])
+            ->groupBy('statusid')
+            ->orderByDesc('total')
+            ->with('status:statusid,name,auxiliary01')
+            ->get();
+
+        return response()->json(
+            $statusQuantitys->map(fn ($row) => [
+                'statusid' => $row->statusid,
+                'name' => $row->status->name ?? $row->statusid,
+                'color' => $row->status->auxiliary01 ?? '#b0bec5',
+                'total' => $row->total,
+            ]),
+        );
+    }
+
+    public function getShipmentStatus(Request $request)
+    {
+        $data = $this->baseMonitorShipments($request)
+            ->select(['orderdeliveries.shipmentid',
+                'orderdeliveries.statusid',
+                'orderdeliveries.carrierid',
+                'orderdeliveries.customerid',
+                'orderdeliveries.folionumber'])
+            ->with(['status:statusid,name', 'customer:id,name', 'folio:id,entrydate', 'carrier:id,name'])
+            ->whereNotNull('orderdeliveries.folionumber')
+            ->when($request->input('statusid'), function ($q) use ($request) {
+                $q->where('orderdeliveries.statusid', $request->input('statusid'));
+            });
+
+        return DataTables::of($data)->toJson();
     }
 
     public function getDataMonitorOperation(Request $request)
     {
-        $data = OrderDeliverie::controlAccessUser()
+        $data = $this->baseMonitorShipments($request)
             ->select(['orderdeliveries.id', 'orderdeliveries.customerid', 'orderdeliveries.carrierid', 'loadingdate',
                 'orderdeliveries.downloaddate', 'orderdeliveries.statusid', 'orderdeliveries.centerid',
                 'orderdeliveries.shipmentid', 'orderdeliveries.folionumber'])
             ->with([
-                'customer:id,name,city,centerid',
-                'carrier:id,name,centerid',
+                'customer:id,name,city',
+                'carrier:id,name',
+                // 'folio.status' se precarga porque el addColumn 'statusunit'
+                // la consulta por fila; sin esto Yajra dispara un lazy-load
+                // N+1 (una query extra por cada registro con folio asignado).
                 'folio:id,entrydate,keydate,statusid',
+                'folio.status:statusid,name,auxiliary01',
                 'operation:id,comment01,orderid',
                 'monitor:id,outputdate,orderid',
                 'status:statusid,name,auxiliary01'])
-            ->whereNotIn('orderdeliveries.statusid', ['DH', 'CA'])
-            ->when($request->input('customerid'), function ($q) use ($request) {
-                $q->where('orderdeliveries.customerid', $request->input('customerid'));
-            })
-            ->when($request->input('carrierid'), function ($q) use ($request) {
-                $q->where('orderdeliveries.carrierid', $request->input('carrierid'));
-            })
-            ->when($request->input('shipmentid'), function ($q) use ($request) {
-                $q->where('orderdeliveries.shipmentid', $request->input('shipmentid'));
+            ->when($request->input('statusid'), function ($q) use ($request) {
+                $q->where('orderdeliveries.statusid', $request->input('statusid'));
             });
 
         return DataTables::eloquent($data)

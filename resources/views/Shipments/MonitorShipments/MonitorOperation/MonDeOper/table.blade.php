@@ -18,7 +18,7 @@
                 d.shipmentid = $('input[name=shipmentid]').val();
                 d.carrierid = $('select[name=carrierid]').val();
                 d.customerid = $('select[name=customerid]').val();
-                d.statusid = $('input[name=statusid]').val();
+                d.statusid = monitorOperationHenkelStatusId;
             }
         },
         "columns": [

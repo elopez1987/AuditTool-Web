@@ -8,6 +8,7 @@ use App\Models\Inventory\InventoryFiscal\InventoryHead;
 use App\Models\Inventory\InventoryFiscal\InventoryLocationCount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Facades\DataTables;
 
 class InventoryLocationCardController extends BaseController
@@ -107,6 +108,39 @@ class InventoryLocationCardController extends BaseController
                 'statusid_count02' => 'F',
                 'user_count02_id' => null,
             ]);
+
+        return $this->redirectBackSuccessMessage('Conteo inicializado con exito.');
+    }
+
+    public function validateCard($id)
+    {
+
+        $inventoryCardCount = InventoryCardCount::findOrFail($id);
+        Log::info('InventoryCardCount: ' . $inventoryCardCount);
+
+        $base = InventoryLocationCount::where('inventory_head_id', $inventoryCardCount->inventory_head_id)
+            ->where('inventory_card_id', $inventoryCardCount->inventory_card_id)
+//			->where('inventory_card_id', $id)
+            ->where('statusid_count01', 'C')
+            ->where('statusid_count02', 'C')
+            ->whereNotNull('quantity01')
+            ->whereNotNull('quantity02')
+            ->whereNotNull('inventorypartnumber01_id')
+            ->whereNotNull('inventorypartnumber02_id');
+
+        // Columnas iguales → CORRECTO
+        (clone $base)
+            ->whereColumn('quantity01', 'quantity02')
+            ->whereColumn('inventorypartnumber01_id', 'inventorypartnumber02_id')
+            ->update(['statusid_location' => true]);
+
+        // Columnas diferentes → ERROR
+        (clone $base)
+            ->where(fn ($q) => $q
+                ->whereColumn('quantity01', '!=', 'quantity02')
+                ->orWhereColumn('inventorypartnumber01_id', '!=', 'inventorypartnumber02_id')
+            )
+            ->update(['statusid_location' => false]);
 
         return $this->redirectBackSuccessMessage('Conteo inicializado con exito.');
     }

@@ -2,70 +2,67 @@
 
 @section('css')
     <style>
-        .status-cards-row .status-card {
+        .status-cards-row {
+            row-gap: .5rem;
+        }
+        .status-card {
             position: relative;
-            overflow: hidden;
-            height: 100%;
-            text-align: center;
-            padding: 24px 14px 20px;
-            background-color: #ffffff;
-            background-image: radial-gradient(#dbe7ef 1px, transparent 1.4px);
-            background-size: 14px 14px;
-            border: 1px solid #e6eef4;
-            border-radius: 14px;
-            box-shadow: 0 4px 14px rgba(41, 171, 226, 0.10);
-            transition: transform .2s ease, box-shadow .2s ease;
-        }
-        .status-cards-row .status-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 24px rgba(41, 171, 226, 0.22);
-        }
-        .status-cards-row .status-card__top {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 88%;
-            height: 8px;
-            /*background: linear-gradient(90deg, #29abe2, #1b8dbf);*/
-            background: linear-gradient(90deg, #D0DF00, #B5BD00);
-            border-radius: 0 0 8px 8px;
-        }
-        .status-cards-row .status-card__bottom {
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            height: 10px;
-            background: linear-gradient(90deg, #D0DF00, #B5BD00);
-        }
-        .status-cards-row .status-card__body {
-            position: relative;
-            z-index: 1;
-        }
-        .status-cards-row .status-card__total {
-            width: 62px;
-            height: 62px;
-            margin: 6px auto 0;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            border-radius: 50%;
-            background: linear-gradient(90deg, #D0DF00, #B5BD00);
-            color: #ffffff;
-            font-size: 1.5rem;
+            background: #fff;
+            border: 1px solid #e8e8e8;
+            border-radius: 10px;
+            padding: .85rem .5rem;
+            height: 100%;
+            cursor: pointer;
+            transition: box-shadow .15s ease, transform .15s ease, border-color .15s ease;
+        }
+        .status-card:hover {
+            box-shadow: 0 2px 10px rgba(0,0,0,.1);
+            transform: translateY(-2px);
+        }
+        .status-card.is-active {
+            border-color: var(--status-card-color, #556ee6);
+            box-shadow: 0 0 0 2px var(--status-card-color, #556ee6) inset;
+        }
+        .status-card__top,
+        .status-card__bottom {
+            display: block;
+            width: 90%;
+            height: 4px;
+            border-radius: 4px;
+            background-color: var(--status-card-color, #b0bec5);
+        }
+        .status-card__top {
+            margin-bottom: .5rem;
+        }
+        .status-card__bottom {
+            margin-top: .5rem;
+        }
+        .status-card__body {
+            text-align: center;
+        }
+        .status-card__total {
+            font-size: 1.6rem;
             font-weight: 700;
             line-height: 1;
-            box-shadow: 0 6px 14px rgba(41, 171, 226, 0.35);
+            color: #2B2F33;
         }
-        .status-cards-row .status-card__label {
+        .status-card__label {
             display: block;
-            margin-top: 12px;
-            font-size: .78rem;
-            font-weight: 600;
-            letter-spacing: .4px;
+            margin-top: .25rem;
+            font-size: .68rem;
+            font-weight: 700;
             text-transform: uppercase;
-            color: #5a6b78;
+            letter-spacing: .03em;
+            color: #5A5A5A;
+        }
+        .status-card__clear {
+            font-size: .75rem;
+            text-decoration: underline;
+            cursor: pointer;
         }
     </style>
 @endsection
@@ -74,24 +71,16 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-header">
-                    Monitor de operaciones de embarques.
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span>Monitor de operaciones de embarques.</span>
+                    <span class="status-card__clear" id="clear-status-filter" style="display:none;">Quitar filtro de estatus</span>
                 </div>
                 <div class="card-body">
-                    <div class="row status-cards-row">
-                        @foreach($statusQuantitys as $status)
-                            <div class="col-lg-1 col-md-1 col-sm-3 mb-3">
-                                <div class="status-card">
-                                    <span class="status-card__top"></span>
-                                    <div class="status-card__body">
-                                        <div class="status-card__total">{{$status->total}}</div>
-                                        <span class="status-card__label">{{$status->status->name}}</span>
-                                    </div>
-                                    <span class="status-card__bottom"></span>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
+                    {{-- Las tarjetas se cargan vía AJAX (ver script mas abajo) respetando
+                         los filtros de embarque/linea de transporte/cliente ya aplicados,
+                         sin bloquear la carga inicial de la vista. Son clickeables para
+                         filtrar ambas tablas por estatus. --}}
+                    <div class="row status-cards-row" id="monitor-operation-status-cards"></div>
                     <hr class="mt-3 mb-3">
                     <div class="row">
                         <div class="col-lg-12">
@@ -222,10 +211,71 @@
 @endsection
 
 @section('script')
+    <script>
+        // Estatus seleccionado al hacer click en una tarjeta; se envia como
+        // filtro adicional a ambos datatables (embarques y estadia).
+        var monitorOperationHenkelStatusId = '';
+    </script>
     @include('Shipments.MonitorShipments.MonitorOperation.MonDeOper.table')
     @include('Shipments.MonitorShipments.MonitorOperation.MonDeOper.table-status')
 
     <script>
+        function reloadtable() {
+            $('#table-monitortrafico').DataTable().ajax.reload();
+        }
+        function reloadtablestatus() {
+            $('#table-monitor-status').DataTable().ajax.reload();
+        }
+
+        /* Tarjetas con la cantidad de embarques por estatus. Son clickeables:
+           al seleccionar una se filtran ambas tablas por ese estatus; un
+           segundo click (o el link "Quitar filtro") lo limpia. */
+        function renderMonitorOperationHenkelStatusCards(items) {
+            let $container = $('#monitor-operation-status-cards');
+            $container.empty();
+            $.each(items, function (index, item) {
+                let statusid = String(item.statusid);
+                let isActive = statusid === String(monitorOperationHenkelStatusId);
+                $container.append(
+                    $('<div class="col-lg-1 col-md-2 col-sm-3 mb-3"></div>').append(
+                        $('<div class="status-card"></div>')
+                            .toggleClass('is-active', isActive)
+                            .css('--status-card-color', item.color || '#b0bec5')
+                            .append('<span class="status-card__top"></span>')
+                            .append(
+                                $('<div class="status-card__body"></div>')
+                                    .append($('<div class="status-card__total"></div>').text(item.total))
+                                    .append($('<span class="status-card__label"></span>').text(item.name))
+                            )
+                            .append('<span class="status-card__bottom"></span>')
+                            .on('click', function () {
+                                monitorOperationHenkelStatusId = (monitorOperationHenkelStatusId === statusid) ? '' : statusid;
+                                loadMonitorOperationHenkelKpis();
+                                reloadtable();
+                                reloadtablestatus();
+                            })
+                    )
+                );
+            });
+            $('#clear-status-filter').toggle(monitorOperationHenkelStatusId !== '');
+        }
+
+        function loadMonitorOperationHenkelKpis() {
+            $.ajax({
+                url: '{{ route("getMonitorOperationHenkelKpis") }}',
+                success: function (r) {
+                    renderMonitorOperationHenkelStatusCards(r);
+                }
+            });
+        }
+
+        $('#clear-status-filter').on('click', function () {
+            monitorOperationHenkelStatusId = '';
+            loadMonitorOperationHenkelKpis();
+            reloadtable();
+            reloadtablestatus();
+        });
+
         $("#carrierid,#customerid").change(function () {
             reloadtable();
         });
@@ -233,12 +283,23 @@
             reloadtablestatus();
         });
 
-        function reloadtable() {
-            $('#table-monitortrafico').DataTable().ajax.reload();
-        }
-        function reloadtablestatus() {
-            $('#table-monitor-status').DataTable().ajax.reload();
-        }
+        /* Recarga automatica al salir del campo de embarque, sin esperar a
+           que se presione "Buscar", igual que en otros monitores. */
+        $("#shipmentid").on('blur', function () {
+            reloadtable();
+        });
+        $("#shipmentid-status").on('blur', function () {
+            reloadtablestatus();
+        });
+
+        $(document).ready(function () {
+            loadMonitorOperationHenkelKpis();
+            setInterval(function () {
+                reloadtable();
+                reloadtablestatus();
+                loadMonitorOperationHenkelKpis();
+            }, 1000 * 60 * 5);
+        });
     </script>
 
 @endsection
