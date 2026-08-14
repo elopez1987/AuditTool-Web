@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SafetyTours\Incidents\DashboardIncidentsController;
 use App\Http\Controllers\SafetyTours\Incidents\StorageCategoryDetailConfigurationController;
 use App\Http\Controllers\SafetyTours\Incidents\StorageCategorySafetyController;
 use App\Http\Controllers\SafetyTours\Incidents\StorageIncidenceSafetiesController;
@@ -44,11 +45,13 @@ Route::middleware(['auth'])->group(function () {
     //	Incidencias encontradas
     Route::resource('storage-incidence-safeties', StorageIncidenceSafetiesController::class);
     Route::get('getIncidenceSafeties', [StorageIncidenceSafetiesController::class, 'getIncidenceSafeties'])->name('getIncidenceSafeties');
-
     // Categorias de incidencias
     Route::resource('storage-category-safeties', StorageCategorySafetyController::class)->except(['destroy']);
     Route::get('getCategoriesSafeties', [StorageCategorySafetyController::class, 'getCategoriesSafeties'])->name('getCategoriesSafeties');
     // Configuracion de tiempos de respuesta de las subcategorias
     Route::put('storage-category-detail-configuration/{id}', [StorageCategoryDetailConfigurationController::class, 'update']);
+    //	Dashboard de incidencias
+    Route::get('dashboard-incidents', [DashboardIncidentsController::class, 'index'])->name('dashboard-incidents');
+    Route::get('getDashboardIncidents', [DashboardIncidentsController::class, 'getDashboardIncidents'])->name('getDashboardIncidents');
 
 });

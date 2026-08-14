@@ -77,6 +77,7 @@ class InventoryValidateLocationController extends BaseController
                 'statusid_count02' => 'C',
                 'statusid_location' => true,
             ]);
+
             if ($inventoryCardCount->user_count02_id == null) {
                 $inventoryCardCount->update([
                     'user_count02_id' => Auth::id(),

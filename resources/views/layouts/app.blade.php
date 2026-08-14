@@ -1315,6 +1315,14 @@
                                                         <span class="hide-menu"> Incidencias</span></a>
                                                 </li>
                                             @endcan
+                                            @can('dashboard-incidents')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('dashboard-incidents')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-archive"></i>
+                                                        <span class="hide-menu"> Incidencias</span></a>
+                                                </li>
+                                            @endcan
                                             @can('storage-category-safeties.index')
                                                 <li class="sidebar-item"><a
                                                             href="{{route('storage-category-safeties.index')}}"
