@@ -18,8 +18,9 @@ class OrderCustomerController extends BaseController
     {
         $this->authorize('ordercustomers.index');
         $warehouses = $this->getWarehouseForSelect();
+        $status = $this->getStatusForSchema('STS');
 
-        return view('Yards.OrderCustomers.index', compact('warehouses'));
+        return view('Yards.OrderCustomers.index', compact('warehouses', 'status'));
     }
 
     public function getDataCustomers(Request $request)
@@ -29,6 +30,7 @@ class OrderCustomerController extends BaseController
             ->Name($request->input('name'))
             ->Shipto($request->input('shiptoid'))
             ->Warehouse($request->input('warehouseid'))
+            ->Status($request->input('statusid'))
             ->select([
                 'ordercustomers.id',
                 'ordercustomers.centerid',

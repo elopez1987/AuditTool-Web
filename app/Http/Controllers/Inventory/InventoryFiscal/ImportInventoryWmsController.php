@@ -38,6 +38,30 @@ class ImportInventoryWmsController extends BaseController
         return $this->showDataToView($data, '');
     }
 
+    /**
+     * Cards de la parte superior de la vista: total de ubicaciones, total de
+     * números de parte y las sumas totales de quantity_location y
+     * quantity_lpns para este inventario.
+     */
+    public function getInventoryStockWmsKpis($id)
+    {
+        $totals = ImportInventoryWms::where('inventory_head_id', $id)
+            ->selectRaw('
+                COUNT(DISTINCT inventory_location_id) as total_locations,
+                COUNT(DISTINCT inventorypartnumber_id) as total_part_numbers,
+                SUM(quantity_location) as total_quantity_location,
+                SUM(quantity_lpns) as total_quantity_lpns
+            ')
+            ->first();
+
+        return response()->json([
+            'totalLocations' => $totals->total_locations ?? 0,
+            'totalPartNumbers' => $totals->total_part_numbers ?? 0,
+            'totalQuantityLocation' => $totals->total_quantity_location ?? 0,
+            'totalQuantityLpns' => $totals->total_quantity_lpns ?? 0,
+        ]);
+    }
+
     public function importStockWms(Request $request)
     {
         $validated = $request->validate([

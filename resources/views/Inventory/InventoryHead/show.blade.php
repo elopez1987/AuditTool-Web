@@ -16,13 +16,14 @@
                                     <span class="text-button ml-3 mr-3"> Salir</span>
                                 </button>
                             </a>
-                            
-                            <a href="{{url('inventoryheads')}}">
-                                <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
-                                    <img src="{{asset('/ico/sap.png')}}" alt="" class="img-16 ml-1">
-                                    <span class="text-button ml-3 mr-3"> Existencia SAP</span>
-                                </button>
-                            </a>
+                            @can('import-inventory-sap')
+                                <a href="{{url('import-inventory-sap/' . $inventoryhead->inventory_uuid)}}">
+                                    <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
+                                        <img src="{{asset('/ico/sap.png')}}" alt="" class="img-16 ml-1">
+                                        <span class="text-button ml-3 mr-3"> Existencia SAP</span>
+                                    </button>
+                                </a>
+                            @endcan
                             @can('import-inventory-wms')
                                 <a href="{{url('import-inventory-wms/' . $inventoryhead->inventory_uuid)}}">
                                     <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
@@ -37,12 +38,12 @@
                                     <span class="text-button ml-3 mr-3"> Conciliación</span>
                                 </button>
                             </a>
-                            {{--                            <a href="{{url('inventoryheads')}}">--}}
-                            {{--                                <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">--}}
-                            {{--                                    <img src="{{asset('/ico/importdata.png')}}" alt="" class="img-16 ml-1">--}}
-                            {{--                                    <span class="text-button ml-3 mr-3"> Tareas 3er Conteo</span>--}}
-                            {{--                                </button>--}}
-                            {{--                            </a>--}}
+                            <a href="{{url('inventoryheads')}}">
+                                <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
+                                    <img src="{{asset('/ico/importdata.png')}}" alt="" class="img-16 ml-1">
+                                    <span class="text-button ml-3 mr-3"> Tareas 3er Conteo</span>
+                                </button>
+                            </a>
 
                             <a href="{{url('inventory-supervisors/' . $inventoryhead->inventory_uuid)}}">
                                 <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
@@ -196,15 +197,15 @@
                                                 </div>
                                             </div>
                                             <div class="progress" style="height: 40px !important;">
-                                                    <div class="progress-bar bg-success"
-                                                         role="progressbar"
-                                                         id="progressCount01"
-                                                         style="width: 0%; height: 40px !important; overflow: hidden; min-width: 0;"
-                                                         aria-valuenow="0"
-                                                         aria-valuemin="0"
-                                                         aria-valuemax="100">
-                                                        0%
-                                                    </div>
+                                                <div class="progress-bar bg-success"
+                                                     role="progressbar"
+                                                     id="progressCount01"
+                                                     style="width: 0%; height: 40px !important; overflow: hidden; min-width: 0;"
+                                                     aria-valuenow="0"
+                                                     aria-valuemin="0"
+                                                     aria-valuemax="100">
+                                                    0%
+                                                </div>
                                             </div>
                                         </li>
                                         <li class="m-t-20 m-b-20">
@@ -219,15 +220,15 @@
                                                 </div>
                                             </div>
                                             <div class="progress" style="height: 40px !important;">
-                                                    <div class="progress-bar bg-success"
-                                                         role="progressbar"
-                                                         id="progressCount02"
-                                                         style="width: 0%; height: 40px !important; overflow: hidden; min-width: 0;"
-                                                         aria-valuenow="0"
-                                                         aria-valuemin="0"
-                                                         aria-valuemax="100">
-                                                        0%
-                                                    </div>
+                                                <div class="progress-bar bg-success"
+                                                     role="progressbar"
+                                                     id="progressCount02"
+                                                     style="width: 0%; height: 40px !important; overflow: hidden; min-width: 0;"
+                                                     aria-valuenow="0"
+                                                     aria-valuemin="0"
+                                                     aria-valuemax="100">
+                                                    0%
+                                                </div>
                                             </div>
                                         </li>
                                     </ul>

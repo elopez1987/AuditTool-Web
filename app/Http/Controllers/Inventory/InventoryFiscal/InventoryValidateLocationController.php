@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Inventory\InventoryFiscal;
 
 use App\Http\Controllers\BaseController;
 use App\Models\Inventory\InventoryFiscal\ImportInventoryWms;
+use App\Models\Inventory\InventoryFiscal\InventoryCardCount;
 use App\Models\Inventory\InventoryFiscal\InventoryLocationCount;
 use App\Models\Inventory\InventoryFiscal\InventoryLocationEvidences;
 use Auth;
@@ -45,8 +46,10 @@ class InventoryValidateLocationController extends BaseController
 
         $evidences = InventoryLocationEvidences::where('inventory_location_count_id', $id)->get();
 
-        return view('Inventory.InventoryHead.LocationCard.ValidateLocation.index',
-            compact('locationCount', 'evidences', 'locationStock'));
+        return view(
+            'Inventory.InventoryHead.LocationCard.ValidateLocation.index',
+            compact('locationCount', 'evidences', 'locationStock')
+        );
     }
 
     public function saveResponseSuccessLocation($id)
@@ -57,6 +60,15 @@ class InventoryValidateLocationController extends BaseController
             return $this->errorResponse('Location count not found');
         }
 
+        $inventoryCardCount = InventoryCardCount::where('inventory_head_id', $locationCount->inventory_head_id)
+            ->where('inventory_card_id', $locationCount->inventory_card_id)
+            ->select(['id', 'user_count02_id'])
+            ->first();
+
+        if (is_null($inventoryCardCount)) {
+            return $this->errorResponse('Inventory card count not found');
+        }
+
         DB::beginTransaction();
 
         try {
@@ -65,6 +77,12 @@ class InventoryValidateLocationController extends BaseController
                 'statusid_count02' => 'C',
                 'statusid_location' => true,
             ]);
+
+            if ($inventoryCardCount->user_count02_id == null) {
+                $inventoryCardCount->update([
+                    'user_count02_id' => Auth::id(),
+                ]);
+            }
 
             DB::commit();
 
@@ -100,7 +118,7 @@ class InventoryValidateLocationController extends BaseController
                     'user_count02_id' => Auth::id(),
                     'statusid_count02' => 'C',
                     'statusid_location' => false,
-                ]
+                ],
             );
 
             DB::commit();

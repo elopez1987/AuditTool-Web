@@ -48,6 +48,68 @@
                             </form>
                         </div>
                     </div>
+                    <div class="row" id="cards-locations">
+                        <div class="col-lg-2 col-md-4 col-sm-6">
+                            <div class="card border-info">
+                                <div class="card-header bg-grey">
+                                    <h5 class="m-b-0 text-black-50">Conteo 1 - Pendientes</h5>
+                                </div>
+                                <div class="card-body">
+                                    <h2 class="text-red" id="pendientesCount01"></h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-sm-6">
+                            <div class="card border-info">
+                                <div class="card-header bg-grey">
+                                    <h5 class="m-b-0 text-black-50">Conteo 1 - Terminados</h5>
+                                </div>
+                                <div class="card-body">
+                                    <h2 class="text-red" id="terminadosCount01"></h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-sm-6">
+                            <div class="card border-info">
+                                <div class="card-header bg-grey">
+                                    <h5 class="m-b-0 text-black-50">Conteo 2 - Pendientes</h5>
+                                </div>
+                                <div class="card-body">
+                                    <h2 class="text-red" id="pendientesCount02"></h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-sm-6">
+                            <div class="card border-info">
+                                <div class="card-header bg-grey">
+                                    <h5 class="m-b-0 text-black-50">Conteo 2 - Terminados</h5>
+                                </div>
+                                <div class="card-body">
+                                    <h2 class="text-red" id="terminadosCount02"></h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-sm-6">
+                            <div class="card border-info">
+                                <div class="card-header bg-grey">
+                                    <h5 class="m-b-0 text-black-50">Ubicaciones - Correctas</h5>
+                                </div>
+                                <div class="card-body">
+                                    <h2 class="text-green" id="ubicacionesCorrectas"></h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-sm-6">
+                            <div class="card border-info">
+                                <div class="card-header bg-grey">
+                                    <h5 class="m-b-0 text-black-50">Ubicaciones - Con Error</h5>
+                                </div>
+                                <div class="card-body">
+                                    <h2 class="text-red" id="ubicacionesConError"></h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-12">
                             <table width="100%" id="table-cards-locations"
@@ -120,8 +182,26 @@
 
 @section('script')
     <script>
+        function loadLocationCardKpis() {
+            $.get('{{ route("getLocationCardKpis", $inventoryCardCount->id) }}', {
+                name: $('input[name=name]').val(),
+            })
+                .done(function (data) {
+                    $('#pendientesCount01').text(data.pendientesCount01);
+                    $('#terminadosCount01').text(data.terminadosCount01);
+                    $('#pendientesCount02').text(data.pendientesCount02);
+                    $('#terminadosCount02').text(data.terminadosCount02);
+                    $('#ubicacionesCorrectas').text(data.ubicacionesCorrectas);
+                    $('#ubicacionesConError').text(data.ubicacionesConError);
+                })
+                .fail(function () {
+                    $('#pendientesCount01, #terminadosCount01, #pendientesCount02, #terminadosCount02, #ubicacionesCorrectas, #ubicacionesConError').text('-');
+                });
+        }
+
         function reloadtable() {
             $('#table-cards-locations').DataTable().ajax.reload();
+            loadLocationCardKpis();
         }
     </script>
     <script>
@@ -243,7 +323,12 @@
         });
         $('#search').on('submit', function (e) {
             oTable.draw();
+            loadLocationCardKpis();
             e.preventDefault();
+        });
+
+        $(document).ready(function () {
+            loadLocationCardKpis();
         });
     </script>
 

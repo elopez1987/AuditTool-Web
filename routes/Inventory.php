@@ -16,6 +16,7 @@ use App\Http\Controllers\Inventory\InventoryFiscal\InventoryHeadController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryHeadEventController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryLocationCardController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryLocationController;
+use App\Http\Controllers\Inventory\InventoryFiscal\InventoryStockSapController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventorySupervisorController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryValidateLocationController;
 use App\Http\Controllers\Inventory\InventoryFiscal\PrintFormatInventoryController;
@@ -114,6 +115,7 @@ Route::middleware(['auth'])->group(function () {
     //	Detalle de ubicaciones por cedula para su validacion en drones y comparacion en APP
     Route::get('inventorylocations-card/{id}', [InventoryLocationCardController::class, 'index'])->name('inventorylocations-card');
     Route::get('getLocationCardInventory/{id}', [InventoryLocationCardController::class, 'getLocationCardInventory'])->name('getLocationCardInventory');
+    Route::get('getLocationCardKpis/{id}', [InventoryLocationCardController::class, 'getLocationCardKpis'])->name('getLocationCardKpis');
     //	Reiniciar conteo 1
     Route::put('reset-count-1/{id}', [InventoryLocationCardController::class, 'initializeCount1'])->name('reset-count-1');
     Route::put('reset-count-2/{id}', [InventoryLocationCardController::class, 'initializeCount2'])->name('reset-count-2');
@@ -170,8 +172,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('import-inventory-wms/{id}', [ImportInventoryWmsController::class, 'index'])->name('import-inventory-wms');
     Route::post('import-inventory-wms-excel', [ImportInventoryWmsController::class, 'importStockWms'])->name('import-inventory-wms-excel');
     Route::get('getInventoryStockWms/{id}', [ImportInventoryWmsController::class, 'getInventoryStockWms'])->name('getInventoryStockWms');
+    Route::get('getInventoryStockWmsKpis/{id}', [ImportInventoryWmsController::class, 'getInventoryStockWmsKpis'])->name('getInventoryStockWmsKpis');
 
     //	Importa existencia de SAP para el inventario
+    Route::get('import-inventory-sap/{id}', [InventoryStockSapController::class, 'index'])->name('import-inventory-sap');
+    Route::post('import-inventory-sap-excel', [InventoryStockSapController::class, 'importStockSAP'])->name('import-inventory-sap-excel');
+    Route::get('getInventoryStockSap/{id}', [InventoryStockSapController::class, 'getInventoryStockSap'])->name('getInventoryStockSap');
+    Route::get('getInventoryStockSapKpis/{id}', [InventoryStockSapController::class, 'getInventoryStockSapKpis'])->name('getInventoryStockSapKpis');
 
     // Migracion de SAP
     Route::get('inventory-sap-migration', [MigrationSapController::class, 'index'])->name('inventory-sap-migration');

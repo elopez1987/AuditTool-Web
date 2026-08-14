@@ -17,6 +17,7 @@ use App\Models\Security\Users\SecurityAccessCustomer;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\Models\Yard\Carriers\ShipmentCarrier;
 use App\Models\Yard\Customer\OrderCustomer;
+use App\Models\Yard\ReceiptUnit;
 use App\Models\Yard\ShipmentTruck\ShipmentTruck;
 use App\Models\Yard\ShipmentType\ShipmentType;
 use App\Models\Yard\StorageLabelTruck\StorageLabelTruck;
@@ -139,6 +140,17 @@ trait Responser
             ->select(['name', 'id'])->get();
     }
 
+    public function getCarriersForSelectStock()
+    {
+        $carriersFilter = $this->getCarrierForUser();
+
+        return ShipmentCarrier::controlAccessUser()
+            ->whereStatusid('E')
+            ->Carriers($carriersFilter)
+            ->whereIn('id', ReceiptUnit::controlAccessUser()->select('carrierid')->distinct())
+            ->select(['name', 'id'])->get();
+    }
+
     public function getReceiptProviderForSelect()
     {
         $userId = auth()->id();
@@ -146,13 +158,13 @@ trait Responser
         $centers = Cache::remember(
             "security_centers_{$userId}",
             300,
-            fn () => SecurityAccessWarehouse::Centers()
+            fn () => SecurityAccessWarehouse::Centers(),
         );
 
         $warehouses = Cache::remember(
             "security_warehouses_{$userId}",
             300,
-            fn () => SecurityAccessWarehouse::Warehouses()
+            fn () => SecurityAccessWarehouse::Warehouses(),
         );
 
         if (empty($centers) || empty($warehouses)) {

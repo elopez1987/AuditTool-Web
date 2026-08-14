@@ -1,7 +1,11 @@
 <script>
     let oTable = $("#table-trucks").DataTable({
         "paging": true,
-        "searching": true,
+        // El buscador nativo de DataTables quedaba duplicado con los
+        // filtros propios (nombre, embarcar a, bodega, estatus) y además
+        // obligaba a Yajra a construir condiciones de búsqueda sobre todas
+        // las columnas -incluyendo relaciones- en cada tecla presionada.
+        "searching": false,
         "ordering": true,
         "sScrollY": "450px",
         "sScrollX": true,
@@ -17,6 +21,7 @@
                 d.name = $('input[name=name]').val();
                 d.shiptoid = $('input[name=shiptoid]').val();
                 d.warehouseid = $('select[name=warehouseid]').val();
+                d.statusid = $('select[name=statusid]').val();
             }
         },
         "columns": [

@@ -18,9 +18,11 @@ class ReportYardController extends BaseController
     {
         $centers = $this->getCenterForSelect();
         $warehouses = $this->getWarehouseForSelect();
-        $carriers = $this->getCarriersForSelect();
+        $carriers = $this->getCarriersForSelectStock();
+
         $reasons = StorageReason::where('type', 'IN')->select(['id', 'name'])->get();
-        $origins = StorageUnitType::controlAccessUser()->where('statusid', 'E')->select(['id', 'description'])->get();
+        $origins = StorageUnitType::controlAccessUser()
+            ->where('statusid', 'E')->select(['id', 'description'])->get();
 
         return view('Yards.Reports.index',
             compact('centers', 'carriers', 'reasons', 'origins', 'warehouses'));
