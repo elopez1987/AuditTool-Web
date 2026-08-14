@@ -201,6 +201,43 @@
             </script>
 
             <script>
+                // Al seleccionar un contador para el conteo 1, se consultan las
+                // cedulas disponibles (sin usuario en conteo 1, y sin usuario en
+                // conteo 2 o con uno distinto al seleccionado) y se usan para
+                // llenar el select multiple inventory_card01_id.
+                $('#user_id').on('change', function () {
+                    const userId = $(this).val();
+                    const $cardSelect = $('#inventory_card01_id');
+
+                    $cardSelect.empty();
+
+                    if (!userId) {
+                        $cardSelect.bootstrapDualListbox('refresh');
+
+                        return;
+                    }
+
+                    $.get('{{ route("getCardForCount01", $inventoryhead->id) }}', {user_id: userId})
+                        .done(function (cards) {
+                            $.each(cards, function (index, card) {
+                                $cardSelect.append(
+                                    $('<option></option>')
+                                        .val(card.id)
+                                        .text(card.name)
+                                        .css({'font-size': '14px', 'text-transform': 'uppercase'})
+                                );
+                            });
+
+                            $cardSelect.bootstrapDualListbox('refresh');
+                        })
+                        .fail(function () {
+                            $cardSelect.bootstrapDualListbox('refresh');
+                            alert('No se pudieron obtener las cédulas disponibles para el conteo 1.');
+                        });
+                });
+            </script>
+
+            <script>
                 // Al seleccionar un contador para el conteo 2, se consultan las
                 // cedulas disponibles (sin usuario en conteo 2, y sin usuario en
                 // conteo 1 o con uno distinto al seleccionado) y se usan para

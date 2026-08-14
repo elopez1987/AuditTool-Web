@@ -159,9 +159,10 @@ Route::middleware(['auth'])->group(function () {
     //	Asignacion de conteo 1
     Route::put('save-accountant-cards/{id}', [InventoryAccountantCardController::class, 'saveAccountantCards'])->name('save-accountant-cards');
     Route::get('getAccountantCards01/{id}', [InventoryAccountantCardController::class, 'getAccountantCards01'])->name('getAccountantCards01');
+    Route::get('getCardForCount01/{id}', [InventoryAccountantCardController::class, 'getCardForCount01'])->name('getCardForCount01');
 
     //	Asignacion de conteo 2
-    Route::put('save-accountant-cards-02/{id}', [InventoryAccountantCardController::class, 'saveAccountantCards'])->name('save-accountant-cards');
+    Route::put('save-accountant-cards-02/{id}', [InventoryAccountantCardController::class, 'saveAccountantCards02'])->name('save-accountant-cards02');
     Route::get('getAccountantCards02/{id}', [InventoryAccountantCardController::class, 'getAccountantCards02'])->name('getAccountantCards02');
     Route::get('getCardForCount02/{id}', [InventoryAccountantCardController::class, 'getCardForCount02'])->name('getCardForCount02');
 
