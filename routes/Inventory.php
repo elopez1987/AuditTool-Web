@@ -163,6 +163,7 @@ Route::middleware(['auth'])->group(function () {
     //	Asignacion de conteo 2
     Route::put('save-accountant-cards-02/{id}', [InventoryAccountantCardController::class, 'saveAccountantCards'])->name('save-accountant-cards');
     Route::get('getAccountantCards02/{id}', [InventoryAccountantCardController::class, 'getAccountantCards02'])->name('getAccountantCards02');
+    Route::get('getCardForCount02/{id}', [InventoryAccountantCardController::class, 'getCardForCount02'])->name('getCardForCount02');
 
     //	Impresion de formatos de conteo
     Route::get('print-format-inventory-01/{id}', [PrintFormatInventoryController::class, 'printFormat01'])->name('print-format-inventory-01');

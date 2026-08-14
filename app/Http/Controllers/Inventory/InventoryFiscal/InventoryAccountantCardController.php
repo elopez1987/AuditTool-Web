@@ -20,20 +20,53 @@ class InventoryAccountantCardController extends BaseController
             ->select(['inventory_accountants.user_id', 'users.name'])
             ->get();
 
+        // El select de contador del conteo 2 usa el mismo catalogo de
+        // contadores asignados al inventario que el conteo 1.
+        $usersAccountants02 = $usersAccountants;
+
         $cardscount01 = InventoryCardCount::where('inventory_head_id', $inventoryhead->id)
             ->leftJoin('inventory_cards', 'inventory_cards.id', '=', 'inventory_card_counts.inventory_card_id')
             ->select(['inventory_card_counts.id', 'inventory_cards.name'])
             ->whereNull('user_count01_id')->get();
 
-        $cardscount02 = InventoryCardCount::where('inventory_head_id', $inventoryhead->id)
-            ->leftJoin('inventory_cards', 'inventory_cards.id', '=', 'inventory_card_counts.inventory_card_id')
-            ->select(['inventory_card_counts.id', 'inventory_cards.name'])
-            ->whereNull('user_count02_id')->get();
+        // La lista de cedulas para el conteo 2 depende del contador
+        // seleccionado (ver getCardForCount02), por lo que inicia vacia y
+        // se llena por AJAX al seleccionar un usuario en user_id_02.
+        $cardscount02 = collect();
 
         return view(
             'Inventory.InventoryHead.AccountantCards.index',
-            compact('inventoryhead', 'usersAccountants', 'cardscount01', 'cardscount02'),
+            compact('inventoryhead', 'usersAccountants', 'usersAccountants02', 'cardscount01', 'cardscount02'),
         );
+    }
+
+    /**
+     * Cedulas disponibles para asignar el conteo 2 al usuario indicado:
+     * sin usuario asignado en el conteo 2, y sin usuario asignado en el
+     * conteo 1 o, si ya tiene, que sea distinto al usuario seleccionado
+     * (un mismo contador no puede hacer ambos conteos de una cedula).
+     */
+    public function getCardForCount02(Request $request, $id)
+    {
+        $inventoryHead = InventoryHead::find($id);
+
+        if (is_null($inventoryHead)) {
+            return response()->json([]);
+        }
+
+        $userId = $request->input('user_id');
+
+        $cardscount02 = InventoryCardCount::where('inventory_head_id', $inventoryHead->id)
+            ->whereNull('user_count02_id')
+            ->where(function ($query) use ($userId) {
+                $query->whereNull('user_count01_id')
+                    ->orWhere('user_count01_id', '!=', $userId);
+            })
+            ->leftJoin('inventory_cards', 'inventory_cards.id', '=', 'inventory_card_counts.inventory_card_id')
+            ->select(['inventory_card_counts.id', 'inventory_cards.name'])
+            ->get();
+
+        return response()->json($cardscount02);
     }
 
     public function saveAccountantCards(Request $request, $id)
