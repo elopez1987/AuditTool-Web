@@ -14,11 +14,6 @@ class DashboardShipmentController extends BaseController
     {
         $base = ViewShipmentEvent::controlAccessUser();
 
-        // Los selects se llenan solo con los valores que realmente aparecen
-        // en los embarques accesibles al usuario (no un catálogo aparte),
-        // igual que las gráficas que alimentan. Se mapean a pares id/name
-        // porque son columnas de texto planas (no catalogos con FK) y el
-        // componente x-select2 espera ese formato por defecto.
         $toOptions = fn ($values) => $values->map(fn ($value) => ['id' => $value, 'name' => $value]);
 
         $clientes = $toOptions((clone $base)->whereNotNull('cliente')->distinct()->orderBy('cliente')->pluck('cliente'));
@@ -33,13 +28,6 @@ class DashboardShipmentController extends BaseController
         );
     }
 
-    /**
-     * Datos para las gráficas del dashboard de embarques: cantidad total,
-     * embarques por fecha de trabajo, cliente, destino, línea de
-     * transporte, estatus de arribo y estatus de despacho. Todas las
-     * gráficas respetan los mismos filtros para que el dashboard sea
-     * completamente dinámico.
-     */
     public function getDatsForDashboardShipment(Request $request)
     {
         $base = $this->filteredShipments($request);
@@ -50,8 +38,6 @@ class DashboardShipmentController extends BaseController
             'by_workday' => (clone $base)
                 ->whereNotNull('workday')
                 ->selectRaw('CAST(workday AS DATE) as label, COUNT(*) as total')
-                // SQL Server no permite agrupar por el alias del select, hay
-                // que repetir la expresión exacta.
                 ->groupByRaw('CAST(workday AS DATE)')
                 ->orderBy('label')
                 ->get()
@@ -92,11 +78,6 @@ class DashboardShipmentController extends BaseController
         ]);
     }
 
-    /**
-     * Consulta base de embarques respetando el acceso del usuario y todos
-     * los filtros del dashboard, para que las 6 gráficas y el total
-     * partan exactamente del mismo conjunto de datos.
-     */
     private function filteredShipments(Request $request): Builder
     {
         return ViewShipmentEvent::controlAccessUser()

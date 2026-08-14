@@ -266,21 +266,24 @@
             chartZonas;
 
         $(document).ready(function () {
-            // Función para aplicar filtros
-            $('#apply-filters').on('click', function () {
-                const $btn = $(this);
+
+            let filtersRequest = null;
+
+            function applyFilters() {
+                const $btn = $('#apply-filters');
                 const originalText = $btn.html();
 
-                // Deshabilitar botón y mostrar loading
+                if (filtersRequest) {
+                    filtersRequest.abort();
+                }
+
                 $btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Cargando...');
 
                 const carrierId = $('#carrier_id').val();
                 const reasonId = $('#reason_id').val();
                 const warehouseId = $('#warehouse_id').val();
 
-                console.log('Enviando filtros:', {carrierId, reasonId, warehouseId});
-
-                $.ajax({
+                filtersRequest = $.ajax({
                     url: '{{ route("home.filter") }}',
                     method: 'GET',
                     data: {
@@ -289,15 +292,9 @@
                         warehouse_id: warehouseId
                     },
                     success: function (data) {
-                        console.log('Datos recibidos:', data);
-                        console.log('Tipo de datos:', typeof data);
-                        console.log('Es string?', typeof data === 'string');
-
-                        // Si la respuesta es un string, intentar parsearlo
                         if (typeof data === 'string') {
                             try {
                                 data = JSON.parse(data);
-                                console.log('Datos parseados:', data);
                             } catch (e) {
                                 console.error('Error al parsear JSON:', e);
                                 alert('Error: Respuesta inválida del servidor');
@@ -308,23 +305,25 @@
                         updateCharts(data);
                     },
                     error: function (xhr, status, error) {
-                        console.error('Error al aplicar filtros:');
-                        console.error('Status:', status);
-                        console.error('Error:', error);
-                        console.error('Response:', xhr.responseText);
+                        if (status === 'abort') {
+                            return;
+                        }
+                        console.error('Error al aplicar filtros:', status, error, xhr.responseText);
                         alert('Error al aplicar los filtros: ' + error);
                     },
                     complete: function () {
-                        // Restaurar botón
                         $btn.prop('disabled', false).html(originalText);
+                        filtersRequest = null;
                     }
                 });
-            });
+            }
 
-            // Función para limpiar filtros
+            $('#apply-filters').on('click', applyFilters);
+            $('#carrier_id, #reason_id, #warehouse_id').on('change', applyFilters);
+
             $('#clear-filters').on('click', function () {
                 $('#filter-form')[0].reset();
-                $('#apply-filters').click();
+                $('#carrier_id, #reason_id, #warehouse_id').val('').trigger('change');
             });
 
             // Función para actualizar gráficas
