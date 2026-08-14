@@ -692,6 +692,14 @@
                                                         <span class="hide-menu"> Reportes</span></a>
                                                 </li>
                                             @endcan
+                                            @can('dashboard-shipment')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('dashboard-shipment')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-dashboard"></i>
+                                                        <span class="hide-menu"> Dashboard</span></a>
+                                                </li>
+                                            @endcan
                                         </ul>
                                     </li>
                                 @endcan

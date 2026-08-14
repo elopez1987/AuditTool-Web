@@ -47,6 +47,7 @@ use App\Http\Controllers\Shipments\OrderDelivery\Imports\ImportOrderPlanControll
 use App\Http\Controllers\Shipments\OrderDelivery\Imports\ImportShipmentCheckController;
 use App\Http\Controllers\Shipments\OrderDelivery\OrderDeliveryController;
 use App\Http\Controllers\Shipments\OrderDelivery\StorageShipmentBillingsController;
+use App\Http\Controllers\Shipments\Reports\DashboardShipmentController;
 use App\Http\Controllers\Shipments\Reports\ReportShipmentController;
 use App\Http\Controllers\Shipments\ScheduleInverse\PrinFormatInvoiceSchedulleController;
 use App\Http\Controllers\Shipments\ScheduleInverse\ScheduleInverseController;
@@ -300,6 +301,10 @@ Route::middleware(['auth'])->group(function () {
     //    ****************************************************** INICIO DE REPORTES   ********************************************************
     Route::get('reporteshipments', [ReportShipmentController::class, 'index'])->name('reporteshipments');
     Route::post('exportreportshipments', [ReportShipmentController::class, 'exportreportshipments'])->name('exportreportshipments');
+    //  Dashboard de embarques (ViewShipmentEvent)
+    Route::get('dashboard-shipment', [DashboardShipmentController::class, 'index'])->name('dashboard-shipment');
+    Route::get('getDatsForDashboardShipment', [DashboardShipmentController::class, 'getDatsForDashboardShipment'])->name('getDatsForDashboardShipment');
+
     //    ****************************************************** FIN DE REPORTES   ********************************************************
 
     //    ****************************************************** INICIO DE LOGISTICA INVERSA   ********************************************************
