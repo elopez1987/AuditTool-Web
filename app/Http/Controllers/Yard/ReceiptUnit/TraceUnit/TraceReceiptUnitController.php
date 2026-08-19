@@ -15,6 +15,7 @@ use App\Models\Yard\ReceiptUnitSeal;
 use App\Models\Yard\ReceiptUnitTicket;
 use App\Models\Yard\StorageLoto\StorageTraceLoto;
 use App\Models\Yard\StorageUnitTrace;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PDF;
@@ -32,11 +33,34 @@ class TraceReceiptUnitController extends BaseController
             compact('warehouses', 'concepts', 'carriers'));
     }
 
+    /**
+     * Se pasa el query builder (sin ->get()) a DataTables::of(), igual que en
+     * ReceiptUnitController::getDataReceipts(), para que Yajra genere el
+     * SELECT/COUNT con LIMIT/OFFSET a nivel SQL en lugar de traer toda la
+     * tabla filtrada a memoria en cada búsqueda/paginación.
+     *
+     * También se aplica el rango de fechas de forma inclusiva (startOfDay /
+     * endOfDay) en vez de usar FilterForRangeDate con fechas sin hora, que
+     * excluía los registros del último día del rango seleccionado.
+     */
     public function getDataReceiptUnitToKardex(Request $request)
     {
         $data = ReceiptUnit::controlAccessUser()
             ->with(['carrier:id,name', 'warehouse:warehouseid,name', 'reason:id,name'])
-            ->select(['receiptunits.*'])
+            ->select([
+                'receiptunits.id',
+                'receiptunits.warehouseid',
+                'receiptunits.barcode',
+                'receiptunits.carrierid',
+                'receiptunits.boxnumber',
+                'receiptunits.econumber',
+                'receiptunits.trucknumber',
+                'receiptunits.operatorname',
+                'receiptunits.shipmentid',
+                'receiptunits.containerseal',
+                'receiptunits.razonstatusid',
+                'receiptunits.entrydate',
+            ])
             ->Folio($request->get('folionumber'))
             ->Shipmentid($request->get('shipmentid'))
             ->BoxNumber($request->get('boxnumber'))
@@ -45,8 +69,12 @@ class TraceReceiptUnitController extends BaseController
             ->Rason($request->get('razonstatusid'))
             ->Carrier($request->get('carrierid'))
             ->EcoNumber($request->get('ecobox'))
-            ->FilterForRangeDate($request->get('startDate'), $request->get('endDate'))
-            ->get();
+            ->when($request->filled('startDate') && $request->filled('endDate'), function ($query) use ($request) {
+                $query->whereBetween('receiptunits.entrydate', [
+                    Carbon::parse($request->get('startDate'))->startOfDay(),
+                    Carbon::parse($request->get('endDate'))->endOfDay(),
+                ]);
+            });
 
         return $this->showDataToView($data, 'Yards.KardexReceiptUnit.KardexForFolio.buttons');
     }

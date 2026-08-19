@@ -23,7 +23,8 @@
                         <div class="col-lg-4 col-md-6 col-sm-12">
                             <div id="categorydiv" class="">
                                 <label>Linea de transporte</label>
-                                <select name="carrierid" id="carrierid" class="form-control" multiple="multiple"></select>
+                                <select name="carrierid" id="carrierid" class="form-control"
+                                        multiple="multiple"></select>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6 col-sm-12">
@@ -133,7 +134,8 @@
                         <div class="col-lg-4">
                             <div class="card box-primary">
                                 <div class="card-header">
-                                    <h3 class="card-title text-trax" style="font-size: 12px;"> Total por estatus de proceso.</h3>
+                                    <h3 class="card-title text-trax" style="font-size: 12px;"> Total por estatus de
+                                        proceso.</h3>
                                 </div>
                                 <div class="card-body no-padding">
                                     <figure class="highcharts-figure">
@@ -148,7 +150,8 @@
                         <div class="col-lg-4">
                             <div class="card box-primary">
                                 <div class="card-header">
-                                    <h3 class="card-title text-trax" style="font-size: 12px;"> Total por tipo de unidad.</h3>
+                                    <h3 class="card-title text-trax" style="font-size: 12px;"> Total por tipo de
+                                        unidad.</h3>
                                 </div>
                                 <div class="card-body no-padding">
                                     <figure class="highcharts-figure">
@@ -160,7 +163,8 @@
                         <div class="col-lg-8">
                             <div class="card box-primary">
                                 <div class="card-header">
-                                    <h3 class="card-title text-trax" style="font-size: 12px;"> Total de registros por dia.</h3>
+                                    <h3 class="card-title text-trax" style="font-size: 12px;"> Total de registros por
+                                        dia.</h3>
                                 </div>
                                 <div class="card-body no-padding">
                                     <figure class="highcharts-figure">
@@ -204,15 +208,160 @@
 
 
     <script>
-        // Función centralizada para cargar todas las gráficas
+        // Paleta compartida por todas las gráficas del dashboard.
+        const yardDashboardPalette = [
+            '#d0df00', '#63666a', '#b5bd00', '#97999b',
+            '#e3e935', '#d0d0ce', '#000000'
+        ];
+
+        let chartForType, chartForCarrier, chartForStatus, chartForTypeTruck, chartForTotalForDays;
+
+        function makePie3dChart(containerId) {
+            return Highcharts.chart(containerId, {
+                colors: yardDashboardPalette,
+                chart: {
+                    type: 'pie',
+                    options3d: {
+                        enabled: true,
+                        alpha: 45,
+                        beta: 0
+                    }
+                },
+                title: {text: ''},
+                accessibility: {point: {valueSuffix: '%'}},
+                tooltip: {pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'},
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        depth: 35,
+                        dataLabels: {enabled: true, format: '{point.name}'}
+                    }
+                },
+                series: [{type: 'pie', name: 'Total', data: []}]
+            });
+        }
+
+        function makeSemiDonutChart(containerId) {
+            return Highcharts.chart(containerId, {
+                colors: yardDashboardPalette,
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: 0,
+                    plotShadow: false
+                },
+                title: {text: ''},
+                tooltip: {pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'},
+                accessibility: {point: {valueSuffix: '%'}},
+                plotOptions: {
+                    pie: {
+                        dataLabels: {
+                            enabled: true,
+                            distance: -50,
+                            style: {fontWeight: 'bold', color: 'white'}
+                        },
+                        startAngle: -90,
+                        endAngle: 90,
+                        center: ['50%', '75%'],
+                        size: '110%'
+                    }
+                },
+                series: [{type: 'pie', name: 'Total por estatus', innerSize: '50%', data: []}]
+            });
+        }
+
+        function makeColumnChart(containerId) {
+            return Highcharts.chart(containerId, {
+                colors: yardDashboardPalette,
+                chart: {type: 'column'},
+                title: {text: '', align: 'left'},
+                subtitle: {text: '', align: 'left'},
+                xAxis: {categories: [], crosshair: true, accessibility: {description: ''}},
+                yAxis: {min: 0, title: {text: 'Tipo'}},
+                tooltip: {valueSuffix: ''},
+                plotOptions: {column: {pointPadding: 0.2, borderWidth: 0}},
+                series: [{name: 'Total por tipo', data: []}]
+            });
+        }
+
+        function makeLineChart(containerId) {
+            return Highcharts.chart(containerId, {
+                colors: yardDashboardPalette,
+                chart: {type: 'line'},
+                title: {text: ''},
+                subtitle: {text: ''},
+                xAxis: {categories: []},
+                yAxis: {title: {text: 'Total de registros'}},
+                plotOptions: {line: {dataLabels: {enabled: true}, enableMouseTracking: false}},
+                series: [{name: 'Fecha de trabajo', data: []}]
+            });
+        }
+
+        function setPieData(chart, rows) {
+            chart.series[0].setData(rows.map(function (row) {
+                return [row.name, parseInt(row.total)];
+            }));
+        }
+
+        function setColumnData(chart, rows) {
+            chart.xAxis[0].setCategories(rows.map(function (row) {
+                return row.name;
+            }));
+            chart.series[0].setData(rows.map(function (row) {
+                return parseInt(row.total);
+            }));
+        }
+
+        function setLineData(chart, rows) {
+            chart.xAxis[0].setCategories(rows.map(function (row) {
+                return row.fecha;
+            }));
+            chart.series[0].setData(rows.map(function (row) {
+                return parseInt(row.total);
+            }));
+        }
+
+        function getDashboardYardFilterParams(from_date, to_date, carrierid, statusid, razon, warehouseid) {
+            return {
+                startDate: from_date,
+                endDate: to_date,
+                carrierid: carrierid,
+                statusid: statusid,
+                razon: razon,
+                warehouseid: warehouseid
+            };
+        }
+
+        // Dashboard dinámico: una sola petición trae los datos de todas las
+        // gráficas y sólo se actualiza su data (setData/setCategories) en vez
+        // de recrear cada gráfica desde cero.
         function loadAllCharts(from_date, to_date, selectedValuesCarrier, selectedValuesStatus, selectedValuesRason, selectedValuesWarehouse) {
-            fetchDataAndCreateChart(from_date, to_date, selectedValuesCarrier, selectedValuesStatus, selectedValuesRason, selectedValuesWarehouse);
-            fetchDataFroCarrier(from_date, to_date, selectedValuesCarrier, selectedValuesStatus, selectedValuesRason, selectedValuesWarehouse);
-            fetchDataFroStatus(from_date, to_date, selectedValuesCarrier, selectedValuesStatus, selectedValuesRason, selectedValuesWarehouse);
-            getTotalUnits(from_date, to_date, selectedValuesCarrier, selectedValuesStatus, selectedValuesRason, selectedValuesWarehouse);
-            getForTypeTruck(from_date, to_date, selectedValuesCarrier, selectedValuesStatus, selectedValuesRason, selectedValuesWarehouse);
-            getTotalUnitForDays(from_date, to_date, selectedValuesCarrier, selectedValuesStatus, selectedValuesRason, selectedValuesWarehouse);
-            getTotalEstadia(from_date, to_date, selectedValuesCarrier, selectedValuesStatus, selectedValuesRason, selectedValuesWarehouse);
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: '{{route('getDashboardData')}}',
+                method: 'POST',
+                data: getDashboardYardFilterParams(from_date, to_date, selectedValuesCarrier, selectedValuesStatus, selectedValuesRason, selectedValuesWarehouse),
+                success: function (data) {
+                    document.getElementById('totalunit').innerText = data.totalUnits;
+                    document.getElementById('estadiatotal').innerText =
+                        (data.estadia && data.estadia.length > 0 && data.estadia[0].estadia) ? data.estadia[0].estadia : '0 horas 0 minutos';
+
+                    setPieData(chartForType, data.byType || []);
+                    setPieData(chartForCarrier, data.byCarrier || []);
+                    setPieData(chartForStatus, data.byStatus || []);
+                    setColumnData(chartForTypeTruck, data.byTruckType || []);
+                    setLineData(chartForTotalForDays, data.byDay || []);
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error al cargar el dashboard:', error);
+                    document.getElementById('totalunit').innerText = '0';
+                    document.getElementById('estadiatotal').innerText = 'Error';
+                }
+            });
         }
 
         // Evento del botón de filtros
@@ -232,7 +381,7 @@
             var selectedValuesWarehouse = $('#warehouseid').select2('data').map(function (item) {
                 return item.id;
             });
-            
+
             loadAllCharts(from_date, to_date, selectedValuesCarrier, selectedValuesStatus, selectedValuesRason, selectedValuesWarehouse);
         });
     </script>
@@ -255,448 +404,24 @@
             $('#daterange span').html(start_date.format('YYYY-MM-DD') + ' - ' + end_date.format('YYYY-MM-DD'));
         });
 
-        // Cargar gráficas al iniciar la página con el rango de fecha predeterminado
-        $(document).ready(function() {
+        $(document).ready(function () {
+            // Se crean las gráficas una sola vez (vacías); a partir de aquí sólo
+            // se actualiza su data en cada filtro, en vez de recrearlas.
+            chartForType = makePie3dChart('ForType');
+            chartForCarrier = makePie3dChart('ForCarrier');
+            chartForStatus = makeSemiDonutChart('ForStatus');
+            chartForTypeTruck = makeColumnChart('ForTypeTruck');
+            chartForTotalForDays = makeLineChart('getForTotalForDays');
+
             // Dar tiempo a que se carguen los select2 (1 segundo)
-            setTimeout(function() {
+            setTimeout(function () {
                 let from_date = start_date.format('YYYY-MM-DD');
                 let to_date = end_date.format('YYYY-MM-DD');
-                
-                console.log('Cargando gráficas iniciales con fechas:', from_date, 'a', to_date);
-                
+
                 // Cargar con filtros vacíos inicialmente
                 loadAllCharts(from_date, to_date, [], [], [], []);
             }, 1000);
         });
-    </script>
-    <script>
-        function getTotalUnits(startDate, endDate, carrierid, statusid, selectedValuesRason,selectedValuesWarehouse) {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url: '{{route('getTotalUnits')}}',
-                method: 'POST',
-                data: {
-                    startDate: startDate,
-                    endDate: endDate,
-                    carrierid: carrierid,
-                    statusid: statusid,
-                    razon: selectedValuesRason,
-                    warehouseid : selectedValuesWarehouse
-                },
-                success: function (response) {
-                    var data = JSON.parse(response)
-                    document.getElementById('totalunit').innerText = data;
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error en getTotalUnits:', error);
-                    document.getElementById('totalunit').innerText = '0';
-                }
-            });
-        }
-    </script>
-    <script>
-        function getTotalEstadia(startDate, endDate, carrierid, statusid, selectedValuesRason,selectedValuesWarehouse) {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url: '{{route('getStadiaTotal')}}',
-                method: 'POST',
-                data: {
-                    startDate: startDate,
-                    endDate: endDate,
-                    carrierid: carrierid,
-                    statusid: statusid,
-                    razon: selectedValuesRason,
-                    warehouseid : selectedValuesWarehouse
-                },
-                success: function (response) {
-                    var data = JSON.parse(response)
-                    if (data && data.length > 0 && data[0].estadia) {
-                        document.getElementById('estadiatotal').innerText = data[0].estadia;
-                    } else {
-                        document.getElementById('estadiatotal').innerText = '0 horas 0 minutos';
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error en getStadiaTotal:', error);
-                    document.getElementById('estadiatotal').innerText = 'Error';
-                }
-            });
-        }
-    </script>
-    <script>
-        function getTotalUnitForDays(startDate, endDate, carrierid, statusid, selectedValuesRason,selectedValuesWarehouse) {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url: '{{route('getTotalUnitForDays')}}',
-                method: 'POST',
-                data: {
-                    startDate: startDate,
-                    endDate: endDate,
-                    carrierid: carrierid,
-                    statusid: statusid,
-                    razon: selectedValuesRason,
-                    warehouseid:selectedValuesWarehouse
-                },
-                success: function (response) {
-                    var data = JSON.parse(response)
-                    var fechas = data.map(function (item) {
-                        return item.fecha
-                    });
-                    var total = data.map(function (item) {
-                        return parseInt(item.total)
-                    });
-                    Highcharts.chart('getForTotalForDays', {
-                        colors: [
-                            '#d0df00', '#63666a', '#b5bd00', '#97999b',
-                            '#e3e935', '#d0d0ce', '#000000'
-                        ],
-                        chart: {
-                            type: 'line'
-                        },
-                        title: {
-                            text: ''
-                        },
-                        subtitle: {
-                            text: ''
-                        },
-                        xAxis: {
-                            categories: fechas
-                        },
-                        yAxis: {
-                            title: {
-                                text: 'Total de registros'
-                            }
-                        },
-                        plotOptions: {
-                            line: {
-                                dataLabels: {
-                                    enabled: true
-                                },
-                                enableMouseTracking: false
-                            }
-                        },
-                        series: [{
-                            name: 'Fecha de trabajo',
-                            data: total
-                        }]
-                    });
-
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error en getTotalUnitForDays:', error);
-                }
-            });
-        }
-    </script>
-    <script>
-        function getForTypeTruck(startDate, endDate, carrierid, statusid, selectedValuesRason,selectedValuesWarehouse) {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url: '{{route('getForTypeTruck')}}',
-                method: 'POST',
-                data: {
-                    startDate: startDate,
-                    endDate: endDate,
-                    carrierid: carrierid,
-                    statusid: statusid,
-                    razon: selectedValuesRason,
-                    warehouseid:selectedValuesWarehouse
-                },
-                success: function (response) {
-                    var data = JSON.parse(response)
-                    var tipe = data.map(function (item) {
-                        return item.name
-                    });
-                    var total = data.map(function (item) {
-                        return parseInt(item.total)
-                    });
-                    Highcharts.chart('ForTypeTruck', {
-                        colors: [
-                            '#d0df00', '#63666a', '#b5bd00', '#97999b',
-                            '#e3e935', '#d0d0ce', '#000000'
-                        ],
-                        chart: {
-                            type: 'column'
-                        },
-                        title: {
-                            text: '',
-                            align: 'left'
-                        },
-                        subtitle: {
-                            text: '',
-                            align: 'left'
-                        },
-                        xAxis: {
-                            categories: tipe,
-                            crosshair: true,
-                            accessibility: {
-                                description: ''
-                            }
-                        },
-                        yAxis: {
-                            min: 0,
-                            title: {
-                                text: 'Tipo'
-                            }
-                        },
-                        tooltip: {
-                            valueSuffix: ''
-                        },
-                        plotOptions: {
-                            column: {
-                                pointPadding: 0.2,
-                                borderWidth: 0
-                            }
-                        },
-                        series: [
-                            {
-                                name: 'Total por tipo',
-                                data: total
-                            },
-                        ]
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error en getForTypeTruck:', error);
-                }
-            });
-        }
-    </script>
-
-
-    <script>
-        function fetchDataAndCreateChart(startDate, endDate, carrierid, statusid, selectedValuesRason,selectedValuesWarehouse) {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url: '{{route('getForTypeForDasboardYard')}}',
-                method: 'POST',
-                data: {
-                    startDate: startDate,
-                    endDate: endDate,
-                    carrierid: carrierid,
-                    statusid: statusid,
-                    razon: selectedValuesRason,
-                    warehouseid:selectedValuesWarehouse
-                },
-                success: function (response) {
-                    var data = JSON.parse(response)
-                    var arrays = data.map(function (item) {
-                        return [item.name, parseInt(item.total)]
-                    });
-                    Highcharts.chart('ForType', {
-                        colors: [
-                            '#d0df00', '#63666a', '#b5bd00', '#97999b',
-                            '#e3e935', '#d0d0ce', '#000000'
-                        ],
-                        chart: {
-                            type: 'pie',
-                            options3d: {
-                                enabled: true,
-                                alpha: 45,
-                                beta: 0
-                            }
-                        },
-                        title: {
-                            text: '',
-                        },
-                        accessibility: {
-                            point: {
-                                valueSuffix: '%'
-                            }
-                        },
-                        tooltip: {
-                            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-                        },
-                        plotOptions: {
-                            pie: {
-                                allowPointSelect: true,
-                                cursor: 'pointer',
-                                depth: 35,
-                                dataLabels: {
-                                    enabled: true,
-                                    format: '{point.name}'
-                                }
-                            }
-                        },
-                        series: [{
-                            type: 'pie',
-                            name: 'Total',
-                            data: arrays
-                        }]
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error en fetchDataAndCreateChart (ForType):', error);
-                }
-            });
-        }
-    </script>
-    <script>
-        function fetchDataFroCarrier(startDate, endDate, carrierid, statusid, selectedValuesRason,selectedValuesWarehouse) {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url: '{{route('getForCarrierForDasboardYard')}}',
-                method: 'POST',
-                data: {
-                    startDate: startDate,
-                    endDate: endDate,
-                    carrierid: carrierid,
-                    statusid: statusid,
-                    razon: selectedValuesRason,
-                    warehouseid:selectedValuesWarehouse
-                },
-                success: function (response) {
-                    var data = JSON.parse(response)
-                    var arrays = data.map(function (item) {
-                        return [item.name, parseInt(item.total)]
-                    });
-                    Highcharts.chart('ForCarrier', {
-                        colors: [
-                            '#d0df00', '#63666a', '#b5bd00', '#97999b',
-                            '#e3e935', '#d0d0ce', '#000000'
-                        ],
-                        chart: {
-                            type: 'pie',
-                            options3d: {
-                                enabled: true,
-                                alpha: 45,
-                                beta: 0
-                            }
-                        },
-                        title: {
-                            text: '',
-                        },
-                        accessibility: {
-                            point: {
-                                valueSuffix: '%'
-                            }
-                        },
-                        tooltip: {
-                            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-                        },
-                        plotOptions: {
-                            pie: {
-                                allowPointSelect: true,
-                                cursor: 'pointer',
-                                depth: 35,
-                                dataLabels: {
-                                    enabled: true,
-                                    format: '{point.name}'
-                                }
-                            }
-                        },
-                        series: [{
-                            type: 'pie',
-                            name: 'Total',
-                            data: arrays
-                        }]
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error en fetchDataFroCarrier (ForCarrier):', error);
-                }
-            });
-        }
-    </script>
-    <script>
-        function fetchDataFroStatus(startDate, endDate, carrierid, statusid, selectedValuesRason,selectedValuesWarehouse) {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url: '{{route('getForStatusForDasboardYard')}}',
-                method: 'POST',
-                data: {
-                    startDate: startDate,
-                    endDate: endDate,
-                    carrierid: carrierid,
-                    statusid: statusid,
-                    razon: selectedValuesRason,
-                    warehouseid:selectedValuesWarehouse
-                },
-                success: function (response) {
-                    var data = JSON.parse(response)
-                    var arrays = data.map(function (item) {
-                        return [item.name, parseInt(item.total)]
-                    });
-
-                    Highcharts.chart('ForStatus', {
-                        colors: [
-                            '#d0df00', '#63666a', '#b5bd00', '#97999b',
-                            '#e3e935', '#d0d0ce', '#000000'
-                        ],
-                        chart: {
-                            plotBackgroundColor: null,
-                            plotBorderWidth: 0,
-                            plotShadow: false
-                        },
-                        title: {
-                            text: '',
-
-                        },
-                        tooltip: {
-                            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>',
-                        },
-                        accessibility: {
-                            point: {
-                                valueSuffix: '%'
-                            }
-                        },
-                        plotOptions: {
-                            pie: {
-                                dataLabels: {
-                                    enabled: true,
-                                    distance: -50,
-                                    style: {
-                                        fontWeight: 'bold',
-                                        color: 'white'
-                                    }
-                                },
-                                startAngle: -90,
-                                endAngle: 90,
-                                center: ['50%', '75%'],
-                                size: '110%'
-                            }
-                        },
-                        series: [{
-                            type: 'pie',
-                            name: 'Total por estatus',
-                            innerSize: '50%',
-                            data: arrays,
-                        }]
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error en fetchDataFroStatus (ForStatus):', error);
-                }
-            });
-        }
     </script>
 
 @endsection
