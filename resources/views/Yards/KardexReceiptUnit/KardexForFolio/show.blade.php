@@ -836,6 +836,57 @@
             border: 3px solid #fff;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
+
+        .customtab {
+            flex-wrap: wrap;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .customtab .nav-item {
+            margin-bottom: -1px;
+        }
+
+        .customtab .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            border: none;
+            border-bottom: 3px solid transparent;
+            border-radius: 0;
+            color: #6c757d;
+            font-weight: 500;
+            font-size: 12px;
+            padding: 12px 16px;
+            transition: color .15s ease, border-color .15s ease, background-color .15s ease;
+        }
+
+        .customtab .nav-link i {
+            font-size: 15px;
+            color: #adb5bd;
+            transition: color .15s ease;
+        }
+
+        .customtab .nav-link:hover {
+            color: #17a2b8;
+            background-color: rgba(23, 162, 184, .06);
+            border-bottom-color: rgba(23, 162, 184, .35);
+        }
+
+        .customtab .nav-link:hover i {
+            color: #17a2b8;
+        }
+
+        /* Pestaña donde el usuario se encuentra actualmente */
+        .customtab .nav-link.active {
+            color: #17a2b8;
+            font-weight: 700;
+            background-color: rgba(23, 162, 184, .1);
+            border-bottom-color: #17a2b8;
+        }
+
+        .customtab .nav-link.active i {
+            color: #17a2b8;
+        }
     </style>
 @endsection
 
@@ -845,11 +896,8 @@
     <script src="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.all.min.js')}}"></script>
 
     <script>
-        $(document).ready(function () {
-            $('a[data-toggle="tab"]').on('shown.bs.tab', function () {
-                $.fn.dataTable.tables({visible: true, api: true}).columns.adjust();
-            });
-            $('table.table').DataTable({
+        function dataTableOptions() {
+            return {
                 "paging": true,
                 "searching": true,
                 "ordering": true,
@@ -895,6 +943,26 @@
                         "previous": "Anterior"
                     }
                 },
+            };
+        }
+
+        function initTablesIn($pane) {
+            $pane.find('table.table').each(function () {
+                let $table = $(this);
+                if ($.fn.DataTable.isDataTable($table)) {
+                    $table.DataTable().columns.adjust();
+                } else {
+                    $table.DataTable(dataTableOptions());
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            initTablesIn($('.tab-pane.active'));
+
+            $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                let target = $($(e.target).attr('href'));
+                initTablesIn(target);
             });
         });
     </script>

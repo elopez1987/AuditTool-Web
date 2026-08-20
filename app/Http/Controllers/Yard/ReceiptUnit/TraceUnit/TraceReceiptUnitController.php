@@ -33,16 +33,6 @@ class TraceReceiptUnitController extends BaseController
             compact('warehouses', 'concepts', 'carriers'));
     }
 
-    /**
-     * Se pasa el query builder (sin ->get()) a DataTables::of(), igual que en
-     * ReceiptUnitController::getDataReceipts(), para que Yajra genere el
-     * SELECT/COUNT con LIMIT/OFFSET a nivel SQL en lugar de traer toda la
-     * tabla filtrada a memoria en cada búsqueda/paginación.
-     *
-     * También se aplica el rango de fechas de forma inclusiva (startOfDay /
-     * endOfDay) en vez de usar FilterForRangeDate con fechas sin hora, que
-     * excluía los registros del último día del rango seleccionado.
-     */
     public function getDataReceiptUnitToKardex(Request $request)
     {
         $data = ReceiptUnit::controlAccessUser()
@@ -79,22 +69,53 @@ class TraceReceiptUnitController extends BaseController
         return $this->showDataToView($data, 'Yards.KardexReceiptUnit.KardexForFolio.buttons');
     }
 
+    /**
+     * Cada pestaña de esta vista reutiliza una de estas colecciones (ya
+     * cargadas una sola vez aquí) para renderizar su tabla. Antes ninguna
+     * traía sus relaciones (carrier, unit, user, etc.), por lo que Blade
+     * disparaba una consulta adicional por cada fila y cada relación
+     * accedida (N+1). Se agregan los `with()` correspondientes para que
+     * todo se resuelva con una consulta por relación, sin importar cuántas
+     * filas tenga cada colección.
+     */
     public function show($id)
     {
-        $receiptunit = ReceiptUnit::with('warehouse')->findOrFail($id);
-        $traces = StorageUnitTrace::controlAccessUser()->where('receiptunitid', '=', $id)->get();
+        $receiptunit = ReceiptUnit::with(['warehouse', 'key'])->findOrFail($id);
+
+        $traces = StorageUnitTrace::controlAccessUser()
+            ->with(['event', 'carrier', 'unit', 'unitstatus', 'zone', 'location', 'user'])
+            ->where('receiptunitid', '=', $id)
+            ->get();
+
         $evidences = EvidencePhoto::where('model_id', $id)
             ->leftJoin('systemstatus', 'storageevidencephotos.auxiliary04', '=', 'systemstatus.statusid')
             ->where('model_type', '=', 'ReceiptUnit')
+            ->with('user')
             ->select(['storageevidencephotos.*', 'systemstatus.name as tipo'])->get();
+
         $evidencesTiros = CheckListEvidenceProcessUnit::where('modelid', $receiptunit->id)
-            ->whereNotNull('path')->where('modeltype', 'ReceiptUnits')->get();
+            ->whereNotNull('path')->where('modeltype', 'ReceiptUnits')
+            ->with('user')
+            ->get();
+
         $checklisttransports = $this->getChecklistTransports($receiptunit);
+
         $comments = StorageComment::where('modeltype', 'ReceiptUnits')
-            ->where('modelid', $id)->get();
-        $seals = ReceiptUnitSeal::controlAccessUser()->where('folionumber', '=', $id)->get();
+            ->where('modelid', $id)
+            ->with('user')
+            ->get();
+
+        $seals = ReceiptUnitSeal::controlAccessUser()
+            ->where('folionumber', '=', $id)
+            ->with('user')
+            ->get();
+
         $peso = ReceiptUnitTicket::where('folionumber', '=', $id)->first();
-        $lotos = StorageTraceLoto::controlAccessUser()->where('folionumber', '=', $id)->get();
+
+        $lotos = StorageTraceLoto::controlAccessUser()
+            ->where('folionumber', '=', $id)
+            ->with(['loto', 'event', 'user'])
+            ->get();
 
         return view(
             'Yards.KardexReceiptUnit.KardexForFolio.show',
@@ -112,10 +133,13 @@ class TraceReceiptUnitController extends BaseController
         );
     }
 
+    //	Eventos
     private function getChecklistTransports($receiptunit)
     {
         return CheckListTransport::where('receiptunitid', $receiptunit->id)
-            ->where('centerid', $receiptunit->centerid)->get();
+            ->where('centerid', $receiptunit->centerid)
+            ->with('checklistdetail')
+            ->get();
     }
 
     public function generateinvoicekardex($id)
