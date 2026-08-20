@@ -170,143 +170,25 @@
     <script src="{{asset('/theme/assets/libs/moment/moment.js')}}"></script>
 
     <script>
-        $(function () {
-            let start_date = moment().subtract(3, 'M');
-            let end_date = moment().add(2,'days');
-            $('#daterange span').html(start_date.format('YYYY-MM-DD') + ' - ' + end_date.format('YYYY-MM-DD'));
-            $('#daterange').daterangepicker({
-                locale: {
-                    cancelLabel: 'Clear'
-                },
-                startDate: start_date,
-                endDate: end_date
-            }, function (start_date, end_date) {
-                $('#daterange span').html(start_date.format('YYYY-MM-DD') + ' - ' + end_date.format('YYYY-MM-DD'));
-            });
-        });
+        // Rango por defecto: día actual menos 90 días. Se reutiliza también
+        // al limpiar filtros, para que la búsqueda nunca quede sin límite de
+        // fechas (lo que antes forzaba a traer la tabla completa).
+        function defaultKardexStartDate() {
+            return moment().subtract(90, 'days');
+        }
 
-        $('#searchData').on('click', function () {
-            let serialnumber = $('#serialnumber').val();
-            let shipmentid = $('#shipmentid').val();
-            let barcode = $('#barcode').val();
+        function defaultKardexEndDate() {
+            return moment();
+        }
 
-            if (serialnumber !== '' || shipmentid !== '') {
-                $("#table-kardex").dataTable().fnDestroy();
-                let oTable = $("#table-kardex").DataTable({
-                    bDestroy: true,
-                    "paging": true,
-                    "searching": true,
-                    "ordering": true,
-                    "sScrollY": "350px",
-                    "sScrollX": true,
-                    "processing": true,
-                    "serverSide": true,
-                    "responsive": true,
-                    "colReorder": true,
-                    "stateSave": true,
-                    "stateDuration": 0,
-                    "ajax": {
-                        url: 'getDataReceiptUnitToKardex',
-                        dataType: 'json',
-                        data: function (d) {
-                            d.folionumber = $('input[name=folionumber]').val();
-                            d.barcode = $('input[name=barcode]').val();
-                            d.shipmentid = $('input[name=shipmentid]').val();
-                            d.boxnumber = $('input[name=boxnumber]').val();
-                            d.ecobox = $('input[name=ecobox]').val();
-                            d.razonstatusid = $('select[name=razonstatusid]').val();
-                            d.carrierid = $('select[name=carrierid]').val();
-                            d.warehouseid = $('select[name=warehouseid]').val();
-                            d.startDate = $('#daterange').data('daterangepicker').startDate.format('YYYY-MM-DD');
-                            d.endDate = $('#daterange').data('daterangepicker').endDate.format('YYYY-MM-DD');
-                        }
-                    },
-                    "columns": [
-                        {data: 'warehouse.name'},
-                        {data: 'id'},
-                        {data: 'barcode'},
-                        {data: 'carrier.name'},
-                        {data: 'boxnumber'},
-                        {data: 'econumber'},
-                        {data: 'trucknumber'},
-                        {data: 'operatorname'},
-                        {data: 'shipmentid'},
-                        {data: 'containerseal'},
-                        {data: 'reason.name'},
-                        {data: 'entrydate'},
-                        {data: 'btn'},
-                    ],
-                    "columnDefs": [
-                        {"width": "150px", "targets": 0},
-                        {"width": "280px", "targets": 1},
-                        {"width": "280px", "targets": 2},
-                        {"width": "280px", "targets": 3},
-                        {"width": "280px", "targets": 4},
-                        {"width": "280px", "targets": 5},
-                        {"width": "280px", "targets": 6},
-                        {"width": "280px", "targets": 7},
-                        {"width": "280px", "targets": 8},
-                        {"width": "280px", "targets": 9},
-                        {"width": "280px", "targets": 10},
-                        {"width": "280px", "targets": 11},
-                        {"width": "280px", "targets": 12},
-                    ],
-                    "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
-                    "lengthMenu": [[1, 5, 10, 30, 50, 100, 150, 200, 250, -1], [1, 5, 10, 30, 50, 100, 150, 200, 250, "Todos"]],
-                    buttons: [
-                        {
-                            "extend": "colvis",
-                            "text": "<img src=\"{{asset('/pics/adbuscar.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span> Mostar/Ocultar</span>",
-                            "className": "btn btn-outline-info btn-md  btn-bold",
-                            columns: ':not(:first):not(:last)'
-                        },
-                        {
-                            "extend": "csv",
-                            "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span> Csv</span>",
-                            "className": "btn btn-outline-info btn-md  btn-bold",
-                        },
-                        {
-                            "extend": "excel",
-                            "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span> Excel</span>",
-                            "className": "btn btn-outline-info btn-md  btn-bold",
-                        }
-                    ],
-                    language: {
-                        "decimal": "",
-                        "emptyTable": "No hay información",
-                        "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-                        "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-                        "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-                        "infoPostFix": "",
-                        "thousands": ",",
-                        "lengthMenu": "Mostrar _MENU_ Entradas",
-                        "loadingRecords": "Cargando...",
-                        "processing": '<i class="fa fa-spinner fa-spin fa-4x fa-fw text-info"></i><span class="sr-only">Loading...</span> ',
-                        "search": "Buscar:",
-                        "zeroRecords": "Sin resultados encontrados",
-                        "paginate": {
-                            "first": "Primero",
-                            "last": "Ultimo",
-                            "next": "Siguiente",
-                            "previous": "Anterior"
-                        }
-                    },
-                });
-            } else {
-                Swal.fire({
-                    type: 'error',
-                    title: 'Oops...',
-                    text: 'Inserte un valor de busqueda.!',
-                })
-            }
-        });
-    </script>
+        function formatDateRangeLabel(start, end) {
+            return start.format('DD-MM-YYYY') + ' - ' + end.format('DD-MM-YYYY');
+        }
 
+        function initKardexDateRange() {
+            let start_date = defaultKardexStartDate();
+            let end_date = defaultKardexEndDate();
 
-    <script>
-        $(function () {
-            let start_date = moment().subtract(3, 'M');
-            let end_date = moment().add(2,'days');
             $('#daterange').daterangepicker({
                 locale: {
                     format: 'DD-MM-YYYY',
@@ -318,147 +200,161 @@
                 endDate: end_date,
                 autoUpdateInput: false
             });
-            
-            $('#daterange').on('apply.daterangepicker', function(ev, picker) {
-                $(this).val(picker.startDate.format('DD-MM-YYYY') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
+
+            $('#daterange').val(formatDateRangeLabel(start_date, end_date));
+
+            $('#daterange').on('apply.daterangepicker', function (ev, picker) {
+                $(this).val(formatDateRangeLabel(picker.startDate, picker.endDate));
             });
-            
-            $('#daterange').on('cancel.daterangepicker', function(ev, picker) {
-                $(this).val('');
+
+            // Al limpiar, se regresa al rango por defecto (no se deja vacío),
+            // para que siempre exista un rango de fechas acotando la búsqueda.
+            $('#daterange').on('cancel.daterangepicker', function (ev, picker) {
+                let defaultStart = defaultKardexStartDate();
+                let defaultEnd = defaultKardexEndDate();
+                picker.setStartDate(defaultStart);
+                picker.setEndDate(defaultEnd);
+                $(this).val(formatDateRangeLabel(defaultStart, defaultEnd));
             });
-            
-            // Establecer valor inicial
-            $('#daterange').val(start_date.format('DD-MM-YYYY') + ' - ' + end_date.format('DD-MM-YYYY'));
+        }
+
+        let kardexTable = null;
+
+        function buildKardexTable() {
+            // Antes se mezclaba la API legacy (dataTable().fnDestroy()) con la
+            // API moderna (DataTable()), lo que provocaba errores/estados
+            // inconsistentes al volver a buscar. Ahora se destruye siempre con
+            // la misma API con la que fue creada.
+            if ($.fn.DataTable.isDataTable('#table-kardex')) {
+                $('#table-kardex').DataTable().destroy();
+            }
+
+            kardexTable = $('#table-kardex').DataTable({
+                "paging": true,
+                "searching": true,
+                "ordering": true,
+                "sScrollY": "350px",
+                "sScrollX": true,
+                "processing": true,
+                "serverSide": true,
+                "responsive": true,
+                "colReorder": true,
+                "stateSave": true,
+                "stateDuration": 0,
+                "ajax": {
+                    url: '{{route('getDataReceiptUnitToKardex')}}',
+                    dataType: 'json',
+                    data: function (d) {
+                        d.folionumber = $('input[name=folionumber]').val();
+                        d.barcode = $('input[name=barcode]').val();
+                        d.shipmentid = $('input[name=shipmentid]').val();
+                        d.boxnumber = $('input[name=boxnumber]').val();
+                        d.ecobox = $('input[name=ecobox]').val();
+                        d.razonstatusid = $('select[name=razonstatusid]').val();
+                        d.carrierid = $('select[name=carrierid]').val();
+                        d.warehouseid = $('select[name=warehouseid]').val();
+                        // El rango de fechas siempre tiene un valor (por
+                        // defecto o el seleccionado), por lo que la búsqueda
+                        // sólo filtra dentro de ese rango.
+                        d.startDate = $('#daterange').data('daterangepicker').startDate.format('YYYY-MM-DD');
+                        d.endDate = $('#daterange').data('daterangepicker').endDate.format('YYYY-MM-DD');
+                    }
+                },
+                "columns": [
+                    {data: 'warehouse.name'},
+                    {data: 'id'},
+                    {data: 'barcode'},
+                    {data: 'carrier.name'},
+                    {data: 'boxnumber'},
+                    {data: 'econumber'},
+                    {data: 'trucknumber'},
+                    {data: 'operatorname'},
+                    {data: 'shipmentid'},
+                    {data: 'containerseal'},
+                    {data: 'reason.name'},
+                    {data: 'entrydate'},
+                    {data: 'btn'},
+                ],
+                "columnDefs": [
+                    {"width": "150px", "targets": 0},
+                    {"width": "280px", "targets": 1},
+                    {"width": "280px", "targets": 2},
+                    {"width": "280px", "targets": 3},
+                    {"width": "280px", "targets": 4},
+                    {"width": "280px", "targets": 5},
+                    {"width": "280px", "targets": 6},
+                    {"width": "280px", "targets": 7},
+                    {"width": "280px", "targets": 8},
+                    {"width": "280px", "targets": 9},
+                    {"width": "280px", "targets": 10},
+                    {"width": "280px", "targets": 11},
+                    {"width": "280px", "targets": 12},
+                ],
+                "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
+                "lengthMenu": [[1, 5, 10, 30, 50, 100, 150, 200, 250, -1], [1, 5, 10, 30, 50, 100, 150, 200, 250, "Todos"]],
+                buttons: [
+                    {
+                        "extend": "colvis",
+                        "text": "<img src=\"{{asset('/pics/adbuscar.png')}}\"  alt=''><span  style='font-size: 11px;'> Mostar/Ocultar</span>",
+                        "className": "btn btn-outline-info btn-md  btn-bold",
+                        columns: ':not(:first):not(:last)'
+                    },
+                    {
+                        "extend": "csv",
+                        "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16'><span  style='font-size: 11px;'> Csv</span>",
+                        "className": "btn btn-outline-info btn-md  btn-bold",
+                    },
+                    {
+                        "extend": "excel",
+                        "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt=''><span  style='font-size: 11px;'> Excel</span>",
+                        "className": "btn btn-outline-info btn-md  btn-bold",
+                    }
+                ],
+                language: {
+                    "decimal": "",
+                    "emptyTable": "No hay información",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                    "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "Mostrar _MENU_ Entradas",
+                    "loadingRecords": "Cargando...",
+                    "processing": '<i class="fa fa-spinner fa-spin fa-4x fa-fw text-info"></i><span class="sr-only">Loading...</span> ',
+                    "search": "Buscar:",
+                    "zeroRecords": "Sin resultados encontrados",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Ultimo",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                },
+            });
+        }
+
+        $(function () {
+            initKardexDateRange();
         });
 
         $('#searchData').on('click', function () {
-            let serialnumber = $('#serialnumber').val();
-            let shipmentid = $('#shipmentid').val();
-            let barcode = $('#barcode').val();
-            if (serialnumber !== '' || shipmentid !== '') {
-                $("#table-kardex").dataTable().fnDestroy();
-                let oTable = $("#table-kardex").DataTable({
-                    bDestroy: true,
-                    "paging": true,
-                    "searching": true,
-                    "ordering": true,
-                    "sScrollY": "350px",
-                    "sScrollX": true,
-                    "processing": true,
-                    "serverSide": true,
-                    "responsive": true,
-                    "colReorder": true,
-                    "stateSave": true,
-                    "stateDuration": 0,
-                    "ajax": {
-                        url: 'getDataReceiptUnitToKardex',
-                        dataType: 'json',
-                        data: function (d) {
-                            d.folionumber = $('input[name=folionumber]').val();
-                            d.barcode = $('input[name=barcode]').val();
-                            d.shipmentid = $('input[name=shipmentid]').val();
-                            d.boxnumber = $('input[name=boxnumber]').val();
-                            d.ecobox = $('input[name=ecobox]').val();
-                            d.razonstatusid = $('select[name=razonstatusid]').val();
-                            d.warehouseid = $('select[name=warehouseid]').val();
-                            d.carrierid = $('select[name=carrierid]').val();
-                            
-                            // Enviar fechas vacías si no hay selección
-                            let daterangeValue = $('#daterange').val();
-                            if (daterangeValue && daterangeValue.trim() !== '') {
-                                d.startDate = $('#daterange').data('daterangepicker').startDate.format('YYYY-MM-DD');
-                                d.endDate = $('#daterange').data('daterangepicker').endDate.format('YYYY-MM-DD');
-                            } else {
-                                d.startDate = '';
-                                d.endDate = '';
-                            }
-                        }
-                    },
-                    "columns": [
-                        {data: 'warehouse.name'},
-                        {data: 'id'},
-                        {data: 'barcode'},
-                        {data: 'carrier.name'},
-                        {data: 'boxnumber'},
-                        {data: 'econumber'},
-                        {data: 'trucknumber'},
-                        {data: 'operatorname'},
-                        {data: 'shipmentid'},
-                        {data: 'containerseal'},
-                        {data: 'reason.name'},
-                        {data: 'entrydate'},
-                        {data: 'btn'},
-                    ],
-                    "columnDefs": [
-                        {"width": "150px", "targets": 0},
-                        {"width": "280px", "targets": 1},
-                        {"width": "280px", "targets": 2},
-                        {"width": "280px", "targets": 3},
-                        {"width": "280px", "targets": 4},
-                        {"width": "280px", "targets": 5},
-                        {"width": "280px", "targets": 6},
-                        {"width": "280px", "targets": 7},
-                        {"width": "280px", "targets": 8},
-                        {"width": "280px", "targets": 9},
-                        {"width": "280px", "targets": 10},
-                        {"width": "280px", "targets": 11},
-                        {"width": "280px", "targets": 12},
-                    ],
-                    "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
-                    "lengthMenu": [[1, 5, 10, 30, 50, 100, 150, 200, 250, -1], [1, 5, 10, 30, 50, 100, 150, 200, 250, "Todos"]],
-                    buttons: [
-                        {
-                            "extend": "colvis",
-                            "text": "<img src=\"{{asset('/pics/adbuscar.png')}}\"  alt=''><span  style='font-size: 11px;'> Mostar/Ocultar</span>",
-                            "className": "btn btn-outline-info btn-md  btn-bold",
-                            columns: ':not(:first):not(:last)'
-                        },
-                        {
-                            "extend": "csv",
-                            "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16'><span  style='font-size: 11px;'> Csv</span>",
-                            "className": "btn btn-outline-info btn-md  btn-bold",
-                        },
-                        {
-                            "extend": "excel",
-                            "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt=''><span  style='font-size: 11px;'> Excel</span>",
-                            "className": "btn btn-outline-info btn-md  btn-bold",
-                        }
-                    ],
-                    language: {
-                        "decimal": "",
-                        "emptyTable": "No hay información",
-                        "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-                        "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-                        "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-                        "infoPostFix": "",
-                        "thousands": ",",
-                        "lengthMenu": "Mostrar _MENU_ Entradas",
-                        "loadingRecords": "Cargando...",
-                        "processing": '<i class="fa fa-spinner fa-spin fa-4x fa-fw text-info"></i><span class="sr-only">Loading...</span> ',
-                        "search": "Buscar:",
-                        "zeroRecords": "Sin resultados encontrados",
-                        "paginate": {
-                            "first": "Primero",
-                            "last": "Ultimo",
-                            "next": "Siguiente",
-                            "previous": "Anterior"
-                        }
-                    },
-                });
-            } else {
-                Swal.fire({
-                    type: 'error',
-                    title: 'Oops...',
-                    text: 'Inserte un valor de busqueda.!',
-                })
-            }
+            buildKardexTable();
         });
-    </script>
-    <script>
+
         $('#clearinput').on('click', function () {
             $('input[type="text"]').val('');
-            $("#table-kardex").dataTable().fnDestroy();
-            $('#table-kardex tbody').empty();
+            $('select.select2').val('').trigger('change');
+
+            let defaultStart = defaultKardexStartDate();
+            let defaultEnd = defaultKardexEndDate();
+            $('#daterange').data('daterangepicker').setStartDate(defaultStart);
+            $('#daterange').data('daterangepicker').setEndDate(defaultEnd);
+            $('#daterange').val(formatDateRangeLabel(defaultStart, defaultEnd));
+
+            if ($.fn.DataTable.isDataTable('#table-kardex')) {
+                $('#table-kardex').DataTable().destroy();
+                $('#table-kardex tbody').empty();
+            }
         });
     </script>
 @endsection

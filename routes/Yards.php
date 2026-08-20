@@ -209,13 +209,7 @@ Route::middleware(['auth'])->group(function () {
 
     //    **************************************************** RUTAS DE DASHBOARDS ***********************************************************
     Route::get('dashboardyard', [DashboardYardController::class, 'index'])->name('dashboardyard');
-    Route::post('getForTypeForDasboardYard', [DashboardYardController::class, 'getForTypeForDasboardYard'])->name('getForTypeForDasboardYard');
-    Route::post('getForCarrierForDasboardYard', [DashboardYardController::class, 'getForCarrierForDasboardYard'])->name('getForCarrierForDasboardYard');
-    Route::post('getForStatusForDasboardYard', [DashboardYardController::class, 'getForStatusForDasboardYard'])->name('getForStatusForDasboardYard');
-    Route::post('getTotalUnits', [DashboardYardController::class, 'getTotalUnits'])->name('getTotalUnits');
-    Route::post('getForTypeTruck', [DashboardYardController::class, 'getForTypeTruck'])->name('getForTypeTruck');
-    Route::post('getTotalUnitForDays', [DashboardYardController::class, 'getTotalUnitForDays'])->name('getTotalUnitForDays');
-    Route::post('getStadiaTotal', [DashboardYardController::class, 'getStadiaTotal'])->name('getStadiaTotal');
+    Route::post('getDashboardData', [DashboardYardController::class, 'getDashboardData'])->name('getDashboardData');
     Route::post('getTotalForZone', [DashboardYardController::class, 'getTotalForZone'])->name('getTotalForZone');
 
     //    **************************************************** CATALOGOS ***********************************************************

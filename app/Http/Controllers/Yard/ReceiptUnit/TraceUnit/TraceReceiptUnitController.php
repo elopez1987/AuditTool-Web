@@ -15,6 +15,7 @@ use App\Models\Yard\ReceiptUnitSeal;
 use App\Models\Yard\ReceiptUnitTicket;
 use App\Models\Yard\StorageLoto\StorageTraceLoto;
 use App\Models\Yard\StorageUnitTrace;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PDF;
@@ -36,7 +37,20 @@ class TraceReceiptUnitController extends BaseController
     {
         $data = ReceiptUnit::controlAccessUser()
             ->with(['carrier:id,name', 'warehouse:warehouseid,name', 'reason:id,name'])
-            ->select(['receiptunits.*'])
+            ->select([
+                'receiptunits.id',
+                'receiptunits.warehouseid',
+                'receiptunits.barcode',
+                'receiptunits.carrierid',
+                'receiptunits.boxnumber',
+                'receiptunits.econumber',
+                'receiptunits.trucknumber',
+                'receiptunits.operatorname',
+                'receiptunits.shipmentid',
+                'receiptunits.containerseal',
+                'receiptunits.razonstatusid',
+                'receiptunits.entrydate',
+            ])
             ->Folio($request->get('folionumber'))
             ->Shipmentid($request->get('shipmentid'))
             ->BoxNumber($request->get('boxnumber'))
@@ -45,28 +59,63 @@ class TraceReceiptUnitController extends BaseController
             ->Rason($request->get('razonstatusid'))
             ->Carrier($request->get('carrierid'))
             ->EcoNumber($request->get('ecobox'))
-            ->FilterForRangeDate($request->get('startDate'), $request->get('endDate'))
-            ->get();
+            ->when($request->filled('startDate') && $request->filled('endDate'), function ($query) use ($request) {
+                $query->whereBetween('receiptunits.entrydate', [
+                    Carbon::parse($request->get('startDate'))->startOfDay(),
+                    Carbon::parse($request->get('endDate'))->endOfDay(),
+                ]);
+            });
 
         return $this->showDataToView($data, 'Yards.KardexReceiptUnit.KardexForFolio.buttons');
     }
 
+    /**
+     * Cada pestaña de esta vista reutiliza una de estas colecciones (ya
+     * cargadas una sola vez aquí) para renderizar su tabla. Antes ninguna
+     * traía sus relaciones (carrier, unit, user, etc.), por lo que Blade
+     * disparaba una consulta adicional por cada fila y cada relación
+     * accedida (N+1). Se agregan los `with()` correspondientes para que
+     * todo se resuelva con una consulta por relación, sin importar cuántas
+     * filas tenga cada colección.
+     */
     public function show($id)
     {
-        $receiptunit = ReceiptUnit::with('warehouse')->findOrFail($id);
-        $traces = StorageUnitTrace::controlAccessUser()->where('receiptunitid', '=', $id)->get();
+        $receiptunit = ReceiptUnit::with(['warehouse', 'key'])->findOrFail($id);
+
+        $traces = StorageUnitTrace::controlAccessUser()
+            ->with(['event', 'carrier', 'unit', 'unitstatus', 'zone', 'location', 'user'])
+            ->where('receiptunitid', '=', $id)
+            ->get();
+
         $evidences = EvidencePhoto::where('model_id', $id)
             ->leftJoin('systemstatus', 'storageevidencephotos.auxiliary04', '=', 'systemstatus.statusid')
             ->where('model_type', '=', 'ReceiptUnit')
+            ->with('user')
             ->select(['storageevidencephotos.*', 'systemstatus.name as tipo'])->get();
+
         $evidencesTiros = CheckListEvidenceProcessUnit::where('modelid', $receiptunit->id)
-            ->whereNotNull('path')->where('modeltype', 'ReceiptUnits')->get();
+            ->whereNotNull('path')->where('modeltype', 'ReceiptUnits')
+            ->with('user')
+            ->get();
+
         $checklisttransports = $this->getChecklistTransports($receiptunit);
+
         $comments = StorageComment::where('modeltype', 'ReceiptUnits')
-            ->where('modelid', $id)->get();
-        $seals = ReceiptUnitSeal::controlAccessUser()->where('folionumber', '=', $id)->get();
+            ->where('modelid', $id)
+            ->with('user')
+            ->get();
+
+        $seals = ReceiptUnitSeal::controlAccessUser()
+            ->where('folionumber', '=', $id)
+            ->with('user')
+            ->get();
+
         $peso = ReceiptUnitTicket::where('folionumber', '=', $id)->first();
-        $lotos = StorageTraceLoto::controlAccessUser()->where('folionumber', '=', $id)->get();
+
+        $lotos = StorageTraceLoto::controlAccessUser()
+            ->where('folionumber', '=', $id)
+            ->with(['loto', 'event', 'user'])
+            ->get();
 
         return view(
             'Yards.KardexReceiptUnit.KardexForFolio.show',
@@ -84,10 +133,13 @@ class TraceReceiptUnitController extends BaseController
         );
     }
 
+    //	Eventos
     private function getChecklistTransports($receiptunit)
     {
         return CheckListTransport::where('receiptunitid', $receiptunit->id)
-            ->where('centerid', $receiptunit->centerid)->get();
+            ->where('centerid', $receiptunit->centerid)
+            ->with('checklistdetail')
+            ->get();
     }
 
     public function generateinvoicekardex($id)

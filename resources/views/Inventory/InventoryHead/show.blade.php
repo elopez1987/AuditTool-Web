@@ -82,7 +82,6 @@
                                 <div class="card-header bg-grey">
                                     <h5 class="m-b-0 text-black-50">Pasillos</h5></div>
                                 <div class="card-body">
-                                    <h4 class="card-title">Total de Pasillos</h4>
                                     <h2 class="text-red" id="totalAisles" data-id="{{ $inventoryhead->id }}"></h2>
                                     <a href="{{url('inventoryhead-aisles/' . $inventoryhead->id)}}"
                                        class="btn btn-inverse">Ver Detalle</a>
@@ -94,7 +93,6 @@
                                 <div class="card-header bg-grey">
                                     <h4 class="m-b-0 text-black-50">Cedulas</h4></div>
                                 <div class="card-body">
-                                    <h4 class="card-title">Total de cédulas</h4>
                                     <h2 class="text-red" id="totalCards" data-id="{{ $inventoryhead->id }}"></h2>
                                     <a href="{{url('inventoryhead-cards/' . $inventoryhead->inventory_uuid)}}"
                                        class="btn btn-inverse">Ver Detalle</a>
@@ -107,7 +105,6 @@
                                     <h4 class="m-b-0 text-black-50">Ubicaciones</h4>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">Total de ubicaciones</h4>
                                     <h2 class="text-red" id="totalLocations" data-id="{{ $inventoryhead->id }}"></h2>
                                     <a href="javascript:void(0)" class="btn btn-inverse">Ver Detalle</a>
                                 </div>
@@ -122,12 +119,10 @@
                                 <div class="card-body ">
                                     <div class="row">
                                         <div class="col-6">
-                                            <h4 class="card-title">Errores de conteo</h4>
                                             <h2 class="text-danger font-bold m-b-0" id="totalErrors"
                                                 data-id="{{ $inventoryhead->id }}"></h2>
                                         </div>
                                         <div class="col-6">
-                                            <h4 class="card-title">% de Error</h4>
                                             <h2 class="text-danger font-bold m-b-0" id="errorPercentage"
                                                 data-id="{{ $inventoryhead->id }}"></h2>
                                         </div>
