@@ -138,9 +138,9 @@
                                     <th>Placa de tracto</th>
                                     <th>Operador</th>
                                     <th>Embarque</th>
-                                    <th>Sellos</th>
                                     <th>Concepto de ajuste</th>
                                     <th>Fecha de registro</th>
+                                    <th>Estatus</th>
                                     <th>Opciones</th>
                                 </tr>
                                 </thead>
@@ -270,9 +270,9 @@
                     {data: 'trucknumber'},
                     {data: 'operatorname'},
                     {data: 'shipmentid'},
-                    {data: 'containerseal'},
                     {data: 'reason.name'},
                     {data: 'entrydate'},
+                    {data: 'status.name',name:'status.name'},
                     {data: 'btn'},
                 ],
                 "columnDefs": [
@@ -288,7 +288,6 @@
                     {"width": "280px", "targets": 9},
                     {"width": "280px", "targets": 10},
                     {"width": "280px", "targets": 11},
-                    {"width": "280px", "targets": 12},
                 ],
                 "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
                 "lengthMenu": [[1, 5, 10, 30, 50, 100, 150, 200, 250, -1], [1, 5, 10, 30, 50, 100, 150, 200, 250, "Todos"]],

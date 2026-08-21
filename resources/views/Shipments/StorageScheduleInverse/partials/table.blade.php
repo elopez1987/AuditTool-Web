@@ -18,6 +18,7 @@
                 d.statusid = $('select[name=statusid]').val();
             }
         },
+        "order": [[5, "desc"]],
         "columns": [
             {data: 'center'},
             {data: 'warehouse'},
