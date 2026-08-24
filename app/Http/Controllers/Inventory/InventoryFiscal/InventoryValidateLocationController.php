@@ -55,6 +55,7 @@ class InventoryValidateLocationController extends BaseController
     public function saveResponseSuccessLocation($id)
     {
         $locationCount = InventoryLocationCount::where('id', $id)->first();
+        Log::error($locationCount);
 
         if (is_null($locationCount)) {
             return $this->errorResponse('Location count not found');
@@ -65,6 +66,7 @@ class InventoryValidateLocationController extends BaseController
             ->select(['id', 'user_count02_id'])
             ->first();
 
+        Log::info($inventoryCardCount);
         if (is_null($inventoryCardCount)) {
             return $this->errorResponse('Inventory card count not found');
         }

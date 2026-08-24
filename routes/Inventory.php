@@ -20,6 +20,7 @@ use App\Http\Controllers\Inventory\InventoryFiscal\InventoryStockSapController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventorySupervisorController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryValidateLocationController;
 use App\Http\Controllers\Inventory\InventoryFiscal\PrintFormatInventoryController;
+use App\Http\Controllers\Inventory\InventoryFiscal\ThirdCountController;
 use App\Http\Controllers\Inventory\InventoryPartNumberCategory01sController;
 use App\Http\Controllers\Inventory\InventoryPartNumberCategory02sController;
 use App\Http\Controllers\Inventory\InventoryPartNumbers\ImportPartNumbersController;
@@ -186,5 +187,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('inventory-sap-migration', [MigrationSapController::class, 'index'])->name('inventory-sap-migration');
     Route::get('inventory-sap-details/{id}', [MigrationSapController::class, 'show'])->name('inventory-sap-details');
     Route::get('getMigrationSap', [MigrationSapController::class, 'getMigrationSap'])->name('getMigrationSap');
+
+    // Terceros conteos
+    Route::get('inventory-third-count/{id}', [ThirdCountController::class, 'index'])->name('inventory-third-count');
 
 });
