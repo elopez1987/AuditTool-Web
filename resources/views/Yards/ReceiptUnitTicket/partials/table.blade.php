@@ -3,7 +3,7 @@
     $(document).ready(function () {
         oTable = $("#table-ticketspt").DataTable({
             "paging": true,
-            "searching": true,
+            "searching": false,
             "ordering": true,
             "sScrollY": "450px",
             "sScrollX": true,

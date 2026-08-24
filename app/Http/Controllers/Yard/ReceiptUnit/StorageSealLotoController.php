@@ -28,6 +28,7 @@ class StorageSealLotoController extends BaseController
     {
         $data = StorageSealLoto::controlAccessUser()
             ->with(['center:centerid,name,description', 'status:statusid,name,auxiliary01'])
+            ->select('storagesealloto.*')
             ->Name($request->input('name'));
 
         return DataTables::of($data)
