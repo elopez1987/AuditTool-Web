@@ -67,6 +67,7 @@ class InventoryValidateLocationController extends BaseController
             ->first();
 
         Log::info($inventoryCardCount);
+
         if (is_null($inventoryCardCount)) {
             return $this->errorResponse('Inventory card count not found');
         }

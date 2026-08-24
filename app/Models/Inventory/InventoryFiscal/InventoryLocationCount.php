@@ -59,16 +59,16 @@ class InventoryLocationCount extends Model
 
     public function inventorypartnumber02(): BelongsTo
     {
-        return $this->belongsTo(InventoryPartnumber::class, 'inventorypartnumber02_id');
+        return $this->belongsTo(InventoryPartnumber::class, 'inventorypartnumber02_id', 'id');
     }
 
     public function userCount01(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_count01_id');
+        return $this->belongsTo(User::class, 'user_count01_id', 'id');
     }
 
     public function userCount02(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_count02_id');
+        return $this->belongsTo(User::class, 'user_count02_id', 'id');
     }
 }
