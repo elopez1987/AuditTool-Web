@@ -9,6 +9,7 @@ use App\Models\Shipments\OrderDeliverie;
 use App\Models\Shipments\OrderdeliveryTrace;
 use App\Models\Shipments\ShipmentDataOperation;
 use App\Models\Shipments\ShipmentHeader;
+use App\Models\Shipments\ShipmentPallet;
 use App\Models\Shipments\ShipmentSeal;
 use App\Traits\Web\General\GetParameters;
 use Exception;
@@ -31,6 +32,14 @@ class SendDocumentOrderDeliveryController extends BaseController
 
             if ($orderDeliveryOld->statusid === 'DO') {
                 return $this->errorResponse('Los documentos ya fueron enviados anteriormente.');
+            }
+
+            $parameterWarehouse = $this->getParametersOfWarehouse($orderDeliveryOld->warehouseid);
+            if (! empty($parameterWarehouse) && in_array('SWH-46', (array) $parameterWarehouse)) {
+                $pallets = ShipmentPallet::where('orderid', $orderDeliveryOld->id)->exists();
+                if (! $pallets) {
+                    return $this->errorResponse('No se encontraron pallets para el embarque, favor de registrarlos para poder continuar.');
+                }
             }
 
             $statusold = $orderDeliveryOld->statusid;
