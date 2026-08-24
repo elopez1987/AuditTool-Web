@@ -36,7 +36,7 @@ class TraceReceiptUnitController extends BaseController
     public function getDataReceiptUnitToKardex(Request $request)
     {
         $data = ReceiptUnit::controlAccessUser()
-            ->with(['carrier:id,name', 'warehouse:warehouseid,name', 'reason:id,name'])
+            ->with(['carrier:id,name', 'warehouse:warehouseid,name', 'reason:id,name', 'status:statusid,name'])
             ->select([
                 'receiptunits.id',
                 'receiptunits.warehouseid',
@@ -50,6 +50,7 @@ class TraceReceiptUnitController extends BaseController
                 'receiptunits.containerseal',
                 'receiptunits.razonstatusid',
                 'receiptunits.entrydate',
+                'receiptunits.statusid',
             ])
             ->Folio($request->get('folionumber'))
             ->Shipmentid($request->get('shipmentid'))
@@ -69,15 +70,6 @@ class TraceReceiptUnitController extends BaseController
         return $this->showDataToView($data, 'Yards.KardexReceiptUnit.KardexForFolio.buttons');
     }
 
-    /**
-     * Cada pestaña de esta vista reutiliza una de estas colecciones (ya
-     * cargadas una sola vez aquí) para renderizar su tabla. Antes ninguna
-     * traía sus relaciones (carrier, unit, user, etc.), por lo que Blade
-     * disparaba una consulta adicional por cada fila y cada relación
-     * accedida (N+1). Se agregan los `with()` correspondientes para que
-     * todo se resuelva con una consulta por relación, sin importar cuántas
-     * filas tenga cada colección.
-     */
     public function show($id)
     {
         $receiptunit = ReceiptUnit::with(['warehouse', 'key'])->findOrFail($id);

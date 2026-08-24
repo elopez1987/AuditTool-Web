@@ -57,7 +57,6 @@ class StorageScheduleInversesController extends BaseController
                 'receiptunits.entrydate',
             ]);
 
-        //        return $this->showDataToView($data, );
         return DataTables::of($data)
             ->addColumn('btn', 'Shipments.StorageScheduleInverse.partials.buttons')
             ->rawColumns(['btn'])

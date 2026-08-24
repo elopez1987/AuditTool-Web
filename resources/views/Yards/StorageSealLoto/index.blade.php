@@ -40,19 +40,19 @@
                     </form>
                     <div class="row">
                         <div class="col-12">
-                            <table id="table-trucks" class="table table-bordered  table-condensed">
+                            <table id="table-trucks" class="table table-bordered  table-condensed table-hover">
                                 <thead>
                                 <tr>
-                                    <th class="bg-inverse text-white">C.Distribución</th>
-                                    <th class="bg-inverse text-white">Nombre</th>
-                                    <th class="bg-inverse text-white">Placa de caja</th>
-                                    <th class="bg-inverse text-white">Auxiliar 01</th>
-                                    <th class="bg-inverse text-white">Auxiliar 02</th>
-                                    <th class="bg-inverse text-white">Auxiliar 03</th>
-                                    <th class="bg-inverse text-white">Auxiliar 04</th>
-                                    <th class="bg-inverse text-white">Auxiliar 05</th>
-                                    <th class="bg-inverse text-white">Estatus</th>
-                                    <th class="bg-inverse text-white">Opciones</th>
+                                    <th>C.Distribución</th>
+                                    <th>Nombre</th>
+                                    <th>Placa de caja</th>
+                                    <th>Auxiliar 01</th>
+                                    <th>Auxiliar 02</th>
+                                    <th>Auxiliar 03</th>
+                                    <th>Auxiliar 04</th>
+                                    <th>Auxiliar 05</th>
+                                    <th>Estatus</th>
+                                    <th>Opciones</th>
                                 </tr>
                                 </thead>
                             </table>

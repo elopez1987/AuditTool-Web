@@ -80,11 +80,14 @@ class StorageScheduleInverse extends Model
 
     public static function controlAccessUser()
     {
-        $warehouses = SecurityAccessWarehouse::Warehouses();
-        $centers = SecurityAccessWarehouse::Centers();
+        // Una sola consulta a securityaccesswarehouses en lugar de
+        // Warehouses()+Centers() por separado, ya que este scope se ejecuta
+        // en cada petición del datatable (carga inicial, cada página, cada
+        // filtro/orden).
+        $access = SecurityAccessWarehouse::AccessScope();
 
-        return StorageScheduleInverse::whereIn('storagescheduleinverse.warehouseid', $warehouses)
-            ->whereIn('storagescheduleinverse.centerid', $centers);
+        return StorageScheduleInverse::whereIn('storagescheduleinverse.warehouseid', $access['warehouses'])
+            ->whereIn('storagescheduleinverse.centerid', $access['centers']);
     }
 
     public function order()
