@@ -190,5 +190,6 @@ Route::middleware(['auth'])->group(function () {
 
     // Terceros conteos
     Route::get('inventory-third-count/{id}', [ThirdCountController::class, 'index'])->name('inventory-third-count');
+    Route::get('third-count-assign/{id}', [ThirdCountController::class, 'index'])->name('inventory-third-count');
 
 });

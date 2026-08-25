@@ -50,7 +50,15 @@
                                         <td>{{$error->cardid}}</td>
                                         <td>{{$error->total_errors}}</td>
                                         <td>
-                                            {{--                                        <a href="{{route('inventory.head.third-count.assign', $error->inventory_card_id)}}" class="btn btn-primary">Asignar</a>--}}
+                                            <a href="" data-target="#modal-{{$error->}}"
+                                               data-toggle="modal" data-placement="top">
+                                                <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md"
+                                                        data-toggle="tooltip" data-placement="top" title="Cerrar Inventario">
+                                                    <img src="{{asset('/ico/adreload.png')}}" alt="" class="img-16">
+                                                    <span style="font-size: 11px;"> Reiniciar Conteo 1</span>
+                                                </button>
+                                            </a>
+                                            @include('Inventory.InventoryHead.LocationCard.initialize-count1')
                                         </td>
                                     </tr>
                                 @endforeach
