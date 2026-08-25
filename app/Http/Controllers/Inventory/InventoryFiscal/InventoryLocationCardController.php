@@ -8,6 +8,7 @@ use App\Models\Inventory\InventoryFiscal\InventoryHead;
 use App\Models\Inventory\InventoryFiscal\InventoryLocationCount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Facades\DataTables;
 
 class InventoryLocationCardController extends BaseController
@@ -25,7 +26,8 @@ class InventoryLocationCardController extends BaseController
     {
         return DB::table('inventory_location_counts as ilc')
             ->join('inventory_aisles as ia', 'ilc.inventory_aisle_id', '=', 'ia.id')
-            ->join('inventory_cards as ic', 'ilc.inventory_card_id', '=', 'ic.id')
+            ->join('inventory_card_counts', 'ilc.inventory_card_id', '=', 'inventory_card_counts.id')
+            ->join('inventory_cards as ic', 'inventory_card_counts.inventory_card_id', '=', 'ic.id')
             ->join('inventory_locations as il', 'ilc.inventory_location_id', '=', 'il.id')
             ->leftJoin('inventorypartnumbers as ipn', 'ilc.inventorypartnumber01_id', '=', 'ipn.id')
             ->leftJoin('inventorypartnumbers as ipn2', 'ilc.inventorypartnumber02_id', '=', 'ipn2.id')
@@ -34,7 +36,7 @@ class InventoryLocationCardController extends BaseController
             ->leftJoin('systemstatus as s', 'ilc.statusid_count01', '=', 's.statusid')
             ->leftJoin('systemstatus as s2', 'ilc.statusid_count02', '=', 's2.statusid')
             ->where('ilc.inventory_head_id', $inventoryCardCount->inventory_head_id)
-            ->where('ilc.inventory_card_id', $inventoryCardCount->inventory_card_id)
+            ->where('ilc.inventory_card_id', $inventoryCardCount->id)
             ->when($request->filled('name'), function ($q) use ($request) {
                 $q->where('il.name', 'like', '%' . $request->name . '%');
             });
@@ -43,6 +45,7 @@ class InventoryLocationCardController extends BaseController
     public function getLocationCardInventory(Request $request, $id)
     {
         $inventoryCardCount = InventoryCardCount::findOrFail($id);
+        Log::info($inventoryCardCount);
 
         $query = $this->baseLocationCardQuery($request, $inventoryCardCount)
             ->select([
