@@ -212,7 +212,8 @@
             $('#saveSuccess').click(function (e) {
                 e.preventDefault();
                 $.ajax({
-                    url: '{!! route('saveResponseSuccessLocation', $locationCount->id) !!}',
+                    {{--url: '{!! route('saveResponseSuccessLocation', $locationCount->id) !!}',--}}
+                    url: '{!! route('saveResponseSuccessLocation', ['id' => $locationCount->id, 'headId' => $locationCount->inventory_head_id]) !!}',
                     type: 'POST',
                     dataType: 'json',
                     success: function (data) {
@@ -238,7 +239,7 @@
             $('#saveErrorLocation').click(function (e) {
                 e.preventDefault();
                 $.ajax({
-                    url: '{!! route('saveResponseErrorLocation', $locationCount->id) !!}',
+                    url: '{!! route('saveResponseErrorLocation',['id' => $locationCount->id, 'headId' => $locationCount->inventory_head_id]) !!}',
                     type: 'POST',
                     dataType: 'json',
                     success: function (data) {
