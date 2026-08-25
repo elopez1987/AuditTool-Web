@@ -8,7 +8,6 @@ use App\Models\Inventory\InventoryFiscal\InventoryHead;
 use App\Models\Inventory\InventoryFiscal\InventoryLocationCount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Facades\DataTables;
 
 class InventoryLocationCardController extends BaseController
@@ -45,8 +44,6 @@ class InventoryLocationCardController extends BaseController
     public function getLocationCardInventory(Request $request, $id)
     {
         $inventoryCardCount = InventoryCardCount::findOrFail($id);
-        Log::info($inventoryCardCount);
-
         $query = $this->baseLocationCardQuery($request, $inventoryCardCount)
             ->select([
                 'ilc.id',
@@ -110,12 +107,14 @@ class InventoryLocationCardController extends BaseController
         ]);
 
         InventoryLocationCount::where('inventory_head_id', $inventoryCardCount->inventory_head_id)
-            ->where('inventory_card_id', $inventoryCardCount->inventory_card_id)
+            ->where('inventory_card_id', $inventoryCardCount->id)
             ->update([
                 'inventorypartnumber01_id' => null,
                 'quantity01' => null,
                 'statusid_count01' => 'F',
                 'user_count01_id' => null,
+                'statusid_location' => null,
+                'type' => null,
             ]);
 
         return $this->redirectBackSuccessMessage('Conteo inicializado con exito.');
@@ -131,12 +130,14 @@ class InventoryLocationCardController extends BaseController
         ]);
 
         InventoryLocationCount::where('inventory_head_id', $inventoryCardCount->inventory_head_id)
-            ->where('inventory_card_id', $inventoryCardCount->inventory_card_id)
+            ->where('inventory_card_id', $inventoryCardCount->id)
             ->update([
                 'inventorypartnumber02_id' => null,
                 'quantity02' => null,
                 'statusid_count02' => 'F',
                 'user_count02_id' => null,
+                'statusid_location' => null,
+                'type' => null,
             ]);
 
         return $this->redirectBackSuccessMessage('Conteo inicializado con exito.');
@@ -146,7 +147,7 @@ class InventoryLocationCardController extends BaseController
     {
         $inventoryCardCount = InventoryCardCount::findOrFail($id);
         $base = InventoryLocationCount::where('inventory_head_id', $inventoryCardCount->inventory_head_id)
-            ->where('inventory_card_id', $inventoryCardCount->inventory_card_id)
+            ->where('inventory_card_id', $inventoryCardCount->id)
             ->where('statusid_count01', 'C')
             ->where('statusid_count02', 'C')
             ->whereNotNull('quantity01')

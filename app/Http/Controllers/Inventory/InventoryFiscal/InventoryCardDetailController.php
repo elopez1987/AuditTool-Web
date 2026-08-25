@@ -6,6 +6,7 @@ use App\Http\Controllers\BaseController;
 use App\Models\Inventory\InventoryFiscal\InventoryHead;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Facades\DataTables;
 
 class InventoryCardDetailController extends BaseController
@@ -65,12 +66,40 @@ class InventoryCardDetailController extends BaseController
 
             $inventoryCard = DB::table('inventory_card_counts')->where('id', $id)->first();
 
-            DB::table('inventory_location_counts')->where('inventory_card_id', $inventoryCard->inventory_card_id)->delete();
+            DB::table('inventory_location_counts')->where('inventory_card_id', $inventoryCard->id)->delete();
             DB::table('inventory_card_counts')->where('id', $id)->delete();
 
             return response()->json(['success' => true, 'message' => 'Cédula eliminada correctamente.']);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => 'Error al eliminar: ' . $e->getMessage()], 500);
+        }
+    }
+
+    public function clearUser01($id)
+    {
+        Log::info('Desasignando usuario 1 de la cédula con ID: ' . $id);
+        try {
+            DB::table('inventory_card_counts')->where('id', $id)->update([
+                'user_count01_id' => null,
+            ]);
+
+            return response()->json(['success' => true, 'message' => 'Cédula desasignada correctamente.']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Error al desasignar: ' . $e->getMessage()], 500);
+        }
+    }
+
+    public function clearUser02($id)
+    {
+        Log::info('Desasignando usuario 2 de la cédula con ID: ' . $id);
+        try {
+            DB::table('inventory_card_counts')->where('id', $id)->update([
+                'user_count02_id' => null,
+            ]);
+
+            return response()->json(['success' => true, 'message' => 'Cédula desasignada correctamente.']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Error al desasignar: ' . $e->getMessage()], 500);
         }
     }
 }

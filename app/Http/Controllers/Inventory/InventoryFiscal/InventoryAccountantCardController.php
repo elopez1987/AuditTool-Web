@@ -145,7 +145,7 @@ class InventoryAccountantCardController extends BaseController
         return $this->redirectBackSuccessMessage('Conteo asignado con éxito.');
     }
 
-    public function getAccountantCards01(Request $request, $id)
+    public function getAccountantCards01($id)
     {
         $inventoryHead = InventoryHead::find($id);
 
@@ -156,12 +156,12 @@ class InventoryAccountantCardController extends BaseController
         return $this->showDataToView($inventoryCardCount, '');
     }
 
-    public function getAccountantCards02(Request $request, $id)
+    public function getAccountantCards02($id)
     {
         $inventoryHead = InventoryHead::find($id);
 
         $inventoryCardCount = InventoryCardCount::where('inventory_head_id', $inventoryHead->id)
-            ->with(['inventorycard:id,name', 'user_count01:id,name'])
+            ->with(['inventorycard:id,name', 'user_count02:id,name'])
             ->whereNotNull('user_count02_id');
 
         return $this->showDataToView($inventoryCardCount, '');

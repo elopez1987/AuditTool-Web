@@ -130,4 +130,110 @@ $(document).ready(function () {
         });
     });
 
+    // ── Limpiar usuario 01 ───────────────────────────────────────────────────────
+    $(document).on('click', '.btn-clear01', function () {
+        var id = $(this).data('id');
+
+        Swal.fire({
+            title: '¿Desasignar usuario de conteo 1?',
+            text: 'Esta acción eliminará la asignación del usuario 1.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Sí, limpiar',
+            cancelButtonText: 'Cancelar'
+        }).then(function (result) {
+            if (!result.isConfirmed) return;
+
+            $.ajax({
+                url: CardDetail.clear01Url + '/' + id,
+                type: 'PUT',
+                headers: {
+                    'X-CSRF-TOKEN': CardDetail.csrfToken
+                },
+                success: function (response) {
+                    if (response.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Eliminado',
+                            text: response.message,
+                            timer: 1800,
+                            showConfirmButton: false
+                        }).then(function () {
+                            oTable.ajax.reload(null, false);
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: response.message
+                        });
+                    }
+                },
+                error: function (xhr) {
+                    var msg = xhr.responseJSON ? xhr.responseJSON.message : 'Error al eliminar el registro.';
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: msg
+                    });
+                }
+            });
+        });
+    });
+
+    // ── Limpiar usuario 02 ───────────────────────────────────────────────────────
+    $(document).on('click', '.btn-clear02', function () {
+        var id = $(this).data('id');
+
+        Swal.fire({
+            title: '¿Desasignar usuario de conteo 2?',
+            text: 'Esta acción eliminará la asignación del usuario 2.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Sí, limpiar',
+            cancelButtonText: 'Cancelar'
+        }).then(function (result) {
+            if (!result.isConfirmed) return;
+
+            $.ajax({
+                url: CardDetail.clear02Url + '/' + id,
+                type: 'PUT',
+                headers: {
+                    'X-CSRF-TOKEN': CardDetail.csrfToken
+                },
+                success: function (response) {
+                    if (response.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Eliminado',
+                            text: response.message,
+                            timer: 1800,
+                            showConfirmButton: false
+                        }).then(function () {
+                            oTable.ajax.reload(null, false);
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: response.message
+                        });
+                    }
+                },
+                error: function (xhr) {
+                    var msg = xhr.responseJSON ? xhr.responseJSON.message : 'Error al eliminar el registro.';
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: msg
+                    });
+                }
+            });
+        });
+    });
+
 });

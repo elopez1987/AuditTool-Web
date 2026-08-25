@@ -112,6 +112,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('inventoryhead-cards/{id}', [InventoryCardDetailController::class, 'index'])->name('inventoryhead-cards');
     Route::get('getCardsInventory/{id}', [InventoryCardDetailController::class, 'getCardsInventory'])->name('getCardsInventory');
     Route::delete('deleteCardDetail/{id}', [InventoryCardDetailController::class, 'destroy'])->name('deleteCardDetail');
+    //	Limpiar asignacion del usuario 01
+    Route::put('clear01CardDetail/{id}', [InventoryCardDetailController::class, 'clearUser01'])->name('clear01CardDetail');
+    Route::put('clear02CardDetail/{id}', [InventoryCardDetailController::class, 'clearUser02'])->name('clear02CardDetail');
 
     //	Detalle de ubicaciones por cedula para su validacion en drones y comparacion en APP
     Route::get('inventorylocations-card/{id}', [InventoryLocationCardController::class, 'index'])->name('inventorylocations-card');
