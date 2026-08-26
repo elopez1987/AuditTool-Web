@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('inventory_head_id');
             $table->foreignId('inventory_card_count_id');
-            $table->foreignId('user_id');
+            $table->foreignId('user_id')->nullable();
             $table->string('statusid', 15);
             $table->timestamps();
 
