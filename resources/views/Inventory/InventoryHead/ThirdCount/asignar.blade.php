@@ -1,6 +1,6 @@
 <div class="modal fade bs-example-modal-lg" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true"
-     style="display: none;" id="modal-{{$inventoryCardCount->id}}">
-    <form method="POST" action="{{url('reset-count-1/' . $inventoryCardCount->id)}}">
+     style="display: none;" id="modal-{{$error->inventory_card_id}}">
+    <form method="POST" action="{{url('third-assign-counter/' . $error->inventory_card_id)}}">
         {{ method_field('PUT') }}
         @csrf
         <div class="modal-dialog modal-lg">
@@ -10,9 +10,15 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
-
-                    </div>
+                    <x-select2
+                            name="userid"
+                            label="Usuario"
+                            :options="$users"
+                            valueField="id"
+                            textField="name"
+                            :required="true"
+                            colClass="col-12"
+                    />
                 </div>
 
                 <div class="modal-footer">

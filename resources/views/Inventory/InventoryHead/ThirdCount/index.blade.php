@@ -47,18 +47,17 @@
                                 <tbody>
                                 @foreach($errors as $error)
                                     <tr>
-                                        <td>{{$error->cardid}}</td>
+                                        <td>{{$error->card_name}}</td>
                                         <td>{{$error->total_errors}}</td>
                                         <td>
-                                            <a href="" data-target="#modal-{{$error->}}"
+                                            <a href="" data-target="#modal-{{$error->inventory_card_id}}"
                                                data-toggle="modal" data-placement="top">
-                                                <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md"
-                                                        data-toggle="tooltip" data-placement="top" title="Cerrar Inventario">
-                                                    <img src="{{asset('/ico/adreload.png')}}" alt="" class="img-16">
-                                                    <span style="font-size: 11px;"> Reiniciar Conteo 1</span>
+                                                <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
+                                                    <img src="{{asset('/ico/adduser.png')}}" alt="" class="img-16">
+                                                    <span style="font-size: 11px;"> Asignar contador</span>
                                                 </button>
                                             </a>
-                                            @include('Inventory.InventoryHead.LocationCard.initialize-count1')
+                                            @include('Inventory.InventoryHead.ThirdCount.asignar')
                                         </td>
                                     </tr>
                                 @endforeach
