@@ -64,7 +64,7 @@ class InventoryValidateLocationController extends BaseController
         }
 
         $inventoryCardCount = InventoryCardCount::where('inventory_head_id', $locationCount->inventory_head_id)
-            ->where('inventory_card_id', $locationCount->inventory_card_id)
+            ->where('id', $locationCount->inventory_card_id)
             ->select(['id', 'user_count02_id'])
             ->first();
 
