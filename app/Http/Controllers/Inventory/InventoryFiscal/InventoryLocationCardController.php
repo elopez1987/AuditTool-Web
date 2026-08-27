@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Inventory\InventoryFiscal;
 
 use App\Http\Controllers\BaseController;
+use App\Models\Inventory\InventoryFiscal\InventoryAssignCounterCard;
+use App\Models\Inventory\InventoryFiscal\InventoryAssignCounterLocation;
 use App\Models\Inventory\InventoryFiscal\InventoryCardCount;
 use App\Models\Inventory\InventoryFiscal\InventoryHead;
 use App\Models\Inventory\InventoryFiscal\InventoryLocationCount;
@@ -168,6 +170,26 @@ class InventoryLocationCardController extends BaseController
                 ->orWhereColumn('inventorypartnumber01_id', '!=', 'inventorypartnumber02_id')
             )
             ->update(['statusid_location' => false]);
+
+        $locationsErrors = InventoryLocationCount::where('inventory_head_id', $inventoryCardCount->inventory_head_id)
+            ->where('inventory_card_id', $inventoryCardCount->id)
+            ->where('statusid_location', 0)
+            ->get();
+
+        $inventoryCard = InventoryAssignCounterCard::create([
+            'inventory_head_id' => $inventoryCardCount->inventory_head_id,
+            'inventory_card_count_id' => $inventoryCardCount->id,
+            'user_id' => $request->userid,
+            'statusid' => 'F',
+        ]);
+
+        foreach ($locationsErrors as $locationError) {
+            InventoryAssignCounterLocation::create([
+                'inventory_assign_counter_card_id' => $inventoryCard->id,
+                'inventory_location_count_id' => $locationError->id,
+                'statusid' => 'F',
+            ]);
+        }
 
         return $this->redirectBackSuccessMessage('Conteo inicializado con exito.');
     }

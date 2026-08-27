@@ -5,12 +5,9 @@ namespace App\Http\Controllers\Inventory\InventoryFiscal;
 use App\Http\Controllers\BaseController;
 use App\Models\Inventory\InventoryFiscal\InventoryAccountant;
 use App\Models\Inventory\InventoryFiscal\InventoryAssignCounterCard;
-use App\Models\Inventory\InventoryFiscal\InventoryAssignCounterLocation;
 use App\Models\Inventory\InventoryFiscal\InventoryCardCount;
 use App\Models\Inventory\InventoryFiscal\InventoryHead;
-use App\Models\Inventory\InventoryFiscal\InventoryLocationCount;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class ThirdCountController extends BaseController
 {
@@ -26,23 +23,26 @@ class ThirdCountController extends BaseController
             ->select('inventory_accountants.user_id', 'users.id', 'users.name')
             ->get();
 
-        $errors = InventoryLocationCount::join('inventory_card_counts', 'inventory_location_counts.inventory_card_id', '=', 'inventory_card_counts.id')
-            ->join('inventory_cards', 'inventory_card_counts.inventory_card_id', '=', 'inventory_cards.id')
-            ->where('inventory_location_counts.inventory_head_id', $inventoryhead->id)
-            ->where('inventory_location_counts.statusid_location', 0)
-            ->groupBy(
-                'inventory_location_counts.inventory_card_id',
-                'inventory_location_counts.inventory_head_id',
-                'inventory_cards.name',
-                'inventory_card_counts.inventory_card_id'
-            )
-            ->select([
-                'inventory_location_counts.inventory_head_id',
-                'inventory_location_counts.inventory_card_id',
-                'inventory_cards.name as card_name',
-                DB::raw('COUNT(inventory_location_counts.statusid_location) as total_errors'),
-            ])
-            ->get();
+        //        $errors = InventoryLocationCount::join('inventory_card_counts', 'inventory_location_counts.inventory_card_id', '=', 'inventory_card_counts.id')
+        //            ->join('inventory_cards', 'inventory_card_counts.inventory_card_id', '=', 'inventory_cards.id')
+        //			->leftJoin('inventory_assign_counter_cards', 'inventory_assign_counter_cards.inventory_card_id', '=', 'inventory_cards.id')
+        //            ->where('inventory_location_counts.inventory_head_id', $inventoryhead->id)
+        //            ->where('inventory_location_counts.statusid_location', 0)
+        //            ->groupBy(
+        //                'inventory_location_counts.inventory_card_id',
+        //                'inventory_location_counts.inventory_head_id',
+        //                'inventory_cards.name',
+        //				'inventory_assign_counter_cards.statusid',
+        //                'inventory_card_counts.inventory_card_id'
+        //            )
+        //            ->select([
+        //                'inventory_location_counts.inventory_head_id',
+        //                'inventory_location_counts.inventory_card_id',
+        //                'inventory_cards.name as card_name',
+        //				'inventory_assign_counter_cards.statusid',
+        //                DB::raw('COUNT(inventory_location_counts.statusid_location) as total_errors'),
+        //            ])
+        //            ->get();
 
         return view(
             'Inventory.InventoryHead.ThirdCount.index',
@@ -54,25 +54,12 @@ class ThirdCountController extends BaseController
     {
         $inventoryCardCount = InventoryCardCount::where('id', $id)->first();
 
-        $locationsErrors = InventoryLocationCount::where('inventory_head_id', $inventoryCardCount->inventory_head_id)
-            ->where('inventory_card_id', $inventoryCardCount->id)
-            ->where('statusid_location', 0)
-            ->get();
-
-        $inventoryCard = InventoryAssignCounterCard::create([
-            'inventory_head_id' => $inventoryCardCount->inventory_head_id,
-            'inventory_card_count_id' => $inventoryCardCount->id,
-            'user_id' => $request->userid,
-            'statusid' => 'F',
-        ]);
-
-        foreach ($locationsErrors as $locationError) {
-            InventoryAssignCounterLocation::create([
-                'inventory_assign_counter_card_id' => $inventoryCard->id,
-                'inventory_location_count_id' => $locationError->id,
-                'statusid' => 'F',
+        InventoryAssignCounterCard::where('inventory_card_count_id', $inventoryCardCount->id)
+            ->where('inventory_head_id', $inventoryCardCount->inventory_head_id)
+            ->update([
+                'user_id' => $request->userid,
+                'statusid' => 'A',
             ]);
-        }
 
         return $this->redirectBackSuccessMessage('Usuario asignado correctamente');
     }
