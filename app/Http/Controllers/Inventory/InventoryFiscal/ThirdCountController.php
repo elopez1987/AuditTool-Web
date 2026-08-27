@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Inventory\InventoryFiscal;
 use App\Http\Controllers\BaseController;
 use App\Models\Inventory\InventoryFiscal\InventoryAccountant;
 use App\Models\Inventory\InventoryFiscal\InventoryAssignCounterCard;
-use App\Models\Inventory\InventoryFiscal\InventoryCardCount;
 use App\Models\Inventory\InventoryFiscal\InventoryHead;
 use Illuminate\Http\Request;
 
@@ -23,39 +22,27 @@ class ThirdCountController extends BaseController
             ->select('inventory_accountants.user_id', 'users.id', 'users.name')
             ->get();
 
-        //        $errors = InventoryLocationCount::join('inventory_card_counts', 'inventory_location_counts.inventory_card_id', '=', 'inventory_card_counts.id')
-        //            ->join('inventory_cards', 'inventory_card_counts.inventory_card_id', '=', 'inventory_cards.id')
-        //			->leftJoin('inventory_assign_counter_cards', 'inventory_assign_counter_cards.inventory_card_id', '=', 'inventory_cards.id')
-        //            ->where('inventory_location_counts.inventory_head_id', $inventoryhead->id)
-        //            ->where('inventory_location_counts.statusid_location', 0)
-        //            ->groupBy(
-        //                'inventory_location_counts.inventory_card_id',
-        //                'inventory_location_counts.inventory_head_id',
-        //                'inventory_cards.name',
-        //				'inventory_assign_counter_cards.statusid',
-        //                'inventory_card_counts.inventory_card_id'
-        //            )
-        //            ->select([
-        //                'inventory_location_counts.inventory_head_id',
-        //                'inventory_location_counts.inventory_card_id',
-        //                'inventory_cards.name as card_name',
-        //				'inventory_assign_counter_cards.statusid',
-        //                DB::raw('COUNT(inventory_location_counts.statusid_location) as total_errors'),
-        //            ])
-        //            ->get();
+        $errors = InventoryAssignCounterCard::where('inventory_head_id', $inventoryCardCount->inventory_head_id)
+            ->join('inventory_card_counts', 'inventory_assign_counter_cards.inventory_card_count_id', '=', 'inventory_card_counts.inventory_card_id')
+            ->join('inventory_cards', 'inventory_card_counts.inventory_card_id', '=', 'inventory_cards.id')
+            ->select([
+                'inventory_cards.name as card_name',
+                'inventory_assign_counter_cards.statusid',
+                'inventory_assign_counter_cards.id',
+            ])
+            ->where('inventory_assign_counter_cards.statusid', 'F')
+            ->get();
 
         return view(
             'Inventory.InventoryHead.ThirdCount.index',
-            compact('inventoryhead', 'users')
+            compact('inventoryhead', 'users', 'errors')
         );
     }
 
     public function assignCounter(Request $request, $id)
     {
-        $inventoryCardCount = InventoryCardCount::where('id', $id)->first();
 
-        InventoryAssignCounterCard::where('inventory_card_count_id', $inventoryCardCount->id)
-            ->where('inventory_head_id', $inventoryCardCount->inventory_head_id)
+        InventoryAssignCounterCard::where('id', $id)
             ->update([
                 'user_id' => $request->userid,
                 'statusid' => 'A',

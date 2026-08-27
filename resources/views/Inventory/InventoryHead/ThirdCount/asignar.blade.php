@@ -1,6 +1,6 @@
 <div class="modal fade bs-example-modal-lg" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true"
-     style="display: none;" id="modal-{{$error->inventory_card_id}}">
-    <form method="POST" action="{{url('third-assign-counter/' . $error->inventory_card_id)}}">
+     style="display: none;" id="modal-{{$error->id}}">
+    <form method="POST" action="{{url('third-assign-counter/' . $error->id)}}">
         {{ method_field('PUT') }}
         @csrf
         <div class="modal-dialog modal-lg">

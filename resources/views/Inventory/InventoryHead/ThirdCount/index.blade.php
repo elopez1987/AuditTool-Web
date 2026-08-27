@@ -40,28 +40,28 @@
                                 <thead>
                                 <tr>
                                     <th>Cédula</th>
-                                    <th>Cantidad de errores</th>
+{{--                                    <th>Cantidad de errores</th>--}}
                                     <th>Usuario asignado</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-{{--                                @foreach($errors as $error)--}}
-{{--                                    <tr>--}}
-{{--                                        <td>{{$error->card_name}}</td>--}}
+                                @foreach($errors as $error)
+                                    <tr>
+                                        <td>{{$error->card_name}}</td>
 {{--                                        <td>{{$error->total_errors}}</td>--}}
-{{--                                        <td>--}}
-{{--                                                <a href="" data-target="#modal-{{$error->inventory_card_id}}"--}}
-{{--                                                   data-toggle="modal" data-placement="top">--}}
-{{--                                                    <button type="button"--}}
-{{--                                                            class="btn waves-effect waves-light btn-outline-info btn-md">--}}
-{{--                                                        <img src="{{asset('/ico/adduser.png')}}" alt="" class="img-16">--}}
-{{--                                                        <span style="font-size: 11px;"> Asignar contador</span>--}}
-{{--                                                    </button>--}}
-{{--                                                </a>--}}
-{{--                                                @include('Inventory.InventoryHead.ThirdCount.asignar')--}}
-{{--                                        </td>--}}
-{{--                                    </tr>--}}
-{{--                                @endforeach--}}
+                                        <td>
+                                                <a href="" data-target="#modal-{{$error->id}}"
+                                                   data-toggle="modal" data-placement="top">
+                                                    <button type="button"
+                                                            class="btn waves-effect waves-light btn-outline-info btn-md">
+                                                        <img src="{{asset('/ico/adduser.png')}}" alt="" class="img-16">
+                                                        <span style="font-size: 11px;"> Asignar contador</span>
+                                                    </button>
+                                                </a>
+                                                @include('Inventory.InventoryHead.ThirdCount.asignar')
+                                        </td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
