@@ -46,7 +46,7 @@ class ThirdCountController extends BaseController
 
         return view(
             'Inventory.InventoryHead.ThirdCount.index',
-            compact('inventoryhead', 'errors', 'users')
+            compact('inventoryhead', 'users')
         );
     }
 

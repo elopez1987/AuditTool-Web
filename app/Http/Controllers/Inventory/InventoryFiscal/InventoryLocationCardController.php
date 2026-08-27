@@ -179,7 +179,6 @@ class InventoryLocationCardController extends BaseController
         $inventoryCard = InventoryAssignCounterCard::create([
             'inventory_head_id' => $inventoryCardCount->inventory_head_id,
             'inventory_card_count_id' => $inventoryCardCount->id,
-            'user_id' => $request->userid,
             'statusid' => 'F',
         ]);
 
