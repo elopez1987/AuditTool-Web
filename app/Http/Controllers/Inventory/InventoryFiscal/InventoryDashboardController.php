@@ -78,7 +78,8 @@ class InventoryDashboardController extends BaseController
     {
         $data = DB::table('inventory_location_counts as ilc')
             ->join('inventory_aisles as ia', 'ilc.inventory_aisle_id', '=', 'ia.id')
-            ->join('inventory_cards as ic', 'ilc.inventory_card_id', '=', 'ic.id')
+            ->join('inventory_card_counts as icc', 'ilc.inventory_card_id', '=', 'icc.inventory_card_id')
+            ->join('inventory_cards as ic', 'icc.inventory_card_id', '=', 'ic.id')
             ->join('inventory_locations as il', 'ilc.inventory_location_id', '=', 'il.id')
             ->where('ilc.inventory_head_id', $request->inventory_head_id)
             ->where('ilc.statusid_location', 0)

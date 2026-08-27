@@ -1,7 +1,7 @@
 <script>
     var oTable = $("#inventoryDetailTableErrors").DataTable({
         "paging": true,
-        "searching": true,
+        "searching": false,
         "ordering": true,
         "sScrollY": "450px",
         "sScrollX": true,
