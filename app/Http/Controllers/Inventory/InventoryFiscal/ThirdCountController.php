@@ -23,7 +23,7 @@ class ThirdCountController extends BaseController
             ->get();
 
         $errors = InventoryAssignCounterCard::where('inventory_assign_counter_cards.inventory_head_id', $inventoryhead->id)
-            ->join('inventory_card_counts', 'inventory_assign_counter_cards.inventory_card_count_id', '=', 'inventory_card_counts.inventory_card_id')
+            ->join('inventory_card_counts', 'inventory_assign_counter_cards.inventory_card_count_id', '=', 'inventory_card_counts.id')
             ->join('inventory_cards', 'inventory_card_counts.inventory_card_id', '=', 'inventory_cards.id')
             ->select([
                 'inventory_cards.name as card_name',
