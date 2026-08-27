@@ -24,9 +24,9 @@ class InventorySupervisor extends Model
         'user_id',
     ];
 
-    public function inventoryHead(): BelongsTo
+    public function inventoryhead(): BelongsTo
     {
-        return $this->belongsTo(InventoryHead::class);
+        return $this->belongsTo(InventoryHead::class, 'inventory_head_id', 'id');
     }
 
     public function user(): BelongsTo

@@ -10,6 +10,7 @@ use App\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Str;
@@ -57,6 +58,36 @@ class InventoryHead extends Model
         return $this->belongsTo(User::class, 'created_id', 'id');
     }
 
+    public function inventorystocksap(): HasMany
+    {
+        return $this->hasMany(InventoryStockSap::class, 'inventory_head_id', 'id');
+    }
+
+    public function inventorystockwms(): HasMany
+    {
+        return $this->hasMany(ImportInventoryWms::class, 'inventory_head_id', 'id');
+    }
+
+    public function inventorysupervisors(): HasMany
+    {
+        return $this->hasMany(InventorySupervisor::class, 'inventory_head_id', 'id');
+    }
+
+    public function inventoryaccounts(): HasMany
+    {
+        return $this->hasMany(InventoryAccountant::class, 'inventory_head_id', 'id');
+    }
+
+    public function inventorylocationevidences(): HasMany
+    {
+        return $this->hasMany(InventoryLocationEvidences::class, 'inventory_head_id', 'id');
+    }
+
+    public function inventoryassigncountercards(): HasMany
+    {
+        return $this->hasMany(InventoryAssignCounterCard::class, 'inventory_head_id', 'id');
+    }
+
     public function closed_by(): BelongsTo
     {
         return $this->belongsTo(User::class, 'closed_id', 'id')
@@ -83,6 +114,14 @@ class InventoryHead extends Model
         static::creating(function ($model) {
             $model->inventory_uuid = (string) Str::uuid();
             $model->created_id = auth()->id();
+        });
+        self::deleting(function (InventoryHead $model) {
+            $model->inventorystocksap()->delete();
+            $model->inventorystockwms()->delete();
+            $model->inventorysupervisors()->delete();
+            $model->inventoryaccounts()->delete();
+            $model->inventorylocationevidences()->delete();
+            $model->inventoryassigncountercards()->delete();
         });
     }
 

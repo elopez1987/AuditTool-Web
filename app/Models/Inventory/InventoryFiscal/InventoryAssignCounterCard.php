@@ -6,6 +6,7 @@ use App\Models\Configuration\Schemas\SystemStatus;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class InventoryAssignCounterCard extends Model
 {
@@ -20,7 +21,7 @@ class InventoryAssignCounterCard extends Model
 
     public function inventoryhead(): BelongsTo
     {
-        return $this->belongsTo(InventoryHead::class);
+        return $this->belongsTo(InventoryHead::class, 'inventory_head_id', 'id');
     }
 
     public function inventorycardcount(): BelongsTo
@@ -36,5 +37,20 @@ class InventoryAssignCounterCard extends Model
     public function status(): BelongsTo
     {
         return $this->belongsTo(SystemStatus::class, 'statusid', 'statusid');
+    }
+
+    public function inventoryassignslocations(): HasMany
+    {
+        return $this->hasMany(InventoryAssignCounterLocation::class, 'inventory_assign_counter_card_id', 'id');
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {});
+        self::deleting(function (InventoryAssignCounterCard $model) {
+            $model->inventoryassignslocations()->delete();
+        });
     }
 }

@@ -295,6 +295,14 @@
                                                         <span class="hide-menu"> Autorizar salida</span></a>
                                                 </li>
                                             @endcan
+                                            @can('autorizeoutput')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('authorize-empty')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Autorizar salida vacia</span></a>
+                                                </li>
+                                            @endcan
                                             @can('refuseunit')
                                                 <li class="sidebar-item"><a
                                                             href="{{route('refuseunit')}}"
