@@ -47,7 +47,7 @@ class InventoryValidateLocationController extends BaseController
 
         return view(
             'Inventory.InventoryHead.LocationCard.ValidateLocation.index',
-            compact('locationCount', 'evidences', 'locationStock')
+            compact('locationCount', 'evidences', 'locationStock'),
         );
     }
 
@@ -79,6 +79,13 @@ class InventoryValidateLocationController extends BaseController
                 'statusid_count02' => 'C',
                 'statusid_location' => true,
             ]);
+
+            if ($locationCount->type == 'D') {
+                $locationCount->update([
+                    'inventorypartnumber02_id' => $locationCount->inventorypartnumber01_id,
+                    'quantity02' => $locationCount->quantity01,
+                ]);
+            }
 
             if ($inventoryCardCount->user_count02_id == null) {
                 $inventoryCardCount->update([

@@ -49,7 +49,7 @@
                                                 <tr>
                                                     <th>Pasillo</th>
                                                     <th>Cedula</th>
-                                                    <th>Ubciación</th>
+                                                    <th>Ubicación</th>
                                                 </tr>
                                                 </thead>
                                             </table>
