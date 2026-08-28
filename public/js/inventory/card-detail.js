@@ -62,7 +62,7 @@ $(document).ready(function () {
             }
         ],
         "language": {
-            "url": "{{asset('/js/spanish.json')}}"
+            // "url": "{{asset('/js/spanish.json')}}"
         }
     });
 
