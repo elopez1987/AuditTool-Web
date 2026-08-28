@@ -38,7 +38,7 @@
                         <div class="col-lg-12">
                             <div class="card">
                                 <div class="row">
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-12">
                                         <div class="card-header">
                                             <h4>ERRORES DE CONTEO</h4>
                                         </div>
