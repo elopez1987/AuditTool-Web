@@ -50,6 +50,11 @@
                                                     <th>Pasillo</th>
                                                     <th>Cedula</th>
                                                     <th>Ubicación</th>
+                                                    <th>Sku 01</th>
+                                                    <th>Catidad 01</th>
+                                                    <th>Sku 02</th>
+                                                    <th>Catidad 02</th>
+                                                    <th>Tipo de conteo</th>
                                                 </tr>
                                                 </thead>
                                             </table>

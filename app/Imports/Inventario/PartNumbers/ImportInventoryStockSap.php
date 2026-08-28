@@ -23,10 +23,6 @@ class ImportInventoryStockSap implements ShouldQueue, ToCollection, WithChunkRea
         protected readonly InventoryHead $inventoryHead,
     ) {}
 
-    /**
-     * Se ejecuta una vez POR CHUNK (no por fila), gracias a ToCollection.
-     * El archivo de SAP solo trae prtnum y quantity.
-     */
     public function collection(Collection $rows): void
     {
         if ($rows->isEmpty()) {
@@ -38,6 +34,8 @@ class ImportInventoryStockSap implements ShouldQueue, ToCollection, WithChunkRea
             ->map(fn ($value) => (string) $value)
             ->unique()
             ->values();
+
+        Log::info('Part numbers: ' . $partNumbers->implode(', '));
 
         $partNumberRecords = InventoryPartnumber::query()
             ->where('centerid', $this->inventoryHead->centerid)

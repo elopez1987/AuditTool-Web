@@ -70,12 +70,6 @@ class ImportPartNumbers implements ToCollection, WithChunkReading, WithHeadingRo
 
         $presentOptionalColumns = $this->presentOptionalColumns($rows->first());
 
-        // Indexado por prtnum: si el archivo trae el mismo prtnum repetido
-        // dentro del mismo chunk, nos quedamos con la última ocurrencia en
-        // vez de mandar dos filas con la misma llave (centerid, warehouseid,
-        // prtnum) al mismo UPSERT masivo. SQL Server rechaza un MERGE cuyo
-        // origen matchea la misma fila destino más de una vez con
-        // "attempted to UPDATE or DELETE the same row more than once".
         $upsertData = [];
 
         foreach ($rows as $row) {
