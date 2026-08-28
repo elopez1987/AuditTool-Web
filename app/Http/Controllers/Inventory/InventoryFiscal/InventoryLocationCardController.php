@@ -21,8 +21,10 @@ class InventoryLocationCardController extends BaseController
         $inventoryCardCount = InventoryCardCount::with('inventoryhead:id,name')->findOrFail($id);
         $inventoryHead = InventoryHead::where('id', $inventoryCardCount->inventory_head_id)->first();
 
-        return view('Inventory.InventoryHead.LocationCard.index',
-            compact('inventoryCardCount', 'inventoryHead'));
+        return view(
+            'Inventory.InventoryHead.LocationCard.index',
+            compact('inventoryCardCount', 'inventoryHead')
+        );
     }
 
     private function baseLocationCardQuery(Request $request, InventoryCardCount $inventoryCardCount)
@@ -161,13 +163,11 @@ class InventoryLocationCardController extends BaseController
                     ->whereNotNull('inventorypartnumber01_id')
                     ->whereNotNull('inventorypartnumber02_id');
 
-                // Columnas iguales → CORRECTO
                 (clone $base)
                     ->whereColumn('quantity01', 'quantity02')
                     ->whereColumn('inventorypartnumber01_id', 'inventorypartnumber02_id')
                     ->update(['statusid_location' => true]);
 
-                // Columnas diferentes → ERROR
                 (clone $base)
                     ->where(fn ($q) => $q
                         ->whereColumn('quantity01', '!=', 'quantity02')
@@ -185,6 +185,20 @@ class InventoryLocationCardController extends BaseController
                 if ($locationsErrors->isNotEmpty()) {
                     $now = now();
 
+                    // Valida que no exista ya una asignación abierta ('F') o activa ('A') para esta cédula,
+                    // evitando crear registros duplicados de InventoryAssignCounterCard.
+                    $inventoryCardExist = InventoryAssignCounterCard::query()
+                        ->where('inventory_head_id', $inventoryCardCount->inventory_head_id)
+                        ->where('inventory_card_count_id', $inventoryCardCount->id)
+                        ->whereIn('statusid', ['F', 'A'])
+                        ->exists();
+
+                    // Si ya existe, se sale sin crear nada nuevo (evita duplicados).
+                    if ($inventoryCardExist) {
+                        return $this->errorResponse('Ya existe una asignación de conteo activa para esta cédula.');
+                    }
+
+                    // Solo continúa si NO existe una asignación previa.
                     $inventoryCard = InventoryAssignCounterCard::create([
                         'inventory_head_id' => $inventoryCardCount->inventory_head_id,
                         'inventory_card_count_id' => $inventoryCardCount->id,

@@ -53,14 +53,6 @@ class InventoryCardDetailController extends BaseController
                 's2.auxiliary01 as color_count02',
             ]);
 
-        // Estos permisos no dependen de la fila (son abilities globales, no
-        // por modelo), por lo que se evalúan UNA sola vez para toda la
-        // respuesta en vez de una vez por fila. Antes, con 300 filas, la
-        // columna 'btn' hacía view(...)->render() (resolución + compilación
-        // Blade) más 4 chequeos @can por fila -> 300 renders + 1200 checks
-        // de permisos, lo que explica la mayor parte de los 1.45s medidos:
-        // las dos consultas SQL (conteo + selección), ya indexadas por
-        // inventory_head_id, tardan solo unos pocos milisegundos.
         $permissions = [
             'show' => Gate::allows('inventorylocations-card.show'),
             'printformat01' => Gate::allows('inventorylocations-card.printformat01'),
@@ -75,14 +67,6 @@ class InventoryCardDetailController extends BaseController
             ->toJson();
     }
 
-    /**
-     * Construye el HTML de la columna de acciones sin pasar por el motor de
-     * vistas de Blade (view()->render()) en cada fila, ya que para un
-     * datatable de cientos de filas ese costo de resolución/compilación se
-     * vuelve el cuello de botella dominante frente a la propia consulta SQL.
-     * Debe reflejar exactamente los mismos botones que
-     * Inventory.InventoryHead.CardDetail.buttons.
-     */
     private function renderButtons($row, array $permissions): string
     {
         $html = '';
