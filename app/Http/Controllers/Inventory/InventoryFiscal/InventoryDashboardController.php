@@ -94,8 +94,8 @@ class InventoryDashboardController extends BaseController
             ->join('inventory_card_counts as icc', 'ilc.inventory_card_id', '=', 'icc.id')
             ->join('inventory_cards as ic', 'icc.inventory_card_id', '=', 'ic.id')
             ->join('inventory_aisles as ias', 'ic.inventory_aisle_id', '=', 'ias.id')
-            ->leftJoin('inventorypartnumbers iv1', 'ilc.inventorypartnumber01_id', '=', 'iv1.id')
-            ->leftJoin('inventorypartnumbers iv2', 'ilc.inventorypartnumber02_id', '=', 'iv2.id')
+            ->leftJoin('inventorypartnumbers as iv1', 'ilc.inventorypartnumber01_id', '=', 'iv1.id')
+            ->leftJoin('inventorypartnumbers as iv2', 'ilc.inventorypartnumber02_id', '=', 'iv2.id')
             ->where('ilc.inventory_head_id', $request->inventory_head_id)
             ->where('ilc.statusid_location', 0)
             ->get();
