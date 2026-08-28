@@ -19,7 +19,17 @@ class ImportPartNumbersController extends BaseController
         }
         ini_set('max_execution_time', 400);
         $file = $request->file('file');
-        Excel::import(new ImportPartNumbers, $file);
+
+        $import = new ImportPartNumbers;
+        Excel::import($import, $file);
+
+        $omitted = $import->getFailedRowsCount();
+        if ($omitted > 0) {
+            return redirect()->route('inventorypartnumbers.index')->with(
+                'warning',
+                "Importación finalizada. Se omitieron {$omitted} fila(s) por datos inválidos o faltantes; revise el log para más detalle."
+            );
+        }
 
         return $this->successResponse('inventorypartnumbers.index');
     }

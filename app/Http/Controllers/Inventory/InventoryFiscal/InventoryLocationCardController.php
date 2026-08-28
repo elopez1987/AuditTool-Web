@@ -141,7 +141,6 @@ class InventoryLocationCardController extends BaseController
                 'statusid_count02' => 'F',
                 'user_count02_id' => null,
                 'statusid_location' => null,
-                'type' => null,
             ]);
 
         return $this->redirectBackSuccessMessage('Conteo inicializado con exito.');
@@ -183,14 +182,14 @@ class InventoryLocationCardController extends BaseController
                     ->where('statusid_location', 0)
                     ->get();
 
-                $inventoryCard = InventoryAssignCounterCard::create([
-                    'inventory_head_id' => $inventoryCardCount->inventory_head_id,
-                    'inventory_card_count_id' => $inventoryCardCount->id,
-                    'statusid' => 'F',
-                ]);
-
                 if ($locationsErrors->isNotEmpty()) {
                     $now = now();
+
+                    $inventoryCard = InventoryAssignCounterCard::create([
+                        'inventory_head_id' => $inventoryCardCount->inventory_head_id,
+                        'inventory_card_count_id' => $inventoryCardCount->id,
+                        'statusid' => 'F',
+                    ]);
 
                     $rows = $locationsErrors->map(fn ($locationError) => [
                         'inventory_assign_counter_card_id' => $inventoryCard->id,
