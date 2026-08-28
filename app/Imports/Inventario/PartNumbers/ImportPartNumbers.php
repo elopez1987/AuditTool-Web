@@ -129,8 +129,6 @@ class ImportPartNumbers implements ToCollection, WithChunkReading, WithHeadingRo
             'untpal' => $this->sanitizeInt($row['untpal'] ?? null) ?? 1, // Obligatorio
             'statusid' => 'E',
             'schemaid' => 'STS',
-            'created_at' => now(),
-            'updated_at' => now(),
         ];
 
         foreach ($presentOptionalColumns as $fileColumn => $dbColumn) {
