@@ -70,18 +70,30 @@ class ImportPartNumbers implements ToCollection, WithChunkReading, WithHeadingRo
 
         $presentOptionalColumns = $this->presentOptionalColumns($rows->first());
 
+        // Indexado por prtnum: si el archivo trae el mismo prtnum repetido
+        // dentro del mismo chunk, nos quedamos con la última ocurrencia en
+        // vez de mandar dos filas con la misma llave (centerid, warehouseid,
+        // prtnum) al mismo UPSERT masivo. SQL Server rechaza un MERGE cuyo
+        // origen matchea la misma fila destino más de una vez con
+        // "attempted to UPDATE or DELETE the same row more than once".
         $upsertData = [];
 
         foreach ($rows as $row) {
             $prepared = $this->prepareRow($row, $presentOptionalColumns);
 
-            if ($prepared !== null) {
-                $upsertData[] = $prepared;
+            if ($prepared === null) {
+                continue;
             }
+
+            if (isset($upsertData[$prepared['prtnum']])) {
+                $this->failedRows[] = "prtnum {$prepared['prtnum']} está repetido en el archivo (mismo lote); se importó solo la última ocurrencia.";
+            }
+
+            $upsertData[$prepared['prtnum']] = $prepared;
         }
 
         if (! empty($upsertData)) {
-            $this->upsertChunk($upsertData);
+            $this->upsertChunk(array_values($upsertData));
         }
 
         $this->logFailedRows();
@@ -152,13 +164,23 @@ class ImportPartNumbers implements ToCollection, WithChunkReading, WithHeadingRo
         ));
 
         try {
-            DB::transaction(function () use ($upsertData, $updateColumns) {
-                DB::table('inventorypartnumbers')->upsert(
-                    $upsertData,
-                    ['centerid', 'warehouseid', 'prtnum'],
-                    $updateColumns,
-                );
-            });
+            // Sin DB::transaction() propio: maatwebsite/excel ya ejecuta
+            // collection() dentro de su propia transacción por chunk
+            // (config('excel.transactions.handler') = 'db'). Anidar otra
+            // transacción aquí obligaba a Laravel a usar un SAVEPOINT
+            // (SAVE TRANSACTION transN); en SQL Server, un error dentro de
+            // ese savepoint puede invalidarlo sin invalidar la transacción
+            // externa, y el ROLLBACK TRANSACTION transN termina fallando
+            // con "No transaction or savepoint of that name was found",
+            // dejando el contador de transacciones de Laravel
+            // desincronizado para los siguientes chunks. El upsert es una
+            // sola sentencia atómica: si falla, no se aplica nada del lote,
+            // así que la atomicidad por chunk se conserva de todas formas.
+            DB::table('inventorypartnumbers')->upsert(
+                $upsertData,
+                ['centerid', 'warehouseid', 'prtnum'],
+                $updateColumns,
+            );
         } catch (Throwable $e) {
             Log::error('Error al guardar un lote de números de parte', [
                 'centerid' => $this->centerid,
