@@ -127,6 +127,10 @@ class ImportPartNumbers implements ToCollection, WithChunkReading, WithHeadingRo
             'category02id' => $category02id, // Obligatorio
             'untcas' => $this->sanitizeInt($row['untcas'] ?? null) ?? 1, // Obligatorio
             'untpal' => $this->sanitizeInt($row['untpal'] ?? null) ?? 1, // Obligatorio
+            'statusid' => 'E',
+            'schemaid' => 'STS',
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
 
         foreach ($presentOptionalColumns as $fileColumn => $dbColumn) {
@@ -146,7 +150,7 @@ class ImportPartNumbers implements ToCollection, WithChunkReading, WithHeadingRo
     {
         $updateColumns = array_values(array_diff(
             array_keys($upsertData[0]),
-            ['centerid', 'warehouseid', 'prtnum']
+            ['centerid', 'warehouseid', 'prtnum'],
         ));
 
         try {
@@ -154,7 +158,7 @@ class ImportPartNumbers implements ToCollection, WithChunkReading, WithHeadingRo
                 DB::table('inventorypartnumbers')->upsert(
                     $upsertData,
                     ['centerid', 'warehouseid', 'prtnum'],
-                    $updateColumns
+                    $updateColumns,
                 );
             });
         } catch (Throwable $e) {
