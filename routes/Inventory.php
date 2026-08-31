@@ -16,6 +16,7 @@ use App\Http\Controllers\Inventory\InventoryFiscal\InventoryHeadController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryHeadEventController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryLocationCardController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryLocationController;
+use App\Http\Controllers\Inventory\InventoryFiscal\InventoryLocationCountsController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryStockSapController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventorySupervisorController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryValidateLocationController;
@@ -84,6 +85,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('inventoryheads', InventoryHeadController::class);
     Route::get('getInventoryHead', [InventoryHeadController::class, 'getInventoryHead'])->name('getInventoryHead');
+
+    // Detalle de ubicaciones del inventario
+    Route::get('inventoryhead-locations/{id}', [InventoryLocationCountsController::class, 'index'])->name('inventoryhead-locations');
+    Route::get('getLocationCountsInventory/{id}', [InventoryLocationCountsController::class, 'getLocationCountsInventory'])->name('getLocationCountsInventory');
 
     //	Activar conteo fiscal
     Route::put('inventory-head-activate/{id}', [InventoryHeadEventController::class, 'activateInventoryHead'])->name('inventory-head-activate');

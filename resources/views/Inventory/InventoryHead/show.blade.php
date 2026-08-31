@@ -108,7 +108,7 @@
                                 </div>
                                 <div class="card-body">
                                     <h2 class="text-red" id="totalLocations" data-id="{{ $inventoryhead->id }}"></h2>
-                                    <a href="javascript:void(0)" class="btn btn-inverse">Ver Detalle</a>
+                                    <a href="{{url('inventoryhead-locations/' . $inventoryhead->inventory_uuid)}}" class="btn btn-inverse">Ver Detalle</a>
                                 </div>
                             </div>
                         </div>
