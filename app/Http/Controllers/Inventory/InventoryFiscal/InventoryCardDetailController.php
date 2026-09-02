@@ -6,6 +6,8 @@ use App\Http\Controllers\BaseController;
 use App\Models\Inventory\InventoryFiscal\InventoryHead;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Facades\DataTables;
 
 class InventoryCardDetailController extends BaseController
@@ -51,12 +53,61 @@ class InventoryCardDetailController extends BaseController
                 's2.auxiliary01 as color_count02',
             ]);
 
+        $permissions = [
+            'show' => Gate::allows('inventorylocations-card.show'),
+            'printformat01' => Gate::allows('inventorylocations-card.printformat01'),
+            'printformat02' => Gate::allows('inventorylocations-card.printformat02'),
+            'destroy' => Gate::allows('inventoryheads.destroy'),
+            'clearuser' => Gate::allows('inventoryheads.clearuser'),
+        ];
+
         return DataTables::of($query)
-            ->addColumn('btn', function ($row) {
-                return view('Inventory.InventoryHead.CardDetail.buttons', ['row' => $row])->render();
-            })
+            ->addColumn('btn', fn ($row) => $this->renderButtons($row, $permissions))
             ->rawColumns(['btn'])
             ->toJson();
+    }
+
+    private function renderButtons($row, array $permissions): string
+    {
+        $html = '';
+
+        if ($permissions['show']) {
+            $html .= '<a href="' . url('inventorylocations-card/' . $row->id) . '" class="ml-2 mr-2">'
+                . '<button type="button" class="btn waves-effect waves-light btn-outline-info btn-sm">'
+                . '<img src="' . asset('/ico/viewdetail.png') . '" alt="" class="img-16 ml-2 mr-2"><span> Detalle</span>'
+                . '</button></a>';
+        }
+
+        if ($permissions['printformat01'] && $row->statusid01 == 'C') {
+            $html .= '<a href="' . url('print-format-inventory-01/' . $row->id) . '" class="ml-2 mr-2">'
+                . '<button type="button" class="btn waves-effect waves-light btn-outline-info btn-sm">'
+                . '<img src="' . asset('/ico/pdf.png') . '" alt="" class="img-16 ml-2 mr-2"><span> Formato 01</span>'
+                . '</button></a>';
+        }
+
+        if ($permissions['printformat02'] && $row->statusid02 == 'C') {
+            $html .= '<a href="' . url('print-format-inventory-02/' . $row->id) . '" class="ml-2 mr-2">'
+                . '<button type="button" class="btn waves-effect waves-light btn-outline-info btn-sm">'
+                . '<img src="' . asset('/ico/pdf.png') . '" alt="" class="img-16 ml-2 mr-2"><span> Formato 02</span>'
+                . '</button></a>';
+        }
+
+        if ($permissions['destroy']) {
+            $html .= '<button type="button" class="btn waves-effect waves-light btn-outline-info btn-sm btn-delete ml-2 mr-2" data-id="' . $row->id . '">'
+                . '<img src="' . asset('/ico/refuseunit.png') . '" alt="" class="img-16 ml-2 mr-2"><span> Eliminar</span>'
+                . '</button>';
+        }
+
+        if ($permissions['clearuser']) {
+            $html .= '<button type="button" class="btn waves-effect waves-light btn-outline-info btn-sm btn-clear01 ml-2 mr-2" data-id="' . $row->id . '">'
+                . '<img src="' . asset('/ico/reloadpage.png') . '" alt="" class="img-16 ml-2 mr-2"><span> Desasignar 1</span>'
+                . '</button>';
+            $html .= '<button type="button" class="btn waves-effect waves-light btn-outline-info btn-sm btn-clear02 ml-2 mr-2" data-id="' . $row->id . '">'
+                . '<img src="' . asset('/ico/reloadpage.png') . '" alt="" class="img-16 ml-2 mr-2"><span> Desasignar 2</span>'
+                . '</button>';
+        }
+
+        return $html;
     }
 
     public function destroy($id)
@@ -65,12 +116,40 @@ class InventoryCardDetailController extends BaseController
 
             $inventoryCard = DB::table('inventory_card_counts')->where('id', $id)->first();
 
-            DB::table('inventory_location_counts')->where('inventory_card_id', $inventoryCard->inventory_card_id)->delete();
+            DB::table('inventory_location_counts')->where('inventory_card_id', $inventoryCard->id)->delete();
             DB::table('inventory_card_counts')->where('id', $id)->delete();
 
             return response()->json(['success' => true, 'message' => 'Cédula eliminada correctamente.']);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => 'Error al eliminar: ' . $e->getMessage()], 500);
+        }
+    }
+
+    public function clearUser01($id)
+    {
+        Log::info('Desasignando usuario 1 de la cédula con ID: ' . $id);
+        try {
+            DB::table('inventory_card_counts')->where('id', $id)->update([
+                'user_count01_id' => null,
+            ]);
+
+            return response()->json(['success' => true, 'message' => 'Cédula desasignada correctamente.']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Error al desasignar: ' . $e->getMessage()], 500);
+        }
+    }
+
+    public function clearUser02($id)
+    {
+        Log::info('Desasignando usuario 2 de la cédula con ID: ' . $id);
+        try {
+            DB::table('inventory_card_counts')->where('id', $id)->update([
+                'user_count02_id' => null,
+            ]);
+
+            return response()->json(['success' => true, 'message' => 'Cédula desasignada correctamente.']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Error al desasignar: ' . $e->getMessage()], 500);
         }
     }
 }

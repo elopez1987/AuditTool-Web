@@ -12,7 +12,7 @@
                         {{csrf_field()}}
                         <div class="row">
                             <div class="col-md-12">
-                                <a href="{{url('inventorylocations-card/' . $locationCount->inventorycardcount->id)}}">
+                                <a href="{{url('inventorylocations-card/' . $locationCount->inventory_card_id)}}">
                                     <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
                                         <img src="{{asset('/ico/back.png')}}" alt="" class="img-16 ml-1">
                                         <span class="text-button"> Regresar</span>
@@ -207,12 +207,12 @@
                 }
             });
 
-            const redirectUrl = "{{ url('inventorylocations-card/' . $locationCount->card_id) }}";
+            const redirectUrl = "{{ url('inventorylocations-card/' . $locationCount->inventory_card_id) }}";
 
             $('#saveSuccess').click(function (e) {
                 e.preventDefault();
                 $.ajax({
-                    url: '{!! route('saveResponseSuccessLocation', $locationCount->id) !!}',
+                    url: '{!! route('saveResponseSuccessLocation', ['id' => $locationCount->id, 'headId' => $locationCount->inventory_head_id]) !!}',
                     type: 'POST',
                     dataType: 'json',
                     success: function (data) {
@@ -238,7 +238,7 @@
             $('#saveErrorLocation').click(function (e) {
                 e.preventDefault();
                 $.ajax({
-                    url: '{!! route('saveResponseErrorLocation', $locationCount->id) !!}',
+                    url: '{!! route('saveResponseErrorLocation',['id' => $locationCount->id, 'headId' => $locationCount->inventory_head_id]) !!}',
                     type: 'POST',
                     dataType: 'json',
                     success: function (data) {

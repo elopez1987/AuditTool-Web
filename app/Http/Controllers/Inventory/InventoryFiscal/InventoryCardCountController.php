@@ -80,7 +80,7 @@ class InventoryCardCountController extends BaseController
                         ->select([
                             'icc.inventory_head_id',
                             'icc.inventory_aisle_id',
-                            'icc.inventory_card_id',
+                            'icc.id as inventory_card_id',
                             'il.id as inventory_location_id',
                             DB::raw("'F' as statusid_count01"),
                             DB::raw("'F' as statusid_count02"),

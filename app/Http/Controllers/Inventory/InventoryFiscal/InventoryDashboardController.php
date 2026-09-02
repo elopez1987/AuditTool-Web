@@ -77,16 +77,27 @@ class InventoryDashboardController extends BaseController
     public function getDetailInventoryErrors(Request $request)
     {
         $data = DB::table('inventory_location_counts as ilc')
-            ->join('inventory_aisles as ia', 'ilc.inventory_aisle_id', '=', 'ia.id')
-            ->join('inventory_cards as ic', 'ilc.inventory_card_id', '=', 'ic.id')
+            ->select([
+                'ilc.id',
+                'ias.name as aisle_name',
+                'ic.name as card_name',
+                'il.name as location_name',
+                'ilc.inventorypartnumber01_id',
+                'ilc.quantity01',
+                'ilc.inventorypartnumber02_id',
+                'ilc.quantity02',
+                'ilc.type',
+                'iv1.prtnum as sku01',
+                'iv2.prtnum as sku02',
+            ])
             ->join('inventory_locations as il', 'ilc.inventory_location_id', '=', 'il.id')
+            ->join('inventory_card_counts as icc', 'ilc.inventory_card_id', '=', 'icc.id')
+            ->join('inventory_cards as ic', 'icc.inventory_card_id', '=', 'ic.id')
+            ->join('inventory_aisles as ias', 'ic.inventory_aisle_id', '=', 'ias.id')
+            ->leftJoin('inventorypartnumbers as iv1', 'ilc.inventorypartnumber01_id', '=', 'iv1.id')
+            ->leftJoin('inventorypartnumbers as iv2', 'ilc.inventorypartnumber02_id', '=', 'iv2.id')
             ->where('ilc.inventory_head_id', $request->inventory_head_id)
             ->where('ilc.statusid_location', 0)
-            ->select([
-                'ia.name as pasillo',
-                'ic.name as cedula',
-                'il.name as location',
-            ])
             ->get();
 
         return $this->showDataToView($data, '');
@@ -103,11 +114,9 @@ class InventoryDashboardController extends BaseController
 
     public function getTotalCount02($id)
     {
-        //        DB::connection()->enableQueryLog();
         $toalCount02 = InventoryLocationCount::where('inventory_head_id', $id)
             ->where('statusid_count02', 'C')
             ->count();
-        //        $queries = DB::getQueryLog();
 
         return response()->json(['totalCount02' => $toalCount02]);
     }

@@ -65,7 +65,7 @@ class InventoryCardCount extends Model
         return $this->belongsTo(SystemStatus::class, 'statusid_count01', 'statusid');
     }
 
-    public function statusid_count02(): BelongsTo
+    public function statusidcount02(): BelongsTo
     {
         return $this->belongsTo(SystemStatus::class, 'statusid_count02', 'statusid');
     }

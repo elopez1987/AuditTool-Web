@@ -136,6 +136,10 @@ Route::middleware(['auth'])->group(function () {
     //  Autorizacion de salida de unidad
     Route::get('autorizeoutput', [AuthorizeExitController::class, 'index'])->name('autorizeoutput');
     Route::post('registermovementbox', [AuthorizeExitController::class, 'registermovementbox'])->name('registermovementbox');
+    // Autorizar salida de unidad vacia
+    Route::get('authorize-empty', [AuthorizeExitController::class, 'autorizeempty'])->name('authorize-empty');
+    Route::post('registermovementbox-empty', [AuthorizeExitController::class, 'registermovementboxempty'])->name('registermovementbox-empty');
+
     // Rechazar unidad
     Route::get('refuseunit', [RefuseUnitController::class, 'index'])->name('refuseunit');
     Route::post('registerrefuseunit', [RefuseUnitController::class, 'store'])->name('registerrefuseunit');

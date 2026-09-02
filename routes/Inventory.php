@@ -16,10 +16,12 @@ use App\Http\Controllers\Inventory\InventoryFiscal\InventoryHeadController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryHeadEventController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryLocationCardController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryLocationController;
+use App\Http\Controllers\Inventory\InventoryFiscal\InventoryLocationCountsController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryStockSapController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventorySupervisorController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryValidateLocationController;
 use App\Http\Controllers\Inventory\InventoryFiscal\PrintFormatInventoryController;
+use App\Http\Controllers\Inventory\InventoryFiscal\ThirdCountController;
 use App\Http\Controllers\Inventory\InventoryPartNumberCategory01sController;
 use App\Http\Controllers\Inventory\InventoryPartNumberCategory02sController;
 use App\Http\Controllers\Inventory\InventoryPartNumbers\ImportPartNumbersController;
@@ -84,6 +86,10 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('inventoryheads', InventoryHeadController::class);
     Route::get('getInventoryHead', [InventoryHeadController::class, 'getInventoryHead'])->name('getInventoryHead');
 
+    // Detalle de ubicaciones del inventario
+    Route::get('inventoryhead-locations/{id}', [InventoryLocationCountsController::class, 'index'])->name('inventoryhead-locations');
+    Route::get('getLocationCountsInventory/{id}', [InventoryLocationCountsController::class, 'getLocationCountsInventory'])->name('getLocationCountsInventory');
+
     //	Activar conteo fiscal
     Route::put('inventory-head-activate/{id}', [InventoryHeadEventController::class, 'activateInventoryHead'])->name('inventory-head-activate');
     Route::put('inventory-head-close/{id}', [InventoryHeadEventController::class, 'closeInventoryHead'])->name('inventory-head-close');
@@ -111,6 +117,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('inventoryhead-cards/{id}', [InventoryCardDetailController::class, 'index'])->name('inventoryhead-cards');
     Route::get('getCardsInventory/{id}', [InventoryCardDetailController::class, 'getCardsInventory'])->name('getCardsInventory');
     Route::delete('deleteCardDetail/{id}', [InventoryCardDetailController::class, 'destroy'])->name('deleteCardDetail');
+    //	Limpiar asignacion del usuario 01
+    Route::put('clear01CardDetail/{id}', [InventoryCardDetailController::class, 'clearUser01'])->name('clear01CardDetail');
+    Route::put('clear02CardDetail/{id}', [InventoryCardDetailController::class, 'clearUser02'])->name('clear02CardDetail');
 
     //	Detalle de ubicaciones por cedula para su validacion en drones y comparacion en APP
     Route::get('inventorylocations-card/{id}', [InventoryLocationCardController::class, 'index'])->name('inventorylocations-card');
@@ -122,8 +131,8 @@ Route::middleware(['auth'])->group(function () {
     Route::put('validateCard/{id}', [InventoryLocationCardController::class, 'validateCard'])->name('validateCard');
     // Validar evidencias de conteo de drones
     Route::get('validate-location/{id}', [InventoryValidateLocationController::class, 'index'])->name('validate-location');
-    Route::post('saveResponseSuccessLocation/{id}', [InventoryValidateLocationController::class, 'saveResponseSuccessLocation'])->name('saveResponseSuccessLocation');
-    Route::post('saveResponseErrorLocation/{id}', [InventoryValidateLocationController::class, 'saveResponseErrorLocation'])->name('saveResponseErrorLocation');
+    Route::post('saveResponseSuccessLocation/{id}/{headId}', [InventoryValidateLocationController::class, 'saveResponseSuccessLocation'])->name('saveResponseSuccessLocation');
+    Route::post('saveResponseErrorLocation/{id}/{headId}', [InventoryValidateLocationController::class, 'saveResponseErrorLocation'])->name('saveResponseErrorLocation');
 
     //	Detalle de errores de conteo
     Route::get('inventoryhead-errors/{id}', [InventoryErrorsController::class, 'index'])->name('inventoryhead-errors');
@@ -186,5 +195,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('inventory-sap-migration', [MigrationSapController::class, 'index'])->name('inventory-sap-migration');
     Route::get('inventory-sap-details/{id}', [MigrationSapController::class, 'show'])->name('inventory-sap-details');
     Route::get('getMigrationSap', [MigrationSapController::class, 'getMigrationSap'])->name('getMigrationSap');
+
+    // Terceros conteos
+    Route::get('inventory-third-count/{id}', [ThirdCountController::class, 'index'])->name('inventory-third-count');
+    Route::get('third-count-assign/{id}', [ThirdCountController::class, 'index'])->name('inventory-third-count');
+    Route::put('third-assign-counter/{id}', [ThirdCountController::class, 'assignCounter'])->name('third-assign-counter');
 
 });

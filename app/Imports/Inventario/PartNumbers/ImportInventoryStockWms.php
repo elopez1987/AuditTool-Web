@@ -34,8 +34,8 @@ class ImportInventoryStockWms implements ShouldQueue, ToCollection, WithChunkRea
         }
 
         // --- 1. Recolectar los identificadores únicos que necesita este chunk ---
-        $locationNames = $rows->pluck('location_name')->filter()->unique()->values();
-        $partNumbers = $rows->pluck('prtnum')->filter()->unique()->values();
+        $locationNames = $rows->pluck('location_name')->filter()->map(fn ($value) => (string) $value)->unique()->values();
+        $partNumbers = $rows->pluck('prtnum')->filter()->map(fn ($value) => (string) $value)->unique()->values();
 
         // --- 2. UNA sola query por lookup, para TODO el chunk (en vez de 1 por fila) ---
         $locations = InventoryLocation::whereIn('name', $locationNames)

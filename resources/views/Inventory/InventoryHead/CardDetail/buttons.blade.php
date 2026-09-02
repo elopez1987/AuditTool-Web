@@ -36,3 +36,18 @@
         <span> Eliminar</span>
     </button>
 @endcan
+
+@can('inventoryheads.clearuser')
+    <button type="button" class="btn waves-effect waves-light btn-outline-info btn-sm btn-clear01 ml-2 mr-2 "
+            data-id="{{ $row->id }}">
+        <img src="{{asset('/ico/reloadpage.png')}}" alt="" class="img-16 ml-2 mr-2">
+        <span> Desasignar 1</span>
+    </button>
+@endcan
+@can('inventoryheads.clearuser')
+    <button type="button" class="btn waves-effect waves-light btn-outline-info btn-sm btn-clear02 ml-2 mr-2 "
+            data-id="{{ $row->id }}">
+        <img src="{{asset('/ico/reloadpage.png')}}" alt="" class="img-16 ml-2 mr-2">
+        <span> Desasignar 2</span>
+    </button>
+@endcan

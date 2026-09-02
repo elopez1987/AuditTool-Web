@@ -38,12 +38,14 @@
                                     <span class="text-button ml-3 mr-3"> Conciliación</span>
                                 </button>
                             </a>
-                            <a href="{{url('inventoryheads')}}">
-                                <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
-                                    <img src="{{asset('/ico/importdata.png')}}" alt="" class="img-16 ml-1">
-                                    <span class="text-button ml-3 mr-3"> Tareas 3er Conteo</span>
-                                </button>
-                            </a>
+                            @can('inventory-third-count')
+                                <a href="{{url('inventory-third-count/' . $inventoryhead->inventory_uuid)}}">
+                                    <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
+                                        <img src="{{asset('/ico/importdata.png')}}" alt="" class="img-16 ml-1">
+                                        <span class="text-button ml-3 mr-3"> Tareas 3er Conteo</span>
+                                    </button>
+                                </a>
+                            @endcan
 
                             <a href="{{url('inventory-supervisors/' . $inventoryhead->inventory_uuid)}}">
                                 <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
@@ -106,7 +108,7 @@
                                 </div>
                                 <div class="card-body">
                                     <h2 class="text-red" id="totalLocations" data-id="{{ $inventoryhead->id }}"></h2>
-                                    <a href="javascript:void(0)" class="btn btn-inverse">Ver Detalle</a>
+                                    <a href="{{url('inventoryhead-locations/' . $inventoryhead->inventory_uuid)}}" class="btn btn-inverse">Ver Detalle</a>
                                 </div>
                             </div>
                         </div>

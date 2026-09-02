@@ -80,6 +80,8 @@
         var CardDetail = {
             ajaxUrl:   '{{ route("getCardsInventory", $inventoryHead->id) }}',
             deleteUrl: '{{ url("deleteCardDetail") }}',
+            clear01Url: '{{ url("clear01CardDetail") }}',
+            clear02Url: '{{ url("clear02CardDetail") }}',
             csrfToken: '{{ csrf_token() }}'
         };
     </script>

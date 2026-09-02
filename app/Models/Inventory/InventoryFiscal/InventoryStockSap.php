@@ -18,9 +18,9 @@ class InventoryStockSap extends Model
         'quantity',
     ];
 
-    public function inventoryHead(): BelongsTo
+    public function inventoryhead(): BelongsTo
     {
-        return $this->belongsTo(InventoryHead::class);
+        return $this->belongsTo(InventoryHead::class, 'inventory_head_id', 'id');
     }
 
     public function inventorypartnumber(): BelongsTo

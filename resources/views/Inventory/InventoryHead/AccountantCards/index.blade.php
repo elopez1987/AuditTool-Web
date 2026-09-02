@@ -152,7 +152,7 @@
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="card p-3">
-                                                <table class="table table-bordered table-condensed" id="table-count-01">
+                                                <table class="table table-bordered table-condensed" id="table-count-02">
                                                     <thead>
                                                     <tr>
                                                         <th>Contador</th>
@@ -201,10 +201,6 @@
             </script>
 
             <script>
-                // Al seleccionar un contador para el conteo 1, se consultan las
-                // cedulas disponibles (sin usuario en conteo 1, y sin usuario en
-                // conteo 2 o con uno distinto al seleccionado) y se usan para
-                // llenar el select multiple inventory_card01_id.
                 $('#user_id').on('change', function () {
                     const userId = $(this).val();
                     const $cardSelect = $('#inventory_card01_id');
@@ -238,10 +234,6 @@
             </script>
 
             <script>
-                // Al seleccionar un contador para el conteo 2, se consultan las
-                // cedulas disponibles (sin usuario en conteo 2, y sin usuario en
-                // conteo 1 o con uno distinto al seleccionado) y se usan para
-                // llenar el select multiple inventory_card02_id.
                 $('#user_id_02').on('change', function () {
                     const userId = $(this).val();
                     const $cardSelect = $('#inventory_card02_id');
@@ -352,6 +344,83 @@
 
             </script>
 
+            <script>
+                var oTable = $("#table-count-02").DataTable({
+                    "paging": true,
+                    "searching": true,
+                    "ordering": true,
+                    "sScrollY": "500px",
+                    "processing": true,
+                    "serverSide": true,
+                    "autoFill": true,
+                    "colReorder": true,
+                    "stateSave": true,
+                    "stateDuration": 0,
+                    "responsive": true,
+
+                    "ajax": {
+                        url: '{{ route("getAccountantCards02", $inventoryhead->id) }}',
+                        data: function (d) {
+                            d.folionumber = $('input[name=folionumber]').val();
+                            d.boxnumber = $('input[name=boxnumber]').val();
+                            d.barcode = $('input[name=barcode]').val();
+                            d.carrierid = $('select[name=carrierid]').val();
+                        }
+                    },
+                    "columns": [
+                        {data: 'user_count02.name', name: 'user_count02.name'},
+                        {data: 'inventorycard.name', name: 'inventorycard.name'},
+                        // {data: 'btn'},
+                    ],
+                    "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
+                    "lengthMenu": [[25, 50, -1], [25, 50, "All"]],
+
+                    buttons: [
+                        {
+                            "extend": "colvis",
+                            "text": "<img src=\"{{asset('/pics/adbuscar.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span> Mostar/Ocultar</span>",
+                            "className": "btn btn-outline-info btn-md  btn-bold",
+                            columns: ':not(:first):not(:last)'
+                        },
+                        {
+                            "extend": "csv",
+                            "text": "<img src=\"{{asset('/ico/csv.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span> Csv</span>",
+                            "className": "btn btn-outline-info btn-md  btn-bold",
+                        },
+                        {
+                            "extend": "excel",
+                            "text": "<img src=\"{{asset('/pics/adexportar.png')}}\"  alt='' class='img-16 ml-2 mr-2'><span> Excel</span>",
+                            "className": "btn btn-outline-info btn-md  btn-bold",
+                        }
+                    ],
+
+                    language: {
+                        "decimal": "",
+                        "emptyTable": "No hay información",
+                        "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                        "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                        "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                        "infoPostFix": "",
+                        "thousands": ",",
+                        "lengthMenu": "Mostrar _MENU_ Entradas",
+                        "loadingRecords": "Cargando...",
+                        "processing": '<i class="fa fa-spinner fa-spin fa-4x fa-fw text-info"></i><span class="sr-only">Loading...</span> ',
+                        "search": "Buscar:",
+                        "zeroRecords": "Sin resultados encontrados",
+                        "paginate": {
+                            "first": "Primero",
+                            "last": "Ultimo",
+                            "next": "Siguiente",
+                            "previous": "Anterior"
+                        }
+                    },
+                });
+                $('#search').on('submit', function (e) {
+                    oTable.draw();
+                    e.preventDefault();
+                });
+
+            </script>
 
 
 @endsection

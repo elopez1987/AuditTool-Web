@@ -1,7 +1,7 @@
 <script>
     var oTable = $("#inventoryDetailTableErrors").DataTable({
         "paging": true,
-        "searching": true,
+        "searching": false,
         "ordering": true,
         "sScrollY": "450px",
         "sScrollX": true,
@@ -20,9 +20,14 @@
             }
         },
         "columns": [
-            {data: 'pasillo'},
-            {data: 'cedula'},
-            {data: 'location'},
+            {data: 'aisle_name'},
+            {data: 'card_name'},
+            {data: 'location_name'},
+            {data: 'sku01'},
+            {data: 'quantity01'},
+            {data: 'sku02'},
+            {data: 'quantity02'},
+            {data: 'type'},
         ],
         "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
         "lengthMenu": [[5,10, 25, 50, -1], [5,10, 25, 50, "Todos"]],

@@ -34,7 +34,6 @@ class InventoryValidateLocationController extends BaseController
                 'inventory_location_counts.statusid_count02',
                 'inventory_location_counts.statusid_location',
             ])
-//            ->where('inventory_card_counts.inventory_head_id', $id)
             ->first();
         if (is_null($locationCount)) {
             return $this->errorResponse('Location count not found');
@@ -48,20 +47,23 @@ class InventoryValidateLocationController extends BaseController
 
         return view(
             'Inventory.InventoryHead.LocationCard.ValidateLocation.index',
-            compact('locationCount', 'evidences', 'locationStock')
+            compact('locationCount', 'evidences', 'locationStock'),
         );
     }
 
-    public function saveResponseSuccessLocation($id)
+    public function saveResponseSuccessLocation($id, $headId)
     {
-        $locationCount = InventoryLocationCount::where('id', $id)->first();
+        $locationCount = InventoryLocationCount::query()
+            ->where('id', $id)
+            ->where('inventory_head_id', $headId)
+            ->first();
 
         if (is_null($locationCount)) {
             return $this->errorResponse('Location count not found');
         }
 
         $inventoryCardCount = InventoryCardCount::where('inventory_head_id', $locationCount->inventory_head_id)
-            ->where('inventory_card_id', $locationCount->inventory_card_id)
+            ->where('id', $locationCount->inventory_card_id)
             ->select(['id', 'user_count02_id'])
             ->first();
 
@@ -77,6 +79,13 @@ class InventoryValidateLocationController extends BaseController
                 'statusid_count02' => 'C',
                 'statusid_location' => true,
             ]);
+
+            if ($locationCount->type == 'D') {
+                $locationCount->update([
+                    'inventorypartnumber02_id' => $locationCount->inventorypartnumber01_id,
+                    'quantity02' => $locationCount->quantity01,
+                ]);
+            }
 
             if ($inventoryCardCount->user_count02_id == null) {
                 $inventoryCardCount->update([
@@ -104,9 +113,12 @@ class InventoryValidateLocationController extends BaseController
         }
     }
 
-    public function saveResponseErrorLocation($id)
+    public function saveResponseErrorLocation($id, $headId)
     {
-        $locationCount = InventoryLocationCount::where('id', $id)->first();
+        $locationCount = InventoryLocationCount::query()
+            ->where('id', $id)
+            ->where('inventory_head_id', $headId)
+            ->first();
         if (is_null($locationCount)) {
             return $this->errorResponse('Location count not found');
         }

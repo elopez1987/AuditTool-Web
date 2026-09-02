@@ -20,31 +20,29 @@ class ImportInventoryStockSap implements ShouldQueue, ToCollection, WithChunkRea
     protected array $failedRows = [];
 
     public function __construct(
-        protected readonly InventoryHead $inventoryHead
+        protected readonly InventoryHead $inventoryHead,
     ) {}
 
-    /**
-     * Se ejecuta una vez POR CHUNK (no por fila), gracias a ToCollection.
-     * El archivo de SAP solo trae prtnum y quantity.
-     */
     public function collection(Collection $rows): void
     {
         if ($rows->isEmpty()) {
             return;
         }
 
-        // --- 1. Recolectar los prtnum únicos que necesita este chunk ---
-        $partNumbers = $rows->pluck('prtnum')->filter()->unique()->values();
+        $partNumbers = $rows->pluck('prtnum')
+            ->filter()
+            ->map(fn ($value) => (string) $value)
+            ->unique()
+            ->values();
 
-        // --- 2. UNA sola query por lookup, para TODO el chunk (en vez de 1 por fila) ---
-        // El prtnum solo se usa como referencia para ubicar el número de
-        // parte; lo que se guarda es el inventorypartnumber_id.
-        $partNumberRecords = InventoryPartnumber::where('centerid', $this->inventoryHead->centerid)
+        Log::info('Part numbers: ' . $partNumbers->implode(', '));
+
+        $partNumberRecords = InventoryPartnumber::query()
+            ->where('centerid', $this->inventoryHead->centerid)
             ->where('warehouseid', $this->inventoryHead->warehouseid)
             ->whereIn('prtnum', $partNumbers)
             ->pluck('id', 'prtnum');
 
-        // --- 3. Armar el array de upsert en memoria (sin tocar la BD todavía) ---
         $upsertData = [];
 
         foreach ($rows as $row) {
@@ -68,7 +66,7 @@ class ImportInventoryStockSap implements ShouldQueue, ToCollection, WithChunkRea
                 DB::table('inventory_stock_sap')->upsert(
                     $upsertData,
                     ['inventory_head_id', 'inventorypartnumber_id'], // columnas únicas (requiere índice único compuesto)
-                    ['quantity']
+                    ['quantity'],
                 );
             });
         }

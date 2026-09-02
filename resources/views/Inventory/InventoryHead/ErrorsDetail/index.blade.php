@@ -38,7 +38,7 @@
                         <div class="col-lg-12">
                             <div class="card">
                                 <div class="row">
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-12">
                                         <div class="card-header">
                                             <h4>ERRORES DE CONTEO</h4>
                                         </div>
@@ -49,7 +49,12 @@
                                                 <tr>
                                                     <th>Pasillo</th>
                                                     <th>Cedula</th>
-                                                    <th>Ubciación</th>
+                                                    <th>Ubicación</th>
+                                                    <th>Sku 01</th>
+                                                    <th>Catidad 01</th>
+                                                    <th>Sku 02</th>
+                                                    <th>Catidad 02</th>
+                                                    <th>Tipo de conteo</th>
                                                 </tr>
                                                 </thead>
                                             </table>
