@@ -8,6 +8,8 @@ use App\Exports\Yard\ReceiptUnit\ReportUnitEvidences;
 use App\Exports\Yard\ReceiptUnit\StorageBoxStockExport;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Yard\Reports\FilterReportYardRequest;
+use App\Models\Yard\Carriers\ShipmentCarrier;
+use App\Models\Yard\ReceiptUnit;
 use App\Models\Yard\StorageReason;
 use App\Models\Yard\StorageUnitType;
 use Maatwebsite\Excel\Facades\Excel;
@@ -51,5 +53,17 @@ class ReportYardController extends BaseController
                 'Reporte de entradas planta.xlsx',
             )->deleteFileAfterSend();
         }
+    }
+
+    public function getCarriersForSelectReport($warehouseid)
+    {
+        $carriersFilter = $this->getCarrierForUser();
+
+        return ShipmentCarrier::controlAccessUser()
+            ->where('warehouseid', $warehouseid)
+            ->whereStatusid('E')
+            ->Carriers($carriersFilter)
+            ->whereIn('id', ReceiptUnit::controlAccessUser()->select('carrierid')->distinct())
+            ->select(['name', 'id'])->get();
     }
 }

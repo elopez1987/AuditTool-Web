@@ -160,4 +160,38 @@
         });
     </script>
 
+    <script>
+        // Al cambiar la bodega, se filtran las lineas de transporte que
+        // correspondan solo a esa bodega y se recarga el select multiple.
+        $('#warehouseid').on('change', function () {
+            const warehouseId = $(this).val();
+            const $carrierSelect = $('#carrierid');
+
+            $carrierSelect.empty();
+
+            if (!warehouseId) {
+                $carrierSelect.bootstrapDualListbox('refresh');
+
+                return;
+            }
+
+            $.get('{{ url("getCarriersForSelectReport") }}/' + warehouseId)
+                .done(function (carriers) {
+                    $.each(carriers, function (index, carrier) {
+                        $carrierSelect.append(
+                            $('<option></option>')
+                                .val(carrier.id)
+                                .text(carrier.name)
+                        );
+                    });
+
+                    $carrierSelect.bootstrapDualListbox('refresh');
+                })
+                .fail(function () {
+                    $carrierSelect.bootstrapDualListbox('refresh');
+                    alert('No se pudieron obtener las lineas de transporte para la bodega seleccionada.');
+                });
+        });
+    </script>
+
 @endsection
