@@ -40,7 +40,7 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="card-header">
-                                            <h4>ERRORES DE CONTEO</h4>
+                                            ERRORES DE CONTEO
                                         </div>
                                         <div class="card-body">
                                             <table class="table table-bordered table-condensed" id="inventoryDetailTableErrors"
@@ -55,6 +55,7 @@
                                                     <th>Sku 02</th>
                                                     <th>Catidad 02</th>
                                                     <th>Tipo de conteo</th>
+                                                    <th>Ajustar</th>
                                                 </tr>
                                                 </thead>
                                             </table>
@@ -72,7 +73,7 @@
             </div>
         </div>
     </div>
-
+@include('layouts.Partials.Errors')
 @endsection
 
 @section('script')

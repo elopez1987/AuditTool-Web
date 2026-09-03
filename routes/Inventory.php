@@ -136,6 +136,8 @@ Route::middleware(['auth'])->group(function () {
 
     //	Detalle de errores de conteo
     Route::get('inventoryhead-errors/{id}', [InventoryErrorsController::class, 'index'])->name('inventoryhead-errors');
+    Route::get('getDetailInventoryErrors/{id}', [InventoryErrorsController::class, 'getDetailInventoryErrors'])->name('getDetailInventoryErrors');
+    Route::put('inventory-adjust-count/{id}', [InventoryErrorsController::class, 'inventoryadjustcount'])->name('inventory-adjust-count');
 
     //	Consultas para el dashboard
     Route::get('getTotalAisles/{id}', [InventoryDashboardController::class, 'getTotalAisles'])->name('getTotalAisles');
@@ -145,7 +147,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('getDetailAisles/{id}', [InventoryDashboardController::class, 'getDetailAisles'])->name('getDetailAisles');
     Route::get('getTotalCount01/{id}', [InventoryDashboardController::class, 'getTotalCount01'])->name('getTotalCount01');
     Route::get('getTotalCount02/{id}', [InventoryDashboardController::class, 'getTotalCount02'])->name('getTotalCount02');
-    Route::get('getDetailInventoryErrors/{id}', [InventoryDashboardController::class, 'getDetailInventoryErrors'])->name('getDetailInventoryErrors');
 
     //	Crear facilitadores del conteo
     Route::get('inventory-supervisors/{id}', [InventorySupervisorController::class, 'index'])->name('inventory-supervisors');

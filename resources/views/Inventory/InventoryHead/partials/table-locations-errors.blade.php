@@ -28,6 +28,7 @@
             {data: 'sku02'},
             {data: 'quantity02'},
             {data: 'type'},
+            {data: 'btn'},
         ],
         "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
         "lengthMenu": [[5,10, 25, 50, -1], [5,10, 25, 50, "Todos"]],
