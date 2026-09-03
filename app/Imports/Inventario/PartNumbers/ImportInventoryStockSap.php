@@ -35,8 +35,6 @@ class ImportInventoryStockSap implements ShouldQueue, ToCollection, WithChunkRea
             ->unique()
             ->values();
 
-        Log::info('Part numbers: ' . $partNumbers->implode(', '));
-
         $partNumberRecords = InventoryPartnumber::query()
             ->where('centerid', $this->inventoryHead->centerid)
             ->where('warehouseid', $this->inventoryHead->warehouseid)

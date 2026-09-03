@@ -101,6 +101,6 @@ class ImportInventoryStockWms implements ShouldQueue, ToCollection, WithChunkRea
 
     public function chunkSize(): int
     {
-        return 1000; // ahora que no hay N+1, un chunk más grande es más eficiente
+        return 400; // ahora que no hay N+1, un chunk más grande es más eficiente
     }
 }
