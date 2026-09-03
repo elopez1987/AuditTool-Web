@@ -29,7 +29,18 @@ class InventoryCardController extends BaseController
         $data = InventoryCard::with(['status:statusid,name,auxiliary01',
             'inventoryarea:id,name',
             'inventoryaisle:id,name',
-        ])->get();
+        ])
+            ->select(['inventory_cards.id', 'inventory_cards.name', 'inventory_area_id', 'inventory_aisle_id', 'inventory_cards.statusid',
+            ])
+            ->when($request->name, function ($query) use ($request) {
+                $query->where('inventory_cards.name', $request->name);
+            })
+            ->when($request->inventory_area_id, function ($query) use ($request) {
+                $query->where('inventory_cards.inventory_area_id', $request->inventory_area_id);
+            })
+            ->when($request->inventory_aisle_id, function ($query) use ($request) {
+                $query->where('inventory_cards.inventory_aisle_id', $request->inventory_aisle_id);
+            });
 
         return $this->showDataToView($data,
             'Inventory.InventoryCard.partials.buttons');

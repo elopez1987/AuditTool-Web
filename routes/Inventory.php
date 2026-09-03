@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Inventory\InventoryFiscal\ImportInventoryTransitionalController;
 use App\Http\Controllers\Inventory\InventoryFiscal\ImportInventoryWmsController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryAccountantCardController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryAccountantController;
@@ -185,6 +186,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('import-inventory-wms-excel', [ImportInventoryWmsController::class, 'importStockWms'])->name('import-inventory-wms-excel');
     Route::get('getInventoryStockWms/{id}', [ImportInventoryWmsController::class, 'getInventoryStockWms'])->name('getInventoryStockWms');
     Route::get('getInventoryStockWmsKpis/{id}', [ImportInventoryWmsController::class, 'getInventoryStockWmsKpis'])->name('getInventoryStockWmsKpis');
+
+    // Importar existencias transitorias
+    Route::get('import-inventory-transitional/{id}', [ImportInventoryTransitionalController::class, 'index'])->name('import-inventory-transitional');
+    Route::post('import-inventory-transitional-excel', [ImportInventoryTransitionalController::class, 'importStockTransitional'])->name('import-inventory-transitional-excel');
 
     //	Importa existencia de SAP para el inventario
     Route::get('import-inventory-sap/{id}', [InventoryStockSapController::class, 'index'])->name('import-inventory-sap');

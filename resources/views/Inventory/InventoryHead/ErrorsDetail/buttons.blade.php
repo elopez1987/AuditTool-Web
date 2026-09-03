@@ -1,4 +1,4 @@
-@can('inventoryheads.activate')
+@can('inventoryheads.adjust')
     <a href="" data-target="#modal-activate-{{$id}}" data-toggle="modal" data-placement="top">
         <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md"
                 data-toggle="tooltip" data-placement="top" title="Activar Inventario">

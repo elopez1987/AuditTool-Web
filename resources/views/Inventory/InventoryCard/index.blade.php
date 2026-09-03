@@ -37,12 +37,7 @@
                                            value="{{old('name')}}">
                                 </div>
                             </div>
-                            <x-select2
-                                    name="statusid"
-                                    label="Estatus"
-                                    :options="$status"
-                                    placeholder="Seleccione un registro"
-                            />
+
                             <x-select2
                                     name="areaid"
                                     label="Areas"
@@ -53,6 +48,12 @@
                                     name="aisleid"
                                     label="Pasillo"
                                     :options="$aisles"
+                                    placeholder="Seleccione un registro"
+                            />
+                            <x-select2
+                                    name="statusid"
+                                    label="Estatus"
+                                    :options="$status"
                                     placeholder="Seleccione un registro"
                             />
                         </div>
@@ -68,9 +69,9 @@
                                     <th class="bg-inverse text-white">Area</th>
                                     <th class="bg-inverse text-white">Pasillo</th>
                                     <th class="bg-inverse text-white">Cedula</th>
-                                    <th class="bg-inverse text-white">Auxiliar 01</th>
-                                    <th class="bg-inverse text-white">Auxiliar 02</th>
-                                    <th class="bg-inverse text-white">Auxiliar 03</th>
+{{--                                    <th class="bg-inverse text-white">Auxiliar 01</th>--}}
+{{--                                    <th class="bg-inverse text-white">Auxiliar 02</th>--}}
+{{--                                    <th class="bg-inverse text-white">Auxiliar 03</th>--}}
                                     <th class="bg-inverse text-white">Estatus</th>
                                     <th class="bg-inverse text-white">Opciones</th>
                                 </tr>
