@@ -90,6 +90,7 @@ Route::middleware(['auth'])->group(function () {
     // Detalle de ubicaciones del inventario
     Route::get('inventoryhead-locations/{id}', [InventoryLocationCountsController::class, 'index'])->name('inventoryhead-locations');
     Route::get('getLocationCountsInventory/{id}', [InventoryLocationCountsController::class, 'getLocationCountsInventory'])->name('getLocationCountsInventory');
+    Route::get('getLocationCountsKpis/{id}', [InventoryLocationCountsController::class, 'getLocationCountsKpis'])->name('getLocationCountsKpis');
 
     //	Activar conteo fiscal
     Route::put('inventory-head-activate/{id}', [InventoryHeadEventController::class, 'activateInventoryHead'])->name('inventory-head-activate');

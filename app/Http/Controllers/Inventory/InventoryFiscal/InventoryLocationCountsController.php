@@ -22,9 +22,53 @@ class InventoryLocationCountsController extends BaseController
 
     public function getLocationCountsInventory(Request $request, $id)
     {
-        $inventoryHead = InventoryHead::where('id', $id)->first();
+        $inventoryHead = InventoryHead::where('id', $id)->firstOrFail();
 
-        $data = DB::query()
+        $data = $this->baseLocationCountsQuery($request, $inventoryHead);
+
+        return DataTables::of($data)
+            ->addColumn('btn', '')
+            ->rawColumns(['btn'])
+            ->toJson();
+
+    }
+
+    public function getLocationCountsKpis(Request $request, $id)
+    {
+        $inventoryHead = InventoryHead::where('id', $id)->firstOrFail();
+
+        // Se reutiliza la misma consulta del datatable como subconsulta para agregar los totales por estatus.
+        $totals = DB::query()
+            ->fromSub($this->baseLocationCountsQuery($request, $inventoryHead), 'resumen')
+            ->selectRaw("
+				COUNT(*) as total_ubicaciones,
+				SUM(CASE WHEN status_comparacion = 'OK' THEN 1 ELSE 0 END) as total_ok,
+				SUM(CASE WHEN status_comparacion = 'ERROR' THEN 1 ELSE 0 END) as total_error,
+				SUM(CASE WHEN status_comparacion = 'PENDIENTE' THEN 1 ELSE 0 END) as total_pendiente
+			")
+            ->first();
+
+        $totalLocations = (int) ($totals->total_ubicaciones ?? 0);
+        $totalOk = (int) ($totals->total_ok ?? 0);
+
+        return response()->json([
+            'totalUbicaciones' => $totalLocations,
+            'totalOk' => $totalOk,
+            'totalError' => (int) ($totals->total_error ?? 0),
+            'totalPendiente' => (int) ($totals->total_pendiente ?? 0),
+            'porcentajeAcertividad' => $totalLocations > 0
+                ? round(($totalOk / $totalLocations) * 100, 2)
+                : 0,
+        ]);
+    }
+
+    /**
+     * Consulta base de ubicaciones del inventario con su estatus de comparación
+     * (físico vs WMS), compartida por el datatable y los KPIs.
+     */
+    private function baseLocationCountsQuery(Request $request, InventoryHead $inventoryHead)
+    {
+        return DB::query()
             ->fromSub(function ($query) use ($inventoryHead, $request) {
                 $query->from('inventory_location_counts as ilc')
                     ->leftJoin('inventory_card_counts as icc', 'ilc.inventory_card_id', '=', 'icc.id')
@@ -75,11 +119,5 @@ class InventoryLocationCountsController extends BaseController
 					ELSE 'ERROR'
 				END as status_comparacion
 			");
-
-        return DataTables::of($data)
-            ->addColumn('btn', '')
-            ->rawColumns(['btn'])
-            ->toJson();
-
     }
 }
