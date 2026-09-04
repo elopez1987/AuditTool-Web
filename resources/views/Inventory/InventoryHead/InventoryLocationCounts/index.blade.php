@@ -49,6 +49,11 @@
                                             label="Ubicación"
                                             uppercase
                                     />
+                                    <x-text-input
+                                            name="partnumberid"
+                                            label="Número de parte"
+                                            uppercase
+                                    />
                                 </div>
                             </form>
                         </div>
@@ -64,12 +69,10 @@
                                         <th>Ubicación</th>
                                         <th>Sku 01</th>
                                         <th>Descripción</th>
-                                        <th>Cantidad</th>
-                                        <th>Sku 02</th>
-                                        <th>Descripción</th>
-                                        <th>Cantidad</th>
-                                        <th>Estatus de ubicación</th>
+                                        <th>Cantidad fisico</th>
+                                        <th>Cantidad wms</th>
                                         <th>Unidad de medida</th>
+                                        <th>Estatus de ubicación</th>
 {{--                                        <th>Opciones</th>--}}
                                     </tr>
                                 </thead>
@@ -103,20 +106,19 @@
                     d.aislename = $('input[name=aislename]').val();
                     d.cardname = $('input[name=cardname]').val();
                     d.locationname = $('input[name=locationname]').val();
+                    d.partnumberid = $('input[name=partnumberid]').val();
                 }
             },
             "columns": [
-                {data: 'aisle_name',name: 'aisle_name'},
-                {data: 'card_name',name: 'card_name'},
+                {data: 'aisle_name'},
+                {data: 'card_name'},
                 {data: 'location_name'},
-                {data: 'part_number1',name: 'part_number1'},
+                {data: 'part_number1'},
                 {data: 'description01'},
-                {data: 'quantity01'},
-                {data: 'part_number2'},
-                {data: 'description02'},
-                {data: 'quantity02'},
-                {data: 'statusid_location'},
+                {data: 'total_piezas_fisico'},
+                {data: 'total_piezas_wms'},
                 {data: 'unitmeasureid'},
+                {data: 'status_comparacion'},
             ],
             "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
             "lengthMenu": [[10, 25, 50, 100,200,300,400], [10, 25, 50,100,200,300,400]],

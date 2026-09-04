@@ -64,14 +64,9 @@
                             <table width="100%" id="table-cards" class="table table-bordered  table-condensed">
                                 <thead>
                                 <tr>
-{{--                                    <th class="bg-inverse text-white">C.Distribución</th>--}}
-{{--                                    <th class="bg-inverse text-white">Bodega</th>--}}
                                     <th class="bg-inverse text-white">Area</th>
                                     <th class="bg-inverse text-white">Pasillo</th>
                                     <th class="bg-inverse text-white">Cedula</th>
-{{--                                    <th class="bg-inverse text-white">Auxiliar 01</th>--}}
-{{--                                    <th class="bg-inverse text-white">Auxiliar 02</th>--}}
-{{--                                    <th class="bg-inverse text-white">Auxiliar 03</th>--}}
                                     <th class="bg-inverse text-white">Estatus</th>
                                     <th class="bg-inverse text-white">Opciones</th>
                                 </tr>
