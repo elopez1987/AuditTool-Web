@@ -23,6 +23,7 @@ trait QueryShipmentTransport
             ->leftJoin('shipmenttransport', 'orderdeliveries.id', '=', 'shipmenttransport.orderid')
             ->leftJoin('shipmentcarriers', 'orderdeliveries.carrierid', '=', 'shipmentcarriers.id')
             ->leftJoin('systemstatus', 'orderdeliveries.statusid', '=', 'systemstatus.statusid')
+            ->leftJoin('users', 'shipmenttransport.createuser', '=', 'users.id')
             ->whereNotIn('orderdeliveries.statusid', ['DH', 'CA', 'EJ', 'FO', 'IF', 'DT', 'SO'])
             ->where('shipmenttransport.auxiliary04', 'OrderDelivery')
             ->Shipmentid($request->input('shipmentid'))
@@ -43,6 +44,7 @@ trait QueryShipmentTransport
                 'shipmenttransport.boxnumber',
                 'shipmenttransport.trucknumber',
                 'shipmenttransport.has_data as statustransport',
+                'users.name as ultimousuario',
             ])
             ->when(! empty($carriers), function ($q) use ($carriers) {
                 $q->whereIn('orderdeliveries.carrierid', $carriers);

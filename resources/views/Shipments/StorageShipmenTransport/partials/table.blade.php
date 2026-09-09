@@ -30,6 +30,7 @@
             {data: 'operatorname'},
             {data: 'boxnumber'},
             {data: 'trucknumber'},
+            {data: 'ultimousuario'},
             {
                 data: 'statustransport',
                 createdCell: function (td, cellData, rowData) {

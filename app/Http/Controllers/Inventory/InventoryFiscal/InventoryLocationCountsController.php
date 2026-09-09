@@ -78,10 +78,10 @@ class InventoryLocationCountsController extends BaseController
                     ->leftJoin('inventorypartnumbers as iv2', 'ilc.inventorypartnumber02_id', '=', 'iv2.id')
                     ->leftJoin('inventory_locations as il', 'ilc.inventory_location_id', '=', 'il.id')
                     ->leftJoin('inventoryunitsmeasure as um', 'il.inventoryunitsmeasure_id', '=', 'um.id')
-                    ->join('inventory_stock_wms as wm', function ($join) {
+                    ->leftJoin('inventory_stock_wms as wm', function ($join) {
                         $join->on('ilc.inventory_location_id', '=', 'wm.inventory_location_id')
                             ->on('wm.inventory_head_id', '=', 'ilc.inventory_head_id');
-                    }, null, null, 'full outer')
+                    })
                     ->where('ilc.inventory_head_id', $inventoryHead->id)
                     ->when($request->filled('aislename'), function ($q) use ($request) {
                         $q->where('ia.name', 'like', '%' . $request->aislename . '%');

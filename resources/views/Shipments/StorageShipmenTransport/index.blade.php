@@ -76,6 +76,7 @@
                                     <th>Operador</th>
                                     <th>Placa de caja</th>
                                     <th>Placa de tracto</th>
+                                    <th>Ultimo usuario</th>
                                     <th>Estatus</th>
                                     <th>Opciones</th>
                                 </tr>
