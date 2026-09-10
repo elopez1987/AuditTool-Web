@@ -4,9 +4,11 @@ namespace App\Models\Shipments\ShipmentTransport;
 
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\Models\Yard\Carriers\ShipmentCarrier;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Auth;
 use Ramsey\Uuid\Uuid;
 use Spatie\Activitylog\LogOptions;
@@ -107,9 +109,12 @@ class StorageShipmentTransport extends Model
         parent::boot();
         if (! app()->runningInConsole()) {
             self::creating(function (StorageShipmentTransport $model) {
-                $model->createuser = Auth::user()->id;
+                $model->createuser = Auth::id();
                 $model->auxiliary05 = Uuid::uuid4()->toString();
                 $model->createdate = Carbon::now();
+            });
+            self::updating(function (StorageShipmentTransport $model) {
+                $model->createuser = Auth::id();
             });
         }
     }
@@ -117,6 +122,11 @@ class StorageShipmentTransport extends Model
     public function carrier()
     {
         return $this->belongsTo(ShipmentCarrier::class, 'carrierid', 'id');
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'createuser', 'id');
     }
 
     public static function controlAccessUser()

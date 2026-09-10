@@ -15,18 +15,15 @@
             url: 'getInventoryCard',
             data: function (d) {
                 d.name = $('input[name=name]').val();
+                d.inventory_area_id = $('select[name=areaid]').val();
+                d.inventory_aisle_id = $('select[name=aisleid]').val();
                 d.statusid = $('select[name=statusid]').val();
             }
         },
         "columns": [
-            // {data: 'center.description',name: 'center.description'},
-            // {data: 'warehouse.name',name: 'warehouse.name'},
             {data: 'inventoryarea.name'},
             {data: 'inventoryaisle.name'},
             {data: 'name'},
-            {data: 'auxiliary01'},
-            {data: 'auxiliary02'},
-            {data: 'auxiliary03'},
             {
                 data: 'status.name', name: 'status.name',
                 createdCell: function (td, cellData, rowData) {

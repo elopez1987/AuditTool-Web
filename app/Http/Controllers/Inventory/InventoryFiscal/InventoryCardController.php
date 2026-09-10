@@ -19,8 +19,10 @@ class InventoryCardController extends BaseController
         $areas = $this->getAreas();
         $aisles = $this->getAisles();
 
-        return view('Inventory.InventoryCard.index',
-            compact('status', 'areas', 'aisles'));
+        return view(
+            'Inventory.InventoryCard.index',
+            compact('status', 'areas', 'aisles')
+        );
 
     }
 
@@ -29,10 +31,23 @@ class InventoryCardController extends BaseController
         $data = InventoryCard::with(['status:statusid,name,auxiliary01',
             'inventoryarea:id,name',
             'inventoryaisle:id,name',
-        ])->get();
+        ])
+            ->select(['inventory_cards.id', 'inventory_cards.name', 'inventory_area_id', 'inventory_aisle_id', 'inventory_cards.statusid',
+            ])
+            ->when($request->name, function ($query) use ($request) {
+                $query->where('inventory_cards.name', $request->name);
+            })
+            ->when($request->inventory_area_id, function ($query) use ($request) {
+                $query->where('inventory_cards.inventory_area_id', $request->inventory_area_id);
+            })
+            ->when($request->inventory_aisle_id, function ($query) use ($request) {
+                $query->where('inventory_cards.inventory_aisle_id', $request->inventory_aisle_id);
+            });
 
-        return $this->showDataToView($data,
-            'Inventory.InventoryCard.partials.buttons');
+        return $this->showDataToView(
+            $data,
+            'Inventory.InventoryCard.partials.buttons'
+        );
     }
 
     public function create()
@@ -40,8 +55,10 @@ class InventoryCardController extends BaseController
         $areas = $this->getAreas();
         $aisles = $this->getAisles();
 
-        return view('Inventory.InventoryCard.create',
-            compact('areas', 'aisles'));
+        return view(
+            'Inventory.InventoryCard.create',
+            compact('areas', 'aisles')
+        );
     }
 
     public function store(InventoryCardRequest $request)
@@ -58,8 +75,10 @@ class InventoryCardController extends BaseController
             ->get();
         $status = $this->getStatusSTS();
 
-        return view('Inventory.InventoryCard.show',
-            compact('inventorycard', 'unitmeasures', 'status'));
+        return view(
+            'Inventory.InventoryCard.show',
+            compact('inventorycard', 'unitmeasures', 'status')
+        );
     }
 
     public function edit(InventoryCard $inventorycard)
@@ -69,8 +88,10 @@ class InventoryCardController extends BaseController
         $aisles = $this->getAisles();
         $status = $this->getStatusSTS();
 
-        return view('Inventory.InventoryCard.edit',
-            compact('inventorycard', 'status', 'areas', 'aisles'));
+        return view(
+            'Inventory.InventoryCard.edit',
+            compact('inventorycard', 'status', 'areas', 'aisles')
+        );
     }
 
     public function update(Request $request, InventoryCard $inventorycard)

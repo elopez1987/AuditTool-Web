@@ -28,6 +28,7 @@ class ShipmentTypesController extends BaseController
                 'shipmenttypes.centerid',
                 'shipmenttypes.warehouseid',
                 'shipmenttypes.name',
+                'shipmenttypes.auxiliary01',
                 'shipmenttypes.statusid',
             ])
             ->Name($request->input('name'));

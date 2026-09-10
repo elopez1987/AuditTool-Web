@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Inventory\InventoryFiscal\ImportInventoryTransitionalController;
 use App\Http\Controllers\Inventory\InventoryFiscal\ImportInventoryWmsController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryAccountantCardController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryAccountantController;
@@ -89,6 +90,7 @@ Route::middleware(['auth'])->group(function () {
     // Detalle de ubicaciones del inventario
     Route::get('inventoryhead-locations/{id}', [InventoryLocationCountsController::class, 'index'])->name('inventoryhead-locations');
     Route::get('getLocationCountsInventory/{id}', [InventoryLocationCountsController::class, 'getLocationCountsInventory'])->name('getLocationCountsInventory');
+    Route::get('getLocationCountsKpis/{id}', [InventoryLocationCountsController::class, 'getLocationCountsKpis'])->name('getLocationCountsKpis');
 
     //	Activar conteo fiscal
     Route::put('inventory-head-activate/{id}', [InventoryHeadEventController::class, 'activateInventoryHead'])->name('inventory-head-activate');
@@ -136,6 +138,8 @@ Route::middleware(['auth'])->group(function () {
 
     //	Detalle de errores de conteo
     Route::get('inventoryhead-errors/{id}', [InventoryErrorsController::class, 'index'])->name('inventoryhead-errors');
+    Route::get('getDetailInventoryErrors/{id}', [InventoryErrorsController::class, 'getDetailInventoryErrors'])->name('getDetailInventoryErrors');
+    Route::put('inventory-adjust-count/{id}', [InventoryErrorsController::class, 'inventoryadjustcount'])->name('inventory-adjust-count');
 
     //	Consultas para el dashboard
     Route::get('getTotalAisles/{id}', [InventoryDashboardController::class, 'getTotalAisles'])->name('getTotalAisles');
@@ -145,7 +149,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('getDetailAisles/{id}', [InventoryDashboardController::class, 'getDetailAisles'])->name('getDetailAisles');
     Route::get('getTotalCount01/{id}', [InventoryDashboardController::class, 'getTotalCount01'])->name('getTotalCount01');
     Route::get('getTotalCount02/{id}', [InventoryDashboardController::class, 'getTotalCount02'])->name('getTotalCount02');
-    Route::get('getDetailInventoryErrors/{id}', [InventoryDashboardController::class, 'getDetailInventoryErrors'])->name('getDetailInventoryErrors');
 
     //	Crear facilitadores del conteo
     Route::get('inventory-supervisors/{id}', [InventorySupervisorController::class, 'index'])->name('inventory-supervisors');
@@ -184,6 +187,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('import-inventory-wms-excel', [ImportInventoryWmsController::class, 'importStockWms'])->name('import-inventory-wms-excel');
     Route::get('getInventoryStockWms/{id}', [ImportInventoryWmsController::class, 'getInventoryStockWms'])->name('getInventoryStockWms');
     Route::get('getInventoryStockWmsKpis/{id}', [ImportInventoryWmsController::class, 'getInventoryStockWmsKpis'])->name('getInventoryStockWmsKpis');
+
+    // Importar existencias transitorias
+    Route::get('import-inventory-transitional/{id}', [ImportInventoryTransitionalController::class, 'index'])->name('import-inventory-transitional');
+    Route::post('import-inventory-transitional-excel', [ImportInventoryTransitionalController::class, 'importStockTransitional'])->name('import-inventory-transitional-excel');
 
     //	Importa existencia de SAP para el inventario
     Route::get('import-inventory-sap/{id}', [InventoryStockSapController::class, 'index'])->name('import-inventory-sap');

@@ -49,8 +49,66 @@
                                             label="Ubicación"
                                             uppercase
                                     />
+                                    <x-text-input
+                                            name="partnumberid"
+                                            label="Número de parte"
+                                            uppercase
+                                    />
                                 </div>
                             </form>
+                        </div>
+                    </div>
+
+                    <div class="row" id="cards-totales">
+                        <div class="col-lg-2 col-md-4 col-sm-6">
+                            <div class="card border-info">
+                                <div class="card-header bg-grey">
+                                    <h5 class="m-b-0 text-black-50">Total ubicaciones</h5>
+                                </div>
+                                <div class="card-body">
+                                    <h2 class="text-info" id="totalUbicaciones">-</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-sm-6">
+                            <div class="card border-info">
+                                <div class="card-header bg-grey">
+                                    <h5 class="m-b-0 text-black-50">Ubicaciones OK</h5>
+                                </div>
+                                <div class="card-body">
+                                    <h2 class="text-green" id="totalOk">-</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-sm-6">
+                            <div class="card border-info">
+                                <div class="card-header bg-grey">
+                                    <h5 class="m-b-0 text-black-50">Ubicaciones con error</h5>
+                                </div>
+                                <div class="card-body">
+                                    <h2 class="text-red" id="totalError">-</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-sm-6">
+                            <div class="card border-info">
+                                <div class="card-header bg-grey">
+                                    <h5 class="m-b-0 text-black-50">Ubicaciones pendientes</h5>
+                                </div>
+                                <div class="card-body">
+                                    <h2 class="text-warning" id="totalPendiente">-</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-sm-6">
+                            <div class="card border-info">
+                                <div class="card-header bg-grey">
+                                    <h5 class="m-b-0 text-black-50">% Acertividad</h5>
+                                </div>
+                                <div class="card-body">
+                                    <h2 class="text-green" id="porcentajeAcertividad">-</h2>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -62,14 +120,12 @@
                                         <th>Pasillo</th>
                                         <th>Cédula</th>
                                         <th>Ubicación</th>
-                                        <th>Sku 01</th>
+                                        <th>Número de parte</th>
                                         <th>Descripción</th>
-                                        <th>Cantidad</th>
-                                        <th>Sku 02</th>
-                                        <th>Descripción</th>
-                                        <th>Cantidad</th>
-                                        <th>Estatus de ubicación</th>
+                                        <th>Cantidad fisico</th>
+                                        <th>Cantidad wms</th>
                                         <th>Unidad de medida</th>
+                                        <th>Estatus de ubicación</th>
 {{--                                        <th>Opciones</th>--}}
                                     </tr>
                                 </thead>
@@ -89,7 +145,7 @@
             "paging": true,
             "searching": false,
             "ordering": true,
-            "sScrollY": "450px",
+            "sScrollY": "750px",
             "sScrollX": true,
             "processing": true,
             "serverSide": true,
@@ -103,20 +159,34 @@
                     d.aislename = $('input[name=aislename]').val();
                     d.cardname = $('input[name=cardname]').val();
                     d.locationname = $('input[name=locationname]').val();
+                    d.partnumberid = $('input[name=partnumberid]').val();
                 }
             },
             "columns": [
-                {data: 'aisle_name',name: 'aisle_name'},
-                {data: 'card_name',name: 'card_name'},
+
+                {data: 'aisle_name'},
+                {data: 'card_name'},
                 {data: 'location_name'},
-                {data: 'part_number1',name: 'part_number1'},
+                {data: 'part_number1'},
                 {data: 'description01'},
-                {data: 'quantity01'},
-                {data: 'part_number2'},
-                {data: 'description02'},
-                {data: 'quantity02'},
-                {data: 'statusid_location'},
+                {data: 'total_piezas_fisico'},
+                {data: 'total_piezas_wms'},
                 {data: 'unitmeasureid'},
+                {
+                    data: 'status_comparacion',
+                    name: 'status_comparacion',
+                    render: function (data, type, rowData) {
+                        var colors = {
+                            'OK': '#00e676',
+                            'ERROR': '#ff1744',
+                            'PENDIENTE': '#ffff00'
+                        };
+
+                        var bgColor = colors[data] || '#e0e0e0'; // gris si llega un valor inesperado
+
+                        return '<span style="background-color:' + bgColor + '; color: black; padding: 2px 8px; border-radius: 4px; display: inline-block;">' + data + '</span>';
+                    }
+                },
             ],
             "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
             "lengthMenu": [[10, 25, 50, 100,200,300,400], [10, 25, 50,100,200,300,400]],
@@ -163,13 +233,38 @@
         });
         $('#search').on('submit', function (e) {
             oTable.draw();
+            loadLocationCountsKpis();
             e.preventDefault();
         });
     </script>
 
     <script>
-        function reloadtable() {
-            $('#table-cards').DataTable().ajax.reload();
+        function loadLocationCountsKpis() {
+            $.get('{{ route("getLocationCountsKpis", $inventoryHead->id) }}', {
+                aislename: $('input[name=aislename]').val(),
+                cardname: $('input[name=cardname]').val(),
+                locationname: $('input[name=locationname]').val(),
+                partnumberid: $('input[name=partnumberid]').val(),
+            })
+                .done(function (data) {
+                    $('#totalUbicaciones').text(data.totalUbicaciones);
+                    $('#totalOk').text(data.totalOk);
+                    $('#totalError').text(data.totalError);
+                    $('#totalPendiente').text(data.totalPendiente);
+                    $('#porcentajeAcertividad').text(data.porcentajeAcertividad + ' %');
+                })
+                .fail(function () {
+                    $('#totalUbicaciones, #totalOk, #totalError, #totalPendiente, #porcentajeAcertividad').text('-');
+                });
         }
+
+        function reloadtable() {
+            $('#table-locations').DataTable().ajax.reload();
+            loadLocationCountsKpis();
+        }
+
+        $(document).ready(function () {
+            loadLocationCountsKpis();
+        });
     </script>
 @endsection
