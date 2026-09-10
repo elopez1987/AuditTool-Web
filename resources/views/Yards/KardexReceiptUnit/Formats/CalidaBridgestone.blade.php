@@ -720,11 +720,11 @@
                             <img src="{{storage_path('app/' . $receiptunit->key->keyguard02 )}}" alt="Firma"
                                  style="height: 40px;max-height: 40px"/>
                         @endif
-                        @if(!empty($receiptunit->order->folio_count))
-                            <img src="{{storage_path('app/' . $receiptunit->order->folio_count->keyguard )}}"
-                                 alt="Firma"
-                                 style="height: 40px;max-height: 40px"/>
-                        @endif
+{{--                        @if(!empty($receiptunit->order->folio_count))--}}
+{{--                            <img src="{{storage_path('app/' . $receiptunit->order->folio_count->keyguard )}}"--}}
+{{--                                 alt="Firma"--}}
+{{--                                 style="height: 40px;max-height: 40px"/>--}}
+{{--                        @endif--}}
                     </div>
                 </th>
             </tr>
@@ -736,11 +736,11 @@
                         <img src="{{storage_path('app/' . $receiptunit->key->supervisorkey )}}" alt="Firma"
                              style="height: 40px;max-height: 40px"/>
                     @endif
-                    @if(!empty($receiptunit->order->folio_count))
-                        <img src="{{storage_path('app/' . $receiptunit->order->folio_count->keyoperator )}}"
-                             alt="Firma"
-                             style="height: 40px;max-height: 40px"/>
-                    @endif
+{{--                    @if(!empty($receiptunit->order->folio_count))--}}
+{{--                        <img src="{{storage_path('app/' . $receiptunit->order->folio_count->keyoperator )}}"--}}
+{{--                             alt="Firma"--}}
+{{--                             style="height: 40px;max-height: 40px"/>--}}
+{{--                    @endif--}}
                 </th>
             </tr>
         </table>
