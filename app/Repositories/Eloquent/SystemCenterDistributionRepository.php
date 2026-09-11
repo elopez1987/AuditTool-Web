@@ -34,11 +34,13 @@ class SystemCenterDistributionRepository implements SystemCenterDistributionRepo
     {
         $userId = Auth::id();
 
-        return Cache::remember(
+        $access = Cache::remember(
             "security_centers_{$userId}",
             300,
             fn () => SecurityAccessWarehouse::AccessScope(),
         );
+
+        return $access['centers'];
     }
 
     public function findOrFail(string $centerid): SystemCenterDistribution

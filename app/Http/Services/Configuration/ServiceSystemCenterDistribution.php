@@ -93,8 +93,10 @@ class ServiceSystemCenterDistribution
     {
         DB::beginTransaction();
         try {
+            $parameter = $data['parameter'] ?? [];
+
             $this->repository->update($systemcenterdistribution, [
-                'configurationflag' => $data['parameter'] ?? [],
+                'configurationflag' => $parameter,
             ]);
 
             DB::commit();

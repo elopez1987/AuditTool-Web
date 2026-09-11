@@ -38,6 +38,7 @@ class SystemCenterDistribution extends Model
         'auxiliary04',
         'auxiliary05',
         'statusid',
+        'configurationflag',
         'notificationsflags',
     ];
 
@@ -59,9 +60,9 @@ class SystemCenterDistribution extends Model
 
     public static function controlAccessUser()
     {
-        $access = app(SystemCenterDistributionRepositoryInterface::class)->getAccessibleCenterIds();
+        $centers = app(SystemCenterDistributionRepositoryInterface::class)->getAccessibleCenterIds();
 
-        return static::whereIn('systemcenterdistributions.centerid', $access['centers']);
+        return static::whereIn('systemcenterdistributions.centerid', $centers);
     }
 
     public function status(): BelongsTo
