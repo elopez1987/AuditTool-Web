@@ -3,30 +3,44 @@
 namespace App\Http\Controllers\Configuration\Warehouses;
 
 use App\Http\Controllers\BaseController;
-use App\Models\Configuration\Schemas\SystemStatus;
-use App\Models\Configuration\Warehouses\SystemWarehouse;
-use Illuminate\Http\Request;
+use App\Http\Requests\Web\Configuration\Warehouse\UpdateWarehouseNotificationsRequest;
+use App\Http\Services\Configuration\ServiceSystemWarehouse;
+use App\ViewModels\SystemWarehouseViewModel;
+use Illuminate\Http\RedirectResponse;
+use Throwable;
 
 class NotificactionWarehouseController extends BaseController
 {
-    public function index($id)
+    public function __construct(
+        private readonly ServiceSystemWarehouse $service,
+        private readonly SystemWarehouseViewModel $viewModel,
+    ) {}
+
+    public function index(string $id)
     {
-        $warehouse = SystemWarehouse::findOrFail($id);
-        $parameters = SystemStatus::whereSchemaid('MWH')->select(['statusid', 'name', 'comment'])
-            ->orderBy('statusid')
-            ->get();
+        $warehouse = $this->service->findOrFail($id);
+
+        $this->authorize('notify', $warehouse);
+
+        $parameters = $this->service->getStatusForSchema('MWH');
 
         return view(
             'Configuration.SystemWarehouses.Notifications.create',
-            compact('warehouse', 'parameters')
+            $this->viewModel->forNotifications($warehouse, $parameters)
         );
     }
 
-    public function systemwarehousenotifications(Request $request, $id)
+    public function systemwarehousenotifications(UpdateWarehouseNotificationsRequest $request, string $id): RedirectResponse
     {
-        $warehouse = SystemWarehouse::findOrFail($id);
-        $warehouse->notificationsflags = $request->input('parameter');
-        $warehouse->update();
+        $warehouse = $this->service->findOrFail($id);
+
+        $this->authorize('notify', $warehouse);
+
+        try {
+            $this->service->updateNotifications($warehouse, $request->validated());
+        } catch (Throwable $e) {
+            return $this->errorResponse($e->getMessage());
+        }
 
         return $this->redirectBackSuccess();
     }

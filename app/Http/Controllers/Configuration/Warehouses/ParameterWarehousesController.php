@@ -3,31 +3,44 @@
 namespace App\Http\Controllers\Configuration\Warehouses;
 
 use App\Http\Controllers\BaseController;
-use App\Models\Configuration\Schemas\SystemStatus;
-use App\Models\Configuration\Warehouses\SystemWarehouse;
-use Illuminate\Http\Request;
+use App\Http\Requests\Web\Configuration\Warehouse\UpdateWarehouseConfigurationFlagRequest;
+use App\Http\Services\Configuration\ServiceSystemWarehouse;
+use App\ViewModels\SystemWarehouseViewModel;
+use Illuminate\Http\RedirectResponse;
+use Throwable;
 
 class ParameterWarehousesController extends BaseController
 {
-    public function parameters($id)
+    public function __construct(
+        private readonly ServiceSystemWarehouse $service,
+        private readonly SystemWarehouseViewModel $viewModel,
+    ) {}
+
+    public function parameters(string $id)
     {
-        $this->authorize('systemwarehouses.parameters');
-        $warehouse = SystemWarehouse::findOrFail($id);
-        $parameters = SystemStatus::whereSchemaid('SWH')->select(['statusid', 'name', 'comment'])
-            ->orderBy('statusid')
-            ->get();
+        $warehouse = $this->service->findOrFail($id);
+
+        $this->authorize('parametrize', $warehouse);
+
+        $parameters = $this->service->getStatusForSchema('SWH');
 
         return view(
             'Configuration.SystemWarehouses.Parameters.create',
-            compact('warehouse', 'parameters')
+            $this->viewModel->forParameters($warehouse, $parameters)
         );
     }
 
-    public function systemwarehouseparameters(Request $request, $id)
+    public function systemwarehouseparameters(UpdateWarehouseConfigurationFlagRequest $request, string $id): RedirectResponse
     {
-        $warehouse = SystemWarehouse::findOrFail($id);
-        $warehouse->configurationflag = $request->input('parameter');
-        $warehouse->update();
+        $warehouse = $this->service->findOrFail($id);
+
+        $this->authorize('parametrize', $warehouse);
+
+        try {
+            $this->service->updateConfigurationFlag($warehouse, $request->validated());
+        } catch (Throwable $e) {
+            return $this->errorResponse($e->getMessage());
+        }
 
         return $this->redirectBackSuccess();
     }

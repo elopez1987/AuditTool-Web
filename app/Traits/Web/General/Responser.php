@@ -85,9 +85,27 @@ trait Responser
 
     //	-----------------------------------------------------------------------------
 
-    /**
-     * @return mixed|null
-     */
+    //	Eliminar
+
+    public function getStatusForSchema($schemaid)
+    {
+        return SystemStatus::whereSchemaid($schemaid)
+            ->select(['statusid', 'name', 'comment'])
+            ->orderBy('statusid')
+            ->get();
+    }
+
+
+	//    public function getCenters()
+//    {
+//        return SystemCenterDistribution::where('statusid', '=', 'E')
+//            ->select(['centerid', 'name'])->get();
+//    }
+
+
+
+	// Pendientes
+
     public function getCenterForUser()
     {
         return SecurityAccessWarehouse::where('username', Auth::user()
@@ -100,19 +118,7 @@ trait Responser
             ->username)->value('warehouseid');
     }
 
-    public function getStatusForSchema($schemaid)
-    {
-        return SystemStatus::whereSchemaid($schemaid)
-            ->select(['statusid', 'name', 'comment'])
-            ->orderBy('statusid')
-            ->get();
-    }
 
-    public function getCenters()
-    {
-        return SystemCenterDistribution::where('statusid', '=', 'E')
-            ->select(['centerid', 'name'])->get();
-    }
 
     public function getCenterForSelect()
     {

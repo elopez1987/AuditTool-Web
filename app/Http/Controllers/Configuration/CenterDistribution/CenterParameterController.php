@@ -3,43 +3,68 @@
 namespace App\Http\Controllers\Configuration\CenterDistribution;
 
 use App\Http\Controllers\BaseController;
-use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
-use Illuminate\Http\Request;
+use App\Http\Requests\Web\Configuration\CenterDistribution\UpdateCenterAppParametersRequest;
+use App\Http\Requests\Web\Configuration\CenterDistribution\UpdateCenterConfigurationFlagRequest;
+use App\Http\Services\Configuration\ServiceSystemCenterDistribution;
+use App\ViewModels\SystemCenterDistributionViewModel;
+use Illuminate\Http\RedirectResponse;
+use Throwable;
 
 class CenterParameterController extends BaseController
 {
-    public function parameters($id)
-    {
-        $center = SystemCenterDistribution::findOrFail($id);
-        $parameters = $this->getStatusForSchema('SDC');
+    public function __construct(
+        private readonly ServiceSystemCenterDistribution $service,
+        private readonly SystemCenterDistributionViewModel $viewModel,
+    ) {}
 
-        return view('Configuration.SystemCenterDistributions.Parameters.create', compact('center', 'parameters'));
+    public function parameters(string $id)
+    {
+        $center = $this->service->findOrFail($id);
+
+        $this->authorize('parametrize', $center);
+
+        $parameters = $this->service->getStatusForSchema('SDC');
+
+        return view('Configuration.SystemCenterDistributions.Parameters.create', $this->viewModel->forParameters($center, $parameters));
     }
 
-    public function systemcenterdistributionsparameters(Request $request, $id)
+    public function systemcenterdistributionsparameters(UpdateCenterConfigurationFlagRequest $request, string $id): RedirectResponse
     {
+        $center = $this->service->findOrFail($id);
 
-        $center = SystemCenterDistribution::findOrFail($id);
-        $center->configurationflag = $request['parameter'];
-        $center->update();
+        $this->authorize('parametrize', $center);
+
+        try {
+            $this->service->updateConfigurationFlag($center, $request->validated());
+        } catch (Throwable $e) {
+            return $this->errorResponse($e->getMessage());
+        }
 
         return $this->redirectBackSuccess();
     }
 
-    public function parametersapp($id)
+    public function parametersapp(string $id)
     {
-        $center = SystemCenterDistribution::findOrFail($id);
-        $parameters = $this->getStatusForSchema('APP');
+        $center = $this->service->findOrFail($id);
 
-        return view('Configuration.SystemCenterDistributions.Parameters.createApp', compact('center', 'parameters'));
+        $this->authorize('parametrizeApp', $center);
+
+        $parameters = $this->service->getStatusForSchema('APP');
+
+        return view('Configuration.SystemCenterDistributions.Parameters.createApp', $this->viewModel->forAppParameters($center, $parameters));
     }
 
-    public function systemparametersapp(Request $request, $id)
+    public function systemparametersapp(UpdateCenterAppParametersRequest $request, string $id): RedirectResponse
     {
-        $center = SystemCenterDistribution::findOrFail($id);
-        $center->auxiliary05 = $request->input('parameter');
-        $center->notificationsflags = $request->input('parameter');
-        $center->update();
+        $center = $this->service->findOrFail($id);
+
+        $this->authorize('parametrizeApp', $center);
+
+        try {
+            $this->service->updateAppParameters($center, $request->validated());
+        } catch (Throwable $e) {
+            return $this->errorResponse($e->getMessage());
+        }
 
         return $this->redirectBackSuccess();
     }

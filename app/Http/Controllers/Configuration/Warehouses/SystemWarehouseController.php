@@ -3,92 +3,82 @@
 namespace App\Http\Controllers\Configuration\Warehouses;
 
 use App\Http\Controllers\BaseController;
-use App\Http\Requests\Web\Configuration\Warehouse\CreateWarehouseRequest;
+use App\Http\Requests\Web\Configuration\Warehouse\IndexWarehouseRequest;
+use App\Http\Requests\Web\Configuration\Warehouse\StoreWarehouseRequest;
+use App\Http\Requests\Web\Configuration\Warehouse\UpdateWarehouseRequest;
+use App\Http\Services\Configuration\ServiceSystemCenterDistribution;
+use App\Http\Services\Configuration\ServiceSystemWarehouse;
 use App\Models\Configuration\Warehouses\SystemWarehouse;
-use App\Traits\Web\General\EvidencePhotoTrait;
+use App\ViewModels\SystemWarehouseViewModel;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Throwable;
 
 class SystemWarehouseController extends BaseController
 {
-    use EvidencePhotoTrait;
+    public function __construct(
+        private readonly ServiceSystemWarehouse $service,
+        private readonly SystemWarehouseViewModel $viewModel,
+		private readonly ServiceSystemCenterDistribution $centerDistribution,
+    ) {}
 
     public function index()
     {
-        $this->authorize('systemwarehouses.index');
+        $this->authorize('viewAny', SystemWarehouse::class);
 
         return view('Configuration.SystemWarehouses.index');
     }
 
-    public function getDataWarehouses(Request $request)
+    public function getDataWarehouses(IndexWarehouseRequest $request)
     {
-        $data = $this->getAllWarehouses($request);
+        $data = $this->service->search($request->validated('name'));
 
         return $this->showDataToView($data, 'Configuration.SystemWarehouses.partials.buttons');
     }
 
     public function create()
     {
-        $this->authorize('systemwarehouses.create');
-        $centers = $this->getCenters();
+        $this->authorize('create', SystemWarehouse::class);
 
-        return view('Configuration.SystemWarehouses.create', compact('centers'));
+        $centers = $this->centerDistribution->getCenterAll();
+
+        return view('Configuration.SystemWarehouses.create', $this->viewModel->forCreate($centers));
     }
 
-    public function store(CreateWarehouseRequest $request): RedirectResponse
+    public function store(StoreWarehouseRequest $request): RedirectResponse
     {
-        $warehouse = new SystemWarehouse($request->all());
-        $warehouse->save();
+        $this->authorize('create', SystemWarehouse::class);
+
+        try {
+            $this->service->store($request->validated());
+        } catch (Throwable $e) {
+            return $this->errorResponse($e->getMessage());
+        }
 
         return $this->successResponse('systemwarehouses.index');
     }
 
     public function edit(SystemWarehouse $systemwarehouse)
     {
-        $this->authorize('systemwarehouses.edit');
-        $status = $this->getStatusForSchema('STS');
+        $this->authorize('update', $systemwarehouse);
+
+        $status = $this->service->getStatusForSchema('STS');
 
         return view(
             'Configuration.SystemWarehouses.edit',
-            compact('status', 'systemwarehouse'),
+            $this->viewModel->forEdit($systemwarehouse, $status),
         );
     }
 
-    public function update(Request $request, SystemWarehouse $systemwarehouse): RedirectResponse
+    public function update(UpdateWarehouseRequest $request, SystemWarehouse $systemwarehouse): RedirectResponse
     {
-        $systemwarehouse->update($request->except('centerid'));
-        if ($request->hasFile('file')) {
-            if (Storage::exists('storage/' . $systemwarehouse->auxiliary09)) {
-                Storage::delete('storage/' . $systemwarehouse->auxiliary09);
-            }
-            $path = $this->addMediaToModel($request, 'ImageProfile');
-            $systemwarehouse->auxiliary09 = $path;
-            $systemwarehouse->save();
+        $this->authorize('update', $systemwarehouse);
+
+        try {
+            $this->service->update($systemwarehouse, $request->validated(), $request);
+        } catch (Throwable $e) {
+            return $this->errorResponse($e->getMessage());
         }
 
         return $this->infoResponse('systemwarehouses.index');
-    }
-
-    public function show(SystemWarehouse $systemwarehouse) {}
-
-    public function getAllWarehouses($request)
-    {
-        return SystemWarehouse::controlAccessUser()
-            ->leftJoin('systemstatus', 'systemwarehouses.statusid', 'systemstatus.statusid')
-            ->leftJoin('systemcenterdistributions', 'systemwarehouses.centerid', 'systemcenterdistributions.centerid')
-            ->select([
-                'systemcenterdistributions.name as centername',
-                'systemwarehouses.warehouseid',
-                'systemwarehouses.name',
-                'systemwarehouses.center',
-                'systemwarehouses.auxiliary01',
-                'systemwarehouses.auxiliary02',
-                'systemwarehouses.auxiliary03',
-                'systemwarehouses.auxiliary04',
-                'systemwarehouses.auxiliary05',
-                'systemstatus.name as status',
-            ])
-            ->ForName($request->get('name'));
     }
 }

@@ -13,9 +13,11 @@
                         @csrf
                         <div class="row">
                             <div class="col-12">
-                                <a href="">
-                                    @include('buttons.save')
-                                </a>
+                                @can('systemwarehouses.notifications')
+                                    <a href="">
+                                        @include('buttons.save')
+                                    </a>
+                                @endcan
                                 <a href="{{route('systemwarehouses.index')}}">
                                     @include('buttons.back')
                                 </a>

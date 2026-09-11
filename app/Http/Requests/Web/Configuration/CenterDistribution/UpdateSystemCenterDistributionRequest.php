@@ -4,7 +4,7 @@ namespace App\Http\Requests\Web\Configuration\CenterDistribution;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateCenterDistributionRequest extends FormRequest
+class UpdateSystemCenterDistributionRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -14,7 +14,8 @@ class CreateCenterDistributionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'centerid' => 'required|string|max:15|unique:systemcenterdistributions,centerid',
+            // 'centerid' is intentionally not validated/updated: it is the
+            // (immutable) primary key and is only rendered read-only in the form.
             'description' => 'required|string|max:50',
             'name' => 'required|string|max:50',
             'capacityyard' => 'required|numeric|max:100|min:1',
@@ -28,6 +29,7 @@ class CreateCenterDistributionRequest extends FormRequest
             'url' => 'nullable|string|max:100',
             'userapi' => 'nullable|string|max:50',
             'passwordapi' => 'nullable|string|max:50',
+            'file' => 'nullable|image|max:5120',
         ];
     }
 }

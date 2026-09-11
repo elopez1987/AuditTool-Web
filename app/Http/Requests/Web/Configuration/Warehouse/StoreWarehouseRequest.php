@@ -4,7 +4,7 @@ namespace App\Http\Requests\Web\Configuration\Warehouse;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateWarehouseRequest extends FormRequest
+class StoreWarehouseRequest extends FormRequest
 {
     public function authorize(): bool
     {

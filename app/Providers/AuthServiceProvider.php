@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
+use App\Models\Configuration\Warehouses\SystemWarehouse;
+use App\Policies\SystemCenterDistributionPolicy;
+use App\Policies\SystemWarehousePolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -13,7 +17,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        // 'App\Model' => 'App\Policies\ModelPolicy',
+        SystemCenterDistribution::class => SystemCenterDistributionPolicy::class,
+        SystemWarehouse::class => SystemWarehousePolicy::class,
     ];
 
     /**

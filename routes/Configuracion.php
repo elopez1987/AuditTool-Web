@@ -51,6 +51,26 @@ Route::middleware(['auth'])->group(function () {
     //    ---------------------------------------------------- Jobs ------------------------------------------
     Route::get('jobs', [JobsController::class, 'index'])->name('jobs');
 
+    // ############################ Refactorizados #################################
+    //    ---------------------------------------------------- Centros de distribucion  ------------------------------------
+    Route::resource('systemcenterdistributions', SystemCenterDistributionController::class);
+    Route::get('getDataCenterDistributions', [SystemCenterDistributionController::class, 'getDataCenterDistributions'])->name('getDataCenterDistributions');
+    //    Parametros de centros de distribucion
+    Route::get('systemcenterdistributions/{id}/parameters', [CenterParameterController::class, 'parameters'])->name('systemcenterdistributions.parameters');
+    Route::put('systemcenterdistributionsparameters/{id}', [CenterParameterController::class, 'systemcenterdistributionsparameters'])->name('systemcenterdistributionsparameters');
+    //    Parametros de App
+    Route::get('systemcenterdistributions/{id}/parametersapp', [CenterParameterController::class, 'parametersapp'])->name('systemcenterdistributions.parametersapp');
+    Route::put('systemparametersapp/{id}', [CenterParameterController::class, 'systemparametersapp'])->name('systemparametersapp');
+    //    Creacion de directorios para el centro de distribucion
+    Route::get('systemcenterdistributions/{id}/folder', [SystemCenterDistributionFolderController::class, 'index'])->name('systemcenterdistributions.folder');
+    Route::put('systemcenterdistributionfolder/{id}', [SystemCenterDistributionFolderController::class, 'systemcenterdistributionfolder'])->name('systemcenterdistributionfolder');
+
+    //	Parametrizar mensajes de bodega
+    Route::get('systemcenterdistributions/{id}/notifications', [NotificationCenterController::class, 'index'])->name('systemcenterdistributions.notifications');
+    Route::put('systemcenternotifications/{id}', [NotificationCenterController::class, 'systemcenternotifications'])->name('systemcenternotifications');
+
+    // ########################## Pendientes #######################################
+
     //    ---------------------------------------------------- Esquemas del sistema ----------------------------------------
     Route::resource('systemschemas', SystemSchemaController::class);
     Route::get('getDataSchemas', [SystemSchemaController::class, 'getDataSchemas'])->name('getDataSchemas');
@@ -74,23 +94,6 @@ Route::middleware(['auth'])->group(function () {
     Route::put('savedetailparameter/{systemparameter}', [SystemDetailParametersController::class, 'savedetailparameter'])->name('savedetailparameter');
     Route::delete('deletedetailparameter/{systemdetailparameter}', [SystemDetailParametersController::class, 'deleteregister'])->name('deletedetailparameter');
     Route::put('editdetailparameter/{systemdetailparameter}', [SystemDetailParametersController::class, 'editdetailparameter'])->name('editdetailparameter');
-
-    //    ---------------------------------------------------- Centros de distribucion  ------------------------------------
-    Route::resource('systemcenterdistributions', SystemCenterDistributionController::class);
-    Route::get('getDataCenterDistributions', [SystemCenterDistributionController::class, 'getDataCenterDistributions'])->name('getDataCenterDistributions');
-    //    Parametros de centros de distribucion
-    Route::get('systemcenterdistributions/{id}/parameters', [CenterParameterController::class, 'parameters'])->name('systemcenterdistributions.parameters');
-    Route::put('systemcenterdistributionsparameters/{id}', [CenterParameterController::class, 'systemcenterdistributionsparameters'])->name('systemcenterdistributionsparameters');
-    //    Parametros de App
-    Route::get('systemcenterdistributions/{id}/parametersapp', [CenterParameterController::class, 'parametersapp'])->name('systemcenterdistributions.parametersapp');
-    Route::put('systemparametersapp/{id}', [CenterParameterController::class, 'systemparametersapp'])->name('systemparametersapp');
-    //    Creacion de directorios para el centro de distribucion
-    Route::get('systemcenterdistributions/{id}/folder', [SystemCenterDistributionFolderController::class, 'index'])->name('systemcenterdistributions.folder');
-    Route::put('systemcenterdistributionfolder/{id}', [SystemCenterDistributionFolderController::class, 'systemcenterdistributionfolder'])->name('systemcenterdistributionfolder');
-
-    //	Parametrizar mensajes de bodega
-    Route::get('systemcenterdistributions/{id}/notifications', [NotificationCenterController::class, 'index'])->name('systemcenterdistributions.notifications');
-    Route::put('systemcenternotifications/{id}', [NotificationCenterController::class, 'systemcenternotifications'])->name('systemcenternotifications');
 
     //    ---------------------------------------------------- Bodegas  ----------------------------------------------------
     Route::resource('systemwarehouses', SystemWarehouseController::class)->except('show');

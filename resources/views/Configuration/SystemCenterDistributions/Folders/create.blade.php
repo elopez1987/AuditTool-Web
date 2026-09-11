@@ -13,9 +13,11 @@
                         @csrf
                         <div class="row">
                             <div class="col-12">
-                                <a href="">
-                                    @include('buttons.save')
-                                </a>
+                                @can('systemcenterdistributions.folder')
+                                    <a href="">
+                                        @include('buttons.save')
+                                    </a>
+                                @endcan
                                 <a href="{{route('systemcenterdistributions.index')}}">
                                     @include('buttons.back')
                                 </a>

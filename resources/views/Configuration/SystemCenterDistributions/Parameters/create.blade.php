@@ -13,15 +13,17 @@
                         @csrf
                         <div class="row">
                             <div class="col-12">
-                                <a href="">
-                                    @include('buttons.save')
-                                </a>
+                                @can('systemcenterdistributions.parametrizar')
+                                    <a href="">
+                                        @include('buttons.save')
+                                    </a>
+                                @endcan
                                 <a href="{{route('systemcenterdistributions.index')}}">
                                     @include('buttons.back')
                                 </a>
                             </div>
                         </div>
-                        <hr class="mb-3">
+                        <hr>
                         <div class="row">
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">

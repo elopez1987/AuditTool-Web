@@ -3,69 +3,75 @@
 namespace App\Http\Controllers\Configuration\CenterDistribution;
 
 use App\Http\Controllers\BaseController;
-use App\Http\Requests\Web\Configuration\CenterDistribution\CreateCenterDistributionRequest;
+use App\Http\Requests\Web\Configuration\CenterDistribution\IndexSystemCenterDistributionRequest;
+use App\Http\Requests\Web\Configuration\CenterDistribution\StoreSystemCenterDistributionRequest;
+use App\Http\Requests\Web\Configuration\CenterDistribution\UpdateSystemCenterDistributionRequest;
+use App\Http\Services\Configuration\ServiceSystemCenterDistribution;
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
-use App\Traits\Web\General\EvidencePhotoTrait;
+use App\ViewModels\SystemCenterDistributionViewModel;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Throwable;
 
 class SystemCenterDistributionController extends BaseController
 {
-    use EvidencePhotoTrait;
-
     protected string $routePath = 'systemcenterdistributions';
 
     protected string $viewPath = 'Configuration.SystemCenterDistributions';
 
+    public function __construct(
+        private readonly ServiceSystemCenterDistribution $service,
+        private readonly SystemCenterDistributionViewModel $viewModel,
+    ) {}
+
     public function index()
     {
-        $this->authorize('systemcenterdistributions.index');
+        $this->authorize('viewAny', SystemCenterDistribution::class);
 
         return view("{$this->viewPath}.index");
     }
 
-    public function getDataCenterDistributions(Request $request)
+    public function getDataCenterDistributions(IndexSystemCenterDistributionRequest $request)
     {
-        $data = SystemCenterDistribution::controlAccessUser()
-            ->with(['status:statusid,name'])
-            ->ForName($request->get('name'));
+        $data = $this->service->search($request->validated('name'));
 
         return $this->showDataToView($data, "{$this->viewPath}.partials.buttons");
     }
 
     public function create()
     {
-        $this->authorize('systemcenterdistributions.create');
+        $this->authorize('create', SystemCenterDistribution::class);
 
         return view("{$this->viewPath}.create");
     }
 
-    public function store(CreateCenterDistributionRequest $request): RedirectResponse
+    public function store(StoreSystemCenterDistributionRequest $request): RedirectResponse
     {
-        $center = new SystemCenterDistribution($request->all());
-        $center->save();
+        $this->authorize('create', SystemCenterDistribution::class);
+
+        try {
+            $this->service->store($request->validated());
+        } catch (Throwable $e) {
+            return $this->errorResponse($e->getMessage());
+        }
 
         return $this->successResponse("{$this->routePath}.index");
     }
 
     public function edit(SystemCenterDistribution $systemcenterdistribution)
     {
-        $this->authorize('systemcenterdistributions.edit');
+        $this->authorize('update', $systemcenterdistribution);
 
-        return view("{$this->viewPath}.edit", compact('systemcenterdistribution'));
+        return view("{$this->viewPath}.edit", $this->viewModel->forEdit($systemcenterdistribution));
     }
 
-    public function update(Request $request, SystemCenterDistribution $systemcenterdistribution): RedirectResponse
+    public function update(UpdateSystemCenterDistributionRequest $request, SystemCenterDistribution $systemcenterdistribution): RedirectResponse
     {
-        $systemcenterdistribution->update($request->all());
-        if ($request->hasFile('file')) {
-            if (Storage::exists('storage/' . $systemcenterdistribution->auxiliary04)) {
-                Storage::delete('storage/' . $systemcenterdistribution->auxiliary04);
-            }
-            $path = $this->addMediaToModel($request, 'ImageProfile');
-            $systemcenterdistribution->auxiliary04 = $path;
-            $systemcenterdistribution->save();
+        $this->authorize('update', $systemcenterdistribution);
+
+        try {
+            $this->service->update($systemcenterdistribution, $request->validated(), $request);
+        } catch (Throwable $e) {
+            return $this->errorResponse($e->getMessage());
         }
 
         return $this->successResponse("{$this->routePath}.index");

@@ -19,14 +19,14 @@
                             <label for="name">Descripción <span style="color: red">*</span></label>
                             <input type="text" class="form-control" required id="description" name="description" maxlength="50"
                                    aria-describedby="description" onKeyUp=this.value=this.value.toUpperCase();
-                                   value="{{$systemcenterdistribution->description}}">
+                                   value="{{old('description', $systemcenterdistribution->description)}}">
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12">
                         <div class="form-group">
                             <label for="name">Nombre <span style="color: red">*</span></label>
                             <input type="text" class="form-control" required id="name" name="name" maxlength="50"
-                                   aria-describedby="name" onKeyUp=this.value=this.value.toUpperCase(); value="{{$systemcenterdistribution->name}}">
+                                   aria-describedby="name" onKeyUp=this.value=this.value.toUpperCase(); value="{{old('name', $systemcenterdistribution->name)}}">
                         </div>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                         <div class="form-group">
                             <label for="name">Código de planta ( SAP ) <span style="color: red">*</span></label>
                             <input type="text" class="form-control"  id="code" name="code" maxlength="15"
-                                   aria-describedby="code" onKeyUp=this.value=this.value.toUpperCase(); value="{{$systemcenterdistribution->code}}">
+                                   aria-describedby="code" onKeyUp=this.value=this.value.toUpperCase(); value="{{old('code', $systemcenterdistribution->code)}}">
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12">
@@ -55,7 +55,7 @@
                             <label for="name">Nombre del formato del folio de patios </label>
                             <input type="text" class="form-control"  id="formatinvoice" name="formatinvoice" maxlength="50"
                                    aria-describedby="formatinvoice"
-                                   value="{{$systemcenterdistribution->formatinvoice}}">
+                                   value="{{old('formatinvoice', $systemcenterdistribution->formatinvoice)}}">
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12">
@@ -63,7 +63,7 @@
                             <label for="name">Capacidad maxima de patio.</label>
                             <input type="number" class="form-control numeric"  id="capacityyard" name="capacityyard"
                                    maxlength="15"
-                                   aria-describedby="code" onKeyUp=this.value=this.value.toUpperCase(); value="{{$systemcenterdistribution->capacityyard}}">
+                                   aria-describedby="code" onKeyUp=this.value=this.value.toUpperCase(); value="{{old('capacityyard', $systemcenterdistribution->capacityyard)}}">
                         </div>
                     </div>
                 </div>
@@ -84,25 +84,25 @@
                         <div class="form-group">
                             <label for="name">Auxiliar 01 </label>
                             <input type="text" class="form-control" id="auxiliary01" name="auxiliary01" maxlength="100"
-                                   aria-describedby="auxiliary01" value="{{$systemcenterdistribution->auxiliary01}}">
+                                   aria-describedby="auxiliary01" value="{{old('auxiliary01', $systemcenterdistribution->auxiliary01)}}">
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12">
                         <div class="form-group">
                             <label for="name">Auxiliar 02 </label>
                             <input type="text" class="form-control" id="auxiliary02" name="auxiliary02" maxlength="100"
-                                   aria-describedby="auxiliary02" value="{{$systemcenterdistribution->auxiliary02}}">
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12">
-                        <div class="form-group">
-                            <label for="name">Auxiliar 03 </label>
-                            <input type="text" class="form-control" id="auxiliary03" name="auxiliary03" maxlength="100"
-                                   aria-describedby="auxiliary03" value="{{$systemcenterdistribution->auxiliary03}}">
+                                   aria-describedby="auxiliary02" value="{{old('auxiliary02', $systemcenterdistribution->auxiliary02)}}">
                         </div>
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label for="name">Auxiliar 03 </label>
+                            <input type="text" class="form-control" id="auxiliary03" name="auxiliary03" maxlength="100"
+                                   aria-describedby="auxiliary03" value="{{old('auxiliary03', $systemcenterdistribution->auxiliary03)}}">
+                        </div>
+                    </div>
                     <div class="col-lg-4 col-md-6 col-sm-12">
                         <div class="form-group">
                             <label for="name">Logo de la empresa</label>

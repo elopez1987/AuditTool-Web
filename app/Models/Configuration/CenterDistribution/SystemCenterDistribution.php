@@ -3,7 +3,7 @@
 namespace App\Models\Configuration\CenterDistribution;
 
 use App\Models\Configuration\Schemas\SystemStatus;
-use App\Models\Security\Users\SecurityAccessWarehouse;
+use App\Repositories\SystemCenterDistributionRepositoryInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -57,22 +57,17 @@ class SystemCenterDistribution extends Model
         'auxiliary05' => 'array',
     ];
 
+
     public static function controlAccessUser()
     {
-        $centers = SecurityAccessWarehouse::Centers();
-
-        return SystemCenterDistribution::whereIn('systemcenterdistributions.centerid', $centers);
-    }
-
-    public function scopeForName($query, $name)
-    {
-        if (trim($name) != '') {
-            $query->where('systemcenterdistributions.name', 'like', "%{$name}%");
-        }
+		$access = app(SystemCenterDistributionRepositoryInterface::class)->getAccessibleCenterIds();
+		return static::whereIn('systemcenterdistributions.centerid', $access['centers']);
     }
 
     public function status(): BelongsTo
     {
         return $this->belongsTo(SystemStatus::class, 'statusid', 'statusid');
     }
+
+
 }
