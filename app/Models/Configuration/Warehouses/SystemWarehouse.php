@@ -37,6 +37,7 @@ class SystemWarehouse extends Model
         'auxiliary09',
         'auxiliary10',
         'statusid',
+        'configurationflag',
         'notificationsflags',
     ];
 
@@ -66,7 +67,8 @@ class SystemWarehouse extends Model
     {
         $warehouses = app(SystemWarehouseRepositoryInterface::class)->getAccessibleWarehouseIds();
 
-        return SystemWarehouse::whereIn('systemwarehouses.warehouseid', $warehouses);
+        return static::whereIn('systemwarehouses.warehouseid', $warehouses);
+
     }
 
     //    Relaciones

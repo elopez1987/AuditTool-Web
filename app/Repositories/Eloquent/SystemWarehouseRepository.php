@@ -37,11 +37,13 @@ class SystemWarehouseRepository implements SystemWarehouseRepositoryInterface
     {
         $userId = Auth::id();
 
-        return Cache::remember(
+        $access = Cache::remember(
             "security_warehouses_{$userId}",
             300,
-            fn () => SecurityAccessWarehouse::Warehouses(),
+            fn () => SecurityAccessWarehouse::AccessScope(),
         );
+
+        return $access['warehouses'];
     }
 
     public function findOrFail(string $warehouseid): SystemWarehouse

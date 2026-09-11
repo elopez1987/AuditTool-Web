@@ -64,19 +64,15 @@
                                             <td>{{$loop->iteration}}</td>
                                             <td style="width: 100px;" class="switch">
                                                 <input
-                                                    type="checkbox"
-                                                    value="{{$parameter->statusid}}"
-                                                    @if(!empty($center->configurationflag))
-                                                        @foreach ($center->configurationflag as $check)
-                                                            @if ($check == $parameter->statusid)
-                                                                checked
-                                                             @endif
-                                                        @endforeach
-                                                    @endif
-                                                    name="parameter[]"
-                                                    data-size="mini" data-on-color="success" data-off-color="danger"
-                                                    data-on-text="<i class='ti ti-check'></i>"
-                                                    data-off-text="<i class='ti ti-close'></i>"
+                                                        type="checkbox"
+                                                        value="{{ $parameter->statusid }}"
+                                                        @checked(in_array($parameter->statusid, $center->configurationflag ?? []))
+                                                        name="parameter[]"
+                                                        data-size="mini"
+                                                        data-on-color="success"
+                                                        data-off-color="danger"
+                                                        data-on-text="<i class='ti ti-check'></i>"
+                                                        data-off-text="<i class='ti ti-close'></i>"
                                                 >
                                             </td>
                                             <td>{{$parameter->statusid}}</td>

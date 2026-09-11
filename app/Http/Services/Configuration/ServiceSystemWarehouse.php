@@ -88,8 +88,9 @@ class ServiceSystemWarehouse
     {
         DB::beginTransaction();
         try {
+            $parameter = $data['parameter'] ?? [];
             $this->repository->update($systemwarehouse, [
-                'configurationflag' => $data['parameter'] ?? [],
+                'configurationflag' => $parameter,
             ]);
 
             DB::commit();
