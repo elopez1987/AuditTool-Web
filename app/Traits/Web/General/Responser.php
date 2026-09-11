@@ -95,16 +95,13 @@ trait Responser
             ->get();
     }
 
+    //    public function getCenters()
+    //    {
+    //        return SystemCenterDistribution::where('statusid', '=', 'E')
+    //            ->select(['centerid', 'name'])->get();
+    //    }
 
-	//    public function getCenters()
-//    {
-//        return SystemCenterDistribution::where('statusid', '=', 'E')
-//            ->select(['centerid', 'name'])->get();
-//    }
-
-
-
-	// Pendientes
+    // Pendientes
 
     public function getCenterForUser()
     {
@@ -117,8 +114,6 @@ trait Responser
         return SecurityAccessWarehouse::where('username', Auth::user()
             ->username)->value('warehouseid');
     }
-
-
 
     public function getCenterForSelect()
     {

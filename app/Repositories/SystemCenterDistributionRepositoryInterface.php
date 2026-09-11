@@ -12,8 +12,8 @@ interface SystemCenterDistributionRepositoryInterface
      */
     public function search(?string $name): Builder;
 
-	/** Query all centers */
-	public function searchAll();
+    /** Query all centers */
+    public function searchAll();
 
     /**
      * Center IDs the current user is allowed to access, cached per user to

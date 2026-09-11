@@ -22,9 +22,8 @@ class ServiceSystemCenterDistribution
 
     public function __construct(
         private readonly SystemCenterDistributionRepositoryInterface $repository,
-        private readonly SystemStatusRepositoryInterface             $statusRepository,
-    ) {
-    }
+        private readonly SystemStatusRepositoryInterface $statusRepository,
+    ) {}
 
     public function findOrFail(string $centerid): SystemCenterDistribution
     {
@@ -46,7 +45,6 @@ class ServiceSystemCenterDistribution
     {
         return $this->repository->searchAll();
     }
-
 
     public function getStatusForSchema(string $schemaid): Collection
     {
@@ -202,7 +200,7 @@ class ServiceSystemCenterDistribution
      */
     private function updateLogo(SystemCenterDistribution $systemcenterdistribution, Request $request): void
     {
-        if (!empty($systemcenterdistribution->auxiliary04) && Storage::exists($systemcenterdistribution->auxiliary04)) {
+        if (! empty($systemcenterdistribution->auxiliary04) && Storage::exists($systemcenterdistribution->auxiliary04)) {
             Storage::delete($systemcenterdistribution->auxiliary04);
         }
 

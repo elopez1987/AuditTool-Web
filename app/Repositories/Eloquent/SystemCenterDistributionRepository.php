@@ -18,11 +18,10 @@ class SystemCenterDistributionRepository implements SystemCenterDistributionRepo
         return SystemCenterDistribution::whereIn('systemcenterdistributions.centerid', $this->getAccessibleCenterIds())
             ->with(['status:statusid,name'])
             ->where('statusid', self::STATUS_AVAILABLE)
-            ->when(trim((string)$name) !== '', function (Builder $query) use ($name) {
+            ->when(trim((string) $name) !== '', function (Builder $query) use ($name) {
                 $query->where('systemcenterdistributions.name', 'like', "%{$name}%");
             });
     }
-
 
     public function searchAll()
     {

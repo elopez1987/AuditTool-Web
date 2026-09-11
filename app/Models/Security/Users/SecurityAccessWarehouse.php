@@ -9,18 +9,16 @@ use Illuminate\Support\Facades\Auth;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-
 class SecurityAccessWarehouse extends Model
 {
     use LogsActivity;
 
-	public function getActivitylogOptions(): LogOptions
-	{
-		return LogOptions::defaults()->logFillable();
-	}
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
-
-	protected $table = 'securityaccesswarehouses';
+    protected $table = 'securityaccesswarehouses';
 
     protected $dateFormat = 'Y-m-d H:i:s';
 
@@ -31,41 +29,38 @@ class SecurityAccessWarehouse extends Model
         'defaultlevel',
     ];
 
+    //	Relaciones con modelos
+    public function center()
+    {
+        return $this->belongsTo(SystemCenterDistribution::class, 'centerid', 'centerid');
+    }
 
-//	Relaciones con modelos
-	public function center()
-	{
-		return $this->belongsTo(SystemCenterDistribution::class, 'centerid', 'centerid');
-	}
+    public function warehouse()
+    {
+        return $this->belongsTo(SystemWarehouse::class, 'warehouseid', 'warehouseid');
+    }
 
-	public function warehouse()
-	{
-		return $this->belongsTo(SystemWarehouse::class, 'warehouseid', 'warehouseid');
-	}
+    //	Scopes para filtros de acceso a usuarios
 
+    /**
+     * Igual que llamar a Centers() y Warehouses(), pero en una sola consulta.
+     * Úsalo en lugares donde ambos arreglos se necesiten juntos (p.ej.
+     * controlAccessUser) para evitar un round-trip extra a la base de datos.
+     *
+     * @return array{centers: array<int, string>, warehouses: array<int, string>}
+     */
+    public static function AccessScope(): array
+    {
+        $rows = SecurityAccessWarehouse::where('username', Auth::user()->username)
+            ->select('centerid', 'warehouseid')
+            ->get();
 
-//	Scopes para filtros de acceso a usuarios
+        return [
+            'centers' => $rows->pluck('centerid')->all(),
+            'warehouses' => $rows->pluck('warehouseid')->all(),
+        ];
+    }
 
-	/**
-	 * Igual que llamar a Centers() y Warehouses(), pero en una sola consulta.
-	 * Úsalo en lugares donde ambos arreglos se necesiten juntos (p.ej.
-	 * controlAccessUser) para evitar un round-trip extra a la base de datos.
-	 *
-	 * @return array{centers: array<int, string>, warehouses: array<int, string>}
-	 */
-	public static function AccessScope(): array
-	{
-		$rows = SecurityAccessWarehouse::where('username', Auth::user()->username)
-			->select('centerid', 'warehouseid')
-			->get();
-
-		return [
-			'centers' => $rows->pluck('centerid')->all(),
-			'warehouses' => $rows->pluck('warehouseid')->all(),
-		];
-	}
-
-	
     public static function Centers()
     {
         return SecurityAccessWarehouse::where('username', Auth::user()->username)
@@ -85,8 +80,6 @@ class SecurityAccessWarehouse extends Model
     public static function getCenterForUser()
     {
         return SecurityAccessWarehouse::where('username', Auth::user()->username)
-			->value('centerid');
+            ->value('centerid');
     }
-
-
 }

@@ -18,7 +18,7 @@ class SystemWarehouseController extends BaseController
     public function __construct(
         private readonly ServiceSystemWarehouse $service,
         private readonly SystemWarehouseViewModel $viewModel,
-		private readonly ServiceSystemCenterDistribution $centerDistribution,
+        private readonly ServiceSystemCenterDistribution $centerDistribution,
     ) {}
 
     public function index()

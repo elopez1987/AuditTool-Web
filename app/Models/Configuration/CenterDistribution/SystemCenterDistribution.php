@@ -57,17 +57,15 @@ class SystemCenterDistribution extends Model
         'auxiliary05' => 'array',
     ];
 
-
     public static function controlAccessUser()
     {
-		$access = app(SystemCenterDistributionRepositoryInterface::class)->getAccessibleCenterIds();
-		return static::whereIn('systemcenterdistributions.centerid', $access['centers']);
+        $access = app(SystemCenterDistributionRepositoryInterface::class)->getAccessibleCenterIds();
+
+        return static::whereIn('systemcenterdistributions.centerid', $access['centers']);
     }
 
     public function status(): BelongsTo
     {
         return $this->belongsTo(SystemStatus::class, 'statusid', 'statusid');
     }
-
-
 }
