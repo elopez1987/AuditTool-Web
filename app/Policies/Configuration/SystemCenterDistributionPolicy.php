@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Policies;
+namespace App\Policies\Configuration;
 
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\User;

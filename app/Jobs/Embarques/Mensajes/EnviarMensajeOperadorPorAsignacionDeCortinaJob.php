@@ -2,10 +2,10 @@
 
 namespace App\Jobs\Embarques\Mensajes;
 
-use App\Http\Services\Yard\AssingDoorToUnitFromShipment;
 use App\Models\Shipments\OrderDeliverie;
 use App\Models\Yard\ReceiptUnit;
 use App\Models\Yard\StorageLocation;
+use App\Services\Yard\AssingDoorToUnitFromShipment;
 use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Bus\Queueable;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\ViewModels;
+namespace App\ViewModels\Configuration;
 
 use App\Models\Configuration\Warehouses\SystemWarehouse;
 use Illuminate\Support\Collection;

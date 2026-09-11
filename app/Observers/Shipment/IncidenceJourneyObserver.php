@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Observers;
+namespace App\Observers\Shipment;
 
 use App\Models\Configuration\WhatsApp\StorageTaskWhatsapp;
 use App\Models\Shipments\StorageIncidenceJourney;

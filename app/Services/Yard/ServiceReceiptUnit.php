@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Services\Yard;
+namespace App\Services\Yard;
 
 use App\Jobs\Recibos\CorreoLlegadaUnidadDeReciboJob;
 use App\Jobs\Recibos\MensajeLLegadaDeUnidadJob;
@@ -23,13 +23,13 @@ use App\Traits\Web\Yard\ReceiptUnit\InsertSchedulleInverse;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-class ReceiptUnitFullService
+class ServiceReceiptUnit
 {
     use GetParameters;
     use InsertSchedulleInverse;
     use Responser;
 
-    public function createNewReceiptUnitFull(Request $request, $truck)
+    public function createNewReceiptUnit(Request $request, $truck)
     {
         $centerid = $this->getCenterForUser();
         $warehouseid = $this->getWarehouseForUser();
@@ -48,18 +48,18 @@ class ReceiptUnitFullService
         $receiptunit = ReceiptUnit::create([
             'centerid' => $request['centerid'] ?? $centerid,
             'warehouseid' => $request['warehouseid'] ?? $warehouseid,
-            'barcode' => $request['barcodebox2'] ?? $barcode->folionumber,
-            'shipmentid' => $request['shipmentid2'],
+            'barcode' => $request['barcodebox'] ?? $barcode->folionumber,
+            'shipmentid' => $request['shipmentid'],
             'carrierid' => $request['carrierid'],
             'truckid' => $request['truckid'],
             'zoneid' => $request['zoneid'] ?? $location->zoneid,
             'locationid' => $request['locationid'] ?? $location->id,
             'unittypeid' => $request['unittypeid'] ?? $defaultOrigin->value02,
-            'containerseal' => $request['containerseal2'] ?? '0',
-            'boxnumber' => $request['boxnumber2'],
+            'containerseal' => $request['containerseal'] ?? '0',
+            'boxnumber' => $request['boxnumber'],
             'razonstatusid' => $request['razonstatusid'],
             'unitstatusid' => $unitstatus,
-            'econumber' => $request['eccobox2'],
+            'econumber' => $request['ecobox'],
             'truckcategoryid' => $request['truckcategoryid'] ?? 'CO',
             'statusid' => $statusid,
             'foliotruck' => $truck->id,

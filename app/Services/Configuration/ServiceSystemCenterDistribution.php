@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Services\Configuration;
+namespace App\Services\Configuration;
 
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Configuration\Parameters\SystemDetailParameter;

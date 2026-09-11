@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Services\Yard;
+namespace App\Services\Yard;
 
 use App\Models\Shipments\OrderDeliverie;
 use App\Models\Shipments\ShipmentStage;

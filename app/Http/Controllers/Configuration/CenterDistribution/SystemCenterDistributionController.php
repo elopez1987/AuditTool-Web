@@ -6,9 +6,9 @@ use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Configuration\CenterDistribution\IndexSystemCenterDistributionRequest;
 use App\Http\Requests\Web\Configuration\CenterDistribution\StoreSystemCenterDistributionRequest;
 use App\Http\Requests\Web\Configuration\CenterDistribution\UpdateSystemCenterDistributionRequest;
-use App\Http\Services\Configuration\ServiceSystemCenterDistribution;
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
-use App\ViewModels\SystemCenterDistributionViewModel;
+use App\Services\Configuration\ServiceSystemCenterDistribution;
+use App\ViewModels\Configuration\SystemCenterDistributionViewModel;
 use Illuminate\Http\RedirectResponse;
 use Throwable;
 

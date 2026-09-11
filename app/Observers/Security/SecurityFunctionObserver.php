@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Observers;
+namespace App\Observers\Security;
 
 use App\Models\Security\Fuctions\SecurityFunction;
 use Illuminate\Support\Facades\Cache;

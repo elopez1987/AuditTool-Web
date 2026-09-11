@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Security\Users;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Security\Users\CreateUserRequest;
 use App\Http\Requests\Web\Security\Users\UpdateUserRequest;
-use App\Http\Services\Security\ServiceUser;
+use App\Services\Security\ServiceUser;
 use App\Traits\Web\Security\QueryUser;
 use App\User;
 use Exception;

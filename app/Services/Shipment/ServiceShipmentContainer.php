@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Services\Shipment;
+namespace App\Services\Shipment;
 
 use App\Models\Shipments\ShipmentContainer;
 use App\Traits\Web\General\EvidencePhotoTrait;

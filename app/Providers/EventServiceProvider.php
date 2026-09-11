@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Shipments\StorageIncidenceJourney;
-use App\Observers\IncidenceJourneyObserver;
+use App\Observers\Shipment\IncidenceJourneyObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;

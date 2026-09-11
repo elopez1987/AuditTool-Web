@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Configuration\CenterDistribution;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Configuration\CenterDistribution\UpdateCenterAppParametersRequest;
 use App\Http\Requests\Web\Configuration\CenterDistribution\UpdateCenterConfigurationFlagRequest;
-use App\Http\Services\Configuration\ServiceSystemCenterDistribution;
-use App\ViewModels\SystemCenterDistributionViewModel;
+use App\Services\Configuration\ServiceSystemCenterDistribution;
+use App\ViewModels\Configuration\SystemCenterDistributionViewModel;
 use Illuminate\Http\RedirectResponse;
 use Throwable;
 

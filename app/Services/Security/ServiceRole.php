@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Services\Security;
+namespace App\Services\Security;
 
 use App\Models\Security\Roles\Role;
 use App\Models\Security\Roles\RoleHasPermission;

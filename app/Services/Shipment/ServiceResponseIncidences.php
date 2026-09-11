@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Services\Shipment\IncidecesJourney;
+namespace App\Services\Shipment;
 
 use App\Models\Shipments\StorageIncidenceJourney;
 use App\Models\Shipments\StorageKeyIncidenceOperation;

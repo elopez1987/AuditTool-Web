@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Configuration\Warehouses;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Configuration\Warehouse\UpdateWarehouseConfigurationFlagRequest;
-use App\Http\Services\Configuration\ServiceSystemWarehouse;
-use App\ViewModels\SystemWarehouseViewModel;
+use App\Services\Configuration\ServiceSystemWarehouse;
+use App\ViewModels\Configuration\SystemWarehouseViewModel;
 use Illuminate\Http\RedirectResponse;
 use Throwable;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Services\Configuration;
+namespace App\Services\Configuration;
 
 use App\Models\Configuration\Warehouses\SystemWarehouse;
 use App\Repositories\SystemStatusRepositoryInterface;

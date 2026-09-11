@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Configuration\Warehouses;
 
 use App\Http\Controllers\BaseController;
-use App\Http\Services\Security\ServiceSecurityAccessWarehouse;
-use App\ViewModels\SecurityAccessWarehouseViewModel;
+use App\Services\Security\ServiceSecurityAccessWarehouse;
+use App\ViewModels\Configuration\SecurityAccessWarehouseViewModel;
 use Auth;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;

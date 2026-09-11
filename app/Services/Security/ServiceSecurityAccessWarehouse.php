@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Services\Security;
+namespace App\Services\Security;
 
 use App\Repositories\SecurityAccessWarehouseRepositoryInterface;
 use Illuminate\Support\Collection;

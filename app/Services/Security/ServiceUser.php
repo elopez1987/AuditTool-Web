@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Services\Security;
+namespace App\Services\Security;
 
 use App\Models\Security\Users\AccessCarrier;
 use App\Models\Security\Users\SecurityAccessCustomer;

@@ -6,10 +6,10 @@ use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Configuration\Warehouse\IndexWarehouseRequest;
 use App\Http\Requests\Web\Configuration\Warehouse\StoreWarehouseRequest;
 use App\Http\Requests\Web\Configuration\Warehouse\UpdateWarehouseRequest;
-use App\Http\Services\Configuration\ServiceSystemCenterDistribution;
-use App\Http\Services\Configuration\ServiceSystemWarehouse;
 use App\Models\Configuration\Warehouses\SystemWarehouse;
-use App\ViewModels\SystemWarehouseViewModel;
+use App\Services\Configuration\ServiceSystemCenterDistribution;
+use App\Services\Configuration\ServiceSystemWarehouse;
+use App\ViewModels\Configuration\SystemWarehouseViewModel;
 use Illuminate\Http\RedirectResponse;
 use Throwable;
 

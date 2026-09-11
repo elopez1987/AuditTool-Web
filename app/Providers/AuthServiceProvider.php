@@ -4,8 +4,8 @@ namespace App\Providers;
 
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Configuration\Warehouses\SystemWarehouse;
-use App\Policies\SystemCenterDistributionPolicy;
-use App\Policies\SystemWarehousePolicy;
+use App\Policies\Configuration\SystemCenterDistributionPolicy;
+use App\Policies\Configuration\SystemWarehousePolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 

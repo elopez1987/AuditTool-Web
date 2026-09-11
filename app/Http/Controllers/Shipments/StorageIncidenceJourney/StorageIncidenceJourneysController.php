@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Shipments\StorageIncidenceJourney;
 
 use App\Http\Controllers\BaseController;
-use App\Http\Services\Shipment\IncidecesJourney\ServiceIncidenceJourney;
-use App\Http\Services\Shipment\IncidecesJourney\ServiceIncidenceJourneyDetail;
 use App\Jobs\Embarques\Incidencias\SendEmailNewIncidenceJourneyJob;
 use App\Models\General\EvidencePhoto;
 use App\Models\General\StorageComment;
@@ -13,6 +11,8 @@ use App\Models\Receipt\StorageCategoryIncidenceDetail;
 use App\Models\Shipments\OrderDeliverie;
 use App\Models\Shipments\StorageIncidenceJourney;
 use App\Models\Shipments\StorageIncidenceJourneyDetails;
+use App\Services\Shipment\ServiceIncidenceJourney;
+use App\Services\Shipment\ServiceIncidenceJourneyDetail;
 use App\Traits\Web\Shipments\QuerysIncidencesJourneys;
 use Carbon\Carbon;
 use DataTables;

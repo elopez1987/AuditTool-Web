@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Observers;
+namespace App\Observers\Receipt;
 
 use App\Jobs\Recibos\SendEmailToProviderJob;
 use App\Models\Configuration\Warehouses\SystemWarehouse;
