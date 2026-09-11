@@ -30,7 +30,6 @@ class SystemCenterDistribution extends Model
         'url',
         'userapi',
         'passwordapi',
-        'code',
         'formatinvoice',
         'auxiliary01',
         'auxiliary02',

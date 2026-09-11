@@ -32,6 +32,7 @@ class SystemCenterDistributionController extends BaseController
 
     public function getDataCenterDistributions(IndexSystemCenterDistributionRequest $request)
     {
+        $this->authorize('viewAny', SystemCenterDistribution::class);
         $data = $this->service->search($request->validated('name'));
 
         return $this->showDataToView($data, "{$this->viewPath}.partials.buttons");
@@ -74,6 +75,6 @@ class SystemCenterDistributionController extends BaseController
             return $this->errorResponse($e->getMessage());
         }
 
-        return $this->successResponse("{$this->routePath}.index");
+        return $this->infoResponse("{$this->routePath}.index");
     }
 }

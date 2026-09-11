@@ -1,0 +1,72 @@
+<?php
+
+namespace App\Repositories\Eloquent;
+
+use App\Models\Security\Users\SecurityAccessWarehouse;
+use App\Repositories\{{Model}}RepositoryInterface;
+use {{ModelNamespace}}\{{Model}};
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
+
+class {{Model}}Repository implements {{Model}}RepositoryInterface
+{
+    public const string STATUS_AVAILABLE = 'E';
+
+    /**
+     * Cache key is namespaced for this repository on purpose: sharing a generic
+     * key (e.g. "security_centers_{id}") with other callers that store a
+     * different shape corrupts both consumers.
+     */
+    private const string ACCESS_CACHE_PREFIX = '{{routePath}}_access_scope_';
+
+    private const int ACCESS_CACHE_TTL = 300;
+
+    public function search(?string $name): Builder
+    {
+        return {{Model}}::whereIn('{{table}}.{{primaryKey}}', $this->getAccessibleIds())
+            ->with(['status:statusid,name'])
+            ->where('{{table}}.statusid', self::STATUS_AVAILABLE)
+            ->when(trim((string) $name) !== '', function (Builder $query) use ($name) {
+                $query->where('{{table}}.name', 'like', "%{$name}%");
+            });
+    }
+
+    public function allActive(): Collection
+    {
+        return {{Model}}::query()
+            ->where('statusid', self::STATUS_AVAILABLE)
+            ->select(['{{primaryKey}}', 'name', 'description'])
+            ->orderBy('name')
+            ->get();
+    }
+
+    public function getAccessibleIds(): array
+    {
+        $access = Cache::remember(
+            self::ACCESS_CACHE_PREFIX . Auth::id(),
+            self::ACCESS_CACHE_TTL,
+            fn () => SecurityAccessWarehouse::AccessScope(),
+        );
+
+        return $access['centers'];
+    }
+
+    public function findOrFail(string $id): {{Model}}
+    {
+        return {{Model}}::findOrFail($id);
+    }
+
+    public function create(array $data): {{Model}}
+    {
+        return {{Model}}::create($data);
+    }
+
+    public function update({{Model}} ${{variable}}, array $data): {{Model}}
+    {
+        ${{variable}}->update($data);
+
+        return ${{variable}};
+    }
+}

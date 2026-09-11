@@ -1,0 +1,52 @@
+<?php
+
+namespace App\Policies;
+
+use App\User;
+use {{ModelNamespace}}\{{Model}};
+
+/**
+ * Each ability delegates to the exact permission string already used by the
+ * Blade views ({{permissionPrefix}}.*), so existing role/permission
+ * assignments keep working unchanged.
+ *
+ * Reminder: AuthServiceProvider::boot() registers a Gate::before that grants
+ * everything to the ADMINISTRADOR role, so these methods are never evaluated
+ * for that role.
+ *
+ * Register in AuthServiceProvider::$policies:
+ *     {{Model}}::class => {{Model}}Policy::class,
+ */
+class {{Model}}Policy
+{
+    public function viewAny(User $user): bool
+    {
+        return $user->can('{{permissionPrefix}}.index');
+    }
+
+    public function create(User $user): bool
+    {
+        return $user->can('{{permissionPrefix}}.create');
+    }
+
+    public function update(User $user, {{Model}} ${{variable}}): bool
+    {
+        return $user->can('{{permissionPrefix}}.edit');
+    }
+
+    /** One ability per vertical tab; drop the ones that do not apply. */
+    public function parametrize(User $user, {{Model}} ${{variable}}): bool
+    {
+        return $user->can('{{permissionPrefix}}.parametrizar');
+    }
+
+    public function notify(User $user, {{Model}} ${{variable}}): bool
+    {
+        return $user->can('{{permissionPrefix}}.notification');
+    }
+
+    public function manageFolders(User $user, {{Model}} ${{variable}}): bool
+    {
+        return $user->can('{{permissionPrefix}}.folder');
+    }
+}

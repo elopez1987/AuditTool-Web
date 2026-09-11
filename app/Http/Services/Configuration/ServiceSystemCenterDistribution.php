@@ -41,7 +41,7 @@ class ServiceSystemCenterDistribution
     }
 
     /** Distributions centers accessible */
-    public function getCenterAll()
+    public function getCenterAll(): Collection
     {
         return $this->repository->searchAll();
     }

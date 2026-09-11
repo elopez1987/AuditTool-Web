@@ -12,7 +12,7 @@
                         {{csrf_field()}}
                         <div class="row">
                             <div class="col-md-12">
-                                @can('CREAR CENTROS')
+                                @can('systemcenterdistributions.create')
                                     <a href="{{route('systemcenterdistributions.create')}}">
                                         @include('buttons.add')
                                     </a>

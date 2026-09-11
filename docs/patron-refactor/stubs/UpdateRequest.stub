@@ -1,0 +1,27 @@
+<?php
+
+namespace App\Http\Requests\Web\{{Module}}\{{SubModule}};
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class Update{{Model}}Request extends FormRequest
+{
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function rules(): array
+    {
+        return [
+            // '{{primaryKey}}' is intentionally not validated/updated: it is the
+            // (immutable) primary key and is only rendered read-only in the form.
+            'description' => 'required|string|max:50',
+            'name' => 'required|string|max:50',
+            'file' => 'nullable|image|max:5120',
+        ];
+    }
+}

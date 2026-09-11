@@ -1,0 +1,20 @@
+<?php
+
+// ------------------------------------------------------------------------
+// {{Model}} — bloque para routes/{{Module}}.php, dentro del grupo ['auth'].
+//
+// `except()` es obligatorio: Route::resource registra show/destroy y, si el
+// controlador no los implementa, la URL revienta al ser visitada.
+// ------------------------------------------------------------------------
+
+Route::resource('{{routePath}}', {{Model}}Controller::class)->except(['show', 'destroy']);
+
+// Endpoint AJAX del DataTable (server-side). El nombre debe coincidir con el
+// `url` declarado en partials/table.blade.php.
+Route::get('{{dataRoute}}', [{{Model}}Controller::class, '{{dataRoute}}'])->name('{{dataRoute}}');
+
+// Verticales / pestañas: una pareja GET+PUT por vertical.
+Route::get('{{routePath}}/{id}/parameters', [{{Ability}}{{Model}}Controller::class, 'index'])
+    ->name('{{routePath}}.parameters');
+Route::put('{{routePath}}parameters/{id}', [{{Ability}}{{Model}}Controller::class, 'update'])
+    ->name('{{routePath}}parameters');

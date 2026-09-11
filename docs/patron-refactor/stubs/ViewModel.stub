@@ -1,0 +1,46 @@
+<?php
+
+namespace App\ViewModels;
+
+use {{ModelNamespace}}\{{Model}};
+use Illuminate\Support\Collection;
+
+/**
+ * Stateless mapper between the controller and the Blade views.
+ *
+ * The compact() keys MUST match the variable names the existing Blade files
+ * already consume; that is the whole point of this class. Renaming a key means
+ * editing the view too.
+ */
+class {{Model}}ViewModel
+{
+    /**
+     * Data for create.blade.php.
+     *
+     * @return array{statuses: Collection}
+     */
+    public function forCreate(Collection $statuses): array
+    {
+        return compact('statuses');
+    }
+
+    /**
+     * Data for edit.blade.php and partials/formEdit.blade.php.
+     *
+     * @return array{{{variable}}: {{Model}}}
+     */
+    public function forEdit({{Model}} ${{variable}}): array
+    {
+        return compact('{{variable}}');
+    }
+
+    /**
+     * Data for the vertical tab views (parameters / notifications).
+     *
+     * @return array{{{variable}}: {{Model}}, parameters: Collection}
+     */
+    public function forParameters({{Model}} ${{variable}}, Collection $parameters): array
+    {
+        return compact('{{variable}}', 'parameters');
+    }
+}

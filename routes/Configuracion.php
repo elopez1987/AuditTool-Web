@@ -53,7 +53,7 @@ Route::middleware(['auth'])->group(function () {
 
     // ############################ Refactorizados #################################
     //    ---------------------------------------------------- Centros de distribucion  ------------------------------------
-    Route::resource('systemcenterdistributions', SystemCenterDistributionController::class);
+    Route::resource('systemcenterdistributions', SystemCenterDistributionController::class)->except('show', 'destroy');
     Route::get('getDataCenterDistributions', [SystemCenterDistributionController::class, 'getDataCenterDistributions'])->name('getDataCenterDistributions');
     //    Parametros de centros de distribucion
     Route::get('systemcenterdistributions/{id}/parameters', [CenterParameterController::class, 'parameters'])->name('systemcenterdistributions.parameters');

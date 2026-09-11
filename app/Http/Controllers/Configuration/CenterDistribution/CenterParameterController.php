@@ -20,7 +20,6 @@ class CenterParameterController extends BaseController
     public function parameters(string $id)
     {
         $center = $this->service->findOrFail($id);
-
         $this->authorize('parametrize', $center);
 
         $parameters = $this->service->getStatusForSchema('SDC');
@@ -31,7 +30,6 @@ class CenterParameterController extends BaseController
     public function systemcenterdistributionsparameters(UpdateCenterConfigurationFlagRequest $request, string $id): RedirectResponse
     {
         $center = $this->service->findOrFail($id);
-
         $this->authorize('parametrize', $center);
 
         try {
@@ -46,7 +44,6 @@ class CenterParameterController extends BaseController
     public function parametersapp(string $id)
     {
         $center = $this->service->findOrFail($id);
-
         $this->authorize('parametrizeApp', $center);
 
         $parameters = $this->service->getStatusForSchema('APP');
@@ -57,7 +54,6 @@ class CenterParameterController extends BaseController
     public function systemparametersapp(UpdateCenterAppParametersRequest $request, string $id): RedirectResponse
     {
         $center = $this->service->findOrFail($id);
-
         $this->authorize('parametrizeApp', $center);
 
         try {
