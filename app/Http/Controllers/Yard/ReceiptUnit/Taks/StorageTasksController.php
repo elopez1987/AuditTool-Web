@@ -92,7 +92,10 @@ class StorageTasksController extends BaseController
             $parameterNotificacionWarehouse = $this->getParameterNotificacionWarehouse($receiptunit->warehouseid);
 
             if (! empty($parameterNotificacionWarehouse) && in_array('MWH-01', (array) $parameterNotificacionWarehouse)) {
-                SendMessageNewTaskJob::dispatch($task->id)->onQueue('yms-web');
+
+                if ((int) $task->assignedto === 1) {
+                    SendMessageNewTaskJob::dispatch($task->id)->onQueue('yms-web');
+                }
                 $user = User::find($task->operatoryard);
 
                 if (is_null($user)) {
