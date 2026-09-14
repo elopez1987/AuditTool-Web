@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Throwable;
 
-class ServiceSecurityAccessWarehouse
+readonly class ServiceSecurityAccessWarehouse
 {
-    public function __construct(private readonly SecurityAccessWarehouseRepositoryInterface $repository) {}
+    public function __construct(private SecurityAccessWarehouseRepositoryInterface $repository) {}
 
     public function getAccessesForUser(string $username): Collection
     {
