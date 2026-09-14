@@ -35,4 +35,11 @@ class SecurityAccessWarehouseRepository implements SecurityAccessWarehouseReposi
         $access->defaultlevel = 'S';
         $access->save();
     }
+
+    public function getCenterIdByUsername(string $username): ?string
+    {
+        return SecurityAccessWarehouse::query()
+            ->where('username', $username)
+            ->value('centerid');
+    }
 }

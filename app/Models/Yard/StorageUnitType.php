@@ -57,6 +57,11 @@ class StorageUnitType extends Model
 {
     use LogsActivity;
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
+
     protected $table = 'storageunittypes';
 
     protected $dateFormat = 'Y-m-d H:i:s';
@@ -83,11 +88,6 @@ class StorageUnitType extends Model
         'statusid' => 'E',
         'schemaid' => 'STS',
     ];
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
 
     public function center()
     {
