@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Schema;
 
 class StorageUnitTypeScope implements Scope
 {
@@ -19,6 +20,13 @@ class StorageUnitTypeScope implements Scope
 
         // Sin usuario autenticado (jobs, console, etc.) no se aplica el filtro
         if (! $username) {
+            return;
+        }
+
+        $connection = new AccessOrigins()->getConnectionName();
+
+        // Evita el QueryException si la tabla no existe en esta conexión/tenant
+        if (! Schema::connection($connection)->hasTable('securityaccessorigins')) {
             return;
         }
 
