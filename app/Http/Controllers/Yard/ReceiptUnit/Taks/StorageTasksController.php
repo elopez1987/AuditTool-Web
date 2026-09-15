@@ -93,23 +93,23 @@ class StorageTasksController extends BaseController
 
             if (! empty($parameterNotificacionWarehouse) && in_array('MWH-01', (array) $parameterNotificacionWarehouse)) {
 
-                if ((int) $task->assignedto === 1) {
-                    SendMessageNewTaskJob::dispatch($task->id)->onQueue('yms-web');
-                }
-                $user = User::find($task->operatoryard);
-
-                if (is_null($user)) {
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'El operador no existe!!',
-                    ], 404);
-                }
-                $push->sendToUser(
-                    $user,
-                    'Alerta :',
-                    'Movimiento de unidad requerida.',
-                    ['task_id' => (string) $task->id],
-                );
+                //                if ((int) $task->assignedto === 1) {
+                SendMessageNewTaskJob::dispatch($task->id)->onQueue('yms-web');
+                //                }
+                //                $user = User::find($task->operatoryard);
+                //
+                //                if (is_null($user)) {
+                //                    return response()->json([
+                //                        'success' => false,
+                //                        'message' => 'El operador no existe!!',
+                //                    ], 404);
+                //                }
+                //                $push->sendToUser(
+                //                    $user,
+                //                    'Alerta :',
+                //                    'Movimiento de unidad requerida.',
+                //                    ['task_id' => (string) $task->id],
+                //                );
             }
 
             if ($request->ajax() || $request->wantsJson()) {
