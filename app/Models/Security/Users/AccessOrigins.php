@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Configuration;
+namespace App\Models\Security\Users;
 
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Yard\StorageUnitType;

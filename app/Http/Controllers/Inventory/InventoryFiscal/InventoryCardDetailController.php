@@ -7,7 +7,6 @@ use App\Models\Inventory\InventoryFiscal\InventoryHead;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Facades\DataTables;
 
 class InventoryCardDetailController extends BaseController
@@ -127,7 +126,6 @@ class InventoryCardDetailController extends BaseController
 
     public function clearUser01($id)
     {
-        Log::info('Desasignando usuario 1 de la cédula con ID: ' . $id);
         try {
             DB::table('inventory_card_counts')->where('id', $id)->update([
                 'user_count01_id' => null,
@@ -141,7 +139,6 @@ class InventoryCardDetailController extends BaseController
 
     public function clearUser02($id)
     {
-        Log::info('Desasignando usuario 2 de la cédula con ID: ' . $id);
         try {
             DB::table('inventory_card_counts')->where('id', $id)->update([
                 'user_count02_id' => null,
