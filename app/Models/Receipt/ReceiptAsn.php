@@ -12,7 +12,7 @@ use App\Models\Shipments\ShipmentTransport\StorageShipmentTransport;
 use App\Models\Yard\Carriers\ShipmentCarrier;
 use App\Models\Yard\ReceiptUnit;
 use App\Models\Yard\StorageReason;
-use App\Observers\ReceiptAsnObserver;
+use App\Observers\Receipt\ReceiptAsnObserver;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Collection;

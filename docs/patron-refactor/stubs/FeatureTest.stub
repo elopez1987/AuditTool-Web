@@ -1,0 +1,81 @@
+<?php
+
+// ---------------------------------------------------------------------------
+// Requiere el andamiaje de tests (phpunit.xml, tests/TestCase.php,
+// tests/Pest.php y una BD de pruebas), que hoy NO existe en el proyecto.
+// Ver la sección 6.4 de docs/patron-refactor.md.
+//
+// Recordatorio: Gate::before otorga todo al rol ADMINISTRADOR, así que los
+// tests de denegación deben usar un usuario SIN ese rol.
+//
+// Los helpers userWithPermissions() / userWithoutPermissions() no existen aún:
+// hay que definirlos en tests/Pest.php (crear el User y asignarle los permisos
+// con el paquete de roles del proyecto). Los modelos tampoco tienen factory.
+// ---------------------------------------------------------------------------
+
+use {{ModelNamespace}}\{{Model}};
+
+it('niega el listado a un usuario sin permiso', function () {
+    $user = userWithoutPermissions();
+
+    $this->actingAs($user)
+        ->get(route('{{routePath}}.index'))
+        ->assertForbidden();
+});
+
+it('muestra el listado con permiso', function () {
+    $user = userWithPermissions(['{{permissionPrefix}}.index']);
+
+    $this->actingAs($user)
+        ->get(route('{{routePath}}.index'))
+        ->assertOk()
+        ->assertViewIs('{{viewPath}}.index');
+});
+
+it('filtra la tabla por nombre y solo devuelve registros accesibles', function () {
+    $user = userWithPermissions(['{{permissionPrefix}}.index']);
+    $visible = {{Model}}::factory()->create(['name' => 'ALFA']);
+    {{Model}}::factory()->create(['name' => 'BETA']);
+
+    $this->actingAs($user)
+        ->getJson(route('{{dataRoute}}', ['name' => 'ALF']))
+        ->assertOk()
+        ->assertJsonPath('data.0.{{primaryKey}}', $visible->{{primaryKey}})
+        ->assertJsonCount(1, 'data');
+});
+
+it('crea un registro y redirige al listado', function () {
+    $user = userWithPermissions(['{{permissionPrefix}}.create']);
+
+    $this->actingAs($user)
+        ->post(route('{{routePath}}.store'), [
+            '{{primaryKey}}' => 'TEST',
+            'name' => 'NUEVO',
+            'description' => 'NUEVO',
+        ])
+        ->assertRedirect(route('{{routePath}}.index'));
+
+    $this->assertDatabaseHas('{{table}}', ['{{primaryKey}}' => 'TEST']);
+});
+
+it('actualiza un registro existente', function () {
+    $user = userWithPermissions(['{{permissionPrefix}}.edit']);
+    ${{variable}} = {{Model}}::factory()->create();
+
+    $this->actingAs($user)
+        ->put(route('{{routePath}}.update', ${{variable}}), [
+            'name' => 'MODIFICADO',
+            'description' => ${{variable}}->description,
+        ])
+        ->assertRedirect(route('{{routePath}}.index'));
+
+    expect(${{variable}}->refresh()->name)->toBe('MODIFICADO');
+});
+
+it('no deja guardar sin los campos requeridos', function () {
+    $user = userWithPermissions(['{{permissionPrefix}}.create']);
+
+    $this->actingAs($user)
+        ->post(route('{{routePath}}.store'), [])
+        ->assertSessionHasErrors(['{{primaryKey}}', 'name', 'description']);
+});

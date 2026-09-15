@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Shipments\StorageIncidenceJourney;
 
 use App\Http\Controllers\Controller;
-use App\Http\Services\Shipment\IncidecesJourney\ServiceResponseIncidences;
 use App\Models\Shipments\StorageIncidenceJourney;
+use App\Services\Shipment\ServiceResponseIncidences;
 use App\Traits\ResponseApi;
 use Illuminate\Http\Request;
 use Ramsey\Uuid\Uuid;

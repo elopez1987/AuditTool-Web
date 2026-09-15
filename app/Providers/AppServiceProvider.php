@@ -5,9 +5,9 @@ namespace App\Providers;
 use App\Models\Receipt\ReceiptAsn;
 use App\Models\Security\Fuctions\SecurityFunction;
 use App\Models\Security\Permission\Permission;
-use App\Observers\PermissionObserver;
-use App\Observers\ReceiptAsnObserver;
-use App\Observers\SecurityFunctionObserver;
+use App\Observers\Receipt\ReceiptAsnObserver;
+use App\Observers\Security\PermissionObserver;
+use App\Observers\Security\SecurityFunctionObserver;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider

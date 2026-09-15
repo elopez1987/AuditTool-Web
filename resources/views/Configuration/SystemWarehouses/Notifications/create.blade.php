@@ -13,9 +13,11 @@
                         @csrf
                         <div class="row">
                             <div class="col-12">
-                                <a href="">
-                                    @include('buttons.save')
-                                </a>
+                                @can('systemwarehouses.notifications')
+                                    <a href="">
+                                        @include('buttons.save')
+                                    </a>
+                                @endcan
                                 <a href="{{route('systemwarehouses.index')}}">
                                     @include('buttons.back')
                                 </a>
@@ -61,19 +63,15 @@
                                             <td>{{$loop->iteration}}</td>
                                             <td class="switch" style="width: 70px;">
                                                 <input
-                                                    type="checkbox"
-                                                    value="{{$parameter->statusid}}"
-                                                    @if(!empty($warehouse->notificationsflags))
-                                                        @foreach ($warehouse->notificationsflags as $check)
-                                                            @if ($check == $parameter->statusid)
-                                                                checked
-                                                    @endif
-                                                    @endforeach
-                                                    @endif
-                                                    name="parameter[]"
-                                                    data-size="mini" data-on-color="success" data-off-color="danger"
-                                                    data-on-text="<i class='ti ti-check'></i>"
-                                                    data-off-text="<i class='ti ti-close'></i>"
+                                                        type="checkbox"
+                                                        value="{{ $parameter->statusid }}"
+                                                        @checked(in_array($parameter->statusid, $warehouse->notificationsflags ?? []))
+                                                        name="parameter[]"
+                                                        data-size="mini"
+                                                        data-on-color="success"
+                                                        data-off-color="danger"
+                                                        data-on-text="<i class='ti ti-check'></i>"
+                                                        data-off-text="<i class='ti ti-close'></i>"
                                                 >
                                             </td>
                                             <td>{{$parameter->statusid}}</td>

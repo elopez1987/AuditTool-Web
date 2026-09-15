@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Security\Roles;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Security\Roles\CreateRoleRequest;
-use App\Http\Services\Security\ServiceRole;
 use App\Models\Configuration\Parameters\SystemDetailParameter;
 use App\Models\Security\Permission\Permission;
 use App\Models\Security\Roles\Role;
 use App\Models\Security\Roles\RoleHasPermission;
+use App\Services\Security\ServiceRole;
 use App\Traits\Web\Security\QuerySecurityRoles;
 use Artisan;
 use Illuminate\Http\RedirectResponse;

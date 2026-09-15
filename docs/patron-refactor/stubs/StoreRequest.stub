@@ -1,0 +1,28 @@
+<?php
+
+namespace App\Http\Requests\Web\{{Module}}\{{SubModule}};
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class Store{{Model}}Request extends FormRequest
+{
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    /**
+     * Mirror the real column list and lengths; do not validate what the form
+     * does not send.
+     *
+     * @return array<string, string>
+     */
+    public function rules(): array
+    {
+        return [
+            '{{primaryKey}}' => 'required|string|max:15|unique:{{table}},{{primaryKey}}',
+            'description' => 'required|string|max:50',
+            'name' => 'required|string|max:50',
+        ];
+    }
+}

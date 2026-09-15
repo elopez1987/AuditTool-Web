@@ -5,6 +5,7 @@ namespace App\Models\Yard;
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Configuration\Warehouses\SystemWarehouse;
+use App\Models\Scopes\Yard\StorageUnitTypeScope;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\Models\Shipments\OrderDeliverie;
 use App\Models\Yard\Carriers\ShipmentCarrier;
@@ -152,8 +153,6 @@ class ReceiptUnit extends Model
 
     public static function controlAccessUser()
     {
-        // Una sola consulta en lugar de Warehouses()+Centers() por separado,
-        // para ahorrar un round-trip a la base de datos en cada listado.
         $access = SecurityAccessWarehouse::AccessScope();
 
         return ReceiptUnit::whereIn('receiptunits.warehouseid', $access['warehouses'])
@@ -169,6 +168,11 @@ class ReceiptUnit extends Model
                 $model->entrydate = Carbon::now();
             });
         }
+    }
+
+    protected static function booted(): void
+    {
+        static::addGlobalScope(new StorageUnitTypeScope);
     }
 
     // ################################################## Relaciones entre modelos ######################################

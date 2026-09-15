@@ -13,9 +13,11 @@
                         @csrf
                         <div class="row">
                             <div class="col-12">
-                                <a href="">
-                                    @include('buttons.save')
-                                </a>
+                                @can('systemcenterdistributions.parametrizarapp')
+                                    <a href="">
+                                        @include('buttons.save')
+                                    </a>
+                                @endcan
                                 <a href="{{route('systemcenterdistributions.index')}}">
                                     @include('buttons.back')
                                 </a>
@@ -93,8 +95,7 @@
 @endsection
 
 @section('css')
-    <link rel="stylesheet"
-          href="{{asset('/theme/assets/libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css')}}">
+    <link rel="stylesheet" href="{{asset('/theme/assets/libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css')}}">
 @endsection
 
 

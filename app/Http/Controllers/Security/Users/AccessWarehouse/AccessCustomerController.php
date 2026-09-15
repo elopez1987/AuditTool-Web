@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Security\Users\AccessWarehouse;
 
 use App\Http\Controllers\BaseController;
-use App\Http\Services\Security\ServiceUser;
 use App\Models\Security\Users\SecurityAccessCustomer;
+use App\Services\Security\ServiceUser;
 use App\Traits\Web\Security\QueryUser;
 use App\User;
 use Illuminate\Http\Request;

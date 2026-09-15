@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Shipments\StorageIncidenceJourney;
 
 use App\Http\Controllers\BaseController;
-use App\Http\Services\Shipment\IncidecesJourney\ServiceIncidenceJourneyDetail;
 use App\Models\Configuration\Parameters\SystemDetailParameter;
 use App\Models\General\EvidencePhoto;
 use App\Models\Shipments\StorageIncidenceJourney;
 use App\Models\Shipments\StorageKeyIncidenceOperation;
+use App\Services\Shipment\ServiceIncidenceJourneyDetail;
 use App\Traits\Web\Shipments\QuerysIncidencesJourneys;
 use Illuminate\Http\Request;
 use PDF;

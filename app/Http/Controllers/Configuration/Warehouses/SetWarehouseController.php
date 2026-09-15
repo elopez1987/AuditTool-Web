@@ -3,37 +3,40 @@
 namespace App\Http\Controllers\Configuration\Warehouses;
 
 use App\Http\Controllers\BaseController;
-use App\Models\Security\Users\SecurityAccessWarehouse;
+use App\Services\Security\ServiceSecurityAccessWarehouse;
+use App\ViewModels\Configuration\SecurityAccessWarehouseViewModel;
 use Auth;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Throwable;
 
 class SetWarehouseController extends BaseController
 {
+    public function __construct(
+        private readonly ServiceSecurityAccessWarehouse $service,
+        private readonly SecurityAccessWarehouseViewModel $viewModel,
+    ) {}
+
     public function index()
     {
         $user = Auth::user();
-        $accesos = SecurityAccessWarehouse::where('username', $user->username)->get();
+        $accesos = $this->service->getAccessesForUser($user->username);
 
-        return view(
-            'Configuration.SetWarehouse.index',
-            [
-                'user' => $user,
-                'accesos' => $accesos,
-            ]
-        );
+        return view('Configuration.SetWarehouse.index', $this->viewModel->forIndex($user, $accesos));
     }
 
-    public function setwarehousestore(Request $request, $username)
+    public function setwarehousestore(Request $request, string $username): RedirectResponse
     {
-        $accesos = SecurityAccessWarehouse::where('username', $username)
-            ->select(['id', 'defaultlevel'])->get();
-        foreach ($accesos as $item) {
-            $item->defaultlevel = '';
-            $item->save();
+        // Autoservicio: cada usuario solo puede fijar su propia bodega por
+        // defecto (antes, cualquier usuario autenticado podía fijarla para
+        // otro cambiando el username en la URL).
+        abort_if($username !== Auth::user()->username, 403);
+
+        try {
+            $this->service->setDefaultWarehouse($username, (int) $request->input('defaultlevel'));
+        } catch (Throwable $e) {
+            return $this->errorResponse($e->getMessage());
         }
-        $access = SecurityAccessWarehouse::where('id', $request['defaultlevel'])->first();
-        $access->defaultlevel = 'S';
-        $access->save();
 
         return $this->redirectBackSuccessMessage('Bodega fijado con exito.');
     }

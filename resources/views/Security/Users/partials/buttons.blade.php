@@ -3,7 +3,7 @@
             data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
         <i class="ti ti-settings"></i>
-       <span class="font-12">Acciones</span>
+        <span class="font-12">Acciones</span>
     </button>
     <div class="dropdown-menu animated flipInX">
 
@@ -37,6 +37,13 @@
             <a href="{{url('securityusers/' . $uuiduser . '/providers')}}" class="dropdown-item">
                 <img src="{{asset('/ico/storageproviders.png')}}" alt="" class="img-16 ml-2">
                 <span style="text-transform: capitalize;">Vincular Proveedores</span>
+            </a>
+        @endcan
+
+        @can('securityusers.accessorigin')
+            <a href="{{url('securityusers/' . $uuiduser . '/origins')}}" class="dropdown-item">
+                <img src="{{asset('/ico/storageproviders.png')}}" alt="" class="img-16 ml-2">
+                <span style="text-transform: capitalize;">Vincular Origen de transporte</span>
             </a>
         @endcan
 

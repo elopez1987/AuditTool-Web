@@ -1,0 +1,43 @@
+<?php
+
+namespace App\Repositories;
+
+use {{ModelNamespace}}\{{Model}};
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
+
+interface {{Model}}RepositoryInterface
+{
+    /**
+     * Query for records visible to the current user, optionally filtered by name.
+     *
+     * Returns a Builder (never a Collection) so DataTables can filter, sort and
+     * paginate server-side.
+     */
+    public function search(?string $name): Builder;
+
+    /**
+     * Active records for <select> inputs, without the per-user access scope.
+     */
+    public function allActive(): Collection;
+
+    /**
+     * Record IDs the current user is allowed to access, cached per user to avoid
+     * re-querying the access tables on every call.
+     *
+     * @return array<int, string>
+     */
+    public function getAccessibleIds(): array;
+
+    public function findOrFail(string $id): {{Model}};
+
+    /**
+     * @param  array<string, mixed>  $data
+     */
+    public function create(array $data): {{Model}};
+
+    /**
+     * @param  array<string, mixed>  $data
+     */
+    public function update({{Model}} ${{variable}}, array $data): {{Model}};
+}

@@ -1,0 +1,93 @@
+<?php
+
+namespace App\Http\Controllers\{{Module}}\{{SubModule}};
+
+use App\Http\Controllers\BaseController;
+use App\Http\Requests\Web\{{Module}}\{{SubModule}}\Index{{Model}}Request;
+use App\Http\Requests\Web\{{Module}}\{{SubModule}}\Store{{Model}}Request;
+use App\Http\Requests\Web\{{Module}}\{{SubModule}}\Update{{Model}}Request;
+use App\Http\Services\{{Module}}\Service{{Model}};
+use App\ViewModels\{{Model}}ViewModel;
+use {{ModelNamespace}}\{{Model}};
+use Illuminate\Http\RedirectResponse;
+use Throwable;
+
+class {{Model}}Controller extends BaseController
+{
+    protected string $routePath = '{{routePath}}';
+
+    protected string $viewPath = '{{viewPath}}';
+
+    public function __construct(
+        private readonly Service{{Model}} $service,
+        private readonly {{Model}}ViewModel $viewModel,
+    ) {}
+
+    /**
+     * Renders the empty grid; rows are fetched by the DataTable via
+     * {{dataRoute}}.
+     */
+    public function index()
+    {
+        $this->authorize('viewAny', {{Model}}::class);
+
+        return view("{$this->viewPath}.index");
+    }
+
+    /**
+     * Server-side DataTables endpoint. Authorized on its own: it is a separate
+     * route and must not rely on index() having been visited.
+     */
+    public function {{dataRoute}}(Index{{Model}}Request $request)
+    {
+        $this->authorize('viewAny', {{Model}}::class);
+
+        $data = $this->service->search($request->validated('name'));
+
+        return $this->showDataToView($data, "{$this->viewPath}.partials.buttons");
+    }
+
+    public function create()
+    {
+        $this->authorize('create', {{Model}}::class);
+
+        return view("{$this->viewPath}.create");
+    }
+
+    public function store(Store{{Model}}Request $request): RedirectResponse
+    {
+        $this->authorize('create', {{Model}}::class);
+
+        try {
+            $this->service->store($request->validated());
+        } catch (Throwable) {
+            return $this->errorResponse('No fue posible crear el registro. Verifique la información e intente nuevamente.');
+        }
+
+        return $this->successResponse("{$this->routePath}.index");
+    }
+
+    /**
+     * Implicit route model binding: the parameter name must match the resource
+     * route parameter ({{routePath}} -> ${{variable}}).
+     */
+    public function edit({{Model}} ${{variable}})
+    {
+        $this->authorize('update', ${{variable}});
+
+        return view("{$this->viewPath}.edit", $this->viewModel->forEdit(${{variable}}));
+    }
+
+    public function update(Update{{Model}}Request $request, {{Model}} ${{variable}}): RedirectResponse
+    {
+        $this->authorize('update', ${{variable}});
+
+        try {
+            $this->service->update(${{variable}}, $request->validated(), $request);
+        } catch (Throwable) {
+            return $this->errorResponse('No fue posible actualizar el registro. Verifique la información e intente nuevamente.');
+        }
+
+        return $this->infoResponse("{$this->routePath}.index");
+    }
+}

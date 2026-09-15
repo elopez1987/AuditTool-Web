@@ -1,0 +1,61 @@
+<?php
+
+namespace App\Http\Controllers\{{Module}}\{{SubModule}};
+
+use App\Http\Controllers\BaseController;
+use App\Http\Requests\Web\{{Module}}\{{SubModule}}\Update{{Model}}{{Ability}}Request;
+use App\Http\Services\{{Module}}\Service{{Model}};
+use App\ViewModels\{{Model}}ViewModel;
+use Illuminate\Http\RedirectResponse;
+use Throwable;
+
+/**
+ * Vertical tab for {{entityLabel}} ({{Vertical}}). Reuses the same service and
+ * view model as {{Model}}Controller; only the policy ability, the status schema
+ * and the target column change.
+ *
+ * These routes receive {id} (not a bound model) to keep the legacy URLs, so the
+ * record is resolved through the service BEFORE authorize(): a model-scoped
+ * ability needs the instance, so the two lines cannot be swapped.
+ *
+ * If leaking record existence to unauthorized users matters here, either switch
+ * the route to implicit binding (Laravel resolves the model before the method
+ * runs) or authorize a class-level ability first:
+ *     $this->authorize('{{ability}}', {{Model}}::class);
+ */
+class {{Ability}}{{Model}}Controller extends BaseController
+{
+    protected string $viewPath = '{{viewPath}}.{{Vertical}}';
+
+    public function __construct(
+        private readonly Service{{Model}} $service,
+        private readonly {{Model}}ViewModel $viewModel,
+    ) {}
+
+    public function index(string $id)
+    {
+        ${{variable}} = $this->service->findOrFail($id);
+
+        $this->authorize('{{ability}}', ${{variable}});
+
+        $parameters = $this->service->getStatusForSchema('{{schemaid}}');
+
+        return view("{$this->viewPath}.create", $this->viewModel->forParameters(${{variable}}, $parameters));
+    }
+
+    public function update(Update{{Model}}{{Ability}}Request $request, string $id): RedirectResponse
+    {
+        ${{variable}} = $this->service->findOrFail($id);
+
+        $this->authorize('{{ability}}', ${{variable}});
+
+        try {
+            $this->service->updateConfigurationFlag(${{variable}}, $request->validated());
+        } catch (Throwable) {
+            return $this->errorResponse('No fue posible guardar los parámetros. Intente nuevamente.');
+        }
+
+        // Vertical tabs stay on the same screen instead of going back to index.
+        return $this->redirectBackSuccess();
+    }
+}

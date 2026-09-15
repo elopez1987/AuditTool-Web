@@ -3,26 +3,44 @@
 namespace App\Http\Controllers\Configuration\CenterDistribution;
 
 use App\Http\Controllers\BaseController;
-use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
-use Illuminate\Http\Request;
+use App\Http\Requests\Web\Configuration\CenterDistribution\UpdateCenterNotificationsRequest;
+use App\Services\Configuration\ServiceSystemCenterDistribution;
+use App\ViewModels\Configuration\SystemCenterDistributionViewModel;
+use Illuminate\Http\RedirectResponse;
+use Throwable;
 
 class NotificationCenterController extends BaseController
 {
-    public function index($id)
-    {
-        $center = SystemCenterDistribution::findOrFail($id);
-        $parameters = $this->getStatusForSchema('MCD');
+    public function __construct(
+        private readonly ServiceSystemCenterDistribution $service,
+        private readonly SystemCenterDistributionViewModel $viewModel,
+    ) {}
 
-        return view('Configuration.SystemCenterDistributions.Notifications.create',
-            compact('center', 'parameters')
+    public function index(string $id)
+    {
+        $center = $this->service->findOrFail($id);
+
+        $this->authorize('notify', $center);
+
+        $parameters = $this->service->getStatusForSchema('MCD');
+
+        return view(
+            'Configuration.SystemCenterDistributions.Notifications.create',
+            $this->viewModel->forNotifications($center, $parameters)
         );
     }
 
-    public function systemcenternotifications(Request $request, $id)
+    public function systemcenternotifications(UpdateCenterNotificationsRequest $request, string $id): RedirectResponse
     {
-        $model = SystemCenterDistribution::findOrFail($id);
-        $model->notificationsflags = $request->parameter;
-        $model->update();
+        $center = $this->service->findOrFail($id);
+
+        $this->authorize('notify', $center);
+
+        try {
+            $this->service->updateNotifications($center, $request->validated());
+        } catch (Throwable $e) {
+            return $this->errorResponse($e->getMessage());
+        }
 
         return $this->redirectBackSuccess();
     }

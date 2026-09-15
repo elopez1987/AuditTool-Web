@@ -1,0 +1,177 @@
+<?php
+
+namespace App\Http\Services\{{Module}};
+
+use App\Repositories\{{Model}}RepositoryInterface;
+use App\Repositories\SystemStatusRepositoryInterface;
+use {{ModelNamespace}}\{{Model}};
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use Throwable;
+
+/**
+ * Orchestrates {{entityLabel}} use cases: transactions, logging and any
+ * cross-repository coordination. Queries belong to the repository; HTTP
+ * concerns belong to the controller.
+ */
+class Service{{Model}}
+{
+    // use EvidencePhotoTrait; // only if the model handles file uploads
+
+    public function __construct(
+        private readonly {{Model}}RepositoryInterface $repository,
+        private readonly SystemStatusRepositoryInterface $statusRepository,
+    ) {}
+
+    public function findOrFail(string $id): {{Model}}
+    {
+        return $this->repository->findOrFail($id);
+    }
+
+    /**
+     * Builder for the server-side DataTable. Must NOT be resolved with get().
+     */
+    public function search(?string $name): Builder
+    {
+        return $this->repository->search($name);
+    }
+
+    public function allActive(): Collection
+    {
+        return $this->repository->allActive();
+    }
+
+    public function getStatusForSchema(string $schemaid): Collection
+    {
+        return $this->statusRepository->findStatusForSchema($schemaid);
+    }
+
+    /**
+     * @param  array<string, mixed>  $data
+     */
+    public function store(array $data): {{Model}}
+    {
+        DB::beginTransaction();
+        try {
+            ${{variable}} = $this->repository->create($data);
+
+            DB::commit();
+
+            return ${{variable}};
+        } catch (Throwable $e) {
+            DB::rollBack();
+            $this->logError('Error al crear el {{entityLabel}}', $e);
+
+            throw $e;
+        }
+    }
+
+    /**
+     * $request is only required when the form uploads files; drop the parameter
+     * otherwise and keep the service free of HTTP concerns.
+     *
+     * @param  array<string, mixed>  $data
+     */
+    public function update({{Model}} ${{variable}}, array $data, Request $request): {{Model}}
+    {
+        DB::beginTransaction();
+        try {
+            $this->repository->update(${{variable}}, $data);
+
+            if ($request->hasFile('file')) {
+                $this->updateLogo(${{variable}}, $request);
+            }
+
+            DB::commit();
+
+            return ${{variable}};
+        } catch (Throwable $e) {
+            DB::rollBack();
+            $this->logError('Error al actualizar el {{entityLabel}}', $e, ${{variable}}->{{primaryKey}});
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Vertical tab: persists the selected flags into a JSON/array column.
+     *
+     * @param  array<string, mixed>  $data
+     */
+    public function updateConfigurationFlag({{Model}} ${{variable}}, array $data): {{Model}}
+    {
+        DB::beginTransaction();
+        try {
+            $this->repository->update(${{variable}}, [
+                'configurationflag' => $data['parameter'] ?? [],
+            ]);
+
+            DB::commit();
+
+            return ${{variable}};
+        } catch (Throwable $e) {
+            DB::rollBack();
+            $this->logError('Error al actualizar los parámetros del {{entityLabel}}', $e, ${{variable}}->{{primaryKey}});
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Filesystem-only operation: a DB transaction would not roll back files,
+     * so it is deliberately left outside one.
+     *
+     * @param  array<int, string>  $folders
+     */
+    public function createFolders(string $id, array $folders): void
+    {
+        if (empty($folders)) {
+            return;
+        }
+
+        try {
+            foreach ($folders as $folder) {
+                Storage::makeDirectory("public/{$id}/{$folder}");
+            }
+        } catch (Throwable $e) {
+            $this->logError('Error al crear directorios del {{entityLabel}}', $e, $id);
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Replaces the stored image, removing the previous file when present.
+     *
+     * NOTE: the stored path is relative to the default ("local") disk root
+     * (e.g. "public/ImageProfile/archivo.jpg"). It must NOT be prefixed with
+     * "storage/", otherwise Storage::exists()/delete() silently no-op and old
+     * files are never removed.
+     */
+    private function updateLogo({{Model}} ${{variable}}, Request $request): void
+    {
+        if (! empty(${{variable}}->auxiliary04) && Storage::exists(${{variable}}->auxiliary04)) {
+            Storage::delete(${{variable}}->auxiliary04);
+        }
+
+        ${{variable}}->auxiliary04 = $this->addMediaToModel($request, 'ImageProfile');
+        ${{variable}}->save();
+    }
+
+    private function logError(string $message, Throwable $e, ?string $id = null): void
+    {
+        Log::error($message, [
+            'message' => $e->getMessage(),
+            'file' => $e->getFile(),
+            'line' => $e->getLine(),
+            'user_id' => Auth::id(),
+            'trace' => $e->getTraceAsString(),
+            '{{primaryKey}}' => $id,
+        ]);
+    }
+}

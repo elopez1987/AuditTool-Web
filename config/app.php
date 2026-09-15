@@ -2,6 +2,7 @@
 
 use App\Providers\AppServiceProvider;
 use App\Providers\EventServiceProvider;
+use App\Providers\RepositoryServiceProvider;
 use App\Providers\RouteServiceProvider;
 use Barryvdh\DomPDF\Facade;
 use Barryvdh\DomPDF\ServiceProvider;
@@ -249,6 +250,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         EventServiceProvider::class,
         RouteServiceProvider::class,
+        RepositoryServiceProvider::class,
 
         //        Styde\Html\HtmlServiceProvider::class,
         PermissionServiceProvider::class,

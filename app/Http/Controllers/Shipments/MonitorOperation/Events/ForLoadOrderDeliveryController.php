@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Shipments\MonitorOperation\Events;
 
 use App\Http\Controllers\BaseController;
-use App\Http\Services\Yard\AssingDoorToUnitFromShipment;
 use App\Jobs\Embarques\Mensajes\EnviarMensajeOperadorPorAsignacionDeCortinaJob;
 use App\Models\Shipments\OrderDeliverie;
 use App\Models\Shipments\OrderdeliveryTrace;
@@ -11,6 +10,7 @@ use App\Models\Shipments\ShipmentCheck;
 use App\Models\Shipments\ShipmentDataOperation;
 use App\Models\Shipments\ShipmentHeader;
 use App\Models\Shipments\ShipmentSeal;
+use App\Services\Yard\AssingDoorToUnitFromShipment;
 use App\Traits\Web\Yard\VirtualUnit\CheckOutVirtual;
 use App\Traits\Web\Yard\VirtualUnit\NewUnitVirtual;
 use Exception;
