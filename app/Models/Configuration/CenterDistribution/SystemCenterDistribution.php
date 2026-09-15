@@ -3,7 +3,7 @@
 namespace App\Models\Configuration\CenterDistribution;
 
 use App\Models\Configuration\Schemas\SystemStatus;
-use App\Repositories\SystemCenterDistributionRepositoryInterface;
+use App\Models\Security\Users\SecurityAccessWarehouse;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -59,7 +59,8 @@ class SystemCenterDistribution extends Model
 
     public static function controlAccessUser()
     {
-        $centers = app(SystemCenterDistributionRepositoryInterface::class)->getAccessibleCenterIds();
+        //        $centers = app(SystemCenterDistributionRepositoryInterface::class)->getAccessibleCenterIds();
+        $centers = SecurityAccessWarehouse::Centers();
 
         return static::whereIn('systemcenterdistributions.centerid', $centers);
     }
