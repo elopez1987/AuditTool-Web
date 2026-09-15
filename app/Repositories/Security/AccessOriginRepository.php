@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Security;
 
-use App\Models\Configuration\AccessOrigins;
+use App\Models\Security\Users\AccessOrigins;
 use Illuminate\Support\Collection;
 
 class AccessOriginRepository

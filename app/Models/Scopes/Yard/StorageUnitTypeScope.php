@@ -2,7 +2,7 @@
 
 namespace App\Models\Scopes\Yard;
 
-use App\Models\Configuration\AccessOrigins;
+use App\Models\Security\Users\AccessOrigins;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
