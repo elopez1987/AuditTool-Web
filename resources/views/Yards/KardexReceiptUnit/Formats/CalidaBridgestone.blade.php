@@ -191,7 +191,6 @@
             </th>
         </table>
     </div>
-    <!--    &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
     <div class="row">
         <table class="border-none">
             <th width="30%" style="height: 40px">
@@ -418,8 +417,6 @@
 
         </table>
     </div>
-    <!--    &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
-
     <div class="row">
         <table class="border-none">
             <th STYLE="background-color: #D5D5D5">INSPECCION DE AGRICULTURA</th>
@@ -742,6 +739,14 @@
                              style="height: 40px;max-height: 40px"/>
                     @endif
                 </th>
+            </tr>
+        </table>
+    </div>
+
+    <div class="row" style="position:relative; z-index: 1;margin-top: 50px">
+        <table class="border-none">
+            <tr>
+                <th style="width: 20%;height: 20px;border: none">SEG-IIUC-058-PC</th>
             </tr>
         </table>
     </div>
