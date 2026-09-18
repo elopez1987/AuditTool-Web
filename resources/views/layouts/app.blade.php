@@ -361,7 +361,7 @@
                                                             href="{{route('storagelabeltrucks.index')}}"
                                                             class="sidebar-link">
                                                         <i class="lni lni-list"></i>
-                                                        <span class="hide-menu"> Etiquetas de caja</span></a>
+                                                        <span class="hide-menu"> Etiquetas de caja y tracto</span></a>
                                                 </li>
                                             @endcan
                                         </ul>

@@ -6,6 +6,7 @@ use App\Http\Controllers\BaseController;
 use App\Models\Shipments\OrderDeliverie;
 use App\Models\Yard\Carriers\ShipmentCarrier;
 use App\Models\Yard\Customer\OrderCustomer;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
@@ -107,7 +108,9 @@ class MonitorOperationHenkelController extends BaseController
                 $q->where('orderdeliveries.statusid', $request->input('statusid'));
             });
 
-        return DataTables::of($data)->toJson();
+        return DataTables::of($data)
+            ->blacklist(['folio.staytime'])
+            ->toJson();
     }
 
     public function getDataMonitorOperation(Request $request)
@@ -140,10 +143,23 @@ class MonitorOperationHenkelController extends BaseController
                 return '';
             })
             ->addColumn('key', function ($row) {
-                return $row->folio?->keydate ?
-                    '<span class="badge bg-success" style="padding: 3px;font-size:11px !important">Entregado</span>'
+                return $row->folio?->keydate
+                    ? '<span class="badge bg-success" style="padding: 3px;font-size:11px !important">Entregado</span>'
                     : '-';
             })
+            ->addColumn('staytime', function ($row) {
+                $entry = $row->folio?->entrydate;
+
+                if (! $entry) {
+                    return '-';
+                }
+
+                $end = $row->monitor?->outputdate ?? now();
+                $minutes = Carbon::parse($entry)->diffInMinutes(Carbon::parse($end));
+
+                return intdiv($minutes, 60) . 'h ' . ($minutes % 60) . 'm';
+            })
+            ->blacklist(['staytime', 'statusunit', 'key', 'folio.staytime'])
             ->rawColumns(['statusunit', 'key'])
             ->toJson();
     }

@@ -26,15 +26,15 @@
             {data: 'customer.name',name:'customer.name'},
             {data: 'carrier.name',name:'carrier.name'},
             {data: 'status.name',name:'status.name'},
-            {data: 'folio.staytime',name:'folio.staytime'},
+            {data: 'folio.staytime',name:'folio.staytime',searchable: false,orderable: false,},
 
         ],
         "columnDefs": [
-            {"width": "180px", "targets": 0},
+            {"width": "280px", "targets": 0},
             {"width": "250px", "targets": 1},
             {"width": "250px", "targets": 2},
             {"width": "250px", "targets": 3},
-            {"width": "250px", "targets": 4},
+            {"width": "250px", "targets": 4,searchable: false,orderable: false,},
         ],
         "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
         "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],

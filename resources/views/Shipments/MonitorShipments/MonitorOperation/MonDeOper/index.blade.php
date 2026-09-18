@@ -76,10 +76,6 @@
                     <span class="status-card__clear" id="clear-status-filter" style="display:none;">Quitar filtro de estatus</span>
                 </div>
                 <div class="card-body">
-                    {{-- Las tarjetas se cargan vía AJAX (ver script mas abajo) respetando
-                         los filtros de embarque/linea de transporte/cliente ya aplicados,
-                         sin bloquear la carga inicial de la vista. Son clickeables para
-                         filtrar ambas tablas por estatus. --}}
                     <div class="row status-cards-row" id="monitor-operation-status-cards"></div>
                     <hr class="mt-3 mb-3">
                     <div class="row">
@@ -121,8 +117,7 @@
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <table id="table-monitortrafico"
-                                                   class="table table-bordered  table-condensed table-hover"
-                                                   width="100%">
+                                                   class="table table-bordered  table-condensed table-hover">
                                                 <thead>
                                                 <tr>
                                                     <th>Embarque</th>
@@ -212,8 +207,7 @@
 
 @section('script')
     <script>
-        // Estatus seleccionado al hacer click en una tarjeta; se envia como
-        // filtro adicional a ambos datatables (embarques y estadia).
+
         var monitorOperationHenkelStatusId = '';
     </script>
     @include('Shipments.MonitorShipments.MonitorOperation.MonDeOper.table')
@@ -227,9 +221,6 @@
             $('#table-monitor-status').DataTable().ajax.reload();
         }
 
-        /* Tarjetas con la cantidad de embarques por estatus. Son clickeables:
-           al seleccionar una se filtran ambas tablas por ese estatus; un
-           segundo click (o el link "Quitar filtro") lo limpia. */
         function renderMonitorOperationHenkelStatusCards(items) {
             let $container = $('#monitor-operation-status-cards');
             $container.empty();
