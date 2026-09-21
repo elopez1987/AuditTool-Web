@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Imports\Inventario\PartNumbers;
+namespace App\Imports\Inventario\InventoryFiscal;
 
 use App\Models\Inventory\InventoryFiscal\InventoryAisle;
 use App\Models\Inventory\InventoryFiscal\InventoryArea;
@@ -151,7 +151,7 @@ class ImportLocationInventory implements ShouldQueue, ToCollection, WithChunkRea
             ->keyBy(fn ($aisle) => "{$aisle->centerid}|{$aisle->warehouseid}|{$aisle->name}");
 
         $missing = $keys->reject(
-            fn (array $k) => $existing->has("{$k['centerid']}|{$k['warehouseid']}|{$k['name']}")
+            fn (array $k) => $existing->has("{$k['centerid']}|{$k['warehouseid']}|{$k['name']}"),
         )->values();
 
         if ($missing->isNotEmpty()) {
@@ -166,7 +166,7 @@ class ImportLocationInventory implements ShouldQueue, ToCollection, WithChunkRea
                     'schemaid' => 'STS',
                     'created_at' => $now,
                     'updated_at' => $now,
-                ])->all()
+                ])->all(),
             );
 
             $newlyCreated = InventoryAisle::whereIn('centerid', $missing->pluck('centerid')->unique())
@@ -194,7 +194,7 @@ class ImportLocationInventory implements ShouldQueue, ToCollection, WithChunkRea
             'inventory_area_id' => $row['area_id'],
             'name' => $row['card_name'],
         ])->unique(
-            fn (array $k) => "{$k['inventory_aisle_id']}|{$k['inventory_area_id']}|{$k['name']}"
+            fn (array $k) => "{$k['inventory_aisle_id']}|{$k['inventory_area_id']}|{$k['name']}",
         )->values();
 
         $existing = InventoryCard::whereIn('inventory_aisle_id', $keys->pluck('inventory_aisle_id')->unique())
@@ -204,7 +204,7 @@ class ImportLocationInventory implements ShouldQueue, ToCollection, WithChunkRea
             ->keyBy(fn ($card) => "{$card->inventory_aisle_id}|{$card->inventory_area_id}|{$card->name}");
 
         $missing = $keys->reject(
-            fn (array $k) => $existing->has("{$k['inventory_aisle_id']}|{$k['inventory_area_id']}|{$k['name']}")
+            fn (array $k) => $existing->has("{$k['inventory_aisle_id']}|{$k['inventory_area_id']}|{$k['name']}"),
         )->values();
 
         if ($missing->isNotEmpty()) {
@@ -219,7 +219,7 @@ class ImportLocationInventory implements ShouldQueue, ToCollection, WithChunkRea
                     'schemaid' => 'STS',
                     'created_at' => $now,
                     'updated_at' => $now,
-                ])->all()
+                ])->all(),
             );
 
             $newlyCreated = InventoryCard::whereIn('inventory_aisle_id', $missing->pluck('inventory_aisle_id')->unique())

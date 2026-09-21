@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Imports\Inventario\PartNumbers;
+namespace App\Imports\Inventario\InventoryFiscal;
 
 use App\Models\Inventory\InventoryFiscal\InventoryHead;
 use App\Models\Inventory\PartNumber\InventoryPartnumber;

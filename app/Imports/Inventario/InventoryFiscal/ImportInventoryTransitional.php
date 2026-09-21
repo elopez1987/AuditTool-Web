@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-namespace App\Imports\Inventario\PartNumbers;
+namespace App\Imports\Inventario\InventoryFiscal;
 
 use App\Models\Inventory\InventoryFiscal\InventoryHead;
 use App\Models\Inventory\InventoryFiscal\InventoryLocation;
@@ -15,20 +13,18 @@ use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class ImportInventoryStockWms implements ShouldQueue, ToCollection, WithChunkReading, WithHeadingRow
+class ImportInventoryTransitional implements ShouldQueue, ToCollection, WithChunkReading, WithHeadingRow
 {
     /** Filas que no se pudieron procesar, para reportar al final. */
     protected array $failedRows = [];
 
     public function __construct(
-        protected readonly InventoryHead $inventoryHead
+        protected readonly InventoryHead $inventoryHead,
     ) {}
 
-    /**
-     * Se ejecuta una vez POR CHUNK (no por fila), gracias a ToCollection.
-     */
     public function collection(Collection $rows): void
     {
+        Log::info('Estas dentro del importador.');
         if ($rows->isEmpty()) {
             return;
         }
@@ -68,19 +64,17 @@ class ImportInventoryStockWms implements ShouldQueue, ToCollection, WithChunkRea
                 'inventory_head_id' => $this->inventoryHead->id,
                 'inventory_location_id' => $locationId,
                 'inventorypartnumber_id' => $partNumberId,
-                'quantity_location' => $row['quantity_location'],
-                'quantity_lpns' => $row['quantity_lpn'],
+                'quantity' => $row['quantity'],
             ];
-
         }
 
         // --- 4. UN solo upsert masivo para todo el chunk, dentro de transacción ---
         if (! empty($upsertData)) {
             DB::transaction(function () use ($upsertData) {
-                DB::table('inventory_stock_wms')->upsert(
+                DB::table('inventory_transitionals')->upsert(
                     $upsertData,
                     ['inventory_head_id', 'inventory_location_id'], // columnas únicas (requiere índice único compuesto)
-                    ['inventorypartnumber_id', 'quantity_location', 'quantity_lpns']
+                    ['inventorypartnumber_id', 'quantity'],
                 );
             });
         }
@@ -101,6 +95,6 @@ class ImportInventoryStockWms implements ShouldQueue, ToCollection, WithChunkRea
 
     public function chunkSize(): int
     {
-        return 400; // ahora que no hay N+1, un chunk más grande es más eficiente
+        return 600; // sin N+1, un chunk más grande es más eficiente
     }
 }

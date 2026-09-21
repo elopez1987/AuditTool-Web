@@ -1,16 +1,25 @@
 <div class="modal fade bs-example-modal-lg" role="dialog" aria-labelledby="myLargeModalLabel" tabindex="-1"
      aria-hidden="true" style="display: none;" id="modal-upload">
-    <form method="POST" action="{{url('uploadfilelocations-inventory')}}" enctype="multipart/form-data">
+    <form method="POST" action="{{url('uploadfilelocations-counters')}}" enctype="multipart/form-data">
         @csrf
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="" style="font-size: 12px;font-style: normal;font-weight: 400;">
-                        Importar Ubicaciones
+                        Importar asignación de contadores
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
                 <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <label for="name">Inventario </label>
+                                <input type="text" class="form-control" required id="inventoryid" name="inventoryid" value="{!! $inventoryHead->id !!}" readonly>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="row">
                         <div class="col-lg-12">
                             <ul class="list-group">
@@ -29,27 +38,27 @@
                                 </tr>
                                 <tr class="mt-4">
                                     <thead>
-                                    <th>Campo</th>
-                                    <th>Nombre</th>
-                                    <th>Formato</th>
+                                        <th>Campo</th>
+                                        <th>Nombre</th>
+                                        <th>Formato</th>
                                     </thead>
                                 </tr>
                                 <tbody>
-                                <tr>
-                                    <td>cardid</td>
-                                    <td>Cédula</td>
-                                    <td>String</td>
-                                </tr>
-                                <tr>
-                                    <td>username</td>
-                                    <td>Usuario</td>
-                                    <td>String</td>
-                                </tr>
-                                <tr>
-                                    <td>count_number</td>
-                                    <td>Número de conteo</td>
-                                    <td>Númerico</td>
-                                </tr>
+                                    <tr>
+                                        <td>cardid</td>
+                                        <td>Cédula</td>
+                                        <td>String</td>
+                                    </tr>
+                                    <tr>
+                                        <td>username</td>
+                                        <td>Usuario</td>
+                                        <td>String</td>
+                                    </tr>
+                                    <tr>
+                                        <td>count_number</td>
+                                        <td>Número de conteo</td>
+                                        <td>Númerico</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>

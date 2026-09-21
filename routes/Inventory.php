@@ -123,6 +123,8 @@ Route::middleware(['auth'])->group(function () {
     //	Limpiar asignacion del usuario 01
     Route::put('clear01CardDetail/{id}', [InventoryCardDetailController::class, 'clearUser01'])->name('clear01CardDetail');
     Route::put('clear02CardDetail/{id}', [InventoryCardDetailController::class, 'clearUser02'])->name('clear02CardDetail');
+    //	Importar contadores de cedulas
+    Route::post('uploadfilelocations-counters', [InventoryImportCounterController::class, 'index'])->name('counter-import-inventory');
 
     //	Detalle de ubicaciones por cedula para su validacion en drones y comparacion en APP
     Route::get('inventorylocations-card/{id}', [InventoryLocationCardController::class, 'index'])->name('inventorylocations-card');
@@ -208,8 +210,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('inventory-third-count/{id}', [ThirdCountController::class, 'index'])->name('inventory-third-count');
     Route::get('third-count-assign/{id}', [ThirdCountController::class, 'index'])->name('inventory-third-count');
     Route::put('third-assign-counter/{id}', [ThirdCountController::class, 'assignCounter'])->name('third-assign-counter');
-
-    // Importar contadores de APP basado en usuario y cedula
-    Route::post('import-counter-cards', [InventoryImportCounterController::class, 'index'])->name('counter-import-inventory');
 
 });

@@ -84,12 +84,9 @@ class InventoryCardCount extends Model
     {
         parent::boot();
         if (! app()->runningInConsole()) {
-            //            self::creating(function (StorageZone $model) {});
-            //            self::updating(function (StorageZone $model) {});
             self::deleting(function (InventoryCardCount $model) {
                 $model->inventorylocationscount()->delete();
             });
-            //			self::restoring(function (StorageZone $model) {});
         }
     }
 }
