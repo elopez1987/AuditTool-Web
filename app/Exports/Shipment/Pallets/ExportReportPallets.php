@@ -75,7 +75,7 @@ class ExportReportPallets implements FromCollection, ShouldAutoSize, WithColumnF
         return DB::table('orderdeliveries as o')
             ->leftJoin('ordercustomers as o2', 'o.customerid', '=', 'o2.id')
             ->leftJoin('shipmentpallets as s', 'o.id', '=', 's.orderid')
-            ->leftJoin('inventorypartnumbers as i', 's.prtnum', '=', 'i.prtnum')
+            ->leftJoin('inventorypartnumbers as i', 's.prtnum', '=', 'i.id')
             ->select(
                 'o.workday',
                 'o.shipmentid',
