@@ -15,6 +15,7 @@ use App\Http\Controllers\Inventory\InventoryFiscal\InventoryDashboardController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryErrorsController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryHeadController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryHeadEventController;
+use App\Http\Controllers\Inventory\InventoryFiscal\InventoryImportCounterController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryLocationCardController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryLocationController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryLocationCountsController;
@@ -207,5 +208,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('inventory-third-count/{id}', [ThirdCountController::class, 'index'])->name('inventory-third-count');
     Route::get('third-count-assign/{id}', [ThirdCountController::class, 'index'])->name('inventory-third-count');
     Route::put('third-assign-counter/{id}', [ThirdCountController::class, 'assignCounter'])->name('third-assign-counter');
+
+    // Importar contadores de APP basado en usuario y cedula
+    Route::post('import-counter-cards', [InventoryImportCounterController::class, 'index'])->name('counter-import-inventory');
 
 });

@@ -171,7 +171,7 @@
                 <span style="margin-left:15px"> {{$receiptunit->carrier  ? $receiptunit->carrier->name : ''}} </span>
             </th>
             <th style="border-top: 0px;">Celular:</th>
-            <th style="border-top: 0px;">{{$receiptunit->tracto ? $receiptunit->tracto->phone : ''}}</th>
+            <th style="border-top: 0px;font-size:12px !important;">{{$receiptunit->tracto ? $receiptunit->tracto->phone : ''}}</th>
         </table>
     </div>
 
