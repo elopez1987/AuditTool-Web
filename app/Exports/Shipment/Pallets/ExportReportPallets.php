@@ -80,7 +80,7 @@ class ExportReportPallets implements FromCollection, ShouldAutoSize, WithColumnF
                 'o.workday',
                 'o.shipmentid',
                 'o2.name as customer',
-                's.prtnum',
+                'i.prtnum',
                 'i.lngdsc',
                 's.quantity'
             )

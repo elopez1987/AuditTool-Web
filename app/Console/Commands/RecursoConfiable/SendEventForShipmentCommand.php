@@ -116,7 +116,7 @@ class SendEventForShipmentCommand extends Command
                 return null;
             }
 
-            Log::info('Token de Recurso Confiable obtenido exitosamente', ['token' => $token]);
+            //            Log::info('Token de Recurso Confiable obtenido exitosamente', ['token' => $token]);
 
             return $token;
 
@@ -237,10 +237,10 @@ class SendEventForShipmentCommand extends Command
                 'error_message' => null,
             ]);
 
-            Log::info('Evento procesado exitosamente', [
-                'shipment_id' => $shipment->shipmentid,
-                'track_detail_id' => $result->track_detail_id,
-            ]);
+            //            Log::info('Evento procesado exitosamente', [
+            //                'shipment_id' => $shipment->shipmentid,
+            //                'track_detail_id' => $result->track_detail_id,
+            //            ]);
 
         } else {
             $shipment->increment('retry_count');
