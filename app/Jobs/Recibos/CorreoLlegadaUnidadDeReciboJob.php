@@ -34,8 +34,6 @@ class CorreoLlegadaUnidadDeReciboJob implements ShouldQueue
             return;
         }
 
-        Log::info('La unidad a notificar es : ' . $receipt->shipmentid);
-
         $contacts = SystemDetailMail::query()
             ->where('centerid', $receipt->centerid)
             ->where('warehouseid', $receipt->warehouseid)
@@ -45,7 +43,7 @@ class CorreoLlegadaUnidadDeReciboJob implements ShouldQueue
             ->toArray();
 
         if (empty($contacts)) {
-            Log::error('No se encontraron contactos para el correo de peso con el Centro y Bodega seleccionado', [
+            Log::error('No se encontraron contactos para el correo de entrada de unidad con el Centro y Bodega seleccionado', [
                 'receiptUnitId' => $receipt->id,
             ]);
 

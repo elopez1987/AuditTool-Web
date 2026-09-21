@@ -34,8 +34,6 @@ class SendEmailToProviderJob implements ShouldQueue
             return;
         }
 
-        Log::info('El proveedor a notiticar es : ' . $receiptAsn->providerid);
-
         $contacts = ReceiptProviderContacts::where('providerid', $receiptAsn->providerid)
             ->pluck('email')->toArray();
 

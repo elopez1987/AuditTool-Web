@@ -441,10 +441,6 @@ class SendPlanForShipmentCommand extends Command
                 'error_message' => $resultData->error_message ?? null,
             ]);
 
-            Log::info('Shipment procesado exitosamente', [
-                'shipment_id' => $shipment->shipmentid,
-            ]);
-
         } else {
             $shipment->increment('retry_count');
             $shipment->update([

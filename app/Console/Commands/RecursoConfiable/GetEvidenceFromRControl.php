@@ -253,10 +253,6 @@ class GetEvidenceFromRControl extends Command
                 return null;
             }
 
-            Log::info('Token de Recurso Confiable obtenido exitosamente', [
-                'center_id' => $centerid,
-            ]);
-
             return $token;
 
         } catch (Exception $e) {
