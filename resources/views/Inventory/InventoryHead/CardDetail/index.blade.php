@@ -69,7 +69,7 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    @can('inventorycards.count01')
+                    @can('inventorycards.importcounter')
                         <a href="" data-target="#modal-upload" data-toggle="modal" data-placement="top">
                             <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md"
                                     data-toggle="tooltip" data-placement="top" title="Importar archivo">
@@ -79,16 +79,6 @@
                         </a>
                         @include('Inventory.InventoryHead.CardDetail.counter01')
                     @endcan
-                    {{--                        @can('inventorycards.count01')--}}
-                    {{--                            <a href="" data-target="#modal-upload" data-toggle="modal" data-placement="top">--}}
-                    {{--                                <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md"--}}
-                    {{--                                        data-toggle="tooltip" data-placement="top" title="Importar archivo">--}}
-                    {{--                                    <img src="{{asset('/ico/window_add_12815.png')}}" alt="" class="img-16 mr-2">--}}
-                    {{--                                    <span> Importar contadores 2 </span>--}}
-                    {{--                                </button>--}}
-                    {{--                            </a>--}}
-                    {{--                            @include('Inventory.InventoryCard.partials.uploadfile')--}}
-                    {{--                        @endcan--}}
                 </div>
             </div>
         </div>
