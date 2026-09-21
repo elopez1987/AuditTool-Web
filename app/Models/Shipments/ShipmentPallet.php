@@ -5,44 +5,11 @@ namespace App\Models\Shipments;
 use App\Models\Inventory\PartNumber\InventoryPartnumber;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Activitylog\LogOptions;
-use Spatie\Activitylog\Models\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-/**
- * @property int $id
- * @property string $centerid
- * @property string $warehouseid
- * @property int $orderid
- * @property string $prtnum
- * @property int|null $quantity
- * @property string|null $adddate
- * @property string|null $update
- * @property int|null $adduserid
- * @property int|null $lastuserid
- * @property-read Collection<int, Activity> $activities
- * @property-read int|null $activities_count
- * @property-read InventoryPartnumber|null $partnumber
- *
- * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentPallet newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentPallet newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentPallet query()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentPallet whereAdddate($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentPallet whereAdduserid($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentPallet whereCenterid($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentPallet whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentPallet whereLastuserid($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentPallet whereOrderid($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentPallet wherePrtnum($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentPallet whereQuantity($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentPallet whereUpdate($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|ShipmentPallet whereWarehouseid($value)
- *
- * @mixin \Eloquent
- */
 class ShipmentPallet extends Model
 {
     use LogsActivity;
@@ -83,6 +50,9 @@ class ShipmentPallet extends Model
             self::creating(function (ShipmentPallet $model) {
                 $model->adddate = Carbon::now();
                 $model->adduserid = Auth::user()->id;
+            });
+            self::updating(function (ShipmentPallet $model) {
+                $model->lastuserid = Auth::id();
             });
         }
     }

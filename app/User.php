@@ -187,13 +187,6 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         $this->attributes['name'] = strtolower($value);
     }
 
-    //    public function setUserNameAttribute($value)
-    //    {
-    //        $this->attributes['username'] = strtolower($value);
-    //    }
-
-    //    Relaciones entre modelos
-
     // ##############################################################################
     // En User.php agrega la relación para notificaciones push con firebase
     public function deviceTokens()
@@ -217,6 +210,15 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public function isSubscribedTo(string $typeKey): bool
     {
         return $this->notificationTypes()->where('key_notification', $typeKey)->exists();
+    }
+
+    public function isBridgestone(): bool
+    {
+        return in_array(
+            $this->access?->center?->centerid,
+            ['BRIDGESTONES', 'AVBSMX', 'BRIDCUE'],
+            true
+        );
     }
 
     // ################################################################################

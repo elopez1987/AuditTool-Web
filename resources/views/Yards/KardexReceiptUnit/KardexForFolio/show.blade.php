@@ -13,28 +13,14 @@
                             <a href="{{route('tracereceiptunit.index')}}">
                                 @include('buttons.cancel')
                             </a>
+
                             <a href="{{url('generateinvoicekardex/' . $receiptunit->id)}}">
                                 <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
                                     <img src="{{asset('/ico/papeleta.png')}}" alt="" class="img-16 ml-1">
                                     <span class="text-button"> Generar Kardex</span>
                                 </button>
                             </a>
-                            @can('receiptunits.princhecklistbrid')
-                                <a href="{{url('printchecklistbrind/' . $receiptunit->id)}}">
-                                    <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
-                                        <img src="{{asset('/ico/papeleta.png')}}" alt="" class="img-16 ml-1">
-                                        <span class="text-button"> Generar Check List Bridgestone</span>
-                                    </button>
-                                </a>
-                            @endcan
-                            @can('receiptunits.calidadbridgestone')
-                                <a href="{{url('printqualitybridge/' . $receiptunit->id)}}">
-                                    <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
-                                        <img src="{{asset('/ico/papeleta.png')}}" alt="" class="img-16 ml-1">
-                                        <span class="text-button"> Generar Check List Calidad</span>
-                                    </button>
-                                </a>
-                            @endcan
+
                             @if($receiptunit->statusid == 'TR')
                                 @can('receiptunits.realodunit')
                                     <a onclick="reloadunit( {!! $receiptunit->id!!} )">
@@ -55,15 +41,7 @@
                                     </button>
                                 </a>
                             @endcan
-                            @can('receiptunits.ticket')
-                                <a href="{{url('downloadticket/' . $receiptunit->id)}}">
-                                    <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
-                                        <img src="{{asset('/ico/papeleta.png')}}" alt=""
-                                             class="img-16 ml-1">
-                                        <span class="text-button">Descargar Ticket de bascula</span>
-                                    </button>
-                                </a>
-                            @endcan
+
                             @can('generateinvoicetransport')
                                 <a href="{{url('generateinvoicetransport/' . $receiptunit->id)}}">
                                     <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
@@ -73,6 +51,41 @@
                                     </button>
                                 </a>
                             @endcan
+
+                            @auth
+                                @if(Auth::user()->isBridgestone())
+                                    @can('receiptunits.princhecklistbrid')
+                                        <a href="{{url('printchecklistbrind/' . $receiptunit->id)}}">
+                                            <button type="button"
+                                                    class="btn waves-effect waves-light btn-outline-info btn-md">
+                                                <img src="{{asset('/ico/papeleta.png')}}" alt="" class="img-16 ml-1">
+                                                <span class="text-button"> Generar Check List Bridgestone</span>
+                                            </button>
+                                        </a>
+                                    @endcan
+                                    @can('receiptunits.calidadbridgestone')
+                                        <a href="{{url('printqualitybridge/' . $receiptunit->id)}}">
+                                            <button type="button"
+                                                    class="btn waves-effect waves-light btn-outline-info btn-md">
+                                                <img src="{{asset('/ico/papeleta.png')}}" alt="" class="img-16 ml-1">
+                                                <span class="text-button"> Generar Check List Calidad</span>
+                                            </button>
+                                        </a>
+                                    @endcan
+                                    @can('receiptunits.ticket')
+                                        <a href="{{url('downloadticket/' . $receiptunit->id)}}">
+                                            <button type="button"
+                                                    class="btn waves-effect waves-light btn-outline-info btn-md">
+                                                <img src="{{asset('/ico/papeleta.png')}}" alt=""
+                                                     class="img-16 ml-1">
+                                                <span class="text-button">Descargar Ticket de bascula</span>
+                                            </button>
+                                        </a>
+                                    @endcan
+                                @endif
+                            @endauth
+
+
                         </div>
                     </div>
                     <hr class="mt-3">
@@ -231,21 +244,27 @@
                                                             <td>{{$check->observation}}</td>
                                                             <td>
                                                                 @if($check->photo_1)
-                                                                    <img src="{{asset('storage/' . $check->photo_1)}}" alt="user" style="height: 200px;max-height: 200px;width: 100%"/>
+                                                                    <img src="{{asset('storage/' . $check->photo_1)}}"
+                                                                         alt="user"
+                                                                         style="height: 200px;max-height: 200px;width: 100%"/>
                                                                 @endif
                                                             </td>
                                                             <td>
                                                                 @if($check->photo_2)
-                                                                    <img src="{{asset('storage/' . $check->photo_2)}}" alt="user" style="height: 200px;max-height: 200px;width: 100%"/>
+                                                                    <img src="{{asset('storage/' . $check->photo_2)}}"
+                                                                         alt="user"
+                                                                         style="height: 200px;max-height: 200px;width: 100%"/>
                                                                 @endif
                                                             </td>
                                                             <td>
                                                                 @if($check->photo_3)
-                                                                    <img src="{{asset('storage/' . $check->photo_3)}}" alt="user" style="height: 200px;max-height: 200px;width: 100%"/>
+                                                                    <img src="{{asset('storage/' . $check->photo_3)}}"
+                                                                         alt="user"
+                                                                         style="height: 200px;max-height: 200px;width: 100%"/>
                                                                 @endif
                                                             </td>
                                                         </tr>
-                                                      @endif
+                                                @endif
                                                 @endforeach
                                             </table>
                                         </div>
@@ -763,23 +782,31 @@
                                                             @if($receiptunit->key)
                                                                 <td style="height: 150px">
                                                                     @if($receiptunit->key->keyguard01)
-                                                                        <img src="{{asset('storage/' . $receiptunit->key->keyguard01)}}" alt="Firma" style="height: 100px;max-height: 200px"/>
+                                                                        <img src="{{asset('storage/' . $receiptunit->key->keyguard01)}}"
+                                                                             alt="Firma"
+                                                                             style="height: 100px;max-height: 200px"/>
                                                                     @endif
                                                                 </td>
                                                                 <td>
                                                                     @if($receiptunit->key->keyoperator01)
-                                                                        <img src="{{asset('storage/' . $receiptunit->key->keyoperator01 )}}" alt="Firma" style="height: 100px;max-height: 200px"/>
+                                                                        <img src="{{asset('storage/' . $receiptunit->key->keyoperator01 )}}"
+                                                                             alt="Firma"
+                                                                             style="height: 100px;max-height: 200px"/>
                                                                     @endif
                                                                 </td>
                                                                 <td>
                                                                     @if($receiptunit->key->keyguard03)
-                                                                        <img src="{{asset('storage/' . $receiptunit->key->keyguard03 )}}" alt="Firma" style="height: 100px;max-height: 200px"/>
+                                                                        <img src="{{asset('storage/' . $receiptunit->key->keyguard03 )}}"
+                                                                             alt="Firma"
+                                                                             style="height: 100px;max-height: 200px"/>
                                                                     @endif
                                                                 </td>
                                                                 <td>
                                                                     @if($receiptunit->key->keyoperator03)
-                                                                    <img src="{{asset('storage/' . $receiptunit->key->keyoperator03)}}" alt="Firma" style="height: 100px;max-height: 200px"/>
-                                                                        @endif
+                                                                        <img src="{{asset('storage/' . $receiptunit->key->keyoperator03)}}"
+                                                                             alt="Firma"
+                                                                             style="height: 100px;max-height: 200px"/>
+                                                                    @endif
                                                                 </td>
                                                             @endif
                                                         </tr>
