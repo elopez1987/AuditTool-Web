@@ -46,7 +46,7 @@ Route::middleware(['auth'])->group(function () {
     })->name('menuconfiguration');
 
     //    ---------------------------------------------------- Nombre del sistema ------------------------------------------
-    Route::resource('namesystem', NameSystemController::class);
+    Route::resource('namesystem', NameSystemController::class)->except('show', 'destroy');
 
     //    ---------------------------------------------------- Jobs ------------------------------------------
     Route::get('jobs', [JobsController::class, 'index'])->name('jobs');
@@ -72,7 +72,7 @@ Route::middleware(['auth'])->group(function () {
     // ########################## Pendientes #######################################
 
     //    ---------------------------------------------------- Esquemas del sistema ----------------------------------------
-    Route::resource('systemschemas', SystemSchemaController::class);
+    Route::resource('systemschemas', SystemSchemaController::class)->except('show', 'destroy');
     Route::get('getDataSchemas', [SystemSchemaController::class, 'getDataSchemas'])->name('getDataSchemas');
     //    Crear nuevo estatus en esquema
     Route::get('systemschemas/{id}/createstatus', [SystemStatusController::class, 'addStatus'])->name('systemschemas.createstatus');
@@ -84,10 +84,10 @@ Route::middleware(['auth'])->group(function () {
     Route::put('import-status/{id}', [ImportStatusController::class, 'index'])->name('import-status');
 
     //    ---------------------------------------------------- Logs del sistema --------------------------------------------
-    Route::resource('activitylog', ActivityLogController::class);
+    Route::resource('activitylog', ActivityLogController::class)->only('index', 'show');
     Route::get('getDataActivityLog', [ActivityLogController::class, 'getDataActivityLog'])->name('getDataActivityLog');
     //    ---------------------------------------------------- Parametros --------------------------------------------------
-    Route::resource('systemparameters', SystemParameterController::class);
+    Route::resource('systemparameters', SystemParameterController::class)->except('show');
     Route::get('getDataParameters', [SystemParameterController::class, 'getDataParameters'])->name('getDataParameters');
     //    Detalle de parametros
     Route::get('detailparameter/{systemparameter}/add', [SystemDetailParametersController::class, 'adddetailparameter'])->name('adddetailparameter');
@@ -96,7 +96,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('editdetailparameter/{systemdetailparameter}', [SystemDetailParametersController::class, 'editdetailparameter'])->name('editdetailparameter');
 
     //    ---------------------------------------------------- Bodegas  ----------------------------------------------------
-    Route::resource('systemwarehouses', SystemWarehouseController::class)->except('show');
+    Route::resource('systemwarehouses', SystemWarehouseController::class)->except('show', 'destroy');
     Route::get('getDataWarehouses', [SystemWarehouseController::class, 'getDataWarehouses'])->name('getDataWarehouses');
     //    Parametros de bodegas
     Route::get('systemwarehouses/{id}/parameters', [ParameterWarehousesController::class, 'parameters'])->name('systemwarehouses.parameters');
@@ -110,7 +110,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('setwarehouse', [SetWarehouseController::class, 'index'])->name('setwarehouse');
     Route::put('setwarehousestore/{username}', [SetWarehouseController::class, 'setwarehousestore'])->name('setwarehousestore');
     //    ---------------------------------------------------- Correos  ----------------------------------------------------
-    Route::resource('systemmails', SystemMailController::class);
+    Route::resource('systemmails', SystemMailController::class)->except('show', 'destroy');
     Route::get('getDataMails', [SystemMailController::class, 'getDataMails'])->name('getDataMails');
     //    Detalle de correo
     Route::get('systemmails/{id}/createMailDetail', [SystemDetailMailController::class, 'createMailDetail'])->name('systemmails.createMailDetail');
@@ -119,7 +119,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('deletedetailmail/{id}', [SystemDetailMailController::class, 'destroy'])->name('deletedetailmail');
 
     //    ---------------------------------------------------- Web Service  ----------------------------------------------------
-    Route::resource('webservicelog', WebServiceLogController::class);
+    Route::resource('webservicelog', WebServiceLogController::class)->only('index', 'show');
     Route::get('getDataLogsWs', [WebServiceLogController::class, 'getDataLogsWs'])->name('getDataLogsWs');
 
     //    ---------------------------------------------------- WhatsApp  ----------------------------------------------------
@@ -133,7 +133,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('deletewhatsappcontact/{id}', [WhatsAppDetailController::class, 'deletecontact'])->name('deletewhatsappcontact');
 
     //    ---------------------------------------------------- Folios del sistema  ----------------------------------------------------
-    Route::resource('systemfolios', SystemFoliosController::class);
+    Route::resource('systemfolios', SystemFoliosController::class)->except('show', 'destroy');
     Route::get('getdatafolios', [SystemFoliosController::class, 'getDataFolios'])->name('getDataFolios');
 
     //    ---------------------------------------------------- Modulo de Token WebService Okta  ----------------------------------------------------
@@ -142,12 +142,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('geteditokens', [EdiTokenController::class, 'geteditokens'])->name('geteditokens');
 
     //    ---------------------------------------------------- Edi Logs  ----------------------------------------------------
-    Route::resource('edilogs', EdiLogsController::class);
+    Route::resource('edilogs', EdiLogsController::class)->only('index');
     Route::get('getdatalogs', [EdiLogsController::class, 'getDataLogs'])->name('getDataLogs');
     //    ---------------------------------------------------- Impresoras  ----------------------------------------------------
 
     //    ---------------------------------------------------- Edi Config  ----------------------------------------------------
-    Route::resource('edi-configurations', EdiConfigController::class);
+    Route::resource('edi-configurations', EdiConfigController::class)->only('index');
     //    ---------------------------------------------------- Impresoras  ----------------------------------------------------
 
     //    Catalogos de impresoras
@@ -172,7 +172,7 @@ Route::group(['middleware' => ['role:ADMINISTRADOR']], function () {
     //    ---------------------------------------------------- Log de errores del sistema  ----------------------------------------------------
     Route::get('logsystems', [LogViewerController::class, 'index'])->name('logsystems');
     //    ---------------------------------------------------- Tablas de base de datos  ----------------------------------------------------
-    Route::resource('systemtables', SystemTableController::class)->except(['destroy', 'show']);
+    Route::resource('systemtables', SystemTableController::class)->except(['destroy', 'show', 'create', 'store']);
     Route::get('getsystemtables', [SystemTableController::class, 'getsystemtables'])->name('getsystemtables');
     Route::post('uploadfiletables', [SystemTableController::class, 'uploadfiletables'])->name('uploadfiletables');
     Route::put('uploadfilecolumns/{id}', [SystemTableController::class, 'uploadfilecolumns'])->name('uploadfilecolumns');
@@ -207,7 +207,7 @@ Route::group(['middleware' => ['role:ADMINISTRADOR']], function () {
     Route::get('getDevicesForUser', [LogDeviceForUserController::class, 'getDevicesForUser'])->name('getDevicesForUser');
 
     //  --------------------------------------  Conceptos de ajustes (Eventos) ---------------------------------------------------------
-    Route::resource('storagereasons', StorageReasonController::class);
+    Route::resource('storagereasons', StorageReasonController::class)->except('show', 'destroy');
     Route::get('getDataTypeMovements', [StorageReasonController::class, 'getDataTypeMovements'])->name('getDataTypeMovements');
     //    Parametros de bodegas
     Route::get('storagereasons/{id}/parameters', [ParameterReasonController::class, 'parameters'])->name('storagereasons.parameters');
@@ -222,7 +222,7 @@ Route::group(['middleware' => ['role:ADMINISTRADOR']], function () {
     Route::get('taskmailslist', [StorageTaskMailsController::class, 'taskmailslist'])->name('taskmailslist');
 
     // Diccionario de label
-    Route::resource('label-dictionary', UiLabelsController::class);
+    Route::resource('label-dictionary', UiLabelsController::class)->except('show');
 
     Route::get('logs', [LogViewerController::class, 'index']);
 });

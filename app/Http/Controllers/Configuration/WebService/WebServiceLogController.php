@@ -22,14 +22,12 @@ class WebServiceLogController extends BaseController
     {
         $data = SystemEventWebServiceIzel::controlAccessUser()
             ->with(['center:centerid,name,description', 'warehouse:warehouseid,name'])
-            ->FolioNumber($request->input('folionumber'))
-            ->BoxNumber($request->input('boxnumber'));
+            ->when($request->filled('folionumber'), function ($query) use ($request) {
+                $query->where('systemeventwebserviceizel.folionumber', $request->folionumber);
+            });
 
         return DataTables::of($data)
             ->addColumn('btn', 'Configuration.LogWebService.partials.buttons')
-//            ->editColumn('created_at', function ($row) {
-//                return $row->created_at->format('d/m/Y H:i:s');
-//            })
             ->rawColumns(['btn'])->toJson();
     }
 

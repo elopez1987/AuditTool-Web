@@ -7,7 +7,9 @@ use App\Models\Configuration\Warehouses\SystemWarehouse;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Models\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -68,6 +70,11 @@ class SystemEventWebServiceIzel extends Model
 {
     use LogsActivity;
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
+
     protected $table = 'systemeventwebserviceizel';
 
     protected $fillable = [
@@ -94,43 +101,32 @@ class SystemEventWebServiceIzel extends Model
         'messagejsonresponse' => 'json',
     ];
 
-    public function getActivitylogOptions(): LogOptions
+    public function center(): BelongsTo
     {
-        return LogOptions::defaults()->logFillable();
+        return $this->belongsTo(SystemCenterDistribution::class, 'centerid', 'centerid');
     }
 
-    public function center()
+    public function warehouse(): BelongsTo
     {
-        return $this->belongsTo(SystemCenterDistribution::class, 'centerid')
-            ->select('name', 'centerid', 'description');
-    }
-
-    public function warehouse()
-    {
-        return $this->belongsTo(SystemWarehouse::class, 'warehouseid')
-            ->select('name', 'warehouseid');
+        return $this->belongsTo(SystemWarehouse::class, 'warehouseid');
     }
 
     public static function controlAccessUser()
     {
-        $centers = SecurityAccessWarehouse::Centers();
-        $warehouses = SecurityAccessWarehouse::Warehouses();
+        $username = Auth::user()->username;
 
-        return SystemEventWebServiceIzel::whereIn('systemeventwebserviceizel.centerid', $centers)
-            ->whereIn('systemeventwebserviceizel.warehouseid', $warehouses);
-    }
-
-    public function scopeFolioNumber($query, $folionumber)
-    {
-        if (trim($folionumber) != '') {
-            $query->where('systemeventwebserviceizel.folionumber', 'like', "%{$folionumber}%");
-        }
-    }
-
-    public function scopeBoxNumber($query, $boxnumber)
-    {
-        if ($boxnumber != '') {
-            $query->where('systemeventwebserviceizel.boxnumber', 'like', "%{$boxnumber}%");
-        }
+        return SystemEventWebServiceIzel::query()
+            ->whereIn(
+                'systemeventwebserviceizel.centerid',
+                SecurityAccessWarehouse::query()
+                    ->where('username', $username)
+                    ->select('centerid'),
+            )
+            ->whereIn(
+                'systemeventwebserviceizel.warehouseid',
+                SecurityAccessWarehouse::query()
+                    ->where('username', $username)
+                    ->select('warehouseid'),
+            );
     }
 }

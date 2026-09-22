@@ -200,7 +200,7 @@ class SendEventForShipmentCommand extends Command
             'fh_event' => $shipment->created_at->format('Y-m-d H:i:s'),
             'location_equiv' => $shipmentData->warehouse?->auxiliary02 ?? '',
             'truck' => [
-                'plate' => $shipmentData->folio ? $shipmentData->folio->trucknumber : '',
+                'plate' => $shipmentData->folio->tracto ? $shipmentData->folio->tracto->trucknumber : '',
             ],
         ];
 
