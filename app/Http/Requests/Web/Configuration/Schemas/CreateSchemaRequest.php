@@ -16,6 +16,11 @@ class CreateSchemaRequest extends FormRequest
         return [
             'schemaid' => 'required|string|max:3',
             'name' => 'required|string|max:150',
+            'auxiliary01' => 'nullable|string',
+            'auxiliary02' => 'nullable|string',
+            'auxiliary03' => 'nullable|string',
+            'auxiliary04' => 'nullable|string',
+            'auxiliary05' => 'nullable|string',
         ];
     }
 }

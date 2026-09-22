@@ -6,26 +6,36 @@ use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Configuration\Schemas\CreateStatusRequest;
 use App\Models\Configuration\Schemas\SystemSchema;
 use App\Models\Configuration\Schemas\SystemStatus;
+use App\Services\Configuration\ServiceSystemCenterDistribution;
+use App\Services\Configuration\ServiceSystemWarehouse;
+use App\Services\Configuration\SystemSchemaService;
+use App\Services\Configuration\SystemStatusService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class SystemStatusController extends BaseController
 {
-    public function addStatus($id)
+    public function __construct(
+        private readonly SystemStatusService $statusService,
+        private readonly SystemSchemaService $schemaService,
+        private readonly ServiceSystemCenterDistribution $centerDistribution,
+        private readonly ServiceSystemWarehouse $systemWarehouse,
+    ) {}
+
+    public function index($id)
     {
-        $systemschema = SystemSchema::where('schemaid', $id)->first();
-        $status = $this->getStatusForSchema($systemschema);
-        $centers = $this->getCenterForSelect();
-        $warehouses = $this->getWarehouseForSelect();
-        $statusList = SystemStatus::where('schemaid', $systemschema->schemaid)->get();
+        $systemschema = $this->schemaService->findById($id);
+        $centers = $this->centerDistribution->getCenters();
+        $warehouses = $this->systemWarehouse->getWarehouses();
+        $statusList = $this->statusService->findBySchema($id);
 
         return view(
             'Configuration.SystemSchemas.createstatus',
-            compact('systemschema', 'status', 'centers', 'warehouses', 'statusList')
+            compact('systemschema', 'centers', 'warehouses', 'statusList')
         );
     }
 
-    public function storeStatus(CreateStatusRequest $request, $id): RedirectResponse
+    public function store(CreateStatusRequest $request, $id): RedirectResponse
     {
         $schema = SystemSchema::where('schemaid', $id)->first();
         SystemStatus::create([
@@ -43,14 +53,14 @@ class SystemStatusController extends BaseController
         return $this->redirectBackInfo();
     }
 
-    public function updatestatus($id, Request $request)
+    public function update($id, Request $request)
     {
         $status = SystemStatus::findOrFail($id);
         $status->centerid = $request['centerid'] ?? '';
         $status->warehouseid = $request['warehouseid'] ?? '';
         $status->name = $request['namestatus'];
         $status->comment = $request['comment'] ?? '';
-        $status->auxiliary01 = $request['auxiliary01'] ?? '';  // Se utiliza para el color del estatus en la celda
+        $status->auxiliary01 = $request['auxiliary01'] ?? '';
         $status->auxiliary02 = $request['auxiliary02'] ?? '';
         $status->auxiliary03 = $request['auxiliary03'] ?? '';
         $status->auxiliary04 = $request['auxiliary04'] ?? '';
@@ -61,7 +71,7 @@ class SystemStatusController extends BaseController
         return $this->redirectBackSuccess();
     }
 
-    public function destroystatus($id)
+    public function destroy($id)
     {
         SystemStatus::destroy($id);
 

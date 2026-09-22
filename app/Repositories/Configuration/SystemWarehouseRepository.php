@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Repositories\Eloquent;
+namespace App\Repositories\Configuration;
 
 use App\Models\Configuration\Warehouses\SystemWarehouse;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\Repositories\SystemWarehouseRepositoryInterface;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 
@@ -31,6 +32,13 @@ class SystemWarehouseRepository implements SystemWarehouseRepositoryInterface
             ->when(trim((string) $name) !== '', function (Builder $query) use ($name) {
                 $query->where('systemwarehouses.name', 'like', "%{$name}%");
             });
+    }
+
+    public function getWarehouses(): Collection
+    {
+        return SystemWarehouse::controlAccessUser()
+            ->where('statusid', 'E')
+            ->select(['name', 'warehouseid'])->get();
     }
 
     public function getAccessibleWarehouseIds(): array

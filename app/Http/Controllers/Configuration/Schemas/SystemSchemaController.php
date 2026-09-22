@@ -3,13 +3,19 @@
 namespace App\Http\Controllers\Configuration\Schemas;
 
 use App\Http\Controllers\BaseController;
+use App\Http\Requests\Configuration\SearchSchemasRequest;
 use App\Http\Requests\Web\Configuration\Schemas\CreateSchemaRequest;
 use App\Models\Configuration\Schemas\SystemSchema;
+use App\Services\Configuration\SystemSchemaService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class SystemSchemaController extends BaseController
 {
+    public function __construct(
+        private readonly SystemSchemaService $service,
+    ) {}
+
     public function index()
     {
         $this->authorize('systemschemas.index');
@@ -17,11 +23,14 @@ class SystemSchemaController extends BaseController
         return view('Configuration.SystemSchemas.index');
     }
 
-    public function getDataSchemas(Request $request)
+    public function getDataSchemas(SearchSchemasRequest $request)
     {
-        $schemas = SystemSchema::Name($request->get('name'))->Schema($request->get('schemaid'));
+        $schemas = $this->service->findAll($request->validated());
 
-        return $this->showDataToView($schemas, 'Configuration.SystemSchemas.partials.buttons');
+        return $this->showDataToView(
+            $schemas,
+            'Configuration.SystemSchemas.partials.buttons'
+        );
     }
 
     public function create()
@@ -33,8 +42,7 @@ class SystemSchemaController extends BaseController
 
     public function store(CreateSchemaRequest $request): RedirectResponse
     {
-        $schema = new SystemSchema($request->all());
-        $schema->save();
+        $schema = $this->service->newSchema($request->validated());
 
         return redirect('systemschemas/' . $schema->schemaid . '/createstatus');
     }

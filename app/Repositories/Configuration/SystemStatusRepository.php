@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\Eloquent;
+namespace App\Repositories\Configuration;
 
 use App\Models\Configuration\Schemas\SystemStatus;
 use App\Repositories\SystemStatusRepositoryInterface;

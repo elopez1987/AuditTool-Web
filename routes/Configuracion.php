@@ -68,20 +68,21 @@ Route::middleware(['auth'])->group(function () {
     //	Parametrizar mensajes de bodega
     Route::get('systemcenterdistributions/{id}/notifications', [NotificationCenterController::class, 'index'])->name('systemcenterdistributions.notifications');
     Route::put('systemcenternotifications/{id}', [NotificationCenterController::class, 'systemcenternotifications'])->name('systemcenternotifications');
-
-    // ########################## Pendientes #######################################
-
-    //    ---------------------------------------------------- Esquemas del sistema ----------------------------------------
+    //  Esquemas del sistema
     Route::resource('systemschemas', SystemSchemaController::class)->except('show', 'destroy');
+    //   Consultar todos los esquemas
     Route::get('getDataSchemas', [SystemSchemaController::class, 'getDataSchemas'])->name('getDataSchemas');
     //    Crear nuevo estatus en esquema
-    Route::get('systemschemas/{id}/createstatus', [SystemStatusController::class, 'addStatus'])->name('systemschemas.createstatus');
-    Route::put('storeStatus/{id}', [SystemStatusController::class, 'storeStatus'])->name('storeStatus');
+    Route::get('systemschemas/{id}/createstatus', [SystemStatusController::class, 'index'])->name('systemschemas.createstatus');
+    Route::put('storeStatus/{id}', [SystemStatusController::class, 'store'])->name('storeStatus');
     //    Actualizar estatus desde detalle de esquema
-    Route::put('updatestatus/{id}', [SystemStatusController::class, 'updateStatus'])->name('updateStatus');
-    Route::delete('deletestatus/{id}', [SystemStatusController::class, 'destroystatus'])->name('deletestatus');
+    Route::put('updatestatus/{id}', [SystemStatusController::class, 'update'])->name('updateStatus');
+    //	 Eliminar estatus
+    Route::delete('deletestatus/{id}', [SystemStatusController::class, 'destroy'])->name('deletestatus');
     //	Importar estatus
     Route::put('import-status/{id}', [ImportStatusController::class, 'index'])->name('import-status');
+
+    // ########################## Pendientes #######################################
 
     //    ---------------------------------------------------- Logs del sistema --------------------------------------------
     Route::resource('activitylog', ActivityLogController::class)->only('index', 'show');

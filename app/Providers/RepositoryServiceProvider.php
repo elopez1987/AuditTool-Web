@@ -2,10 +2,10 @@
 
 namespace App\Providers;
 
-use App\Repositories\Eloquent\SecurityAccessWarehouseRepository;
-use App\Repositories\Eloquent\SystemCenterDistributionRepository;
-use App\Repositories\Eloquent\SystemStatusRepository;
-use App\Repositories\Eloquent\SystemWarehouseRepository;
+use App\Repositories\Configuration\SecurityAccessWarehouseRepository;
+use App\Repositories\Configuration\SystemCenterDistributionRepository;
+use App\Repositories\Configuration\SystemStatusRepository;
+use App\Repositories\Configuration\SystemWarehouseRepository;
 use App\Repositories\SecurityAccessWarehouseRepositoryInterface;
 use App\Repositories\SystemCenterDistributionRepositoryInterface;
 use App\Repositories\SystemStatusRepositoryInterface;

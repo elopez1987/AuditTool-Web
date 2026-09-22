@@ -57,12 +57,6 @@ class SystemWarehouse extends Model
         'center' => 'string',
     ];
 
-    /**
-     * Kept as a chainable query scope for backward compatibility with existing
-     * callers. The actual data access (and its caching, for load speed) lives
-     * in SystemWarehouseRepository::getAccessibleWarehouseIds(); this method
-     * only resolves that repository and applies the Eloquent filter.
-     */
     public static function controlAccessUser()
     {
         $warehouses = app(SystemWarehouseRepositoryInterface::class)->getAccessibleWarehouseIds();

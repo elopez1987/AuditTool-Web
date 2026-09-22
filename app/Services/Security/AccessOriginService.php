@@ -3,7 +3,7 @@
 namespace App\Services\Security;
 
 use App\Exceptions\CatalogEntityNotFoundException;
-use App\Repositories\Eloquent\SecurityAccessWarehouseRepository;
+use App\Repositories\Configuration\SecurityAccessWarehouseRepository;
 use App\Repositories\Security\AccessOriginRepository;
 use Illuminate\Support\Collection;
 

@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Repositories\Eloquent;
+namespace App\Repositories\Configuration;
 
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\Repositories\SystemCenterDistributionRepositoryInterface;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 
@@ -58,5 +59,11 @@ class SystemCenterDistributionRepository implements SystemCenterDistributionRepo
         $systemcenterdistribution->update($data);
 
         return $systemcenterdistribution;
+    }
+
+    public function getCenters(): Collection
+    {
+        return SystemCenterDistribution::controlAccessUser()
+            ->select(['description as name', 'centerid'])->get();
     }
 }

@@ -29,6 +29,11 @@ class ServiceSystemWarehouse
         return $this->repository->findOrFail($warehouseid);
     }
 
+    public function getWarehouses(): Collection
+    {
+        return $this->repository->getWarehouses();
+    }
+
     public function search(?string $name): Builder
     {
         return $this->repository->search($name);

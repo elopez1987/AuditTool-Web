@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Configuration\Warehouses\SystemWarehouse;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
 
 interface SystemWarehouseRepositoryInterface
 {
@@ -11,6 +12,8 @@ interface SystemWarehouseRepositoryInterface
      * Query for warehouses visible to the current user, optionally filtered by name.
      */
     public function search(?string $name): Builder;
+
+    public function getWarehouses(): Collection;
 
     /**
      * Warehouse IDs the current user is allowed to access, cached per user to

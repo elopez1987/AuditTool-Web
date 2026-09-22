@@ -6,6 +6,7 @@ use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Auth;
 
 class SystemCenterDistribution extends Model
 {
@@ -59,10 +60,16 @@ class SystemCenterDistribution extends Model
 
     public static function controlAccessUser()
     {
-        //        $centers = app(SystemCenterDistributionRepositoryInterface::class)->getAccessibleCenterIds();
-        $centers = SecurityAccessWarehouse::Centers();
 
-        return static::whereIn('systemcenterdistributions.centerid', $centers);
+        $username = Auth::user()->username;
+
+        return SystemCenterDistribution::query()
+            ->whereIn(
+                'systemcenterdistributions.centerid',
+                SecurityAccessWarehouse::query()
+                    ->where('username', $username)
+                    ->select('centerid'),
+            );
     }
 
     public function status(): BelongsTo

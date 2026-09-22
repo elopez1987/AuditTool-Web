@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
 
 interface SystemCenterDistributionRepositoryInterface
 {
@@ -11,6 +12,8 @@ interface SystemCenterDistributionRepositoryInterface
      * Query for centers visible to the current user, optionally filtered by name.
      */
     public function search(?string $name): Builder;
+
+    public function getCenters(): Collection;
 
     /** Query all centers */
     public function searchAll();

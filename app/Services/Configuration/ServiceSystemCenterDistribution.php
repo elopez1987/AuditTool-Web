@@ -35,6 +35,11 @@ class ServiceSystemCenterDistribution
         return $this->repository->search($name);
     }
 
+    public function getCenters(): Collection
+    {
+        return $this->repository->getCenters();
+    }
+
     public function getAccessibleCenters(): Collection
     {
         return $this->repository->search(null)->get();

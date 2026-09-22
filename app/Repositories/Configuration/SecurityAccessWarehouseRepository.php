@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\Eloquent;
+namespace App\Repositories\Configuration;
 
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\Repositories\SecurityAccessWarehouseRepositoryInterface;
