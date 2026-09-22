@@ -1,5 +1,5 @@
 @can('datatransport.addfortransport')
-    <a href="{{url('datatransport/' . $id. '/edit')}}" data-toggle="tooltip" data-placement="top"
+    <a href="{{url('shipment-transport/' . $id. '/edit')}}" data-toggle="tooltip" data-placement="top"
        title="Modificar Registro">
         @include('buttons.edit')
     </a>

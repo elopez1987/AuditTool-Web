@@ -81,7 +81,7 @@
                     Captura de datos
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{{url('datatransport/' . $transport->id)}}"
+                    <form method="POST" action="{{url('shipment-transport/' . $transport->id)}}"
                           enctype="multipart/form-data">
                         {{ method_field('PUT') }}
                         @csrf
@@ -90,7 +90,7 @@
                                 <a href="">
                                     @include('buttons.save')
                                 </a>
-                                <a href="{{route('datatransport.index')}}">
+                                <a href="{{route('shipment-transport.index')}}">
                                     @include('buttons.back')
                                 </a>
                             </div>

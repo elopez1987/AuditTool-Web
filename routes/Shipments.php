@@ -206,7 +206,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('monitor-customer-service', [CustomerController::class, 'index'])->name('monitor-customer-service');
     //    ----------------------------------------------- Asignacion de Transporte a Viaje----------------------------------
     //    Agregar datos del transporte esperado
-    Route::resource('datatransport', StorageShipmentTransportsController::class)->only(['index', 'edit', 'update']);
+    Route::resource('shipment-transport', StorageShipmentTransportsController::class)->only(['index', 'edit', 'update']);
     Route::get('getDataTransportShipment', [StorageShipmentTransportsController::class, 'getDataTransportShipment'])->name('getDataTransportShipment');
     // Imprimir el fotmato de QR para acceso a cedis
     Route::get('printPDF/{id}', [PrintDocumentQRForTransportController::class, 'printPDF'])->name('printPDF');

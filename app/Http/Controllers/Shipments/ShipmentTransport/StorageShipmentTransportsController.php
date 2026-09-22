@@ -61,6 +61,6 @@ class StorageShipmentTransportsController extends BaseController
             ]);
         }
 
-        return $this->successResponse('datatransport.index');
+        return $this->successResponse('shipment-transport.index');
     }
 }

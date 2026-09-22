@@ -668,7 +668,7 @@
                                         <ul aria-expanded="false" class="collapse second-level">
                                             @can('datatransport.index')
                                                 <li class="sidebar-item"><a
-                                                            href="{{route('datatransport.index')}}"
+                                                            href="{{route('shipment-transport.index')}}"
                                                             class="sidebar-link">
                                                         <i class="lni lni-list"></i>
                                                         <span class="hide-menu"> Asignar viaje</span></a>
