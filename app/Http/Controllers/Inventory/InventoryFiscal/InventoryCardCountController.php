@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Inventory\InventoryFiscal;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Inventory\InventoryCardCountRequest;
-use App\Models\Inventory\InventoryFiscal\InventoryAisleCount;
 use App\Models\Inventory\InventoryFiscal\InventoryCard;
 use App\Models\Inventory\InventoryFiscal\InventoryCardCount;
 use App\Models\Inventory\InventoryFiscal\InventoryHead;
@@ -34,15 +33,18 @@ class InventoryCardCountController extends BaseController
     public function getAvailableCardsForInventory($id)
     {
         $inventoryHead = InventoryHead::findOrFail($id);
-        $aislesPlanning = InventoryAisleCount::where('inventory_head_id', $inventoryHead->id)
-            ->pluck('inventory_aisle_id');
-
-        $assignedCardIds = InventoryCardCount::where('inventory_head_id', $inventoryHead->id)
-            ->pluck('inventory_card_id');
 
         $cards = InventoryCard::where('statusid', 'E')
-            ->whereIn('inventory_aisle_id', $aislesPlanning)
-            ->whereNotIn('id', $assignedCardIds)
+            ->whereIn('inventory_aisle_id', function ($query) use ($inventoryHead) {
+                $query->select('inventory_aisle_id')
+                    ->from('inventory_aisle_counts')
+                    ->where('inventory_head_id', $inventoryHead->id);
+            })
+            ->whereNotIn('id', function ($query) use ($inventoryHead) {
+                $query->select('inventory_card_id')
+                    ->from('inventory_card_counts')
+                    ->where('inventory_head_id', $inventoryHead->id);
+            })
             ->select(['id', 'name'])
             ->get();
 
@@ -113,8 +115,6 @@ class InventoryCardCountController extends BaseController
                     'message' => 'Cédula eliminada del conteo con éxito!!',
                 ]);
             }
-
-            return $this->redirectBackSuccessMessage('Cédula eliminada del conteo con éxito!!');
         } catch (\Throwable $th) {
             return response()->json([
                 'success' => false,

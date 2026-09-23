@@ -25,10 +25,10 @@
                         <div class="row">
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="schema">Esquema </label>
-                                    <input type="text" class="form-control" readonly id="schema" name="schema"
+                                    <label for="schemaid">Esquema </label>
+                                    <input type="text" class="form-control" readonly id="schemaid" name="schemaid"
                                            maxlength="15"
-                                           aria-describedby="schema" onKeyUp=this.value=this.value.toUpperCase();
+                                           aria-describedby="schemaid" onKeyUp=this.value=this.value.toUpperCase();
                                            value="{{$systemschema->schemaid}}">
                                 </div>
                             </div>
@@ -82,10 +82,10 @@
                             </div>
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="namestatus">Nombre de Estatus <span style="color: red">*</span></label>
-                                    <input type="text" class="form-control" required id="namestatus" name="namestatus"
-                                           aria-describedby="namestatus" onKeyUp=this.value=this.value.toUpperCase();
-                                           value="{{old('namestatus')}}">
+                                    <label for="name">Nombre de Estatus <span style="color: red">*</span></label>
+                                    <input type="text" class="form-control" required id="name" name="name"
+                                           aria-describedby="name" onKeyUp=this.value=this.value.toUpperCase();
+                                           value="{{old('name')}}">
                                 </div>
                             </div>
 
@@ -167,8 +167,8 @@
                                 <tbody>
                                     @foreach($statusList as $statu)
                                         <tr>
-                                            <td>{{$statu->auxiliary02}} {{$statu->centerid}}</td>
-                                            <td>{{$statu->auxiliary03}} {{$statu->warehouseid}}</td>
+                                            <td>{{$statu->centerid}}</td>
+                                            <td>{{$statu->warehouseid}}</td>
                                             <td>{{$statu->statusid}}</td>
                                             <td>{{$statu->name}}</td>
                                             <td>{{$statu->comment}}</td>

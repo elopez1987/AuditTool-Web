@@ -4,51 +4,30 @@ namespace App\Http\Controllers\Configuration\Schemas;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Configuration\Schemas\CreateStatusRequest;
-use App\Models\Configuration\Schemas\SystemSchema;
 use App\Models\Configuration\Schemas\SystemStatus;
-use App\Services\Configuration\ServiceSystemCenterDistribution;
-use App\Services\Configuration\ServiceSystemWarehouse;
-use App\Services\Configuration\SystemSchemaService;
 use App\Services\Configuration\SystemStatusService;
+use App\ViewModels\Configuration\SystemSchemaStatusViewModel;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class SystemStatusController extends BaseController
 {
     public function __construct(
+        private readonly SystemSchemaStatusViewModel $viewModel,
         private readonly SystemStatusService $statusService,
-        private readonly SystemSchemaService $schemaService,
-        private readonly ServiceSystemCenterDistribution $centerDistribution,
-        private readonly ServiceSystemWarehouse $systemWarehouse,
     ) {}
 
     public function index($id)
     {
-        $systemschema = $this->schemaService->findById($id);
-        $centers = $this->centerDistribution->getCenters();
-        $warehouses = $this->systemWarehouse->getWarehouses();
-        $statusList = $this->statusService->findBySchema($id);
-
         return view(
             'Configuration.SystemSchemas.createstatus',
-            compact('systemschema', 'centers', 'warehouses', 'statusList')
+            $this->viewModel->get($id)
         );
     }
 
-    public function store(CreateStatusRequest $request, $id): RedirectResponse
+    public function store(CreateStatusRequest $request): RedirectResponse
     {
-        $schema = SystemSchema::where('schemaid', $id)->first();
-        SystemStatus::create([
-            'schemaid' => $schema->schemaid,
-            'statusid' => $request['statusid'],
-            'name' => $request['namestatus'],
-            'comment' => $request['comment'],
-            'auxiliary01' => $request['auxiliary01'],
-            'auxiliary02' => $request['centerid'],
-            'auxiliary03' => $request['warehouseid'],
-            'auxiliary04' => $request['auxiliary04'],
-            'auxiliary05' => $request['auxiliary05'],
-        ]);
+        $this->statusService->store($request->validated());
 
         return $this->redirectBackInfo();
     }

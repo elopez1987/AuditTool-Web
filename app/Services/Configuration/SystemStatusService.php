@@ -15,4 +15,9 @@ readonly class SystemStatusService
     {
         return $this->repository->findStatusForSchema($schemaId);
     }
+
+    public function store(array $data)
+    {
+        return $this->repository->store($data);
+    }
 }

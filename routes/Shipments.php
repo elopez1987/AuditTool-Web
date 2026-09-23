@@ -188,7 +188,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('getDataMonitor', [OrderMonitorController::class, 'getDataMonitor'])->name('getDataMonitor');
 
     // ------------------------------------------  Seguimiento de viaje  ---------------------------------------------------
-    Route::resource('shipmentjourney', ShipmentJourneysController::class)->except(['show', 'destroy']);
+    Route::resource('shipmentjourney', ShipmentJourneysController::class)->except(['show', 'destroy', 'create', 'store']);
     Route::get('getDataJourney', [ShipmentJourneysController::class, 'getDataJourney'])->name('getDataJourney');
 
     //  -----------------------------------------  Vista de cortinas y stages   --------------------------------------------

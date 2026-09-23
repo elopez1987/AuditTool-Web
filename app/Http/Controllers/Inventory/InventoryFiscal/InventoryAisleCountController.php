@@ -17,12 +17,13 @@ class InventoryAisleCountController extends BaseController
     public function getAvailableAislesForInventory($id)
     {
         $inventoryHead = InventoryHead::findOrFail($id);
-        $assignedAisleIds = InventoryAisleCount::where('inventory_head_id', $inventoryHead->id)
-            ->pluck('inventory_aisle_id');
 
         $aisles = InventoryAisle::controlAccessUser()
             ->where('statusid', 'E')
-            ->whereNotIn('id', $assignedAisleIds)
+            ->whereNotIn('id', InventoryAisleCount::query()
+                ->select('inventory_aisle_id')
+                ->where('inventory_head_id', $inventoryHead->id)
+            )
             ->orderBy('name')
             ->get(['id', 'name']);
 
@@ -88,8 +89,6 @@ class InventoryAisleCountController extends BaseController
                     'message' => 'Pasillo eliminado del conteo con éxito!!',
                 ]);
             }
-
-            return $this->redirectBackSuccessMessage('Pasillo eliminado del conteo con éxito!!');
         } catch (Throwable $th) {
             return response()->json([
                 'success' => false,

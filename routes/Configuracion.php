@@ -72,8 +72,9 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('systemschemas', SystemSchemaController::class)->except('show', 'destroy');
     //   Consultar todos los esquemas
     Route::get('getDataSchemas', [SystemSchemaController::class, 'getDataSchemas'])->name('getDataSchemas');
-    //    Crear nuevo estatus en esquema
+    //    Vista detalle del esquema
     Route::get('systemschemas/{id}/createstatus', [SystemStatusController::class, 'index'])->name('systemschemas.createstatus');
+    //	  Crear nuevo estatus en esquema
     Route::put('storeStatus/{id}', [SystemStatusController::class, 'store'])->name('storeStatus');
     //    Actualizar estatus desde detalle de esquema
     Route::put('updatestatus/{id}', [SystemStatusController::class, 'update'])->name('updateStatus');

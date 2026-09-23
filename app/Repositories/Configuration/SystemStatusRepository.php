@@ -11,8 +11,12 @@ class SystemStatusRepository implements SystemStatusRepositoryInterface
     public function findStatusForSchema(string $schemaid): Collection
     {
         return SystemStatus::where('schemaid', $schemaid)
-            ->select(['statusid', 'name', 'comment'])
             ->orderBy('statusid')
             ->get();
+    }
+
+    public function store(array $data)
+    {
+        SystemStatus::create($data);
     }
 }
