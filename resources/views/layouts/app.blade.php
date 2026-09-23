@@ -1681,7 +1681,7 @@
                                 @can('activitylog.index')
                                     <li class="sidebar-item"><a
                                                 class="sidebar-link waves-effect waves-dark sidebar-link"
-                                                href="{{route('activitylog.index')}}" aria-expanded="false"><i
+                                                href="{{route('activity-logs.index')}}" aria-expanded="false"><i
                                                     class="mdi mdi-creation"></i><span class="hide-menu">Eventos</span></a>
                                     </li>
                                 @endcan

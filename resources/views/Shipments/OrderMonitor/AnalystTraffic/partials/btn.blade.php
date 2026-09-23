@@ -8,7 +8,7 @@
         </a>
     @endcan
 
-    <a href="{{url('datatransport/' . $id . '/edit')}}" data-toggle="tooltip" data-placement="top"
+    <a href="{{url('shipment-transport/' . $id . '/edit')}}" data-toggle="tooltip" data-placement="top"
        title="Asignar transporte">
         <img src="{{asset('/ico/typetruck.png')}}" alt="" class="img-16 ml-2 mr-2">
     </a>

@@ -3,33 +3,32 @@
 namespace App\Http\Controllers\Configuration\LogSystem;
 
 use App\Http\Controllers\Controller;
-use App\Models\Configuration\ActivityLog\ActivityLog;
-use App\User;
-use Illuminate\Http\Request;
+use App\Http\Requests\Configuration\SearchActivityLogRequest;
+use App\Services\Configuration\ActivityLogService;
+use App\ViewModels\Configuration\ActivityLogViewModel;
 use Yajra\DataTables\Facades\DataTables;
 
 class ActivityLogController extends Controller
 {
+    public function __construct(
+        private readonly ActivityLogViewModel $logViewModel,
+        private readonly ActivityLogService $logService,
+    ) {}
+
     public function index()
     {
         $this->authorize('activitylog.index');
-        $descriptions = ActivityLog::select(['description', 'description'])->distinct()->get();
-        $models = ActivityLog::select(['subject_type', 'subject_type'])->distinct()->get();
-        $users = User::select(['name', 'id'])->where('statusid', '=', 'E')->get();
 
-        return view('Configuration.ActivityLogs.index', compact('descriptions', 'models', 'users'));
+        return view(
+            'Configuration.ActivityLogs.index',
+            $this->logViewModel->index(),
+        );
     }
 
-    public function getDataActivityLog(Request $request)
+    public function getDataActivityLog(SearchActivityLogRequest $request)
     {
-        $data = ActivityLog::with('user')
-            ->ForDescription($request->get('description'))
-            ->ForModel($request->get('model'))
-            ->ForDate($request->get('date_in'), $request->get('date_out'))
-            ->ForSubject($request->get('subject_id'))
-            ->ForUser($request->get('user'))
-            ->ForFolio($request->get('id'))->limit(1000)
-            ->get();
+
+        $data = $this->logService->all($request->validated());
 
         return DataTables::of($data)
             ->addColumn('btn', 'Configuration.ActivityLogs.partials.buttons')
@@ -37,11 +36,8 @@ class ActivityLogController extends Controller
             ->toJson();
     }
 
-    public function show($id)
+    public function show(int $id)
     {
-        $register = ActivityLog::findOrFail($id);
-        $jsonObject = json_decode($register->properties);
-
-        return view('Configuration.ActivityLogs.show', compact('register', 'jsonObject'));
+        return view('Configuration.ActivityLogs.show', $this->logViewModel->show($id));
     }
 }

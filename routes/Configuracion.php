@@ -82,12 +82,15 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('deletestatus/{id}', [SystemStatusController::class, 'destroy'])->name('deletestatus');
     //	Importar estatus
     Route::put('import-status/{id}', [ImportStatusController::class, 'index'])->name('import-status');
+    //   Logs del sistema
+    Route::resource('activity-logs', ActivityLogController::class)->only('index', 'show');
+    // Consulta del detalle de logs
+    Route::get('getDataActivityLog', [ActivityLogController::class, 'getDataActivityLog'])->name('getDataActivityLog');
 
     // ########################## Pendientes #######################################
 
     //    ---------------------------------------------------- Logs del sistema --------------------------------------------
-    Route::resource('activitylog', ActivityLogController::class)->only('index', 'show');
-    Route::get('getDataActivityLog', [ActivityLogController::class, 'getDataActivityLog'])->name('getDataActivityLog');
+
     //    ---------------------------------------------------- Parametros --------------------------------------------------
     Route::resource('systemparameters', SystemParameterController::class)->except('show');
     Route::get('getDataParameters', [SystemParameterController::class, 'getDataParameters'])->name('getDataParameters');

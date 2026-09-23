@@ -5,10 +5,26 @@ namespace App\Services\Security;
 use App\Models\Security\Users\AccessCarrier;
 use App\Models\Security\Users\SecurityAccessCustomer;
 use App\Models\Security\Users\SecurityAccessWarehouse;
+use App\Repositories\Security\UserRepository;
 use App\User;
+use Illuminate\Support\Collection;
 
-class ServiceUser
+readonly class ServiceUser
 {
+    public function __construct(
+        private UserRepository $userReposotory,
+    ) {}
+
+    public function findById(int $Id)
+    {
+        return $this->userReposotory->findById($Id);
+    }
+
+    public function all(): Collection
+    {
+        return $this->userReposotory->all();
+    }
+
     public function createNewUser($request)
     {
         $user = User::create([
