@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Configuration\EDI;
+namespace App\Http\Requests\Configuration;
 
 use Illuminate\Foundation\Http\FormRequest;
 

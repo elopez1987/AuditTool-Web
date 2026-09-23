@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Configuration\Schemas;
 
 use App\Http\Controllers\BaseController;
+use App\Http\Requests\Configuration\UpdateStatusRequest;
 use App\Http\Requests\Web\Configuration\Schemas\CreateStatusRequest;
-use App\Models\Configuration\Schemas\SystemStatus;
 use App\Services\Configuration\SystemStatusService;
 use App\ViewModels\Configuration\SystemSchemaStatusViewModel;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 
 class SystemStatusController extends BaseController
 {
@@ -21,7 +20,7 @@ class SystemStatusController extends BaseController
     {
         return view(
             'Configuration.SystemSchemas.createstatus',
-            $this->viewModel->get($id)
+            $this->viewModel->get($id),
         );
     }
 
@@ -32,27 +31,17 @@ class SystemStatusController extends BaseController
         return $this->redirectBackInfo();
     }
 
-    public function update($id, Request $request)
+    public function update(UpdateStatusRequest $request)
     {
-        $status = SystemStatus::findOrFail($id);
-        $status->centerid = $request['centerid'] ?? '';
-        $status->warehouseid = $request['warehouseid'] ?? '';
-        $status->name = $request['namestatus'];
-        $status->comment = $request['comment'] ?? '';
-        $status->auxiliary01 = $request['auxiliary01'] ?? '';
-        $status->auxiliary02 = $request['auxiliary02'] ?? '';
-        $status->auxiliary03 = $request['auxiliary03'] ?? '';
-        $status->auxiliary04 = $request['auxiliary04'] ?? '';
-        $status->auxiliary05 = $request['auxiliary05'] ?? '';
-
-        $status->save();
+        $this->statusService->update($request->validated());
 
         return $this->redirectBackSuccess();
     }
 
     public function destroy($id)
     {
-        SystemStatus::destroy($id);
+
+        $this->statusService->destroy($id);
 
         return $this->redirectBackSuccessMessage('Estatus eliminado con exito.');
     }

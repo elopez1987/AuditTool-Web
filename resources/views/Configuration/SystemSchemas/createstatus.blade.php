@@ -148,7 +148,7 @@
                     <hr class="mb-3">
                     <div class="row">
                         <div class="col-lg-12 col-md-6">
-                            <table class="table table-condensed table-bordered table-list">
+                            <table class="table table-condensed table-bordered table-list table-hover">
                                 <thead>
                                     <tr>
                                         <th>Centro de distribución</th>

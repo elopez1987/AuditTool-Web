@@ -101,6 +101,7 @@ class OktaController extends BaseController
                 $data = json_decode((string) $response->getBody(), true);
                 $user->auth0 = $data['user_id'];
                 $user->save();
+
                 DB::commit();
 
                 return $this->redirectBackSuccessMessage('Usuario creado con exito.');

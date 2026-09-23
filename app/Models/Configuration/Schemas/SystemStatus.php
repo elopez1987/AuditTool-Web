@@ -2,6 +2,8 @@
 
 namespace App\Models\Configuration\Schemas;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
@@ -13,7 +15,7 @@ use Illuminate\Support\Carbon;
  * @property string|null $centerid
  * @property string|null $warehouseid
  * @property string $schemaid
- * @property string unitstatusid$statusid
+ * @property string $statusid
  * @property string $name
  * @property string|null $comment
  * @property string|null $auxiliary01
@@ -24,23 +26,23 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  *
- * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemStatus newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemStatus newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemStatus query()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemStatus whereAuxiliary01($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemStatus whereAuxiliary02($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemStatus whereAuxiliary03($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemStatus whereAuxiliary04($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemStatus whereAuxiliary05($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemStatus whereCenterid($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemStatus whereComment($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemStatus whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemStatus whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemStatus whereStatusid($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemStatus whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemStatus whereWarehouseid($value)
+ * @method static Builder<static>|SystemStatus newModelQuery()
+ * @method static Builder<static>|SystemStatus newQuery()
+ * @method static Builder<static>|SystemStatus query()
+ * @method static Builder<static>|SystemStatus whereAuxiliary01($value)
+ * @method static Builder<static>|SystemStatus whereAuxiliary02($value)
+ * @method static Builder<static>|SystemStatus whereAuxiliary03($value)
+ * @method static Builder<static>|SystemStatus whereAuxiliary04($value)
+ * @method static Builder<static>|SystemStatus whereAuxiliary05($value)
+ * @method static Builder<static>|SystemStatus whereCenterid($value)
+ * @method static Builder<static>|SystemStatus whereComment($value)
+ * @method static Builder<static>|SystemStatus whereCreatedAt($value)
+ * @method static Builder<static>|SystemStatus whereName($value)
+ * @method static Builder<static>|SystemStatus whereStatusid($value)
+ * @method static Builder<static>|SystemStatus whereUpdatedAt($value)
+ * @method static Builder<static>|SystemStatus whereWarehouseid($value)
  *
- * @mixin \Eloquent
+ * @mixin Eloquent
  */
 class SystemStatus extends Model
 {
@@ -73,40 +75,41 @@ class SystemStatus extends Model
         'updated_at',
     ];
 
-    public static function SchemaSTS()
-    {
-        return SystemStatus::whereSchemaid('STS')
-            ->whereNotIn('statusid', ['B'])->pluck('name', 'statusid')->toArray();
-    }
+    //    public static function SchemaSTS()
+    //    {
+    //        return SystemStatus::whereSchemaid('STS')
+    //            ->whereNotIn('statusid', ['B'])->pluck('name', 'statusid')->toArray();
+    //    }
+    //
+    //    public static function SchemaRUS()
+    //    {
+    //        return SystemStatus::whereSchemaid('RUS')->pluck('name', 'statusid')->toArray();
+    //    }
+    //
+    //    public static function SchemaSRE()
+    //    {
+    //        return SystemStatus::whereSchemaid('SRE')->pluck('name', 'statusid')->toArray();
+    //    }
+    //
+    //    public static function SchemaSCHIndex()
+    //    {
+    //        return SystemStatus::whereSchemaid('KLE')
+    //            ->whereAuxiliary01('F')
+    //            ->pluck('systemstatus.name', 'statusid')->toArray();
+    //    }
+    //
+    //    public static function SchemaEIJ()
+    //    {
+    //        return SystemStatus::where('schemaid', 'EIJ')
+    //            ->whereIn('statusid', ['AB', 'CD'])
+    //            ->pluck('systemstatus.name', 'statusid')->toArray();
+    //    }
+    //
+    //    public static function SchemaEIJDetail()
+    //    {
+    //        return SystemStatus::where('schemaid', 'EIJ')
+    //            ->whereIn('systemstatus.statusid', ['P', 'N'])
+    //            ->pluck('name', 'statusid')->toArray();
+    //    }
 
-    public static function SchemaRUS()
-    {
-        return SystemStatus::whereSchemaid('RUS')->pluck('name', 'statusid')->toArray();
-    }
-
-    public static function SchemaSRE()
-    {
-        return SystemStatus::whereSchemaid('SRE')->pluck('name', 'statusid')->toArray();
-    }
-
-    public static function SchemaSCHIndex()
-    {
-        return SystemStatus::whereSchemaid('KLE')
-            ->whereAuxiliary01('F')
-            ->pluck('systemstatus.name', 'statusid')->toArray();
-    }
-
-    public static function SchemaEIJ()
-    {
-        return SystemStatus::where('schemaid', 'EIJ')
-            ->whereIn('statusid', ['AB', 'CD'])
-            ->pluck('systemstatus.name', 'statusid')->toArray();
-    }
-
-    public static function SchemaEIJDetail()
-    {
-        return SystemStatus::where('schemaid', 'EIJ')
-            ->whereIn('systemstatus.statusid', ['P', 'N'])
-            ->pluck('name', 'statusid')->toArray();
-    }
 }

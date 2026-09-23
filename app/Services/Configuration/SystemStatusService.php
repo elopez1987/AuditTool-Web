@@ -20,4 +20,14 @@ readonly class SystemStatusService
     {
         return $this->repository->store($data);
     }
+
+    public function update(array $data)
+    {
+        return $this->repository->update($data);
+    }
+
+    public function destroy(string $statusId)
+    {
+        $this->repository->destroy($statusId);
+    }
 }

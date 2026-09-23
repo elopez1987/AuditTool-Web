@@ -19,4 +19,15 @@ class SystemStatusRepository implements SystemStatusRepositoryInterface
     {
         SystemStatus::create($data);
     }
+
+    public function update(array $data)
+    {
+        SystemStatus::where('statusid', $data['statusid'])
+            ->update($data);
+    }
+
+    public function destroy(string $statusId)
+    {
+        SystemStatus::destroy($statusId);
+    }
 }
