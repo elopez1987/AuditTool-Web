@@ -11,6 +11,7 @@ use App\Http\Controllers\Yard\Customers\ParameterCustomerController;
 use App\Http\Controllers\Yard\DashboardYardController;
 use App\Http\Controllers\Yard\Destination\StorageDestinationController;
 use App\Http\Controllers\Yard\GeofencesController;
+use App\Http\Controllers\Yard\GpsDevice\GpsDeviceController;
 use App\Http\Controllers\Yard\LabelTrucks\StorageLabelTrucksController;
 use App\Http\Controllers\Yard\RControl\SearchOperatorInRC;
 use App\Http\Controllers\Yard\ReceiptProviders\ImportProvidersController;
@@ -374,5 +375,9 @@ Route::middleware(['auth'])->group(function () {
     // Mapa con GeoCerca
     Route::resource('maps-geofence', GeofencesController::class);
     Route::get('getDataGeofence', [GeofencesController::class, 'getDataGeofence'])->name('getDataGeofence');
+
+    // Dispositos GPS
+    Route::resource('gps-devices', GpsDeviceController::class);
+    Route::get('getGpsDevices', [GpsDeviceController::class, 'getGpsDevices'])->name('getGpsDevices');
 
 });

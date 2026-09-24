@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Inventory\InventoryFiscal;
 
 use App\Http\Controllers\BaseController;
-use App\Imports\Inventario\PartNumbers\ImportInventoryTransitional;
+use App\Imports\Inventario\InventoryFiscal\ImportInventoryTransitional;
 use App\Models\Inventory\InventoryFiscal\ImportInventoryWms;
 use App\Models\Inventory\InventoryFiscal\InventoryHead;
 use Illuminate\Http\Request;

@@ -489,6 +489,14 @@
                                                         <span class="hide-menu"> Candados LOTO</span></a>
                                                 </li>
                                             @endcan
+                                            @can('gps-devices.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('gps-devices.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Dispositivos GPS</span></a>
+                                                </li>
+                                            @endcan
                                         </ul>
                                     </li>
                                 @endcan

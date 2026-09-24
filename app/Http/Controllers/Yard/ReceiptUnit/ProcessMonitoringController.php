@@ -61,4 +61,16 @@ class ProcessMonitoringController extends BaseController
 				')
             ->get();
     }
+
+    public function create() {}
+
+    public function store() {}
+
+    public function show(string $processmonitoring) {}
+
+    public function edit(string $processmonitoring) {}
+
+    public function update(string $processmonitoring) {}
+
+    public function destroy(string $processmonitoring) {}
 }

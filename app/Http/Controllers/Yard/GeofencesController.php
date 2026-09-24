@@ -48,4 +48,10 @@ class GeofencesController extends BaseController
     }
 
     public function edit(Geofence $geofence) {}
+
+    public function show() {}
+
+    public function update() {}
+
+    public function destroy() {}
 }

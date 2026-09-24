@@ -294,4 +294,8 @@ class ReceiptUnitTicketController extends BaseController
             return $this->errorResponse('Ocurrió un error al actualizar el registro.');
         }
     }
+
+    public function show(string $receiptunitticket) {}
+
+    public function edit(string $receiptunitticket) {}
 }

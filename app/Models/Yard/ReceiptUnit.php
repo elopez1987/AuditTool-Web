@@ -16,6 +16,7 @@ use Auth;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -299,6 +300,12 @@ class ReceiptUnit extends Model
     public function order(): BelongsTo
     {
         return $this->belongsTo(OrderDeliverie::class, 'id', 'folionumber');
+    }
+
+    public function gpsDeviceAssignment(): HasOne
+    {
+        return $this->hasOne(GpsDeviceAssignment::class, 'receiptunit_id')
+            ->whereNull('unassigned_at');
     }
 
     // ################################################## Fin de relaciones entre modelos ######################################

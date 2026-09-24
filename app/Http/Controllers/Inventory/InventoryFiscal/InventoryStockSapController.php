@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Inventory\InventoryFiscal;
 
 use App\Http\Controllers\BaseController;
-use App\Imports\Inventario\PartNumbers\ImportInventoryStockSap;
+use App\Imports\Inventario\InventoryFiscal\ImportInventoryStockSap;
 use App\Models\Inventory\InventoryFiscal\InventoryHead;
 use App\Models\Inventory\InventoryFiscal\InventoryStockSap;
 use Illuminate\Http\Request;
