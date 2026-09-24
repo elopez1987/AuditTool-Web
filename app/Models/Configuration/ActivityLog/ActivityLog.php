@@ -24,7 +24,6 @@ class ActivityLog extends Model
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'causer_id', 'id')
-            ->select('users.name', 'users.id');
+        return $this->belongsTo(User::class, 'causer_id', 'id');
     }
 }

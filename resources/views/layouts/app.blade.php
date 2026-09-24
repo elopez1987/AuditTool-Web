@@ -249,6 +249,14 @@
                                                 </li>
                                             @endcan
 
+                                            @can('maps-geofence.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('maps-geofence.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="mdi mdi-map"></i>
+                                                        <span class="hide-menu"> Mapa del sitio</span></a>
+                                                </li>
+                                            @endcan
 
                                         </ul>
                                     </li>

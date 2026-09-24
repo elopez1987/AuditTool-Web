@@ -10,6 +10,7 @@ use App\Http\Controllers\Yard\Customers\OrderCustomerController;
 use App\Http\Controllers\Yard\Customers\ParameterCustomerController;
 use App\Http\Controllers\Yard\DashboardYardController;
 use App\Http\Controllers\Yard\Destination\StorageDestinationController;
+use App\Http\Controllers\Yard\GeofencesController;
 use App\Http\Controllers\Yard\LabelTrucks\StorageLabelTrucksController;
 use App\Http\Controllers\Yard\RControl\SearchOperatorInRC;
 use App\Http\Controllers\Yard\ReceiptProviders\ImportProvidersController;
@@ -369,5 +370,9 @@ Route::middleware(['auth'])->group(function () {
     Route::put('receiptunitticketstatus/{id}', [ReceiptUnitTicketController::class, 'updatestatus'])->name('receiptunitticketstatus.update');
     //	Registrar el peso de producto y embalaje por operaciones
     Route::put('saveweightforoperation/{id}', [ReceiptUnitTicketController::class, 'saveweightforoperation'])->name('saveweightforoperation');
+
+    // Mapa con GeoCerca
+    Route::resource('maps-geofence', GeofencesController::class);
+    Route::get('getDataGeofence', [GeofencesController::class, 'getDataGeofence'])->name('getDataGeofence');
 
 });

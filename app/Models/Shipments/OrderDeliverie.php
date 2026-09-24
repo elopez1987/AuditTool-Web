@@ -52,8 +52,6 @@ class OrderDeliverie extends Model
 
     public static function controlAccessUser()
     {
-        // Una sola consulta en lugar de Warehouses()+Centers() por separado,
-        // para ahorrar un round-trip a la base de datos en cada listado.
         $access = SecurityAccessWarehouse::AccessScope();
 
         return static::whereIn('orderdeliveries.warehouseid', $access['warehouses'])
