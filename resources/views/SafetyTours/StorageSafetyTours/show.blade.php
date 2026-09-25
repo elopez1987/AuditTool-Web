@@ -146,12 +146,23 @@
             height: 900px;
             width: 100%;
         }
+        .gps-marker {
+            background: transparent;
+            border: none;
+        }
+
+        .gps-icon {
+            font-size: 32px;
+            filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.4));
+        }
     </style>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
     <link rel="stylesheet" href="{{asset('/theme/assets/extra-libs/prism/prism.css')}}">
     <link rel="stylesheet" href="{{asset('/theme/assets/libs/magnific-popup/dist/magnific-popup.css')}}">
 @endsection
 
 @section('script')
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="{{asset('theme/assets/extra-libs/prism/prism.js')}}"></script>
     <script src="{{asset('theme/assets/libs/magnific-popup/dist/jquery.magnific-popup.min.js')}}"></script>
     <script src="{{asset('theme/assets/libs/magnific-popup/meg.init.js')}}"></script>
@@ -159,48 +170,61 @@
     
     <script>
         const locations = @json($locations);
-        
+
         function initMap() {
             console.log('Iniciando mapa con', locations.length, 'ubicaciones');
-            
+
             // Validar que existan ubicaciones
             if (!locations || locations.length === 0) {
                 console.warn('No hay ubicaciones disponibles para mostrar en el mapa');
-                document.getElementById('map').innerHTML = '<div style="padding: 20px; text-align: center; background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 4px;">No hay ubicaciones disponibles para mostrar en el mapa</div>';
+                document.getElementById('map').innerHTML = '<div style="padding: 20px; ' +
+                    'text-align: center; background: #f8f9fa; ' +
+                    'border: 1px solid #dee2e6; border-radius: 4px;">No hay ubicaciones disponibles para mostrar en el mapa</div>';
                 return;
             }
 
-            const center = { lat: 19.3540031, lng: -99.587697 };
-            const map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 8,
-                center: center,
-            });
-            
-            const bounds = getBoundsForLocations(locations);
-            map.fitBounds(bounds);
+            const center = [19.3540031, -99.587697];
+            const map = L.map('map').setView(center, 8);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors',
+                maxZoom: 19,
+            }).addTo(map);
+
+            map.invalidateSize();
 
             locations.forEach(location => {
                 console.log('Agregando marcador:', location);
-                const position = { lat: location.lat, lng: location.lng };
+
                 const markerColor = getMarkerColor(location.status);
-                new google.maps.Marker({
-                    position: position,
-                    map: map,
-                    title: `Ubicación: ${location.name}`,
-                    icon: {
-                        path: google.maps.SymbolPath.CIRCLE,
-                        fillColor: markerColor,
-                        fillOpacity: 1,
-                        strokeColor: markerColor,
-                        strokeWeight: 2,
-                        scale: 5
-                    }
+
+                const gpsIcon = L.divIcon({
+                    className: 'gps-marker',
+                    html: `
+                        <div class="gps-icon" style="color: ${markerColor};">
+                            <i class="fas fa-map-marker"></i>
+                        </div>
+                         `,
+                    iconSize: [30, 30],
+                    iconAnchor: [20, 20],
+                    popupAnchor: [0, -20]
                 });
+
+                L.marker([location.lat, location.lng], {
+                    icon: gpsIcon
+                })
+                    .addTo(map)
+                    .bindPopup(`
+            <strong>${location.name}</strong><br>
+            Estado: ${location.status}
+        `);
             });
-            
+
+            map.fitBounds(getBoundsForLocations(locations));
+
             console.log('Mapa inicializado correctamente');
         }
-        
+
         function getMarkerColor(status) {
             switch (status) {
                 case 'TERMINADO':
@@ -211,14 +235,11 @@
                     return 'blue';
             }
         }
-        
+
         function getBoundsForLocations(locations) {
-            const bounds = new google.maps.LatLngBounds();
-            locations.forEach(location => {
-                bounds.extend({ lat: location.lat, lng: location.lng });
-            });
-            return bounds;
+            return L.latLngBounds(locations.map(location => [location.lat, location.lng]));
         }
+
+        $(window).on('load', initMap);
     </script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ config('app.google_maps_api_key') }}&callback=initMap"></script>
 @endsection

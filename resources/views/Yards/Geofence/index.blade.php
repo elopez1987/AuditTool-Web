@@ -31,9 +31,33 @@
                                     valueField="centerid"
                                     textField="name"
                                     :selected="$selectedCenterId"
-                                    colClass="col-lg-3 col-md-12"
+                                    colClass="col-lg-2 col-md-12"
                             />
+                            <x-text-input
+                                    name="folionumber"
+                                    label="Folio de unidad"
+                                    uppercase
+                                    colClass="col-lg-2 col-md-12"
+                            />
+                            <x-text-input
+                                    name="boxnumber"
+                                    label="Placa de unidad"
+                                    uppercase
+                                    colClass="col-lg-2 col-md-12"
+                            />
+                            <div class="col-lg-2 col-md-12">
+                                <div class="mb-3">
+                                    <label class="d-block">&nbsp;</label>
+                                    @include('buttons.search')
+                                </div>
+                            </div>
                         </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div id="unit-search-feedback" class="alert" role="alert" style="display:none;"></div>
+                            </div>
+                        </div>
+
                     </form>
                     <div id="geofence-warning" class="alert alert-warning" style="@if(! $selectedCenterId || $geofence) display:none; @endif">
                         El centro seleccionado no cuenta con una geocerca registrada.
@@ -50,6 +74,27 @@
 
 @section('css')
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <style>
+        .unit-marker-highlighted {
+            background: transparent;
+            border: none;
+        }
+        .unit-marker-highlighted-pin {
+            display: block;
+            width: 24px;
+            height: 24px;
+            background-color: #e53935;
+            border: 3px solid #b71c1c;
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(-45deg);
+            box-shadow: 0 0 8px rgba(0, 0, 0, .6);
+            animation: unit-marker-pulse 1s ease-in-out infinite alternate;
+        }
+        @keyframes unit-marker-pulse {
+            from { box-shadow: 0 0 4px rgba(229, 57, 53, .7); }
+            to { box-shadow: 0 0 16px rgba(229, 57, 53, 1); }
+        }
+    </style>
 @endsection
 
 @section('script')
@@ -68,14 +113,19 @@
         let currentPolygon = null;
         const unitMarkers = L.layerGroup().addTo(map);
 
-        // Ajusta el zoom para que se vean tanto la geocerca dibujada como los
-        // marcadores de unidades en patio; si no hay ninguno de los dos,
-        // regresa a la vista por default (CDMX).
+        let currentUnits = [];
+        let unitMarkersById = {};
+        let highlightedMarkers = [];
+        const defaultMarkerIcon = new L.Icon.Default();
+        const highlightedMarkerIcon = L.divIcon({
+            className: 'unit-marker-highlighted',
+            html: '<span class="unit-marker-highlighted-pin"></span>',
+            iconSize: [24, 24],
+            iconAnchor: [12, 24],
+            popupAnchor: [0, -22],
+        });
+
         function updateMapView() {
-            // Si el layout (sidebar, cards) todavia no termina de acomodarse cuando
-            // Leaflet mide el contenedor, calcula mal el tamaño y el mapa se ve
-            // "abierto" a nivel mundial con el mundo repetido. Forzamos el recalculo
-            // antes de hacer zoom para evitarlo.
             map.invalidateSize();
 
             const boundsPoints = [];
@@ -113,8 +163,6 @@
             updateMapView();
         }
 
-        // Arma el contenido del popup como una lista de "Campo: Valor",
-        // omitiendo los campos vacíos (p.ej. unidades sin transportista o sin caja).
         function buildUnitPopup(unit) {
             const rows = [
                 ['Unidad', unit.id],
@@ -131,22 +179,90 @@
                 .join('<br>');
         }
 
-        // Pinta un marcador por cada unidad en patio con posición GPS válida.
-        // Coexiste con la geocerca; no depende del centro de distribución
-        // seleccionado en el filtro, por lo que solo se calcula una vez.
         function renderUnitMarkers(units) {
             unitMarkers.clearLayers();
 
-            (units || []).forEach(function (unit) {
-                L.marker([unit.lat, unit.lng])
+            currentUnits = units || [];
+            unitMarkersById = {};
+            highlightedMarkers = [];
+
+            currentUnits.forEach(function (unit) {
+                const marker = L.marker([unit.lat, unit.lng], {icon: defaultMarkerIcon})
                     .addTo(unitMarkers)
                     .bindPopup(buildUnitPopup(unit));
+
+                unitMarkersById[unit.id] = marker;
             });
         }
 
-        // Se espera a que la página termine de cargar por completo (incluyendo el
-        // acomodo del layout) antes del primer render, para que Leaflet mida bien
-        // el contenedor desde el inicio.
+        function clearUnitHighlights() {
+            highlightedMarkers.forEach(marker => marker.setIcon(defaultMarkerIcon));
+            highlightedMarkers = [];
+        }
+
+        function normalizeSearchValue(value) {
+            return (value || '').toString().trim().toUpperCase();
+        }
+
+        function findMatchingUnits(folionumber, boxnumber) {
+            const folioAsNumber = folionumber !== '' && ! isNaN(Number(folionumber)) ? Number(folionumber) : null;
+
+            return currentUnits.filter(function (unit) {
+                const matchesFolio = folioAsNumber !== null && Number(unit.id) === folioAsNumber;
+                const matchesBox = boxnumber !== '' && (unit.boxnumber || '').toString().toUpperCase().includes(boxnumber);
+
+                return matchesFolio || matchesBox;
+            });
+        }
+
+        function showUnitSearchFeedback(message, type) {
+            $('#unit-search-feedback')
+                .removeClass('alert-warning alert-success')
+                .addClass('alert-' + type)
+                .text(message)
+                .show();
+        }
+
+        function searchUnitOnMap() {
+            const folionumber = normalizeSearchValue($('#folionumber').val());
+            const boxnumber = normalizeSearchValue($('#boxnumber').val());
+
+            clearUnitHighlights();
+
+            if (! folionumber && ! boxnumber) {
+                showUnitSearchFeedback('Captura el folio o la placa de la unidad a buscar.', 'warning');
+                return;
+            }
+
+            const matches = findMatchingUnits(folionumber, boxnumber);
+            const matchedMarkers = matches.map(unit => unitMarkersById[unit.id]).filter(Boolean);
+
+            if (! matchedMarkers.length) {
+                showUnitSearchFeedback('No se encontró ninguna unidad en el mapa con esos datos.', 'warning');
+                return;
+            }
+
+            highlightedMarkers = matchedMarkers;
+            matchedMarkers.forEach(marker => marker.setIcon(highlightedMarkerIcon));
+
+            if (matchedMarkers.length === 1) {
+                map.setView(matchedMarkers[0].getLatLng(), 18);
+                matchedMarkers[0].openPopup();
+            } else {
+                map.fitBounds(L.latLngBounds(matchedMarkers.map(marker => marker.getLatLng())), {
+                    maxZoom: 18,
+                    padding: [30, 30],
+                });
+            }
+
+            showUnitSearchFeedback(
+                matchedMarkers.length === 1
+                    ? 'Unidad localizada en el mapa.'
+                    : matchedMarkers.length + ' unidades localizadas en el mapa.',
+                'success'
+            );
+        }
+
         $(window).on('load', function () {
             renderUnitMarkers(@json($unitsInYard));
             renderGeofence(@json((bool) $selectedCenterId), @json($geofence->name ?? null), @json($points));
@@ -167,6 +283,11 @@
                 .fail(function () {
                     renderGeofence(true, null, []);
                 });
+        });
+
+        $('#search').on('submit', function (event) {
+            event.preventDefault();
+            searchUnitOnMap();
         });
     </script>
 @endsection

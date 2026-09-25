@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\SafetyTours\Tours;
 
 use App\Http\Controllers\BaseController;
-use App\Http\Controllers\SafetyTours\Exception;
 use App\Http\Requests\Web\SafetyTours\CreateSafetyTourRequest;
 use App\Models\SafetyTours\StorageSafetyTourDetail;
 use App\Models\SafetyTours\StorageSafetyTours;
@@ -26,7 +25,7 @@ class StorageSafetyToursController extends BaseController
     {
         $data = StorageSafetyTours::controlAccessUser()
             ->with(['status', 'center', 'user'])
-            ->Name($request->get('name'))->get();
+            ->Name($request->input('name'))->get();
 
         return $this->showDataToView($data, 'SafetyTours.StorageSafetyTours.partials.buttons');
     }
