@@ -97,6 +97,12 @@
                     ['id' => 'S', 'name' => 'SI'],
                 ]"
     />
+    <x-text-input
+            name="auxiliary05"
+            label="ID de tipo de unidad"
+            :value="$storagechecklist->auxiliary05"
+            uppercase
+    />
 </div>
 <div class="row">
     <div class="col-lg-2 col-md-6 col-sm-12">

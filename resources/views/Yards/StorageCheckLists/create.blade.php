@@ -23,15 +23,11 @@
                         <hr class="mt-3">
                         @include('Yards.StorageCheckLists.partials.formCreate')
                     </form>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            @include('layouts.Partials.Errors')
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
+    @include('layouts.Partials.Errors')
 @endsection
 
 @section('script')

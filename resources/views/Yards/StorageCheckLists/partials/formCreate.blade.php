@@ -92,4 +92,9 @@
                     ['id' => 'S', 'name' => 'SI'],
                 ]"
     />
+    <x-text-input
+            name="auxiliary05"
+            label="ID de tipo de unidad"
+            uppercase
+    />
 </div>

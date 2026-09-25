@@ -19,6 +19,7 @@
         },
         "columns": [
             {data: 'center.description', name: 'center.description'},
+            {data: 'id'},
             {data: 'name'},
             {data: 'truckid'},
             {data: 'auxiliary01'},

@@ -61,4 +61,6 @@ class ShipmentTruckController extends BaseController
 
         return $this->successResponse('shipmenttrucks.index');
     }
+
+    public function show(string $shipmenttruck) {}
 }

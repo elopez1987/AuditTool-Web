@@ -38,6 +38,7 @@ class StorageCheckListsController extends BaseController
                 'storagechecklists.auxiliary02',
                 'storagechecklists.auxiliary03',
                 'storagechecklists.auxiliary04',
+                'storagechecklists.auxiliary05',
                 'storagechecklists.statusid',
                 'storagereasons.name as reason',
                 'storageunittypes.description as unittype'])
