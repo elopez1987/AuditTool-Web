@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Inventory\InventoryFiscal;
 
 use App\Http\Controllers\BaseController;
-use App\Http\Requests\Inventory\InventoryCardCountRequest;
+use App\Http\Requests\Web\Inventory\InventoryFiscal\InventoryCardCountRequest;
 use App\Models\Inventory\InventoryFiscal\InventoryCard;
 use App\Models\Inventory\InventoryFiscal\InventoryCardCount;
 use App\Models\Inventory\InventoryFiscal\InventoryHead;

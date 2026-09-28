@@ -2,11 +2,9 @@
 
 namespace App\Http\Resources\IzelWms;
 
-use App\Models\Yard\ReceiptUnit;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-/** @mixin ReceiptUnit */
 class CheckOutResource extends JsonResource
 {
     public function toArray(Request $request): array

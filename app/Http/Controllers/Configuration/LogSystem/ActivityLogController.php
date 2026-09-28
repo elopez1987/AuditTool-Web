@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Configuration\LogSystem;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Configuration\SearchActivityLogRequest;
+use App\Http\Requests\Web\Configuration\ActiviyLog\SearchActivityLogRequest;
 use App\Services\Configuration\ActivityLogService;
 use App\ViewModels\Configuration\ActivityLogViewModel;
 use Yajra\DataTables\Facades\DataTables;

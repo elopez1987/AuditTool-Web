@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Yard;
 
 use App\Http\Controllers\BaseController;
-use App\Http\Requests\Yard\CreateGeofenceRequest;
+use App\Http\Requests\Web\Yard\Geofence\CreateGeofenceRequest;
 use App\Models\Yard\Geofence;
 use App\Services\Yard\GeofenceService;
 use App\ViewModels\Yard\GeofenceViewModel;

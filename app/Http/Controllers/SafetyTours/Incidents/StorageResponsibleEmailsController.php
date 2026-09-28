@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\SafetyTours\Incidents;
 
 use App\Http\Controllers\BaseController;
-use App\Http\Requests\SafetyTours\Incidents\SaveEmailResponsibleRequest;
+use App\Http\Requests\Web\SafetyTours\Incidents\SaveEmailResponsibleRequest;
 use App\Models\SafetyTours\Incidents\StorageResponsibleArea;
 use App\Models\SafetyTours\Incidents\StorageSafetyResponsibleEmail;
 use Illuminate\Http\Request;

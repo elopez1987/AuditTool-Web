@@ -40,10 +40,6 @@ class ImportUsers implements SkipsOnError, SkipsOnFailure, ToModel, WithBatchIns
 
         Log::info('[ImportUsers] Procesando fila', $rowContext);
 
-        // NOTA: No envolvemos en DB::transaction() para evitar el error
-        // "Cannot roll back transNN. No transaction or savepoint of that name was found."
-        // que ocurre con SQL Server cuando se crean savepoints anidados dentro de
-        // los chunks de Maatwebsite/Excel. Los updateOrCreate ya son atómicos.
         try {
             $user = $this->getUpdateOrCreateUser($row);
             $this->assignRole($row, $user);
@@ -63,9 +59,6 @@ class ImportUsers implements SkipsOnError, SkipsOnFailure, ToModel, WithBatchIns
                 'trace' => $e->getTraceAsString(),
             ]);
         }
-
-        // Devolvemos null porque la persistencia la manejamos manualmente
-        // con updateOrCreate para evitar duplicados.
 
     }
 
@@ -147,7 +140,7 @@ class ImportUsers implements SkipsOnError, SkipsOnFailure, ToModel, WithBatchIns
     {
         return User::updateOrCreate(
             [
-                'username' => strtolower(trim((string) ($row['username'] ?? ''))),
+                'username' => trim((string) ($row['username'] ?? '')),
             ],
             [
                 'email' => strtolower(trim((string) ($row['email'] ?? ''))),

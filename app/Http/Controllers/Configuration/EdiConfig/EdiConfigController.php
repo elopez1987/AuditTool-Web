@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Configuration\EdiConfig;
 
 use App\Http\Controllers\BaseController;
-use App\Http\Requests\Configuration\EdiConfigRequest;
+use App\Http\Requests\Web\Configuration\EdiToken\EdiConfigRequest;
 use App\Models\Configuration\EDI\EdiConfig;
 use Illuminate\Http\Request;
 

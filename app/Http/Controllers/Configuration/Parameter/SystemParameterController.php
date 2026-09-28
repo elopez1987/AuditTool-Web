@@ -4,12 +4,18 @@ namespace App\Http\Controllers\Configuration\Parameter;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Configuration\Parameters\CreateParameterRequest;
+use App\Http\Requests\Web\Configuration\Parameters\SearchParameterRequest;
+use App\Http\Requests\Web\Configuration\Parameters\UpdateParameterRequest;
 use App\Models\Configuration\Parameters\SystemParameter;
+use App\Services\Configuration\SystemParameterService;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 
 class SystemParameterController extends BaseController
 {
+    public function __construct(
+        private readonly SystemParameterService $parameterService,
+    ) {}
+
     public function index()
     {
         $this->authorize('systemparameters.index');
@@ -17,20 +23,14 @@ class SystemParameterController extends BaseController
         return view('Configuration.SystemParameters.index');
     }
 
-    public function getDataParameters(Request $request)
+    public function getDataParameters(SearchParameterRequest $request)
     {
-        $data = SystemParameter::with(
-            [
-                'status' => function ($q) {
-                    $q->select('statusid', 'name');
-                },
-            ]
-        )
-            ->ForName($request->get('name'))
-            ->ForParameter($request->get('parameterid'))
-            ->select('systemparameters.*');
+        $data = $this->parameterService->all($request->validated());
 
-        return $this->showDataToView($data, 'Configuration.SystemParameters.partials.buttons');
+        return $this->showDataToView(
+            $data,
+            'Configuration.SystemParameters.partials.buttons',
+        );
     }
 
     public function create()
@@ -42,8 +42,8 @@ class SystemParameterController extends BaseController
 
     public function store(CreateParameterRequest $request): RedirectResponse
     {
-        $parameter = new SystemParameter($request->all());
-        $parameter->save();
+        $this->authorize('systemparameters.create');
+        $parameter = $this->parameterService->store($request->validated());
 
         return redirect('detailparameter/' . $parameter->parameterid . '/add');
     }
@@ -54,22 +54,24 @@ class SystemParameterController extends BaseController
 
         return view(
             'Configuration.SystemParameters.edit',
-            compact('systemparameter')
+            compact('systemparameter'),
         );
     }
 
-    public function update(Request $request, SystemParameter $systemparameter): RedirectResponse
-    {
-        $systemparameter->update($request->all());
+    public function update(
+        UpdateParameterRequest $request,
+        SystemParameter $systemparameter
+    ): RedirectResponse {
+        $this->authorize('systemparameters.edit');
+        $systemparameter->update($request->validated());
 
         return $this->infoResponse('systemparameters.index');
     }
 
     public function destroy(SystemParameter $systemparameter): RedirectResponse
     {
-        $systemparameter->statusid = 'D';
-        $systemparameter->save();
-        $systemparameter->delete();
+        $this->authorize('systemparameters.destroy');
+        $this->parameterService->destroy($systemparameter);
 
         return $this->infoResponse('systemparameters.index');
     }

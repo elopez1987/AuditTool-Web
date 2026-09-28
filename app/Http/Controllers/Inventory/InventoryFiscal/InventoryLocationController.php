@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Inventory\InventoryFiscal;
 
 use App\Http\Controllers\BaseController;
-use App\Http\Requests\Inventory\InventoryLocationRequest;
+use App\Http\Requests\Web\Inventory\InventoryFiscal\InventoryLocationRequest;
 use App\Imports\Inventario\PartNumbers\ImportLocationInventory;
 use App\Models\Inventory\InventoryFiscal\InventoryCard;
 use App\Models\Inventory\InventoryFiscal\InventoryLocation;

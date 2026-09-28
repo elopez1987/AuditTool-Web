@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Yard\GpsDevice;
 
 use App\Http\Controllers\BaseController;
-use App\Http\Requests\Yard\GpsDeviceRequest;
-use App\Http\Requests\Yard\GpsDeviceSearchRequest;
-use App\Http\Requests\Yard\GpsDeviceUpdateRequest;
+use App\Http\Requests\Web\Yard\Geofence\GpsDeviceRequest;
+use App\Http\Requests\Web\Yard\Geofence\GpsDeviceSearchRequest;
+use App\Http\Requests\Web\Yard\Geofence\GpsDeviceUpdateRequest;
 use App\Models\Yard\GpsDevice;
 use App\Services\Yard\GpsDeviceService;
 use App\ViewModels\Yard\GpsDeviceViewModel;

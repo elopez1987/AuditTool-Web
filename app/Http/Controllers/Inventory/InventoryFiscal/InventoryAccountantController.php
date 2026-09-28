@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Inventory\InventoryFiscal;
 
 use App\Http\Controllers\BaseController;
-use App\Http\Requests\Inventory\InventoryFiscal\InventoryAccountantRequest;
+use App\Http\Requests\Web\Inventory\InventoryFiscal\InventoryAccountantRequest;
 use App\Models\Inventory\InventoryFiscal\InventoryAccountant;
 use App\Models\Inventory\InventoryFiscal\InventoryHead;
 use App\User;

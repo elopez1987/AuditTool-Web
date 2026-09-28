@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\SafetyTours\Incidents;
 
 use App\Http\Controllers\BaseController;
-use App\Http\Requests\SafetyTours\Incidents\SaveCategorySafetyRequest;
+use App\Http\Requests\Web\SafetyTours\Incidents\SaveCategorySafetyRequest;
 use App\Models\SafetyTours\Incidents\StorageCategorySafety;
 use App\Models\SafetyTours\Incidents\StorageResponsibleArea;
 use App\Models\SafetyTours\Incidents\StorageSafetyCategoryDetail;

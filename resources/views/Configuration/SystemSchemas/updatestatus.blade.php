@@ -60,10 +60,10 @@
                         </div>
                         <div class="col-md-6 col-sm-12">
                             <div class="form-group">
-                                <label for="namestatus">Nombre del Estatus </label>
-                                <input type="text" class="form-control" required id="namestatus" name="namestatus"
+                                <label for="name">Nombre del Estatus </label>
+                                <input type="text" class="form-control" required id="name" name="name"
                                        maxlength="100"
-                                       aria-describedby="namestatus" value="{{$statu->name}}"
+                                       aria-describedby="name" value="{{$statu->name}}"
                                        onKeyUp=this.value=this.value.toUpperCase();
                                 >
                             </div>
