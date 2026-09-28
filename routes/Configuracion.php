@@ -152,7 +152,7 @@ Route::middleware(['auth'])->group(function () {
     //    ---------------------------------------------------- Impresoras  ----------------------------------------------------
 
     //    ---------------------------------------------------- Edi Config  ----------------------------------------------------
-    Route::resource('edi-configurations', EdiConfigController::class)->only('index');
+    Route::resource('edi-configurations', EdiConfigController::class);
     //    ---------------------------------------------------- Impresoras  ----------------------------------------------------
 
     //    Catalogos de impresoras
