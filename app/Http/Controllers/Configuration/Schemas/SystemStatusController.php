@@ -19,7 +19,7 @@ class SystemStatusController extends BaseController
     public function index($id)
     {
         return view(
-            'Configuration.SystemSchemas.createstatus',
+            'Configuration.SystemSchemas.creatgit estatus',
             $this->viewModel->get($id),
         );
     }
