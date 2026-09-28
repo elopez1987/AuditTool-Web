@@ -86,14 +86,14 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('activity-logs', ActivityLogController::class)->only('index', 'show');
     // Consulta del detalle de logs
     Route::get('getDataActivityLog', [ActivityLogController::class, 'getDataActivityLog'])->name('getDataActivityLog');
+    // Parametros
+    Route::resource('systemparameters', SystemParameterController::class)->except('show');
+    // Consultar parametros del sistema
+    Route::get('getDataParameters', [SystemParameterController::class, 'getDataParameters'])->name('getDataParameters');
 
     // ########################## Pendientes #######################################
-
     //    ---------------------------------------------------- Logs del sistema --------------------------------------------
 
-    //    ---------------------------------------------------- Parametros --------------------------------------------------
-    Route::resource('systemparameters', SystemParameterController::class)->except('show');
-    Route::get('getDataParameters', [SystemParameterController::class, 'getDataParameters'])->name('getDataParameters');
     //    Detalle de parametros
     Route::get('detailparameter/{systemparameter}/add', [SystemDetailParametersController::class, 'adddetailparameter'])->name('adddetailparameter');
     Route::put('savedetailparameter/{systemparameter}', [SystemDetailParametersController::class, 'savedetailparameter'])->name('savedetailparameter');

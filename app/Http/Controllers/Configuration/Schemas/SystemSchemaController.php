@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Configuration\Schemas;
 
 use App\Http\Controllers\BaseController;
-use App\Http\Requests\Configuration\SearchSchemasRequest;
 use App\Http\Requests\Web\Configuration\Schemas\CreateSchemaRequest;
+use App\Http\Requests\Web\Configuration\Schemas\SearchSchemasRequest;
 use App\Models\Configuration\Schemas\SystemSchema;
 use App\Services\Configuration\SystemSchemaService;
 use Illuminate\Http\RedirectResponse;

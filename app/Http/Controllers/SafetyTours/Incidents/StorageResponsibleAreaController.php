@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\SafetyTours\Incidents;
 
 use App\Http\Controllers\BaseController;
-use App\Http\Requests\SafetyTours\StorageResponsibleAreaRequest;
+use App\Http\Requests\Web\SafetyTours\StorageResponsibleAreaRequest;
 use App\Models\SafetyTours\Incidents\StorageResponsibleArea;
 use Illuminate\Http\Request;
 

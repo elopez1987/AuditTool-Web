@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Inventory\InventoryFiscal;
 
 use App\Http\Controllers\BaseController;
-use App\Http\Requests\Inventory\InventoryAisleCountRequest;
+use App\Http\Requests\Web\Inventory\InventoryFiscal\InventoryAisleCountRequest;
 use App\Models\Inventory\InventoryFiscal\InventoryAisle;
 use App\Models\Inventory\InventoryFiscal\InventoryAisleCount;
 use App\Models\Inventory\InventoryFiscal\InventoryHead;

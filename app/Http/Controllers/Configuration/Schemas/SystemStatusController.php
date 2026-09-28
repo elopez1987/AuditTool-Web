@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Configuration\Schemas;
 
 use App\Http\Controllers\BaseController;
-use App\Http\Requests\Configuration\UpdateStatusRequest;
 use App\Http\Requests\Web\Configuration\Schemas\CreateStatusRequest;
+use App\Http\Requests\Web\Configuration\Schemas\UpdateStatusRequest;
 use App\Services\Configuration\SystemStatusService;
 use App\ViewModels\Configuration\SystemSchemaStatusViewModel;
 use Illuminate\Http\RedirectResponse;

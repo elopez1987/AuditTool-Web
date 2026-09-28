@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Inventory\InventoryFiscal;
 
 use App\Http\Controllers\BaseController;
-use App\Http\Requests\Inventory\InventoryFiscal\InventoryImportCounterRequest;
+use App\Http\Requests\Web\Inventory\InventoryFiscal\InventoryImportCounterRequest;
 use App\Services\Inventory\InventoryCounterImportService;
 
 class InventoryImportCounterController extends BaseController

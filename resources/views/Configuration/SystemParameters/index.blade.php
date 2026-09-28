@@ -12,7 +12,7 @@
                         {{csrf_field()}}
                         <div class="row">
                             <div class="col-md-12">
-                                @can('CREAR PARAMETROS')
+                                @can('systemparameters.create')
                                 <a href="{{route('systemparameters.create')}}">
                                   @include('buttons.add')
                                 </a>
@@ -23,7 +23,7 @@
                                 <a href="{{route('systemparameters.index')}}">
                                   @include('buttons.reload')
                                 </a>
-                                <a href="{{route('menuconfiguration')}}">
+                                <a href="{{route('home')}}">
                                   @include('buttons.cancel')
                                 </a>
                             </div>
@@ -51,20 +51,21 @@
 
                     <div class="row">
                         <div class="col-lg-12 col-md-12">
-                            <table id="table-parameters" class="table table-bordered table-condensed table-hover">
+                            <table id="table-parameters" class="table table-bordered table-condensed table-hover" width="100%">
                                 <thead>
                                     <tr>
-                                        <th class="bg-inverse text-white">Parametro</th>
-                                        <th class="bg-inverse text-white">Nombre</th>
-                                        <th class="bg-inverse text-white">Auxiliar 01</th>
-                                        <th class="bg-inverse text-white">Auxiliar 02</th>
-                                        <th class="bg-inverse text-white">Auxiliar 03</th>
-                                        <th class="bg-inverse text-white">Opciones</th>
+                                        <th>Parametro</th>
+                                        <th>Nombre</th>
+                                        <th>Auxiliar 01</th>
+                                        <th>Auxiliar 02</th>
+                                        <th>Auxiliar 03</th>
+                                        <th>Opciones</th>
                                     </tr>
                                 </thead>
                             </table>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -73,5 +74,36 @@
 @endsection
 
 @section('script')
-    @include('Configuration.SystemParameters.partials.table')
+    <script>
+        let oTable = initDataTable("#table-parameters", {
+            serverSide: true,
+            ajax: {
+                url: '{{ route('getDataParameters') }}',
+                data: function (d) {
+                    d.name = $('input[name=name]').val();
+                    d.parameterid = $('input[name=parameterid]').val();
+                }
+            },
+            columns: [
+                {data : 'parameterid'},
+                {data : 'name'},
+                {data : 'auxiliary01'},
+                {data : 'auxiliary02'},
+                {data : 'auxiliary03'},
+                { data: 'btn', orderable: false, searchable: false },
+            ],
+            columnDefs: [
+                {"width": "300px", "targets": 0},
+                {"width": "450px", "targets": 1},
+                {"width": "150px", "targets": 2},
+                {"width": "220px", "targets": 3},
+                {"width": "220px", "targets": 4},
+                {"width": "220px", "targets": 5},
+            ],
+        });
+        $('#search').on('submit', function (e) {
+            oTable.draw();
+            e.preventDefault();
+        });
+    </script>
 @endsection

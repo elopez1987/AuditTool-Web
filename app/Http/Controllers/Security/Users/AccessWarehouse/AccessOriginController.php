@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Security\Users\AccessWarehouse;
 
 use App\Http\Controllers\BaseController;
-use App\Http\Requests\Security\Users\AccessOriginRequest;
+use App\Http\Requests\Web\Security\Users\AccessOriginRequest;
 use App\Services\Security\AccessOriginService;
 use App\Services\Security\SecurityUserService;
 use App\Services\Yard\StorageUnitOriginService;
