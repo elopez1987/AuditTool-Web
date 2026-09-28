@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Shipments\ShipmentTransport;
 
 use App\Http\Controllers\Controller;
 use App\Models\Configuration\Parameters\SystemDetailParameter;
-use App\Models\Shipments\OrderDeliverie;
 use App\Models\Shipments\ShipmentTransport\StorageShipmentTransport;
 use App\Traits\Web\Shipments\ShipmentTransport\QueryShipmentTransport;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -17,16 +16,8 @@ class PrintDocumentQRForTransportController extends Controller
     {
         $pathImage = SystemDetailParameter::where('parameterid', '=', 'PARAM-IMG')->first();
 
-        //
-        //        $data = OrderDeliverie::with([
-        //            'transport' => function ($query) {
-        //                $query->where('auxiliary04', 'OrderDelivery');
-        //            },
-        //            'center:centerid,auxiliary04',
-        //        ])->findOrFail($id);
-
         $data = StorageShipmentTransport::controlAccessUser()
-            ->with('order')
+            ->with('order', 'carrier')
             ->where('id', $id)->first();
 
         $fortmat = 'Shipments.StorageShipmenTransport.partials.format';

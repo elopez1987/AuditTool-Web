@@ -218,12 +218,12 @@
         <tr>
             <th class="label">EMBARQUE</th>
             <td class="value value-highlight">
-                {{ $data->order->shipmentid ?? '' }}
+                {{ $data->order?->shipmentid ?? '' }}
             </td>
 
             <th class="label">N. CONFIRMACIÓN</th>
             <td class="value">
-                {{ $data->order->confirmation ?? '' }}
+                {{ $data->order?->confirmation ?? '' }}
             </td>
         </tr>
 
@@ -312,8 +312,8 @@
     {{-- Información del transporte --}}
 
     @php
-        $carrierImage = $data->carrier?->auxiliary04;
-        $driverImage = $data->carrier?->auxiliary05;
+        $carrierImage = $data->carrier->auxiliary04;
+        $driverImage = $data->carrier->auxiliary05;
 
         $carrierImagePath = $carrierImage
             ? (str_starts_with($carrierImage, 'public/')
