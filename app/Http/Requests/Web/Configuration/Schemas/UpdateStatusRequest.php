@@ -11,8 +11,7 @@ class UpdateStatusRequest extends FormRequest
         return [
             'centerid' => 'nullable|string|max:30|exists:systemcenterdistributions,centerid',
             'warehouseid' => 'nullable|string|max:30|exists:systemwarehouses,warehouseid',
-            'schemaid' => 'required|string|max:3|exists:systemschemas,schemaid',
-            'statusid' => 'required|string|max:10|unique:systemstatus,statusid',
+            'statusid' => ['required', 'string', 'max:10'],
             'name' => 'required|string|max:100',
             'comment' => 'nullable|string',
             'auxiliary01' => 'nullable|string',
