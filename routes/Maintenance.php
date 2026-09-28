@@ -25,9 +25,9 @@ Route::middleware(['auth'])->group(function () {
     Route::put('storedetailslifttruck/{id}', [StorageCheckListDetailLiftTruckController::class, 'store'])->name('storedetailslifttruck.store');
     Route::put('updatestatusdetaillifttruck/{id}', [StorageCheckListDetailLiftTruckController::class, 'updatestatusdetaillifttruck'])->name('updatestatusdetaillifttruck');
     // Agregar check list de evidencias fotograficas
-    Route::get('storage-check-listtruck-evidences/{id}', [StorageChekListTruckEvidenceController::class, 'index'])->name('storageChekListTruckEvidence');
+    Route::get('storage-check-listtruck-evidences/{id}', [StorageChekListTruckEvidenceController::class, 'index'])->name('storageChekListTruckEvidenceget');
     Route::put('storage-check-listtruck-evidences/{id}', [StorageChekListTruckEvidenceController::class, 'store'])->name('storageChekListTruckEvidence');
-    Route::put('storage-check-listtruck-update/{id}', [StorageChekListTruckEvidenceController::class, 'update'])->name('storageChekListTruckEvidence');
+    Route::put('storage-check-listtruck-update/{id}', [StorageChekListTruckEvidenceController::class, 'update'])->name('storageChekListTruckEvidenceupdate');
 
     //    Borrar detalle de check list de montacargas
     Route::post('deletedetailchecklistlifttrucks/{id}', [StorageCheckListDetailLiftTruckController::class, 'deletedetailchecklistlifttrucks'])->name('deletedetailchecklistlifttrucks');
