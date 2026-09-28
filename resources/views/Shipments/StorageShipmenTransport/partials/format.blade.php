@@ -310,52 +310,50 @@
     </div>
 
     {{-- Información del transporte --}}
-    @if ($data->transport)
 
-        @php
-            $carrierImage = $data->carrier?->auxiliary04;
-            $driverImage = $data->carrier?->auxiliary05;
+    @php
+        $carrierImage = $data->carrier?->auxiliary04;
+        $driverImage = $data->carrier?->auxiliary05;
 
-            $carrierImagePath = $carrierImage
-                ? (str_starts_with($carrierImage, 'public/')
-                    ? storage_path('app/' . $carrierImage)
-                    : storage_path('app/public/' . $carrierImage))
-                : null;
+        $carrierImagePath = $carrierImage
+            ? (str_starts_with($carrierImage, 'public/')
+                ? storage_path('app/' . $carrierImage)
+                : storage_path('app/public/' . $carrierImage))
+            : null;
 
-            $driverImagePath = $driverImage
-                ? storage_path('app/' . $driverImage)
-                : null;
-        @endphp
+        $driverImagePath = $driverImage
+            ? storage_path('app/' . $driverImage)
+            : null;
+    @endphp
 
-        <div class="row">
-            <table class="transport-images">
-                <tbody>
-                <tr>
-                    <th>
-                        @if ($carrierImagePath && file_exists($carrierImagePath))
-                            <img
-                                    src="{{ $carrierImagePath }}"
-                                    alt="Imagen del transporte"
-                                    class="transport-image"
-                            >
-                        @endif
-                    </th>
+    <div class="row">
+        <table class="transport-images">
+            <tbody>
+            <tr>
+                <th>
+                    @if ($carrierImagePath && file_exists($carrierImagePath))
+                        <img
+                                src="{{ $carrierImagePath }}"
+                                alt="Imagen del transporte"
+                                class="transport-image"
+                        >
+                    @endif
+                </th>
 
-                    <th>
-                        @if ($driverImagePath && file_exists($driverImagePath))
-                            <img
-                                    src="{{ $driverImagePath }}"
-                                    alt="Imagen del operador"
-                                    class="transport-image"
-                            >
-                        @endif
-                    </th>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+                <th>
+                    @if ($driverImagePath && file_exists($driverImagePath))
+                        <img
+                                src="{{ $driverImagePath }}"
+                                alt="Imagen del operador"
+                                class="transport-image"
+                        >
+                    @endif
+                </th>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 
-    @endif
 
     {{-- Aviso --}}
     <h5 class="note">
