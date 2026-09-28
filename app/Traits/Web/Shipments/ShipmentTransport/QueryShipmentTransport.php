@@ -29,7 +29,7 @@ trait QueryShipmentTransport
             ->Shipmentid($request->input('shipmentid'))
             ->Carrier($request->input('carrierid'))
             ->select([
-                'orderdeliveries.id',
+                'shipmenttransport.id',
                 'orderdeliveries.shipmentid',
                 'orderdeliveries.carrierid',
                 'orderdeliveries.customerid',
@@ -59,12 +59,12 @@ trait QueryShipmentTransport
 
     public function getModelTransportEdit($id)
     {
-        return StorageShipmentTransport::where('orderid', $id)
+        return StorageShipmentTransport::where('shipmenttransport.id', $id)
             ->leftJoin('orderdeliveries', 'shipmenttransport.orderid', '=', 'orderdeliveries.id')
             ->where('shipmenttransport.auxiliary04', 'OrderDelivery')
             ->select([
                 'orderdeliveries.shipmentid', 'orderdeliveries.workday', 'orderdeliveries.loadingdate',
-                'orderdeliveries.downloaddate', 'orderdeliveries.id',
+                'orderdeliveries.downloaddate', 'shipmenttransport.id', 'shipmenttransport.carrierid',
                 'shipmenttransport.operatorname', 'shipmenttransport.drivernumber',
                 'shipmenttransport.phone', 'shipmenttransport.boxnumber',
                 'shipmenttransport.trucknumber', 'shipmenttransport.ecobox', 'shipmenttransport.ecotruck',

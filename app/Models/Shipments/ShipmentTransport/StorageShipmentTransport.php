@@ -2,7 +2,9 @@
 
 namespace App\Models\Shipments\ShipmentTransport;
 
+use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Security\Users\SecurityAccessWarehouse;
+use App\Models\Shipments\OrderDeliverie;
 use App\Models\Yard\Carriers\ShipmentCarrier;
 use App\User;
 use Carbon\Carbon;
@@ -60,16 +62,23 @@ use Spatie\Activitylog\Traits\LogsActivity;
  *
  * @mixin \Eloquent
  */
+
+//    Auxiliary01 ==
+//    Auxiliary02 ==
+//    Auxiliary03 ==
+//    Auxiliary04 == 'Modelo ReceiptAsn o OrderDelivery'
+//    Auxiliary05 == 'UUId de acceso '
+
 class StorageShipmentTransport extends Model
 {
     use LogsActivity;
 
-    public $timestamps = false;
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
-    //    Auxiliary01 == Ingreso de unidad en el módulo de patios (1 con transporte)
-    //    Auxiliary02 == Datos de transporte registrado en sistema por tráfico o registro de QR
-    //    Auxiliary03 == ''
-    //    Auxiliary04 == 'Modelo ReceiptAsn o OrderDelivery'
+    public $timestamps = false;
 
     protected $table = 'shipmenttransport';
 
@@ -99,11 +108,6 @@ class StorageShipmentTransport extends Model
         'createddate',
     ];
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
-
     protected static function boot()
     {
         parent::boot();
@@ -119,6 +123,35 @@ class StorageShipmentTransport extends Model
         }
     }
 
+    public static function controlAccessUser()
+    {
+        $username = Auth::user()->username;
+
+        return StorageShipmentTransport::query()
+            ->whereIn(
+                'shipmenttransport.centerid',
+                SecurityAccessWarehouse::query()
+                    ->where('username', $username)
+                    ->select('centerid'),
+            )
+            ->whereIn(
+                'shipmenttransport.warehouseid',
+                SecurityAccessWarehouse::query()
+                    ->where('username', $username)
+                    ->select('warehouseid'),
+            );
+    }
+
+    public function center(): BelongsTo
+    {
+        return $this->belongsTo(SystemCenterDistribution::class, 'centerid', 'centerid');
+    }
+
+    public function order(): BelongsTo
+    {
+        return $this->belongsTo(OrderDeliverie::class, 'orderid', 'id');
+    }
+
     public function carrier()
     {
         return $this->belongsTo(ShipmentCarrier::class, 'carrierid', 'id');
@@ -127,14 +160,5 @@ class StorageShipmentTransport extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'createuser', 'id');
-    }
-
-    public static function controlAccessUser()
-    {
-        $warehouses = SecurityAccessWarehouse::Warehouses();
-        $centers = SecurityAccessWarehouse::Centers();
-
-        return StorageShipmentTransport::whereIn('shipmenttransport.warehouseid', $warehouses)
-            ->whereIn('shipmenttransport.centerid', $centers);
     }
 }

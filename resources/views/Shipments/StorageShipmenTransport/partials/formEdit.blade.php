@@ -121,13 +121,13 @@
                         <div class="col-lg-4 col-md-6 col-sm-12">
                             <div class="form-group">
                                 <label for="carriername">Linea de transporte</label>
-                                <input type="text" class="form-control" readonly id="carriername" name="carriername">
+                                <input type="text" class="form-control" disabled id="carriername" name="carriername" value="{{$transport->carrier->name}}">
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6 col-sm-12">
                             <div class="form-group">
                                 <label for="rfccarrier">RFC de Línea de transporte</label>
-                                <input type="text" class="form-control" readonly id="rfccarrier" name="rfccarrier">
+                                <input type="text" class="form-control" disabled id="rfccarrier" name="rfccarrier">
                             </div>
                         </div>
                     </div>
@@ -136,8 +136,7 @@
                             <div id="check" class="custom-control custom-checkbox hide">
                                 <input type="checkbox" class="custom-control-input" id="validateoperator"
                                        name="validateoperator">
-                                <label class="custom-control-label" for="validateoperator">Operador validado en Recurso
-                                    Confiable</label>
+                                <label class="custom-control-label" for="validateoperator">Operador validado en Recurso Confiable</label>
                             </div>
                         </div>
                     </div>
