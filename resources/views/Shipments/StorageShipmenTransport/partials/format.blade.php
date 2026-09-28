@@ -311,42 +311,26 @@
 
     {{-- Información del transporte --}}
 
-    @php
-        $carrierImage = $data->carrier->auxiliary04;
-        $driverImage = $data->carrier->auxiliary05;
-
-        $carrierImagePath = $carrierImage
-            ? (str_starts_with($carrierImage, 'public/')
-                ? storage_path('app/' . $carrierImage)
-                : storage_path('app/public/' . $carrierImage))
-            : null;
-
-        $driverImagePath = $driverImage
-            ? storage_path('app/' . $driverImage)
-            : null;
-    @endphp
 
     <div class="row">
         <table class="transport-images">
             <tbody>
             <tr>
                 <th>
-                    @if ($carrierImagePath && file_exists($carrierImagePath))
-                        <img
-                                src="{{ $carrierImagePath }}"
-                                alt="Imagen del transporte"
-                                class="transport-image"
-                        >
+                    @php
+                        $outPhotoPath = str_starts_with($data->carrier->auxiliary04, 'public/')
+                            ? storage_path('app/' . $data->carrier->auxiliary04)
+                            : storage_path('app/public/' . $data->carrier->auxiliary04);
+                    @endphp
+                    @if(file_exists($outPhotoPath))
+                        <img src="{{ $outPhotoPath }}" style="width: 300px; height: 200px; margin: 5px;">
                     @endif
                 </th>
 
                 <th>
-                    @if ($driverImagePath && file_exists($driverImagePath))
-                        <img
-                                src="{{ $driverImagePath }}"
-                                alt="Imagen del operador"
-                                class="transport-image"
-                        >
+                    @if($data->carrier->auxiliary05 != null)
+                        <img src='{{storage_path('app/' . $data->carrier->auxiliary05)}}' alt=""
+                             style="height: 200px;max-width: 200px">
                     @endif
                 </th>
             </tr>
