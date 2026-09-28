@@ -52,10 +52,21 @@ class OrderDeliverie extends Model
 
     public static function controlAccessUser()
     {
-        $access = SecurityAccessWarehouse::AccessScope();
+        $username = Auth::user()->username;
 
-        return static::whereIn('orderdeliveries.warehouseid', $access['warehouses'])
-            ->whereIn('orderdeliveries.centerid', $access['centers']);
+        return OrderDeliverie::query()
+            ->whereIn(
+                'orderdeliveries.centerid',
+                SecurityAccessWarehouse::query()
+                    ->where('username', $username)
+                    ->select('centerid'),
+            )
+            ->whereIn(
+                'orderdeliveries.warehouseid',
+                SecurityAccessWarehouse::query()
+                    ->where('username', $username)
+                    ->select('warehouseid'),
+            );
     }
 
     //   --------------------------  Relaciones -------------------------------------------

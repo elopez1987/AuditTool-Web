@@ -25,27 +25,22 @@
                                 <tr>
                                     <thead>
                                         <th>Nombre</th>
-                                        <th>Descripción</th>
                                         <th>Formato</th>
                                     </thead>
                                 </tr>
                                 <tbody>
                                 <tr>
-                                    <td>shipmentid</td>
-                                    <td>Embarque</td>
+                                    <td>EMBARQUE</td>
                                     <td>String</td>
                                 </tr>
                                 <tr>
-                                    <td>delivery</td>
-                                    <td>Factura</td>
+                                    <td>FACTURA</td>
                                     <td>String</td>
                                 </tr>
                                 <tr>
-                                    <td>type</td>
-                                    <td>Tipo de reporte</td>
+                                    <td>TIPO</td>
                                     <td>String (FIS / VIR)</td>
                                 </tr>
-
                                 </tbody>
                             </table>
                         </div>

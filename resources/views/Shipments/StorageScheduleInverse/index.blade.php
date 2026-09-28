@@ -79,61 +79,61 @@
                             <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md"
                                     data-toggle="tooltip" data-placement="top" title="Importar archivo">
                                 <i class="lni lni-upload text-trax font-22 mr-2"></i>
-                                <span style="font-size: 11px;"> Solicitud Zare </span>
+                                <span style="font-size: 11px;"> Datos de transporte </span>
                             </button>
                         </a>
                         @include('Shipments.StorageScheduleInverse.Imports.requestzare')
                     @endcan
-                    @can('importresponsezare')
-                        <a href="" data-target="#modal-response" data-toggle="modal" data-placement="top">
-                            <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md"
-                                    data-toggle="tooltip" data-placement="top" title="Importar archivo">
-                                <i class="lni lni-upload text-trax font-22 mr-2"></i>
-                                <span style="font-size: 11px;"> Recepción Zare </span>
-                            </button>
-                        </a>
-                        @include('Shipments.StorageScheduleInverse.Imports.responsezare')
-                    @endcan
-                    @can('importrequestne')
-                        <a href="" data-target="#modal-requestne" data-toggle="modal" data-placement="top">
-                            <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md"
-                                    data-toggle="tooltip" data-placement="top" title="Importar archivo">
-                                <i class="lni lni-upload text-trax font-22 mr-2"></i>
-                                <span style="font-size: 11px;"> Solicitud NE </span>
-                            </button>
-                        </a>
-                        @include('Shipments.StorageScheduleInverse.Imports.requestne')
-                    @endcan
-                    @can('importresponsene')
-                        <a href="" data-target="#modal-responsene" data-toggle="modal" data-placement="top">
-                            <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md"
-                                    data-toggle="tooltip" data-placement="top" title="Importar archivo">
-                                <i class="lni lni-upload text-trax font-22 mr-2"></i>
-                                <span style="font-size: 11px;"> Recepción de  NE </span>
-                            </button>
-                        </a>
-                        @include('Shipments.StorageScheduleInverse.Imports.responsene')
-                    @endcan
-                    @can('importrequestnc')
-                        <a href="" data-target="#modal-requestnc" data-toggle="modal" data-placement="top">
-                            <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md"
-                                    data-toggle="tooltip" data-placement="top" title="Importar archivo">
-                                <i class="lni lni-upload text-trax font-22 mr-2"></i>
-                                <span style="font-size: 11px;"> Solicitud de  NC </span>
-                            </button>
-                        </a>
-                        @include('Shipments.StorageScheduleInverse.Imports.requestnc')
-                    @endcan
-                    @can('importresponsenc')
-                        <a href="" data-target="#modal-responsenc" data-toggle="modal" data-placement="top">
-                            <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md"
-                                    data-toggle="tooltip" data-placement="top" title="Importar archivo">
-                                <i class="lni lni-upload text-trax font-22 mr-2"></i>
-                                <span style="font-size: 11px;"> Respuesta de  NC </span>
-                            </button>
-                        </a>
-                        @include('Shipments.StorageScheduleInverse.Imports.responsenc')
-                    @endcan
+{{--                    @can('importresponsezare')--}}
+{{--                        <a href="" data-target="#modal-response" data-toggle="modal" data-placement="top">--}}
+{{--                            <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md"--}}
+{{--                                    data-toggle="tooltip" data-placement="top" title="Importar archivo">--}}
+{{--                                <i class="lni lni-upload text-trax font-22 mr-2"></i>--}}
+{{--                                <span style="font-size: 11px;"> Recepción Zare </span>--}}
+{{--                            </button>--}}
+{{--                        </a>--}}
+{{--                        @include('Shipments.StorageScheduleInverse.Imports.responsezare')--}}
+{{--                    @endcan--}}
+{{--                    @can('importrequestne')--}}
+{{--                        <a href="" data-target="#modal-requestne" data-toggle="modal" data-placement="top">--}}
+{{--                            <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md"--}}
+{{--                                    data-toggle="tooltip" data-placement="top" title="Importar archivo">--}}
+{{--                                <i class="lni lni-upload text-trax font-22 mr-2"></i>--}}
+{{--                                <span style="font-size: 11px;"> Solicitud NE </span>--}}
+{{--                            </button>--}}
+{{--                        </a>--}}
+{{--                        @include('Shipments.StorageScheduleInverse.Imports.requestne')--}}
+{{--                    @endcan--}}
+{{--                    @can('importresponsene')--}}
+{{--                        <a href="" data-target="#modal-responsene" data-toggle="modal" data-placement="top">--}}
+{{--                            <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md"--}}
+{{--                                    data-toggle="tooltip" data-placement="top" title="Importar archivo">--}}
+{{--                                <i class="lni lni-upload text-trax font-22 mr-2"></i>--}}
+{{--                                <span style="font-size: 11px;"> Recepción de  NE </span>--}}
+{{--                            </button>--}}
+{{--                        </a>--}}
+{{--                        @include('Shipments.StorageScheduleInverse.Imports.responsene')--}}
+{{--                    @endcan--}}
+{{--                    @can('importrequestnc')--}}
+{{--                        <a href="" data-target="#modal-requestnc" data-toggle="modal" data-placement="top">--}}
+{{--                            <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md"--}}
+{{--                                    data-toggle="tooltip" data-placement="top" title="Importar archivo">--}}
+{{--                                <i class="lni lni-upload text-trax font-22 mr-2"></i>--}}
+{{--                                <span style="font-size: 11px;"> Solicitud de  NC </span>--}}
+{{--                            </button>--}}
+{{--                        </a>--}}
+{{--                        @include('Shipments.StorageScheduleInverse.Imports.requestnc')--}}
+{{--                    @endcan--}}
+{{--                    @can('importresponsenc')--}}
+{{--                        <a href="" data-target="#modal-responsenc" data-toggle="modal" data-placement="top">--}}
+{{--                            <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md"--}}
+{{--                                    data-toggle="tooltip" data-placement="top" title="Importar archivo">--}}
+{{--                                <i class="lni lni-upload text-trax font-22 mr-2"></i>--}}
+{{--                                <span style="font-size: 11px;"> Respuesta de  NC </span>--}}
+{{--                            </button>--}}
+{{--                        </a>--}}
+{{--                        @include('Shipments.StorageScheduleInverse.Imports.responsenc')--}}
+{{--                    @endcan--}}
                     @can('importregisterwms')
                         <a href="" data-target="#modal-registerwms" data-toggle="modal" data-placement="top">
                             <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md"
