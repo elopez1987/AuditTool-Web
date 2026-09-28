@@ -76,4 +76,14 @@ class CheckListLiftTruckController extends BaseController
 
         return view('Maintenance.CheckListLiftTrucks.show', compact('checkList', 'errorsCheck', 'evidences'));
     }
+
+    public function create() {}
+
+    public function store() {}
+
+    public function edit(string $checklistlifttruck) {}
+
+    public function update(string $checklistlifttruck) {}
+
+    public function destroy(string $checklistlifttruck) {}
 }

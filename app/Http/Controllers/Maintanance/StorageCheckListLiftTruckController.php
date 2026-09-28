@@ -74,4 +74,6 @@ class StorageCheckListLiftTruckController extends BaseController
 
         return $this->redirectBackSuccessMessage('Registro eliminado con exito.');
     }
+
+    public function show(string $storagechecklistlifttruck) {}
 }

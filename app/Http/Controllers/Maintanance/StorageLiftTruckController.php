@@ -6,8 +6,10 @@ use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Maintenance\CreateStorageLiftTruckRequest;
 use App\Models\Maintenance\CheckListTruckErrorLog;
 use App\Models\Maintenance\StorageLiftTruck;
+use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\Traits\Web\Maintenance\QueryStorageLiftTrucks;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 
 class StorageLiftTruckController extends BaseController
@@ -46,9 +48,9 @@ class StorageLiftTruckController extends BaseController
 
     public function store(CreateStorageLiftTruckRequest $request)
     {
-        $centerid = $this->getCenterForUser();
-        $ligtTruck = new StorageLiftTruck($request->all() + ['centerid' => $centerid]);
-        $ligtTruck->save();
+        StorageLiftTruck::create([...$request->validated(),
+            'centerid' => SecurityAccessWarehouse::where('username', Auth::user()->username)->value('centerid'),
+        ]);
 
         return $this->redirectBackSuccessMessage('Registro agregado exitosamente.');
     }

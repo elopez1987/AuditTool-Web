@@ -60,4 +60,12 @@ class StorageAssignLiftTruckController extends BaseController
 
         return response()->json();
     }
+
+    public function create() {}
+
+    public function store() {}
+
+    public function show(string $storageassignlifttruck) {}
+
+    public function destroy(string $storageassignlifttruck) {}
 }

@@ -5,7 +5,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    Agregar cliente
+                    Agregar nuevo equipo.
                 </div>
                 <div class="card-body">
                     <form method="POST" action="{{url('storagelifttrucks')}}">
@@ -27,9 +27,10 @@
             </div>
         </div>
     </div>
+    @include('layouts.Partials.Errors')
 @endsection
 
 @section('script')
-    <script src="{{asset('js/selects/warehouse-for-center.js')}}"></script>
+
 @endsection
 
