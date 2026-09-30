@@ -245,7 +245,7 @@
 
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <table class="table table-hover table-bordered table-bordered" id="table-users-cards">
+                                            <table class="table table-hover table-bordered table-bordered" id="table-users-cards" width="100%">
                                                 <thead>
                                                     <tr>
                                                         <th>Usurio</th>
