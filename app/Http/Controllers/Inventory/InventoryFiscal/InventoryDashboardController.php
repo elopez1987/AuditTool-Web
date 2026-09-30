@@ -91,4 +91,17 @@ class InventoryDashboardController extends BaseController
 
         return response()->json(['totalCount02' => $toalCount02]);
     }
+
+    public function getTotalCardForUser($id)
+    {
+        $results = DB::table('inventory_card_counts as icc')
+            ->leftJoin('users as u', 'icc.user_count02_id', '=', 'u.id')
+            ->select('u.name as username', DB::raw('count(icc.user_count02_id) as total'))
+            ->where('icc.inventory_head_id', $id)
+            ->whereNotNull('icc.user_count02_id')
+            ->groupBy('u.name')
+            ->get();
+
+        return $this->showDataToView($results, '');
+    }
 }

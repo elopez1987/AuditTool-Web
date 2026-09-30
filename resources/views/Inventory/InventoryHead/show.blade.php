@@ -189,54 +189,72 @@
                             <div class="card">
                                 <div class="card-header"></div>
                                 <div class="card-body">
-                                    <ul class="list-style-none">
-                                        <li class="m-t-20">
-                                            <div class="d-flex align-items-center">
-                                                <i class="mdi mdi-apps display-5 text-muted"></i>
-                                                <div class="m-l-10">
-                                                    <h5 class="m-b-0">Avance del primer conteo</h5>
-                                                    <span class="font-20">
+
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <ul class="list-style-none">
+                                                <li class="m-t-20">
+                                                    <div class="d-flex align-items-center">
+                                                        <i class="mdi mdi-apps display-5 text-muted"></i>
+                                                        <div class="m-l-10">
+                                                            <h5 class="m-b-0">Avance del primer conteo</h5>
+                                                            <span class="font-20">
                                                     <span id="totalCount01Display">0</span> Ubicaciones -
                                                     <span id="progressCount01Percentage">0</span>%
                                                 </span>
-                                                </div>
-                                            </div>
-                                            <div class="progress" style="height: 40px !important;">
-                                                <div class="progress-bar bg-success"
-                                                     role="progressbar"
-                                                     id="progressCount01"
-                                                     style="width: 0%; height: 40px !important; overflow: hidden; min-width: 0;"
-                                                     aria-valuenow="0"
-                                                     aria-valuemin="0"
-                                                     aria-valuemax="100">
-                                                    0%
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="m-t-20 m-b-20">
-                                            <div class="d-flex align-items-center">
-                                                <i class="mdi mdi-apps display-5 text-muted"></i>
-                                                <div class="m-l-10">
-                                                    <h5 class="m-b-0">Avance del segundo conteo</h5>
-                                                    <span class="font-20">
+                                                        </div>
+                                                    </div>
+                                                    <div class="progress" style="height: 40px !important;">
+                                                        <div class="progress-bar bg-success"
+                                                             role="progressbar"
+                                                             id="progressCount01"
+                                                             style="width: 0%; height: 40px !important; overflow: hidden; min-width: 0;"
+                                                             aria-valuenow="0"
+                                                             aria-valuemin="0"
+                                                             aria-valuemax="100">
+                                                            0%
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="m-t-20 m-b-20">
+                                                    <div class="d-flex align-items-center">
+                                                        <i class="mdi mdi-apps display-5 text-muted"></i>
+                                                        <div class="m-l-10">
+                                                            <h5 class="m-b-0">Avance del segundo conteo</h5>
+                                                            <span class="font-20">
                                                     <span id="totalCount02Display">0</span> Ubicaciones -
                                                     <span id="progressCount02Percentage">0</span>%
                                                 </span>
-                                                </div>
-                                            </div>
-                                            <div class="progress" style="height: 40px !important;">
-                                                <div class="progress-bar bg-success"
-                                                     role="progressbar"
-                                                     id="progressCount02"
-                                                     style="width: 0%; height: 40px !important; overflow: hidden; min-width: 0;"
-                                                     aria-valuenow="0"
-                                                     aria-valuemin="0"
-                                                     aria-valuemax="100">
-                                                    0%
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="progress" style="height: 40px !important;">
+                                                        <div class="progress-bar bg-success"
+                                                             role="progressbar"
+                                                             id="progressCount02"
+                                                             style="width: 0%; height: 40px !important; overflow: hidden; min-width: 0;"
+                                                             aria-valuenow="0"
+                                                             aria-valuemin="0"
+                                                             aria-valuemax="100">
+                                                            0%
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <table class="table table-hover table-bordered table-bordered" id="table-users-cards">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Usurio</th>
+                                                        <th>Cantidad de cédulas</th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -324,12 +342,25 @@
         function reloadtableAisles() {
             $('#inventoryDetailTable').DataTable().ajax.reload();
             loadDashboardStats();
+
+            if (typeof reloadUsersCardsTable === 'function') {
+                reloadUsersCardsTable();
+            }
         }
 
         $(document).ready(function () {
             loadDashboardStats();
         });
     </script>
+
+    {{-- Variables dinámicas de Blade expuestas al JS externo --}}
+    <script>
+        var InventoryHeadUsersCards = {
+            ajaxUrl: '{{ url("getTotalCardForUser", $inventoryhead->id) }}'
+        };
+    </script>
+
+    <script src="{{ asset('js/inventory/inventory-head-users-cards.js') }}"></script>
 
     @include('Inventory.InventoryHead.partials.table-details-aisles')
 
