@@ -248,7 +248,7 @@
                                             <table class="table table-hover table-bordered table-bordered" id="table-users-cards" width="100%">
                                                 <thead>
                                                     <tr>
-                                                        <th>Usurio</th>
+                                                        <th>Usuario</th>
                                                         <th>Cantidad de cédulas</th>
                                                     </tr>
                                                 </thead>
