@@ -308,6 +308,11 @@ class ReceiptUnit extends Model
             ->whereNull('unassigned_at');
     }
 
+    public function seal(): BelongsTo
+    {
+        return $this->belongsTo(ReceiptUnitSeal::class, 'id', 'folionumber');
+    }
+
     // ################################################## Fin de relaciones entre modelos ######################################
 
     // ################################################## Inicio de Scopes para filtros  ######################################

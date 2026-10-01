@@ -55,9 +55,9 @@
             text-align: left;
         }
 
-        tr:nth-child(even) {
-            background-color: #f2f2f2
-        }
+        /*tr:nth-child(even) {*/
+        /*    background-color: #f2f2f2*/
+        /*}*/
 
         .border-none {
             border: 0px;
@@ -73,7 +73,7 @@
                 <th width="25%" class="border-none">
                     <img src="img/Bridgestone.png" alt="" style="height: 25px;width: 100px">
                 </th>
-                <th class="border-none">INSPECCION DEL TRACTOCAMION Y DEL SEMIREMOLQUE</th>
+                <th class="border-none">INSPECCION DEL TRACTOCAMION Y DEL SEMIREMOLQUE - {{$receiptunit->id}}</th>
             </tr>
         </table>
     </div>
@@ -424,7 +424,10 @@
     </div>
     <div class="row">
         <table class="border-none">
-            <th>INSTRUCCIONES: Señalar con =Inspeccionado Aprobado X= Inspeccionado No Aprobado NO dejar espacios en
+            <th>INSTRUCCIONES: Señalar con <img src="img/kraft/check-mark-icon.png" alt=""
+                                                style="width: 9px;height: 9px"> =Inspeccionado Aprobado <img
+                        src="img/kraft/close-icon.png" alt="" style="width: 9px;height: 9px"> = Inspeccionado No
+                Aprobado NO dejar espacios en
                 blanco
             </th>
         </table>
@@ -577,7 +580,7 @@
             <tr>
                 <th style="width: 25%">
                     <table class="border-none">
-                        <th class="border-none">SI</th>
+                        <th class="border-none">APROBADO</th>
                         <th class="border-none">
                             <div style="width: 10px;height: 10px;border: 1px solid #D5D5D5;align-items: center">
                                 @foreach($verified as $item)
@@ -590,7 +593,7 @@
                                 @endforeach
                             </div>
                         </th>
-                        <th class="border-none">NO</th>
+                        <th class="border-none">NO APROBADO</th>
                         <th class="border-none">
                             <div style="width: 10px;height: 10px;border: 1px solid #D5D5D5;align-items: center">
                                 @foreach($verified as $item)
@@ -607,7 +610,7 @@
                 </th>
                 <th style="width: 25%">
                     <table class="border-none">
-                        <th class="border-none">SI</th>
+                        <th class="border-none">APROBADO</th>
                         <th class="border-none">
                             <div style="width: 10px;height: 10px;border: 1px solid #D5D5D5;align-items: center">
                                 @foreach($verified as $item)
@@ -620,7 +623,7 @@
                                 @endforeach
                             </div>
                         </th>
-                        <th class="border-none">NO</th>
+                        <th class="border-none">NO APROBADO</th>
                         <th class="border-none">
                             <div style="width: 10px;height: 10px;border: 1px solid #D5D5D5;align-items: center">
                                 @foreach($verified as $item)
@@ -637,7 +640,7 @@
                 </th>
                 <th style="width: 25%">
                     <table class="border-none">
-                        <th class="border-none">SI</th>
+                        <th class="border-none">APROBADO</th>
                         <th class="border-none">
                             <div style="width: 10px;height: 10px;border: 1px solid #D5D5D5;align-items: center">
                                 @foreach($verified as $item)
@@ -650,7 +653,7 @@
                                 @endforeach
                             </div>
                         </th>
-                        <th class="border-none">NO</th>
+                        <th class="border-none">NO APROBADO</th>
                         <th class="border-none">
                             <div style="width: 10px;height: 10px;border: 1px solid #D5D5D5;align-items: center">
                                 @foreach($verified as $item)
@@ -704,39 +707,44 @@
     <div class="row" style="position:relative; z-index: 1">
         <table>
             <tr>
-                <th style="width: 20%;background-color: #D5D5D5;height: 20px">SELLOS COLOCADOS</th>
-                <th style="width: 40%">{{$receiptunit->key ? $receiptunit->key->containersealout : ''}}</th>
+                <th style="width: 20%;background-color: #D5D5D5;height: 35px !important;">SELLOS COLOCADOS</th>
+                <th style="width: 40%">{{$receiptunit->key?->containersealout}}</th>
                 <th></th>
             </tr>
             <tr>
-                <th style="width: 20%;background-color: #D5D5D5;height: 20px">OFICIAL DE ALMACEN</th>
-                <th style="width: 40%;text-align: left">{{$receiptunit->key ? $receiptunit->key->nameguard02 : ''}}</th>
+                <th style="width: 20%;background-color: #D5D5D5;height: 35px !important;">OFICIAL DE ALMACEN</th>
+                <th style="width: 40%;text-align: left">
+                    {{--                    {{$receiptunit->key ? $receiptunit->key->nameguard02 : ''}}--}}
+                    {{$receiptunit->order?->folio_count->user->name}}
+                </th>
                 <th style="position: relative;">
                     <div style="position: absolute; left: 0;">
                         @if(!empty($receiptunit->key))
-                            <img src="{{storage_path('app/' . $receiptunit->key->keyguard02 )}}" alt="Firma"
-                                 style="height: 40px;max-height: 40px"/>
+                            <img src="{{storage_path('app/' . $receiptunit->key->keyguard02 )}}" alt="Firma" style="height: 28px;max-height: 28px"/>
                         @endif
                         @if(!empty($receiptunit->order->folio_count))
                             <img src="{{storage_path('app/' . $receiptunit->order->folio_count->keyguard )}}"
                                  alt="Firma"
-                                 style="height: 40px;max-height: 40px"/>
+                                 style="height: 28px;max-height: 28px"/>
                         @endif
                     </div>
                 </th>
             </tr>
             <tr>
-                <th style="width: 20%;background-color: #D5D5D5;height: 20px">SUPERVISOR - ALMACEN</th>
-                <th style="width: 40%;text-align: left">{{$receiptunit->key ? $receiptunit->key->supervisorname : ''}}</th>
+                <th style="width: 20%;background-color: #D5D5D5;height: 35px !important;">SUPERVISOR - ALMACEN</th>
+                <th style="width: 40%;text-align: left">
+{{--                    {{$receiptunit->key ? $receiptunit->key->supervisorname : ''}}--}}
+                    {{$receiptunit->order?->verification_pending->usersupr->name}}
+                </th>
                 <th>
                     @if(!empty($receiptunit->key))
                         <img src="{{storage_path('app/' . $receiptunit->key->supervisorkey )}}" alt="Firma"
-                             style="height: 40px;max-height: 40px"/>
+                             style="height: 28px;max-height: 28px"/>
                     @endif
                     @if(!empty($receiptunit->order->folio_count))
                         <img src="{{storage_path('app/' . $receiptunit->order->folio_count->keysupervisor )}}"
                              alt="Firma"
-                             style="height: 40px;max-height: 40px"/>
+                             style="height: 28px;max-height: 28px"/>
                     @endif
                 </th>
             </tr>
