@@ -219,7 +219,8 @@
                                 <div class="tab-pane" id="view02" role="tabpanel">
                                     <div class="row mt-3">
                                         <div class="col-lg-12">
-                                            <table width="100%" class="table table-condensed table-bordered ">
+                                            <table width="100%"
+                                                   class="table table-condensed table-bordered table-hover">
                                                 <thead>
                                                 <tr>
                                                     <th>Concepto</th>
@@ -244,10 +245,6 @@
                                                             <td>{{$check->observation}}</td>
                                                             <td>
                                                                 @if($check->photo_1)
-{{--                                                                    <img src="{{asset('storage/' . $check->photo_1)}}"--}}
-{{--                                                                         alt="user"--}}
-{{--                                                                         style="height: 200px;max-height: 200px;width: 100%"/>--}}
-
                                                                     <div class="el-card-item">
                                                                         <div class="el-card-avatar el-overlay-1">
                                                                             <div class="el-overlay">
@@ -263,21 +260,44 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-
                                                                 @endif
                                                             </td>
                                                             <td>
                                                                 @if($check->photo_2)
-                                                                    <img src="{{asset('storage/' . $check->photo_2)}}"
-                                                                         alt="user"
-                                                                         style="height: 200px;max-height: 200px;width: 100%"/>
+                                                                    <div class="el-card-item">
+                                                                        <div class="el-card-avatar el-overlay-1">
+                                                                            <div class="el-overlay">
+                                                                                <ul class="list-style-none el-info">
+                                                                                    <li class="el-item bg-grey">
+                                                                                        <a class="btn default btn-outline image-popup-vertical-fit el-link"
+                                                                                           href="{{asset('storage/' . $check->photo_2)}}">
+                                                                                            Ver
+                                                                                            <i class="icon-magnifier"></i>
+                                                                                        </a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
                                                                 @endif
                                                             </td>
                                                             <td>
                                                                 @if($check->photo_3)
-                                                                    <img src="{{asset('storage/' . $check->photo_3)}}"
-                                                                         alt="user"
-                                                                         style="height: 200px;max-height: 200px;width: 100%"/>
+                                                                    <div class="el-card-item">
+                                                                        <div class="el-card-avatar el-overlay-1">
+                                                                            <div class="el-overlay">
+                                                                                <ul class="list-style-none el-info">
+                                                                                    <li class="el-item bg-grey">
+                                                                                        <a class="btn default btn-outline image-popup-vertical-fit el-link"
+                                                                                           href="{{asset('storage/' . $check->photo_3)}}">
+                                                                                            Ver
+                                                                                            <i class="icon-magnifier"></i>
+                                                                                        </a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
                                                                 @endif
                                                             </td>
                                                         </tr>
