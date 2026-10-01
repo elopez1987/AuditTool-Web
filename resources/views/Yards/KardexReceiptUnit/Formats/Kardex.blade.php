@@ -30,6 +30,7 @@
             height: 65px;
             object-fit: contain;
         }
+
         footer {
             position: fixed;
             bottom: -60px;
@@ -106,10 +107,10 @@
                 KARDEX DE UNIDAD - {{$receiptunit->id}}
             </th>
             <th style="height: 20px;width: 25%;text-align: left;font-size: 9px !important;">
-{{--                @if(!empty($receiptunit->warehouse->auxiliary09))--}}
-{{--                    <img src="{{ storage_path('app/public/' . $receiptunit->warehouse->auxiliary09) }}"--}}
-{{--                         class="align-self-center img-responsive" alt="" style="height: 60px;max-width: 180px">--}}
-{{--                @endif--}}
+                {{--                @if(!empty($receiptunit->warehouse->auxiliary09))--}}
+                {{--                    <img src="{{ storage_path('app/public/' . $receiptunit->warehouse->auxiliary09) }}"--}}
+                {{--                         class="align-self-center img-responsive" alt="" style="height: 60px;max-width: 180px">--}}
+                {{--                @endif--}}
             </th>
         </table>
     </div>
@@ -232,12 +233,8 @@
                     @foreach($evidencesCTPAT as $image)
                         @if($image->type == 'IN')
                             <td class="border-none" style="text-align: center; padding: 10px;">
-                                @php
-                                    $doorsPhotoPath = str_starts_with($image->photo_1, 'public/') ? storage_path('app/' . $image->photo_1)  : storage_path('app/public/' . $image->photo_1);
-                                @endphp
-                                @if(file_exists($doorsPhotoPath))
-                                    <img src="{{ $doorsPhotoPath }}" alt="" style="width: 350px;height: 100px">
-                                @endif
+                                <img src='{{storage_path('app/' . $image->photo_1)}}' alt=""
+                                     style="height: 200px;max-width: 200px">
                             </td>
                             @php
                                 $count++;

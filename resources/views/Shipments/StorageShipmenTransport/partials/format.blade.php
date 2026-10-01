@@ -329,8 +329,7 @@
 
                 <th>
                     @if($data->carrier->auxiliary05 != null)
-                        <img src='{{storage_path('app/' . $data->carrier->auxiliary05)}}' alt=""
-                             style="height: 200px;max-width: 200px">
+                        <img src='{{storage_path('app/' . $data->carrier->auxiliary05)}}' alt="" style="height: 200px;max-width: 200px">
                     @endif
                 </th>
             </tr>
