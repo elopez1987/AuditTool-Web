@@ -86,7 +86,7 @@ class ReceiptUnitTicket extends Model
 
     protected $fillable = [
         'centerid', 'warehouseid',
-        'folionumber', 'ticketticket', 'weightin',
+        'folionumber', 'ticket', 'weightin',
         'weightout', 'createuser', 'updateuser',
         'responsibleid', 'areaid', 'contentid',
         'value01', 'value02', 'value03', 'weightoutsap', 'updateddate',

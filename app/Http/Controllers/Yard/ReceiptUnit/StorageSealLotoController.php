@@ -19,7 +19,9 @@ class StorageSealLotoController extends BaseController
     {
         $this->authorize('storagesealloto.index');
         $centers = $this->getCenterForSelect();
-        $status = SystemStatus::whereSchemaid('STS')->whereIn('statusid', ['E', 'D'])->select(['statusid', 'name'])->get();
+        $status = SystemStatus::whereSchemaid('STS')
+            ->whereIn('statusid', ['E', 'D'])
+            ->select(['statusid', 'name'])->get();
 
         return view('Yards.StorageSealLoto.index', compact('centers', 'status'));
     }

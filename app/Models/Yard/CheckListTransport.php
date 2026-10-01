@@ -4,52 +4,20 @@ namespace App\Models\Yard;
 
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Security\Users\SecurityAccessWarehouse;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\DatabaseNotification;
-use Illuminate\Notifications\DatabaseNotificationCollection;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Carbon;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Activitylog\LogOptions;
-use Spatie\Activitylog\Models\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-/**
- * @property int $id
- * @property string $centerid
- * @property int $checklistid
- * @property int $receiptunitid
- * @property int $checklitsdetailid
- * @property string|null $verified
- * @property string|null $type
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property-read Collection<int, Activity> $activities
- * @property-read int|null $activities_count
- * @property-read SystemCenterDistribution $center
- * @property-read StorageCheckListDetail $checklistdetail
- * @property-read DatabaseNotificationCollection<int, DatabaseNotification> $notifications
- * @property-read int|null $notifications_count
- *
- * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListTransport newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListTransport newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListTransport query()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListTransport whereCenterid($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListTransport whereChecklistid($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListTransport whereChecklitsdetailid($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListTransport whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListTransport whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListTransport whereReceiptunitid($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListTransport whereType($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListTransport whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|CheckListTransport whereVerified($value)
- *
- * @mixin \Eloquent
- */
 class CheckListTransport extends Model
 {
     use LogsActivity;
-    use Notifiable;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
     protected $table = 'storagechecklisttransports';
 
@@ -69,24 +37,25 @@ class CheckListTransport extends Model
         'updated_at',
     ];
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
-
     public static function controlAccessUser()
     {
-        $centers = SecurityAccessWarehouse::Centers();
+        $username = Auth::user()->username;
 
-        return CheckListTransport::whereIn('storagechecklisttransports.centerid', $centers);
+        return CheckListTransport::query()
+            ->whereIn(
+                'storagechecklisttransports.centerid',
+                SecurityAccessWarehouse::query()
+                    ->where('username', $username)
+                    ->select('centerid'),
+            );
     }
 
-    public function center()
+    public function center(): BelongsTo
     {
-        return $this->belongsTo(SystemCenterDistribution::class, 'centerid');
+        return $this->belongsTo(SystemCenterDistribution::class, 'centerid', 'centerid');
     }
 
-    public function checklistdetail()
+    public function checklistdetail(): BelongsTo
     {
         return $this->belongsTo(StorageCheckListDetail::class, 'checklitsdetailid', 'id');
     }
