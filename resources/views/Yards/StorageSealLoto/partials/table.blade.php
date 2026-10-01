@@ -23,9 +23,9 @@
             {data: 'boxnumber'},
             {data: 'value01'},
             {data: 'value02'},
-            {data: 'value03'},
-            {data: 'value04'},
-            {data: 'value05'},
+            // {data: 'value03'},
+            // {data: 'value04'},
+            // {data: 'value05'},
             {
                 data: 'status.name', name: 'status.name',
                 createdCell: function (td, cellData, rowData) {

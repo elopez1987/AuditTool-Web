@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title> Kardex de Unidad</title>
+    <title> Kardex de Unidad - {{$receiptunit->id}}</title>
     <style>
         @page {
             margin: 0cm 0cm;
@@ -25,6 +25,11 @@
             width: 700px;
         }
 
+        .header-logo {
+            width: 150px;
+            height: 65px;
+            object-fit: contain;
+        }
         footer {
             position: fixed;
             bottom: -60px;
@@ -91,16 +96,20 @@
     <div class="row" style="margin-top: 5px">
         <table class="border-none">
             <th style="height: 20px;width: 25%;">
-                <img src="img/taxion-logistic.png" alt="" style="height: 60px;width: 180px;">
+                <img
+                        src="{{ storage_path('app/' . $receiptunit->center->auxiliary04) }}"
+                        alt="Logo"
+                        class="header-logo"
+                >
             </th>
             <th style="height: 20px;width: 50%;text-align: center;font-size: 14px;">
                 KARDEX DE UNIDAD - {{$receiptunit->id}}
             </th>
             <th style="height: 20px;width: 25%;text-align: left;font-size: 9px !important;">
-                @if(!empty($receiptunit->warehouse->auxiliary09))
-                    <img src="{{ storage_path('app/public/' . $receiptunit->warehouse->auxiliary09) }}"
-                         class="align-self-center img-responsive" alt="" style="height: 60px;max-width: 180px">
-                @endif
+{{--                @if(!empty($receiptunit->warehouse->auxiliary09))--}}
+{{--                    <img src="{{ storage_path('app/public/' . $receiptunit->warehouse->auxiliary09) }}"--}}
+{{--                         class="align-self-center img-responsive" alt="" style="height: 60px;max-width: 180px">--}}
+{{--                @endif--}}
             </th>
         </table>
     </div>
@@ -179,6 +188,7 @@
             </tr>
         </table>
     </div>
+
     @if ($evidences->isNotEmpty())
         @php
             $count = 0;
@@ -193,6 +203,37 @@
                                     $doorsPhotoPath = str_starts_with($image->path, 'public/')
                                         ? storage_path('app/' . $image->path)
                                         : storage_path('app/public/' . $image->path);
+                                @endphp
+                                @if(file_exists($doorsPhotoPath))
+                                    <img src="{{ $doorsPhotoPath }}" alt="" style="width: 350px;height: 100px">
+                                @endif
+                            </td>
+                            @php
+                                $count++;
+                            @endphp
+                            @if($count % 2 == 0)
+                </tr>
+                <tr>
+                    @endif
+                    @endif
+                    @endforeach
+                </tr>
+            </table>
+        </div>
+    @endif
+
+    @if ($evidencesCTPAT->isNotEmpty())
+        @php
+            $count = 0;
+        @endphp
+        <div class="row">
+            <table class="border-none" style="width: 100%;">
+                <tr>
+                    @foreach($evidencesCTPAT as $image)
+                        @if($image->type == 'IN')
+                            <td class="border-none" style="text-align: center; padding: 10px;">
+                                @php
+                                    $doorsPhotoPath = str_starts_with($image->photo_1, 'public/') ? storage_path('app/' . $image->photo_1)  : storage_path('app/public/' . $image->photo_1);
                                 @endphp
                                 @if(file_exists($doorsPhotoPath))
                                     <img src="{{ $doorsPhotoPath }}" alt="" style="width: 350px;height: 100px">
@@ -273,7 +314,8 @@
                                         : storage_path('app/public/' . $image->path);
                                 @endphp
                                 @if(file_exists($tirosPhotoPath))
-                                    <img src="{{ $tirosPhotoPath }}" style="width: 500px;height:250px;margin-left: 10px; margin-right: 10px;">
+                                    <img src="{{ $tirosPhotoPath }}"
+                                         style="width: 500px;height:250px;margin-left: 10px; margin-right: 10px;">
                                 @endif
                             </td>
                         </tr>
@@ -310,6 +352,37 @@
                                 @endphp
                                 @if(file_exists($outPhotoPath))
                                     <img src="{{ $outPhotoPath }}" style="width: 300px; height: 200px; margin: 5px;">
+                                @endif
+                            </td>
+                            @php
+                                $count++;
+                            @endphp
+                            @if($count % 2 == 0)
+                </tr>
+                <tr>
+                    @endif
+                    @endif
+                    @endforeach
+                </tr>
+            </table>
+        </div>
+    @endif
+
+    @if ($evidencesCTPAT->isNotEmpty())
+        @php
+            $count = 0;
+        @endphp
+        <div class="row">
+            <table class="border-none" style="width: 100%;">
+                <tr>
+                    @foreach($evidencesCTPAT as $image)
+                        @if($image->type == 'OUT')
+                            <td class="border-none" style="text-align: center; padding: 10px;">
+                                @php
+                                    $doorsPhotoPath = str_starts_with($image->photo_1, 'public/') ? storage_path('app/' . $image->photo_1)  : storage_path('app/public/' . $image->photo_1);
+                                @endphp
+                                @if(file_exists($doorsPhotoPath))
+                                    <img src="{{ $doorsPhotoPath }}" alt="" style="width: 350px;height: 100px">
                                 @endif
                             </td>
                             @php

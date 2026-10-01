@@ -5,6 +5,7 @@ namespace App\Models\Shipments\Bridgestone\Verificacion;
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Configuration\Warehouses\SystemWarehouse;
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -40,5 +41,10 @@ class Storageverificationpending extends Model
     public function status(): BelongsTo
     {
         return $this->belongsTo(SystemStatus::class, 'statusid');
+    }
+
+    public function usersupr(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'countoperuser', 'id');
     }
 }

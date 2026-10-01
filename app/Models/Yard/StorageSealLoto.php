@@ -5,59 +5,20 @@ namespace App\Models\Yard;
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Security\Users\SecurityAccessWarehouse;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Carbon;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Activitylog\LogOptions;
-use Spatie\Activitylog\Models\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-/**
- * @property int $id
- * @property string $centerid
- * @property string $description
- * @property string|null $boxnumber
- * @property string|null $value01
- * @property string|null $value02
- * @property string|null $value03
- * @property string|null $value04
- * @property string|null $value05
- * @property int $createuser
- * @property Carbon|null $created_at
- * @property string $schemaid
- * @property string $statusid
- * @property Carbon|null $updated_at
- * @property string|null $deleted_at
- * @property-read Collection<int, Activity> $activities
- * @property-read int|null $activities_count
- * @property-read SystemCenterDistribution $center
- * @property-read SystemStatus $status
- *
- * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSealLoto name($description)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSealLoto newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSealLoto newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSealLoto query()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSealLoto whereBoxnumber($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSealLoto whereCenterid($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSealLoto whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSealLoto whereCreateuser($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSealLoto whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSealLoto whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSealLoto whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSealLoto whereSchemaid($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSealLoto whereStatusid($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSealLoto whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSealLoto whereValue01($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSealLoto whereValue02($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSealLoto whereValue03($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSealLoto whereValue04($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|StorageSealLoto whereValue05($value)
- *
- * @mixin \Eloquent
- */
 class StorageSealLoto extends Model
 {
     use LogsActivity;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
     public $timestamps = true;
 
@@ -84,24 +45,36 @@ class StorageSealLoto extends Model
         'updated_at' => 'datetime:d/m/Y H:i',
     ];
 
-    public function getActivitylogOptions(): LogOptions
+    protected static function boot()
     {
-        return LogOptions::defaults()->logFillable();
+        parent::boot();
+        if (! app()->runningInConsole()) {
+            self::creating(function (StorageSealLoto $model) {
+                $model->createuser = Auth::id();
+            });
+        }
     }
 
     public static function controlAccessUser()
     {
-        $centers = SecurityAccessWarehouse::Centers();
 
-        return StorageSealLoto::whereIn('storagesealloto.centerid', $centers);
+        $username = Auth::user()->username;
+
+        return StorageSealLoto::query()
+            ->whereIn(
+                'storagesealloto.centerid',
+                SecurityAccessWarehouse::query()
+                    ->where('username', $username)
+                    ->select('centerid'),
+            );
     }
 
-    public function center()
+    public function center(): BelongsTo
     {
         return $this->belongsTo(SystemCenterDistribution::class, 'centerid');
     }
 
-    public function status()
+    public function status(): BelongsTo
     {
         return $this->belongsTo(SystemStatus::class, 'statusid', 'statusid');
     }
@@ -110,16 +83,6 @@ class StorageSealLoto extends Model
     {
         if (! empty($description)) {
             $query->where('storagesealloto.description', 'like', "%{$description}%");
-        }
-    }
-
-    protected static function boot()
-    {
-        parent::boot();
-        if (! app()->runningInConsole()) {
-            self::creating(function (StorageSealLoto $model) {
-                $model->createuser = \Auth::id();
-            });
         }
     }
 }

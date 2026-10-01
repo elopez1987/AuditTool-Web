@@ -142,6 +142,9 @@ class TraceReceiptUnitController extends BaseController
             ->where('model_type', '=', 'ReceiptUnit')
             ->leftJoin('systemstatus', 'storageevidencephotos.auxiliary04', '=', 'systemstatus.statusid')
             ->select(['storageevidencephotos.*', 'systemstatus.name as tipo'])->get();
+
+        $evidencesCTPAT = CheckListTransport::controlAccessUser()->where('receiptunitid', $id)->get();
+
         $evidencesTiros = CheckListEvidenceProcessUnit::where('modelid', $receiptunit->id)
             ->whereNotNull('path')->where('modeltype', 'ReceiptUnits')->get();
         $comments = StorageComment::where('modeltype', 'ReceiptUnits')
@@ -167,6 +170,7 @@ class TraceReceiptUnitController extends BaseController
             'traces',
             'evidencesTiros',
             'comments',
+            'evidencesCTPAT'
 
         ));
 

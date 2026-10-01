@@ -152,6 +152,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('getDetailAisles/{id}', [InventoryDashboardController::class, 'getDetailAisles'])->name('getDetailAisles');
     Route::get('getTotalCount01/{id}', [InventoryDashboardController::class, 'getTotalCount01'])->name('getTotalCount01');
     Route::get('getTotalCount02/{id}', [InventoryDashboardController::class, 'getTotalCount02'])->name('getTotalCount02');
+    Route::get('getTotalCardForUser/{id}', [InventoryDashboardController::class, 'getTotalCardForUser'])->name('getTotalCardForUser');
 
     //	Crear facilitadores del conteo
     Route::get('inventory-supervisors/{id}', [InventorySupervisorController::class, 'index'])->name('inventory-supervisors');
