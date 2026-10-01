@@ -244,9 +244,26 @@
                                                             <td>{{$check->observation}}</td>
                                                             <td>
                                                                 @if($check->photo_1)
-                                                                    <img src="{{asset('storage/' . $check->photo_1)}}"
-                                                                         alt="user"
-                                                                         style="height: 200px;max-height: 200px;width: 100%"/>
+{{--                                                                    <img src="{{asset('storage/' . $check->photo_1)}}"--}}
+{{--                                                                         alt="user"--}}
+{{--                                                                         style="height: 200px;max-height: 200px;width: 100%"/>--}}
+
+                                                                    <div class="el-card-item">
+                                                                        <div class="el-card-avatar el-overlay-1">
+                                                                            <div class="el-overlay">
+                                                                                <ul class="list-style-none el-info">
+                                                                                    <li class="el-item bg-grey">
+                                                                                        <a class="btn default btn-outline image-popup-vertical-fit el-link"
+                                                                                           href="{{asset('storage/' . $check->photo_1)}}">
+                                                                                            Ver
+                                                                                            <i class="icon-magnifier"></i>
+                                                                                        </a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
                                                                 @endif
                                                             </td>
                                                             <td>
@@ -735,7 +752,7 @@
                                             <div class="card">
                                                 <div class="card-body">
                                                     <table width="100%"
-                                                           class="table table-condensed table-bordered table-striped table-hover">
+                                                           class="table table-condensed table-bordered  table-hover">
                                                         <thead>
                                                         <tr>
                                                             <th>Folio</th>
@@ -768,7 +785,7 @@
                                             <div class="card">
                                                 <div class="card-body">
                                                     <table width="100%"
-                                                           class="table table-condensed table-bordered table-hover">
+                                                           class="table table-condensed table-bordered">
                                                         <thead>
                                                         <tr>
                                                             <th>Firma de vigilante de entrada</th>
@@ -832,6 +849,8 @@
 
 @section('css')
     <link rel="stylesheet" href="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.min.css')}}">
+    <link rel="stylesheet" href="{{asset('/theme/assets/extra-libs/prism/prism.css')}}">
+    <link rel="stylesheet" href="{{asset('/theme/assets/libs/magnific-popup/dist/magnific-popup.css')}}">
     <style>
         .timeline-horizontal {
             overflow-x: auto;
@@ -920,6 +939,11 @@
 
 
 @section('script')
+
+    <script src="{{asset('theme/assets/extra-libs/prism/prism.js')}}"></script>
+    <script src="{{asset('theme/assets/libs/magnific-popup/dist/jquery.magnific-popup.min.js')}}"></script>
+    <script src="{{asset('theme/assets/libs/magnific-popup/meg.init.js')}}"></script>
+
     <script src="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.all.min.js')}}"></script>
 
     <script>
