@@ -286,19 +286,28 @@ class TraceReceiptUnitController extends BaseController
     {
         $receiptUnit = ReceiptUnit::controlAccessUser()->findOrFail($id);
 
-        $files = EvidencePhoto::where('model_type', '=', 'ReceiptUnit')
+        $files = EvidencePhoto::where('model_type', 'ReceiptUnit')
             ->where('model_id', $receiptUnit->id)
             ->get();
 
-        if ($files->isEmpty()) {
+        $evidencesCTPAT = CheckListTransport::controlAccessUser()
+            ->where('receiptunitid', $receiptUnit->id)
+            ->get();
+
+        // Unificamos ambas colecciones en una sola lista de rutas de archivo.
+        // Asumo que CheckListTransport también expone un atributo `path` (igual que EvidencePhoto).
+        // Si el campo se llama distinto, ajusta el `pluck`/`map` correspondiente.
+        $allFiles = $files->pluck('path')
+            ->merge($evidencesCTPAT->pluck('photo_1'))
+            ->filter(); // descarta null/vacíos
+
+        if ($allFiles->isEmpty()) {
             return $this->errorResponse('No hay archivos para descargar.');
         }
 
-        // Ruta absoluta y consistente, dentro de storage (writable garantizado)
         $zipFileName = $receiptUnit->id . '_' . uniqid() . '.zip';
         $zipPath = storage_path('app/tmp/' . $zipFileName);
 
-        // Asegura que exista el directorio temporal
         if (! file_exists(storage_path('app/tmp'))) {
             mkdir(storage_path('app/tmp'), 0755, true);
         }
@@ -310,16 +319,25 @@ class TraceReceiptUnitController extends BaseController
         }
 
         $addedAny = false;
+        $usedNames = [];
 
-        foreach ($files as $file) {
-            $filepath = storage_path('app/' . $file->path);
+        foreach ($allFiles as $path) {
+            $filepath = storage_path('app/' . $path);
 
             if (! file_exists($filepath)) {
-                continue; // evita fallar si algún archivo referenciado no existe
+                continue;
             }
 
-            $ultimo = strrpos($file->path, '/');
-            $newPath = substr($file->path, $ultimo + 1);
+            $newPath = basename($path);
+
+            // Evita sobrescribir dentro del zip si EvidencePhoto y CheckListTransport
+            // llegaran a tener archivos con el mismo nombre.
+            if (isset($usedNames[$newPath])) {
+                $usedNames[$newPath]++;
+                $newPath = pathinfo($newPath, PATHINFO_FILENAME) . "_{$usedNames[$newPath]}." . pathinfo($newPath, PATHINFO_EXTENSION);
+            } else {
+                $usedNames[$newPath] = 0;
+            }
 
             $zip->addFile($filepath, $newPath);
             $addedAny = true;
