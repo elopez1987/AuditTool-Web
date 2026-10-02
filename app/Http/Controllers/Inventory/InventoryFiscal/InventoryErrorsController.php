@@ -19,7 +19,20 @@ class InventoryErrorsController extends BaseController
             ->where('inventory_uuid', $id)
             ->firstOrFail();
 
-        return view('Inventory.InventoryHead.ErrorsDetail.index', compact('inventoryhead'));
+        $cedulas = DB::table('inventory_location_counts as ilc')
+            ->leftJoin('inventory_card_counts as icc', 'ilc.inventory_card_id', '=', 'icc.id')
+            ->leftJoin('inventory_cards as ic', 'icc.inventory_card_id', '=', 'ic.id')
+            ->select(
+                'ilc.inventory_card_id',
+                'ic.name as cardname',
+                DB::raw('count(icc.inventory_card_id) as totalerrores')
+            )
+            ->where('ilc.inventory_head_id', $inventoryhead->id)
+            ->where('ilc.statusid_location', 0)
+            ->groupBy('ic.name', 'ilc.inventory_card_id')->get();
+
+        return view('Inventory.InventoryHead.ErrorsDetail.index',
+            compact('inventoryhead', 'cedulas'));
     }
 
     public function getDetailInventoryErrors(Request $request)
@@ -103,6 +116,5 @@ class InventoryErrorsController extends BaseController
 
             return $this->errorResponse('Ocurrió un error al ajustar el conteo de la ubicación.');
         }
-
     }
 }
