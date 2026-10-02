@@ -69,9 +69,9 @@ return [
     ],
 
     'MX10' => [
-        'image' => 'yokohama/yoko.jpeg',
-        'width' => '280px',
-        'height' => '80px',
+        'image' => 'yokohama/Yokohama.png',
+        'width' => '500px',
+        'height' => '100px',
     ],
 
 ];

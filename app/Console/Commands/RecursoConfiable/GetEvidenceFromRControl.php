@@ -203,10 +203,10 @@ class GetEvidenceFromRControl extends Command
         $relativePath = 'public/' . $center->centerid . '/EvidenceShipment/' . $fileName;
         $this->createRegisterPOD($shipment, $relativePath);
 
-        Log::info('Evidencia almacenada exitosamente', [
-            'shipment_id' => $shipment->shipmentid,
-            'path' => $relativePath,
-        ]);
+        //        Log::info('Evidencia almacenada exitosamente', [
+        //            'shipment_id' => $shipment->shipmentid,
+        //            'path' => $relativePath,
+        //        ]);
     }
 
     private function createJsonFilter(string $shipment): string
