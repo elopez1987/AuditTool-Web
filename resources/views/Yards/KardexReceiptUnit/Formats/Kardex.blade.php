@@ -233,8 +233,7 @@
                     @foreach($evidencesCTPAT as $image)
                         @if($image->type == 'IN')
                             <td class="border-none" style="text-align: center; padding: 10px;">
-                                <img src='{{storage_path('app/' . $image->photo_1)}}' alt=""
-                                     style="height: 200px;max-width: 350px">
+                                <img src='{{storage_path('app/' . $image->photo_1)}}' alt="" style="height: 200px;max-width: 350px">
                             </td>
                             @php
                                 $count++;
@@ -272,9 +271,7 @@
                             @if($image->auxiliary01 == 'IP')
                                 <td class="border-none" style="text-align: center; padding: 10px;">
                                     @php
-                                        $ipPhotoPath = str_starts_with($image->path, 'public/')
-                                            ? storage_path('app/' . $image->path)
-                                            : storage_path('app/public/' . $image->path);
+                                        $ipPhotoPath = str_starts_with($image->path, 'public/') ? storage_path('app/' . $image->path) : storage_path('app/public/' . $image->path);
                                     @endphp
                                     @if(file_exists($ipPhotoPath))
                                         <img src="{{ $ipPhotoPath }}" style="width: 350px; height: 200px; margin: 5px;">
@@ -306,9 +303,7 @@
                         <tr>
                             <td class="border-none">
                                 @php
-                                    $tirosPhotoPath = str_starts_with($image->path, 'public/')
-                                        ? storage_path('app/' . $image->path)
-                                        : storage_path('app/public/' . $image->path);
+                                    $tirosPhotoPath = str_starts_with($image->path, 'public/')    ? storage_path('app/' . $image->path)  : storage_path('app/public/' . $image->path);
                                 @endphp
                                 @if(file_exists($tirosPhotoPath))
                                     <img src="{{ $tirosPhotoPath }}"
@@ -343,9 +338,7 @@
                         @if($image->auxiliary01 == 'OUT')
                             <td class="border-none" style="text-align: center; padding: 10px;">
                                 @php
-                                    $outPhotoPath = str_starts_with($image->path, 'public/')
-                                        ? storage_path('app/' . $image->path)
-                                        : storage_path('app/public/' . $image->path);
+                                    $outPhotoPath = str_starts_with($image->path, 'public/') ? storage_path('app/' . $image->path) : storage_path('app/public/' . $image->path);
                                 @endphp
                                 @if(file_exists($outPhotoPath))
                                     <img src="{{ $outPhotoPath }}" style="width: 350px; height: 200px; margin: 5px;">
