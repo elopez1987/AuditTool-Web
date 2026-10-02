@@ -138,18 +138,23 @@ class TraceReceiptUnitController extends BaseController
     {
         $pathImage = SystemDetailParameter::where('parameterid', '=', 'PARAM-IMG')->first();
         $receiptunit = ReceiptUnit::controlAccessUser()->where('id', $id)->first();
+
         $evidences = EvidencePhoto::where('model_id', $id)
             ->where('model_type', '=', 'ReceiptUnit')
             ->leftJoin('systemstatus', 'storageevidencephotos.auxiliary04', '=', 'systemstatus.statusid')
             ->select(['storageevidencephotos.*', 'systemstatus.name as tipo'])->get();
 
-        $evidencesCTPAT = CheckListTransport::controlAccessUser()->where('receiptunitid', $id)->get();
+        $evidencesCTPAT = CheckListTransport::controlAccessUser()->where('receiptunitid', $id)
+            ->whereNotNull('photo_1')
+            ->get();
 
         $evidencesTiros = CheckListEvidenceProcessUnit::where('modelid', $receiptunit->id)
             ->whereNotNull('path')->where('modeltype', 'ReceiptUnits')->get();
+
         $comments = StorageComment::where('modeltype', 'ReceiptUnits')
             ->where('modelid', $id)->get();
         $traces = StorageUnitTrace::controlAccessUser()->where('receiptunitid', '=', $id)->get();
+
         $fortmat = 'Yards.KardexReceiptUnit.Formats.Kardex';
         $pdf = PDF::setOptions([
             'isRemoteEnabled' => true,
