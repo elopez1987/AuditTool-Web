@@ -71,7 +71,7 @@
                                                 Concentrado de errores
                                             </div>
                                             <div class="card-body">
-                                               <table class="table table-hover table-bordered table-condensed" id="inventoryDetailTableErrorsTotal">
+                                               <table class="table table-hover table-bordered table-condensed tablegeneral" >
                                                    <thead>
                                                     <tr>
                                                         <th>Cédula</th>
@@ -84,7 +84,14 @@
                                                         <tr>
                                                             <td>{{$cedula->cardname}}</td>
                                                             <td>{{$cedula->totalerrores}}</td>
-                                                            <td></td>
+                                                            <td>
+                                                                <a href="{{url('printCardErrors/' . $cedula->inventory_card_id )}}" class="ml-2 mr-2 ">
+                                                                    <button type="button" class="btn waves-effect waves-light btn-outline-info btn-sm">
+                                                                        <img src="{{asset('/ico/pdf.png')}}" alt="" class="img-16 ml-2 mr-2">
+                                                                        <span> Imprimir</span>
+                                                                    </button>
+                                                                </a>
+                                                            </td>
                                                         </tr>
                                                     @endforeach
                                                    </tbody>
@@ -113,5 +120,5 @@
             $('#inventoryDetailTableErrors').DataTable().ajax.reload();
         }
     </script>
-
+    @include('layouts.Partials.DataTable')
 @endsection

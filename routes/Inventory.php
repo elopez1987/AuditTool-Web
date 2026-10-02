@@ -143,6 +143,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('inventoryhead-errors/{id}', [InventoryErrorsController::class, 'index'])->name('inventoryhead-errors');
     Route::get('getDetailInventoryErrors/{id}', [InventoryErrorsController::class, 'getDetailInventoryErrors'])->name('getDetailInventoryErrors');
     Route::put('inventory-adjust-count/{id}', [InventoryErrorsController::class, 'inventoryadjustcount'])->name('inventory-adjust-count');
+    Route::put('printCardErrors/{id}', [InventoryErrorsController::class, 'printCardErrors'])->name('printCardErrors');
 
     //	Consultas para el dashboard
     Route::get('getTotalAisles/{id}', [InventoryDashboardController::class, 'getTotalAisles'])->name('getTotalAisles');

@@ -25,7 +25,7 @@ class InventoryErrorsController extends BaseController
             ->select(
                 'ilc.inventory_card_id',
                 'ic.name as cardname',
-                DB::raw('count(icc.inventory_card_id) as totalerrores')
+                DB::raw('count(icc.inventory_card_id) as totalerrores'),
             )
             ->where('ilc.inventory_head_id', $inventoryhead->id)
             ->where('ilc.statusid_location', 0)
@@ -116,5 +116,37 @@ class InventoryErrorsController extends BaseController
 
             return $this->errorResponse('Ocurrió un error al ajustar el conteo de la ubicación.');
         }
+    }
+
+    public function printCardErrors($cardId)
+    {
+        return DB::table('inventory_location_counts as ilc')
+            ->leftJoin('inventory_card_counts as icc', 'ilc.inventory_card_id', '=', 'icc.id')
+            ->leftJoin('inventory_cards as ic', 'icc.inventory_card_id', '=', 'ic.id')
+            ->leftJoin('inventory_locations as il', 'ilc.inventory_location_id', '=', 'il.id')
+            ->select('ic.name as cardname', 'il.name as locationname')
+//			->where('ilc.inventory_head_id', $headId)
+            ->where('ilc.inventory_card_id', $cardId)
+            ->where('ilc.statusid_location', 0)
+            ->get();
+
+        $fortmat = 'Inventory.InventoryHead.ErrorsDetail.card-errors';
+
+        $pdf = \PDF::setOptions([
+            'isRemoteEnabled' => true,
+            'chroot' => [
+                realpath(base_path()),
+                realpath($pathImage->value01),
+            ],
+            'httpContext' => stream_context_create([
+                'ssl' => [
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                    'allow_self_signed' => true,
+                ],
+            ]),
+        ])->loadView($fortmat, compact('inventoryCardCount', 'locations'));
+
+        return $pdf->download('Cédula de conteo-' . '.pdf');
     }
 }
