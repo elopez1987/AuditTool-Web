@@ -206,7 +206,7 @@
                                         : storage_path('app/public/' . $image->path);
                                 @endphp
                                 @if(file_exists($doorsPhotoPath))
-                                    <img src="{{ $doorsPhotoPath }}" alt="" style="width: 350px;height: 100px">
+                                    <img src="{{ $doorsPhotoPath }}" alt="" style="width: 350px;height: 200px">
                                 @endif
                             </td>
                             @php
@@ -234,7 +234,7 @@
                         @if($image->type == 'IN')
                             <td class="border-none" style="text-align: center; padding: 10px;">
                                 <img src='{{storage_path('app/' . $image->photo_1)}}' alt=""
-                                     style="height: 200px;max-width: 200px">
+                                     style="height: 200px;max-width: 350px">
                             </td>
                             @php
                                 $count++;
@@ -277,7 +277,7 @@
                                             : storage_path('app/public/' . $image->path);
                                     @endphp
                                     @if(file_exists($ipPhotoPath))
-                                        <img src="{{ $ipPhotoPath }}" style="width: 300px; height: 200px; margin: 5px;">
+                                        <img src="{{ $ipPhotoPath }}" style="width: 350px; height: 200px; margin: 5px;">
                                     @endif
                                 </td>
                                 @php
@@ -312,7 +312,7 @@
                                 @endphp
                                 @if(file_exists($tirosPhotoPath))
                                     <img src="{{ $tirosPhotoPath }}"
-                                         style="width: 500px;height:250px;margin-left: 10px; margin-right: 10px;">
+                                         style="width: 350px;height:200px;margin-left: 10px; margin-right: 10px;">
                                 @endif
                             </td>
                         </tr>
@@ -348,7 +348,7 @@
                                         : storage_path('app/public/' . $image->path);
                                 @endphp
                                 @if(file_exists($outPhotoPath))
-                                    <img src="{{ $outPhotoPath }}" style="width: 300px; height: 200px; margin: 5px;">
+                                    <img src="{{ $outPhotoPath }}" style="width: 350px; height: 200px; margin: 5px;">
                                 @endif
                             </td>
                             @php
@@ -379,7 +379,7 @@
                                     $doorsPhotoPath = str_starts_with($image->photo_1, 'public/') ? storage_path('app/' . $image->photo_1)  : storage_path('app/public/' . $image->photo_1);
                                 @endphp
                                 @if(file_exists($doorsPhotoPath))
-                                    <img src="{{ $doorsPhotoPath }}" alt="" style="width: 350px;height: 100px">
+                                    <img src="{{ $doorsPhotoPath }}" alt="" style="width: 350px;height: 200px">
                                 @endif
                             </td>
                             @php

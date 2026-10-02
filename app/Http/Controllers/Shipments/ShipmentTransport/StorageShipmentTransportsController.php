@@ -35,6 +35,9 @@ class StorageShipmentTransportsController extends BaseController
     {
 
         $transport = $this->getModelTransportEdit($id);
+        if (empty($transport)) {
+            return $this->errorResponse('No existe el número de embarque buscado.');
+        }
 
         return view('Shipments.StorageShipmenTransport.edit', compact('transport'));
     }
