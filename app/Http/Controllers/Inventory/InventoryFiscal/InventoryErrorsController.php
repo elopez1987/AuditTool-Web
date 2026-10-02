@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Inventory\InventoryFiscal;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Inventory\InventoryFiscal\InventoryAdjustLocationRequest;
+use App\Models\Configuration\Parameters\SystemDetailParameter;
 use App\Models\Inventory\InventoryFiscal\InventoryHead;
 use App\Models\Inventory\InventoryFiscal\InventoryLocationCount;
 use App\Models\Inventory\PartNumber\InventoryPartnumber;
@@ -120,6 +121,7 @@ class InventoryErrorsController extends BaseController
 
     public function printCardErrors($cardId)
     {
+        $pathImage = SystemDetailParameter::where('parameterid', '=', 'PARAM-IMG')->first();
         $locations = DB::table('inventory_location_counts as ilc')
             ->leftJoin('inventory_card_counts as icc', 'ilc.inventory_card_id', '=', 'icc.id')
             ->leftJoin('inventory_cards as ic', 'icc.inventory_card_id', '=', 'ic.id')
