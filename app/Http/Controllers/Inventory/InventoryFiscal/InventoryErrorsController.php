@@ -120,12 +120,11 @@ class InventoryErrorsController extends BaseController
 
     public function printCardErrors($cardId)
     {
-        return DB::table('inventory_location_counts as ilc')
+        $locations = DB::table('inventory_location_counts as ilc')
             ->leftJoin('inventory_card_counts as icc', 'ilc.inventory_card_id', '=', 'icc.id')
             ->leftJoin('inventory_cards as ic', 'icc.inventory_card_id', '=', 'ic.id')
             ->leftJoin('inventory_locations as il', 'ilc.inventory_location_id', '=', 'il.id')
             ->select('ic.name as cardname', 'il.name as locationname')
-//			->where('ilc.inventory_head_id', $headId)
             ->where('ilc.inventory_card_id', $cardId)
             ->where('ilc.statusid_location', 0)
             ->get();
@@ -145,7 +144,7 @@ class InventoryErrorsController extends BaseController
                     'allow_self_signed' => true,
                 ],
             ]),
-        ])->loadView($fortmat, compact('inventoryCardCount', 'locations'));
+        ])->loadView($fortmat, compact('locations'));
 
         return $pdf->download('Cédula de conteo-' . '.pdf');
     }

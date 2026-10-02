@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Cédula de Inventario</title>
+    <title>Cédula de Inventario con errores</title>
     <style>
         @page {
             margin: 0 0;
@@ -74,8 +74,6 @@
 <div class="row">
     <table class="border-none">
         <th style="height: 20px; width: 25%; text-align: center;">
-            <img src="{{ asset('storage/' . $inventoryCardCount->key_user_count_01) }}"
-                 style="width: 50px; height: 50px; display: block; margin: 0 auto;">
 
             <span style="display: block; margin-top: 5px;">
                 Firma del contador:
@@ -94,20 +92,20 @@
 </div>
 <div class="row" style="margin-top: 5px">
     <table class="border-none">
-        <th style="height: 20px;width: 20%;">PRIMER CONTEO</th>
-        <th style="height: 20px;width: 50%;text-align: left;"> NOMBRE: {{$inventoryCardCount->inventoryhead->name}}</th>
+        <th style="height: 20px;width: 20%;">CONTEO DE VALIDACION</th>
+        <th style="height: 20px;width: 50%;text-align: left;"> </th>
     </table>
 </div>
 <div class="row" style="margin-top: 5px">
     <table class="border-none">
         <th style="height: 20px;width: 50%;text-align: left;">
-            CONTADOR: {{$inventoryCardCount->user_count01->name}}</th>
+            CONTADOR: </th>
     </table>
 </div>
 <div class="row">
     <table class="border-none">
         <th style="height: 20px;width: 80%;background-color: black;color: white;font-size: 20px;">INVENTARIO FISICO</th>
-        <th style="height: 20px;width: 20%;font-size: 24px;border-top: 0;vertical-align: text-top;"> {{$inventoryCardCount->inventorycard ? $inventoryCardCount->inventorycard->name : ''}}</th>
+        <th style="height: 20px;width: 20%;font-size: 24px;border-top: 0;vertical-align: text-top;"> </th>
     </table>
 </div>
 
@@ -124,10 +122,10 @@
             </tr>
             @foreach($locations as $location)
                 <tr>
-                    <th style="height: 20px;width: 25%;text-align: center;">{{$location->inventorylocation ? $location->inventorylocation->name : ''}}</th>
-                    <th style="height: 20px;width: 25%;text-align: center;">{{$location->inventorypartnumber01 ? $location->inventorypartnumber01->prtnum : ''}}</th>
-                    <th style="height: 20px;width: 25%;text-align: center;">{{$location->quantity01}}</th>
-                    <th style="height: 20px;width: 25%;text-align:center;">{{$location->inventorylocation ? $location->inventorylocation->inventoryunitsmeasure?->description : ''}}</th>
+                    <th style="height: 20px;width: 25%;text-align: center;">{{$location->locationname}}</th>
+                    <th style="height: 20px;width: 25%;text-align: center;"></th>
+                    <th style="height: 20px;width: 25%;text-align: center;"></th>
+                    <th style="height: 20px;width: 25%;text-align:center;"></th>
                 </tr>
             @endforeach
         </table>
