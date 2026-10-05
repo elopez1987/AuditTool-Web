@@ -119,9 +119,9 @@ class ObtenerETAdeRecursoConfiable extends Command
         $results = json_decode($response->getBody()->getContents());
 
         if (empty($results)) {
-            Log::warning('Respuesta vacía de Recurso Confiable', [
-                'center_id' => $centerid,
-            ]);
+            //            Log::warning('Respuesta vacía de Recurso Confiable', [
+            //                'center_id' => $centerid,
+            //            ]);
 
             return;
         }

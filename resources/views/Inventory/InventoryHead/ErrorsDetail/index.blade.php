@@ -38,31 +38,68 @@
                         <div class="col-lg-12">
                             <div class="card">
                                 <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="card-header">
-                                            ERRORES DE CONTEO
+                                    <div class="col-lg-8">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                ERRORES DE CONTEO
+                                            </div>
+                                            <div class="card-body">
+                                                <table class="table table-bordered table-condensed" id="inventoryDetailTableErrors"
+                                                       width="100%">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Pasillo</th>
+                                                        <th>Cedula</th>
+                                                        <th>Ubicación</th>
+                                                        <th>Sku 01</th>
+                                                        <th>Catidad 01</th>
+                                                        <th>Sku 02</th>
+                                                        <th>Catidad 02</th>
+                                                        <th>Tipo de conteo</th>
+                                                        <th>Ajustar</th>
+                                                    </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
+                                            <div class="card-footer"></div>
                                         </div>
-                                        <div class="card-body">
-                                            <table class="table table-bordered table-condensed" id="inventoryDetailTableErrors"
-                                                   width="100%">
-                                                <thead>
-                                                <tr>
-                                                    <th>Pasillo</th>
-                                                    <th>Cedula</th>
-                                                    <th>Ubicación</th>
-                                                    <th>Sku 01</th>
-                                                    <th>Catidad 01</th>
-                                                    <th>Sku 02</th>
-                                                    <th>Catidad 02</th>
-                                                    <th>Tipo de conteo</th>
-                                                    <th>Ajustar</th>
-                                                </tr>
-                                                </thead>
-                                            </table>
-                                        </div>
+
                                     </div>
                                     <div class="col-lg-4">
-
+                                        <div class="card">
+                                            <div class="card-header">
+                                                Concentrado de errores
+                                            </div>
+                                            <div class="card-body">
+                                               <table class="table table-hover table-bordered table-condensed tablegeneral" >
+                                                   <thead>
+                                                    <tr>
+                                                        <th>Cédula</th>
+                                                        <th>Cantidad de errores</th>
+                                                        <th>Imprimir</th>
+                                                    </tr>
+                                                   </thead>
+                                                   <tbody>
+                                                    @foreach($cedulas as $cedula)
+                                                        <tr>
+                                                            <td>{{$cedula->cardname}}</td>
+                                                            <td>{{$cedula->totalerrores}}</td>
+                                                            <td>
+                                                                <a href="{{url('printCardErrors/' . $cedula->inventory_card_id )}}" class="ml-2 mr-2 ">
+                                                                    <button type="button" class="btn waves-effect waves-light btn-outline-info btn-sm">
+                                                                        <img src="{{asset('/ico/pdf.png')}}" alt="" class="img-16 ml-2 mr-2">
+                                                                        <span> Imprimir</span>
+                                                                    </button>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                   </tbody>
+                                               </table>
+                                            </div>
+                                            <div class="card-footer">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -83,4 +120,5 @@
             $('#inventoryDetailTableErrors').DataTable().ajax.reload();
         }
     </script>
+    @include('layouts.Partials.DataTable')
 @endsection

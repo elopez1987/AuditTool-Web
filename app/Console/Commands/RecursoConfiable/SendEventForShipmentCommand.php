@@ -251,10 +251,10 @@ class SendEventForShipmentCommand extends Command
             if ($shipment->retry_count >= self::MAX_RETRIES) {
                 $shipment->update(['status' => 'Error']);
 
-                Log::error("Evento marcado como Error después de {$shipment->retry_count} intentos", [
-                    'shipment_id' => $shipment->shipmentid,
-                    'error' => $result->error_message ?? 'Error en el envío',
-                ]);
+                //                Log::error("Evento marcado como Error después de {$shipment->retry_count} intentos", [
+                //                    'shipment_id' => $shipment->shipmentid,
+                //                    'error' => $result->error_message ?? 'Error en el envío',
+                //                ]);
             }
         }
     }

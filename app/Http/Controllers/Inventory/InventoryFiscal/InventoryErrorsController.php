@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Inventory\InventoryFiscal;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Inventory\InventoryFiscal\InventoryAdjustLocationRequest;
+use App\Models\Configuration\Parameters\SystemDetailParameter;
 use App\Models\Inventory\InventoryFiscal\InventoryHead;
 use App\Models\Inventory\InventoryFiscal\InventoryLocationCount;
 use App\Models\Inventory\PartNumber\InventoryPartnumber;
@@ -19,7 +20,20 @@ class InventoryErrorsController extends BaseController
             ->where('inventory_uuid', $id)
             ->firstOrFail();
 
-        return view('Inventory.InventoryHead.ErrorsDetail.index', compact('inventoryhead'));
+        $cedulas = DB::table('inventory_location_counts as ilc')
+            ->leftJoin('inventory_card_counts as icc', 'ilc.inventory_card_id', '=', 'icc.id')
+            ->leftJoin('inventory_cards as ic', 'icc.inventory_card_id', '=', 'ic.id')
+            ->select(
+                'ilc.inventory_card_id',
+                'ic.name as cardname',
+                DB::raw('count(icc.inventory_card_id) as totalerrores'),
+            )
+            ->where('ilc.inventory_head_id', $inventoryhead->id)
+            ->where('ilc.statusid_location', 0)
+            ->groupBy('ic.name', 'ilc.inventory_card_id')->get();
+
+        return view('Inventory.InventoryHead.ErrorsDetail.index',
+            compact('inventoryhead', 'cedulas'));
     }
 
     public function getDetailInventoryErrors(Request $request)
@@ -103,6 +117,37 @@ class InventoryErrorsController extends BaseController
 
             return $this->errorResponse('Ocurrió un error al ajustar el conteo de la ubicación.');
         }
+    }
 
+    public function printCardErrors($cardId)
+    {
+        $pathImage = SystemDetailParameter::where('parameterid', '=', 'PARAM-IMG')->first();
+        $locations = DB::table('inventory_location_counts as ilc')
+            ->leftJoin('inventory_card_counts as icc', 'ilc.inventory_card_id', '=', 'icc.id')
+            ->leftJoin('inventory_cards as ic', 'icc.inventory_card_id', '=', 'ic.id')
+            ->leftJoin('inventory_locations as il', 'ilc.inventory_location_id', '=', 'il.id')
+            ->select('ic.name as cardname', 'il.name as locationname')
+            ->where('ilc.inventory_card_id', $cardId)
+            ->where('ilc.statusid_location', 0)
+            ->get();
+
+        $fortmat = 'Inventory.InventoryHead.ErrorsDetail.card-errors';
+
+        $pdf = \PDF::setOptions([
+            'isRemoteEnabled' => true,
+            'chroot' => [
+                realpath(base_path()),
+                realpath($pathImage->value01),
+            ],
+            'httpContext' => stream_context_create([
+                'ssl' => [
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                    'allow_self_signed' => true,
+                ],
+            ]),
+        ])->loadView($fortmat, compact('locations'));
+
+        return $pdf->download('Cédula de conteo-' . '.pdf');
     }
 }
