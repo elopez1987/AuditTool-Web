@@ -175,9 +175,9 @@ class GetEvidenceFromRControl extends Command
         $result = json_decode($response->getBody()->getContents());
 
         if (empty($result)) {
-            Log::warning('Respuesta vacía de Recurso Confiable', [
-                'shipment_id' => $shipment->shipmentid,
-            ]);
+            //            Log::warning('Respuesta vacía de Recurso Confiable', [
+            //                'shipment_id' => $shipment->shipmentid,
+            //            ]);
 
             return;
         }

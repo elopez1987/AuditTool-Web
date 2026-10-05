@@ -451,10 +451,10 @@ class SendPlanForShipmentCommand extends Command
             if ($shipment->retry_count >= self::MAX_RETRIES) {
                 $shipment->update(['status' => 'Error']);
 
-                Log::error("Shipment marcado como Error después de {$shipment->retry_count} intentos", [
-                    'shipment_id' => $shipment->shipmentid,
-                    'error' => $resultData->error_message ?? 'Error desconocido',
-                ]);
+                //                Log::error("Shipment marcado como Error después de {$shipment->retry_count} intentos", [
+                //                    'shipment_id' => $shipment->shipmentid,
+                //                    'error' => $resultData->error_message ?? 'Error desconocido',
+                //                ]);
             }
         }
     }
