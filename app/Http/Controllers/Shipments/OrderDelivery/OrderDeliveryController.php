@@ -80,7 +80,7 @@ class OrderDeliveryController extends BaseController
 
         return view(
             'Shipments.OrderDeliveries.create',
-            compact('carriers', 'turns', 'customers', 'shipmenttypes', 'centers', 'warehouses')
+            compact('carriers', 'turns', 'customers', 'shipmenttypes', 'centers', 'warehouses'),
         );
     }
 
@@ -139,8 +139,8 @@ class OrderDeliveryController extends BaseController
                 'conteosVig',
                 'events',
                 'tracesShipment',
-                'countsTotals'
-            )
+                'countsTotals',
+            ),
         );
     }
 
@@ -154,7 +154,7 @@ class OrderDeliveryController extends BaseController
 
         return view(
             'Shipments.OrderDeliveries.edit',
-            compact('carriers', 'turns', 'customers', 'shipmenttypes', 'orderdelivery')
+            compact('carriers', 'turns', 'customers', 'shipmenttypes', 'orderdelivery'),
         );
     }
 
@@ -164,7 +164,12 @@ class OrderDeliveryController extends BaseController
         try {
             $orderdelivery->update($request->all());
             //            $this->updateMaximunOutPutShipment($orderdelivery);
-            $this->createNewRegisterMonitor($orderdelivery);
+
+            $parameter = $this->getParametersOfWarehouse($orderdelivery->warehouseid);
+            if (! empty($parameter) && in_array('SWH-18', (array) $parameter)) {
+                $this->createNewRegisterMonitor($orderdelivery);
+            }
+
             $this->editOrderDelivery($orderdelivery, $request);
             DB::commit();
 
