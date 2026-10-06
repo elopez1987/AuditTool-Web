@@ -683,8 +683,8 @@
             <tr>
                 <th style="height: 30px;background: white">
                     @foreach($comments as $comment)
-                        @if($comment->auxiliary01 == 'QI')
-                            {{$comment->comment}}
+                        @if($comment->auxiliary01 == 'AU')
+                            <ul>{{$comment->comment}}</ul>
                         @endif
                     @endforeach
                 </th>
@@ -715,36 +715,34 @@
                 <th style="width: 20%;background-color: #D5D5D5;height: 35px !important;">OFICIAL DE ALMACEN</th>
                 <th style="width: 40%;text-align: left">
                     {{--                    {{$receiptunit->key ? $receiptunit->key->nameguard02 : ''}}--}}
-                    {{$receiptunit->order?->folio_count->user->name}}
+                    {{$receiptunit->order?->folio_count?->user?->name}}
                 </th>
                 <th style="position: relative;">
                     <div style="position: absolute; left: 0;">
-                        @if(!empty($receiptunit->key))
-                            <img src="{{storage_path('app/' . $receiptunit->key->keyguard02 )}}" alt="Firma" style="height: 28px;max-height: 28px"/>
-                        @endif
+{{--                        @if(!empty($receiptunit->key))--}}
+{{--                            <img src="{{storage_path('app/' . $receiptunit->key->keyguard02 )}}" alt="Firma" style="height: 28px;max-height: 28px"/>--}}
+{{--                        @endif--}}
                         @if(!empty($receiptunit->order->folio_count))
                             <img src="{{storage_path('app/' . $receiptunit->order->folio_count->keyguard )}}"
                                  alt="Firma"
-                                 style="height: 28px;max-height: 28px"/>
+                                 style="max-height: 28px;max-width: 28px;"/>
                         @endif
                     </div>
                 </th>
             </tr>
             <tr>
-                <th style="width: 20%;background-color: #D5D5D5;height: 35px !important;">SUPERVISOR - ALMACEN</th>
+                <th style="width: 20%;background-color: #D5D5D5;height: 40px !important;">SUPERVISOR - ALMACEN</th>
                 <th style="width: 40%;text-align: left">
 {{--                    {{$receiptunit->key ? $receiptunit->key->supervisorname : ''}}--}}
-                    {{$receiptunit->order?->verification_pending->usersupr->name}}
+                    {{$receiptunit->order?->verification_pending?->usersupr?->name}}
                 </th>
                 <th>
-                    @if(!empty($receiptunit->key))
-                        <img src="{{storage_path('app/' . $receiptunit->key->supervisorkey )}}" alt="Firma"
-                             style="height: 28px;max-height: 28px"/>
-                    @endif
+{{--                    @if(!empty($receiptunit->key))--}}
+{{--                        <img src="{{storage_path('app/' . $receiptunit->key->supervisorkey )}}" alt="Firma"--}}
+{{--                             style="height: 28px;max-height: 28px"/>--}}
+{{--                    @endif--}}
                     @if(!empty($receiptunit->order->folio_count))
-                        <img src="{{storage_path('app/' . $receiptunit->order->folio_count->keysupervisor )}}"
-                             alt="Firma"
-                             style="height: 28px;max-height: 28px"/>
+                        <img src="{{storage_path('app/' . $receiptunit->order?->folio_count?->keysupervisor )}}" alt="Firma" style="max-height: 28px;max-width: 28px;"/>
                     @endif
                 </th>
             </tr>
