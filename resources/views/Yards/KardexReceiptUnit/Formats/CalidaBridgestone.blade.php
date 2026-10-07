@@ -512,7 +512,7 @@
                                 $floorPhotoPath = str_starts_with($photo->path, 'public/')  ? storage_path('app/' . $photo->path) : storage_path('app/public/' . $photo->path);
                             @endphp
                             @if(file_exists($floorPhotoPath))
-                                <img src="{{ $floorPhotoPath }}" alt="" style="width: 350px;height: 100px">
+                                <img src="{{ $floorPhotoPath }}" alt="" style="width: 350px;height: 150px">
                             @endif
                         @endif
                     @endforeach
@@ -526,7 +526,7 @@
                                     : storage_path('app/public/' . $photo->path);
                             @endphp
                             @if(file_exists($roofPhotoPath))
-                                <img src="{{ $roofPhotoPath }}" alt="" style="width: 350px;height: 100px">
+                                <img src="{{ $roofPhotoPath }}" alt="" style="width: 350px;height: 150px">
                             @endif
                         @endif
                     @endforeach
@@ -542,7 +542,7 @@
                                     : storage_path('app/public/' . $photo->path);
                             @endphp
                             @if(file_exists($backgroundPhotoPath))
-                                <img src="{{ $backgroundPhotoPath }}" alt="" style="width: 350px;height: 100px">
+                                <img src="{{ $backgroundPhotoPath }}" alt="" style="width: 350px;height: 150px">
                             @endif
                         @endif
                     @endforeach
@@ -556,7 +556,7 @@
                                     : storage_path('app/public/' . $photo->path);
                             @endphp
                             @if(file_exists($doorsPhotoPath))
-                                <img src="{{ $doorsPhotoPath }}" alt="" style="width: 350px;height: 100px">
+                                <img src="{{ $doorsPhotoPath }}" alt="" style="width: 350px;height: 150px">
                             @endif
                         @endif
                     @endforeach
@@ -749,7 +749,7 @@
         </table>
     </div>
 
-    <div class="row" style="position:relative; z-index: 1;margin-top: 20px">
+    <div class="row" style="position:relative; z-index: 1;margin-top: 15px">
         <table class="border-none">
             <tr>
                 <th style="width: 20%;height: 20px;border: none">SEG-IIUC-058-PC</th>
