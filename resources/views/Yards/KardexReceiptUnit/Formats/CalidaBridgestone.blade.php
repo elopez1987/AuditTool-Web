@@ -505,7 +505,7 @@
     <div class="row">
         <table class="border-none">
             <tr>
-                <th style="width: 300px;height: 100px;">
+                <th style="width: 300px;height: 150px;">
                     @foreach($photos as $photo)
                         @if($photo->auxiliary05 == '_floor')
                             @php
@@ -517,7 +517,7 @@
                         @endif
                     @endforeach
                 </th>
-                <th style="width: 300px;height: 100px">
+                <th style="width: 300px;height: 150px">
                     @foreach($photos as $photo)
                         @if($photo->auxiliary05 == '_roof')
                             @php
@@ -533,7 +533,7 @@
                 </th>
             </tr>
             <tr>
-                <th style="width: 300px;height: 100px">
+                <th style="width: 300px;height: 150px">
                     @foreach($photos as $photo)
                         @if($photo->auxiliary05 == 'background')
                             @php
@@ -547,7 +547,7 @@
                         @endif
                     @endforeach
                 </th>
-                <th style="width: 300px;height: 100px">
+                <th style="width: 300px;height: 150px">
                     @foreach($photos as $photo)
                         @if($photo->auxiliary05 == 'doors')
                             @php
@@ -681,7 +681,7 @@
                 <th>FIRMA DE AUTORIZACION</th>
             </tr>
             <tr>
-                <th style="height: 30px;background: white">
+                <th style="height: 45px;background: white">
                     @foreach($comments as $comment)
                         @if($comment->auxiliary01 == 'AU')
                             <ul>{{$comment->comment}}</ul>
@@ -712,26 +712,25 @@
                 <th></th>
             </tr>
             <tr>
-                <th style="width: 20%;background-color: #D5D5D5;height: 35px !important;">OFICIAL DE ALMACEN</th>
+                <th style="width: 20%;background-color: #D5D5D5;height: 50px !important;">OFICIAL DE ALMACEN</th>
                 <th style="width: 40%;text-align: left">
                     {{--                    {{$receiptunit->key ? $receiptunit->key->nameguard02 : ''}}--}}
                     {{$receiptunit->order?->folio_count?->user?->name}}
                 </th>
                 <th style="position: relative;">
-                    <div style="position: absolute; left: 0;">
+                    <div >
 {{--                        @if(!empty($receiptunit->key))--}}
 {{--                            <img src="{{storage_path('app/' . $receiptunit->key->keyguard02 )}}" alt="Firma" style="height: 28px;max-height: 28px"/>--}}
 {{--                        @endif--}}
                         @if(!empty($receiptunit->order->folio_count))
-                            <img src="{{storage_path('app/' . $receiptunit->order->folio_count->keyguard )}}"
-                                 alt="Firma"
-                                 style="max-height: 28px;max-width: 28px;"/>
+                            <img src="{{storage_path('app/' . $receiptunit->order->folio_count->keyguard )}}" alt="Firma" style="max-height: 40px;max-width: 40px;"/>
                         @endif
+{{--                        <img src="{{asset('img/firma.png')}}" alt="Firma" style="max-height: 40px;max-width: 40px;"/>--}}
                     </div>
                 </th>
             </tr>
             <tr>
-                <th style="width: 20%;background-color: #D5D5D5;height: 40px !important;">SUPERVISOR - ALMACEN</th>
+                <th style="width: 20%;background-color: #D5D5D5;height: 50px !important;">SUPERVISOR - ALMACEN</th>
                 <th style="width: 40%;text-align: left">
 {{--                    {{$receiptunit->key ? $receiptunit->key->supervisorname : ''}}--}}
                     {{$receiptunit->order?->verification_pending?->usersupr?->name}}
@@ -742,14 +741,15 @@
 {{--                             style="height: 28px;max-height: 28px"/>--}}
 {{--                    @endif--}}
                     @if(!empty($receiptunit->order->folio_count))
-                        <img src="{{storage_path('app/' . $receiptunit->order?->folio_count?->keysupervisor )}}" alt="Firma" style="max-height: 28px;max-width: 28px;"/>
+                        <img src="{{storage_path('app/' . $receiptunit->order?->folio_count?->keysupervisor )}}" alt="Firma" style="max-height: 40px;max-width: 40px;"/>
                     @endif
+{{--                        <img src="{{asset('img/firma.png')}}" alt="Firma" style="max-height: 40px;max-width: 40px;"/>--}}
                 </th>
             </tr>
         </table>
     </div>
 
-    <div class="row" style="position:relative; z-index: 1;margin-top: 50px">
+    <div class="row" style="position:relative; z-index: 1;margin-top: 20px">
         <table class="border-none">
             <tr>
                 <th style="width: 20%;height: 20px;border: none">SEG-IIUC-058-PC</th>
