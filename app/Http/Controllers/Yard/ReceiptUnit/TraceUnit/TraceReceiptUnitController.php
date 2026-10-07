@@ -187,6 +187,7 @@ class TraceReceiptUnitController extends BaseController
         $receiptunit = ReceiptUnit::controlAccessUser()->where('id', $id)->first();
         $tracto = ReceiptTruck::controlAccessUser()->where('id', $receiptunit->foliotruck)->first();
         $pathImage = SystemDetailParameter::where('parameterid', '=', 'PARAM-IMG')->first();
+
         $verified = DB::table('storagechecklisttransports as s')
             ->select(
                 's.id',
