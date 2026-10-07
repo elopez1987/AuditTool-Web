@@ -749,7 +749,7 @@
         </table>
     </div>
 
-    <div class="row" style="position:relative; z-index: 1;margin-top: 15px">
+    <div class="row" style="position:relative; z-index: 1;">
         <table class="border-none">
             <tr>
                 <th style="width: 20%;height: 20px;border: none">SEG-IIUC-058-PC</th>
