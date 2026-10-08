@@ -586,7 +586,7 @@
                                 @foreach($verified as $item)
                                     @if($item->idcheck == "1")
                                         @if($item->verified == '1')
-                                            <img src="img/kraft/che" alt=""
+                                            <img src="img/kraft/check-mark-icon.png" alt=""
                                                  style="width: 9px;height: 9px">
                                         @endif
                                     @endif
@@ -599,7 +599,7 @@
                                 @foreach($verified as $item)
                                     @if($item->idcheck == "1")
                                         @if($item->verified == '0')
-                                            <img src="img/kraft/che" alt=""
+                                            <img src="img/kraft/check-mark-icon.png" alt=""
                                                  style="width: 9px;height: 9px">
                                         @endif
                                     @endif
@@ -616,7 +616,7 @@
                                 @foreach($verified as $item)
                                     @if($item->idcheck == "2")
                                         @if($item->verified == '1')
-                                            <img src="img/kraft/che" alt=""
+                                            <img src="img/kraft/check-mark-icon.png" alt=""
                                                  style="width: 9px;height: 9px">
                                         @endif
                                     @endif
@@ -629,7 +629,7 @@
                                 @foreach($verified as $item)
                                     @if($item->idcheck == "2")
                                         @if($item->verified == '0')
-                                            <img src="img/kraft/che" alt=""
+                                            <img src="img/kraft/check-mark-icon.png" alt=""
                                                  style="width: 9px;height: 9px">
                                         @endif
                                     @endif
@@ -708,8 +708,12 @@
         <table>
             <tr>
                 <th style="width: 20%;background-color: #D5D5D5;height: 35px !important;">SELLOS COLOCADOS</th>
-                <th style="width: 40%">{{$receiptunit->key?->containersealout}}</th>
-                <th></th>
+                <th style="width: 40%" colspan="2">
+                    @if($seal)
+                        {{$seal->seal01}} | {{$seal->seal02}} | {{$seal->seal03}}
+                    @endif
+                </th>
+                {{--                <th></th>--}}
             </tr>
             <tr>
                 <th style="width: 20%;background-color: #D5D5D5;height: 50px !important;">OFICIAL DE ALMACEN</th>
@@ -718,32 +722,34 @@
                     {{$receiptunit->order?->folio_count?->user?->name}}
                 </th>
                 <th style="position: relative;">
-                    <div >
-{{--                        @if(!empty($receiptunit->key))--}}
-{{--                            <img src="{{storage_path('app/' . $receiptunit->key->keyguard02 )}}" alt="Firma" style="height: 28px;max-height: 28px"/>--}}
-{{--                        @endif--}}
+                    <div>
+                        {{--                        @if(!empty($receiptunit->key))--}}
+                        {{--                            <img src="{{storage_path('app/' . $receiptunit->key->keyguard02 )}}" alt="Firma" style="height: 28px;max-height: 28px"/>--}}
+                        {{--                        @endif--}}
                         @if(!empty($receiptunit->order->folio_count))
-                            <img src="{{storage_path('app/' . $receiptunit->order->folio_count->keyguard )}}" alt="Firma" style="max-height: 40px;max-width: 40px;"/>
+                            <img src="{{storage_path('app/' . $receiptunit->order->folio_count->keyguard )}}"
+                                 alt="Firma" style="max-height: 40px;max-width: 40px;"/>
                         @endif
-{{--                        <img src="{{asset('img/firma.png')}}" alt="Firma" style="max-height: 40px;max-width: 40px;"/>--}}
+                        {{--                        <img src="{{asset('img/firma.png')}}" alt="Firma" style="max-height: 40px;max-width: 40px;"/>--}}
                     </div>
                 </th>
             </tr>
             <tr>
                 <th style="width: 20%;background-color: #D5D5D5;height: 50px !important;">SUPERVISOR - ALMACEN</th>
                 <th style="width: 40%;text-align: left">
-{{--                    {{$receiptunit->key ? $receiptunit->key->supervisorname : ''}}--}}
+                    {{--                    {{$receiptunit->key ? $receiptunit->key->supervisorname : ''}}--}}
                     {{$receiptunit->order?->verification_pending?->usersupr?->name}}
                 </th>
                 <th>
-{{--                    @if(!empty($receiptunit->key))--}}
-{{--                        <img src="{{storage_path('app/' . $receiptunit->key->supervisorkey )}}" alt="Firma"--}}
-{{--                             style="height: 28px;max-height: 28px"/>--}}
-{{--                    @endif--}}
+                    {{--                    @if(!empty($receiptunit->key))--}}
+                    {{--                        <img src="{{storage_path('app/' . $receiptunit->key->supervisorkey )}}" alt="Firma"--}}
+                    {{--                             style="height: 28px;max-height: 28px"/>--}}
+                    {{--                    @endif--}}
                     @if(!empty($receiptunit->order->folio_count))
-                        <img src="{{storage_path('app/' . $receiptunit->order?->folio_count?->keysupervisor )}}" alt="Firma" style="max-height: 40px;max-width: 40px;"/>
+                        <img src="{{storage_path('app/' . $receiptunit->order?->folio_count?->keysupervisor )}}"
+                             alt="Firma" style="max-height: 40px;max-width: 40px;"/>
                     @endif
-{{--                        <img src="{{asset('img/firma.png')}}" alt="Firma" style="max-height: 40px;max-width: 40px;"/>--}}
+                    {{--                        <img src="{{asset('img/firma.png')}}" alt="Firma" style="max-height: 40px;max-width: 40px;"/>--}}
                 </th>
             </tr>
         </table>
