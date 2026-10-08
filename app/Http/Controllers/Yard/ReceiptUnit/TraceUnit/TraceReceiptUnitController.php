@@ -248,6 +248,8 @@ class TraceReceiptUnitController extends BaseController
         $receiptunit = ReceiptUnit::controlAccessUser()->where('id', $id)->first();
         $comments = StorageComment::where('modeltype', 'ReceiptUnits')->where('modelid', $id)->get();
         $pathImage = SystemDetailParameter::where('parameterid', '=', 'PARAM-IMG')->first();
+        $seal = ReceiptUnitSeal::where('folionumber', $receiptunit->id)
+            ->where('value01', 'COLOCAR')->first();
         $verified = DB::table('storagechecklisttransports as s')
             ->select(
                 's.id',
@@ -283,7 +285,7 @@ class TraceReceiptUnitController extends BaseController
                 ],
             ]),
         ])
-            ->loadView($fortmat, compact('receiptunit', 'comments', 'verified', 'photos'));
+            ->loadView($fortmat, compact('receiptunit', 'comments', 'verified', 'photos', 'seal'));
 
         return $pdf->download('Folio_De_Calidad-' . $receiptunit->id . '.pdf');
     }
