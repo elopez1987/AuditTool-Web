@@ -61,9 +61,9 @@ class InventoryErrorsController extends BaseController
             ->leftJoin('inventorypartnumbers as iv1', 'ilc.inventorypartnumber01_id', '=', 'iv1.id')
             ->leftJoin('inventorypartnumbers as iv2', 'ilc.inventorypartnumber02_id', '=', 'iv2.id')
             ->where('ilc.inventory_head_id', $request->inventory_head_id)
-            ->when($request->filled('name'), function ($q) use ($request) {
-                $q->where($request->input('name'));
-            })
+//            ->when($request->filled('name'), function ($q) use ($request) {
+//                $q->where($request->input('name'));
+//            })
             ->where('ilc.statusid_location', 0);
 
         return $this->showDataToView($data, 'Inventory.InventoryHead.ErrorsDetail.buttons');
