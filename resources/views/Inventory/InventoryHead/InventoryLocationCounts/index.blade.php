@@ -198,7 +198,7 @@
                 },
             ],
             "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
-            "lengthMenu": [[10, 25, 50, 100,200,300,400], [10, 25, 50,100,200,300,400]],
+            "lengthMenu": [[10, 25, 50, 100,200,300,400,1000], [10, 25, 50,100,200,300,400,1000]],
 
             buttons: [
                 {
