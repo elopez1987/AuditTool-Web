@@ -23,7 +23,7 @@ class InventoryLocationCardController extends BaseController
 
         return view(
             'Inventory.InventoryHead.LocationCard.index',
-            compact('inventoryCardCount', 'inventoryHead')
+            compact('inventoryCardCount', 'inventoryHead'),
         );
     }
 
@@ -171,7 +171,7 @@ class InventoryLocationCardController extends BaseController
                 (clone $base)
                     ->where(fn ($q) => $q
                         ->whereColumn('quantity01', '!=', 'quantity02')
-                        ->orWhereColumn('inventorypartnumber01_id', '!=', 'inventorypartnumber02_id')
+                        ->orWhereColumn('inventorypartnumber01_id', '!=', 'inventorypartnumber02_id'),
                     )
                     ->update(['statusid_location' => false]);
 
@@ -230,5 +230,10 @@ class InventoryLocationCardController extends BaseController
 
             return $this->errorResponse('Ocurrió un error al validar la cédula.');
         }
+    }
+
+    public function terceronteo($id)
+    {
+        dd($id);
     }
 }

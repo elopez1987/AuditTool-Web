@@ -5,7 +5,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    Detalla de cédula sdfdsf
+                    Detalla de cédula
                 </div>
                 <div class="card-body">
                     <div class="row">
