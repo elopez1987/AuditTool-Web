@@ -132,19 +132,20 @@
                                         <th>Descripción</th>
                                         <th>Cantidad fisico</th>
                                         <th>Cantidad wms</th>
-                                        <th>Unidad de medida</th>
+<th>Unidad de medida</th>
                                         <th>Estatus de ubicación</th>
-{{--                                        <th>Opciones</th>--}}
+                                        <th>Opciones</th>
                                     </tr>
                                 </thead>
                             </table>
                         </div>
                     </div>
 
-                </div>
+</div>
             </div>
         </div>
     </div>
+    @include('layouts.Partials.Errors')
 @endsection
 
 @section('script')
@@ -181,7 +182,7 @@
                 {data: 'total_piezas_fisico'},
                 {data: 'total_piezas_wms'},
                 {data: 'unitmeasureid'},
-                {
+{
                     data: 'status_comparacion',
                     name: 'status_comparacion',
                     render: function (data, type, rowData) {
@@ -196,6 +197,7 @@
                         return '<span style="background-color:' + bgColor + '; color: black; padding: 2px 8px; border-radius: 4px; display: inline-block;">' + data + '</span>';
                     }
                 },
+                {data: 'btn', orderable: false, searchable: false},
             ],
             "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
             "lengthMenu": [[10, 25, 50, 100,200,300,400,1000], [10, 25, 50,100,200,300,400,1000]],

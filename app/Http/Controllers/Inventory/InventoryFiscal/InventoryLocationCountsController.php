@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Inventory\InventoryFiscal;
 
 use App\Http\Controllers\BaseController;
+use App\Http\Requests\Web\Inventory\InventoryFiscal\UpdateInventoryLocationCountRequest;
 use App\Models\Inventory\InventoryFiscal\InventoryHead;
+use App\Models\Inventory\InventoryFiscal\InventoryLocationCount;
+use App\Models\Inventory\PartNumber\InventoryPartnumber;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Log;
 
 class InventoryLocationCountsController extends BaseController
 {
@@ -27,11 +30,10 @@ class InventoryLocationCountsController extends BaseController
 
         $data = $this->baseLocationCountsQuery($request, $inventoryHead);
 
-        return DataTables::of($data)
-            ->addColumn('btn', '')
-            ->rawColumns(['btn'])
-            ->toJson();
-
+        return $this->showDataToView(
+            $data,
+            'Inventory.InventoryHead.InventoryLocationCounts.buttons',
+        );
     }
 
     public function getLocationCountsKpis(Request $request, $id)
@@ -111,6 +113,7 @@ class InventoryLocationCountsController extends BaseController
                         $q->where('iv1.prtnum', 'like', '%' . $request->partnumberid . '%');
                     })
                     ->select([
+                        'ilc.id',
                         'ilc.inventory_head_id',
                         'ia.name as aisle_name',
                         'ic.name as card_name',
@@ -136,13 +139,49 @@ class InventoryLocationCountsController extends BaseController
 				END as status_comparacion
 				");
 
-        // El estatus es una columna calculada en la subconsulta anterior, por lo que
-        // el filtro debe aplicarse en un nivel adicional (no puede ir en el mismo SELECT que lo define).
         return DB::query()
             ->fromSub($resultado, 'resultado')
             ->select('*')
             ->when($request->filled('statuscomparacion'), function ($q) use ($request) {
                 $q->where('status_comparacion', $request->statuscomparacion);
             });
+    }
+
+    public function updatelocation(UpdateInventoryLocationCountRequest $request, $id)
+    {
+        try {
+            return DB::transaction(function () use ($request, $id) {
+                $location = InventoryLocationCount::query()
+                    ->where('id', $id)
+                    ->first();
+
+                if (is_null($location)) {
+                    return $this->errorResponse('La ubicación no existe.');
+                }
+
+                $partNumber = InventoryPartnumber::controlAccessUser()
+                    ->where('prtnum', $request->partnumber01)
+                    ->select(['id', 'prtnum'])
+                    ->first();
+
+                if (is_null($partNumber)) {
+                    return $this->errorResponse('El número de parte no existe: ' . $request->partnumber01);
+                }
+
+                $location->update([
+                    'inventorypartnumber01_id' => $partNumber->id,
+                    'quantity01' => $request->quantity01,
+                ]);
+
+                return $this->redirectBackSuccessMessage('Registro actualizado con éxito.');
+            });
+        } catch (\Throwable $e) {
+            Log::error('Error en updatelocation', [
+                'location_id' => $id,
+                'message' => $e->getMessage(),
+            ]);
+
+            return $this->errorResponse('Ocurrió un error al actualizar la ubicación.');
+        }
     }
 }
