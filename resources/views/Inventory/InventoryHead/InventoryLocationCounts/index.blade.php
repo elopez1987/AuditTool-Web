@@ -54,6 +54,14 @@
                                             label="Número de parte"
                                             uppercase
                                     />
+                                    <x-select2
+                                            name="statuscomparacion"
+                                            label="Estatus"
+                                            :options="$statusComparacionOptions"
+                                            valueField="value"
+                                            textField="label"
+                                            placeholder="Todos"
+                                    />
                                 </div>
                             </form>
                         </div>
@@ -160,6 +168,7 @@
                     d.cardname = $('input[name=cardname]').val();
                     d.locationname = $('input[name=locationname]').val();
                     d.partnumberid = $('input[name=partnumberid]').val();
+                    d.statuscomparacion = $('select[name=statuscomparacion]').val();
                 }
             },
             "columns": [
@@ -245,6 +254,7 @@
                 cardname: $('input[name=cardname]').val(),
                 locationname: $('input[name=locationname]').val(),
                 partnumberid: $('input[name=partnumberid]').val(),
+                statuscomparacion: $('select[name=statuscomparacion]').val(),
             })
                 .done(function (data) {
                     $('#totalUbicaciones').text(data.totalUbicaciones);

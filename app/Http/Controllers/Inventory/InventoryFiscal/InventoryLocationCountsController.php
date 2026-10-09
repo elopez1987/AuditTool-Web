@@ -13,10 +13,11 @@ class InventoryLocationCountsController extends BaseController
     public function index($id)
     {
         $inventoryHead = InventoryHead::where('inventory_uuid', $id)->first();
+        $statusComparacionOptions = $this->statusComparacionOptions();
 
         return view(
             'Inventory.InventoryHead.InventoryLocationCounts.index',
-            compact('inventoryHead'),
+            compact('inventoryHead', 'statusComparacionOptions'),
         );
     }
 
@@ -63,12 +64,26 @@ class InventoryLocationCountsController extends BaseController
     }
 
     /**
+     * Opciones fijas de estatus de comparación utilizadas por el filtro de la vista.
+     *
+     * @return array<int, array{value: string, label: string}>
+     */
+    private function statusComparacionOptions(): array
+    {
+        return [
+            ['value' => 'OK', 'label' => 'OK'],
+            ['value' => 'ERROR', 'label' => 'ERROR'],
+            ['value' => 'PENDIENTE', 'label' => 'PENDIENTE'],
+        ];
+    }
+
+    /**
      * Consulta base de ubicaciones del inventario con su estatus de comparación
      * (físico vs WMS), compartida por el datatable y los KPIs.
      */
     private function baseLocationCountsQuery(Request $request, InventoryHead $inventoryHead)
     {
-        return DB::query()
+        $resultado = DB::query()
             ->fromSub(function ($query) use ($inventoryHead, $request) {
                 $query->from('inventory_location_counts as ilc')
                     ->leftJoin('inventory_card_counts as icc', 'ilc.inventory_card_id', '=', 'icc.id')
@@ -113,11 +128,21 @@ class InventoryLocationCountsController extends BaseController
             ->select('*')
             ->selectRaw("
 				CASE
+					WHEN total_piezas_fisico = 0 AND COALESCE(total_piezas_wms, 0) = 0 THEN 'OK'
 					WHEN part_number1 IS NULL OR LTRIM(RTRIM(part_number1)) = '' THEN 'PENDIENTE'
 					WHEN total_piezas_fisico = total_piezas_wms THEN 'OK'
 					WHEN total_piezas_fisico IS NULL AND total_piezas_wms IS NULL THEN 'OK'
 					ELSE 'ERROR'
 				END as status_comparacion
-			");
+				");
+
+        // El estatus es una columna calculada en la subconsulta anterior, por lo que
+        // el filtro debe aplicarse en un nivel adicional (no puede ir en el mismo SELECT que lo define).
+        return DB::query()
+            ->fromSub($resultado, 'resultado')
+            ->select('*')
+            ->when($request->filled('statuscomparacion'), function ($q) use ($request) {
+                $q->where('status_comparacion', $request->statuscomparacion);
+            });
     }
 }
