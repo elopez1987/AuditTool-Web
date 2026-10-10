@@ -135,6 +135,7 @@ Route::middleware(['auth'])->group(function () {
     //	Validacion de conteo vs sap
     Route::get('inventoryheads-validation/{id}', [InventoryValidationSapController::class, 'index'])->name('inventoryheads-validation');
     Route::get('getDataValidationSap/{id}', [InventoryValidationSapController::class, 'getDataValidationSap'])->name('getDataValidationSap');
+    Route::get('getDataValidationSapKpis/{id}', [InventoryValidationSapController::class, 'getDataValidationSapKpis'])->name('getDataValidationSapKpis');
 
     //	Reiniciar conteo 1
     Route::put('reset-count-1/{id}', [InventoryLocationCardController::class, 'initializeCount1'])->name('reset-count-1');
