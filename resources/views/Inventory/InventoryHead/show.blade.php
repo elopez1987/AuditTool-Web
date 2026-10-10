@@ -40,7 +40,7 @@
                                     </button>
                                 </a>
                             @endcan
-                            <a href="{{url('inventoryheads')}}">
+                            <a href="{{url('inventoryheads-validation/' . $inventoryhead->inventory_uuid)}}">
                                 <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
                                     <img src="{{asset('/ico/reportshipments.png')}}" alt="" class="img-16 ml-1">
                                     <span class="text-button ml-3 mr-3"> Conciliación</span>

@@ -22,6 +22,7 @@ use App\Http\Controllers\Inventory\InventoryFiscal\InventoryLocationCountsContro
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryStockSapController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventorySupervisorController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryValidateLocationController;
+use App\Http\Controllers\Inventory\InventoryFiscal\InventoryValidationSapController;
 use App\Http\Controllers\Inventory\InventoryFiscal\PrintFormatInventoryController;
 use App\Http\Controllers\Inventory\InventoryFiscal\ThirdCountController;
 use App\Http\Controllers\Inventory\InventoryPartNumberCategory01sController;
@@ -131,6 +132,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('inventorylocations-card/{id}', [InventoryLocationCardController::class, 'index'])->name('inventorylocations-card');
     Route::get('getLocationCardInventory/{id}', [InventoryLocationCardController::class, 'getLocationCardInventory'])->name('getLocationCardInventory');
     Route::get('getLocationCardKpis/{id}', [InventoryLocationCardController::class, 'getLocationCardKpis'])->name('getLocationCardKpis');
+    //	Validacion de conteo vs sap
+    Route::get('inventoryheads-validation/{id}', [InventoryValidationSapController::class, 'index'])->name('inventoryheads-validation');
+    Route::get('getDataValidationSap/{id}', [InventoryValidationSapController::class, 'getDataValidationSap'])->name('getDataValidationSap');
+
     //	Reiniciar conteo 1
     Route::put('reset-count-1/{id}', [InventoryLocationCardController::class, 'initializeCount1'])->name('reset-count-1');
     Route::put('reset-count-2/{id}', [InventoryLocationCardController::class, 'initializeCount2'])->name('reset-count-2');
