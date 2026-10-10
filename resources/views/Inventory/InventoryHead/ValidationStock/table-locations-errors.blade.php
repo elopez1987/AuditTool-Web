@@ -3,6 +3,7 @@
         "paging": true,
         "searching": false,
         "ordering": true,
+        "order": [[0, 'asc']],
         "sScrollY": "450px",
         "sScrollX": true,
         "processing": true,

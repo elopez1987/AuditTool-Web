@@ -6,6 +6,7 @@ use App\Http\Controllers\BaseController;
 use App\Models\Inventory\InventoryFiscal\InventoryHead;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\Facades\DataTables;
 
 class InventoryValidationSapController extends BaseController
 {
@@ -95,9 +96,20 @@ class InventoryValidationSapController extends BaseController
                     $q->where('f.idh_01', 'like', '%' . $term . '%')
                         ->orWhere('f.description', 'like', '%' . $term . '%');
                 });
-            })
-            ->orderBy('f.idh_01');
+            });
 
-        return $this->showDataToView($data, '');
+        // No usar orderBy aquí: Yajra envuelve la query en un subquery para el COUNT
+        // y SQL Server rechaza ORDER BY sin TOP/OFFSET en derived tables.
+        return DataTables::of($data)
+            ->orderColumn('partnumber', 'f.idh_01 $1')
+            ->orderColumn('description', 'f.description $1')
+            ->orderColumn('total_piezas_conteo', 'f.total_piezas_conteo $1')
+            ->orderColumn('total_piezas_transitorias', 'isnull(t.total_piezas_transitorias, 0) $1')
+            ->orderColumn('total_piezas_conteo_mas_transitorias', 'f.total_piezas_conteo + isnull(t.total_piezas_transitorias, 0) $1')
+            ->orderColumn('stock_wms', 'isnull(w.stock_wms, 0) $1')
+            ->orderColumn('total_piezas_sap', 'isnull(s.total_piezas_sap, 0) $1')
+            ->orderColumn('status_conteo_vs_sap', 'status_conteo_vs_sap $1')
+            ->orderColumn('status_sap_vs_wms', 'status_sap_vs_wms $1')
+            ->toJson();
     }
 }
