@@ -33,13 +33,21 @@ class InventoryValidationSapController extends BaseController
             ->leftJoin('inventoryunitsmeasure as um', 'il.inventoryunitsmeasure_id', '=', 'um.id')
             ->where('ilc.inventory_head_id', $headId)
             ->groupBy('ilc.inventorypartnumber01_id', 'iv1.prtnum', 'iv1.lngdsc')
+            // quantity/untpal/untcas son INT: castear a BIGINT evita overflow en multiplicaciones
             ->selectRaw("
                 ilc.inventorypartnumber01_id as partnumber_id,
                 iv1.prtnum as idh_01,
                 iv1.lngdsc as description,
-                sum(iif(um.unitmeasureid = 'PA',
-                        ilc.quantity01 * iv1.untpal * iv1.untcas,
-                        ilc.quantity01 * iv1.untcas)) as total_piezas_conteo
+                sum(
+                    iif(
+                        um.unitmeasureid = 'PA',
+                        cast(ilc.quantity01 as bigint)
+                            * cast(isnull(iv1.untpal, 1) as bigint)
+                            * cast(isnull(iv1.untcas, 1) as bigint),
+                        cast(ilc.quantity01 as bigint)
+                            * cast(isnull(iv1.untcas, 1) as bigint)
+                    )
+                ) as total_piezas_conteo
             ");
 
         // CTE transitorios
@@ -49,7 +57,10 @@ class InventoryValidationSapController extends BaseController
             ->groupBy('it.inventorypartnumber_id')
             ->selectRaw('
                 it.inventorypartnumber_id,
-                sum(it.quantity * iv1.untcas) as total_piezas_transitorias
+                sum(
+                    cast(it.quantity as bigint)
+                        * cast(isnull(iv1.untcas, 1) as bigint)
+                ) as total_piezas_transitorias
             ');
 
         // CTE wms
@@ -58,13 +69,16 @@ class InventoryValidationSapController extends BaseController
             ->groupBy('isw.inventorypartnumber_id')
             ->selectRaw('
                 isw.inventorypartnumber_id,
-                sum(isw.quantity_location) as stock_wms
+                sum(cast(isw.quantity_location as bigint)) as stock_wms
             ');
 
         // CTE sap
         $sap = DB::table('inventory_stock_sap')
             ->where('inventory_head_id', $headId)
-            ->select('inventorypartnumber_id', 'quantity as total_piezas_sap');
+            ->selectRaw('
+                inventorypartnumber_id,
+                cast(quantity as bigint) as total_piezas_sap
+            ');
 
         // Consulta final (query builder para server-side DataTables)
         $data = DB::query()
@@ -76,16 +90,18 @@ class InventoryValidationSapController extends BaseController
                 f.idh_01 as partnumber,
                 f.description,
                 f.total_piezas_conteo,
-                isnull(t.total_piezas_transitorias, 0) as total_piezas_transitorias,
-                f.total_piezas_conteo + isnull(t.total_piezas_transitorias, 0) as total_piezas_conteo_mas_transitorias,
-                isnull(w.stock_wms, 0) as stock_wms,
-                isnull(s.total_piezas_sap, 0) as total_piezas_sap,
+                isnull(t.total_piezas_transitorias, cast(0 as bigint)) as total_piezas_transitorias,
+                f.total_piezas_conteo + isnull(t.total_piezas_transitorias, cast(0 as bigint)) as total_piezas_conteo_mas_transitorias,
+                isnull(w.stock_wms, cast(0 as bigint)) as stock_wms,
+                isnull(s.total_piezas_sap, cast(0 as bigint)) as total_piezas_sap,
                 case
-                    when f.total_piezas_conteo + isnull(t.total_piezas_transitorias, 0) = isnull(s.total_piezas_sap, 0)
+                    when f.total_piezas_conteo + isnull(t.total_piezas_transitorias, cast(0 as bigint))
+                         = isnull(s.total_piezas_sap, cast(0 as bigint))
                         then 'CORRECTO' else 'ERROR'
                 end as status_conteo_vs_sap,
                 case
-                    when isnull(s.total_piezas_sap, 0) = isnull(w.stock_wms, 0)
+                    when isnull(s.total_piezas_sap, cast(0 as bigint))
+                         = isnull(w.stock_wms, cast(0 as bigint))
                         then 'CORRECTO' else 'ERROR'
                 end as status_sap_vs_wms
             ")
