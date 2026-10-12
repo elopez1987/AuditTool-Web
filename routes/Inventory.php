@@ -218,6 +218,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('import-inventory-sap-excel', [InventoryStockSapController::class, 'importStockSAP'])->name('import-inventory-sap-excel');
     Route::get('getInventoryStockSap/{id}', [InventoryStockSapController::class, 'getInventoryStockSap'])->name('getInventoryStockSap');
     Route::get('getInventoryStockSapKpis/{id}', [InventoryStockSapController::class, 'getInventoryStockSapKpis'])->name('getInventoryStockSapKpis');
+    Route::get('export-sap-stock/{id}', [InventoryStockSapController::class, 'exportStockSap'])->name('export-sap-stock');
+    Route::delete('clear-stock-sap/{id}', [InventoryStockSapController::class, 'clearDataSAP'])->name('clear-stock-sap');
 
     // Migracion de SAP
     Route::get('inventory-sap-migration', [MigrationSapController::class, 'index'])->name('inventory-sap-migration');
