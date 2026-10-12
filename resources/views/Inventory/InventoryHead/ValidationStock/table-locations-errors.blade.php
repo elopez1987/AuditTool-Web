@@ -68,9 +68,30 @@
                     return '<span class="text-danger fw-bold">' + value.toLocaleString('es-MX') + '</span>';
                 }
             },
+            {
+                data: 'status_sap_vs_wms',
+                name: 'status_sap_vs_wms',
+                render: function (data) {
+                    if (data === 'CORRECTO') {
+                        return '<span class="badge bg-success">' + data + '</span>';
+                    }
+                    return '<span class="badge bg-danger">' + data + '</span>';
+                }
+            },
+            {
+                data: 'diff_sap_vs_wms',
+                name: 'diff_sap_vs_wms',
+                render: function (data) {
+                    var value = Number(data || 0);
+                    if (value === 0) {
+                        return '<span class="text-success">' + value.toLocaleString('es-MX') + '</span>';
+                    }
+                    return '<span class="text-danger fw-bold">' + value.toLocaleString('es-MX') + '</span>';
+                }
+            },
         ],
-        "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
-        "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "Todos"]],
+        "dom": '<"row mb-3"<"col-sm-4"><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
+        "lengthMenu": [[5, 10, 25, 50,-1], [5, 10, 25, 50,'Todos']],
 
         buttons: [
             {

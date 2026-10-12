@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Inventory\InventoryFiscal;
 
+use App\Exports\Inventory\InventoryFiscal\ExportValidationSap;
 use App\Http\Controllers\BaseController;
 use App\Models\Inventory\InventoryFiscal\InventoryHead;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Yajra\DataTables\Facades\DataTables;
 
 class InventoryValidationSapController extends BaseController
@@ -49,6 +52,8 @@ class InventoryValidationSapController extends BaseController
             ->orderColumn('diff_fisico_vs_sap', 'diff_fisico_vs_sap $1')
             ->orderColumn('status_fisico_vs_wms', 'status_fisico_vs_wms $1')
             ->orderColumn('diff_fisico_vs_wms', 'diff_fisico_vs_wms $1')
+            ->orderColumn('status_sap_vs_wms', 'status_sap_vs_wms $1')
+            ->orderColumn('diff_sap_vs_wms', 'diff_sap_vs_wms $1')
             ->toJson();
     }
 
@@ -72,6 +77,30 @@ class InventoryValidationSapController extends BaseController
             'errorsFisicoVsSap' => $totals->errors_fisico_vs_sap ?? 0,
             'errorsFisicoVsWms' => $totals->errors_fisico_vs_wms ?? 0,
         ]);
+    }
+
+    /**
+     * Exporta todos los registros de la conciliación (respeta filtro partnumber).
+     */
+    public function exportValidationSap(Request $request, $id): BinaryFileResponse
+    {
+        $headId = (int) $id;
+
+        $rows = $this->buildValidationQuery($headId)
+            ->when($request->filled('partnumber'), function ($query) use ($request) {
+                $term = trim((string) $request->input('partnumber'));
+
+                $query->where(function ($q) use ($term) {
+                    $q->where('f.idh_01', 'like', '%' . $term . '%')
+                        ->orWhere('f.description', 'like', '%' . $term . '%');
+                });
+            })
+            ->orderBy('f.idh_01')
+            ->get();
+
+        $fileName = 'conciliacion-fisico-sap-wms-' . $headId . '-' . now()->format('Ymd-His') . '.xlsx';
+
+        return Excel::download(new ExportValidationSap($rows), $fileName)->deleteFileAfterSend();
     }
 
     /**
@@ -155,7 +184,14 @@ class InventoryValidationSapController extends BaseController
                         then 'CORRECTO' else 'ERROR'
                 end as status_fisico_vs_wms,
                 (f.total_piezas_conteo + isnull(t.total_piezas_transitorias, cast(0 as bigint)))
-                    - isnull(w.stock_wms, cast(0 as bigint)) as diff_fisico_vs_wms
+                    - isnull(w.stock_wms, cast(0 as bigint)) as diff_fisico_vs_wms,
+                case
+                    when isnull(s.total_piezas_sap, cast(0 as bigint))
+                         = isnull(w.stock_wms, cast(0 as bigint))
+                        then 'CORRECTO' else 'ERROR'
+                end as status_sap_vs_wms,
+                isnull(s.total_piezas_sap, cast(0 as bigint))
+                    - isnull(w.stock_wms, cast(0 as bigint)) as diff_sap_vs_wms
             ");
     }
 }

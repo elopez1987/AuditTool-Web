@@ -119,11 +119,17 @@
                             <th style="background-color: #76ff03 !important;">Diferencia fisico vs Sap</th>
                             <th style="background-color: #40c4ff !important;">Estatus fisico vs Wms</th>
                             <th style="background-color: #40c4ff !important;">Diferencia fisico vs Wms</th>
+                            <th style="background-color: #ffab40 !important;">Sap vs Wms</th>
+                            <th style="background-color: #ffab40 !important;">Diferencia Sap vs Wms</th>
                         </tr>
                         </thead>
                     </table>
                 </div>
-                <div class="card-footer"></div>
+                <div class="card-footer">
+                    <button id="exportar-todo" class="btn waves-effect waves-light btn-outline-info btn-md">
+                        <img src="{{asset('/ico/excel.png')}}" alt="" class="img-16 ml-2 mr-2"> Exportar todo
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -161,8 +167,21 @@
             loadValidationSapKpis();
         }
 
+        function exportValidationSapAll() {
+            var partnumber = $('input[name=partnumber]').val() || '';
+            var url = '{{ route("exportValidationSap", $inventoryhead->id) }}'
+                + '?partnumber=' + encodeURIComponent(partnumber);
+
+            window.location.href = url;
+        }
+
         $(document).ready(function () {
             loadValidationSapKpis();
+
+            $('#exportar-todo').on('click', function (e) {
+                e.preventDefault();
+                exportValidationSapAll();
+            });
         });
     </script>
 @endsection
