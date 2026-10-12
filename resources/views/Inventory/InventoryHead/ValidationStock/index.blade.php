@@ -87,10 +87,10 @@
         <div class="col-lg-3 col-md-6 col-sm-12">
             <div class="card border-danger">
                 <div class="card-header bg-grey">
-                    <h5 class="m-b-0 text-black-50">Errores SAP vs WMS</h5>
+                    <h5 class="m-b-0 text-black-50">Errores físico vs WMS</h5>
                 </div>
                 <div class="card-body">
-                    <h2 class="text-danger" id="errorsSapVsWms" data-id="{{ $inventoryhead->id }}">-</h2>
+                    <h2 class="text-danger" id="errorsFisicoVsWms" data-id="{{ $inventoryhead->id }}">-</h2>
                 </div>
             </div>
         </div>
@@ -112,11 +112,13 @@
                             <th>Descripción</th>
                             <th>Total de conteo</th>
                             <th>Total transitorias</th>
-                            <th>Total fisico</th>
+                            <th>Total Fisico</th>
                             <th>Total Wms</th>
                             <th>Total Sap</th>
-                            <th>Estatus fisico vs Sap</th>
-                            <th>Estatus Sap vs Wms</th>
+                            <th style="background-color: #76ff03 !important;">Estatus fisico vs Sap</th>
+                            <th style="background-color: #76ff03 !important;">Diferencia fisico vs Sap</th>
+                            <th style="background-color: #78909c !important;">Estatus fisico vs Wms</th>
+                            <th style="background-color: #78909c !important;">Diferencia fisico vs Wms</th>
                         </tr>
                         </thead>
                     </table>
@@ -147,10 +149,10 @@
                     $('#totalSap').text(formatKpiNumber(data.totalSap));
                     $('#totalWms').text(formatKpiNumber(data.totalWms));
                     $('#errorsFisicoVsSap').text(formatKpiNumber(data.errorsFisicoVsSap));
-                    $('#errorsSapVsWms').text(formatKpiNumber(data.errorsSapVsWms));
+                    $('#errorsFisicoVsWms').text(formatKpiNumber(data.errorsFisicoVsWms));
                 })
                 .fail(function () {
-                    $('#totalFisico, #totalSap, #totalWms, #errorsFisicoVsSap, #errorsSapVsWms').text('-');
+                    $('#totalFisico, #totalSap, #totalWms, #errorsFisicoVsSap, #errorsFisicoVsWms').text('-');
                 });
         }
 

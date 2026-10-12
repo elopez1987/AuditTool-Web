@@ -37,13 +37,35 @@
                 }
             },
             {
-                data: 'status_sap_vs_wms',
-                name: 'status_sap_vs_wms',
+                data: 'diff_fisico_vs_sap',
+                name: 'diff_fisico_vs_sap',
+                render: function (data) {
+                    var value = Number(data || 0);
+                    if (value === 0) {
+                        return '<span class="text-success">' + value.toLocaleString('es-MX') + '</span>';
+                    }
+                    return '<span class="text-danger fw-bold">' + value.toLocaleString('es-MX') + '</span>';
+                }
+            },
+            {
+                data: 'status_fisico_vs_wms',
+                name: 'status_fisico_vs_wms',
                 render: function (data) {
                     if (data === 'CORRECTO') {
                         return '<span class="badge bg-success">' + data + '</span>';
                     }
                     return '<span class="badge bg-danger">' + data + '</span>';
+                }
+            },
+            {
+                data: 'diff_fisico_vs_wms',
+                name: 'diff_fisico_vs_wms',
+                render: function (data) {
+                    var value = Number(data || 0);
+                    if (value === 0) {
+                        return '<span class="text-success">' + value.toLocaleString('es-MX') + '</span>';
+                    }
+                    return '<span class="text-danger fw-bold">' + value.toLocaleString('es-MX') + '</span>';
                 }
             },
         ],

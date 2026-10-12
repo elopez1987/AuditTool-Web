@@ -46,7 +46,9 @@ class InventoryValidationSapController extends BaseController
             ->orderColumn('stock_wms', 'isnull(w.stock_wms, 0) $1')
             ->orderColumn('total_piezas_sap', 'isnull(s.total_piezas_sap, 0) $1')
             ->orderColumn('status_conteo_vs_sap', 'status_conteo_vs_sap $1')
-            ->orderColumn('status_sap_vs_wms', 'status_sap_vs_wms $1')
+            ->orderColumn('diff_fisico_vs_sap', 'diff_fisico_vs_sap $1')
+            ->orderColumn('status_fisico_vs_wms', 'status_fisico_vs_wms $1')
+            ->orderColumn('diff_fisico_vs_wms', 'diff_fisico_vs_wms $1')
             ->toJson();
     }
 
@@ -59,7 +61,7 @@ class InventoryValidationSapController extends BaseController
                 isnull(sum(cast(v.total_piezas_sap as bigint)), cast(0 as bigint)) as total_sap,
                 isnull(sum(cast(v.stock_wms as bigint)), cast(0 as bigint)) as total_wms,
                 sum(case when v.status_conteo_vs_sap = \'ERROR\' then 1 else 0 end) as errors_fisico_vs_sap,
-                sum(case when v.status_sap_vs_wms = \'ERROR\' then 1 else 0 end) as errors_sap_vs_wms
+                sum(case when v.status_fisico_vs_wms = \'ERROR\' then 1 else 0 end) as errors_fisico_vs_wms
             ')
             ->first();
 
@@ -68,7 +70,7 @@ class InventoryValidationSapController extends BaseController
             'totalSap' => $totals->total_sap ?? 0,
             'totalWms' => $totals->total_wms ?? 0,
             'errorsFisicoVsSap' => $totals->errors_fisico_vs_sap ?? 0,
-            'errorsSapVsWms' => $totals->errors_sap_vs_wms ?? 0,
+            'errorsFisicoVsWms' => $totals->errors_fisico_vs_wms ?? 0,
         ]);
     }
 
@@ -145,11 +147,15 @@ class InventoryValidationSapController extends BaseController
                          = isnull(s.total_piezas_sap, cast(0 as bigint))
                         then 'CORRECTO' else 'ERROR'
                 end as status_conteo_vs_sap,
+                (f.total_piezas_conteo + isnull(t.total_piezas_transitorias, cast(0 as bigint)))
+                    - isnull(s.total_piezas_sap, cast(0 as bigint)) as diff_fisico_vs_sap,
                 case
-                    when isnull(s.total_piezas_sap, cast(0 as bigint))
+                    when f.total_piezas_conteo + isnull(t.total_piezas_transitorias, cast(0 as bigint))
                          = isnull(w.stock_wms, cast(0 as bigint))
                         then 'CORRECTO' else 'ERROR'
-                end as status_sap_vs_wms
+                end as status_fisico_vs_wms,
+                (f.total_piezas_conteo + isnull(t.total_piezas_transitorias, cast(0 as bigint)))
+                    - isnull(w.stock_wms, cast(0 as bigint)) as diff_fisico_vs_wms
             ");
     }
 }
