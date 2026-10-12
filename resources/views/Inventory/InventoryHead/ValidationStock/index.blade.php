@@ -117,8 +117,8 @@
                             <th>Total Sap</th>
                             <th style="background-color: #76ff03 !important;">Estatus fisico vs Sap</th>
                             <th style="background-color: #76ff03 !important;">Diferencia fisico vs Sap</th>
-                            <th style="background-color: #78909c !important;">Estatus fisico vs Wms</th>
-                            <th style="background-color: #78909c !important;">Diferencia fisico vs Wms</th>
+                            <th style="background-color: #40c4ff !important;">Estatus fisico vs Wms</th>
+                            <th style="background-color: #40c4ff !important;">Diferencia fisico vs Wms</th>
                         </tr>
                         </thead>
                     </table>
