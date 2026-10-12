@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Inventory\InventoryFiscal\ExportFormtsCountController;
 use App\Http\Controllers\Inventory\InventoryFiscal\ImportInventoryTransitionalController;
 use App\Http\Controllers\Inventory\InventoryFiscal\ImportInventoryWmsController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryAccountantCardController;
@@ -202,6 +203,10 @@ Route::middleware(['auth'])->group(function () {
     //	Impresion de formatos de conteo
     Route::get('print-format-inventory-01/{id}', [PrintFormatInventoryController::class, 'printFormat01'])->name('print-format-inventory-01');
     Route::get('print-format-inventory-02/{id}', [PrintFormatInventoryController::class, 'printFormat02'])->name('print-format-inventory-02');
+
+    //	Generacion de documentos PDFs masivos
+    Route::get('generate-format-inventory-01/{id}', [ExportFormtsCountController::class, 'generatecount01'])->name('generate-format-inventory-01');
+    Route::get('generate-format-inventory-02/{id}', [ExportFormtsCountController::class, 'generatecount02'])->name('generate-format-inventory-02');
 
     // Importar existencia de WMS
     Route::get('import-inventory-wms/{id}', [ImportInventoryWmsController::class, 'index'])->name('import-inventory-wms');
