@@ -81,7 +81,31 @@
                     </div>
 
                     <div class="row mt-3">
-                        <div class="col-lg-6"></div>
+                        <div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    DETALLE DE UBICACIONES
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-bordered table-condensed table-hover"
+                                           id="inventorydetailerrors"
+                                           width="100%">
+                                        <thead>
+                                        <tr>
+                                            <th>Cédula</th>
+                                            <th>Ubicación</th>
+                                            <th>Sku 01</th>
+                                            <th>Cantidad 01</th>
+                                            <th>Sku 02</th>
+                                            <th>Cantidad 02</th>
+                                            <th>Estatus</th>
+                                            <th>Opciones</th>
+                                        </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-lg-6">
                             <div class="card">
                                 <div class="card-header">
@@ -123,6 +147,9 @@
             }
             if ($.fn.DataTable.isDataTable('#inventorycardassing')) {
                 $('#inventorycardassing').DataTable().ajax.reload(null, false);
+            }
+            if ($.fn.DataTable.isDataTable('#inventorydetailerrors')) {
+                $('#inventorydetailerrors').DataTable().ajax.reload(null, false);
             }
         }
     </script>
