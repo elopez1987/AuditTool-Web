@@ -43,9 +43,11 @@ class InventoryLocationCountsController extends BaseController
             ->orderColumn('part_number1', 'part_number1 $1')
             ->orderColumn('description01', 'description01 $1')
             ->orderColumn('total_piezas_fisico', 'total_piezas_fisico $1')
+            ->orderColumn('part_number_wms', 'part_number_wms $1')
             ->orderColumn('total_piezas_wms', 'total_piezas_wms $1')
-            ->orderColumn('unitmeasureid', 'unitmeasureid $1')
-            ->orderColumn('status_comparacion', 'status_comparacion $1')
+            ->orderColumn('unitmeasure', 'unitmeasure $1')
+            ->orderColumn('status_sku', 'status_sku $1')
+            ->orderColumn('status_cantidad', 'status_cantidad $1')
             ->toJson();
     }
 
@@ -112,6 +114,7 @@ class InventoryLocationCountsController extends BaseController
                         $join->on('ilc.inventory_location_id', '=', 'wm.inventory_location_id')
                             ->on('wm.inventory_head_id', '=', 'ilc.inventory_head_id');
                     })
+                    ->leftJoin('inventorypartnumbers as iv3', 'wm.inventorypartnumber_id', '=', 'iv3.id')
                     ->where('ilc.inventory_head_id', $inventoryHead->id)
                     ->when($request->filled('aislename'), function ($q) use ($request) {
                         $q->where('ia.name', 'like', '%' . $request->aislename . '%');
@@ -135,8 +138,11 @@ class InventoryLocationCountsController extends BaseController
                         'iv1.lngdsc as description01',
                         'ilc.quantity01',
                         'um.unitmeasureid',
+                        'um.description as unitmeasure',
                         'iv1.untpal as cspal',
                         'iv1.untcas as pzcs',
+                        // prtnum del material WMS vía inventorypartnumbers
+                        'iv3.prtnum as part_number_wms',
                         // quantity/untpal/untcas son INT: castear a BIGINT evita overflow.
                         // quantity01 NULL debe seguir NULL (no 0) para no marcar PENDIENTE como OK.
                         DB::raw("IIF(
@@ -152,14 +158,27 @@ class InventoryLocationCountsController extends BaseController
             }, 'base')
             ->select('*')
             ->selectRaw("
-				CASE
-					WHEN total_piezas_fisico = 0 AND COALESCE(total_piezas_wms, 0) = 0 THEN 'OK'
-					WHEN part_number1 IS NULL OR LTRIM(RTRIM(part_number1)) = '' THEN 'PENDIENTE'
-					WHEN total_piezas_fisico = total_piezas_wms THEN 'OK'
-					WHEN total_piezas_fisico IS NULL AND total_piezas_wms IS NULL THEN 'OK'
-					ELSE 'ERROR'
-				END as status_comparacion
-				");
+                CASE
+                    WHEN part_number1 IS NULL OR LTRIM(RTRIM(part_number1)) = '' THEN 'PENDIENTE'
+                    WHEN part_number_wms IS NULL OR LTRIM(RTRIM(part_number_wms)) = '' THEN 'PENDIENTE'
+                    WHEN part_number1 = part_number_wms THEN 'OK'
+                    ELSE 'ERROR'
+                END as status_sku,
+                CASE
+                    WHEN total_piezas_fisico IS NULL AND total_piezas_wms IS NULL THEN 'PENDIENTE'
+                    WHEN total_piezas_fisico IS NULL THEN 'PENDIENTE'
+                    WHEN isnull(total_piezas_fisico, cast(0 as bigint)) = isnull(total_piezas_wms, cast(0 as bigint)) THEN 'OK'
+                    ELSE 'ERROR'
+                END as status_cantidad,
+                CASE
+                    WHEN total_piezas_fisico = 0 AND COALESCE(total_piezas_wms, 0) = 0 THEN 'OK'
+                    WHEN part_number1 IS NULL OR LTRIM(RTRIM(part_number1)) = '' THEN 'PENDIENTE'
+                    WHEN total_piezas_fisico = total_piezas_wms
+                         AND isnull(part_number1, '') = isnull(part_number_wms, '') THEN 'OK'
+                    WHEN total_piezas_fisico IS NULL AND total_piezas_wms IS NULL THEN 'OK'
+                    ELSE 'ERROR'
+                END as status_comparacion
+            ");
 
         return DB::query()
             ->fromSub($resultado, 'resultado')

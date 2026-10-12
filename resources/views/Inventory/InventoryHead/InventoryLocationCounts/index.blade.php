@@ -128,12 +128,14 @@
                                         <th>Pasillo</th>
                                         <th>Cédula</th>
                                         <th>Ubicación</th>
-                                        <th>Número de parte</th>
-                                        <th>Descripción</th>
+                                        <th>Número de parte fisico</th>
+                                        <th>Descripción fisico</th>
                                         <th>Cantidad fisico</th>
+                                        <th>Número de parte wms</th>
                                         <th>Cantidad wms</th>
                                         <th>Unidad de medida</th>
-                                        <th>Estatus de ubicación</th>
+                                        <th>Estatus de sku</th>
+                                        <th>Estatus de cantidad</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -149,6 +151,18 @@
 
 @section('script')
     <script>
+        function renderStatusBadge(data) {
+            var colors = {
+                'OK': '#00e676',
+                'ERROR': '#ff1744',
+                'PENDIENTE': '#ffff00'
+            };
+            var bgColor = colors[data] || '#e0e0e0';
+            var label = data || '-';
+
+            return '<span style="background-color:' + bgColor + '; color: black; padding: 2px 8px; border-radius: 4px; display: inline-block;">' + label + '</span>';
+        }
+
         var oTable = $("#table-locations").DataTable({
             "paging": true,
             "searching": false,
@@ -178,22 +192,23 @@
                 {data: 'part_number1', name: 'part_number1', defaultContent: ''},
                 {data: 'description01', name: 'description01', defaultContent: ''},
                 {data: 'total_piezas_fisico', name: 'total_piezas_fisico', defaultContent: ''},
+                {data: 'part_number_wms', name: 'part_number_wms', defaultContent: ''},
                 {data: 'total_piezas_wms', name: 'total_piezas_wms', defaultContent: ''},
-                {data: 'unitmeasureid', name: 'unitmeasureid', defaultContent: ''},
+                {data: 'unitmeasure', name: 'unitmeasure', defaultContent: ''},
                 {
-                    data: 'status_comparacion',
-                    name: 'status_comparacion',
+                    data: 'status_sku',
+                    name: 'status_sku',
                     defaultContent: '',
                     render: function (data) {
-                        var colors = {
-                            'OK': '#00e676',
-                            'ERROR': '#ff1744',
-                            'PENDIENTE': '#ffff00'
-                        };
-                        var bgColor = colors[data] || '#e0e0e0';
-                        var label = data || '-';
-
-                        return '<span style="background-color:' + bgColor + '; color: black; padding: 2px 8px; border-radius: 4px; display: inline-block;">' + label + '</span>';
+                        return renderStatusBadge(data);
+                    }
+                },
+                {
+                    data: 'status_cantidad',
+                    name: 'status_cantidad',
+                    defaultContent: '',
+                    render: function (data) {
+                        return renderStatusBadge(data);
                     }
                 },
             ],
