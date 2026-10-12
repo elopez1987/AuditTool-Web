@@ -24,7 +24,6 @@ use App\Http\Controllers\Inventory\InventoryFiscal\InventorySupervisorController
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryValidateLocationController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryValidationSapController;
 use App\Http\Controllers\Inventory\InventoryFiscal\PrintFormatInventoryController;
-use App\Http\Controllers\Inventory\InventoryFiscal\ThirdCountController;
 use App\Http\Controllers\Inventory\InventoryPartNumberCategory01sController;
 use App\Http\Controllers\Inventory\InventoryPartNumberCategory02sController;
 use App\Http\Controllers\Inventory\InventoryPartNumbers\ImportPartNumbersController;
@@ -153,6 +152,8 @@ Route::middleware(['auth'])->group(function () {
     //	Detalle de errores de conteo
     Route::get('inventoryhead-errors/{id}', [InventoryErrorsController::class, 'index'])->name('inventoryhead-errors');
     Route::get('getDetailInventoryErrors/{id}', [InventoryErrorsController::class, 'getDetailInventoryErrors'])->name('getDetailInventoryErrors');
+    Route::get('getConcentratedInventoryErrors/{id}', [InventoryErrorsController::class, 'getConcentratedInventoryErrors'])->name('getConcentratedInventoryErrors');
+    Route::get('getPendingAssignInventoryErrors/{id}', [InventoryErrorsController::class, 'getPendingAssignInventoryErrors'])->name('getPendingAssignInventoryErrors');
     Route::put('inventory-adjust-count/{id}', [InventoryErrorsController::class, 'inventoryadjustcount'])->name('inventory-adjust-count');
     Route::get('printCardErrors/{id}', [InventoryErrorsController::class, 'printCardErrors'])->name('printCardErrors');
 
@@ -220,8 +221,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('getMigrationSap', [MigrationSapController::class, 'getMigrationSap'])->name('getMigrationSap');
 
     // Terceros conteos
-    Route::get('inventory-third-count/{id}', [ThirdCountController::class, 'index'])->name('inventory-third-count');
-    Route::get('third-count-assign/{id}', [ThirdCountController::class, 'index'])->name('inventory-third-assign');
-    Route::put('third-assign-counter/{id}', [ThirdCountController::class, 'assignCounter'])->name('third-assign-counter');
+
+    //    Route::get('third-count-assign/{id}', [InventoryErrorsController::class, 'index'])->name('inventory-third-assign');
+    Route::put('third-assign-counter/{id}', [InventoryErrorsController::class, 'assignCounter'])->name('third-assign-counter');
 
 });
