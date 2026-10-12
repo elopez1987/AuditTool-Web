@@ -30,10 +30,7 @@ class InventoryLocationCountsController extends BaseController
 
         $data = $this->baseLocationCountsQuery($request, $inventoryHead);
 
-        return $this->showDataToView(
-            $data,
-            'Inventory.InventoryHead.InventoryLocationCounts.buttons',
-        );
+        return $this->showDataToView($data, '');
     }
 
     public function getLocationCountsKpis(Request $request, $id)

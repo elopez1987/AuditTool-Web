@@ -304,8 +304,8 @@ class InventoryErrorsController extends BaseController
 
         return DataTables::of($asignaciones)
             ->addColumn('btn', function ($row) use ($users) {
-                // Solo permite cambiar usuario si la cédula no está terminada (C)
-                if (($row->statusid ?? '') === 'C') {
+                // Solo permite cambiar usuario si el estatus es A
+                if (($row->statusid ?? '') !== 'A') {
                     return '';
                 }
 
