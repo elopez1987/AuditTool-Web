@@ -66,7 +66,6 @@
                             </form>
                         </div>
                     </div>
-
                     <div class="row" id="cards-totales">
                         <div class="col-lg-2 col-md-4 col-sm-6">
                             <div class="card border-info">
@@ -119,30 +118,39 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-12">
-                            <table width="100%" id="table-locations" class="table table-bordered  table-condensed table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Pasillo</th>
-                                        <th>Cédula</th>
-                                        <th>Ubicación</th>
-                                        <th>Número de parte fisico</th>
-                                        <th>Descripción fisico</th>
-                                        <th>Cantidad fisico</th>
-                                        <th>Número de parte wms</th>
-                                        <th>Cantidad wms</th>
-                                        <th>Unidad de medida</th>
-                                        <th>Estatus de sku</th>
-                                        <th>Estatus de cantidad</th>
-                                    </tr>
-                                </thead>
-                            </table>
+                            <div class="card">
+                                <div class="card-header"></div>
+                                <div class="card-body">
+                                    <table width="100%" id="table-locations" class="table table-bordered  table-condensed table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>Pasillo</th>
+                                            <th>Cédula</th>
+                                            <th>Ubicación</th>
+                                            <th>Número de parte fisico</th>
+                                            <th>Descripción fisico</th>
+                                            <th>Cantidad fisico</th>
+                                            <th>Número de parte wms</th>
+                                            <th>Cantidad wms</th>
+                                            <th>Unidad de medida</th>
+                                            <th>Estatus de sku</th>
+                                            <th>Estatus de cantidad</th>
+                                        </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                                <div class="card-footer"></div>
+                            </div>
                         </div>
                     </div>
-
-</div>
+                </div>
+                <div class="card-footer">
+                    <button class="btn waves-effect waves-light btn-outline-info btn-md" id="exportar-validation-wms">
+                        <img src="{{asset('/ico/excel.png')}}" alt="" class="img-16 ml-2 mr-2"> Exportar Todo
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -212,7 +220,7 @@
                     }
                 },
             ],
-            "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
+            "dom": '<"row mb-3"<"col-sm-4"><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
             "lengthMenu": [[10, 25, 50, 100,200,300,400,1000], [10, 25, 50,100,200,300,400,1000]],
 
             buttons: [
@@ -288,8 +296,34 @@
             loadLocationCountsKpis();
         }
 
+        function exportLocationCountsWmsAll() {
+            var $btn = $('#exportar-validation-wms');
+            $btn.prop('disabled', true);
+
+            var params = $.param({
+                aislename: $('input[name=aislename]').val() || '',
+                cardname: $('input[name=cardname]').val() || '',
+                locationname: $('input[name=locationname]').val() || '',
+                partnumberid: $('input[name=partnumberid]').val() || '',
+                statuscomparacion: $('select[name=statuscomparacion]').val() || ''
+            });
+
+            var url = '{{ route("exportLocationCountsWms", $inventoryHead->id) }}' + '?' + params;
+            window.location.href = url;
+
+            // Reactiva el botón tras iniciar la descarga
+            setTimeout(function () {
+                $btn.prop('disabled', false);
+            }, 3000);
+        }
+
         $(document).ready(function () {
             loadLocationCountsKpis();
+
+            $('#exportar-validation-wms').on('click', function (e) {
+                e.preventDefault();
+                exportLocationCountsWmsAll();
+            });
         });
     </script>
 @endsection

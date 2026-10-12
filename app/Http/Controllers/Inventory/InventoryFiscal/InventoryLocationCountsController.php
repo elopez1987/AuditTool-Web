@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Inventory\InventoryFiscal;
 
+use App\Exports\Inventory\InventoryFiscal\ExportLocationCountsWms;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Inventory\InventoryFiscal\UpdateInventoryLocationCountRequest;
 use App\Models\Inventory\InventoryFiscal\InventoryHead;
@@ -10,6 +11,9 @@ use App\Models\Inventory\PartNumber\InventoryPartnumber;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Maatwebsite\Excel\Excel as ExcelFormat;
+use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Yajra\DataTables\Facades\DataTables;
 
 class InventoryLocationCountsController extends BaseController
@@ -78,6 +82,31 @@ class InventoryLocationCountsController extends BaseController
                 ? round(($totalOk / $totalLocations) * 100, 2)
                 : 0,
         ]);
+    }
+
+    /**
+     * Exporta todos los registros de la tabla (respeta filtros activos).
+     * Usa chunks de 1000 filas + CSV para soportar +30k sin timeout/memoria.
+     */
+    public function exportLocationCountsWms(Request $request, $id): BinaryFileResponse
+    {
+        // Evita corte por max_execution_time en exportaciones grandes.
+        set_time_limit(0);
+        ini_set('memory_limit', '512M');
+
+        $inventoryHead = InventoryHead::controlAccessUser()
+            ->where('id', $id)
+            ->firstOrFail();
+
+        $query = $this->baseLocationCountsQuery($request, $inventoryHead);
+
+        $fileName = 'validacion-ubicaciones-wms-' . $inventoryHead->id . '-' . now()->format('Ymd-His') . '.csv';
+
+        return Excel::download(
+            new ExportLocationCountsWms($query),
+            $fileName,
+            ExcelFormat::CSV,
+        )->deleteFileAfterSend();
     }
 
     /**
