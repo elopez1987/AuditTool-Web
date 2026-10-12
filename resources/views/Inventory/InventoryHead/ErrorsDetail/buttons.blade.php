@@ -9,3 +9,4 @@
     @include('Inventory.InventoryHead.ErrorsDetail.adjust-inventory')
 @endcan
 
+

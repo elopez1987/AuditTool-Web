@@ -25,7 +25,7 @@ class InventoryErrorsController extends BaseController
 
         return view(
             'Inventory.InventoryHead.ErrorsDetail.index',
-            compact('inventoryhead')
+            compact('inventoryhead'),
         );
     }
 
@@ -107,7 +107,22 @@ class InventoryErrorsController extends BaseController
                     . '<span> Imprimir</span>'
                     . '</button></a>';
             })
-            ->rawColumns(['btn'])
+            // PUT validateCard en InventoryLocationCardController (crea tareas 3er conteo)
+            ->addColumn('btn3', function ($row) {
+                $cardId = (int) $row->inventory_card_id;
+                $url = url('validateCard/' . $cardId);
+                $csrf = csrf_token();
+
+                return '<form method="POST" action="' . $url . '" class="d-inline ml-2 mr-2" '
+                    . 'onsubmit="return confirm(\'¿Generar tareas de 3er conteo para esta cédula?\');">'
+                    . '<input type="hidden" name="_token" value="' . $csrf . '">'
+                    . '<input type="hidden" name="_method" value="PUT">'
+                    . '<button type="submit" class="btn waves-effect waves-light btn-outline-info btn-sm">'
+                    . '<img src="' . asset('/ico/adreload.png') . '" alt="" class="img-16 ml-2 mr-2">'
+                    . '<span> Generar 3er conteo</span>'
+                    . '</button></form>';
+            })
+            ->rawColumns(['btn', 'btn3'])
             ->orderColumn('cardname', 'ic.name $1')
             ->orderColumn('totalerrores', 'count(ilc.id) $1')
             ->toJson();
@@ -248,5 +263,100 @@ class InventoryErrorsController extends BaseController
             ]);
 
         return $this->redirectBackSuccessMessage('Usuario asignado correctamente');
+    }
+
+    /**
+     * Asignaciones de cédulas a contadores (3er conteo) — server-side.
+     */
+    public function inventorycardassing(Request $request, $inventoryId)
+    {
+        $headId = (int) $inventoryId;
+
+        $users = InventoryAccountant::query()
+            ->where('inventory_head_id', $headId)
+            ->join('users', 'inventory_accountants.user_id', '=', 'users.id')
+            ->select('users.id', 'users.name')
+            ->orderBy('users.name')
+            ->get();
+
+        $asignaciones = DB::table('inventory_assign_counter_cards as iacc')
+            ->leftJoin('users as u', 'iacc.user_id', '=', 'u.id')
+            ->leftJoin('systemstatus as s', 'iacc.statusid', '=', 's.statusid')
+            ->join('inventory_card_counts as icc', 'iacc.inventory_card_count_id', '=', 'icc.id')
+            ->join('inventory_cards as ic', 'icc.inventory_card_id', '=', 'ic.id')
+            ->where('iacc.inventory_head_id', $headId)
+            ->when($request->filled('name'), function ($query) use ($request) {
+                $term = trim((string) $request->input('name'));
+
+                $query->where(function ($q) use ($term) {
+                    $q->where('ic.name', 'like', '%' . $term . '%')
+                        ->orWhere('u.name', 'like', '%' . $term . '%')
+                        ->orWhere('s.name', 'like', '%' . $term . '%');
+                });
+            })
+            ->select([
+                'iacc.id',
+                'iacc.statusid',
+                'u.name as user_name',
+                'ic.name as card_name',
+                's.name as status',
+            ]);
+
+        return DataTables::of($asignaciones)
+            ->addColumn('btn', function ($row) use ($users) {
+                // Solo permite cambiar usuario si la cédula no está terminada (C)
+                if (($row->statusid ?? '') === 'C') {
+                    return '';
+                }
+
+                return view('Inventory.InventoryHead.ErrorsDetail.buttons-change-user', [
+                    'id' => $row->id,
+                    'users' => $users,
+                    'currentUserId' => null,
+                ])->render();
+            })
+            ->rawColumns(['btn'])
+            ->orderColumn('card_name', 'ic.name $1')
+            ->orderColumn('user_name', 'u.name $1')
+            ->orderColumn('status', 's.name $1')
+            ->toJson();
+    }
+
+    /**
+     * Cambia el usuario asignado a una cédula de 3er conteo.
+     */
+    public function assingnewuser(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'user_id' => ['required', 'integer'],
+        ]);
+
+        $assignment = InventoryAssignCounterCard::query()
+            ->where('id', $id)
+            ->first();
+
+        if (is_null($assignment)) {
+            return $this->errorResponse('La asignación no existe.');
+        }
+
+        if ($assignment->statusid === 'C') {
+            return $this->errorResponse('No se puede cambiar el usuario de una cédula terminada.');
+        }
+
+        $isAccountant = InventoryAccountant::query()
+            ->where('inventory_head_id', $assignment->inventory_head_id)
+            ->where('user_id', $validated['user_id'])
+            ->exists();
+
+        if (! $isAccountant) {
+            return $this->errorResponse('El usuario seleccionado no es contador de este inventario.');
+        }
+
+        $assignment->update([
+            'user_id' => $validated['user_id'],
+            'statusid' => $assignment->statusid === 'F' ? 'A' : $assignment->statusid,
+        ]);
+
+        return $this->redirectBackSuccessMessage('Usuario actualizado correctamente.');
     }
 }

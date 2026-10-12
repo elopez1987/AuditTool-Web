@@ -154,6 +154,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('getDetailInventoryErrors/{id}', [InventoryErrorsController::class, 'getDetailInventoryErrors'])->name('getDetailInventoryErrors');
     Route::get('getConcentratedInventoryErrors/{id}', [InventoryErrorsController::class, 'getConcentratedInventoryErrors'])->name('getConcentratedInventoryErrors');
     Route::get('getPendingAssignInventoryErrors/{id}', [InventoryErrorsController::class, 'getPendingAssignInventoryErrors'])->name('getPendingAssignInventoryErrors');
+    Route::get('inventorycardassing/{id}', [InventoryErrorsController::class, 'inventorycardassing'])->name('inventorycardassing');
+    Route::put('assingnewuser/{id}', [InventoryErrorsController::class, 'assingnewuser'])->name('assingnewuser');
     Route::put('inventory-adjust-count/{id}', [InventoryErrorsController::class, 'inventoryadjustcount'])->name('inventory-adjust-count');
     Route::get('printCardErrors/{id}', [InventoryErrorsController::class, 'printCardErrors'])->name('printCardErrors');
 
