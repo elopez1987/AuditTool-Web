@@ -78,34 +78,34 @@
                         </div>
                     </div>
 
-                    <div class="row mt-3">
-                        <div class="col-lg-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    ERRORES DE CONTEO
-                                </div>
-                                <div class="card-body">
-                                    <table class="table table-bordered table-condensed"
-                                           id="inventoryDetailTableErrors"
-                                           width="100%">
-                                        <thead>
-                                        <tr>
-                                            <th>Pasillo</th>
-                                            <th>Cedula</th>
-                                            <th>Ubicación</th>
-                                            <th>Sku 01</th>
-                                            <th>Catidad 01</th>
-                                            <th>Sku 02</th>
-                                            <th>Catidad 02</th>
-                                            <th>Tipo de conteo</th>
-                                            <th>Ajustar</th>
-                                        </tr>
-                                        </thead>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+{{--                    <div class="row mt-3">--}}
+{{--                        <div class="col-lg-12">--}}
+{{--                            <div class="card">--}}
+{{--                                <div class="card-header">--}}
+{{--                                    ERRORES DE CONTEO--}}
+{{--                                </div>--}}
+{{--                                <div class="card-body">--}}
+{{--                                    <table class="table table-bordered table-condensed"--}}
+{{--                                           id="inventoryDetailTableErrors"--}}
+{{--                                           width="100%">--}}
+{{--                                        <thead>--}}
+{{--                                        <tr>--}}
+{{--                                            <th>Pasillo</th>--}}
+{{--                                            <th>Cedula</th>--}}
+{{--                                            <th>Ubicación</th>--}}
+{{--                                            <th>Sku 01</th>--}}
+{{--                                            <th>Catidad 01</th>--}}
+{{--                                            <th>Sku 02</th>--}}
+{{--                                            <th>Catidad 02</th>--}}
+{{--                                            <th>Tipo de conteo</th>--}}
+{{--                                            <th>Ajustar</th>--}}
+{{--                                        </tr>--}}
+{{--                                        </thead>--}}
+{{--                                    </table>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
                 </div>
             </div>
         </div>
@@ -123,9 +123,9 @@
             if ($.fn.DataTable.isDataTable('#inventoryErrorsAssignTable')) {
                 $('#inventoryErrorsAssignTable').DataTable().ajax.reload(null, false);
             }
-            if ($.fn.DataTable.isDataTable('#inventoryDetailTableErrors')) {
-                $('#inventoryDetailTableErrors').DataTable().ajax.reload(null, false);
-            }
+            // if ($.fn.DataTable.isDataTable('#inventoryDetailTableErrors')) {
+            //     $('#inventoryDetailTableErrors').DataTable().ajax.reload(null, false);
+            // }
         }
     </script>
 @endsection
