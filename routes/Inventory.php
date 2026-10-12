@@ -208,10 +208,16 @@ Route::middleware(['auth'])->group(function () {
     Route::post('import-inventory-wms-excel', [ImportInventoryWmsController::class, 'importStockWms'])->name('import-inventory-wms-excel');
     Route::get('getInventoryStockWms/{id}', [ImportInventoryWmsController::class, 'getInventoryStockWms'])->name('getInventoryStockWms');
     Route::get('getInventoryStockWmsKpis/{id}', [ImportInventoryWmsController::class, 'getInventoryStockWmsKpis'])->name('getInventoryStockWmsKpis');
+    Route::get('export-wms-stock/{id}', [ImportInventoryWmsController::class, 'exportStockWms'])->name('export-wms-stock');
+    Route::delete('clear-stock-wms/{id}', [ImportInventoryWmsController::class, 'clearDataWms'])->name('clear-stock-wms');
 
     // Importar existencias transitorias
     Route::get('import-inventory-transitional/{id}', [ImportInventoryTransitionalController::class, 'index'])->name('import-inventory-transitional');
     Route::post('import-inventory-transitional-excel', [ImportInventoryTransitionalController::class, 'importStockTransitional'])->name('import-inventory-transitional-excel');
+    Route::get('getInventoryStockTransitional/{id}', [ImportInventoryTransitionalController::class, 'getInventoryStockTransitional'])->name('getInventoryStockTransitional');
+    Route::get('getInventoryStockTransitionalKpis/{id}', [ImportInventoryTransitionalController::class, 'getInventoryStockTransitionalKpis'])->name('getInventoryStockTransitionalKpis');
+    Route::get('export-transitional-stock/{id}', [ImportInventoryTransitionalController::class, 'exportStockTransitional'])->name('export-transitional-stock');
+    Route::delete('clear-stock-transitional/{id}', [ImportInventoryTransitionalController::class, 'clearDataTransitional'])->name('clear-stock-transitional');
 
     //	Importa existencia de SAP para el inventario
     Route::get('import-inventory-sap/{id}', [InventoryStockSapController::class, 'index'])->name('import-inventory-sap');
