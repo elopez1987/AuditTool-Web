@@ -143,6 +143,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('reset-count-1/{id}', [InventoryLocationCardController::class, 'initializeCount1'])->name('reset-count-1');
     Route::put('reset-count-2/{id}', [InventoryLocationCardController::class, 'initializeCount2'])->name('reset-count-2');
     Route::put('validateCard/{id}', [InventoryLocationCardController::class, 'validateCard'])->name('validateCard');
+    Route::put('markaserror/{id}', [InventoryLocationCardController::class, 'markaserror'])->name('markaserror');
 
     //	Enviar a 3er  conteo
     Route::put('inventory-head-tercerconteo/{id}', [InventoryLocationCardController::class, 'terceronteo'])->name('inventory-head-tercerconteo');

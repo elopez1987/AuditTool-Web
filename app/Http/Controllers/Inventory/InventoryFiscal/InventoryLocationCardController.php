@@ -169,9 +169,10 @@ class InventoryLocationCardController extends BaseController
                     ->update(['statusid_location' => true]);
 
                 (clone $base)
-                    ->where(fn ($q) => $q
-                        ->whereColumn('quantity01', '!=', 'quantity02')
-                        ->orWhereColumn('inventorypartnumber01_id', '!=', 'inventorypartnumber02_id'),
+                    ->where(
+                        fn ($q) => $q
+                            ->whereColumn('quantity01', '!=', 'quantity02')
+                            ->orWhereColumn('inventorypartnumber01_id', '!=', 'inventorypartnumber02_id'),
                     )
                     ->update(['statusid_location' => false]);
 
@@ -261,8 +262,51 @@ class InventoryLocationCardController extends BaseController
         }
     }
 
-    public function terceronteo($id)
+    /**
+     * Marca una ubicación como error y la deja lista para 3er conteo.
+     * Solo aplica si statusid_location aún es null. Respuesta JSON para AJAX.
+     */
+    public function markaserror($id)
     {
-        dd($id);
+        try {
+            $location = InventoryLocationCount::query()
+                ->where('id', $id)
+                ->first();
+
+            if (is_null($location)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'La ubicación no existe.',
+                ], 404);
+            }
+
+            if (! is_null($location->statusid_location)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'La ubicación ya tiene estatus de comparación y no puede enviarse a 3er conteo.',
+                ], 422);
+            }
+
+            $location->update([
+                'statusid_count01' => 'C',
+                'statusid_count02' => 'C',
+                'statusid_location' => false,
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Ubicación enviada a 3er conteo correctamente.',
+            ]);
+        } catch (\Throwable $e) {
+            Log::error('Error en markaserror', [
+                'location_id' => $id,
+                'message' => $e->getMessage(),
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Ocurrió un error al enviar la ubicación a 3er conteo.',
+            ], 500);
+        }
     }
 }

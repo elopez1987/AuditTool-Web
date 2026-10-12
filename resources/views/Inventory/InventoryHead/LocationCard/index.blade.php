@@ -120,11 +120,11 @@
                                     <th>Cédula</th>
                                     <th>Ubicación</th>
                                     <th>Número de parte 01</th>
-                                    <th>Description 01</th>
+                                    <th>Descripción 01</th>
                                     <th>Cantidad 01</th>
                                     <th>Contado por :</th>
                                     <th>Número de parte 02</th>
-                                    <th>Description 02</th>
+                                    <th>Descripción 02</th>
                                     <th>Cantidad 02</th>
                                     <th>Contado por :</th>
                                     <th>Estatus Conteo 01</th>
@@ -325,6 +325,61 @@
             oTable.draw();
             loadLocationCardKpis();
             e.preventDefault();
+        });
+
+        // Enviar ubicación a 3er conteo sin recargar la página
+        $(document).on('click', '.btn-markaserror', function () {
+            var $btn = $(this);
+            var id = $btn.data('id');
+
+            if ($btn.data('processing')) {
+                return;
+            }
+
+            if (!confirm('¿Enviar esta ubicación a 3er conteo?')) {
+                return;
+            }
+
+            $btn.data('processing', true).prop('disabled', true);
+
+            $.ajax({
+                url: "{{ url('markaserror') }}/" + id,
+                type: 'POST',
+                data: {
+                    _method: 'PUT',
+                    _token: '{{ csrf_token() }}'
+                },
+                headers: {
+                    'Accept': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                success: function (response) {
+                    if (response.success) {
+                        if (typeof toastr !== 'undefined') {
+                            toastr.success(response.message || 'Ubicación enviada a 3er conteo correctamente.');
+                        }
+                        reloadtable();
+                    } else {
+                        if (typeof toastr !== 'undefined') {
+                            toastr.error(response.message || 'No se pudo enviar la ubicación a 3er conteo.');
+                        }
+                    }
+                },
+                error: function (xhr) {
+                    var message = (xhr.responseJSON && xhr.responseJSON.message)
+                        ? xhr.responseJSON.message
+                        : 'Ocurrió un error al enviar la ubicación a 3er conteo.';
+
+                    if (typeof toastr !== 'undefined') {
+                        toastr.error(message);
+                    } else {
+                        alert(message);
+                    }
+                },
+                complete: function () {
+                    $btn.data('processing', false).prop('disabled', false);
+                }
+            });
         });
 
         $(document).ready(function () {
