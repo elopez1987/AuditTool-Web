@@ -327,58 +327,75 @@
             e.preventDefault();
         });
 
-        // Enviar ubicación a 3er conteo sin recargar la página
+        // Enviar ubicación a 3er conteo sin recargar la página (Swal + AJAX)
         $(document).on('click', '.btn-markaserror', function () {
             var $btn = $(this);
             var id = $btn.data('id');
 
-            if ($btn.data('processing')) {
+            if ($btn.data('processing') === true) {
                 return;
             }
 
-            if (!confirm('¿Enviar esta ubicación a 3er conteo?')) {
-                return;
-            }
-
-            $btn.data('processing', true).prop('disabled', true);
-
-            $.ajax({
-                url: "{{ url('markaserror') }}/" + id,
-                type: 'POST',
-                data: {
-                    _method: 'PUT',
-                    _token: '{{ csrf_token() }}'
-                },
-                headers: {
-                    'Accept': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest'
-                },
-                success: function (response) {
-                    if (response.success) {
-                        if (typeof toastr !== 'undefined') {
-                            toastr.success(response.message || 'Ubicación enviada a 3er conteo correctamente.');
-                        }
-                        reloadtable();
-                    } else {
-                        if (typeof toastr !== 'undefined') {
-                            toastr.error(response.message || 'No se pudo enviar la ubicación a 3er conteo.');
-                        }
-                    }
-                },
-                error: function (xhr) {
-                    var message = (xhr.responseJSON && xhr.responseJSON.message)
-                        ? xhr.responseJSON.message
-                        : 'Ocurrió un error al enviar la ubicación a 3er conteo.';
-
-                    if (typeof toastr !== 'undefined') {
-                        toastr.error(message);
-                    } else {
-                        alert(message);
-                    }
-                },
-                complete: function () {
-                    $btn.data('processing', false).prop('disabled', false);
+            Swal.fire({
+                title: '¿Enviar a 3er conteo?',
+                text: 'Esta ubicación se marcará con error y quedará lista para 3er conteo.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Sí, enviar',
+                cancelButtonText: 'Cancelar'
+            }).then(function (result) {
+                if (!result.isConfirmed) {
+                    return;
                 }
+
+                $btn.data('processing', true).prop('disabled', true);
+
+                $.ajax({
+                    url: "{{ url('markaserror') }}/" + id,
+                    type: 'POST',
+                    data: {
+                        _method: 'PUT',
+                        _token: '{{ csrf_token() }}'
+                    },
+                    headers: {
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Listo',
+                                text: response.message || 'Ubicación enviada a 3er conteo correctamente.',
+                                timer: 1800,
+                                showConfirmButton: false
+                            });
+                            reloadtable();
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: response.message || 'No se pudo enviar la ubicación a 3er conteo.'
+                            });
+                        }
+                    },
+                    error: function (xhr) {
+                        var message = (xhr.responseJSON && xhr.responseJSON.message)
+                            ? xhr.responseJSON.message
+                            : 'Ocurrió un error al enviar la ubicación a 3er conteo.';
+
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: message
+                        });
+                    },
+                    complete: function () {
+                        $btn.data('processing', false).prop('disabled', false);
+                    }
+                });
             });
         });
 

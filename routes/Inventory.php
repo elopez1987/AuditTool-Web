@@ -145,9 +145,6 @@ Route::middleware(['auth'])->group(function () {
     Route::put('validateCard/{id}', [InventoryLocationCardController::class, 'validateCard'])->name('validateCard');
     Route::put('markaserror/{id}', [InventoryLocationCardController::class, 'markaserror'])->name('markaserror');
 
-    //	Enviar a 3er  conteo
-    Route::put('inventory-head-tercerconteo/{id}', [InventoryLocationCardController::class, 'terceronteo'])->name('inventory-head-tercerconteo');
-
     // Validar evidencias de conteo de drones
     Route::get('validate-location/{id}', [InventoryValidateLocationController::class, 'index'])->name('validate-location');
     Route::post('saveResponseSuccessLocation/{id}/{headId}', [InventoryValidateLocationController::class, 'saveResponseSuccessLocation'])->name('saveResponseSuccessLocation');
