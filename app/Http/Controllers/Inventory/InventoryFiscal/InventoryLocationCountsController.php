@@ -10,12 +10,16 @@ use App\Models\Inventory\PartNumber\InventoryPartnumber;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Yajra\DataTables\Facades\DataTables;
 
 class InventoryLocationCountsController extends BaseController
 {
     public function index($id)
     {
-        $inventoryHead = InventoryHead::where('inventory_uuid', $id)->first();
+        $inventoryHead = InventoryHead::controlAccessUser()
+            ->where('inventory_uuid', $id)
+            ->firstOrFail();
+
         $statusComparacionOptions = $this->statusComparacionOptions();
 
         return view(
@@ -26,11 +30,23 @@ class InventoryLocationCountsController extends BaseController
 
     public function getLocationCountsInventory(Request $request, $id)
     {
-        $inventoryHead = InventoryHead::where('id', $id)->firstOrFail();
+        $inventoryHead = InventoryHead::controlAccessUser()
+            ->where('id', $id)
+            ->firstOrFail();
 
         $data = $this->baseLocationCountsQuery($request, $inventoryHead);
 
-        return $this->showDataToView($data, '');
+        return DataTables::of($data)
+            ->orderColumn('aisle_name', 'aisle_name $1')
+            ->orderColumn('card_name', 'card_name $1')
+            ->orderColumn('location_name', 'location_name $1')
+            ->orderColumn('part_number1', 'part_number1 $1')
+            ->orderColumn('description01', 'description01 $1')
+            ->orderColumn('total_piezas_fisico', 'total_piezas_fisico $1')
+            ->orderColumn('total_piezas_wms', 'total_piezas_wms $1')
+            ->orderColumn('unitmeasureid', 'unitmeasureid $1')
+            ->orderColumn('status_comparacion', 'status_comparacion $1')
+            ->toJson();
     }
 
     public function getLocationCountsKpis(Request $request, $id)
@@ -121,8 +137,17 @@ class InventoryLocationCountsController extends BaseController
                         'um.unitmeasureid',
                         'iv1.untpal as cspal',
                         'iv1.untcas as pzcs',
-                        DB::raw("IIF(um.unitmeasureid = 'PA', ilc.quantity01 * iv1.untpal * iv1.untcas, ilc.quantity01 * iv1.untcas) as total_piezas_fisico"),
-                        'wm.quantity_location as total_piezas_wms',
+                        // quantity/untpal/untcas son INT: castear a BIGINT evita overflow.
+                        // quantity01 NULL debe seguir NULL (no 0) para no marcar PENDIENTE como OK.
+                        DB::raw("IIF(
+                            um.unitmeasureid = 'PA',
+                            cast(ilc.quantity01 as bigint)
+                                * cast(isnull(iv1.untpal, 1) as bigint)
+                                * cast(isnull(iv1.untcas, 1) as bigint),
+                            cast(ilc.quantity01 as bigint)
+                                * cast(isnull(iv1.untcas, 1) as bigint)
+                        ) as total_piezas_fisico"),
+                        DB::raw('cast(wm.quantity_location as bigint) as total_piezas_wms'),
                     ]);
             }, 'base')
             ->select('*')

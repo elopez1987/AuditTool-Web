@@ -132,9 +132,8 @@
                                         <th>Descripción</th>
                                         <th>Cantidad fisico</th>
                                         <th>Cantidad wms</th>
-<th>Unidad de medida</th>
+                                        <th>Unidad de medida</th>
                                         <th>Estatus de ubicación</th>
-                                        <th>Opciones</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -173,31 +172,30 @@
                 }
             },
             "columns": [
-
-                {data: 'aisle_name'},
-                {data: 'card_name'},
-                {data: 'location_name'},
-                {data: 'part_number1'},
-                {data: 'description01'},
-                {data: 'total_piezas_fisico'},
-                {data: 'total_piezas_wms'},
-                {data: 'unitmeasureid'},
-{
+                {data: 'aisle_name', name: 'aisle_name', defaultContent: ''},
+                {data: 'card_name', name: 'card_name', defaultContent: ''},
+                {data: 'location_name', name: 'location_name', defaultContent: ''},
+                {data: 'part_number1', name: 'part_number1', defaultContent: ''},
+                {data: 'description01', name: 'description01', defaultContent: ''},
+                {data: 'total_piezas_fisico', name: 'total_piezas_fisico', defaultContent: ''},
+                {data: 'total_piezas_wms', name: 'total_piezas_wms', defaultContent: ''},
+                {data: 'unitmeasureid', name: 'unitmeasureid', defaultContent: ''},
+                {
                     data: 'status_comparacion',
                     name: 'status_comparacion',
-                    render: function (data, type, rowData) {
+                    defaultContent: '',
+                    render: function (data) {
                         var colors = {
                             'OK': '#00e676',
                             'ERROR': '#ff1744',
                             'PENDIENTE': '#ffff00'
                         };
+                        var bgColor = colors[data] || '#e0e0e0';
+                        var label = data || '-';
 
-                        var bgColor = colors[data] || '#e0e0e0'; // gris si llega un valor inesperado
-
-                        return '<span style="background-color:' + bgColor + '; color: black; padding: 2px 8px; border-radius: 4px; display: inline-block;">' + data + '</span>';
+                        return '<span style="background-color:' + bgColor + '; color: black; padding: 2px 8px; border-radius: 4px; display: inline-block;">' + label + '</span>';
                     }
                 },
-                // {data: 'btn', orderable: false, searchable: false},
             ],
             "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
             "lengthMenu": [[10, 25, 50, 100,200,300,400,1000], [10, 25, 50,100,200,300,400,1000]],
