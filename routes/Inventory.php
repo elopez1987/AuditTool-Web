@@ -236,8 +236,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('inventory-sap-details/{id}', [MigrationSapController::class, 'show'])->name('inventory-sap-details');
     Route::get('getMigrationSap', [MigrationSapController::class, 'getMigrationSap'])->name('getMigrationSap');
 
-    // Terceros conteos
-
     //    Route::get('third-count-assign/{id}', [InventoryErrorsController::class, 'index'])->name('inventory-third-assign');
     Route::put('third-assign-counter/{id}', [InventoryErrorsController::class, 'assignCounter'])->name('third-assign-counter');
 

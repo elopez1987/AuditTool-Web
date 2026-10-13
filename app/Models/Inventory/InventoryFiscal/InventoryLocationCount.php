@@ -20,6 +20,7 @@ class InventoryLocationCount extends Model
         'quantity02',
         'user_count01_id',
         'user_count02_id',
+        'user_validator_id',
         'statusid_count01',
         'statusid_count02',
         'statusid_location',
