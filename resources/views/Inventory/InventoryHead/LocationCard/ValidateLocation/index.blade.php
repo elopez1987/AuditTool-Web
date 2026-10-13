@@ -28,32 +28,30 @@
                                     Evidencias
                                 </div>
                                 <div class="card-body">
-                                    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                                        <div class="carousel-inner" role="listbox">
-                                            @foreach($evidences as $evidence)
-                                                <div class="carousel-item @if ($loop->first) active @endif ">
-                                                    <img class="img-fluid align-items-lg-center"
-                                                         src="{{asset('storage/' . $evidence->path)}}" alt=""
-                                                         style="max-height: 900px;max-width: 1300px">
-                                                    <div class="carousel-caption d-none d-md-block">
-                                                        <h2 class="text-danger ">Foto : {{$loop->iteration}}
-                                                            / {{$loop->count}}</h2>
-                                                        <p class="text-danger font-14">
-                                                            {{$evidence->usercreated ? $evidence->usercreated->name : ''}} </p>
+                                    <div class="row">
+                                        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                                            <div class="carousel-inner" role="listbox">
+                                                @foreach($evidences as $evidence)
+                                                    <div class="carousel-item @if ($loop->first) active @endif ">
+                                                        <img class="img-fluid align-items-lg-center"
+                                                             src="{{asset('storage/' . $evidence->path)}}" alt=""
+                                                             style="height: 900px;width: 1300px">
+                                                        <div class="carousel-caption d-none d-md-block">
+                                                            <h2 class="text-danger ">Foto : {{$loop->iteration}} / {{$loop->count}}</h2>
+                                                            <p class="text-danger font-14">{{$evidence->usercreated ? $evidence->usercreated->name : ''}} </p>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            @endforeach
+                                                @endforeach
+                                            </div>
+                                            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button"
+                                               data-slide="prev"> <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span class="sr-only">Anterior</span>
+                                            </a>
+                                            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button"
+                                               data-slide="next"> <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span class="sr-only">Siguiente</span>
+                                            </a>
                                         </div>
-                                        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button"
-                                           data-slide="prev"> <span class="carousel-control-prev-icon"
-                                                                    aria-hidden="true"></span>
-                                            <span class="sr-only">Anterior</span>
-                                        </a>
-                                        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button"
-                                           data-slide="next"> <span class="carousel-control-next-icon"
-                                                                    aria-hidden="true"></span>
-                                            <span class="sr-only">Siguiente</span>
-                                        </a>
                                     </div>
                                 </div>
                             </div>
