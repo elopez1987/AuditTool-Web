@@ -63,6 +63,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('getDataInventoryNumbers', [InventoryPartnumbersController::class, 'getDataInventoryNumbers'])->name('getDataInventoryNumbers');
     //    Importar maestro de materiales
     Route::post('uploadfilepartnumbers', [ImportPartNumbersController::class, 'importPartNumber'])->name('uploadfilepartnumbers');
+    Route::get('uploadfilepartnumbers/template', [ImportPartNumbersController::class, 'downloadTemplate'])->name('uploadfilepartnumbers.template');
     //    Parametrizar Skus
     Route::get('inventorypartnumbers/{id}/parameters', [ParameterPartNumberController::class, 'parameters'])->name('inventorypartnumbers.parameters');
     Route::put('inventorypartnumbersaddparameters/{id}', [ParameterPartNumberController::class, 'addparameters'])->name('addparametersinventory');
@@ -208,6 +209,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('generate-format-inventory-02/{id}', [ExportFormtsCountController::class, 'generatecount02'])->name('generate-format-inventory-02');
 
     // Importar existencia de WMS
+    Route::get('import-inventory-wms/template', [ImportInventoryWmsController::class, 'downloadTemplate'])->name('import-inventory-wms.template');
     Route::get('import-inventory-wms/{id}', [ImportInventoryWmsController::class, 'index'])->name('import-inventory-wms');
     Route::post('import-inventory-wms-excel', [ImportInventoryWmsController::class, 'importStockWms'])->name('import-inventory-wms-excel');
     Route::get('getInventoryStockWms/{id}', [ImportInventoryWmsController::class, 'getInventoryStockWms'])->name('getInventoryStockWms');
@@ -216,6 +218,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('clear-stock-wms/{id}', [ImportInventoryWmsController::class, 'clearDataWms'])->name('clear-stock-wms');
 
     // Importar existencias transitorias
+    Route::get('import-inventory-transitional/template', [ImportInventoryTransitionalController::class, 'downloadTemplate'])->name('import-inventory-transitional.template');
     Route::get('import-inventory-transitional/{id}', [ImportInventoryTransitionalController::class, 'index'])->name('import-inventory-transitional');
     Route::post('import-inventory-transitional-excel', [ImportInventoryTransitionalController::class, 'importStockTransitional'])->name('import-inventory-transitional-excel');
     Route::get('getInventoryStockTransitional/{id}', [ImportInventoryTransitionalController::class, 'getInventoryStockTransitional'])->name('getInventoryStockTransitional');
@@ -224,6 +227,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('clear-stock-transitional/{id}', [ImportInventoryTransitionalController::class, 'clearDataTransitional'])->name('clear-stock-transitional');
 
     //	Importa existencia de SAP para el inventario
+    Route::get('import-inventory-sap/template', [InventoryStockSapController::class, 'downloadTemplate'])->name('import-inventory-sap.template');
     Route::get('import-inventory-sap/{id}', [InventoryStockSapController::class, 'index'])->name('import-inventory-sap');
     Route::post('import-inventory-sap-excel', [InventoryStockSapController::class, 'importStockSAP'])->name('import-inventory-sap-excel');
     Route::get('getInventoryStockSap/{id}', [InventoryStockSapController::class, 'getInventoryStockSap'])->name('getInventoryStockSap');

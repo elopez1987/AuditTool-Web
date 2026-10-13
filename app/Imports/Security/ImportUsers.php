@@ -3,207 +3,305 @@
 namespace App\Imports\Security;
 
 use App\Models\Security\Users\SecurityAccessWarehouse;
+use App\Models\Shipments\OrderDelivery\LogImportFile;
 use App\User;
-use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Concerns\Importable;
-use Maatwebsite\Excel\Concerns\SkipsErrors;
+use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
-use Maatwebsite\Excel\Concerns\SkipsOnError;
 use Maatwebsite\Excel\Concerns\SkipsOnFailure;
-use Maatwebsite\Excel\Concerns\ToModel;
-use Maatwebsite\Excel\Concerns\WithBatchInserts;
-use Maatwebsite\Excel\Concerns\WithChunkReading;
+use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
+use Maatwebsite\Excel\Validators\Failure;
 use Spatie\Permission\Models\Role;
 use Throwable;
 
-class ImportUsers implements SkipsOnError, SkipsOnFailure, ToModel, WithBatchInserts, WithChunkReading, WithHeadingRow, WithValidation
+class ImportUsers implements SkipsEmptyRows, SkipsOnFailure, ToCollection, WithHeadingRow, WithValidation
 {
     use Importable;
-    use SkipsErrors;
     use SkipsFailures;
 
+    private const DEFAULT_PASSWORD = 'Temporal12##';
+
+    private int $processed = 0;
+
+    private int $succeeded = 0;
+
+    private int $skipped = 0;
+
     /**
-     * Contadores para tener un resumen al final del import.
+     * Role cache keyed by the raw roleid/name from the file.
+     *
+     * @var array<string, Role|null>
      */
-    protected int $processedRows = 0;
+    private array $roleCache = [];
 
-    protected int $createdOrUpdatedUsers = 0;
-
-    protected int $skippedRows = 0;
-
-    public function model(array $row)
+    public function collection(Collection $rows): void
     {
-        $this->processedRows++;
-        $rowContext = $this->safeContext($row);
+        DB::table('logimports')->delete();
 
-        Log::info('[ImportUsers] Procesando fila', $rowContext);
+        $this->createLog('Inicio de importación de usuarios. Filas recibidas: ' . $rows->count());
 
-        try {
-            $user = $this->getUpdateOrCreateUser($row);
-            $this->assignRole($row, $user);
-            $this->createAccessWarehouse($row, $user);
+        foreach ($rows as $index => $row) {
+            $rowNumber = (int) $index + 2;
+            $data = $row instanceof Collection ? $row->all() : (array) $row;
 
-            $this->createdOrUpdatedUsers++;
+            if ($this->isBlankRow($data)) {
+                continue;
+            }
 
-            Log::info('[ImportUsers] Fila procesada correctamente', $rowContext + [
-                'userid' => $user->id,
-            ]);
-        } catch (Throwable $e) {
-            $this->skippedRows++;
+            $this->processed++;
+            $username = trim((string) ($data['username'] ?? ''));
 
-            Log::error('[ImportUsers] Error procesando fila', $rowContext + [
-                'error' => $e->getMessage(),
-                'exception' => get_class($e),
-                'trace' => $e->getTraceAsString(),
-            ]);
+            $this->createLog("Fila #{$rowNumber}: iniciando importación de usuario [{$username}]");
+
+            try {
+                if ($username === '') {
+                    $this->skipped++;
+                    $this->createLog("Fila #{$rowNumber}: username vacío, se omite.");
+
+                    continue;
+                }
+
+                $user = $this->upsertUser($data);
+                $roleAssigned = $this->assignRole($data, $user, $rowNumber);
+                $this->assignWarehouseAccess($data, $user);
+
+                $this->succeeded++;
+                $centerid = trim((string) ($data['centerid'] ?? ''));
+                $warehouseid = trim((string) ($data['warehouseid'] ?? ''));
+                $this->createLog(
+                    "Fila #{$rowNumber}: usuario [{$user->username}] procesado correctamente"
+                    . ($roleAssigned ? ' (rol asignado)' : ' (sin rol)')
+                    . ", acceso {$centerid}/{$warehouseid}."
+                );
+            } catch (Throwable $exception) {
+                $this->skipped++;
+                $this->createLog(
+                    "Fila #{$rowNumber}: error al importar [{$username}] - {$exception->getMessage()}"
+                );
+            }
         }
 
+        $this->logValidationFailures();
+
+        $this->createLog(sprintf(
+            'Fin de importación de usuarios. Procesadas: %d | Exitosas: %d | Omitidas/Error: %d | Fallas validación: %d',
+            $this->processed,
+            $this->succeeded,
+            $this->skipped,
+            count($this->failures())
+        ));
     }
 
-    public function batchSize(): int
+    public function isEmptyWhen($row): bool
     {
-        return 350;
+        $data = $row instanceof Collection ? $row->all() : (array) $row;
+
+        return $this->isBlankRow($data);
     }
 
-    public function chunkSize(): int
+    /**
+     * @param  array<string, mixed>  $row
+     */
+    private function isBlankRow(array $row): bool
     {
-        return 350;
+        foreach (['centerid', 'warehouseid', 'username', 'name', 'email', 'roleid'] as $field) {
+            $value = $row[$field] ?? null;
+            if ($value !== null && trim((string) $value) !== '') {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * @param  array<string, mixed>  $row
+     */
+    private function upsertUser(array $row): User
+    {
+        $username = trim((string) $row['username']);
+        $email = strtolower(trim((string) $row['email']));
+        $name = trim((string) $row['name']);
+
+        $user = User::withTrashed()->updateOrCreate(
+            [
+                'username' => $username,
+            ],
+            [
+                'email' => $email,
+                'name' => $name,
+                'statusid' => 'E',
+            ]
+        );
+
+        if ($user->wasRecentlyCreated) {
+            $user->forceFill([
+                'password' => Hash::make(self::DEFAULT_PASSWORD),
+                'password_changed_at' => null,
+            ])->save();
+        }
+
+        if (method_exists($user, 'trashed') && $user->trashed()) {
+            $user->restore();
+            $user->statusid = 'E';
+            $user->save();
+        }
+
+        return $user->fresh() ?? $user;
+    }
+
+    /**
+     * @param  array<string, mixed>  $row
+     */
+    private function assignRole(array $row, User $user, int $rowNumber): bool
+    {
+        $roleKey = trim((string) ($row['roleid'] ?? ''));
+        if ($roleKey === '') {
+            $this->createLog("Fila #{$rowNumber}: roleid vacío para [{$user->username}], se omite rol.");
+
+            return false;
+        }
+
+        $role = $this->resolveRole($roleKey);
+        if ($role === null) {
+            $this->createLog(
+                "Fila #{$rowNumber}: rol [{$roleKey}] no encontrado para [{$user->username}], se omite rol."
+            );
+
+            return false;
+        }
+
+        $user->syncRoles([$role->name]);
+
+        return true;
+    }
+
+    private function resolveRole(string $roleKey): ?Role
+    {
+        if (array_key_exists($roleKey, $this->roleCache)) {
+            return $this->roleCache[$roleKey];
+        }
+
+        // Prefer exact id match for numeric values to avoid SQL Server type issues.
+        if (ctype_digit($roleKey)) {
+            $role = Role::query()->where('id', (int) $roleKey)->first();
+            if ($role === null) {
+                $role = Role::query()->where('name', $roleKey)->first();
+            }
+        } else {
+            $role = Role::query()->where('name', $roleKey)->first();
+        }
+
+        $this->roleCache[$roleKey] = $role;
+
+        return $role;
+    }
+
+    /**
+     * @param  array<string, mixed>  $row
+     */
+    private function assignWarehouseAccess(array $row, User $user): void
+    {
+        SecurityAccessWarehouse::updateOrCreate(
+            [
+                'centerid' => trim((string) $row['centerid']),
+                'warehouseid' => trim((string) $row['warehouseid']),
+                'username' => (string) $user->username,
+            ],
+            [
+                'defaultlevel' => 'S',
+            ]
+        );
+    }
+
+    private function logValidationFailures(): void
+    {
+        /** @var Failure $failure */
+        foreach ($this->failures() as $failure) {
+            $errors = implode('; ', $failure->errors());
+            $username = $failure->values()['username'] ?? '';
+            $this->createLog(
+                "Validación fila #{$failure->row()}: [{$username}] {$failure->attribute()} - {$errors}"
+            );
+        }
+    }
+
+    private function createLog(string $message): void
+    {
+        LogImportFile::create([
+            'message' => $message,
+            'created_at' => Carbon::now(),
+        ]);
+    }
+
+    /**
+     * @param  array<string, mixed>  $data
+     * @return array<string, mixed>
+     */
+    public function prepareForValidation($data, $index)
+    {
+        foreach (['username', 'email', 'name', 'roleid', 'centerid', 'warehouseid'] as $field) {
+            if (array_key_exists($field, $data) && $data[$field] !== null) {
+                $data[$field] = trim((string) $data[$field]);
+            }
+        }
+
+        if (isset($data['email'])) {
+            $data['email'] = strtolower((string) $data['email']);
+        }
+
+        return $data;
     }
 
     public function rules(): array
     {
         return [
-            '*.username' => ['required', 'string', 'max:100'],
+            '*.username' => ['required', 'string', 'min:4', 'max:100'],
             '*.email' => ['required', 'email', 'max:150'],
-            '*.name' => ['required', 'string', 'max:100'],
-            '*.roleid' => ['required'],
-            '*.centerid' => [
-                'required',
-                'string',
-                'exists:systemcenterdistributions,centerid',
-            ],
-            '*.warehouseid' => [
-                'required',
-                'string',
-                'exists:systemwarehouses,warehouseid',
-            ],
+            '*.name' => ['required', 'string', 'max:150'],
+            '*.roleid' => ['required', 'string', 'max:100'],
+            '*.centerid' => ['required', 'string', 'exists:systemcenterdistributions,centerid'],
+            '*.warehouseid' => ['required', 'string', 'exists:systemwarehouses,warehouseid'],
         ];
-    }
-
-    /**
-     * Normaliza la fila antes de ejecutar la validación.
-     * Esto permite que usernames numéricos (p.ej. 10089727) no fallen la regla "string".
-     */
-    public function prepareForValidation($row, $index)
-    {
-        foreach (['username', 'email', 'name', 'roleid', 'centerid', 'warehouseid'] as $field) {
-            if (array_key_exists($field, $row) && $row[$field] !== null) {
-                $row[$field] = (string) $row[$field];
-            }
-        }
-
-        return $row;
     }
 
     public function customValidationMessages(): array
     {
         return [
             '*.username.required' => 'El campo username es obligatorio.',
+            '*.username.min' => 'El campo username debe tener al menos 4 caracteres.',
             '*.email.required' => 'El campo email es obligatorio.',
             '*.email.email' => 'El campo email no tiene un formato válido.',
             '*.name.required' => 'El campo name es obligatorio.',
             '*.roleid.required' => 'El campo roleid es obligatorio.',
             '*.centerid.required' => 'El campo centerid es obligatorio.',
-            '*.centerid.exists' => 'El centerid no existe en el catálogo de centros de distribución.',
+            '*.centerid.exists' => 'El centerid no existe en centros de distribución.',
             '*.warehouseid.required' => 'El campo warehouseid es obligatorio.',
-            '*.warehouseid.exists' => 'El warehouseid no existe en el catálogo de bodegas.',
+            '*.warehouseid.exists' => 'El warehouseid no existe en bodegas.',
         ];
     }
 
+    public function headingRow(): int
+    {
+        return 1;
+    }
+
     /**
-     * Resumen final del import para debug.
+     * @return array{processed: int, succeeded: int, skipped: int, failures: int}
      */
     public function summary(): array
     {
         return [
-            'processed' => $this->processedRows,
-            'created_or_updated' => $this->createdOrUpdatedUsers,
-            'skipped' => $this->skippedRows,
+            'processed' => $this->processed,
+            'succeeded' => $this->succeeded,
+            'skipped' => $this->skipped,
             'failures' => count($this->failures()),
-            'errors' => count($this->errors()),
-        ];
-    }
-
-    protected function getUpdateOrCreateUser(array $row): User
-    {
-        return User::updateOrCreate(
-            [
-                'username' => trim((string) ($row['username'] ?? '')),
-            ],
-            [
-                'email' => strtolower(trim((string) ($row['email'] ?? ''))),
-                'name' => trim((string) ($row['name'] ?? '')),
-                'password' => bcrypt('Temporal12##'),
-            ]
-        );
-    }
-
-    protected function assignRole(array $row, User $user): void
-    {
-        $roleid = trim((string) ($row['roleid'] ?? ''));
-
-        if ($roleid === '') {
-            Log::warning('[ImportUsers] roleid vacío, se omite asignación de rol', [
-                'username' => $user->username,
-            ]);
-
-            return;
-        }
-
-        // Evitamos el cast nvarchar -> bigint en SQL Server: si el valor es
-        // numérico buscamos por id, si no, buscamos sólo por name.
-        $role = ctype_digit($roleid)
-            ? Role::query()->where('id', (int) $roleid)->orWhere('name', $roleid)->first()
-            : Role::query()->where('name', $roleid)->first();
-
-        if ($role === null) {
-            Log::warning('[ImportUsers] Rol no encontrado, se omite asignación', [
-                'username' => $user->username,
-                'roleid' => $roleid,
-            ]);
-
-            return;
-        }
-
-        $user->syncRoles([$role->id]);
-    }
-
-    protected function createAccessWarehouse(array $row, User $user): void
-    {
-        SecurityAccessWarehouse::updateOrCreate(
-            [
-                'centerid' => trim((string) ($row['centerid'] ?? '')),
-                'warehouseid' => trim((string) ($row['warehouseid'] ?? '')),
-                'username' => (string) $user->username,
-            ],
-            []
-        );
-    }
-
-    /**
-     * Devuelve un subconjunto seguro de datos de la fila para loguear,
-     * evitando exponer datos sensibles (p.ej. password).
-     */
-    protected function safeContext(array $row): array
-    {
-        return [
-            'username' => $row['username'] ?? null,
-            'email' => $row['email'] ?? null,
-            'roleid' => $row['roleid'] ?? null,
-            'centerid' => $row['centerid'] ?? null,
-            'warehouseid' => $row['warehouseid'] ?? null,
         ];
     }
 }

@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers\Security\Users\Eventos;
 
+use App\Exports\Security\ExportUsersTemplate;
 use App\Http\Controllers\BaseController;
 use App\Imports\Security\ImportUsers;
+use App\Models\Shipments\OrderDelivery\LogImportFile;
 use App\User;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Throwable;
 
 class EventUserController extends BaseController
@@ -22,57 +27,42 @@ class EventUserController extends BaseController
         return $this->redirectBackSuccessMessage('Usuario restaurado correctamente');
     }
 
-    public function importusers(Request $request)
+    public function downloadTemplate(): BinaryFileResponse
     {
-        $file = $request->file('file');
+        return Excel::download(
+            new ExportUsersTemplate,
+            'template_import_users.xlsx'
+        );
+    }
 
-        Log::info('[ImportUsers] Inicio de importación', [
-            'filename' => $file?->getClientOriginalName(),
-            'size' => $file?->getSize(),
-            'user' => optional($request->user())->username,
+    public function importusers(Request $request): View|RedirectResponse
+    {
+        ini_set('max_execution_time', 300);
+
+        $validator = Validator::make($request->all(), [
+            'file' => 'required|mimes:xls,xlsx',
         ]);
 
-        $import = new ImportUsers;
+        if ($validator->fails()) {
+            return $this->errorResponse('El formato de archivo no es correcto. Solo se permiten archivos Excel (.xls, .xlsx).');
+        }
 
         try {
-            Excel::import($import, $file, '', \Maatwebsite\Excel\Excel::XLSX);
-        } catch (Throwable $e) {
-            Log::error('[ImportUsers] Excepción global durante la importación', [
-                'error' => $e->getMessage(),
-                'exception' => get_class($e),
-                'trace' => $e->getTraceAsString(),
-            ]);
-
-            throw $e;
+            Excel::import(
+                new ImportUsers,
+                $request->file('file'),
+                null,
+                \Maatwebsite\Excel\Excel::XLSX
+            );
+        } catch (Throwable $exception) {
+            return $this->errorResponse(
+                'No se pudo procesar el archivo de importación: ' . $exception->getMessage()
+            );
         }
 
-        $failures = collect($import->failures())->map(fn ($failure) => [
-            'row' => $failure->row(),
-            'attribute' => $failure->attribute(),
-            'errors' => $failure->errors(),
-            'values' => $failure->values(),
-        ])->all();
+        $data = LogImportFile::query()->orderByDesc('id')->get();
 
-        $errors = collect($import->errors())->map(fn ($error) => [
-            'message' => $error->getMessage(),
-            'exception' => get_class($error),
-        ])->all();
-
-        if (! empty($failures)) {
-            Log::warning('[ImportUsers] Filas rechazadas por validación', [
-                'failures' => $failures,
-            ]);
-        }
-
-        if (! empty($errors)) {
-            Log::warning('[ImportUsers] Filas con error durante la importación', [
-                'errors' => $errors,
-            ]);
-        }
-
-        Log::info('[ImportUsers] Fin de importación', $import->summary());
-
-        return $this->successResponse('securityusers.index');
+        return view('Configuration.EdiLogs.LogImportFile.index', compact('data'));
     }
 
     public function parameter($uuiduser)

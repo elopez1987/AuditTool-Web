@@ -13,40 +13,47 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="file">Archivo a importar</label>
-                                <input type="file" class="form-control" required id="file" name="file" accept=".xlsx, .xls">
+                            <div class="form-group d-flex justify-content-between align-items-center">
+                                <label for="file" class="mb-0">Archivo a importar</label>
+                                <a href="{{ route('importregisterwms.template') }}"
+                                   class="btn btn-outline-success btn-sm waves-effect waves-light"
+                                   title="Descargar plantilla Excel">
+                                    <img src="{{ asset('/ico/excel.png') }}" alt="" class="img-16">
+                                    Descargar plantilla
+                                </a>
                             </div>
+                            <input type="file" class="form-control" required id="file" name="file"
+                                   accept=".xlsx,.xls">
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-lg-12">
-                            <table class="table table-bordered table-condensed">
+                            <table class="table table-bordered table-condensed table-hover">
+                                <thead>
                                 <tr>
-                                    <thead>
-                                    <th>Nombre</th>
+                                    <th>Cabecera</th>
                                     <th>Descripción</th>
                                     <th>Formato</th>
-                                    </thead>
                                 </tr>
+                                </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>shipmentid</td>
-                                        <td>No.Embarque</td>
-                                        <td>String</td>
-                                    </tr>
+                                <tr>
+                                    <td>shipmentid</td>
+                                    <td>No. Embarque</td>
+                                    <td>Texto</td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary btn-sm  waves-effect waves-light"
+                    <button type="button" class="btn btn-outline-secondary btn-sm waves-effect waves-light"
                             data-dismiss="modal">
                         <img src="{{asset('/pics/adcancelar.png')}}" alt="">
                         Cancelar
                     </button>
-                    <button type="submit" class="btn btn-outline-secondary btn-sm  waves-effect waves-light">
+                    <button type="submit" class="btn btn-outline-secondary btn-sm waves-effect waves-light">
                         <img src="{{asset('/pics/adaceptar.png')}}" alt="">
                         Aceptar
                     </button>
@@ -55,4 +62,3 @@
         </div>
     </form>
 </div>
-

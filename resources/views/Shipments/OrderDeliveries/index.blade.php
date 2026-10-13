@@ -79,7 +79,8 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <table id="table-orders"
-                                   class="table table-bordered  table-condensed table-hover table-uppercase" style="width: 100%;">
+                                   class="table table-bordered  table-condensed table-hover table-uppercase"
+                                   style="width: 100%;">
                                 <thead>
                                 <tr>
                                     <th class="text-white">Bodega</th>
@@ -154,6 +155,17 @@
                             </button>
                         </a>
                         @include('Shipments.OrderDeliveries.importcomment')
+                    @endcan
+                    @can('orderdeliveries.importcarriertoshipment')
+                        <a href="" data-target="#modal-transport" data-toggle="modal" data-placement="top">
+                            <button type="button"
+                                    class="btn waves-effect waves-light btn-outline-info btn-md"
+                                    data-toggle="tooltip" data-placement="top" title="Importar archivo">
+                                <img src="{{asset('/ico/uploadcsv.png')}}" alt="" class="img-16">
+                                <span class="text-button"> Importar transporte </span>
+                            </button>
+                        </a>
+                        @include('Shipments.OrderDeliveries.importtransport')
                     @endcan
                 </div>
             </div>

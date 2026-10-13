@@ -45,6 +45,7 @@ use App\Http\Controllers\Shipments\OrderDelivery\Imports\ImportBillingController
 use App\Http\Controllers\Shipments\OrderDelivery\Imports\ImportCommentShipmentController;
 use App\Http\Controllers\Shipments\OrderDelivery\Imports\ImportOrderPlanController;
 use App\Http\Controllers\Shipments\OrderDelivery\Imports\ImportShipmentCheckController;
+use App\Http\Controllers\Shipments\OrderDelivery\ImportTransportController;
 use App\Http\Controllers\Shipments\OrderDelivery\OrderDeliveryController;
 use App\Http\Controllers\Shipments\OrderDelivery\StorageShipmentBillingsController;
 use App\Http\Controllers\Shipments\Reports\DashboardShipmentController;
@@ -111,12 +112,20 @@ Route::middleware(['auth'])->group(function () {
     //    ------------------------------------------------- Importadores ---------------------------------------------------
     //  Importar comentarios a los embarques
     Route::post('importcommentshipment', [ImportCommentShipmentController::class, 'importcommentshipment'])->name('importcommentshipment');
+    Route::get('importcommentshipment/template', [ImportCommentShipmentController::class, 'downloadTemplate'])->name('importcommentshipment.template');
     //   Importar facturas de los embarques
     Route::post('importbilling', [ImportBillingController::class, 'index'])->name('importbilling');
+    Route::get('importbilling/template', [ImportBillingController::class, 'downloadTemplate'])->name('importbilling.template');
     //  Importar solicitud de material para verificacion
     Route::post('uploadFileCheck', [ImportShipmentCheckController::class, 'index'])->name('uploadFileCheck');
+    Route::get('uploadFileCheck/template', [ImportShipmentCheckController::class, 'downloadTemplate'])->name('uploadFileCheck.template');
     //  Importar embarques a cargar
     Route::post('uploadfiledeliveries', [ImportOrderPlanController::class, 'index'])->name('uploadfiledeliveries');
+    Route::get('uploadfiledeliveries/template', [ImportOrderPlanController::class, 'downloadTemplate'])->name('uploadfiledeliveries.template');
+    //	Importar lineas de transporte para embarques
+    Route::post('importtransportshipment', [ImportTransportController::class, 'index'])->name('import-transport');
+    // Descargar plantilla Excel para importar transporte
+    Route::get('importtransportshipment/template', [ImportTransportController::class, 'downloadTemplate'])->name('import-transport.template');
     //  Subir la evidencia documental del embarque
     Route::put('orderdeliveries.uploadfile/{id}', [UploadDocumentToShipmentController::class, 'uploadfile'])->name('orderdeliveries.uploadfile');
     //    Subir facturas del embarque
@@ -316,6 +325,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('deletedetailincidence/{id}', [StorageIncidenceJourneyDetailController::class, 'destroy'])->name('deletedetailincidence');
     // 	  Importar incidencias masivas
     Route::post('importincidences', [ImportIncidencesJourneyController::class, 'index'])->name('importincidences');
+    Route::get('importincidences/template', [ImportIncidencesJourneyController::class, 'downloadTemplate'])->name('importincidences.template');
 
     //    Seguimiento de incidencias
     Route::resource('followupofincidences', FollowupIncidenceJournyesController::class)->except(['destroy']);
@@ -359,13 +369,16 @@ Route::middleware(['auth'])->group(function () {
 
     //    Importadores del módulo de logística inversa
     Route::post('importrequestzare', [ImportDataInverseController::class, 'importrequestzare'])->name('importrequestzare');
+    Route::get('importrequestzare/template', [ImportDataInverseController::class, 'downloadRequestZareTemplate'])->name('importrequestzare.template');
     Route::post('importresponsezare', [ImportDataInverseController::class, 'importresponsezare'])->name('importresponsezare');
     Route::post('importrequestne', [ImportDataInverseController::class, 'importrequestne'])->name('importrequestne');
     Route::post('importresponsene', [ImportDataInverseController::class, 'importresponsene'])->name('importresponsene');
     Route::post('importrequestnc', [ImportDataInverseController::class, 'importrequestnc'])->name('importrequestnc');
     Route::post('importresponsenc', [ImportDataInverseController::class, 'importresponsenc'])->name('importresponsenc');
     Route::post('importregisterwms', [ImportDataInverseController::class, 'importregisterwms'])->name('importregisterwms');
+    Route::get('importregisterwms/template', [ImportDataInverseController::class, 'downloadRegisterWmsTemplate'])->name('importregisterwms.template');
     Route::post('importresponseinventory', [ImportDataInverseController::class, 'importresponseinventory'])->name('importresponseinventory');
+    Route::get('importresponseinventory/template', [ImportDataInverseController::class, 'downloadResponseInventoryTemplate'])->name('importresponseinventory.template');
 
     //  Modificacion por tráfico
     Route::get('storagescheduleinversetraffic/{storagescheduleinverse}/edit', [StorageScheduleInverseTrafficController::class, 'index'])->name('storagescheduleinversetraffic.index');

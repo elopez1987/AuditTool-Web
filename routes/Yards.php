@@ -226,8 +226,9 @@ Route::middleware(['auth'])->group(function () {
     //	Parametrizar líneas de transporte
     Route::get('shipmentcarriers/{id}/parameters', [ParameterCarrierController::class, 'parameters'])->name('shipmentcarriers.parameters');
     Route::put('addparameterscarrier/{id}', [ParameterCarrierController::class, 'addparameterscarrier'])->name('addparameterscarrier');
-    //	Subir logo y QR a línea de transporte
+    //	Importar líneas de transporte
     Route::post('uploadfilecarriers', [ImportCarriersController::class, 'importcarriers'])->name('uploadfilecarriers');
+    Route::get('uploadfilecarriers/template', [ImportCarriersController::class, 'downloadTemplate'])->name('uploadfilecarriers.template');
     //	Agregar contactos a las líneas de transporte
 
     // //  Obtener listado de contactos PARA UN CARRIER específico (usa {id})
@@ -245,6 +246,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('ordercustomers/{id}/parameters', [ParameterCustomerController::class, 'parameters'])->name('ordercustomers.parameters');
     Route::put('addparameters/{id}', [ParameterCustomerController::class, 'addparameters'])->name('addparameters');
     Route::post('uploadfileordercustomers', [ImportCustomerController::class, 'importcustomer'])->name('uploadfileordercustomers');
+    Route::get('uploadfileordercustomers/template', [ImportCustomerController::class, 'downloadTemplate'])->name('uploadfileordercustomers.template');
     Route::post('deleteCustomer', [OrderCustomerController::class, 'destroy'])->name('deleteCustomer');
 
     //    ---------------------------------------------------- Destinos ---------------------------------------------------------
@@ -256,6 +258,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('getDataLocations', [StorageLocationController::class, 'getDataLocations'])->name('getDataLocations');
     //    Importar ubicaciones
     Route::post('uploadfilelocations', [ImportLocationsController::class, 'importlocations'])->name('uploadfilelocations');
+    Route::get('uploadfilelocations/template', [ImportLocationsController::class, 'downloadTemplate'])->name('uploadfilelocations.template');
     //    Optimizar usuario
     Route::get('optimizelocations', [OptimizeLocationsController::class, 'optimizelocations'])->name('optimizelocations');
     //    Parametrizar las ubicaciones
@@ -272,8 +275,9 @@ Route::middleware(['auth'])->group(function () {
     //    ---------------------------------------------------- Medidas de unidad (Cajas de 53, 20Ft, etc.) ------------------------------
     Route::resource('shipmenttrucks', ShipmentTruckController::class);
     Route::get('getDataTrucks', [ShipmentTruckController::class, 'getDataTrucks'])->name('getDataTrucks');
-    //    Importar tipode unidad
+    //    Importar tipo de unidad
     Route::post('uploadfileshipmenttrucks', [ImportShipmentTruckController::class, 'importshipmenttrucks'])->name('uploadfileshipmenttrucks');
+    Route::get('uploadfileshipmenttrucks/template', [ImportShipmentTruckController::class, 'downloadTemplate'])->name('uploadfileshipmenttrucks.template');
     //    Tolerancia de tipos de unidad
     Route::get('shipmenttrucks/{id}/tolerance', [ShipmentTruckToleranceController::class, 'index'])->name('shipmenttrucks.tolerance');
     Route::put('shipmenttruckstolerance/{id}', [ShipmentTruckToleranceController::class, 'update'])->name('shipmenttruckstolerance');
@@ -294,6 +298,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('getDataProviders', [ReceiptProvidersController::class, 'getDataProviders']);
     //    Importar proveedores
     Route::post('uploadfileproviders', [ImportProvidersController::class, 'index'])->name('uploadfileproviders');
+    Route::get('uploadfileproviders/template', [ImportProvidersController::class, 'downloadTemplate'])->name('uploadfileproviders.template');
     //	Contactos de proveedores
     Route::get('receiptprovidercontacts/{id}/create', [ReceiptProviderContactsController::class, 'create']);
     //  Crear contacto

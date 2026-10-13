@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Inventory\InventoryFiscal;
 
 use App\Exports\Inventory\InventoryFiscal\ExportInventoryStockSap;
+use App\Exports\Inventory\InventoryFiscal\ExportInventoryStockSapTemplate;
 use App\Http\Controllers\BaseController;
 use App\Imports\Inventario\InventoryFiscal\ImportInventoryStockSap;
 use App\Models\Inventory\InventoryFiscal\InventoryHead;
@@ -28,6 +29,14 @@ class InventoryStockSapController extends BaseController
 
         return view('Inventory.InventoryHead.ImportInventorySap.index',
             compact('inventoryHead'));
+    }
+
+    public function downloadTemplate(): BinaryFileResponse
+    {
+        return Excel::download(
+            new ExportInventoryStockSapTemplate,
+            'template_import_inventory_sap.xlsx'
+        );
     }
 
     public function getInventoryStockSap(Request $request, $id)

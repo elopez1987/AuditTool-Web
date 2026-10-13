@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Inventory\InventoryFiscal;
 
 use App\Exports\Inventory\InventoryFiscal\ExportInventoryStockTransitional;
+use App\Exports\Inventory\InventoryFiscal\ExportInventoryStockTransitionalTemplate;
 use App\Http\Controllers\BaseController;
 use App\Imports\Inventario\InventoryFiscal\ImportInventoryTransitional;
 use App\Models\Inventory\InventoryFiscal\InventoryHead;
@@ -28,6 +29,14 @@ class ImportInventoryTransitionalController extends BaseController
 
         return view('Inventory.InventoryHead.ImportInventoryTransitional.index',
             compact('inventoryHead'));
+    }
+
+    public function downloadTemplate(): BinaryFileResponse
+    {
+        return Excel::download(
+            new ExportInventoryStockTransitionalTemplate,
+            'template_import_inventory_transitional.xlsx'
+        );
     }
 
     public function getInventoryStockTransitional(Request $request, $id)

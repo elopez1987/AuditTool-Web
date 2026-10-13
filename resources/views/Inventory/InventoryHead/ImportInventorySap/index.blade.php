@@ -45,7 +45,13 @@
                         </div>
                     </form>
                 </div>
-                <div class="card-footer">
+<div class="card-footer">
+                    <a href="{{ route('import-inventory-sap.template') }}"
+                       class="btn waves-effect waves-light btn-outline-success btn-md me-2"
+                       title="Descargar plantilla Excel">
+                        <img src="{{ asset('/ico/excel.png') }}" alt="" class="img-16 ml-1">
+                        <span class="text-button"> Descargar plantilla</span>
+                    </a>
                     @can('clear-stock-sap')
                         <form id="form-clear-stock-sap"
                               method="POST"

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Inventory\InventoryFiscal;
 
 use App\Exports\Inventory\InventoryFiscal\ExportInventoryStockWms;
+use App\Exports\Inventory\InventoryFiscal\ExportInventoryStockWmsTemplate;
 use App\Http\Controllers\BaseController;
 use App\Imports\Inventario\InventoryFiscal\ImportInventoryStockWms;
 use App\Models\Inventory\InventoryFiscal\ImportInventoryWms;
@@ -28,6 +29,14 @@ class ImportInventoryWmsController extends BaseController
 
         return view('Inventory.InventoryHead.ImportInventoryWms.index',
             compact('inventoryHead'));
+    }
+
+    public function downloadTemplate(): BinaryFileResponse
+    {
+        return Excel::download(
+            new ExportInventoryStockWmsTemplate,
+            'template_import_inventory_wms.xlsx'
+        );
     }
 
     public function getInventoryStockWms(Request $request, $id)

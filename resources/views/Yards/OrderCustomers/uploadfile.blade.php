@@ -14,51 +14,72 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <ul class="list-group">
-                                <li class="list-group-item font-12"> Seleecione archivo a importar (CSV)</li>
+                                <li class="list-group-item font-12 d-flex justify-content-between align-items-center">
+                                    <span>Seleccione archivo a importar (CSV)</span>
+                                    <a href="{{ route('uploadfileordercustomers.template') }}"
+                                       class="btn btn-outline-success btn-sm waves-effect waves-light"
+                                       title="Descargar plantilla CSV">
+                                        <img src="{{ asset('/ico/csv.png') }}" alt="" class="img-16">
+                                        Descargar plantilla
+                                    </a>
+                                </li>
                                 <li class="list-group-item font-12">
-                                    <input type='file' name="file" id="file" required>
+                                    <input type="file" class="form-control" name="file" id="file" required
+                                           accept=".csv,.txt,.xlsx,.xls">
                                 </li>
                             </ul>
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-lg-12">
-                            <table class="table table-no-bordered table-condensed">
+                            <p class="font-14 text-dark mb-2">
+                                Importa una lista de clientes. El archivo debe contener los siguientes datos y formatos.
+                            </p>
+                            <table class="table table-bordered table-condensed table-hover">
+                                <thead>
                                 <tr>
-                                    <span class="font-14 text-dark mb-3">Importa una lista de clientes, el archivo debe de contener los siguientes datos y formatos</span>
-                                </tr>
-                                <tr>
-                                    <thead>
                                     <th>Campo</th>
                                     <th>Nombre</th>
                                     <th>Formato</th>
-                                    </thead>
+                                    <th>Requerido</th>
                                 </tr>
+                                </thead>
                                 <tbody>
                                 <tr>
                                     <td>centerid</td>
                                     <td>C.Distribución</td>
-                                    <td>String</td>
+                                    <td>Texto</td>
+                                    <td>SI</td>
                                 </tr>
                                 <tr>
                                     <td>warehouseid</td>
                                     <td>Bodega</td>
-                                    <td>String</td>
+                                    <td>Texto</td>
+                                    <td>SI</td>
                                 </tr>
                                 <tr>
                                     <td>shiptoid</td>
                                     <td>Cliente</td>
-                                    <td>Numeric</td>
+                                    <td>Texto/Numérico</td>
+                                    <td>SI</td>
                                 </tr>
                                 <tr>
                                     <td>name</td>
                                     <td>Nombre</td>
-                                    <td>String</td>
+                                    <td>Texto</td>
+                                    <td>SI</td>
+                                </tr>
+                                <tr>
+                                    <td>city</td>
+                                    <td>Ciudad</td>
+                                    <td>Texto</td>
+                                    <td>SI</td>
                                 </tr>
                                 <tr>
                                     <td>timetransfer</td>
-                                    <td>Tiempo de trayecto ( Min )</td>
-                                    <td>Numeric</td>
+                                    <td>Tiempo de trayecto (Min)</td>
+                                    <td>Numérico</td>
+                                    <td>SI</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -66,12 +87,12 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary btn-sm  waves-effect waves-light"
+                    <button type="button" class="btn btn-outline-secondary btn-sm waves-effect waves-light"
                             data-dismiss="modal">
                         <img src="{{asset('/pics/adcancelar.png')}}" alt="">
                         Cancelar
                     </button>
-                    <button type="submit" class="btn btn-outline-secondary btn-sm  waves-effect waves-light">
+                    <button type="submit" class="btn btn-outline-secondary btn-sm waves-effect waves-light">
                         <img src="{{asset('/pics/adaceptar.png')}}" alt="">
                         Aceptar
                     </button>
@@ -80,4 +101,3 @@
         </div>
     </form>
 </div>
-
