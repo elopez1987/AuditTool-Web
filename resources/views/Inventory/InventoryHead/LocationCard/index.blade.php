@@ -250,17 +250,31 @@
                 {
                     data: 'statusid01', name: 'statusid01',
                     render: function (data, type, row) {
-                        return (data == 'C' )
-                            ? '<span class="badge bg-green font-12 font-light text-black">Terminado</span>'
-                            : '<span class="badge bg-red font-12 font-light">Pendiente</span>';
+                        switch (data) {
+                            case 'C':
+                                return '<span class="badge bg-green font-12 font-light text-black">Terminado</span>';
+                            case 'F':
+                                return '<span class="badge bg-yellow font-12 text-black font-light">Faltante</span>';
+                            case 'I':
+                                return '<span class="badge bg-blue font-12 font-light">En Proceso</span>';
+                            default:
+                                return '<span class="badge bg-red font-12 font-light">Pendiente</span>';
+                        }
                     },
                 },
                 {
                     data: 'statusid02', name: 'statusid02',
                     render: function (data, type, row) {
-                        return (data == 'C' )
-                            ? '<span class="badge bg-green font-12 font-light text-black">Terminado</span>'
-                            : '<span class="badge bg-red font-12 font-light">Pendiente</span>';
+                        switch (data) {
+                            case 'C':
+                                return '<span class="badge bg-green font-12 font-light text-black">Terminado</span>';
+                            case 'F':
+                                return '<span class="badge bg-yellow font-12 font-light text-black">Faltante</span>';
+                            case 'I':
+                                return '<span class="badge bg-blue font-12 font-light">En Proceso</span>';
+                            default:
+                                return '<span class="badge bg-red font-12 font-light">Pendiente</span>';
+                        }
                     },
                 },
                 {

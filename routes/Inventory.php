@@ -20,6 +20,7 @@ use App\Http\Controllers\Inventory\InventoryFiscal\InventoryImportCounterControl
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryLocationCardController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryLocationController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryLocationCountsController;
+use App\Http\Controllers\Inventory\InventoryFiscal\InventoryLogController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryStockSapController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventorySupervisorController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryValidateLocationController;
@@ -239,5 +240,12 @@ Route::middleware(['auth'])->group(function () {
 
     //    Route::get('third-count-assign/{id}', [InventoryErrorsController::class, 'index'])->name('inventory-third-assign');
     Route::put('third-assign-counter/{id}', [InventoryErrorsController::class, 'assignCounter'])->name('third-assign-counter');
+
+    // Bitácora de peticiones de conteo
+    Route::get('inventory-logs/{id}', [InventoryLogController::class, 'index'])->name('inventory-logs');
+    Route::get('getInventoryLog/{id}', [InventoryLogController::class, 'getInventoryLog'])->name('getInventoryLog');
+    Route::get('getInventoryLogKpis/{id}', [InventoryLogController::class, 'getInventoryLogKpis'])->name('getInventoryLogKpis');
+    Route::get('inventory-logs/{id}/show/{logId}', [InventoryLogController::class, 'show'])->name('inventory-logs.show');
+    Route::get('inventory-logs/{id}/download-file/{logId}', [InventoryLogController::class, 'downloadPayloadFile'])->name('inventory-logs.download-file');
 
 });
