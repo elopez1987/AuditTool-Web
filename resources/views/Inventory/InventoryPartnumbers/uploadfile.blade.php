@@ -13,10 +13,19 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-lg-12">
-                            <ul class="list-group">
-                                <li class="list-group-item font-12"> Seleecione archivo a importar (Excel)</li>
+<ul class="list-group">
+                                <li class="list-group-item font-12 d-flex justify-content-between align-items-center">
+                                    <span>Seleccione archivo a importar (Excel)</span>
+                                    <a href="{{ route('uploadfilepartnumbers.template') }}"
+                                       class="btn btn-outline-success btn-sm waves-effect waves-light"
+                                       title="Descargar plantilla Excel">
+                                        <img src="{{ asset('/ico/excel.png') }}" alt="" class="img-16">
+                                        Descargar plantilla
+                                    </a>
+                                </li>
                                 <li class="list-group-item font-12">
-                                    <input type='file' name="file" id="file" required>
+                                    <input type="file" class="form-control" name="file" id="file" required
+                                           accept=".xlsx,.xls">
                                 </li>
                             </ul>
                         </div>

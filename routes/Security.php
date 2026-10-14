@@ -49,6 +49,7 @@ Route::middleware(['auth'])->group(function () {
 
     //    Importar usuarios masivos
     Route::post('importusers', [EventUserController::class, 'importusers'])->name('importusers');
+    Route::get('importusers/template', [EventUserController::class, 'downloadTemplate'])->name('importusers.template');
     //    Parametrizar usuarios
     Route::get('securityusers/{id}/parameter', [EventUserController::class, 'parameter'])->name('securityuser.parameter');
     Route::put('securityusersparameterstore/{id}', [EventUserController::class, 'securityusersparameterstore'])->name('securityusersparameterstore');

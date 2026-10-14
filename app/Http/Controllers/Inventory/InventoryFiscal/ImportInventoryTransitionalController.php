@@ -2,12 +2,19 @@
 
 namespace App\Http\Controllers\Inventory\InventoryFiscal;
 
+use App\Exports\Inventory\InventoryFiscal\ExportInventoryStockTransitional;
+use App\Exports\Inventory\InventoryFiscal\ExportInventoryStockTransitionalTemplate;
 use App\Http\Controllers\BaseController;
 use App\Imports\Inventario\InventoryFiscal\ImportInventoryTransitional;
-use App\Models\Inventory\InventoryFiscal\ImportInventoryWms;
 use App\Models\Inventory\InventoryFiscal\InventoryHead;
+use App\Models\Inventory\InventoryFiscal\InventoryTransitional;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
+use Maatwebsite\Excel\Excel as ExcelFormat;
+use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ImportInventoryTransitionalController extends BaseController
 {
@@ -24,40 +31,49 @@ class ImportInventoryTransitionalController extends BaseController
             compact('inventoryHead'));
     }
 
-    public function getInventoryStockWms($id)
+    public function downloadTemplate(): BinaryFileResponse
     {
-        $data = ImportInventoryWms::with([
-            'inventoryhead:id,name',
-            'inventorylocation:id,name',
-            'inventorypartnumber:id,prtnum,lngdsc',
-        ])
-            ->select('inventory_stock_wms.*')
-            ->where('inventory_head_id', $id);
+        return Excel::download(
+            new ExportInventoryStockTransitionalTemplate,
+            'template_import_inventory_transitional.xlsx'
+        );
+    }
+
+    public function getInventoryStockTransitional(Request $request, $id)
+    {
+        $data = $this->baseStockTransitionalQuery($request, (int) $id);
 
         return $this->showDataToView($data, '');
     }
 
-    /**
-     * Cards de la parte superior de la vista: total de ubicaciones, total de
-     * números de parte y las sumas totales de quantity_location y
-     * quantity_lpns para este inventario.
-     */
-    public function getInventoryStockWmsKpis($id)
+    public function getInventoryStockTransitionalKpis(Request $request, $id)
     {
-        $totals = ImportInventoryWms::where('inventory_head_id', $id)
+        $totals = InventoryTransitional::query()
+            ->where('inventory_head_id', (int) $id)
+            ->when($request->filled('partnumber'), function ($query) use ($request) {
+                $term = trim((string) $request->input('partnumber'));
+
+                $query->whereHas('inventorypartnumber', function ($q) use ($term) {
+                    $q->where('prtnum', 'like', '%' . $term . '%')
+                        ->orWhere('lngdsc', 'like', '%' . $term . '%');
+                });
+            })
+            ->when($request->filled('locationname'), function ($query) use ($request) {
+                $term = trim((string) $request->input('locationname'));
+
+                $query->whereHas('inventorylocation', function ($q) use ($term) {
+                    $q->where('name', 'like', '%' . $term . '%');
+                });
+            })
             ->selectRaw('
-                COUNT(DISTINCT inventory_location_id) as total_locations,
                 COUNT(DISTINCT inventorypartnumber_id) as total_part_numbers,
-                SUM(quantity_location) as total_quantity_location,
-                SUM(quantity_lpns) as total_quantity_lpns
+                SUM(quantity) as total_quantity
             ')
             ->first();
 
         return response()->json([
-            'totalLocations' => $totals->total_locations ?? 0,
             'totalPartNumbers' => $totals->total_part_numbers ?? 0,
-            'totalQuantityLocation' => $totals->total_quantity_location ?? 0,
-            'totalQuantityLpns' => $totals->total_quantity_lpns ?? 0,
+            'totalQuantity' => $totals->total_quantity ?? 0,
         ]);
     }
 
@@ -78,7 +94,6 @@ class ImportInventoryTransitionalController extends BaseController
 
         try {
             \Excel::import(new ImportInventoryTransitional($inventoryHead), $request->file('file'));
-
         } catch (\Throwable $e) {
             Log::error('Error al encolar import de inventario', [
                 'inventory_head_id' => $inventoryHead->id,
@@ -91,5 +106,77 @@ class ImportInventoryTransitionalController extends BaseController
         return $this->redirectBackSuccessMessage(
             'Tu archivo se está procesando en segundo plano. Te notificaremos cuando termine.',
         );
+    }
+
+    public function exportStockTransitional(Request $request, $id): BinaryFileResponse
+    {
+        set_time_limit(0);
+        ini_set('memory_limit', '512M');
+
+        $inventoryHead = InventoryHead::controlAccessUser()
+            ->where('id', $id)
+            ->firstOrFail();
+
+        $query = $this->baseStockTransitionalQuery($request, (int) $inventoryHead->id);
+        $fileName = 'existencia-transitorias-' . $inventoryHead->id . '-' . now()->format('Ymd-His') . '.csv';
+
+        return Excel::download(
+            new ExportInventoryStockTransitional($query),
+            $fileName,
+            ExcelFormat::CSV,
+        )->deleteFileAfterSend();
+    }
+
+    public function clearDataTransitional($id)
+    {
+        Gate::authorize('clear-stock-transitional');
+
+        $inventoryHead = InventoryHead::controlAccessUser()
+            ->where('id', $id)
+            ->first();
+
+        if (is_null($inventoryHead)) {
+            return $this->errorResponse('Inventory head not found');
+        }
+
+        try {
+            InventoryTransitional::where('inventory_head_id', $inventoryHead->id)->delete();
+        } catch (\Throwable $e) {
+            Log::error('Error al limpiar existencia transitoria', [
+                'inventory_head_id' => $inventoryHead->id,
+                'message' => $e->getMessage(),
+            ]);
+
+            return $this->errorResponse('No se pudieron eliminar los registros importados.');
+        }
+
+        return $this->redirectBackSuccessMessage('Existencia transitoria eliminada correctamente.');
+    }
+
+    private function baseStockTransitionalQuery(Request $request, int $headId): Builder
+    {
+        return InventoryTransitional::query()
+            ->with([
+                'inventoryhead:id,name',
+                'inventorylocation:id,name',
+                'inventorypartnumber:id,prtnum,lngdsc',
+            ])
+            ->select('inventory_transitionals.*')
+            ->where('inventory_transitionals.inventory_head_id', $headId)
+            ->when($request->filled('partnumber'), function ($query) use ($request) {
+                $term = trim((string) $request->input('partnumber'));
+
+                $query->whereHas('inventorypartnumber', function ($q) use ($term) {
+                    $q->where('prtnum', 'like', '%' . $term . '%')
+                        ->orWhere('lngdsc', 'like', '%' . $term . '%');
+                });
+            })
+            ->when($request->filled('locationname'), function ($query) use ($request) {
+                $term = trim((string) $request->input('locationname'));
+
+                $query->whereHas('inventorylocation', function ($q) use ($term) {
+                    $q->where('name', 'like', '%' . $term . '%');
+                });
+            });
     }
 }

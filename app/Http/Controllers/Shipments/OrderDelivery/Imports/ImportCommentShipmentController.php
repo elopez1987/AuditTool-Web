@@ -2,14 +2,25 @@
 
 namespace App\Http\Controllers\Shipments\OrderDelivery\Imports;
 
+use App\Exports\Shipment\OrderDelivery\ExportCommentShipmentTemplate;
 use App\Http\Controllers\BaseController;
 use App\Imports\Shipments\OrderDelivery\ImportCommentShipment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ImportCommentShipmentController extends BaseController
 {
+    public function downloadTemplate(): BinaryFileResponse
+    {
+        return Excel::download(
+            new ExportCommentShipmentTemplate,
+            'template_import_comment_shipment.csv',
+            \Maatwebsite\Excel\Excel::CSV
+        );
+    }
+
     public function importcommentshipment(Request $request)
     {
         ini_set('max_execution_time', 300);

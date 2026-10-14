@@ -23,7 +23,7 @@ class InventoryLocationCardController extends BaseController
 
         return view(
             'Inventory.InventoryHead.LocationCard.index',
-            compact('inventoryCardCount', 'inventoryHead')
+            compact('inventoryCardCount', 'inventoryHead'),
         );
     }
 
@@ -169,9 +169,10 @@ class InventoryLocationCardController extends BaseController
                     ->update(['statusid_location' => true]);
 
                 (clone $base)
-                    ->where(fn ($q) => $q
-                        ->whereColumn('quantity01', '!=', 'quantity02')
-                        ->orWhereColumn('inventorypartnumber01_id', '!=', 'inventorypartnumber02_id')
+                    ->where(
+                        fn ($q) => $q
+                            ->whereColumn('quantity01', '!=', 'quantity02')
+                            ->orWhereColumn('inventorypartnumber01_id', '!=', 'inventorypartnumber02_id'),
                     )
                     ->update(['statusid_location' => false]);
 
@@ -182,41 +183,70 @@ class InventoryLocationCardController extends BaseController
                     ->where('statusid_location', 0)
                     ->get();
 
-                if ($locationsErrors->isNotEmpty()) {
-                    $now = now();
-
-                    // Valida que no exista ya una asignación abierta ('F') o activa ('A') para esta cédula,
-                    // evitando crear registros duplicados de InventoryAssignCounterCard.
-                    $inventoryCardExist = InventoryAssignCounterCard::query()
-                        ->where('inventory_head_id', $inventoryCardCount->inventory_head_id)
-                        ->where('inventory_card_count_id', $inventoryCardCount->id)
-                        ->whereIn('statusid', ['F', 'A'])
-                        ->exists();
-
-                    // Si ya existe, se sale sin crear nada nuevo (evita duplicados).
-                    if ($inventoryCardExist) {
-                        return $this->errorResponse('Ya existe una asignación de conteo activa para esta cédula.');
-                    }
-
-                    // Solo continúa si NO existe una asignación previa.
-                    $inventoryCard = InventoryAssignCounterCard::create([
-                        'inventory_head_id' => $inventoryCardCount->inventory_head_id,
-                        'inventory_card_count_id' => $inventoryCardCount->id,
-                        'statusid' => 'F',
-                    ]);
-
-                    $rows = $locationsErrors->map(fn ($locationError) => [
-                        'inventory_assign_counter_card_id' => $inventoryCard->id,
-                        'inventory_location_count_id' => $locationError->id,
-                        'statusid' => 'F',
-                        'created_at' => $now,
-                        'updated_at' => $now,
-                    ])->all();
-
-                    InventoryAssignCounterLocation::insert($rows);
+                if ($locationsErrors->isEmpty()) {
+                    return $this->redirectBackSuccessMessage('Validación completada. No hay ubicaciones con error.');
                 }
 
-                return $this->redirectBackSuccessMessage('Conteo inicializado con éxito.');
+                $now = now();
+                $errorLocationIds = $locationsErrors->pluck('id');
+
+                // Tarea abierta/activa (estatus distinto de C = Contado/cerrada).
+                $openAssignment = InventoryAssignCounterCard::query()
+                    ->where('inventory_head_id', $inventoryCardCount->inventory_head_id)
+                    ->where('inventory_card_count_id', $inventoryCardCount->id)
+                    ->where('statusid', '!=', 'C')
+                    ->orderByDesc('id')
+                    ->first();
+
+                if ($openAssignment) {
+                    // Conserva ubicaciones ya asignadas y solo agrega las nuevas con error.
+                    $existingLocationIds = InventoryAssignCounterLocation::query()
+                        ->where('inventory_assign_counter_card_id', $openAssignment->id)
+                        ->pluck('inventory_location_count_id');
+
+                    $newLocationIds = $errorLocationIds
+                        ->diff($existingLocationIds)
+                        ->values();
+
+                    if ($newLocationIds->isNotEmpty()) {
+                        $rows = $newLocationIds->map(fn ($locationId) => [
+                            'inventory_assign_counter_card_id' => $openAssignment->id,
+                            'inventory_location_count_id' => $locationId,
+                            'statusid' => 'F',
+                            'created_at' => $now,
+                            'updated_at' => $now,
+                        ])->all();
+
+                        InventoryAssignCounterLocation::insert($rows);
+
+                        return $this->redirectBackSuccessMessage(
+                            'Validación completada. Se agregaron ' . $newLocationIds->count() . ' ubicaciones nuevas a la tarea existente.',
+                        );
+                    }
+
+                    return $this->redirectBackSuccessMessage(
+                        'Validación completada. La tarea existente ya contenía todas las ubicaciones con error.',
+                    );
+                }
+
+                // Cédula/tarea cerrada (C) o sin tarea previa: crear una nueva con los errores actuales.
+                $inventoryCard = InventoryAssignCounterCard::create([
+                    'inventory_head_id' => $inventoryCardCount->inventory_head_id,
+                    'inventory_card_count_id' => $inventoryCardCount->id,
+                    'statusid' => 'F',
+                ]);
+
+                $rows = $errorLocationIds->map(fn ($locationId) => [
+                    'inventory_assign_counter_card_id' => $inventoryCard->id,
+                    'inventory_location_count_id' => $locationId,
+                    'statusid' => 'F',
+                    'created_at' => $now,
+                    'updated_at' => $now,
+                ])->all();
+
+                InventoryAssignCounterLocation::insert($rows);
+
+                return $this->redirectBackSuccessMessage('Validación completada. Se generó una nueva tarea de 3er conteo.');
             });
         } catch (ModelNotFoundException $e) {
             Log::warning('validateCard: InventoryCardCount no encontrado', ['id' => $id]);
@@ -229,6 +259,54 @@ class InventoryLocationCardController extends BaseController
             ]);
 
             return $this->errorResponse('Ocurrió un error al validar la cédula.');
+        }
+    }
+
+    /**
+     * Marca una ubicación como error y la deja lista para 3er conteo.
+     * Solo aplica si statusid_location aún es null. Respuesta JSON para AJAX.
+     */
+    public function markaserror($id)
+    {
+        try {
+            $location = InventoryLocationCount::query()
+                ->where('id', $id)
+                ->first();
+
+            if (is_null($location)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'La ubicación no existe.',
+                ], 404);
+            }
+
+            if (! is_null($location->statusid_location)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'La ubicación ya tiene estatus de comparación y no puede enviarse a 3er conteo.',
+                ], 422);
+            }
+
+            $location->update([
+                'statusid_count01' => 'C',
+                'statusid_count02' => 'C',
+                'statusid_location' => false,
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Ubicación enviada a 3er conteo correctamente.',
+            ]);
+        } catch (\Throwable $e) {
+            Log::error('Error en markaserror', [
+                'location_id' => $id,
+                'message' => $e->getMessage(),
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Ocurrió un error al enviar la ubicación a 3er conteo.',
+            ], 500);
         }
     }
 }

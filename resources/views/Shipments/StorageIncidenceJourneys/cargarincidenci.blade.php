@@ -1,7 +1,7 @@
 <div class="modal fade bs-example-modal-lg" role="dialog" aria-labelledby="myLargeModalLabel" tabindex="-1"
      aria-hidden="true" style="display: none;" id="modal-upload">
-        <form method="POST" action="{{url('importincidences')}}" enctype="multipart/form-data">
-            @csrf
+    <form method="POST" action="{{url('importincidences')}}" enctype="multipart/form-data">
+        @csrf
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -14,75 +14,83 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <ul class="list-group">
-                                <li class="list-group-item font-11"> Seleecione archivo a importar (Excel)</li>
+                                <li class="list-group-item font-12 d-flex justify-content-between align-items-center">
+                                    <span>Seleccione archivo a importar (Excel)</span>
+                                    <a href="{{ route('importincidences.template') }}"
+                                       class="btn btn-outline-success btn-sm waves-effect waves-light"
+                                       title="Descargar plantilla Excel">
+                                        <img src="{{ asset('/ico/excel.png') }}" alt="" class="img-16">
+                                        Descargar plantilla
+                                    </a>
+                                </li>
                                 <li class="list-group-item font-12">
-                                    <input type='file' name="file" id="file" required>
+                                    <input type="file" class="form-control" name="file" id="file" required
+                                           accept=".xls,.xlsx">
                                 </li>
                             </ul>
                         </div>
                     </div>
-                    <div class="row mt-4">
+                    <div class="row mt-3">
                         <div class="col-lg-12">
-                            <table class="table table-bordered table-condensed">
+                            <p class="font-14 text-dark mb-2">
+                                Importa una lista de embarques y su detalle para reportar una incidencia.
+                            </p>
+                            <table class="table table-bordered table-condensed table-hover">
+                                <thead>
                                 <tr>
-                                    <span class="font-14 text-dark mb-3">Importa una lista de embarques y su detalle para reportar una incidencia.</span>
-                                </tr>
-                                <tr>
-                                    <thead>
                                     <th>Campo</th>
                                     <th>Nombre</th>
                                     <th>Formato</th>
-                                    </thead>
                                 </tr>
+                                </thead>
                                 <tbody>
                                 <tr>
                                     <td>shipmentid</td>
                                     <td>Embarque</td>
-                                    <td>String</td>
+                                    <td>Texto</td>
                                 </tr>
                                 <tr>
                                     <td>delivery</td>
                                     <td>Factura</td>
-                                    <td>String</td>
+                                    <td>Texto</td>
                                 </tr>
                                 <tr>
                                     <td>razoncode</td>
                                     <td>Motivo de la incidencia</td>
-                                    <td>String</td>
+                                    <td>Texto</td>
                                 </tr>
                                 <tr>
                                     <td>downloaddate</td>
                                     <td>Fecha de descarga</td>
-                                    <td>Date</td>
+                                    <td>aaaa-mm-dd</td>
                                 </tr>
                                 <tr>
                                     <td>partnumberid</td>
                                     <td>Número de parte / Sku</td>
-                                    <td>String</td>
+                                    <td>Texto</td>
                                 </tr>
                                 <tr>
                                     <td>quantity</td>
                                     <td>Cantidad</td>
-                                    <td>Number</td>
+                                    <td>Numérico</td>
                                 </tr>
                                 <tr>
                                     <td>unitmeasure</td>
                                     <td>Unidad de medida</td>
-                                    <td>String</td>
+                                    <td>Texto</td>
                                 </tr>
                                 </tbody>
                             </table>
                         </div>
-
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary btn-sm  waves-effect waves-light"
+                    <button type="button" class="btn btn-outline-secondary btn-sm waves-effect waves-light"
                             data-dismiss="modal">
                         <img src="{{asset('/pics/adcancelar.png')}}" alt="">
                         Cancelar
                     </button>
-                    <button type="submit" class="btn btn-outline-secondary btn-sm  waves-effect waves-light">
+                    <button type="submit" class="btn btn-outline-secondary btn-sm waves-effect waves-light">
                         <img src="{{asset('/pics/adaceptar.png')}}" alt="">
                         Aceptar
                     </button>
@@ -91,4 +99,3 @@
         </div>
     </form>
 </div>
-

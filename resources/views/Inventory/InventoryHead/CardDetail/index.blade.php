@@ -79,6 +79,26 @@
                         </a>
                         @include('Inventory.InventoryHead.CardDetail.counter01')
                     @endcan
+                    @can('inventorycards.exportpdf01')
+                        <a href="{{ route('generate-format-inventory-01', $inventoryHead->id) }}"
+                           id="exportformat1">
+                            <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md"
+                                    data-toggle="tooltip" data-placement="top" title="Exportar formatos PDF conteo 1">
+                                <img src="{{ asset('/ico/Save_37110.png') }}" alt="" class="img-16 mr-2">
+                                <span> Exportar conteos 1 </span>
+                            </button>
+                        </a>
+                    @endcan
+                    @can('inventorycards.exportpdf01')
+                        <a href="{{ route('generate-format-inventory-02', $inventoryHead->id) }}"
+                           id="exportformat2">
+                            <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md"
+                                    data-toggle="tooltip" data-placement="top" title="Exportar formatos PDF conteo 2">
+                                <img src="{{ asset('/ico/Save_37110.png') }}" alt="" class="img-16 mr-2">
+                                <span> Exportar conteos 2 </span>
+                            </button>
+                        </a>
+                    @endcan
                 </div>
             </div>
         </div>

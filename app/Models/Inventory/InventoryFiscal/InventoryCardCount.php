@@ -29,6 +29,7 @@ class InventoryCardCount extends Model
         'inventory_card_id',
         'user_count01_id',
         'user_count02_id',
+        'user_validator_id',
         'statusid_count01',
         'statusid_count02',
         'key_user_count_01',

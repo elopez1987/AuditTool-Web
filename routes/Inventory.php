@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Inventory\InventoryFiscal\ExportFormtsCountController;
 use App\Http\Controllers\Inventory\InventoryFiscal\ImportInventoryTransitionalController;
 use App\Http\Controllers\Inventory\InventoryFiscal\ImportInventoryWmsController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryAccountantCardController;
@@ -19,11 +20,12 @@ use App\Http\Controllers\Inventory\InventoryFiscal\InventoryImportCounterControl
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryLocationCardController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryLocationController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryLocationCountsController;
+use App\Http\Controllers\Inventory\InventoryFiscal\InventoryLogController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryStockSapController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventorySupervisorController;
 use App\Http\Controllers\Inventory\InventoryFiscal\InventoryValidateLocationController;
+use App\Http\Controllers\Inventory\InventoryFiscal\InventoryValidationSapController;
 use App\Http\Controllers\Inventory\InventoryFiscal\PrintFormatInventoryController;
-use App\Http\Controllers\Inventory\InventoryFiscal\ThirdCountController;
 use App\Http\Controllers\Inventory\InventoryPartNumberCategory01sController;
 use App\Http\Controllers\Inventory\InventoryPartNumberCategory02sController;
 use App\Http\Controllers\Inventory\InventoryPartNumbers\ImportPartNumbersController;
@@ -61,6 +63,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('getDataInventoryNumbers', [InventoryPartnumbersController::class, 'getDataInventoryNumbers'])->name('getDataInventoryNumbers');
     //    Importar maestro de materiales
     Route::post('uploadfilepartnumbers', [ImportPartNumbersController::class, 'importPartNumber'])->name('uploadfilepartnumbers');
+    Route::get('uploadfilepartnumbers/template', [ImportPartNumbersController::class, 'downloadTemplate'])->name('uploadfilepartnumbers.template');
     //    Parametrizar Skus
     Route::get('inventorypartnumbers/{id}/parameters', [ParameterPartNumberController::class, 'parameters'])->name('inventorypartnumbers.parameters');
     Route::put('inventorypartnumbersaddparameters/{id}', [ParameterPartNumberController::class, 'addparameters'])->name('addparametersinventory');
@@ -92,6 +95,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('inventoryhead-locations/{id}', [InventoryLocationCountsController::class, 'index'])->name('inventoryhead-locations');
     Route::get('getLocationCountsInventory/{id}', [InventoryLocationCountsController::class, 'getLocationCountsInventory'])->name('getLocationCountsInventory');
     Route::get('getLocationCountsKpis/{id}', [InventoryLocationCountsController::class, 'getLocationCountsKpis'])->name('getLocationCountsKpis');
+    Route::get('exportLocationCountsWms/{id}', [InventoryLocationCountsController::class, 'exportLocationCountsWms'])->name('exportLocationCountsWms');
+    Route::put('updatelocation/{id}', [InventoryLocationCountsController::class, 'updatelocation'])->name('updatelocation');
 
     //	Activar conteo fiscal
     Route::put('inventory-head-activate/{id}', [InventoryHeadEventController::class, 'activateInventoryHead'])->name('inventory-head-activate');
@@ -130,10 +135,18 @@ Route::middleware(['auth'])->group(function () {
     Route::get('inventorylocations-card/{id}', [InventoryLocationCardController::class, 'index'])->name('inventorylocations-card');
     Route::get('getLocationCardInventory/{id}', [InventoryLocationCardController::class, 'getLocationCardInventory'])->name('getLocationCardInventory');
     Route::get('getLocationCardKpis/{id}', [InventoryLocationCardController::class, 'getLocationCardKpis'])->name('getLocationCardKpis');
+    //	Validacion de conteo vs sap
+    Route::get('inventoryheads-validation/{id}', [InventoryValidationSapController::class, 'index'])->name('inventoryheads-validation');
+    Route::get('getDataValidationSap/{id}', [InventoryValidationSapController::class, 'getDataValidationSap'])->name('getDataValidationSap');
+    Route::get('getDataValidationSapKpis/{id}', [InventoryValidationSapController::class, 'getDataValidationSapKpis'])->name('getDataValidationSapKpis');
+    Route::get('exportValidationSap/{id}', [InventoryValidationSapController::class, 'exportValidationSap'])->name('exportValidationSap');
+
     //	Reiniciar conteo 1
     Route::put('reset-count-1/{id}', [InventoryLocationCardController::class, 'initializeCount1'])->name('reset-count-1');
     Route::put('reset-count-2/{id}', [InventoryLocationCardController::class, 'initializeCount2'])->name('reset-count-2');
     Route::put('validateCard/{id}', [InventoryLocationCardController::class, 'validateCard'])->name('validateCard');
+    Route::put('markaserror/{id}', [InventoryLocationCardController::class, 'markaserror'])->name('markaserror');
+
     // Validar evidencias de conteo de drones
     Route::get('validate-location/{id}', [InventoryValidateLocationController::class, 'index'])->name('validate-location');
     Route::post('saveResponseSuccessLocation/{id}/{headId}', [InventoryValidateLocationController::class, 'saveResponseSuccessLocation'])->name('saveResponseSuccessLocation');
@@ -142,6 +155,10 @@ Route::middleware(['auth'])->group(function () {
     //	Detalle de errores de conteo
     Route::get('inventoryhead-errors/{id}', [InventoryErrorsController::class, 'index'])->name('inventoryhead-errors');
     Route::get('getDetailInventoryErrors/{id}', [InventoryErrorsController::class, 'getDetailInventoryErrors'])->name('getDetailInventoryErrors');
+    Route::get('getConcentratedInventoryErrors/{id}', [InventoryErrorsController::class, 'getConcentratedInventoryErrors'])->name('getConcentratedInventoryErrors');
+    Route::get('getPendingAssignInventoryErrors/{id}', [InventoryErrorsController::class, 'getPendingAssignInventoryErrors'])->name('getPendingAssignInventoryErrors');
+    Route::get('inventorycardassing/{id}', [InventoryErrorsController::class, 'inventorycardassing'])->name('inventorycardassing');
+    Route::put('assingnewuser/{id}', [InventoryErrorsController::class, 'assingnewuser'])->name('assingnewuser');
     Route::put('inventory-adjust-count/{id}', [InventoryErrorsController::class, 'inventoryadjustcount'])->name('inventory-adjust-count');
     Route::get('printCardErrors/{id}', [InventoryErrorsController::class, 'printCardErrors'])->name('printCardErrors');
 
@@ -187,30 +204,50 @@ Route::middleware(['auth'])->group(function () {
     Route::get('print-format-inventory-01/{id}', [PrintFormatInventoryController::class, 'printFormat01'])->name('print-format-inventory-01');
     Route::get('print-format-inventory-02/{id}', [PrintFormatInventoryController::class, 'printFormat02'])->name('print-format-inventory-02');
 
+    //	Generacion de documentos PDFs masivos
+    Route::get('generate-format-inventory-01/{id}', [ExportFormtsCountController::class, 'generatecount01'])->name('generate-format-inventory-01');
+    Route::get('generate-format-inventory-02/{id}', [ExportFormtsCountController::class, 'generatecount02'])->name('generate-format-inventory-02');
+
     // Importar existencia de WMS
+    Route::get('import-inventory-wms/template', [ImportInventoryWmsController::class, 'downloadTemplate'])->name('import-inventory-wms.template');
     Route::get('import-inventory-wms/{id}', [ImportInventoryWmsController::class, 'index'])->name('import-inventory-wms');
     Route::post('import-inventory-wms-excel', [ImportInventoryWmsController::class, 'importStockWms'])->name('import-inventory-wms-excel');
     Route::get('getInventoryStockWms/{id}', [ImportInventoryWmsController::class, 'getInventoryStockWms'])->name('getInventoryStockWms');
     Route::get('getInventoryStockWmsKpis/{id}', [ImportInventoryWmsController::class, 'getInventoryStockWmsKpis'])->name('getInventoryStockWmsKpis');
+    Route::get('export-wms-stock/{id}', [ImportInventoryWmsController::class, 'exportStockWms'])->name('export-wms-stock');
+    Route::delete('clear-stock-wms/{id}', [ImportInventoryWmsController::class, 'clearDataWms'])->name('clear-stock-wms');
 
     // Importar existencias transitorias
+    Route::get('import-inventory-transitional/template', [ImportInventoryTransitionalController::class, 'downloadTemplate'])->name('import-inventory-transitional.template');
     Route::get('import-inventory-transitional/{id}', [ImportInventoryTransitionalController::class, 'index'])->name('import-inventory-transitional');
     Route::post('import-inventory-transitional-excel', [ImportInventoryTransitionalController::class, 'importStockTransitional'])->name('import-inventory-transitional-excel');
+    Route::get('getInventoryStockTransitional/{id}', [ImportInventoryTransitionalController::class, 'getInventoryStockTransitional'])->name('getInventoryStockTransitional');
+    Route::get('getInventoryStockTransitionalKpis/{id}', [ImportInventoryTransitionalController::class, 'getInventoryStockTransitionalKpis'])->name('getInventoryStockTransitionalKpis');
+    Route::get('export-transitional-stock/{id}', [ImportInventoryTransitionalController::class, 'exportStockTransitional'])->name('export-transitional-stock');
+    Route::delete('clear-stock-transitional/{id}', [ImportInventoryTransitionalController::class, 'clearDataTransitional'])->name('clear-stock-transitional');
 
     //	Importa existencia de SAP para el inventario
+    Route::get('import-inventory-sap/template', [InventoryStockSapController::class, 'downloadTemplate'])->name('import-inventory-sap.template');
     Route::get('import-inventory-sap/{id}', [InventoryStockSapController::class, 'index'])->name('import-inventory-sap');
     Route::post('import-inventory-sap-excel', [InventoryStockSapController::class, 'importStockSAP'])->name('import-inventory-sap-excel');
     Route::get('getInventoryStockSap/{id}', [InventoryStockSapController::class, 'getInventoryStockSap'])->name('getInventoryStockSap');
     Route::get('getInventoryStockSapKpis/{id}', [InventoryStockSapController::class, 'getInventoryStockSapKpis'])->name('getInventoryStockSapKpis');
+    Route::get('export-sap-stock/{id}', [InventoryStockSapController::class, 'exportStockSap'])->name('export-sap-stock');
+    Route::delete('clear-stock-sap/{id}', [InventoryStockSapController::class, 'clearDataSAP'])->name('clear-stock-sap');
 
     // Migracion de SAP
     Route::get('inventory-sap-migration', [MigrationSapController::class, 'index'])->name('inventory-sap-migration');
     Route::get('inventory-sap-details/{id}', [MigrationSapController::class, 'show'])->name('inventory-sap-details');
     Route::get('getMigrationSap', [MigrationSapController::class, 'getMigrationSap'])->name('getMigrationSap');
 
-    // Terceros conteos
-    Route::get('inventory-third-count/{id}', [ThirdCountController::class, 'index'])->name('inventory-third-count');
-    Route::get('third-count-assign/{id}', [ThirdCountController::class, 'index'])->name('inventory-third-assign');
-    Route::put('third-assign-counter/{id}', [ThirdCountController::class, 'assignCounter'])->name('third-assign-counter');
+    //    Route::get('third-count-assign/{id}', [InventoryErrorsController::class, 'index'])->name('inventory-third-assign');
+    Route::put('third-assign-counter/{id}', [InventoryErrorsController::class, 'assignCounter'])->name('third-assign-counter');
+
+    // Bitácora de peticiones de conteo
+    Route::get('inventory-logs/{id}', [InventoryLogController::class, 'index'])->name('inventory-logs');
+    Route::get('getInventoryLog/{id}', [InventoryLogController::class, 'getInventoryLog'])->name('getInventoryLog');
+    Route::get('getInventoryLogKpis/{id}', [InventoryLogController::class, 'getInventoryLogKpis'])->name('getInventoryLogKpis');
+    Route::get('inventory-logs/{id}/show/{logId}', [InventoryLogController::class, 'show'])->name('inventory-logs.show');
+    Route::get('inventory-logs/{id}/download-file/{logId}', [InventoryLogController::class, 'downloadPayloadFile'])->name('inventory-logs.download-file');
 
 });

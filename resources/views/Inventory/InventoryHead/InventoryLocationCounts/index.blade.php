@@ -54,11 +54,18 @@
                                             label="Número de parte"
                                             uppercase
                                     />
+                                    <x-select2
+                                            name="statuscomparacion"
+                                            label="Estatus"
+                                            :options="$statusComparacionOptions"
+                                            valueField="value"
+                                            textField="label"
+                                            placeholder="Todos"
+                                    />
                                 </div>
                             </form>
                         </div>
                     </div>
-
                     <div class="row" id="cards-totales">
                         <div class="col-lg-2 col-md-4 col-sm-6">
                             <div class="card border-info">
@@ -111,36 +118,59 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-12">
-                            <table width="100%" id="table-locations" class="table table-bordered  table-condensed table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Pasillo</th>
-                                        <th>Cédula</th>
-                                        <th>Ubicación</th>
-                                        <th>Número de parte</th>
-                                        <th>Descripción</th>
-                                        <th>Cantidad fisico</th>
-                                        <th>Cantidad wms</th>
-                                        <th>Unidad de medida</th>
-                                        <th>Estatus de ubicación</th>
-{{--                                        <th>Opciones</th>--}}
-                                    </tr>
-                                </thead>
-                            </table>
+                            <div class="card">
+                                <div class="card-header"></div>
+                                <div class="card-body">
+                                    <table width="100%" id="table-locations" class="table table-bordered  table-condensed table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>Pasillo</th>
+                                            <th>Cédula</th>
+                                            <th>Ubicación</th>
+                                            <th>Número de parte fisico</th>
+                                            <th>Descripción fisico</th>
+                                            <th>Cantidad fisico</th>
+                                            <th>Número de parte wms</th>
+                                            <th>Cantidad wms</th>
+                                            <th>Unidad de medida</th>
+                                            <th>Estatus de sku</th>
+                                            <th>Estatus de cantidad</th>
+                                        </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                                <div class="card-footer"></div>
+                            </div>
                         </div>
                     </div>
-
+                </div>
+                <div class="card-footer">
+                    <button class="btn waves-effect waves-light btn-outline-info btn-md" id="exportar-validation-wms">
+                        <img src="{{asset('/ico/excel.png')}}" alt="" class="img-16 ml-2 mr-2"> Exportar Todo
+                    </button>
                 </div>
             </div>
         </div>
     </div>
+    @include('layouts.Partials.Errors')
 @endsection
 
 @section('script')
     <script>
+        function renderStatusBadge(data) {
+            var colors = {
+                'OK': '#00e676',
+                'ERROR': '#ff1744',
+                'PENDIENTE': '#ffff00'
+            };
+            var bgColor = colors[data] || '#e0e0e0';
+            var label = data || '-';
+
+            return '<span style="background-color:' + bgColor + '; color: black; padding: 2px 8px; border-radius: 4px; display: inline-block;">' + label + '</span>';
+        }
+
         var oTable = $("#table-locations").DataTable({
             "paging": true,
             "searching": false,
@@ -160,36 +190,38 @@
                     d.cardname = $('input[name=cardname]').val();
                     d.locationname = $('input[name=locationname]').val();
                     d.partnumberid = $('input[name=partnumberid]').val();
+                    d.statuscomparacion = $('select[name=statuscomparacion]').val();
                 }
             },
             "columns": [
-
-                {data: 'aisle_name'},
-                {data: 'card_name'},
-                {data: 'location_name'},
-                {data: 'part_number1'},
-                {data: 'description01'},
-                {data: 'total_piezas_fisico'},
-                {data: 'total_piezas_wms'},
-                {data: 'unitmeasureid'},
+                {data: 'aisle_name', name: 'aisle_name', defaultContent: ''},
+                {data: 'card_name', name: 'card_name', defaultContent: ''},
+                {data: 'location_name', name: 'location_name', defaultContent: ''},
+                {data: 'part_number1', name: 'part_number1', defaultContent: ''},
+                {data: 'description01', name: 'description01', defaultContent: ''},
+                {data: 'total_piezas_fisico', name: 'total_piezas_fisico', defaultContent: ''},
+                {data: 'part_number_wms', name: 'part_number_wms', defaultContent: ''},
+                {data: 'total_piezas_wms', name: 'total_piezas_wms', defaultContent: ''},
+                {data: 'unitmeasure', name: 'unitmeasure', defaultContent: ''},
                 {
-                    data: 'status_comparacion',
-                    name: 'status_comparacion',
-                    render: function (data, type, rowData) {
-                        var colors = {
-                            'OK': '#00e676',
-                            'ERROR': '#ff1744',
-                            'PENDIENTE': '#ffff00'
-                        };
-
-                        var bgColor = colors[data] || '#e0e0e0'; // gris si llega un valor inesperado
-
-                        return '<span style="background-color:' + bgColor + '; color: black; padding: 2px 8px; border-radius: 4px; display: inline-block;">' + data + '</span>';
+                    data: 'status_sku',
+                    name: 'status_sku',
+                    defaultContent: '',
+                    render: function (data) {
+                        return renderStatusBadge(data);
+                    }
+                },
+                {
+                    data: 'status_cantidad',
+                    name: 'status_cantidad',
+                    defaultContent: '',
+                    render: function (data) {
+                        return renderStatusBadge(data);
                     }
                 },
             ],
-            "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
-            "lengthMenu": [[10, 25, 50, 100,200,300,400], [10, 25, 50,100,200,300,400]],
+            "dom": '<"row mb-3"<"col-sm-4"><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
+            "lengthMenu": [[10, 25, 50, 100,200,300,400,1000], [10, 25, 50,100,200,300,400,1000]],
 
             buttons: [
                 {
@@ -245,6 +277,7 @@
                 cardname: $('input[name=cardname]').val(),
                 locationname: $('input[name=locationname]').val(),
                 partnumberid: $('input[name=partnumberid]').val(),
+                statuscomparacion: $('select[name=statuscomparacion]').val(),
             })
                 .done(function (data) {
                     $('#totalUbicaciones').text(data.totalUbicaciones);
@@ -263,8 +296,34 @@
             loadLocationCountsKpis();
         }
 
+        function exportLocationCountsWmsAll() {
+            var $btn = $('#exportar-validation-wms');
+            $btn.prop('disabled', true);
+
+            var params = $.param({
+                aislename: $('input[name=aislename]').val() || '',
+                cardname: $('input[name=cardname]').val() || '',
+                locationname: $('input[name=locationname]').val() || '',
+                partnumberid: $('input[name=partnumberid]').val() || '',
+                statuscomparacion: $('select[name=statuscomparacion]').val() || ''
+            });
+
+            var url = '{{ route("exportLocationCountsWms", $inventoryHead->id) }}' + '?' + params;
+            window.location.href = url;
+
+            // Reactiva el botón tras iniciar la descarga
+            setTimeout(function () {
+                $btn.prop('disabled', false);
+            }, 3000);
+        }
+
         $(document).ready(function () {
             loadLocationCountsKpis();
+
+            $('#exportar-validation-wms').on('click', function (e) {
+                e.preventDefault();
+                exportLocationCountsWmsAll();
+            });
         });
     </script>
 @endsection

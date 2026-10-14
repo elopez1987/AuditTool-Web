@@ -2,13 +2,23 @@
 
 namespace App\Http\Controllers\Inventory\InventoryPartNumbers;
 
+use App\Exports\Inventory\PartNumbers\ExportPartNumbersTemplate;
 use App\Http\Controllers\BaseController;
 use App\Imports\Inventario\PartNumbers\ImportPartNumbers;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ImportPartNumbersController extends BaseController
 {
+    public function downloadTemplate(): BinaryFileResponse
+    {
+        return Excel::download(
+            new ExportPartNumbersTemplate,
+            'template_import_part_numbers.xlsx'
+        );
+    }
+
     public function importPartNumber(Request $request)
     {
         $validator = \Validator::make($request->all(), [

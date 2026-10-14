@@ -14,9 +14,18 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <ul class="list-group">
-                                <li class="list-group-item font-12"> Seleecione archivo a importar (Excel)</li>
+                                <li class="list-group-item font-12 d-flex justify-content-between align-items-center">
+                                    <span>Seleccione archivo a importar (Excel)</span>
+                                    <a href="{{ route('importbilling.template') }}"
+                                       class="btn btn-outline-success btn-sm waves-effect waves-light"
+                                       title="Descargar plantilla Excel">
+                                        <img src="{{ asset('/ico/excel.png') }}" alt="" class="img-16">
+                                        Descargar plantilla
+                                    </a>
+                                </li>
                                 <li class="list-group-item font-12">
-                                    <input type="file" class="form-control" required id="file" name="file" accept=".xlsx, .xls">
+                                    <input type="file" class="form-control" required id="file" name="file"
+                                           accept=".xlsx,.xls">
                                 </li>
                             </ul>
                         </div>
@@ -48,12 +57,12 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary btn-sm  waves-effect waves-light"
+                    <button type="button" class="btn btn-outline-secondary btn-sm waves-effect waves-light"
                             data-dismiss="modal">
                         <img src="{{asset('/pics/adcancelar.png')}}" alt="">
                         Cancelar
                     </button>
-                    <button type="submit" class="btn btn-outline-secondary btn-sm  waves-effect waves-light">
+                    <button type="submit" class="btn btn-outline-secondary btn-sm waves-effect waves-light">
                         <img src="{{asset('/pics/adaceptar.png')}}" alt="">
                         Aceptar
                     </button>
@@ -62,4 +71,3 @@
         </div>
     </form>
 </div>
-

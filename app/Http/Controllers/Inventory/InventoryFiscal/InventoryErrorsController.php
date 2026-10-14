@@ -5,12 +5,15 @@ namespace App\Http\Controllers\Inventory\InventoryFiscal;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Inventory\InventoryFiscal\InventoryAdjustLocationRequest;
 use App\Models\Configuration\Parameters\SystemDetailParameter;
+use App\Models\Inventory\InventoryFiscal\InventoryAccountant;
+use App\Models\Inventory\InventoryFiscal\InventoryAssignCounterCard;
 use App\Models\Inventory\InventoryFiscal\InventoryHead;
 use App\Models\Inventory\InventoryFiscal\InventoryLocationCount;
 use App\Models\Inventory\PartNumber\InventoryPartnumber;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Yajra\DataTables\Facades\DataTables;
 
 class InventoryErrorsController extends BaseController
 {
@@ -20,24 +23,19 @@ class InventoryErrorsController extends BaseController
             ->where('inventory_uuid', $id)
             ->firstOrFail();
 
-        $cedulas = DB::table('inventory_location_counts as ilc')
-            ->leftJoin('inventory_card_counts as icc', 'ilc.inventory_card_id', '=', 'icc.id')
-            ->leftJoin('inventory_cards as ic', 'icc.inventory_card_id', '=', 'ic.id')
-            ->select(
-                'ilc.inventory_card_id',
-                'ic.name as cardname',
-                DB::raw('count(icc.inventory_card_id) as totalerrores'),
-            )
-            ->where('ilc.inventory_head_id', $inventoryhead->id)
-            ->where('ilc.statusid_location', 0)
-            ->groupBy('ic.name', 'ilc.inventory_card_id')->get();
-
-        return view('Inventory.InventoryHead.ErrorsDetail.index',
-            compact('inventoryhead', 'cedulas'));
+        return view(
+            'Inventory.InventoryHead.ErrorsDetail.index',
+            compact('inventoryhead'),
+        );
     }
 
-    public function getDetailInventoryErrors(Request $request)
+    /**
+     * Detalle de ubicaciones con error (server-side).
+     */
+    public function getDetailInventoryErrors(Request $request, $id)
     {
+        $headId = (int) ($request->input('inventory_head_id') ?: $id);
+
         $data = DB::table('inventory_location_counts as ilc')
             ->select([
                 'ilc.id',
@@ -58,15 +56,120 @@ class InventoryErrorsController extends BaseController
             ->join('inventory_aisles as ias', 'ic.inventory_aisle_id', '=', 'ias.id')
             ->leftJoin('inventorypartnumbers as iv1', 'ilc.inventorypartnumber01_id', '=', 'iv1.id')
             ->leftJoin('inventorypartnumbers as iv2', 'ilc.inventorypartnumber02_id', '=', 'iv2.id')
-            ->where('ilc.inventory_head_id', $request->inventory_head_id)
-            ->where('ilc.statusid_location', 0);
+            ->where('ilc.inventory_head_id', $headId)
+            ->where('ilc.statusid_location', 0)
+            ->when($request->filled('name'), function ($query) use ($request) {
+                $term = trim((string) $request->input('name'));
+
+                $query->where(function ($q) use ($term) {
+                    $q->where('ic.name', 'like', '%' . $term . '%')
+                        ->orWhere('il.name', 'like', '%' . $term . '%')
+                        ->orWhere('ias.name', 'like', '%' . $term . '%')
+                        ->orWhere('iv1.prtnum', 'like', '%' . $term . '%')
+                        ->orWhere('iv2.prtnum', 'like', '%' . $term . '%');
+                });
+            });
 
         return $this->showDataToView($data, 'Inventory.InventoryHead.ErrorsDetail.buttons');
     }
 
+    /**
+     * Concentrado de errores por cédula (server-side).
+     */
+    public function getConcentratedInventoryErrors(Request $request, $id)
+    {
+        $headId = (int) $id;
+
+        $data = DB::table('inventory_location_counts as ilc')
+            ->leftJoin('inventory_card_counts as icc', 'ilc.inventory_card_id', '=', 'icc.id')
+            ->leftJoin('inventory_cards as ic', 'icc.inventory_card_id', '=', 'ic.id')
+            ->select([
+                'ilc.inventory_card_id',
+                'ic.name as cardname',
+                DB::raw('count(ilc.id) as totalerrores'),
+            ])
+            ->where('ilc.inventory_head_id', $headId)
+            ->where('ilc.statusid_location', 0)
+            ->when($request->filled('name'), function ($query) use ($request) {
+                $term = trim((string) $request->input('name'));
+                $query->where('ic.name', 'like', '%' . $term . '%');
+            })
+            ->groupBy('ic.name', 'ilc.inventory_card_id');
+
+        return DataTables::of($data)
+            ->addColumn('btn', function ($row) {
+                $cardId = $row->inventory_card_id;
+                $url = url('printCardErrors/' . $cardId);
+
+                return '<a href="' . $url . '" class="ml-2 mr-2">'
+                    . '<button type="button" class="btn waves-effect waves-light btn-outline-info btn-sm">'
+                    . '<img src="' . asset('/ico/pdf.png') . '" alt="" class="img-16 ml-2 mr-2">'
+                    . '<span> Imprimir</span>'
+                    . '</button></a>';
+            })
+            // PUT validateCard en InventoryLocationCardController (crea tareas 3er conteo)
+            ->addColumn('btn3', function ($row) {
+                $cardId = (int) $row->inventory_card_id;
+                $url = url('validateCard/' . $cardId);
+                $csrf = csrf_token();
+
+                return '<form method="POST" action="' . $url . '" class="d-inline ml-2 mr-2" '
+                    . 'onsubmit="return confirm(\'¿Generar tareas de 3er conteo para esta cédula?\');">'
+                    . '<input type="hidden" name="_token" value="' . $csrf . '">'
+                    . '<input type="hidden" name="_method" value="PUT">'
+                    . '<button type="submit" class="btn waves-effect waves-light btn-outline-info btn-sm">'
+                    . '<img src="' . asset('/ico/adreload.png') . '" alt="" class="img-16 ml-2 mr-2">'
+                    . '<span> Generar 3er conteo</span>'
+                    . '</button></form>';
+            })
+            ->rawColumns(['btn', 'btn3'])
+            ->orderColumn('cardname', 'ic.name $1')
+            ->orderColumn('totalerrores', 'count(ilc.id) $1')
+            ->toJson();
+    }
+
+    /**
+     * Cédulas pendientes de asignar contador 3er conteo (server-side).
+     */
+    public function getPendingAssignInventoryErrors(Request $request, $id)
+    {
+        $headId = (int) $id;
+
+        $users = InventoryAccountant::query()
+            ->where('inventory_head_id', $headId)
+            ->join('users', 'inventory_accountants.user_id', '=', 'users.id')
+            ->select('users.id', 'users.name')
+            ->get();
+
+        $data = InventoryAssignCounterCard::query()
+            ->where('inventory_assign_counter_cards.inventory_head_id', $headId)
+            ->join('inventory_card_counts', 'inventory_assign_counter_cards.inventory_card_count_id', '=', 'inventory_card_counts.id')
+            ->join('inventory_cards', 'inventory_card_counts.inventory_card_id', '=', 'inventory_cards.id')
+            ->select([
+                'inventory_assign_counter_cards.id',
+                'inventory_cards.name as card_name',
+                'inventory_assign_counter_cards.statusid',
+            ])
+            ->where('inventory_assign_counter_cards.statusid', 'F')
+            ->when($request->filled('name'), function ($query) use ($request) {
+                $term = trim((string) $request->input('name'));
+                $query->where('inventory_cards.name', 'like', '%' . $term . '%');
+            });
+
+        return DataTables::of($data)
+            ->addColumn('btn', function ($row) use ($users) {
+                return view('Inventory.InventoryHead.ErrorsDetail.buttons-assign', [
+                    'id' => $row->id,
+                    'users' => $users,
+                ])->render();
+            })
+            ->rawColumns(['btn'])
+            ->orderColumn('card_name', 'inventory_cards.name $1')
+            ->toJson();
+    }
+
     public function inventoryadjustcount(InventoryAdjustLocationRequest $request, $id)
     {
-
         try {
             return DB::transaction(function () use ($request, $id) {
 
@@ -149,5 +252,111 @@ class InventoryErrorsController extends BaseController
         ])->loadView($fortmat, compact('locations'));
 
         return $pdf->download('Cédula de conteo-' . '.pdf');
+    }
+
+    public function assignCounter(Request $request, $id)
+    {
+        InventoryAssignCounterCard::where('id', $id)
+            ->update([
+                'user_id' => $request->userid,
+                'statusid' => 'A',
+            ]);
+
+        return $this->redirectBackSuccessMessage('Usuario asignado correctamente');
+    }
+
+    /**
+     * Asignaciones de cédulas a contadores (3er conteo) — server-side.
+     */
+    public function inventorycardassing(Request $request, $inventoryId)
+    {
+        $headId = (int) $inventoryId;
+
+        $users = InventoryAccountant::query()
+            ->where('inventory_head_id', $headId)
+            ->join('users', 'inventory_accountants.user_id', '=', 'users.id')
+            ->select('users.id', 'users.name')
+            ->orderBy('users.name')
+            ->get();
+
+        $asignaciones = DB::table('inventory_assign_counter_cards as iacc')
+            ->leftJoin('users as u', 'iacc.user_id', '=', 'u.id')
+            ->leftJoin('systemstatus as s', 'iacc.statusid', '=', 's.statusid')
+            ->join('inventory_card_counts as icc', 'iacc.inventory_card_count_id', '=', 'icc.id')
+            ->join('inventory_cards as ic', 'icc.inventory_card_id', '=', 'ic.id')
+            ->where('iacc.inventory_head_id', $headId)
+            ->when($request->filled('name'), function ($query) use ($request) {
+                $term = trim((string) $request->input('name'));
+
+                $query->where(function ($q) use ($term) {
+                    $q->where('ic.name', 'like', '%' . $term . '%')
+                        ->orWhere('u.name', 'like', '%' . $term . '%')
+                        ->orWhere('s.name', 'like', '%' . $term . '%');
+                });
+            })
+            ->select([
+                'iacc.id',
+                'iacc.statusid',
+                'u.name as user_name',
+                'ic.name as card_name',
+                's.name as status',
+            ]);
+
+        return DataTables::of($asignaciones)
+            ->addColumn('btn', function ($row) use ($users) {
+                // Solo permite cambiar usuario si el estatus es A
+                if (($row->statusid ?? '') !== 'A') {
+                    return '';
+                }
+
+                return view('Inventory.InventoryHead.ErrorsDetail.buttons-change-user', [
+                    'id' => $row->id,
+                    'users' => $users,
+                    'currentUserId' => null,
+                ])->render();
+            })
+            ->rawColumns(['btn'])
+            ->orderColumn('card_name', 'ic.name $1')
+            ->orderColumn('user_name', 'u.name $1')
+            ->orderColumn('status', 's.name $1')
+            ->toJson();
+    }
+
+    /**
+     * Cambia el usuario asignado a una cédula de 3er conteo.
+     */
+    public function assingnewuser(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'user_id' => ['required', 'integer'],
+        ]);
+
+        $assignment = InventoryAssignCounterCard::query()
+            ->where('id', $id)
+            ->first();
+
+        if (is_null($assignment)) {
+            return $this->errorResponse('La asignación no existe.');
+        }
+
+        if ($assignment->statusid === 'C') {
+            return $this->errorResponse('No se puede cambiar el usuario de una cédula terminada.');
+        }
+
+        $isAccountant = InventoryAccountant::query()
+            ->where('inventory_head_id', $assignment->inventory_head_id)
+            ->where('user_id', $validated['user_id'])
+            ->exists();
+
+        if (! $isAccountant) {
+            return $this->errorResponse('El usuario seleccionado no es contador de este inventario.');
+        }
+
+        $assignment->update([
+            'user_id' => $validated['user_id'],
+            'statusid' => $assignment->statusid === 'F' ? 'A' : $assignment->statusid,
+        ]);
+
+        return $this->redirectBackSuccessMessage('Usuario actualizado correctamente.');
     }
 }

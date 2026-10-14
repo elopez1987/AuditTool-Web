@@ -75,7 +75,7 @@ class InventoryValidateLocationController extends BaseController
 
         try {
             $locationCount->update([
-                'user_count02_id' => Auth::id(),
+                'user_validator_id' => Auth::id(),
                 'statusid_count02' => 'C',
                 'statusid_location' => true,
             ]);
@@ -89,7 +89,7 @@ class InventoryValidateLocationController extends BaseController
 
             if ($inventoryCardCount->user_count02_id == null) {
                 $inventoryCardCount->update([
-                    'user_count02_id' => Auth::id(),
+                    'user_validator_id' => Auth::id(),
                 ]);
             }
 
@@ -127,7 +127,7 @@ class InventoryValidateLocationController extends BaseController
         try {
             $locationCount->update(
                 [
-                    'user_count02_id' => Auth::id(),
+                    'user_validator_id' => Auth::id(),
                     'statusid_count02' => 'C',
                     'statusid_location' => false,
                 ],

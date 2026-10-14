@@ -40,21 +40,12 @@
                                     </button>
                                 </a>
                             @endcan
-                            <a href="{{url('inventoryheads')}}">
+                            <a href="{{url('inventoryheads-validation/' . $inventoryhead->inventory_uuid)}}">
                                 <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
                                     <img src="{{asset('/ico/reportshipments.png')}}" alt="" class="img-16 ml-1">
                                     <span class="text-button ml-3 mr-3"> Conciliación</span>
                                 </button>
                             </a>
-                            @can('inventory-third-count')
-                                <a href="{{url('inventory-third-count/' . $inventoryhead->inventory_uuid)}}">
-                                    <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
-                                        <img src="{{asset('/ico/importdata.png')}}" alt="" class="img-16 ml-1">
-                                        <span class="text-button ml-3 mr-3"> Tareas 3er Conteo</span>
-                                    </button>
-                                </a>
-                            @endcan
-
                             <a href="{{url('inventory-supervisors/' . $inventoryhead->inventory_uuid)}}">
                                 <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
                                     <img src="{{asset('/ico/adduser.png')}}" alt=""
@@ -70,6 +61,16 @@
                                     <span class="text-button ml-3 mr-3"> Asignar Cédula</span>
                                 </button>
                             </a>
+
+                            <a href="{{url('inventory-logs/' . $inventoryhead->inventory_uuid)}}">
+                                <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
+                                    <img src="{{asset('/ico/code.png')}}" alt=""
+                                         class="img-16 ml-1">
+                                    <span class="text-button ml-3 mr-3"> Ver log</span>
+                                </button>
+                            </a>
+
+
                         </div>
                     </div>
 

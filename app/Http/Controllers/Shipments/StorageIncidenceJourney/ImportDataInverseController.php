@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Shipments\StorageIncidenceJourney;
 
+use App\Exports\Shipment\Inverse\ExportRegisterWmsTemplate;
+use App\Exports\Shipment\Inverse\ExportRequestZareTemplate;
+use App\Exports\Shipment\Inverse\ExportResponseInventoryTemplate;
 use App\Http\Controllers\BaseController;
 use App\Imports\Shipments\Inverse\ImportRequestNCInverse;
 use App\Imports\Shipments\Inverse\ImportRequestNEInverse;
@@ -13,9 +16,34 @@ use App\Imports\Shipments\Inverse\ImportResponseZareInverse;
 use App\Imports\Shipments\Inverse\ImportWmsDateInverse;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ImportDataInverseController extends BaseController
 {
+    public function downloadRequestZareTemplate(): BinaryFileResponse
+    {
+        return Excel::download(
+            new ExportRequestZareTemplate,
+            'template_import_request_zare.xlsx'
+        );
+    }
+
+    public function downloadRegisterWmsTemplate(): BinaryFileResponse
+    {
+        return Excel::download(
+            new ExportRegisterWmsTemplate,
+            'template_import_register_wms.xlsx'
+        );
+    }
+
+    public function downloadResponseInventoryTemplate(): BinaryFileResponse
+    {
+        return Excel::download(
+            new ExportResponseInventoryTemplate,
+            'template_import_response_inventory.xlsx'
+        );
+    }
+
     public function importrequestzare(Request $request)
     {
         $validator = \Validator::make($request->all(), [

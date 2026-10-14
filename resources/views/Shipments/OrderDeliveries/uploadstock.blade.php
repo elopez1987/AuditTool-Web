@@ -14,47 +14,60 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <ul class="list-group">
-                                <li class="list-group-item font-12"> Seleccione el archivo de Excel a importar.</li>
+                                <li class="list-group-item font-12 d-flex justify-content-between align-items-center">
+                                    <span>Seleccione el archivo de Excel a importar.</span>
+                                    <a href="{{ route('uploadFileCheck.template') }}"
+                                       class="btn btn-outline-success btn-sm waves-effect waves-light"
+                                       title="Descargar plantilla Excel">
+                                        <img src="{{ asset('/ico/excel.png') }}" alt="" class="img-16">
+                                        Descargar plantilla
+                                    </a>
+                                </li>
                                 <li class="list-group-item font-12">
-                                    <input type='file' name="file" id="file" required>
+                                    <input type="file" class="form-control" name="file" id="file" required
+                                           accept=".xls,.xlsx">
                                 </li>
                             </ul>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row mt-2">
                         <div class="col-lg-12">
                             <table class="table table-condensed table-hover table-bordered">
                                 <thead>
-                                    <tr>
-                                        <th>Campo</th>
-                                        <th>Llave de cabecera</th>
-                                    </tr>
+                                <tr>
+                                    <th>Campo</th>
+                                    <th>Llave de cabecera</th>
+                                    <th>Tipo de dato</th>
+                                </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>Embarques</td>
-                                        <td>shipmentid</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Número de parte / Sku / IDH</td>
-                                        <td>partnumberid</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Cantidad</td>
-                                        <td>quantity</td>
-                                    </tr>
+                                <tr>
+                                    <td>Embarques</td>
+                                    <td>shipmentid</td>
+                                    <td>Texto</td>
+                                </tr>
+                                <tr>
+                                    <td>Número de parte / Sku / IDH</td>
+                                    <td>partnumberid</td>
+                                    <td>Texto</td>
+                                </tr>
+                                <tr>
+                                    <td>Cantidad</td>
+                                    <td>quantity</td>
+                                    <td>Entero</td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary btn-sm  waves-effect waves-light"
+                    <button type="button" class="btn btn-outline-secondary btn-sm waves-effect waves-light"
                             data-dismiss="modal">
                         <img src="{{asset('/pics/adcancelar.png')}}" alt="">
                         Cancelar
                     </button>
-                    <button type="submit" class="btn btn-outline-secondary btn-sm  waves-effect waves-light">
+                    <button type="submit" class="btn btn-outline-secondary btn-sm waves-effect waves-light">
                         <img src="{{asset('/pics/adaceptar.png')}}" alt="">
                         Aceptar
                     </button>
@@ -63,4 +76,3 @@
         </div>
     </form>
 </div>
-

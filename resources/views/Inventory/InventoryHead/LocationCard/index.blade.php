@@ -5,7 +5,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    Detalla de cédula sdfdsf
+                    Detalla de cédula
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -120,11 +120,11 @@
                                     <th>Cédula</th>
                                     <th>Ubicación</th>
                                     <th>Número de parte 01</th>
-                                    <th>Description 01</th>
+                                    <th>Descripción 01</th>
                                     <th>Cantidad 01</th>
                                     <th>Contado por :</th>
                                     <th>Número de parte 02</th>
-                                    <th>Description 02</th>
+                                    <th>Descripción 02</th>
                                     <th>Cantidad 02</th>
                                     <th>Contado por :</th>
                                     <th>Estatus Conteo 01</th>
@@ -250,17 +250,31 @@
                 {
                     data: 'statusid01', name: 'statusid01',
                     render: function (data, type, row) {
-                        return (data == 'C' )
-                            ? '<span class="badge bg-green font-12 font-light text-black">Terminado</span>'
-                            : '<span class="badge bg-red font-12 font-light">Pendiente</span>';
+                        switch (data) {
+                            case 'C':
+                                return '<span class="badge bg-green font-12 font-light text-black">Terminado</span>';
+                            case 'F':
+                                return '<span class="badge bg-yellow font-12 text-black font-light">Faltante</span>';
+                            case 'I':
+                                return '<span class="badge bg-blue font-12 font-light">En Proceso</span>';
+                            default:
+                                return '<span class="badge bg-red font-12 font-light">Pendiente</span>';
+                        }
                     },
                 },
                 {
                     data: 'statusid02', name: 'statusid02',
                     render: function (data, type, row) {
-                        return (data == 'C' )
-                            ? '<span class="badge bg-green font-12 font-light text-black">Terminado</span>'
-                            : '<span class="badge bg-red font-12 font-light">Pendiente</span>';
+                        switch (data) {
+                            case 'C':
+                                return '<span class="badge bg-green font-12 font-light text-black">Terminado</span>';
+                            case 'F':
+                                return '<span class="badge bg-yellow font-12 font-light text-black">Faltante</span>';
+                            case 'I':
+                                return '<span class="badge bg-blue font-12 font-light">En Proceso</span>';
+                            default:
+                                return '<span class="badge bg-red font-12 font-light">Pendiente</span>';
+                        }
                     },
                 },
                 {
@@ -325,6 +339,78 @@
             oTable.draw();
             loadLocationCardKpis();
             e.preventDefault();
+        });
+
+        // Enviar ubicación a 3er conteo sin recargar la página (Swal + AJAX)
+        $(document).on('click', '.btn-markaserror', function () {
+            var $btn = $(this);
+            var id = $btn.data('id');
+
+            if ($btn.data('processing') === true) {
+                return;
+            }
+
+            Swal.fire({
+                title: '¿Enviar a 3er conteo?',
+                text: 'Esta ubicación se marcará con error y quedará lista para 3er conteo.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Sí, enviar',
+                cancelButtonText: 'Cancelar'
+            }).then(function (result) {
+                if (!result.isConfirmed) {
+                    return;
+                }
+
+                $btn.data('processing', true).prop('disabled', true);
+
+                $.ajax({
+                    url: "{{ url('markaserror') }}/" + id,
+                    type: 'POST',
+                    data: {
+                        _method: 'PUT',
+                        _token: '{{ csrf_token() }}'
+                    },
+                    headers: {
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Listo',
+                                text: response.message || 'Ubicación enviada a 3er conteo correctamente.',
+                                timer: 1800,
+                                showConfirmButton: false
+                            });
+                            reloadtable();
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: response.message || 'No se pudo enviar la ubicación a 3er conteo.'
+                            });
+                        }
+                    },
+                    error: function (xhr) {
+                        var message = (xhr.responseJSON && xhr.responseJSON.message)
+                            ? xhr.responseJSON.message
+                            : 'Ocurrió un error al enviar la ubicación a 3er conteo.';
+
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: message
+                        });
+                    },
+                    complete: function () {
+                        $btn.data('processing', false).prop('disabled', false);
+                    }
+                });
+            });
         });
 
         $(document).ready(function () {
