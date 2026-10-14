@@ -74,7 +74,7 @@ class ExportReportBitacoraLogInverse implements FromCollection, ShouldAutoSize, 
             'Entrada a Almacen',
             'Solicitud de ajuste',
             'Respuesta de ajuste',
-            'Estatus de Inventario',
+            //            'Estatus de Inventario',
             'Dias transcurridos',
         ];
     }
@@ -310,7 +310,7 @@ class ExportReportBitacoraLogInverse implements FromCollection, ShouldAutoSize, 
             $shipments->entrywarehouse,
             $shipments->soliadj,
             $shipments->respadj,
-            $shipments->statusinv,
+            //            $shipments->statusinv,
             $shipments->dias,
         ];
     }

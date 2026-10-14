@@ -108,5 +108,19 @@
                 </div>
             </div>
         </div>
+        <div class="col-lg-2 col-md-6 col-sm-12">
+            <div class="form-group">
+                <label for="barcode">Codigo de barra
+                    @error("barcode")
+                    <span class="message-error">{{$message}}</span>
+                    @enderror
+                    <span style="color: red">*</span></label>
+                <input type="text" class="form-control @error('barcode') is-invalid @enderror"
+                       required id="barcode" name="barcode" maxlength="20"
+                       aria-describedby="barcode" onKeyUp=this.value=this.value.toUpperCase();
+                       value="{{$storagelabeltruck->barcode}}"
+                >
+            </div>
+        </div>
     </div>
 @endif

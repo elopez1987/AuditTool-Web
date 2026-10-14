@@ -108,11 +108,13 @@
                                      <img src="{{asset('ico/viewdetail.png')}}" alt="" class="img-16 ml-2 mr-2">
                                 </span> <span class="hidden-xs-down font-12 text-black">Detalle del embarque</span></a>
                         </li>
+                        @can('orderdeliveries.countshipment')
                         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view02" role="tab"><span
                                         class="hidden-sm-up">
                                     <img src="{{asset('ico/checklistin.png')}}" alt="" class="img-16 ml-2 mr-2">
                                 </span> <span class="hidden-xs-down font-12 text-black">Conteo en cortina</span></a>
                         </li>
+                        @endcan
                         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view03" role="tab"><span
                                         class="hidden-sm-up">
                                 <img src="{{asset('ico/img.png')}}" alt="" class="img-16 ml-2 mr-2">
@@ -122,11 +124,14 @@
                                 <img src="{{asset('ico/notepad_bloc_notes_15549.png')}}" alt=""
                                      class="img-16 ml-2 mr-2">
                                 </span> <span class="hidden-xs-down font-12 text-black">Comentarios</span></a></li>
+                        @can('orderdeliveries.kardex')
                         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view05" role="tab"><span
                                         class="hidden-sm-up">
                                 <img src="{{asset('ico/kardex.png')}}" alt=""
                                      class="img-16 ml-2 mr-2">
-                                </span> <span class="hidden-xs-down font-12 text-black">Kardex</span></a></li>
+                                </span> <span class="hidden-xs-down font-12 text-black">Kardex</span></a>
+                        </li>
+                        @endcan
                     </ul>
                     <!-- Tab panes -->
                     <div class="tab-content">
@@ -251,7 +256,7 @@
                                         <div class="card-body" style="height: 400px;">
 
                                             <table class="table table-condensed table-hover table-bordered">
-                                                <tbody>
+                                                <thead>
                                                 <tr>
                                                     <td>Turno</td>
                                                     <td>{{$orderdelivery->turns->name}}</td>
@@ -309,7 +314,7 @@
                                                             <span class="text-red"></span></a>
                                                     </td>
                                                 </tr>
-                                                </tbody>
+                                                </thead>
                                             </table>
                                         </div>
                                     </div>
@@ -339,6 +344,9 @@
                                         </div>
                                         <div class="card-body" style="height: 400px;">
                                             <table class="table table-condensed table-hover table-bordered">
+                                                <thead>
+
+
                                                 <tr>
                                                     <td>Linea de transporte</td>
                                                     <td>{{$orderdelivery->carrier ? $orderdelivery->carrier->name : ''}}</td>
@@ -371,6 +379,7 @@
                                                     <td>Tipo de Registros</td>
                                                     <td>{{$orderdelivery->journey  ? $orderdelivery->journey->auxiliary01 : ''}}</td>
                                                 </tr>
+                                                </thead>
                                             </table>
                                         </div>
                                     </div>
@@ -569,6 +578,8 @@
                                         </div>
                                         <div class="card-body" style="height: 400px;">
                                             <table class="table table-condensed  table-bordered">
+                                                <thead>
+
                                                 <tr>
                                                     <td>Peso total</td>
                                                     <td>{{$orderdelivery->header ? $orderdelivery->header->totalweight : ''}}</td>
@@ -605,6 +616,8 @@
                                                     <td>Entregado a</td>
                                                     <td>{{$orderdelivery->seal ? $orderdelivery->seal->receivername : ''}}</td>
                                                 </tr>
+
+                                                </thead>
                                             </table>
                                         </div>
                                     </div>
@@ -616,7 +629,7 @@
                                         </div>
                                         <div class="card-body" style="height: 400px;">
                                             <table class="table table-condensed table-bordered ">
-                                                <tbody>
+                                                <thead>
                                                 <tr>
                                                     <td>Inicio de preparación :</td>
                                                     <td> {{$orderdelivery->operation ? $orderdelivery->operation->startshipment : ''}}</td>
@@ -662,7 +675,7 @@
                                                     <td>{{$orderdelivery->header ? $orderdelivery->header->goodissuedate : null}}</td>
                                                     <td></td>
                                                 </tr>
-                                                </tbody>
+                                                </thead>
                                             </table>
                                         </div>
                                     </div>
@@ -674,6 +687,7 @@
                                         </div>
                                         <div class="card-body" style="height: 400px;">
                                             <table class="table table-condensed table-bordered">
+                                                <thead>
                                                 <tr>
                                                     <td>Supervisor:</td>
                                                     <td>{{$orderdelivery->operation ? $orderdelivery->operation->supervisor : ''}}</td>
@@ -690,6 +704,7 @@
                                                     <td>Analista Operativo:</td>
                                                     <td>{{$orderdelivery->header->user ? $orderdelivery->header->user->name : ''}}</td>
                                                 </tr>
+                                                </thead>
                                             </table>
                                         </div>
                                     </div>
