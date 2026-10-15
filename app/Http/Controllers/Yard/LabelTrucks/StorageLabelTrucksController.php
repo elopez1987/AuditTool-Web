@@ -6,6 +6,7 @@ use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Yard\LabelTruck\RegisterLabelRequest;
 use App\Imports\Yard\ImportLabelTruck;
 use App\Models\Security\Users\AccessCarrier;
+use App\Models\Yard\ReceiptUnit;
 use App\Models\Yard\StorageLabelTruck\StorageLabelTruck;
 use App\Traits\Web\General\GenerateLabel;
 use Illuminate\Http\Request;
@@ -100,6 +101,13 @@ class StorageLabelTrucksController extends BaseController
     public function update(Request $request, StorageLabelTruck $storagelabeltruck)
     {
         $storagelabeltruck->update($request->except('centerid', 'warehouseid'));
+
+        ReceiptUnit::controlAccessUser()
+            ->where('boxnumber', $storagelabeltruck->boxnumber)
+            ->whereNotIn('statusid', ['TR'])
+            ->update([
+                'barcode' => $storagelabeltruck->barcode,
+            ]);
 
         return $this->redirectBackInfo();
     }

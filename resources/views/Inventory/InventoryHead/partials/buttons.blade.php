@@ -57,22 +57,15 @@
     @endcan
 @endif
 
-@can('inventoryheads.delete')
-    <a href="" data-target="#modal-delete-{{$id}}" data-toggle="modal" data-placement="top">
-        <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md"
-                data-toggle="tooltip" data-placement="top" title="Eliminar Inventario">
-            <img src="{{asset('/ico/refuseunit.png')}}" alt="" class="img-16">
-            <span style="font-size: 11px;"> Eliminar Inv.</span>
-        </button>
-    </a>
-    @include('Inventory.InventoryHead.Events.delete-inventory')
-@endcan
-@if($statusid == 'INF-03')
-    <a href="{{url('inventoryheads')}}">
-        <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
-            <img src="{{asset('/ico/clouddown_icon-icons.com_54405.png')}}" alt=""
-                 class="img-16 ml-1">
-            <span class="text-button ml-3 mr-3"> Descargar Cédulas</span>
-        </button>
-    </a>
+@if($statusid !== 'INF-03')
+    @can('inventoryheads.delete')
+        <a href="" data-target="#modal-delete-{{$id}}" data-toggle="modal" data-placement="top">
+            <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md"
+                    data-toggle="tooltip" data-placement="top" title="Eliminar Inventario">
+                <img src="{{asset('/ico/refuseunit.png')}}" alt="" class="img-16">
+                <span style="font-size: 11px;"> Eliminar Inv.</span>
+            </button>
+        </a>
+        @include('Inventory.InventoryHead.Events.delete-inventory')
+    @endcan
 @endif

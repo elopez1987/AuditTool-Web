@@ -139,7 +139,7 @@
                                                             </a>
                                                             @include('Shipments.OrderMonitor.AnalystTraffic.Events.responseletter')
                                                         @else
-                                                            <span >{{$orderDelivery->operation->responseletter}}</span>
+                                                            <span>{{$orderDelivery->operation->responseletter}}</span>
                                                         @endif
                                                     @endif
                                                 </td>
@@ -155,18 +155,22 @@
                             <!-- Nav tabs -->
                             <ul class="nav nav-tabs nav-tabs-custom nav-success nav-justified mb-3"
                                 role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link active" data-toggle="tab" href="#tab01" role="tab">
-                                        <span class="hidden-sm-up"><i class="ti-home font-12"></i></span> <span
-                                                class="hidden-xs-down ml-3 mr-3">Pedido</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#tab02" role="tab">
-                                        <span class="hidden-sm-up"><i class="ti-close font-12"></i></span> <span
-                                                class="hidden-xs-down ml-3 mr-3">Sellos</span>
-                                    </a>
-                                </li>
+                                @can('monitoranalistatrafico.pallets')
+                                    <li class="nav-item">
+                                        <a class="nav-link active" data-toggle="tab" href="#tab01" role="tab">
+                                            <span class="hidden-sm-up"><i class="ti-home font-12"></i></span> <span
+                                                    class="hidden-xs-down ml-3 mr-3">Pedido</span>
+                                        </a>
+                                    </li>
+                                @endcan
+                                @can('monitoranalistatrafico.seals')
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#tab02" role="tab">
+                                            <span class="hidden-sm-up"><i class="ti-close font-12"></i></span> <span
+                                                    class="hidden-xs-down ml-3 mr-3">Sellos</span>
+                                        </a>
+                                    </li>
+                                @endcan
                                 <li class="nav-item">
                                     <a class="nav-link" data-toggle="tab" href="#tab03" role="tab">
                                         <span class="hidden-sm-up"><i class="ti-comment font-12"></i></span> <span
@@ -192,7 +196,8 @@
                                                 <div class="row">
                                                     <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
                                                         <button type="submit"
-                                                                class="btn btn-block btn-block btn-outline-success btn-block" id="submitBtnAnalystData">
+                                                                class="btn btn-block btn-block btn-outline-success btn-block"
+                                                                id="submitBtnAnalystData">
                                                             <i class="fas fa-check mr-2"></i>
                                                             Guardar datos
                                                         </button>
@@ -292,7 +297,8 @@
                                                             <div class="row mt-3 mb-3">
                                                                 <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
                                                                     <button type="submit"
-                                                                            class="btn btn-block btn-block btn-outline-success btn-block" id="submitBtnSeals">
+                                                                            class="btn btn-block btn-block btn-outline-success btn-block"
+                                                                            id="submitBtnSeals">
                                                                         <i class="fas fa-check mr-2"></i>
                                                                         Guardar sellos
                                                                     </button>
@@ -404,7 +410,8 @@
                                                             <div class="row">
                                                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                                                     <button type="submit"
-                                                                            class="btn btn-block btn-block btn-outline-success btn-block" id="submitBtnComment">
+                                                                            class="btn btn-block btn-block btn-outline-success btn-block"
+                                                                            id="submitBtnComment">
                                                                         <i class="fas fa-check mr-2 text-button"></i>
                                                                         Guardar
                                                                         comentario
@@ -513,17 +520,17 @@
 
         // Event listeners para modales
         const modalForms = [
-            { formId: 'saveFormStartGoodIssueDate', btnId: 'submitBtnStartGoodIssueDate' },
-            { formId: 'saveFormReturnStartGoodIssueDate', btnId: 'submitBtnReturnStartGoodIssueDate' },
-            { formId: 'saveFormGoodIssueDate', btnId: 'submitBtnGoodIssueDate' },
-            { formId: 'saveFormRequestLetter', btnId: 'submitBtnRequestLetter' },
-            { formId: 'saveFormResponseLetter', btnId: 'submitBtnResponseLetter' }
+            {formId: 'saveFormStartGoodIssueDate', btnId: 'submitBtnStartGoodIssueDate'},
+            {formId: 'saveFormReturnStartGoodIssueDate', btnId: 'submitBtnReturnStartGoodIssueDate'},
+            {formId: 'saveFormGoodIssueDate', btnId: 'submitBtnGoodIssueDate'},
+            {formId: 'saveFormRequestLetter', btnId: 'submitBtnRequestLetter'},
+            {formId: 'saveFormResponseLetter', btnId: 'submitBtnResponseLetter'}
         ];
 
-        modalForms.forEach(function(modal) {
+        modalForms.forEach(function (modal) {
             const form = document.getElementById(modal.formId);
             if (form) {
-                form.addEventListener('submit', function() {
+                form.addEventListener('submit', function () {
                     const btn = document.getElementById(modal.btnId);
                     if (btn) {
                         btn.disabled = true;
