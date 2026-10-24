@@ -18,7 +18,6 @@ class CreateZoneRequest extends FormRequest
             'warehouseid' => 'required|exists:systemwarehouses,warehouseid',
             'name' => 'required|string|max:50',
             'zoneid' => 'required|string|max:15',
-            'auxiliary01' => 'required|string|max:190',
             'capacity' => 'required|integer',
         ];
     }

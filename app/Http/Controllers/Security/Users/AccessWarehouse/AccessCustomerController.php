@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Security\Users\AccessWarehouse;
 
 use App\Http\Controllers\BaseController;
 use App\Models\Security\Users\SecurityAccessCustomer;
+use App\Models\Yard\Customer\OrderCustomer;
 use App\Services\Security\ServiceUser;
 use App\Traits\Web\Security\QueryUser;
 use App\User;
@@ -29,7 +30,7 @@ class AccessCustomerController extends BaseController
 
         return view(
             'Security.Users.AccessCustomer.index',
-            compact('user', 'customers', 'listCustomers')
+            compact('user', 'customers', 'listCustomers'),
         );
     }
 
@@ -46,5 +47,11 @@ class AccessCustomerController extends BaseController
         SecurityAccessCustomer::destroy($id);
 
         return $this->redirectBackSuccessMessage('Registro eliminado con exito.');
+    }
+
+    private function getOrderCustomerForSelect()
+    {
+        return OrderCustomer::controlAccessUser()->whereStatusid('E')
+            ->select(['name', 'id', 'shiptoid'])->get();
     }
 }

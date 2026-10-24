@@ -14,42 +14,6 @@ use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Models\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-/**
- * @property int $id
- * @property string|null $stockcategoryid
- * @property string $description
- * @property string|null $auxiliary01
- * @property string|null $auxiliary02
- * @property string|null $auxiliary03
- * @property string|null $auxiliary04
- * @property string|null $auxiliary05
- * @property string $schemaid
- * @property string $statusid
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property-read Collection<int, Activity> $activities
- * @property-read int|null $activities_count
- * @property-read SystemStatus $status
- *
- * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryStockCategory name($name)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryStockCategory newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryStockCategory newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryStockCategory query()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryStockCategory whereAuxiliary01($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryStockCategory whereAuxiliary02($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryStockCategory whereAuxiliary03($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryStockCategory whereAuxiliary04($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryStockCategory whereAuxiliary05($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryStockCategory whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryStockCategory whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryStockCategory whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryStockCategory whereSchemaid($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryStockCategory whereStatusid($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryStockCategory whereStockcategoryid($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|InventoryStockCategory whereUpdatedAt($value)
- *
- * @mixin \Eloquent
- */
 class InventoryStockCategory extends Model
 {
     use LogsActivity;

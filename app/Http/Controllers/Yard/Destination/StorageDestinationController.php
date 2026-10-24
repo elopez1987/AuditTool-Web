@@ -71,4 +71,14 @@ class StorageDestinationController extends BaseController
             ->with('status', 'center', 'warehouse')
             ->Name($request->get('name'))->get();
     }
+
+	public function show(string $storagedestination)
+	{
+
+	}
+
+	public function destroy(string $storagedestination)
+	{
+
+	}
 }

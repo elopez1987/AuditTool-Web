@@ -4,32 +4,18 @@ namespace App\Traits\Web\General;
 
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Configuration\Schemas\SystemStatus;
-use App\Models\Configuration\Turns\StorageTurn;
 use App\Models\Configuration\Warehouses\SystemWarehouse;
 use App\Models\Inventory\Categories\InventoryPartNumberCategory01;
 use App\Models\Inventory\Categories\InventoryPartNumberCategory02;
-use App\Models\Inventory\Origin\InventoryStockCategory;
-use App\Models\Inventory\PartNumber\InventoryPartnumber;
 use App\Models\Receipt\ReceiptProvider;
 use App\Models\Security\Users\AccessCarrier;
 use App\Models\Security\Users\AccessProvider;
-use App\Models\Security\Users\SecurityAccessCustomer;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\Models\Yard\Carriers\ShipmentCarrier;
-use App\Models\Yard\Customer\OrderCustomer;
-use App\Models\Yard\ReceiptUnit;
-use App\Models\Yard\ShipmentTruck\ShipmentTruck;
-use App\Models\Yard\ShipmentType\ShipmentType;
-use App\Models\Yard\StorageLabelTruck\StorageLabelTruck;
-use App\Models\Yard\StorageLocation;
-use App\Models\Yard\StorageOperator;
-use App\Models\Yard\StorageReason;
-use App\Models\Yard\StorageUnitType;
-use App\Models\Yard\StorageZone\StorageZone;
 use Auth;
 use Cache;
 use Carbon\Carbon;
-use Carbon\CarbonPeriod;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -107,7 +93,7 @@ trait Responser
             ->username)->value('warehouseid');
     }
 
-    public function getCenterForSelect()
+    public function getCenterForSelect(): Collection
     {
         return SystemCenterDistribution::controlAccessUser()
             ->select(['description as name', 'centerid'])->get();
@@ -176,13 +162,7 @@ trait Responser
             ->get();
     }
 
-    public function getOrderCustomerForSelect()
-    {
-        return OrderCustomer::controlAccessUser()->whereStatusid('E')
-            ->select(['name', 'id', 'shiptoid'])->get();
-    }
-
-    public function getCategoryInv01()
+    public function getCategoryInv01(): Collection
     {
         $centers = SecurityAccessWarehouse::Centers();
         $warehouses = SecurityAccessWarehouse::Warehouses();
@@ -193,7 +173,7 @@ trait Responser
             ->select('description', 'id')->get();
     }
 
-    public function getCategoryInv02()
+    public function getCategoryInv02(): Collection
     {
         $centers = SecurityAccessWarehouse::Centers();
         $warehouses = SecurityAccessWarehouse::Warehouses();
@@ -204,155 +184,14 @@ trait Responser
             ->select(['description', 'id'])->get();
     }
 
-    public function getShipmentTypeToSelect()
-    {
-        return ShipmentType::controlAccessUser()->whereStatusid('E')
-            ->select('name', 'id')->get();
-    }
-
-    public function shipmentTruckSelect()
-    {
-        $centers = SecurityAccessWarehouse::Centers();
-
-        return ShipmentTruck::whereStatusid('E')
-            ->whereIn('centerid', $centers)
-            ->select('name', 'id')->get();
-    }
-
-    public function getTurns()
-    {
-        return StorageTurn::select(['name', 'id'])->get();
-    }
-
-    public function getCategoriesInventory()
-    {
-        return InventoryStockCategory::controlAccessUser()
-            ->where('statusid', '=', 'E')
-            ->select(['description', 'id'])->get();
-    }
-
     public function getAccessForUser()
     {
         return SecurityAccessWarehouse::where('username', Auth::user()->username)->first();
-    }
-
-    public function getRasonForCodes($code)
-    {
-        return StorageReason::whereIn('id', $code)
-            ->select(['name', 'id'])->get();
     }
 
     public function getCarrierForUser()
     {
         return AccessCarrier::where('username', Auth::user()->username)
             ->select('carrierid')->get()->toArray();
-    }
-
-    public function getCarrierForUserFirst()
-    {
-        return AccessCarrier::where('username', Auth::user()->username)
-            ->select('carrierid')->first();
-    }
-
-    public function getCustomerForUser()
-    {
-        return SecurityAccessCustomer::where('username', '=', Auth::user()->username)
-            ->select('customerid')->get()->toArray();
-    }
-
-    public function getOperatorForCarriers()
-    {
-        $carriers = $this->getCarrierForUser();
-
-        return StorageOperator::controlAccessUser()
-            ->select(['name', 'id'])
-            ->where('statusid', '=', 'E')
-            ->ForCarrierOperator($carriers)->get();
-    }
-
-    public function getBoxForCarrier()
-    {
-        $carriers = $this->getCarrierForUser();
-
-        return StorageLabelTruck::controlAccessUser()
-            ->where('storagelabeltrucks.statusid', '=', 'E')
-            ->where('storagelabeltrucks.typeid', '=', 'BX')
-            ->ForCarrierOperator($carriers)
-            ->whereIn('carrierid', (function ($query) {
-                $query->from('shipmentcarriers')
-                    ->select('id')
-                    ->whereNotNull('configurationflag')
-                    ->whereRaw("charindex('SCR-03', configurationflag) > 0");
-            }))
-            ->select(['storagelabeltrucks.boxnumber', 'storagelabeltrucks.id'])->get();
-    }
-
-    public function getTruckForCarrier()
-    {
-        $carriers = $this->getCarrierForUser();
-
-        return StorageLabelTruck::controlAccessUser()
-            ->whereTypeid('TR')
-            ->where('statusid', '=', 'E')
-            ->ForCarrierOperator($carriers)
-            ->whereIn('carrierid', (function ($query) {
-                $query->from('shipmentcarriers')
-                    ->select('id')
-                    ->whereNotNull('configurationflag')
-                    ->whereRaw("charindex('SCR-03', configurationflag) > 0");
-            }))->select('boxnumber', 'id')->get();
-    }
-
-    public function getLocationActiveIN()
-    {
-        return StorageLocation::controlAccessUser()
-            ->join('storagezones', 'storagelocations.zoneid', '=', 'storagezones.id')
-            ->whereNotIn('storagelocations.name', ['DUMMY'])
-            ->whereIn('storagelocations.statusid', ['E'])
-            ->where('storagezones.statusid', '=', 'E')
-            ->whereRaw("charindex('ZO-02', storagezones.configurationflag) > 0")
-            ->select(['storagelocations.name', 'storagelocations.id'])->get();
-    }
-
-    public function getZoneActiveIN()
-    {
-        return StorageZone::controlAccessUser()->whereStatusid('E')
-            ->whereRaw("charindex('ZO-02', configurationflag) > 0")
-            ->select('name', 'id')->get();
-    }
-
-    public function getUnitType()
-    {
-        return StorageUnitType::controlAccessUser()->where('statusid', '=', 'E')
-            ->select('description', 'id')->get();
-    }
-
-    public function getDatesInRange(string $startdate, string $finishdate): array
-    {
-        $period = CarbonPeriod::create($startdate, $finishdate);
-        $dates = [];
-        foreach ($period as $date) {
-            $dates[] = $date->format('Y-m-d');
-        }
-
-        return $dates;
-    }
-
-    public function getLocations()
-    {
-        return StorageLocation::controlAccessUser()
-            ->join('storagezones', 'storagelocations.zoneid', '=', 'storagezones.id')
-            ->whereNotIn('storagelocations.name', ['DUMMY'])
-            ->whereIn('storagelocations.statusid', ['E'])
-            ->where('storagezones.zoneid', '=', 'ST')
-            ->select(['storagelocations.name', 'storagelocations.id'])->get();
-    }
-
-    public function getMaterialsTarima()
-    {
-        return InventoryPartnumber::controlAccessUser()
-            ->whereNotNull('configurationflag')
-            ->whereRaw("charindex('PIV-02', configurationflag) > 0")
-            ->select(['lngdsc', 'prtnum', 'id'])->get();
     }
 }

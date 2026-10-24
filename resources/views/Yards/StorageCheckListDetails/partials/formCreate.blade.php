@@ -38,6 +38,9 @@
             >
         </div>
     </div>
+</div>
+<div class="row">
+
     <div class="col-lg-2 col-md-6 col-sm-12">
         <div class="form-group">
             <label for="auxiliary01">Auxiliar 01 </label>

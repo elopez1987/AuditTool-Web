@@ -20,14 +20,11 @@
             }
         },
         "columns": [
-            {data: 'center.description', name: 'center.description'},
-            {data: 'warehouse.name', name: 'warehouse.name'},
             {data: 'id'},
             {data: 'zone.name', name: 'zone.name'},
             {data: 'name'},
             {data: 'locationid'},
             {data: 'barcode'},
-            {data: 'auxiliary01'},
             {
                 data: 'status.name', name: 'status.name',
                 createdCell: function (td, cellData, rowData) {

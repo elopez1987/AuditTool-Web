@@ -5,7 +5,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    Crear proveedor
+                    Crear ruta
                 </div>
                 <div class="card-body">
                     <form method="POST" action="{{url('receiptproviders')}}" enctype="multipart/form-data">
@@ -23,15 +23,11 @@
                         <hr class="mb-3">
                         @include('Yards.ReceiptProviders.partials.formCreate')
                     </form>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            @include('layouts.Partials.Errors')
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
+    @include('layouts.Partials.Errors')
 @endsection
 
 @section('script')

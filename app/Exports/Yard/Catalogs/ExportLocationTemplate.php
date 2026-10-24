@@ -18,8 +18,6 @@ class ExportLocationTemplate implements FromArray, ShouldAutoSize, WithEvents, W
     public function headings(): array
     {
         return [
-            'centerid',
-            'warehouseid',
             'zoneid',
             'name',
         ];
@@ -32,8 +30,6 @@ class ExportLocationTemplate implements FromArray, ShouldAutoSize, WithEvents, W
     {
         return [
             [
-                'CD01',
-                'WH01',
                 1,
                 'A-01-01',
             ],
@@ -58,15 +54,15 @@ class ExportLocationTemplate implements FromArray, ShouldAutoSize, WithEvents, W
             AfterSheet::class => function (AfterSheet $event): void {
                 $sheet = $event->sheet->getDelegate();
 
-                $sheet->getStyle('A1:D1')->getFill()->applyFromArray([
+                $sheet->getStyle('A1:B1')->getFill()->applyFromArray([
                     'fillType' => Fill::FILL_SOLID,
                     'rotation' => 0,
                     'startColor' => ['rgb' => '64b5f6'],
                 ]);
 
-                $sheet->getStyle('A1:D1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+                $sheet->getStyle('A1:B1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
 
-                $sheet->getComment('C1')->getText()->createTextRun('ID numérico de storagezones.id');
+                $sheet->getComment('A1')->getText()->createTextRun('ID numérico de storagezones.id');
             },
         ];
     }

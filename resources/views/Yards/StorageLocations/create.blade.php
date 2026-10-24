@@ -23,23 +23,14 @@
                         <hr class="mb-3">
                         @include('Yards.StorageLocations.partials.formCreate')
                     </form>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            @include('layouts.Partials.Errors')
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
+    @include('layouts.Partials.Errors')
 @endsection
 
 @section('script')
-    <script type="module">
-        const moduleUrl = "{{ asset('js/selects/zone-for-warehouse.js') }}";
-        const baseUrl = "{{ config('app.url') }}";
-        const {initializeZoneLookup} = await import(moduleUrl);
-        initializeZoneLookup("warehouseid", "zoneid", baseUrl);
-    </script>
+
 @endsection
 

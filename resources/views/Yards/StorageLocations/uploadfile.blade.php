@@ -45,16 +45,6 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td>centerid</td>
-                                    <td>C.Distribución</td>
-                                    <td>Texto</td>
-                                </tr>
-                                <tr>
-                                    <td>warehouseid</td>
-                                    <td>Bodega</td>
-                                    <td>Texto</td>
-                                </tr>
-                                <tr>
                                     <td>zoneid</td>
                                     <td>Zona (ID)</td>
                                     <td>Numérico</td>

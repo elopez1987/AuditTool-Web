@@ -25,31 +25,13 @@
                         <hr class="mb-3">
                         @include('Yards.StorageZones.partials.formCreate')
                     </form>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            @include('layouts.Partials.Errors')
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
+    @include('layouts.Partials.Errors')
 @endsection
 
 @section('script')
-    <script>
-        $("#zoneid").change(event => {
-            var zoneid = document.getElementById("zoneid").value;
-            if (zoneid === 'CO') {
-                $("#auxiliary01").val('CORTINAS');
-            }
-            if (zoneid === 'PA') {
-                $("#auxiliary01").val('DROP-LOT');
-            }
-            if (zoneid === 'ST') {
-                $("#auxiliary01").val('PRECARGA');
-            }
-        });
-    </script>
 @endsection
 

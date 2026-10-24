@@ -40,70 +40,16 @@
 </div>
 
 <div class="row">
-    <x-select2
+    <x-text-input
             name="type"
             label="Tipo de check list"
-            :required="true"
-            :selected="$storagechecklist->type"
-            :options="[
-                    ['id' => 'AS', 'name' => 'CHECK LIST DE AUTORIZACION DE SALIDA'],
-                    ['id' => 'QI', 'name' => 'CHECK LIST DE CALIDAD'],
-                    ['id' => 'IN', 'name' => 'CHECK LIST DE ENTRADA'],
-                    ['id' => 'OUT', 'name' => 'CHECK LIST DE SALIDA'],
-                    ['id' => 'REC', 'name' => '	CHECK LIST PROCESO DE RECIBO'],
-                ]"
-    />
-    <x-select2
-            name="auxiliary01"
-            label="Origen"
-            :required="true"
-            :selected="$storagechecklist->auxiliary01"
-            :options="[
-                    ['id' => 'NAC', 'name' => 'NACIONAL'],
-                    ['id' => 'EXP', 'name' => 'EXPORTACIÓN'],
-                    ['id' => 'IMP', 'name' => 'IMPORTACION'],
-                ]"
-    />
-    <x-select2
-            name="auxiliary02"
-            label="Tipo de check list"
-            :required="true"
-            :selected="$storagechecklist->auxiliary02"
-            :options="[
-                    ['id' => 'ESTANDAR', 'name' => 'ESTANDAR'],
-                    ['id' => 'CTPAT', 'name' => 'CTPAT'],
-                    ['id' => 'PUNTAJE', 'name' => 'PUNTAJE'],
-                ]"
+            uppercase
+            required
+            :value="$storagechecklist->type"
     />
 </div>
 
-<div class="row">
-    <x-select2
-            name="auxiliary03"
-            label="Concepto de entrada"
-            :options="$concetps"
-            valueField="id"
-            :selected="$storagechecklist->auxiliary03"
-            textField="name"
-            :required="true"
-    />
-    <x-select2
-            name="auxiliary04"
-            label="¿Check list por defecto?"
-            :required="true"
-            :selected="$storagechecklist->auxiliary04"
-            :options="[
-                    ['id' => 'N', 'name' => 'NO'],
-                    ['id' => 'S', 'name' => 'SI'],
-                ]"
-    />
-    <x-text-input
-            name="auxiliary05"
-            label="ID de tipo de unidad"
-            :value="$storagechecklist->auxiliary05"
-            uppercase
-    />
-</div>
+
 <div class="row">
     <div class="col-lg-2 col-md-6 col-sm-12">
         <div class="form-group">

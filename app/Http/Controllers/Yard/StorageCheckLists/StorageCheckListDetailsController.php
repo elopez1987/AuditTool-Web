@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class StorageCheckListDetailsController extends BaseController
 {
-    public function createdetail(StorageCheckList $storagechecklist)
+    public function index(StorageCheckList $storagechecklist)
     {
         $details = StorageCheckListDetail::whereChecklistid($storagechecklist->id)->get();
         $status = $this->getStatusSTS();
@@ -17,10 +17,9 @@ class StorageCheckListDetailsController extends BaseController
         return view('Yards.StorageCheckListDetails.create', compact('storagechecklist', 'details', 'status'));
     }
 
-    public function storedetail(Request $request, StorageCheckList $storagechecklist)
+    public function store(Request $request, StorageCheckList $storagechecklist)
     {
         StorageCheckListDetail::create([
-            'centerid' => $storagechecklist->centerid,
             'checklistid' => $storagechecklist->id,
             'description' => $request['description'],
             'auxiliary01' => $request['auxiliary01'],
@@ -33,7 +32,7 @@ class StorageCheckListDetailsController extends BaseController
         return $this->redirectBackSuccess();
     }
 
-    public function updatestatuscategory(Request $request, $id)
+    public function update(Request $request, $id)
     {
         $detail = StorageCheckListDetail::findOrFail($id);
         $detail->statusid = $request['statusedit'];
@@ -47,4 +46,5 @@ class StorageCheckListDetailsController extends BaseController
 
         return $this->redirectBackSuccess();
     }
+
 }

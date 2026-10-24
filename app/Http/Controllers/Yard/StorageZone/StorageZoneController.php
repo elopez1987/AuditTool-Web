@@ -56,7 +56,7 @@ class StorageZoneController extends BaseController
 
     public function store(CreateZoneRequest $request): RedirectResponse
     {
-        $zone = new StorageZone($request->all());
+        $zone = new StorageZone($request->validated());
         $zone->save();
 
         return $this->successResponse('storagezones.index');
@@ -100,4 +100,9 @@ class StorageZoneController extends BaseController
             ], 500);
         }
     }
+
+	public function show(string $storagezone)
+	{
+
+	}
 }

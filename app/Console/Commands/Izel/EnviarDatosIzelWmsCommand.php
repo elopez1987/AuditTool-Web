@@ -5,7 +5,7 @@ namespace App\Console\Commands\Izel;
 use App\Http\Resources\IzelWms\CheckInResource;
 use App\Http\Resources\IzelWms\CheckOutResource;
 use App\Models\Configuration\EDI\EdiConfig;
-use App\Models\Configuration\EDI\SystemEventWebServiceIzel;
+use App\Models\Configuration\EDI\SystemEventWebService;
 use App\Models\Shipments\EdiShipment;
 use App\Models\Yard\ReceiptUnit;
 use Exception;
@@ -240,7 +240,7 @@ class EnviarDatosIzelWmsCommand extends Command
 
     private function createRegisterLog($receiptunit, $statusService, $data)
     {
-        SystemEventWebServiceIzel::create([
+        SystemEventWebService::create([
             'centerid' => $receiptunit->centerid,
             'warehouseid' => $receiptunit->warehouseid,
             'folionumber' => $receiptunit->id,

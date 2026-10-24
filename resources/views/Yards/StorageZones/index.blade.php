@@ -67,7 +67,6 @@
                                     <th class="bg-inverse text-white">Bodega</th>
                                     <th class="bg-inverse text-white">Zone Id</th>
                                     <th class="bg-inverse text-white">Nombre</th>
-                                    <th class="bg-inverse text-white">Tipo</th>
                                     <th class="bg-inverse text-white">Capacidad</th>
                                     <th class="bg-inverse text-white">Estatus</th>
                                     <th class="bg-inverse text-white">Opciones</th>
@@ -85,11 +84,9 @@
 @endsection
 
 @section('css')
-{{--    <link rel="stylesheet" href="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.min.css')}}">--}}
 @endsection
 
 @section('script')
-{{--    <script src="{{asset('/theme/assets/libs/sweetalert2/dist/sweetalert2.all.min.js')}}"></script>--}}
     @include('Yards.StorageZones.partials.table')
     <script>
         function reloadtable() {

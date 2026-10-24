@@ -15,12 +15,14 @@ use App\Http\Controllers\Receipt\SchedulleV2\DownloadScheduleController;
 use App\Http\Controllers\Receipt\SchedulleV2\EventSchedulleController;
 use App\Http\Controllers\Receipt\StorageCheckListReceiptAsnController;
 use App\Http\Controllers\Receipt\StorageReceiptPeriods\StorageReceiptPeriodsController;
+use App\Http\Controllers\Yard\Carriers\ContactsCarriersController;
+use App\Http\Controllers\Yard\Carriers\ImportCarriersController;
+use App\Http\Controllers\Yard\Carriers\ParameterCarrierController;
+use App\Http\Controllers\Yard\Carriers\ShipmentCarrierController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('menureceipt', function () {
-        return view('layouts.Menu.Receipt.menureceipt');
-    })->name('menureceipt');
+
 
     //  Monitor de descarga
     Route::resource('receiptasn', ReceiptAsnsController::class);
@@ -107,5 +109,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('monitor-transport-receipt/{id}', [MonitorTransportReceiptController::class, 'edit'])->name('monitor-transport-receipt.edit');
     Route::put('monitor-transport-receipt/{id}/create-qr', [MonitorTransportReceiptController::class, 'update'])->name('monitor-transport-receipt.update');
     Route::get('printFormatQr/{id}', [MonitorTransportReceiptController::class, 'printFormatQr'])->name('printFormatQr');
+
+
 
 });

@@ -83,4 +83,6 @@ class ReceiptProvidersController extends BaseController
 
         return $this->responseSuccessAjax('', now());
     }
+
+    public function show(string $receiptprovider) {}
 }

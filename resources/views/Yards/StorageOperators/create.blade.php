@@ -9,69 +9,6 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-lg-6">
-                            <div class="card" style="border: 2px solid #0f6674">
-                                <div class="card-header">
-                                    Consulta datos de operador en Recurso Confiable
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-lg-4 col-md-6 col-sm-12">
-                                            <div class="form-group">
-                                                <label for="licencerc">Número de credencial
-                                                    @error("licencerc")
-                                                    <span class="message-error">{{$message}}</span>
-                                                    @enderror
-                                                </label>
-                                                <input type="text"
-                                                       class="form-control  @error('licencerc') is-invalid @enderror"
-                                                       id="licencerc" name="licencerc" minlength="20"
-                                                       maxlength="20"
-                                                       aria-describedby="licencerc"
-                                                       onKeyUp=this.value=this.value.toUpperCase();
-                                                >
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 col-md-6 col-sm-12">
-                                            <div class="form-group">
-                                                <label for="rfcoperator">RFC de Operador
-                                                    @error("rfcoperator")
-                                                    <span class="message-error">{{$message}}</span>
-                                                    @enderror
-                                                </label>
-                                                <input type="text"
-                                                       class="form-control  @error('rfcoperator') is-invalid @enderror"
-                                                       id="rfcoperator" name="rfcoperator"
-                                                       maxlength="50"
-                                                       aria-describedby="rfcoperator"
-                                                       onKeyUp=this.value=this.value.toUpperCase();
-                                                >
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-2 col- col-md-6 col-sm-12 align-self-center">
-                                            <div class="btn-group btn-group-md" role="group"
-                                                 aria-label="Basic example">
-                                                <button id="searchOperatorInRC" type="button"
-                                                        class="btn waves-effect waves-light btn-outline-info btn-md">
-                                                    <img src="{{asset('/ico/adbuscar.png')}}" alt=""
-                                                         class="img-16 ml-1">
-                                                    <span style="font-size: 11px;"> Buscar</span>
-                                                </button>
-                                                <button id="clearInputs" type="button"
-                                                        class="btn waves-effect waves-light btn-outline-info btn-md">
-                                                    <img src="{{asset('/ico/adcancelar.png')}}" alt=""
-                                                         class="img-16 ml-1">
-                                                    <span style="font-size: 11px;"> Limpiar</span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="row">
                         <div class="col-lg-12">
                             <form method="POST" action="{{url('storageoperators')}}" enctype="multipart/form-data">
                                 @csrf

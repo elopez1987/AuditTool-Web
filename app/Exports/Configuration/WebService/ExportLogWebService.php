@@ -2,7 +2,7 @@
 
 namespace App\Exports\Configuration\WebService;
 
-use App\Models\Configuration\EDI\SystemEventWebServiceIzel;
+use App\Models\Configuration\EDI\SystemEventWebService;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
@@ -34,7 +34,7 @@ class ExportLogWebService implements FromCollection, ShouldAutoSize, WithEvents,
 
     public function collection()
     {
-        return SystemEventWebServiceIzel::controlAccessUser()->get();
+        return SystemEventWebService::controlAccessUser()->get();
     }
 
     public function map($folios): array

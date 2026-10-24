@@ -25,11 +25,11 @@
                         <hr class="mb-3">
                         @include('Yards.ReceiptProviders.partials.formEdit')
                     </form>
-                    @include('layouts.Partials.Errors')
                 </div>
             </div>
         </div>
     </div>
+    @include('layouts.Partials.Errors')
 @endsection
 
 @section('script')

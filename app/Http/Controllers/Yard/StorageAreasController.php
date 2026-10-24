@@ -102,4 +102,9 @@ class StorageAreasController extends BaseController
             return $this->redirectBackSuccessMessage('Area de almacen restaurada con exito');
         }
     }
+
+	public function show(string $storagearea)
+	{
+
+	}
 }

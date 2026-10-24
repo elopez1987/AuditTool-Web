@@ -167,7 +167,7 @@
 namespace App\Console\Commands\RecursoConfiable;
 
 use App\Models\Configuration\EDI\EdiConfig;
-use App\Models\Configuration\EDI\SystemEventWebServiceIzel;
+use App\Models\Configuration\EDI\SystemEventWebService;
 use App\Models\Shipments\EdiShipment;
 use App\Models\Shipments\OrderDeliverie;
 use App\Traits\Web\General\GetParameters;
@@ -469,7 +469,7 @@ class SendPlanForShipmentCommand extends Command
         string $requestJson,
         $responseJson
     ): void {
-        SystemEventWebServiceIzel::create([
+        SystemEventWebService::create([
             'centerid' => $shipment->centerid,
             'warehouseid' => $shipment->warehouseid,
             'folionumber' => $shipment->shipmentid,

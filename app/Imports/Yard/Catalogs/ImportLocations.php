@@ -13,15 +13,13 @@ class ImportLocations implements ToCollection, WithHeadingRow, WithValidation
 {
     use Responser;
 
-    public function collection(Collection $rows)
-    {
+    public function collection(Collection $rows): void
+	{
 
         foreach ($rows as $row) {
 
             StorageLocation::updateOrCreate(
                 [
-                    'centerid' => trim($row['centerid']),
-                    'warehouseid' => trim($row['warehouseid']),
                     'zoneid' => trim($row['zoneid']),
                     'name' => trim($row['name']),
                 ],
@@ -36,8 +34,6 @@ class ImportLocations implements ToCollection, WithHeadingRow, WithValidation
     public function rules(): array
     {
         return [
-            'centerid' => 'required|exists:systemcenterdistributions,centerid',
-            'warehouseid' => 'required|exists:systemwarehouses,warehouseid',
             'zoneid' => 'required|exists:storagezones,id',
             'name' => 'required|string|max:50',
         ];

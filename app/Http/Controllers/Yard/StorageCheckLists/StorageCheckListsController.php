@@ -23,25 +23,13 @@ class StorageCheckListsController extends BaseController
     {
         $data = StorageCheckList::controlAccessUser()
             ->with(['center:centerid,description', 'status:statusid,name'])
-            ->leftJoin('storagereasons', 'storagereasons.id', '=', 'storagechecklists.auxiliary03')
-            ->leftJoin('storageunittypes', function ($join) {
-                $join->on('storageunittypes.auxiliary01', '=', 'storagechecklists.auxiliary01')
-                    ->on('storageunittypes.centerid', '=', 'storagechecklists.centerid');
-            })
             ->select([
                 'storagechecklists.id',
                 'storagechecklists.centerid',
                 'storagechecklists.warehouseid',
                 'storagechecklists.name',
                 'storagechecklists.type',
-                'storagechecklists.auxiliary01',
-                'storagechecklists.auxiliary02',
-                'storagechecklists.auxiliary03',
-                'storagechecklists.auxiliary04',
-                'storagechecklists.auxiliary05',
-                'storagechecklists.statusid',
-                'storagereasons.name as reason',
-                'storageunittypes.description as unittype'])
+                'storagechecklists.statusid'])
             ->Warehouse($request->input('warehouseid'))
             ->Name($request->input('name'));
 
@@ -59,10 +47,9 @@ class StorageCheckListsController extends BaseController
         $this->authorize('storagechecklists.create');
         $centers = $this->getCenterForSelect();
         $warehouses = $this->getWarehouseForSelect();
-        $concetps = StorageReason::select('id', 'name')
-            ->whereRaw("charindex('RES-01', configurationflag) > 0")->get();
 
-        return view('Yards.StorageCheckLists.create', compact('centers', 'warehouses', 'concetps'));
+        return view('Yards.StorageCheckLists.create',
+			compact('centers', 'warehouses'));
     }
 
     public function store(CreateCheckListRequest $request)
@@ -78,11 +65,10 @@ class StorageCheckListsController extends BaseController
         $this->authorize('storagechecklists.edit');
         $status = $this->getStatusSTS();
         $warehouses = $this->getWarehouseForSelect();
-        $concetps = StorageReason::select('id', 'name')
-            ->whereRaw("charindex('RES-01', configurationflag) > 0")->get();
+
 
         return view('Yards.StorageCheckLists.edit',
-            compact('storagechecklist', 'status', 'warehouses', 'concetps'));
+            compact('storagechecklist', 'status', 'warehouses'));
     }
 
     public function update(Request $request, StorageCheckList $storagechecklist)
@@ -101,4 +87,6 @@ class StorageCheckListsController extends BaseController
         return $this->responseSuccessAjax('', now());
 
     }
+
+    public function show(string $storagechecklist) {}
 }

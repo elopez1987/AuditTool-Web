@@ -5,7 +5,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    Catalogo de proveedores
+                    Catalogo de rutas
                 </div>
                 <div class="card-body">
                     <form method="GET" id="search" role="form">
@@ -56,7 +56,7 @@
                                     <th class="bg-inverse text-white">C.Distribución</th>
                                     <th class="bg-inverse text-white">Bodega</th>
                                     <th class="bg-inverse text-white">Nombre</th>
-                                    <th class="bg-inverse text-white">Clave de Proveedor</th>
+                                    <th class="bg-inverse text-white">Clave</th>
                                     <th class="bg-inverse text-white">Estatus</th>
                                     <th class="bg-inverse text-white">Opciones</th>
                                 </tr>
@@ -107,7 +107,6 @@
                 text: "Eliminar el registro!",
                 type: 'warning',
                 showCancelButton: true,
-                // confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Aceptar!',
                 confirmButtonColor: '#66bb6a',
@@ -128,7 +127,7 @@
                         success: data => {
                             Swal.fire({
                                 type: 'success',
-                                title: `Transporte eliminado correctamente`,
+                                title: `Proveedor eliminado correctamente`,
                                 width: 350,
                             })
                             reloadtable();

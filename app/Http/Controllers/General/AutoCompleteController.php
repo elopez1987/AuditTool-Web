@@ -5,7 +5,6 @@ namespace App\Http\Controllers\General;
 use App\Http\Controllers\Controller;
 use App\Models\Configuration\TablesDataBase\SystemTable;
 use App\Models\Inventory\PartNumber\InventoryPartnumber;
-use App\Models\Yard\ReceiptUnit;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -27,16 +26,7 @@ class AutoCompleteController extends Controller
         return response()->json($tables);
     }
 
-    public function autocompleteboxnumber(Request $request)
-    {
-        $query = $request->get('query');
-        $units = ReceiptUnit::controlAccessUser()
-            ->whereNotIn('statusid', ['TR'])
-            ->whereNotNull(['boxnumber'])
-            ->where('boxnumber', 'like', "%{$query}%")->pluck('boxnumber');
 
-        return response()->json($units);
-    }
 
     public function autocompletesku(Request $request)
     {

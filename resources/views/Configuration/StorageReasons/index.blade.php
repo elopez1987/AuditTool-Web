@@ -46,7 +46,7 @@
                                 <tr>
                                     <th>Código</th>
                                     <th>Nombre</th>
-                                    <th>Evento WMS</th>
+                                    <th>Evento</th>
                                     <th>Tipo de movimiento</th>
                                     <th>Opciones</th>
                                 </tr>

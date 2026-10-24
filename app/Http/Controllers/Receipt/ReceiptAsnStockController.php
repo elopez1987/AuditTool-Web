@@ -18,7 +18,7 @@ class ReceiptAsnStockController extends BaseController
     public function addstock($id)
     {
         $receiptasn = ReceiptAsn::controlAccessUser()->whereId($id)->first();
-        $stocks = ReceiptStock::controlAccessUser()->whereReceiptid($id)->get();
+        $stocks = ReceiptStock::whereReceiptid($id)->get();
 
         return view(
             'Receipt.ReceiptAsn.addStock',
@@ -54,8 +54,6 @@ class ReceiptAsnStockController extends BaseController
         }
         $expiredate = Carbon::parse($request['productiondate'])->addDays((int) $sku->shelflife)->format('Y-m-d');
         ReceiptStock::create([
-            'centerid' => $receipt->centerid,
-            'warehouseid' => $receipt->warehouseid,
             'receiptid' => $receipt->id,
             'partnumberid' => $sku->id,
             'expirecode' => $request['batch'],
@@ -67,7 +65,7 @@ class ReceiptAsnStockController extends BaseController
 
     public function updateQuantityStock($id, Request $request)
     {
-        $stock = ReceiptStock::controlAccessUser()->findOrFail($id);
+        $stock = ReceiptStock::findOrFail($id);
         $stock->quantitytrue = $request['quantitytrue'];
         $stock->expirecode = $request['expirecode'];
         $stock->save();
@@ -77,7 +75,7 @@ class ReceiptAsnStockController extends BaseController
 
     public function deletestock($id)
     {
-        $stock = ReceiptStock::controlAccessUser()->findOrFail($id);
+        $stock = ReceiptStock::findOrFail($id);
         $stock->delete();
 
         return $this->redirectBackSuccess();

@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Configuration\Labels\PrinterLabelStockController;
 use App\Http\Controllers\Yard\Carriers\ContactsCarriersController;
 use App\Http\Controllers\Yard\Carriers\ImportCarriersController;
 use App\Http\Controllers\Yard\Carriers\ParameterCarrierController;
@@ -10,52 +9,9 @@ use App\Http\Controllers\Yard\Customers\OrderCustomerController;
 use App\Http\Controllers\Yard\Customers\ParameterCustomerController;
 use App\Http\Controllers\Yard\DashboardYardController;
 use App\Http\Controllers\Yard\Destination\StorageDestinationController;
-use App\Http\Controllers\Yard\GeofencesController;
-use App\Http\Controllers\Yard\GpsDevice\GpsDeviceController;
-use App\Http\Controllers\Yard\LabelTrucks\StorageLabelTrucksController;
-use App\Http\Controllers\Yard\RControl\SearchOperatorInRC;
 use App\Http\Controllers\Yard\ReceiptProviders\ImportProvidersController;
 use App\Http\Controllers\Yard\ReceiptProviders\ReceiptProviderContactsController;
 use App\Http\Controllers\Yard\ReceiptProviders\ReceiptProvidersController;
-use App\Http\Controllers\Yard\ReceiptTruck\ClearTruckStockController;
-use App\Http\Controllers\Yard\ReceiptTruck\EventTruckController;
-use App\Http\Controllers\Yard\ReceiptTruck\JoinTruckToBoxController;
-use App\Http\Controllers\Yard\ReceiptTruck\ReceiptTrucksController;
-use App\Http\Controllers\Yard\ReceiptTruck\ReceiptTruckTraceController;
-use App\Http\Controllers\Yard\ReceiptUnit\AssignResponsibleController;
-use App\Http\Controllers\Yard\ReceiptUnit\AssignShipmentController;
-use App\Http\Controllers\Yard\ReceiptUnit\AutorizeTransportController;
-use App\Http\Controllers\Yard\ReceiptUnit\CheckListCheckIn\AuthorizeTransportEntriesController;
-use App\Http\Controllers\Yard\ReceiptUnit\CheckOut\CheckOutWeb\TransportOutPutController;
-use App\Http\Controllers\Yard\ReceiptUnit\CheckOut\CheckOutWeb\ValidateUnitForCheckOutController;
-use App\Http\Controllers\Yard\ReceiptUnit\CheckOut\RegisterOutPutController;
-use App\Http\Controllers\Yard\ReceiptUnit\CircuitProcess\GenerateAccessWarehouseController;
-use App\Http\Controllers\Yard\ReceiptUnit\CircuitProcess\StorageBoxTravelsController;
-use App\Http\Controllers\Yard\ReceiptUnit\Event\ArriveUnitController;
-use App\Http\Controllers\Yard\ReceiptUnit\Event\AuthorizeExitController;
-use App\Http\Controllers\Yard\ReceiptUnit\Event\KeyReceptionController;
-use App\Http\Controllers\Yard\ReceiptUnit\Event\MoveBoxController;
-use App\Http\Controllers\Yard\ReceiptUnit\Event\RefuseUnitController;
-use App\Http\Controllers\Yard\ReceiptUnit\EventReceiptUnitController;
-use App\Http\Controllers\Yard\ReceiptUnit\Evidences\EvidenceCheckInProcessController;
-use App\Http\Controllers\Yard\ReceiptUnit\Evidences\ReceiptUnitEvidenceStockController;
-use App\Http\Controllers\Yard\ReceiptUnit\Evidences\SaveEvidenceFromStockWebController;
-use App\Http\Controllers\Yard\ReceiptUnit\Inventory\InventoryBoxesController;
-use App\Http\Controllers\Yard\ReceiptUnit\Inventory\InventoryCountStocksController;
-use App\Http\Controllers\Yard\ReceiptUnit\PrintInvoiceController;
-use App\Http\Controllers\Yard\ReceiptUnit\ProcessMonitoringController;
-use App\Http\Controllers\Yard\ReceiptUnit\ReceiptUnitAdjustmentController;
-use App\Http\Controllers\Yard\ReceiptUnit\ReceiptUnitCommentController;
-use App\Http\Controllers\Yard\ReceiptUnit\ReceiptUnitController;
-use App\Http\Controllers\Yard\ReceiptUnit\Reports\AuthorizeOutPutController;
-use App\Http\Controllers\Yard\ReceiptUnit\Reports\CapacityYardController;
-use App\Http\Controllers\Yard\ReceiptUnit\Reports\MonitorUnitsController;
-use App\Http\Controllers\Yard\ReceiptUnit\Reports\ReportStayController;
-use App\Http\Controllers\Yard\ReceiptUnit\Reports\ReportYardController;
-use App\Http\Controllers\Yard\ReceiptUnit\StorageSealLotoController;
-use App\Http\Controllers\Yard\ReceiptUnit\Taks\StorageTasksController;
-use App\Http\Controllers\Yard\ReceiptUnit\TraceUnit\TraceReceiptUnitController;
-use App\Http\Controllers\Yard\ReceiptUnitTicket\ReceiptUnitTicketController;
 use App\Http\Controllers\Yard\ShipmentTruck\ImportShipmentTruckController;
 use App\Http\Controllers\Yard\ShipmentTruck\ShipmentTruckController;
 use App\Http\Controllers\Yard\ShipmentTruck\ShipmentTruckToleranceController;
@@ -68,151 +24,13 @@ use App\Http\Controllers\Yard\StorageLocations\OptimizeLocationsController;
 use App\Http\Controllers\Yard\StorageLocations\ParameterLocationsController;
 use App\Http\Controllers\Yard\StorageLocations\StorageLocationController;
 use App\Http\Controllers\Yard\StorageOperators\StorageOperatorsController;
-use App\Http\Controllers\Yard\StorageUnitTypes\StorageUnitTypesController;
 use App\Http\Controllers\Yard\StorageZone\ParameterZonesController;
 use App\Http\Controllers\Yard\StorageZone\StorageZoneController;
-use App\Http\Controllers\Yard\TruckCategories\ShipmentTruckCategoriesController;
 use App\Http\Controllers\Yard\UnitStatus\StorageUnitStatusesController;
-use App\Http\Controllers\Yard\Yards\HenkelToluca\YardHenkelTolController;
+use App\Models\Yard\StorageAreas;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('menuyard', function () {
-        return view('layouts.Menu.Yard.menuyard');
-    })->name('menuyard');
-
-    //   Registro de folios metodo estandar con lectura de QR de operador, caja y tracto
-    Route::resource('receiptunits', ReceiptUnitController::class);
-    Route::get('getDataReceipts', [ReceiptUnitController::class, 'getDataReceipts'])->name('getDataReceipts');
-    Route::get('getReceiptUnitsKpis', [ReceiptUnitController::class, 'getReceiptUnitsKpis'])->name('getReceiptUnitsKpis');
-    Route::get('exportallreceiptunits', [ReceiptUnitController::class, 'exportAllReceiptUnits'])->name('exportallreceiptunits');
-
-    //    Realizar cambios a unidad en existencia
-    Route::get('adjustmentunit', [ReceiptUnitAdjustmentController::class, 'index'])->name('adjustmentunit');
-    Route::post('adjustmentunitstore', [ReceiptUnitAdjustmentController::class, 'adjustmentunitstore'])->name('adjustmentunitstore');
-
-    // ----------------- Imprimir etiquetas de caja y tracto para stock (Solo se genera el archivo txt)-----------------------------------|
-    Route::get('printlabelstock', [PrinterLabelStockController::class, 'index'])->name('printlabelstock');
-    Route::post('printlabel', [PrinterLabelStockController::class, 'printlabel'])->name('printlabel');
-
-    //   -------------------------- Actualizar numero de embarque al folio -------------------------------------------------
-    Route::get('assignshipment', [AssignShipmentController::class, 'index'])->name('assignshipment');
-    Route::get('getDataTransport', [AssignShipmentController::class, 'getDataTransport'])->name('getDataTransport');
-    Route::put('updateShipmentiToReceiptUnit/{receiptunit}', [AssignShipmentController::class, 'updateShipmentToUnit'])->name('updateShipmentiToReceiptUnit');
-
-    Route::put('saveresponsibletounit/{receiptunit}', [AssignResponsibleController::class, 'index'])->name('saveresponsibletounit');
-
-    //    **************************************************** EVENTOS DE UNIDAD ***********************************************************
-    //  Check list de unidad en proceso de entrada
-    Route::resource('authorizetransportentry', AuthorizeTransportEntriesController::class)->only(['index', 'edit', 'update']);
-    Route::get('getDataTransportES', [AuthorizeTransportEntriesController::class, 'getDataTransportES'])->name('getDataTransportES');
-    //    Subir evidencia de entrada desde Web
-    Route::post('uploadphotocheckin/{id}/upload', [EvidenceCheckInProcessController::class, 'uploadphotocheckin']);
-    //  Rechazar unidad desde el registro de entrada
-    Route::put('declineunit/{id}', [AuthorizeTransportEntriesController::class, 'declineUnitInCheckInProcess'])->name('declineunit');
-    //  --Generar la interface para izel desde la existencia de caja
-    Route::get('generateinterface/{id}', [EventReceiptUnitController::class, 'generateinterface'])->name('generateinterface');
-    //    Revive la unidad desde el kardex de folio
-    Route::post('reloadunit', [EventReceiptUnitController::class, 'reloadunit'])->name('reloadunit');
-    //    --Muesta la vista para la subida de fotos desde la existencia de cajas
-    Route::get('uploadEvidenceProcess/{id}', [ReceiptUnitEvidenceStockController::class, 'index'])->name('uploadEvidenceProcess');
-    //    Guarda el tipo de evidencias que requiere en el proceso de carga
-    Route::post('saveTypeShipmentEvidence', [ReceiptUnitEvidenceStockController::class, 'saveTypeShipmentEvidence'])->name('saveTypeShipmentEvidence');
-    //    Guarda la fotos de proceso de cargar desde la version Web
-    Route::post('saveEvidenceProcessForCheckList', [ReceiptUnitEvidenceStockController::class, 'saveEvidenceProcessForCheckList'])->name('saveEvidenceProcessForCheckList');
-    //    Guardar fotos de manera directa a la unidad desde la existenci
-    Route::post('saveEvidenceProcessDirectWeb/{id}/upload', [SaveEvidenceFromStockWebController::class, 'index']);
-    //    Impresion de folios de entrada
-    Route::get('generateinvoicetransport/{receiptunit}', [PrintInvoiceController::class, 'generateInvoiceTransport'])->name('generateinvoicetransport');
-    //    Generar etiqueta desde la existencia de cajas
-    Route::get('generatelabel/{receiptunit}', [PrintInvoiceController::class, 'generatelabel'])->name('generatelabel');
-    //    --Agregar comentarios desde la existencia de cajas
-    Route::get('receiptunitscomments/{id}', [ReceiptUnitCommentController::class, 'addcomments'])->name('receiptunitscomments');
-    Route::put('receiptunitscommentssave/{id}', [ReceiptUnitCommentController::class, 'receiptunitscommentssave'])->name('receiptunitscommentssave');
-    //    Registrar salida directa de caja
-    Route::get('adjustmentbox', [RegisterOutPutController::class, 'index'])->name('adjustmentbox');
-    Route::post('registeroutputunit', [RegisterOutPutController::class, 'registeroutputunit'])->name('registeroutputunit');
-    //    Registrar llegada a mesa de control
-    Route::get('viewmovementsofbox', [ArriveUnitController::class, 'index'])->name('viewmovementsofbox');
-    Route::post('saveArriveUnitToCenter', [ArriveUnitController::class, 'saveArriveUnitToCenter'])->name('saveArriveUnitToCenter');
-    //  Autorizacion de salida de unidad
-    Route::get('autorizeoutput', [AuthorizeExitController::class, 'index'])->name('autorizeoutput');
-    Route::post('registermovementbox', [AuthorizeExitController::class, 'registermovementbox'])->name('registermovementbox');
-    // Autorizar salida de unidad vacia
-    Route::get('authorize-empty', [AuthorizeExitController::class, 'autorizeempty'])->name('authorize-empty');
-    Route::post('registermovementbox-empty', [AuthorizeExitController::class, 'registermovementboxempty'])->name('registermovementbox-empty');
-
-    // Rechazar unidad
-    Route::get('refuseunit', [RefuseUnitController::class, 'index'])->name('refuseunit');
-    Route::post('registerrefuseunit', [RefuseUnitController::class, 'store'])->name('registerrefuseunit');
-    //  Reubicación de cajas
-    Route::get('movebox', [MoveBoxController::class, 'index'])->name('movebox');
-    Route::post('storeMoveBox', [MoveBoxController::class, 'storeMoveBox'])->name('storeMoveBox');
-    //  Tareas de enrampe y desenrampe para patieros y operadores
-    Route::resource('storagetask', StorageTasksController::class);
-    Route::get('getDataTask', [StorageTasksController::class, 'getDataTask'])->name('getDataTask');
-    Route::get('getZonesForCreateTask', [StorageTasksController::class, 'getZonesForCreateTask'])->name('getZonesForCreateTask');
-    Route::get('getPatierosForCreateTask', [StorageTasksController::class, 'getPatierosForCreateTask'])->name('getPatierosForCreateTask');
-    //  Autorizar transporte para ser reutilizado en otro almacen y concepto de entrada.
-    Route::get('autorizetransport', [AutorizeTransportController::class, 'autorizetransport'])->name('receiptunits.autorizeunit');
-    Route::post('autoizetransportstore', [AutorizeTransportController::class, 'autoizetransportstore'])->name('autoizetransportstore');
-
-    //    Registrar recepcion de llaves
-    Route::get('viewkeyreception', [KeyReceptionController::class, 'index'])->name('viewkeyreception');
-    Route::post('savekeyreception', [KeyReceptionController::class, 'store'])->name('savekeyreception');
-
-    //  Modulo de candados LOTO
-    Route::resource('storagesealloto', StorageSealLotoController::class);
-    Route::get('getSealLotos', [StorageSealLotoController::class, 'getSealLotos'])->name('getSealLotos');
-    //  Kardex de folio
-    Route::resource('tracereceiptunit', TraceReceiptUnitController::class)->only('index', 'show');
-    Route::get('getDataReceiptUnitToKardex', [TraceReceiptUnitController::class, 'getDataReceiptUnitToKardex'])->name('getDataReceiptUnitToKardex');
-    Route::get('generateinvoicekardex/{id}', [TraceReceiptUnitController::class, 'generateinvoicekardex'])->name('generateinvoicekardex');
-    Route::get('printchecklistbrind/{id}', [TraceReceiptUnitController::class, 'printchecklistbrind'])->name('printchecklistbrind');
-    Route::get('printqualitybridge/{id}', [TraceReceiptUnitController::class, 'printqualitybridge'])->name('printqualitybridge');
-    Route::get('downloadfilesunit/{id}', [TraceReceiptUnitController::class, 'downloadfiles'])->name('downloadfiles');
-    Route::get('downloadticket/{id}', [TraceReceiptUnitController::class, 'downloadticket'])->name('downloadticket');
-    //  Buscar el operador en EndPoint de Recurso Confiable
-    Route::post('searchStatusOfOperator', [SearchOperatorInRC::class, 'searchOperator'])->name('searchStatusOfOperator');
-    //  Genera QR de acceso para proceo de circuito planta y almacen
-    Route::resource('generateaccesswarehouse', GenerateAccessWarehouseController::class);
-    Route::get('getAccessWarehouse', [GenerateAccessWarehouseController::class, 'getAccessWarehouse'])->name('getAccessWarehouse');
-    Route::get('generateaccessformat/{id}', [GenerateAccessWarehouseController::class, 'generateaccessformat'])->name('generateaccessformat');
-    //  Monitor de circuito general, vista de planta y almacen
-    Route::get('monitorcircuitplant', [StorageBoxTravelsController::class, 'index'])->name('monitorcircuitplant');
-    Route::get('getDataBoxTravels', [StorageBoxTravelsController::class, 'getDataBoxTravels'])->name('getDataBoxTravels');
-    Route::put('closetravel/{id}', [StorageBoxTravelsController::class, 'close'])->name('closetravel');
-    Route::put('addfolio/{id}', [StorageBoxTravelsController::class, 'addfolio'])->name('addfolio');
-    //  Inventario de cajas en patio
-    Route::resource('inventorybox', InventoryBoxesController::class)->except(['show']);
-    Route::get('getdatainventories', [InventoryBoxesController::class, 'getdatainventories'])->name('getdatainventories');
-    Route::post('activateInventory', [InventoryBoxesController::class, 'activateInventory'])->name('activateInventory');
-    Route::resource('inventoryboxcount', InventoryCountStocksController::class)->except(['show', 'destroy', 'create']);
-    //  Validación de unidad para salida
-    Route::get('registercheckout', [ValidateUnitForCheckOutController::class, 'index'])->name('registercheckout');
-    Route::post('getcheckout', [ValidateUnitForCheckOutController::class, 'checkoutvalidate'])->name('getcheckout');
-    //  Registrar salida de la unidad desde web
-    Route::resource('authorizetransportoutput', TransportOutPutController::class)->only(['edit', 'update']);
-
-    //    **************************************************** RUTAS DE TRACTOS ***********************************************************
-    // Registro de folios de tractos
-    Route::resource('receipttrucks', ReceiptTrucksController::class);
-    Route::get('getDataReceiptTrucks', [ReceiptTrucksController::class, 'getDataReceiptTrucks'])->name('getDataReceiptTrucks');
-    //    Importar existencia de tracto
-    Route::post('importtruck-stock', [ReceiptTrucksController::class, 'importStock'])->name('importtruck-stock');
-    //   Imprimir formato de check list
-    Route::get('generateinvoicetransporttruck/{receipttruck}', [EventTruckController::class, 'generateinvoicetransporttruck'])->name('generateinvoicetransporttruck');
-    //    Salida directa de tracto
-    Route::put('registerOutPutTruck/{receipttruck}', [EventTruckController::class, 'registerOutPutTruck'])->name('registerOutPutTruck');
-    //    Kardex de tracto
-    Route::resource('receipttrucktrace', ReceiptTruckTraceController::class)->only('index');
-    Route::get('getTruckTrace', [ReceiptTruckTraceController::class, 'getTruckTrace'])->name('getTruckTrace');
-    //  Limpiar tractos en existencia
-    Route::post('cleartruckstock', [ClearTruckStockController::class, 'cleartruckstock'])->name('cleartruckstock');
-    //    Une el tracto a la caja cargada
-    Route::resource('storagejointrucktobox', JoinTruckToBoxController::class)->except(['show', 'create', 'destroy']);
-    Route::get('getDataTruckForBox', [JoinTruckToBoxController::class, 'getDataTruckForBox'])->name('getDataTruckForBox');
-
     //    **************************************************** RUTAS DE DASHBOARDS ***********************************************************
     Route::get('dashboardyard', [DashboardYardController::class, 'index'])->name('dashboardyard');
     Route::post('getDashboardData', [DashboardYardController::class, 'getDashboardData'])->name('getDashboardData');
@@ -223,6 +41,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('shipmentcarriers', ShipmentCarrierController::class);
     Route::get('getDataCarriers', [ShipmentCarrierController::class, 'getDataCarriers'])->name('getDataCarriers');
     Route::post('deleteCarrier', [ShipmentCarrierController::class, 'destroy'])->name('deleteCarrier');
+
     //	Parametrizar líneas de transporte
     Route::get('shipmentcarriers/{id}/parameters', [ParameterCarrierController::class, 'parameters'])->name('shipmentcarriers.parameters');
     Route::put('addparameterscarrier/{id}', [ParameterCarrierController::class, 'addparameterscarrier'])->name('addparameterscarrier');
@@ -313,76 +132,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('getDataCheckList', [StorageCheckListsController::class, 'getDataCheckList'])->name('getDataCheckList');
 
     //  --------------------------------------------  Detalle de check list -----------------------------------------------
-    Route::resource('storagechecklistdetails', StorageCheckListDetailsController::class)->only(['edit', 'update']);
-    Route::get('createchecklistdetails/{storagechecklist}', [StorageCheckListDetailsController::class, 'createdetail'])->name('createchecklistdetails');
-    Route::put('storechecklistdetails/{storagechecklist}', [StorageCheckListDetailsController::class, 'storedetail'])->name('storagechecklistdetails.storedetail');
-    Route::put('updatestatuscategory/{id}', [StorageCheckListDetailsController::class, 'updatestatuscategory'])->name('updatestatuscategory');
+    Route::get('createchecklistdetails/{storagechecklist}', [StorageCheckListDetailsController::class, 'index'])->name('createchecklistdetails');
+    Route::put('storechecklistdetails/{storagechecklist}', [StorageCheckListDetailsController::class, 'store'])->name('storagechecklistdetails.storedetail');
+    Route::put('updatestatuscategory/{id}', [StorageCheckListDetailsController::class, 'update'])->name('updatestatuscategory');
     //    Importar detallde de ubicaciones
     Route::post('importchecklistdetails', [ImportCheckListDetailsController::class, 'index'])->name('importchecklistdetails');
-    // ----------------------------- Categorias de transporte (Contenedor, Caja seca,termica, etc.) -----------------------------------|
-    Route::resource('shipmenttruckcategories', ShipmentTruckCategoriesController::class);
-    Route::get('getDataTruckCategories', [ShipmentTruckCategoriesController::class, 'getDataTruckCategories'])->name('getDataTruckCategories');
 
-    //  -------------------------------------------------- Etiquetas de caja y tracto  ------------------------------------------------
-    Route::resource('storagelabeltrucks', StorageLabelTrucksController::class)->except('show');
-    Route::get('getDataLabelsTrucks', [StorageLabelTrucksController::class, 'getDataLabelsTrucks'])->name('getDataLabelsTrucks');
-    //    Imprimir etiquetas de caja
-    Route::get('printlabeltruck/{storagelabeltruck}', [StorageLabelTrucksController::class, 'printlabeltruck'])->name('printlabeltruck');
-    // Importar etiquetas
-    Route::post('upload-labels', [StorageLabelTrucksController::class, 'importlabels'])->name('upload-labels');
-
-    //  -------------------------------------------------- Areas  ------------------------------------------------
     Route::resource('storageareas', StorageAreasController::class);
     Route::get('getDataAreas', [StorageAreasController::class, 'getDataAreas'])->name('getDataAreas');
-
-    //  -------------------------------------------------- Tipos de Unidad  ------------------------------------------------
-    Route::resource('storageunittypes', StorageUnitTypesController::class)->except('show', 'destroy');
-    Route::post('deleteUnitType', [StorageUnitTypesController::class, 'destroy'])->name('deleteUnitType');
-    Route::get('getStorageUnitTypes', [StorageUnitTypesController::class, 'getStorageUnitTypes'])->name('getStorageUnitTypes');
-
-    //    **************************************************** REPORTES  ***********************************************************
-    //    Reportes de control de patios para exportar a excel
-    Route::get('reportsyards', [ReportYardController::class, 'index'])->name('reportsyards');
-    Route::post('exportreportyards', [ReportYardController::class, 'exportreportyards'])->name('exportreportyards');
-    Route::get('getCarriersForSelectReport/{warehouseid}', [ReportYardController::class, 'getCarriersForSelectReport'])->name('getCarriersForSelectReport');
-    //    Reporte de unidades con salida autorizada
-    Route::get('reportauthorizedoutputs', [AuthorizeOutPutController::class, 'reportauthorizedoutputs'])->name('reportauthorizedoutputs');
-    Route::get('getDataAuthorized', [AuthorizeOutPutController::class, 'getDataAuthorized'])->name('getDataAuthorized');
-    //    Reporte de Estadias
-
-    Route::get('reportstays', [ReportStayController::class, 'index'])->name('reportstays');
-    Route::get('getDataStays', [ReportStayController::class, 'getDataStays'])->name('getDataStays');
-    //  Monitor de cajas en patio con cálculo de tiempos
-    Route::get('monitorunitsyard', [MonitorUnitsController::class, 'index'])->name('monitorunitsyard');
-    Route::get('getDataStockBox', [MonitorUnitsController::class, 'getDataStockBox'])->name('getDataStockBox');
-    Route::get('getMonitorKpis', [MonitorUnitsController::class, 'getMonitorKpis'])->name('getMonitorKpis');
-
-    //	Proceso de unidades
-    Route::resource('processmonitoring', ProcessMonitoringController::class);
-
-    //  Vista de ocupacion de patio
-    Route::get('layoutcapacitycenter', [CapacityYardController::class, 'index'])->name('layoutcapacitycenter');
-    //  Detalle de las ubicaciones con relacion a la placa que la está utilizando
-    Route::get('layoutinventoryforzone', [CapacityYardController::class, 'layoutinventoryforzone'])->name('layoutinventoryforzone');
-    //  Exportar el detalle de la zona consultada
-    Route::get('exportDataLocationsForStatus', [CapacityYardController::class, 'exportDataLocationsForStatus'])->name('exportDataLocationsForStatus');
-    //  Patio de virtual
-    Route::get('vitualyard', [YardHenkelTolController::class, 'index'])->name('vitualyard');
-
-    //  Ticket de pesos de báscula
-    Route::resource('receiptunitticket', ReceiptUnitTicketController::class);
-    Route::get('getUnitTickets', [ReceiptUnitTicketController::class, 'getUnitTickets'])->name('getUnitTickets');
-    Route::get('getUnitTicketsPT', [ReceiptUnitTicketController::class, 'getUnitTicketsPT'])->name('getUnitTicketsPT');
-    Route::put('receiptunitticketstatus/{id}', [ReceiptUnitTicketController::class, 'updatestatus'])->name('receiptunitticketstatus.update');
-    //	Registrar el peso de producto y embalaje por operaciones
-    Route::put('saveweightforoperation/{id}', [ReceiptUnitTicketController::class, 'saveweightforoperation'])->name('saveweightforoperation');
-
-    // Mapa con GeoCerca
-    Route::resource('maps-geofence', GeofencesController::class);
-    Route::get('getDataGeofence', [GeofencesController::class, 'getDataGeofence'])->name('getDataGeofence');
-
-    // Dispositos GPS
-    Route::resource('gps-devices', GpsDeviceController::class);
-    Route::get('getGpsDevices', [GpsDeviceController::class, 'getGpsDevices'])->name('getGpsDevices');
 
 });

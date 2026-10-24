@@ -47,14 +47,9 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapConfigurationRoutes();
         $this->mapSecurityRoutes();
         $this->mapSelectRoutes();
-        $this->mapShipmentsRoutes();
-        $this->mapYardsRoutes();
         $this->mapReceiptsRoutes();
         $this->mapInventoryRoutes();
-        $this->mapReportsRoutes();
-        $this->mapMaintenanceRoutes();
-        $this->mapToursRoutes();
-        $this->mapEvidencesRoutes();
+        $this->mapYardsRoutes();
     }
 
     protected function mapAuth0Routes()
@@ -73,19 +68,6 @@ class RouteServiceProvider extends ServiceProvider
             ->group(base_path('routes/web.php'));
     }
 
-    protected function mapMaintenanceRoutes()
-    {
-        Route::middleware('web')
-            ->namespace($this->namespace)
-            ->group(base_path('routes/Maintenance.php'));
-    }
-
-    protected function mapToursRoutes()
-    {
-        Route::middleware('web')
-            ->namespace($this->namespace)
-            ->group(base_path('routes/Tours.php'));
-    }
 
     protected function mapInventoryRoutes()
     {
@@ -108,19 +90,7 @@ class RouteServiceProvider extends ServiceProvider
             ->group(base_path('routes/Receipt.php'));
     }
 
-    protected function mapReportsRoutes()
-    {
-        Route::middleware('web')
-            ->namespace($this->namespace)
-            ->group(base_path('routes/Reports.php'));
-    }
 
-    protected function mapShipmentsRoutes()
-    {
-        Route::middleware('web')
-            ->namespace($this->namespace)
-            ->group(base_path('routes/Shipments.php'));
-    }
 
     protected function mapConfigurationRoutes()
     {
@@ -136,12 +106,7 @@ class RouteServiceProvider extends ServiceProvider
             ->group(base_path('routes/Security.php'));
     }
 
-    protected function mapEvidencesRoutes()
-    {
-        Route::middleware('web')
-            ->namespace($this->namespace)
-            ->group(base_path('routes/Evidences.php'));
-    }
+
 
     protected function mapSelectRoutes()
     {

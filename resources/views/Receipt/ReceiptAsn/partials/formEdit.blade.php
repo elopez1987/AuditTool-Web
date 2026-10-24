@@ -35,7 +35,7 @@
     </div>
     <div class="col-lg-2 col-md-6 col-sm-12">
         <div class="form-group">
-            <label for="providerid"> {{ ui_label('providerid_receiptasn_edit','Proveedor') }} <span style="color: red">*</span></label>
+            <label for="providerid"> {{ ui_label('providerid_receiptasn_edit','Ruta') }} <span style="color: red">*</span></label>
             <select name="providerid" id='providerid' required class="form-control select2">
                 @foreach($providers as $model)
                     <option value="{{$model->id}}"
@@ -51,24 +51,7 @@
             @enderror
         </div>
     </div>
-    <div class="col-lg-2 col-md-6 col-sm-12">
-        <div class="form-group">
-            <label for="turnid"> {{ ui_label('turnid_receiptasn_edit','Turno de trabajo') }} <span style="color: red">*</span></label>
-            <select name="turnid" class="form-control select2">
-                @foreach($turns as $model)
-                    <option value="{{$model->id}}"
-                            @if($model->id == $receiptasn->turnid)
-                                selected="selected"
-                        @endif>
-                        {{$model->name}}
-                    </option>
-                @endforeach
-            </select>
-        </div>
-        @error('turnid')
-        <div class="invalid-feedback">{{ $message }}</div>
-        @enderror
-    </div>
+
 </div>
 <div class="row">
     <div class="col-lg-2 col-md-6 col-sm-12">
@@ -106,23 +89,7 @@
             @enderror
         </div>
     </div>
-    <div class="col-lg-2 col-md-6 col-sm-12">
-        <div class="form-group">
-            <label for="oc"> {{ ui_label('oc_receiptasn_edit','Orden de compra') }}
-                @error("oc")
-                <span class="message-error">{{$message}}</span>
-                @enderror
-            </label>
-            <input type="text" class="form-control @error('oc') is-invalid @enderror"
-                   id="oc" name="oc"
-                   onKeyUp=this.value=this.value.toUpperCase();
-                   value="{{$receiptasn->oc}}"
-            >
-            @error('oc')
-            <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
-    </div>
+
 </div>
 
 <div class="row">
@@ -138,24 +105,6 @@
                    value="{{$receiptasn->folionumber}}"
             >
             @error('folionumber')
-            <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
-    </div>
-    <div class="col-lg-2 col-md-6 col-sm-12">
-        <div class="form-group">
-            <label for="carrierid">  {{ ui_label('carrierid_receiptasn_edit','Linea de transporte') }} <span style="color: red">*</span></label>
-            <select name="carrierid" required class="form-control select2">
-                @foreach($carriers as $model)
-                    <option value="{{$model->id}}"
-                            @if($model->id == $receiptasn->carrierid)
-                                selected="selected"
-                        @endif>
-                        {{$model->name}}
-                    </option>
-                @endforeach
-            </select>
-            @error('carrierid')
             <div class="invalid-feedback">{{ $message }}</div>
             @enderror
         </div>

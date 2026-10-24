@@ -230,4 +230,6 @@ Route::group(['middleware' => ['role:ADMINISTRADOR']], function () {
     Route::resource('label-dictionary', UiLabelsController::class)->except('show');
 
     Route::get('logs', [LogViewerController::class, 'index']);
+
+
 });

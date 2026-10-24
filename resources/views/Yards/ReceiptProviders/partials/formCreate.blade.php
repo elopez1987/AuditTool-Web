@@ -19,21 +19,27 @@
             </select>
         </div>
     </div>
+
+</div>
+
+<div class="row">
     <div class="col-lg-2 col-md-6 col-sm-12">
         <div class="form-group">
-            <label for="name">Nombre de proveedor </label>
-            <input type="text" required class="form-control" id="name" name="name" maxlength="100"
-                   aria-describedby="name" value="{{old('name')}}" onKeyUp=this.value=this.value.toUpperCase()>
-        </div>
-    </div>
-    <div class="col-lg-2 col-md-6 col-sm-12">
-        <div class="form-group">
-            <label for="providerid">Clave de proveedor </label>
+            <label for="providerid">Clave  </label>
             <input type="text" required class="form-control" id="providerid" name="providerid" maxlength="15"
                    aria-describedby="providerid" value="{{old('providerid')}}">
         </div>
     </div>
+    <div class="col-lg-2 col-md-6 col-sm-12">
+        <div class="form-group">
+            <label for="name">Nombre  </label>
+            <input type="text" required class="form-control" id="name" name="name" maxlength="100"
+                   aria-describedby="name" value="{{old('name')}}" onKeyUp=this.value=this.value.toUpperCase()>
+        </div>
+    </div>
+
 </div>
+
 <div class="row">
     <div class="col-lg-2 col-md-6 col-sm-12">
         <div class="form-group">

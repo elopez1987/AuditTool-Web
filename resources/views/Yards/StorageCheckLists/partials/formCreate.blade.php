@@ -37,64 +37,40 @@
             >
         </div>
     </div>
-</div>
-
-<div class="row">
-    <x-select2
+    <x-text-input
             name="type"
             label="Tipo de check list"
-            :required="true"
-            :options="[
-                    ['id' => 'AS', 'name' => 'CHECK LIST DE AUTORIZACION DE SALIDA'],
-                    ['id' => 'QI', 'name' => 'CHECK LIST DE CALIDAD'],
-                    ['id' => 'IN', 'name' => 'CHECK LIST DE ENTRADA'],
-                    ['id' => 'OUT', 'name' => 'CHECK LIST DE SALIDA'],
-                    ['id' => 'REC', 'name' => '	CHECK LIST PROCESO DE RECIBO'],
-                ]"
-    />
-    <x-select2
-            name="auxiliary01"
-            label="Origen"
-            :required="true"
-            :options="[
-                    ['id' => 'NAC', 'name' => 'NACIONAL'],
-                    ['id' => 'EXP', 'name' => 'EXPORTACIÓN'],
-                    ['id' => 'IMP', 'name' => 'IMPORTACION'],
-                ]"
-    />
-    <x-select2
-            name="auxiliary02"
-            label="Tipo de check list"
-            :required="true"
-            :options="[
-                    ['id' => 'ESTANDAR', 'name' => 'ESTANDAR'],
-                    ['id' => 'CTPAT', 'name' => 'CTPAT'],
-                    ['id' => 'PUNTAJE', 'name' => 'PUNTAJE'],
-                ]"
+            uppercase
     />
 </div>
 
 <div class="row">
-    <x-select2
-            name="auxiliary03"
-            label="Concepto de entrada"
-            :options="$concetps"
-            valueField="id"
-            textField="name"
-            :required="true"
+    <x-text-input
+            name="auxiliary01"
+            label="Auxiliar 01"
+            uppercase
     />
-    <x-select2
+    <x-text-input
+            name="auxiliary02"
+            label="Auxiliar 02"
+            uppercase
+    />
+</div>
+
+<div class="row">
+    <x-text-input
+            name="auxiliary03"
+            label="Auxiliar 03"
+            uppercase
+    />
+    <x-text-input
             name="auxiliary04"
-            label="¿Check list por defecto?"
-            :required="true"
-            :options="[
-                    ['id' => 'N', 'name' => 'NO'],
-                    ['id' => 'S', 'name' => 'SI'],
-                ]"
+            label="Auxiliar 04"
+            uppercase
     />
     <x-text-input
             name="auxiliary05"
-            label="ID de tipo de unidad"
+            label="Auxiliar 05"
             uppercase
     />
 </div>

@@ -6,7 +6,7 @@ use App\Http\Resources\IzelWms\CheckInResource;
 use App\Http\Resources\IzelWms\CheckOutResource;
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Configuration\EDI\EdiConfig;
-use App\Models\Configuration\EDI\SystemEventWebServiceIzel;
+use App\Models\Configuration\EDI\SystemEventWebService;
 use App\Models\Shipments\EdiShipment;
 use App\Models\Yard\ReceiptUnit;
 use Exception;
@@ -297,7 +297,7 @@ class SendDataToIzelWmsV5Command extends Command
             $service = 'receiptunitout';
         }
 
-        SystemEventWebServiceIzel::create([
+        SystemEventWebService::create([
             'centerid' => $receiptunit->centerid,
             'warehouseid' => $receiptunit->warehouseid,
             'folionumber' => $receiptunit->id,

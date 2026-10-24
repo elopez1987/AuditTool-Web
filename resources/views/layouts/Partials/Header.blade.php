@@ -7,8 +7,8 @@
                                 <span class="logo-text font-weight-bold text-white font-18">
 {{--                                    SGIO--}}
                                </span>
-                <link rel="icon" type="image/png" sizes="16x16" href=" {{asset('/img/verde.png')}}">
-                <img src="{{asset('img/verde.png')}}" alt="" style="width: 150px;height: 35px">
+{{--                <link rel="icon" type="image/ta" sizes="16x16" href=" {{asset('/img/verde.png')}}">--}}
+                <img src="{{asset('img/taxion-logistic.png')}}" alt="" style="width: 150px;height: 35px">
             </a>
             <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)"
                data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -31,29 +31,7 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 
-                        @can('receiptunits.create')
-                            <a href="{{route('receiptunits.create')}}" class="dropdown-item">
-                                <img src="{{asset('/ico/window_add_12815.png')}}" alt="" class="img-16">
-                                <span class="hide-menu mr-left"> Registrar Unidad</span></a>
-                        @endcan
-                        @can('viewmovementsofbox')
-                            <a href="{{route('viewmovementsofbox')}}" class="dropdown-item">
-                                <img src="{{asset('/ico/unitstatus.png')}}" alt="" class="img-16">
-                                <span class="hide-menu mr-left"> Mesa de control </span>
-                            </a>
-                        @endcan
-                        @can('autorizeoutput')
-                            <a href="{{route('autorizeoutput')}}" class="dropdown-item">
-                                <img src="{{asset('/ico/adcancelar.png')}}" alt="" class="img-16">
-                                <span class="hide-menu mr-left"> Autorizar salida </span>
-                            </a>
-                        @endcan
-                        {{--                        @can('setwarehouse')--}}
-                        {{--                            <a href="{{route('setwarehouse')}}" class="dropdown-item">--}}
-                        {{--                                <img src="{{asset('/ico/fingerprint_117641.png')}}" alt="" class="img-16">--}}
-                        {{--                                <span class="hide-menu mr-left"> Fijar bodega </span>--}}
-                        {{--                            </a>--}}
-                        {{--                        @endcan--}}
+
                     </div>
                 </li>
                 <li class="nav-item dropdown">

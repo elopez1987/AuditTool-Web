@@ -97,4 +97,9 @@ class ShipmentCarrierController extends BaseController
 
         return $this->responseSuccessAjax('', Carbon::now());
     }
+
+	public function show(string $shipmentcarrier)
+	{
+
+	}
 }

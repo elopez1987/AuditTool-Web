@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Configuration\WebService;
 
 use App\Exports\Configuration\WebService\ExportLogWebService;
 use App\Http\Controllers\BaseController;
-use App\Models\Configuration\EDI\SystemEventWebServiceIzel;
+use App\Models\Configuration\EDI\SystemEventWebService;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
@@ -20,7 +20,7 @@ class WebServiceLogController extends BaseController
 
     public function getDataLogsWs(Request $request)
     {
-        $data = SystemEventWebServiceIzel::controlAccessUser()
+        $data = SystemEventWebService::controlAccessUser()
             ->with(['center:centerid,name,description', 'warehouse:warehouseid,name'])
             ->when($request->filled('folionumber'), function ($query) use ($request) {
                 $query->where('systemeventwebserviceizel.folionumber', $request->folionumber);
@@ -33,7 +33,7 @@ class WebServiceLogController extends BaseController
 
     public function show($id)
     {
-        $log = SystemEventWebServiceIzel::findOrFail($id);
+        $log = SystemEventWebService::findOrFail($id);
 
         return view('Configuration.LogWebService.show', compact('log'));
     }

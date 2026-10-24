@@ -16,7 +16,7 @@ class CreateLocationRequest extends FormRequest
         return [
             'zoneid' => 'required|exists:storagezones,id',
             'name' => 'required|string|max:50',
-            'centerid' => 'required|string|exists:systemcenterdistributions,centerid',
+			'locationid' => ['required','string','max:20'],
         ];
     }
 }

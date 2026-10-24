@@ -56,12 +56,7 @@
                                     <th>Bodega</th>
                                     <th>ID</th>
                                     <th>Nombre</th>
-                                    <th>Concepto de entrada</th>
                                     <th>Tipo</th>
-                                    <th>Origen</th>
-                                    <th>Tipo de check list</th>
-                                    <th>¿Check list por defecto?</th>
-                                    <th>ID Tipo de unidad</th>
                                     <th>Estatus</th>
                                     <th>Opciones</th>
                                 </tr>

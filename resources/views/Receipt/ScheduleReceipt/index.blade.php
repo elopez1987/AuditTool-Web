@@ -25,18 +25,7 @@
                                         <a>
                                             @include('buttons.reloadajax')
                                         </a>
-                                        @can('receiptasn.addreceipt')
-                                            <a href="" data-target="#modal-add" data-toggle="modal">
-                                                <button type="submit"
-                                                        class="btn waves-effect waves-light btn-outline-info btn-md">
-                                                    <img src="{{asset('/ico/calendar.png')}}" alt=""
-                                                         class="img-16 ml-1">
-                                                    <span class="text-button"> Programar</span>
-                                                </button>
-                                            </a>
-                                            @include('Receipt.ScheduleReceipt.addreceipt')
-                                        @endcan
-                                        <a href="{{route('menureceipt')}}">
+                                        <a href="{{route('home')}}">
                                             @include('buttons.cancel')
                                         </a>
                                     </div>
@@ -66,13 +55,13 @@
                                                 placeholder="Número de factura"
                                                 colClass="col-lg-2 col-md-4 col-md-12"
                                         />
-                                        <x-text-input
-                                                name="folionumber"
-                                                label="Número de folio de control de patios."
-                                                type="text"
-                                                placeholder="Número de recibo o contenedor"
-                                                colClass="col-lg-2 col-md-4 col-md-12"
-                                        />
+{{--                                        <x-text-input--}}
+{{--                                                name="folionumber"--}}
+{{--                                                label="Número de folio de control de patios."--}}
+{{--                                                type="text"--}}
+{{--                                                placeholder="Número de recibo o contenedor"--}}
+{{--                                                colClass="col-lg-2 col-md-4 col-md-12"--}}
+{{--                                        />--}}
                                         <x-select2
                                                 name="statusid"
                                                 label="Estatus del recibo."
@@ -115,19 +104,6 @@
                                 <th>Factura</th>
                                 <th>Proveedor</th>
                                 <th>Tipo</th>
-                                <th>Folio Patios</th>
-                                <th>Linea de transporte</th>
-                                <th>Placa</th>
-                                <th>Ubicación</th>
-                                <th>Sellos</th>
-                                <th>Cita de descarga</th>
-                                <th>Hora de registro</th>
-                                <th>Mesa de control</th>
-                                <th>Enrampe</th>
-                                <th>Inicio de descarga</th>
-                                <th>Fin de descarga</th>
-                                <th>Autorización de salida</th>
-                                <th>Estadia (Min)</th>
                                 <th>Estatus del recibo</th>
                             </tr>
                             </thead>
@@ -168,68 +144,6 @@
     <script>
         $("#providerid,#statusid,#warehouseid").change(function () {
             reloadtable();
-        });
-    </script>
-    <script>
-        $(function () {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $('#saveReceipt').click(function (e) {
-                e.preventDefault();
-
-                // Validar campos
-                let centerid = $("#centeridadd").val();
-                let warehouseid = $("#warehouseidadd").val();
-                let providerid = $("#provideridadd").val();
-                let carrierid = $("#carrierid").val();
-                let razonstatusid = $("#razonstatusid").val();
-                let addasndate = $("#addasndate").val();
-
-                // Verificar campos vacíos
-                if (!centerid || !warehouseid || !providerid || !carrierid || !razonstatusid || !addasndate) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: 'Todos los campos son obligatorios. Por favor, llene todos los campos antes de continuar.',
-                        confirmButtonText: 'Aceptar'
-                    });
-                    return; // No continuar si hay campos vacíos
-                }
-
-
-                $.ajax({
-                    data: {
-                        centerid: $("#centeridadd").val(),
-                        warehouseid: $("#warehouseidadd").val(),
-                        providerid: $("#provideridadd").val(),
-                        carrierid: $("#carrierid").val(),
-                        razonstatusid: $("#razonstatusid").val(),
-                        addasndate: $("#addasndate").val(),
-                    },
-                    url: '{!! route('addReceiptToPlan') !!}',
-                    type: "POST",
-                    dataType: 'json',
-                    success: data => {
-                        $('#addasndate').val('');
-                        Swal.fire({
-                            type: 'success',
-                            title: `Recibo programado : ${data.shipmentid}`,
-                            html: `
-                                    <p>Fecha de cita : ${data.addasndate}</p>
-                                    <p>Proveedor : ${data.providerid}</p>
-                                    <p>Línea de transporte: ${data.carrierid}</p>
-                                    <p>Tipo de entrada: ${data.reason}</p>
-                                `,
-                            width: 450,
-                        })
-                        reloadtable();
-                        $('#modal-add').modal('hide')
-                    },
-                });
-            });
         });
     </script>
 

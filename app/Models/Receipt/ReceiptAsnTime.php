@@ -16,6 +16,13 @@ class ReceiptAsnTime extends Model
         'send_to_billing',
         'start_billing',
         'finish_billing',
+        'arriveddate',
+        'scanstartdate',
+        'scanfinishdate',
+        'unloadstartdate',
+        'unloadfinishdate',
+        'verifystartdate',
+        'verifyfinishdate',
     ];
 
     protected $casts = [

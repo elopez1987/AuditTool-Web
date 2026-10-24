@@ -106,7 +106,7 @@ class CreateReceiptAsnRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
-        $this->setDefaultCarrierIfNeeded();
+
         $this->generateShipmentIdIfNeeded();
     }
 
@@ -118,11 +118,8 @@ class CreateReceiptAsnRequest extends FormRequest
             'providerid' => 'required|exists:receiptproviders,id',
             'shipmentid' => $this->getShipmentIdRule(),
             'addasndate' => 'required|date|after_or_equal:today',
-            'carrierid' => 'nullable|exists:shipmentcarriers,id',
             'stockcategoryid' => 'required|exists:inventorystockcategories,id',
             'razonstatusid' => 'required|exists:storagereasons,id',
-            'turnid' => 'required|exists:storageturns,id',
-            'oc' => 'nullable|string|max:50',
             'billoflading' => 'nullable|string|max:50',
             'folionumber' => 'nullable|numeric|max_digits:20',
         ];
@@ -134,22 +131,6 @@ class CreateReceiptAsnRequest extends FormRequest
     }
 
     /**
-     * Establece el carrier por defecto si no está presente
-     */
-    private function setDefaultCarrierIfNeeded(): void
-    {
-        if ($this->filled('carrierid')) {
-            return;
-        }
-
-        $defaultCarrier = $this->getDefaultCarrier();
-
-        if ($defaultCarrier) {
-            $this->merge(['carrierid' => $defaultCarrier->id]);
-        }
-    }
-
-    /**
      * Genera el shipmentid automáticamente si está configurado
      */
     private function generateShipmentIdIfNeeded(): void
@@ -158,24 +139,10 @@ class CreateReceiptAsnRequest extends FormRequest
             return;
         }
 
-        if ($this->shouldAutoGenerateShipmentId()) {
-            $shipmentId = $this->getFolioReceipt($this->input('centerid'));
-            $this->merge(['shipmentid' => $shipmentId]);
-        }
+
     }
 
-    /**
-     * Obtiene el carrier por defecto con caché
-     */
-    private function getDefaultCarrier(): ?ShipmentCarrier
-    {
-        return Cache::remember(
-            'default_carrier_' . self::DEFAULT_CARRIER_FLAG,
-            self::CACHE_TTL,
-            fn () => ShipmentCarrier::whereRaw('charindex(?, configurationflag) > 0', [self::DEFAULT_CARRIER_FLAG])
-                ->first(['id'])
-        );
-    }
+
 
     /**
      * Verifica si debe generar shipmentid automáticamente
@@ -215,28 +182,9 @@ class CreateReceiptAsnRequest extends FormRequest
             return $baseRule;
         }
 
-        return $baseRule . '|unique:receiptasn,shipmentid';
+        return $baseRule.'|unique:receiptasn,shipmentid';
     }
 
-    /**
-     * Genera y retorna el siguiente folio de recibo
-     */
-    private function getFolioReceipt(string $centerId): int
-    {
-        return DB::transaction(function () use ($centerId) {
-            $folio = SystemFolio::where([
-                ['schemaid', '=', 'FOL'],
-                ['centerid', '=', $centerId],
-                ['statusid', '=', 'REC'],
-            ])
-                ->lockForUpdate()
-                ->firstOrFail(['id', 'folionumber']);
-
-            $folio->increment('folionumber');
-
-            return $folio->folionumber;
-        }, 3); // 3 intentos en caso de deadlock
-    }
 
     /**
      * Mensajes de validación personalizados

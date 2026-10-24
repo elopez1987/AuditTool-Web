@@ -15,7 +15,7 @@
                                 <a href="">
                                     @include('buttons.search')
                                 </a>
-                                <a href="{{route('menureceipt')}}">
+                                <a href="{{route('home')}}">
                                     @include('buttons.cancel')
                                 </a>
                             </div>

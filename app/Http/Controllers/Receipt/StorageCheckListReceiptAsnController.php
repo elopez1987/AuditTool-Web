@@ -23,7 +23,7 @@ class StorageCheckListReceiptAsnController extends BaseController
         if (empty($checklist)) {
             return $this->errorResponse('No existe check list de recibo configurado (REC).');
         }
-        $details = StorageCheckListDetail::controlAccessUser()->whereChecklistid($checklist->id)
+        $details = StorageCheckListDetail::whereChecklistid($checklist->id)
             ->where('auxiliary01', '=', 'AR')
             ->select(['id', 'description', 'checklistid', 'auxiliary01'])
             ->where('statusid', '=', 'E')

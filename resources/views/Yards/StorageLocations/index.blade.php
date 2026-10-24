@@ -30,20 +30,12 @@
                         <div class="row">
                             <div class="col-lg-2 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="warehouseid">Bodega</label>
-                                    <select name="warehouseid" id='warehouseid' class="form-control select2">
-                                        <option value="" selected>Seleccione una opción</option>
-                                        @foreach($warehouses as $model)
-                                            <option value="{{$model->warehouseid}}"> {{$model->name}} </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-2 col-md-6 col-sm-12">
-                                <div class="form-group">
-                                    <label for="zoneid">Zonas<span style="color: red">*</span></label>
+                                    <label for="zoneid">Zonas</label>
                                     <select name="zoneid" id='zoneid' class="form-control select2">
                                         <option value="" selected>Seleccione una opción</option>
+                                        @foreach($zones as $zone)
+                                            <option value="{{$zone->id}}"> {{$zone->name}} </option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -73,41 +65,19 @@
                             <table id="table-locations" class="table table-bordered  table-condensed table-hover">
                                 <thead>
                                 <tr>
-                                    <th class="bg-inverse text-white">C.Distribución</th>
-                                    <th class="bg-inverse text-white">Bodega</th>
-                                    <th class="bg-inverse text-white">ID</th>
-                                    <th class="bg-inverse text-white">Zona</th>
-                                    <th class="bg-inverse text-white">Nombre</th>
-                                    <th class="bg-inverse text-white">Ubicacion WMS</th>
-                                    <th class="bg-inverse text-white">C.Barra</th>
-                                    <th class="bg-inverse text-white">Placa asignada</th>
-                                    <th class="bg-inverse text-white">Estatus</th>
-                                    <th class="bg-inverse text-white">Opciones</th>
+                                    <th>ID</th>
+                                    <th>Zona</th>
+                                    <th>Nombre</th>
+                                    <th>Ubicacion</th>
+                                    <th>C.Barra</th>
+                                    <th>Estatus</th>
+                                    <th>Opciones</th>
                                 </tr>
                                 </thead>
                             </table>
                         </div>
                     </div>
                     <hr class="mb-3">
-                    <div class="row">
-                        @foreach($locations as $location)
-                            <div class="col-lg-3 col-md-6">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="d-flex no-block align-items-center">
-                                            <div>
-                                                <h2>{{$location->total_locations}}</h2>
-                                                <h6>{{$location->zone->name}}</h6>
-                                            </div>
-                                            <div class="ml-auto">
-                                                <span class="display-6"><i class="ti-location-pin"></i></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
                 </div>
                 <div class="card-footer">
                     @can('storagelocations.importlocation')
@@ -120,14 +90,14 @@
                         </a>
                         @include('Yards.StorageLocations.uploadfile')
                     @endcan
-                    @can('optimizelocations')
-                        <a href="{{route('optimizelocations')}}">
-                            <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
-                                <img src="{{asset('/ico/code.png')}}" alt="" class="img-16 mr-2">
-                                <span> Optimizar Ubicaciones</span>
-                            </button>
-                        </a>
-                    @endcan
+{{--                    @can('optimizelocations')--}}
+{{--                        <a href="{{route('optimizelocations')}}">--}}
+{{--                            <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">--}}
+{{--                                <img src="{{asset('/ico/code.png')}}" alt="" class="img-16 mr-2">--}}
+{{--                                <span> Optimizar Ubicaciones</span>--}}
+{{--                            </button>--}}
+{{--                        </a>--}}
+{{--                    @endcan--}}
                 </div>
             </div>
         </div>
@@ -143,16 +113,9 @@
         }
     </script>
     <script>
-        $("#zoneid,#statusid,#warehouseid").change(function () {
+        $("#zoneid,#statusid").change(function () {
             reloadtable();
         });
-    </script>
-
-    <script type="module">
-        const moduleUrl = "{{ asset('js/selects/zone-for-warehouse.js') }}";
-        const baseUrl = "{{ config('app.url') }}";
-        const {initializeZoneLookup} = await import(moduleUrl);
-        initializeZoneLookup("warehouseid", "zoneid", baseUrl);
     </script>
 
     <script>

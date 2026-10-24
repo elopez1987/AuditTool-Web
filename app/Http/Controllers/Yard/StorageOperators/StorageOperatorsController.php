@@ -22,11 +22,9 @@ class StorageOperatorsController extends BaseController
 
     public function getDataOperators(Request $request)
     {
-        $carrier = $this->getCarrierForUser();
+
         $data = StorageOperator::controlAccessUser()
-            ->with('status', 'center', 'carrier')
-            ->whereNotNull('storageoperators.carrierid')
-            ->ForCarrierOperator($carrier)
+            ->with('status', 'center')
             ->Name($request->get('name'))
             ->Barcode($request->get('barcode'))
             ->select('storageoperators.*');
@@ -38,18 +36,14 @@ class StorageOperatorsController extends BaseController
     {
         $this->authorize('storageoperators.create');
         $centers = $this->getCenterForSelect();
-        $carriers = $this->getCarriersForSelect();
 
-        return view(
-            'Yards.StorageOperators.create',
-            compact('centers', 'carriers')
-        );
+        return view('Yards.StorageOperators.create', compact('centers'));
     }
 
     public function store(CreateOperatorRequest $request)
     {
-        $barcode = $this->getFolioYMS($request['centerid']);
-        $operator = new StorageOperator($request->validated() + ['barcode' => $barcode->folionumber]);
+
+        $operator = new StorageOperator($request->validated());
         $operator->save();
 
         return $this->successResponse('storageoperators.index');
@@ -58,10 +52,10 @@ class StorageOperatorsController extends BaseController
     public function edit(StorageOperator $storageoperator)
     {
         $this->authorize('storageoperators.edit');
-        $carriers = $this->getCarriersForSelect();
         $status = $this->getStatusSTS();
 
-        return view('Yards.StorageOperators.edit', compact('storageoperator', 'carriers', 'status'));
+        return view('Yards.StorageOperators.edit',
+            compact('storageoperator', 'status'));
     }
 
     public function update(Request $request, StorageOperator $storageoperator): RedirectResponse
@@ -85,4 +79,6 @@ class StorageOperatorsController extends BaseController
 
         return $this->generateLabelOperator($storageoperator);
     }
+
+    public function show(string $storageoperator) {}
 }

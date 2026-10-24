@@ -21,7 +21,7 @@
                                         <span style="font-size: 11px;"> Exportar</span>
                                     </button>
                                 </a>
-                                <a href="{{route('menureceipt')}}" class=" m-1">
+                                <a href="{{route('home')}}" class=" m-1">
                                     @include('buttons.cancel')
                                 </a>
                             </div>

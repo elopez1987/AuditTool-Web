@@ -23,7 +23,6 @@
             {data: 'warehousename',name: 'warehousename'},
             {data: 'id'},
             {data: 'name'},
-            {data: 'auxiliary01'},
             {data: 'capacity'},
             {
                 data: 'status.name', name: 'status.name',

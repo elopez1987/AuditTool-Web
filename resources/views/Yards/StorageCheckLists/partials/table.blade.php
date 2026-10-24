@@ -23,12 +23,7 @@
             {data: 'warehousename'},
             {data: 'id'},
             {data: 'name'},
-            {data: 'reason'},
             {data: 'type'},
-            {data: 'unittype'},
-            {data: 'auxiliary02'},
-            {data: 'auxiliary04'},
-            {data: 'auxiliary05'},
             {
                 data: 'status.name', name: 'status.name',
                 createdCell: function (td, cellData, rowData) {
@@ -49,11 +44,6 @@
             {"width": "280px", "targets": 4},
             {"width": "250px", "targets": 5},
             {"width": "250px", "targets": 6},
-            {"width": "250px", "targets": 7},
-            {"width": "250px", "targets": 8},
-            {"width": "250px", "targets": 9},
-            {"width": "250px", "targets": 10},
-            {"width": "180px", "targets": 11},
         ],
 
         "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',

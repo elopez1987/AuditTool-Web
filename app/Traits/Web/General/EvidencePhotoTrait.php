@@ -3,7 +3,6 @@
 namespace App\Traits\Web\General;
 
 use App\Models\General\EvidencePhoto;
-use App\Models\Yard\CheckListEvidenceProcessUnit;
 use Auth;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -31,21 +30,7 @@ trait EvidencePhotoTrait
         return redirect()->back()->with(session()->flash('success', 'Fotografia eliminado con exito!!'));
     }
 
-    public function downloadPhotoTire($id): StreamedResponse
-    {
-        $photo = CheckListEvidenceProcessUnit::findOrFail($id);
 
-        return Storage::download($photo->path);
-    }
-
-    public function destroyPhotoTireProcess($id): RedirectResponse
-    {
-        $photo = CheckListEvidenceProcessUnit::findOrFail($id);
-        Storage::delete($photo->path);
-        CheckListEvidenceProcessUnit::destroy($id);
-
-        return redirect()->back()->with(session()->flash('success', 'Fotografia eliminado con exito!!'));
-    }
 
     public static function addMediaToModel(Request $request, $file)
     {
