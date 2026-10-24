@@ -22,7 +22,6 @@
             {data :'centername',},
             {data : 'warehouseid'},
             {data : 'name'},
-            {data : 'center'},
             {data : 'auxiliary01',},
             {data : 'auxiliary02'},
             {data : 'auxiliary03'},

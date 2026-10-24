@@ -22,9 +22,7 @@ class SystemWarehouse extends Model
 
     protected $fillable = [
         'centerid',
-        'center',
         'warehouseid',
-        'warehouse',
         'name',
         'auxiliary01',
         'auxiliary02',

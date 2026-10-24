@@ -13,20 +13,16 @@ use App\Http\Resources\SystemWarehouseResource;
 use App\Models\Configuration\Warehouses\SystemWarehouse;
 use App\Models\Inventory\PartNumber\InventoryPartnumber;
 use App\Models\Receipt\ReceiptProvider;
-use App\Models\Security\Users\AccessCarrier;
-use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\Models\Yard\Carriers\ShipmentCarrier;
 use App\Models\Yard\StorageLocation;
 use App\Models\Yard\StorageOperator;
 use App\Models\Yard\StorageZone\StorageZone;
-use App\Traits\ResponseApi;
-use App\Traits\Web\General\Responser;
-use Auth;
+use App\Traits\Api\ResponseApi;
 
 class SelectController extends Controller
 {
     use ResponseApi;
-    use Responser;
+
 
     //	Modelo SystemWarehouse
     public function searchWarehouseForCenter($centerid)
@@ -90,11 +86,9 @@ class SelectController extends Controller
         }
 
         return $this->showAll('searchZone', StorageZoneResource::collection($data));
-
     }
 
     // Modelo StorageLocations
-
     public function searchLocationForZone($zoneid)
     {
         $data = StorageLocation::controlAccessUser()
@@ -119,35 +113,5 @@ class SelectController extends Controller
         }
 
         return $this->showAll('searchProvider', ReceiptProviderResource::collection($data));
-    }
-
-    // ------------------------------------------------------------------------------------------------------------------------
-    //	Todas estas funciones validarlos por cada módulo y refactorizarlas
-    public function getCarriersSelect()
-    {
-        $centers = SecurityAccessWarehouse::Centers();
-        $carrier = AccessCarrier::where('username', Auth::user()->username)
-            ->select('carrierid')->get()->toArray();
-        if ($carrier != null) {
-            $carriers = ShipmentCarrier::whereIn('shipmentcarriers.centerid', $centers)
-                ->whereStatusid('E')
-                ->where('shipmentcarriers.id', $carrier)
-                ->select(['name', 'id'])->get();
-        } else {
-            $carriers = ShipmentCarrier::whereStatusid('E')
-                ->whereIn('shipmentcarriers.centerid', $centers)
-                ->select(['name', 'id'])->get();
-        }
-
-        return response()->json($carriers);
-    }
-
-    public function getWarehousesForUser()
-    {
-        $warehouses = SecurityAccessWarehouse::where('username', Auth::user()->username)
-            ->leftJoin('systemwarehouses', 'systemwarehouses.warehouseid', '=', 'securityaccesswarehouses.warehouseid')
-            ->select('systemwarehouses.warehouseid', 'systemwarehouses.name')->get();
-
-        return response()->json($warehouses);
     }
 }

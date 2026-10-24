@@ -23,9 +23,8 @@
 *.log
 
 # === Archivos de desarrollo y pruebas ===
-/tests/
-/phpunit.xml
 /.phpunit.result.cache
+/.phpunit.cache/
 
 # === Configuración de IDEs o editores ===
 /.idea/
