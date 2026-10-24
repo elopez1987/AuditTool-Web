@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 use App\Repositories\Security\LocalPassportClientRepository;
 use App\User;
+use Auth0\Laravel\Controllers\CallbackController;
+use Auth0\Laravel\Controllers\LoginController;
 use Illuminate\Contracts\Hashing\Hasher;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 use Laravel\Passport\Passport;
 use Lcobucci\JWT\Encoding\JoseEncoder;
@@ -27,7 +30,7 @@ function localPassportTestKeys(): array
 }
 
 beforeEach(function (): void {
-    $this->prepareMobileAuthentication();
+    $this->prepareAuthenticationSchema();
     [$private, $public] = localPassportTestKeys();
     config()->set([
         'app.key' => 'base64:'.base64_encode(random_bytes(32)),
@@ -46,7 +49,7 @@ beforeEach(function (): void {
         $table->string('centerid')->primary();
         $table->string('name');
         $table->string('statusid')->default('E');
-        $table->text('auxiliary05')->nullable();
+        $table->text('mobileflags')->nullable();
     });
     Schema::create('systemwarehouses', function (Blueprint $table): void {
         $table->string('warehouseid')->primary();
@@ -98,8 +101,8 @@ beforeEach(function (): void {
         'configurationflag' => json_encode(['USR-01']),
     ]);
     DB::table('systemcenterdistributions')->insert([
-        ['centerid' => 'BRIDCUE', 'name' => 'BRIDGESTONE CUERNAVACA', 'auxiliary05' => json_encode(['APP-03', 'APP-04'])],
-        ['centerid' => 'OTHER', 'name' => 'OTHER CENTER', 'auxiliary05' => null],
+        ['centerid' => 'BRIDCUE', 'name' => 'BRIDGESTONE CUERNAVACA', 'mobileflags' => json_encode(['APP-03', 'APP-04'])],
+        ['centerid' => 'OTHER', 'name' => 'OTHER CENTER', 'mobileflags' => null],
     ]);
     DB::table('securityaccesswarehouses')->insert([
         ['username' => 'mobile.user', 'centerid' => 'OTHER', 'warehouseid' => 'OTHER-WH', 'defaultlevel' => null],
@@ -133,7 +136,7 @@ it('does not accept OAuth client, provider or scope overrides from the login bod
 
 it('normalizes null flags and excludes inaccessible or inactive warehouses', function (): void {
     DB::table('users')->update(['configurationflag' => null]);
-    DB::table('systemcenterdistributions')->update(['auxiliary05' => null]);
+    DB::table('systemcenterdistributions')->update(['mobileflags' => null]);
     DB::table('systemwarehouses')->where('warehouseid', 'MX10APT')->update(['statusid' => 'D']);
     $response = $this->postJson('/api/v1/auth/login', ['username' => 'mobile.user', 'password' => 'local-test-password'])->assertOk();
     $response->assertJsonPath('data.parameters.app', [])->assertJsonPath('data.parameters.user', []);
@@ -309,13 +312,11 @@ it('rejects refresh tokens after local account deactivation without issuing new 
     expect(DB::table('oauth_access_tokens')->count())->toBe(1);
 });
 
-it('keeps Auth0 PKCE and local Passport tokens isolated in both directions', function (): void {
-    $id = DB::table('users')->value('id');
-    DB::table('users')->where('id', $id)->update(['auth0' => 'auth0|mobile-user']);
+it('keeps local Passport available after removing mobile Auth0 routes', function (): void {
     $local = $this->postJson('/api/v1/auth/login', ['username' => 'mobile.user', 'password' => 'local-test-password'])->assertOk();
-    $this->withToken($this->accessToken())->getJson('/api/mobile/auth/me')->assertOk();
-    $this->withToken($this->accessToken())->getJson('/api/v1/auth/me')->assertUnauthorized();
-    $this->withToken($local->json('data.auth.accessToken'))->getJson('/api/mobile/auth/me')->assertUnauthorized();
+    $this->withToken($local->json('data.auth.accessToken'))->getJson('/api/v1/auth/me')->assertOk();
+    $this->getJson('/api/mobile/auth/me')->assertNotFound();
+    expect(collect(Route::getRoutes())->filter(static fn ($route): bool => str_starts_with($route->uri(), 'api/mobile/auth')))->toBeEmpty();
     expect(DB::table('oauth_access_tokens')->where('revoked', false)->count())->toBe(1);
 });
 
@@ -327,15 +328,19 @@ it('does not change Passport global settings or enable its global password grant
     expect(Passport::$clientUuids)->toBe($uuid);
     expect(Passport::tokensExpireIn())->toEqual($ttl);
     expect(config('auth.guards.api.driver'))->toBe('passport');
-    expect(config('auth.guards.auth0-mobile.driver'))->toBe('auth0-mobile');
+    expect(config('auth.guards.local-app.driver'))->toBe('local-passport');
+    expect(config('auth.guards.auth0-mobile'))->toBeNull();
+    expect(config('auth.providers.auth0-mobile-provider'))->toBeNull();
+    expect(Route::getRoutes()->getByName('login')->getActionName())->toBe(LoginController::class);
+    expect(Route::getRoutes()->getByName('callback')->getActionName())->toBe(CallbackController::class);
+    expect(config('auth.guards.auth0-session.driver'))->toBe('auth0.authenticator');
 });
 
-it('limits repeated credential attempts independently of the PKCE limiter', function (): void {
+it('limits repeated local credential attempts per account', function (): void {
     for ($attempt = 0; $attempt < 10; $attempt++) {
         $this->postJson('/api/v1/auth/login', ['username' => 'mobile.user', 'password' => 'incorrect'])->assertUnauthorized();
     }
     $this->postJson('/api/v1/auth/login', ['username' => 'mobile.user', 'password' => 'incorrect'])
         ->assertTooManyRequests()->assertJsonPath('code', 429);
-    DB::table('users')->update(['auth0' => 'auth0|mobile-user']);
-    $this->withToken($this->accessToken())->getJson('/api/mobile/auth/me')->assertOk();
+    $this->postJson('/api/v1/auth/login', ['username' => 'another.user', 'password' => 'incorrect'])->assertUnauthorized();
 });

@@ -1,6 +1,5 @@
 <?php
 
-use App\Auth\MobileUserRepository;
 use App\Auth\UserRepository;
 use App\Models\Security\LocalAppUser;
 use App\User;
@@ -57,10 +56,6 @@ return [
             'provider' => 'users',
         ],
 
-        'auth0-mobile' => [
-            'driver' => 'auth0-mobile',
-            'provider' => 'auth0-mobile-provider',
-        ],
         'local-app' => [
             'driver' => 'local-passport',
             'provider' => 'local-app-users',
@@ -100,10 +95,6 @@ return [
             'repository' => UserRepository::class,
         ],
 
-        'auth0-mobile-provider' => [
-            'driver' => 'auth0.provider',
-            'repository' => MobileUserRepository::class,
-        ],
         'local-app-users' => [
             'driver' => 'eloquent',
             'model' => LocalAppUser::class,
