@@ -82,4 +82,9 @@ class InventoryPartnumbersController extends BaseController
 
         return $this->redirectBackSuccess();
     }
+
+	public function show(string $inventorypartnumber)
+	{
+
+	}
 }

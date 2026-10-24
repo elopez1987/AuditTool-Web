@@ -27,9 +27,6 @@ use App\Http\Controllers\Security\Users\UsersForTRansportController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('menusecurity', function () {
-        return view('layouts.Menu.Security.menusecurity');
-    })->name('menusecurity');
 
     //    ----------------------------------------------- Modulo de usuarios---------------------------------------------------------------------
     Route::resource('securityusers', UserController::class)->except('show');
@@ -137,7 +134,7 @@ Route::group(['middleware' => ['role:ADMINISTRADOR']], function () {
     Route::get('usersfortransportdata', [UsersForTRansportController::class, 'usersfortransportdata'])->name('usersfortransportdata');
 
     //	Usuarios activo
-    Route::resource('activeusers', ActiveUsersController::class);
+    Route::resource('activeusers', ActiveUsersController::class)->only('index', 'destroy');
     Route::get('getactiveusers', [ActiveUsersController::class, 'getactiveusers'])->name('getactiveusers');
     Route::get('clearsessions', [ActiveUsersController::class, 'clearsessions'])->name('clearsessions');
 

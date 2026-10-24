@@ -117,4 +117,9 @@ class PermissionController extends BaseController
                 return $permission;
             });
     }
+
+	public function show(string $securitypermission)
+	{
+
+	}
 }

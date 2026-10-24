@@ -27,7 +27,7 @@
                                 <a>
                                     @include('buttons.reload')
                                 </a>
-                                <a href="{{route('menuconfiguration')}}">
+                                <a href="{{route('home')}}">
                                     @include('buttons.cancel')
                                 </a>
                             </div>

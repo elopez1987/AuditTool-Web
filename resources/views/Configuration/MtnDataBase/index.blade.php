@@ -17,7 +17,7 @@
                                         <a href="">
                                             @include('buttons.save')
                                         </a>
-                                        <a href="{{route('menuconfiguration')}}">
+                                        <a href="{{route('home')}}">
                                             @include('buttons.back')
                                         </a>
                                     </div>

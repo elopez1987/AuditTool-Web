@@ -27,10 +27,7 @@ Route::middleware(['auth'])->group(function () {
     //  Monitor de descarga
     Route::resource('receiptasn', ReceiptAsnsController::class);
     Route::get('getDataAsns', [ReceiptAsnsController::class, 'getDataAsns'])->name('getDataAsns');
-    //    Agregar cortina anticipada para las descargas de planta
-    Route::get('receiptasnstage/{id}', [AssignStageController::class, 'index'])->name('receiptasnstage');
-    Route::put('receiptasnassingstage/{id}', [AssignStageController::class, 'receiptasnassingstage'])->name('receiptasnassingstage');
-    Route::post('deletestagereceipt', [AssignStageController::class, 'deletestagereceipt'])->name('deletestagereceipt');
+
     //  Eventos de descargas
     Route::put('cancellationReceipt/{id}', [EventReceiptController::class, 'cancellationReceipt'])->name('cancellationReceipt');
     Route::put('addpriority/{id}', [EventReceiptController::class, 'addpriority'])->name('addpriority');
@@ -73,42 +70,11 @@ Route::middleware(['auth'])->group(function () {
     //    Exportar reporte de recibos
     Route::get('reportreceipts', [ReportReceiptsController::class, 'reportreceipts'])->name('reportreceipts');
     Route::post('generateFileToExportReceipt', [ReportReceiptsController::class, 'generateFileToExportReceipt'])->name('generateFileToExportReceipt');
-    //    Programar descarga esperada
-    Route::post('addReceiptToPlan', [AddPlanReceiptController::class, 'index'])->name('addReceiptToPlan');
+
     //    Monitos de arribos de planta
     Route::get('monitorreceiptplant', [MonitorReceiptPlantController::class, 'index'])->name('monitorreceiptplant');
     Route::get('getReceiptInTransit', [MonitorReceiptPlantController::class, 'getReceiptInTransit'])->name('getReceiptInTransit');
 
-    //    Horario de descarga 2.0
-    //    Crear periodos de horario de descarga
-    Route::resource('storagereceiptperiods', StorageReceiptPeriodsController::class);
-    Route::get('getDataStorageReceiptPeriod', [StorageReceiptPeriodsController::class, 'getDataStorageReceiptPeriod'])->name('getDataStorageReceiptPeriod');
-    Route::put('storagereceiptperiodsactive/{id}', [StorageReceiptPeriodsController::class, 'activeperiod'])->name('activeperiod');
-    //    Horario de descarga por turnos y bloques
-    Route::get('appointmentschedule', [DownloadScheduleController::class, 'index'])->name('appointmentschedule');
-    Route::get('getDataSchedulleV2', [DownloadScheduleController::class, 'getDataSchedulleV2'])->name('getDataSchedulleV2');
-
-    //    Agregar embarque al detalle del horario de descarga
-    Route::put('addShipmentToScheduleedit/{id}', [DownloadScheduleController::class, 'addShipmentToScheduleedit'])->name('addShipmentToScheduleedit');
-    //    Editar embarque del detalle del horario de descarga
-    Route::put('updateShipmentToSchedule/{id}', [DownloadScheduleController::class, 'updateShipmentToSchedule'])->name('updateShipmentToSchedule');
-    Route::post('getdaysforperiods', [DownloadScheduleController::class, 'getdaysforperiods'])->name('getdaysforperiods');
-    Route::post('getsecuenceforday/{workday}', [DownloadScheduleController::class, 'getsecuenceforday'])->name('getsecuenceforday');
-
-    //	Bloquear modulo del horario de descarga v2
-    Route::put('appointmentschedule/{id}', [EventSchedulleController::class, 'blockedeshedule'])->name('blockedeshedule');
-    Route::put('appointmentscheduleclear/{id}', [EventSchedulleController::class, 'clearBlocked'])->name('appointmentscheduleclear');
-    Route::put('appointmentschedulecancel/{id}', [EventSchedulleController::class, 'cancelReceipt'])->name('appointmentschedulecancel');
-    //	Agregar como prioridad
-    Route::put('addpriorityreceipt/{id}', [EventSchedulleController::class, 'addpriorityreceipt'])->name('addpriorityreceipt');
-    //	Reprogramar cita de entrega
-    Route::put('movetosecuente/{id}', [EventSchedulleController::class, 'movetosecuente'])->name('movetosecuente');
-
-    //   Monitor para registro de transporte por parte de proveedores
-    Route::get('monitor-transport-receipts', [MonitorTransportReceiptController::class, 'index'])->name('monitortransportreceipt');
-    Route::get('monitor-transport-receipt/{id}', [MonitorTransportReceiptController::class, 'edit'])->name('monitor-transport-receipt.edit');
-    Route::put('monitor-transport-receipt/{id}/create-qr', [MonitorTransportReceiptController::class, 'update'])->name('monitor-transport-receipt.update');
-    Route::get('printFormatQr/{id}', [MonitorTransportReceiptController::class, 'printFormatQr'])->name('printFormatQr');
 
 
 

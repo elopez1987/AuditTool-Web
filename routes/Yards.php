@@ -31,10 +31,6 @@ use App\Models\Yard\StorageAreas;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->group(function () {
-    //    **************************************************** RUTAS DE DASHBOARDS ***********************************************************
-    Route::get('dashboardyard', [DashboardYardController::class, 'index'])->name('dashboardyard');
-    Route::post('getDashboardData', [DashboardYardController::class, 'getDashboardData'])->name('getDashboardData');
-    Route::post('getTotalForZone', [DashboardYardController::class, 'getTotalForZone'])->name('getTotalForZone');
 
     //    **************************************************** CATALOGOS ***********************************************************
     //    ---------------------------------------------- Lineas de transporte ----------------------------------------------------
@@ -90,20 +86,6 @@ Route::middleware(['auth'])->group(function () {
     //    Parametros de zonas
     Route::get('storagezones/{id}/parameters', [ParameterZonesController::class, 'parameters'])->name('storagezones.parameters');
     Route::put('storagezonesparameters/{id}', [ParameterZonesController::class, 'storagezonesparameters'])->name('storagezonesparameters');
-
-    //    ---------------------------------------------------- Medidas de unidad (Cajas de 53, 20Ft, etc.) ------------------------------
-    Route::resource('shipmenttrucks', ShipmentTruckController::class);
-    Route::get('getDataTrucks', [ShipmentTruckController::class, 'getDataTrucks'])->name('getDataTrucks');
-    //    Importar tipo de unidad
-    Route::post('uploadfileshipmenttrucks', [ImportShipmentTruckController::class, 'importshipmenttrucks'])->name('uploadfileshipmenttrucks');
-    Route::get('uploadfileshipmenttrucks/template', [ImportShipmentTruckController::class, 'downloadTemplate'])->name('uploadfileshipmenttrucks.template');
-    //    Tolerancia de tipos de unidad
-    Route::get('shipmenttrucks/{id}/tolerance', [ShipmentTruckToleranceController::class, 'index'])->name('shipmenttrucks.tolerance');
-    Route::put('shipmenttruckstolerance/{id}', [ShipmentTruckToleranceController::class, 'update'])->name('shipmenttruckstolerance');
-
-    //  --------------------------------------------  Estatus de unidad (Vacio / Cargado )-----------------------------------------------
-    Route::resource('storageunitstatus', StorageUnitStatusesController::class);
-    Route::get('getDataUnitStatus', [StorageUnitStatusesController::class, 'getDataUnitStatus'])->name('getDataUnitStatus');
 
     //  -----------------------------------------------------  Operadores  --------------------------------------------------------------
     Route::resource('storageoperators', StorageOperatorsController::class);

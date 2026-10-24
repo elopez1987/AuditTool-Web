@@ -41,9 +41,7 @@ use Illuminate\Support\Facades\Route;
 use Rap2hpoutre\LaravelLogViewer\LogViewerController;
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('menuconfiguration', function () {
-        return view('layouts.Menu.Security.menu');
-    })->name('menuconfiguration');
+
 
     //    ---------------------------------------------------- Nombre del sistema ------------------------------------------
     Route::resource('namesystem', NameSystemController::class)->except('show', 'destroy');
