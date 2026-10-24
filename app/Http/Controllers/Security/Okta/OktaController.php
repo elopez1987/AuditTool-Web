@@ -44,7 +44,7 @@ class OktaController extends BaseController
                 'json' => [
                     'client_id' => $config->client_id,
                     'client_secret' => $config->client_secret,
-                    'audience' => $config->baseuri . 'api/v2/',
+                    'audience' => $config->baseuri.'api/v2/',
                     'grant_type' => 'client_credentials',
                 ],
                 'headers' => [
@@ -56,7 +56,7 @@ class OktaController extends BaseController
 
             return $this->cachedToken;
         } catch (ClientException $e) {
-            Log::error('Okta token request failed: ' . $e->getMessage());
+            Log::error('Okta token request failed: '.$e->getMessage());
             throw $e;
         }
 
@@ -108,17 +108,17 @@ class OktaController extends BaseController
             }
 
             DB::rollBack();
-            Log::warning('Okta user creation returned status: ' . $response->getStatusCode());
+            Log::warning('Okta user creation returned status: '.$response->getStatusCode());
 
             return $this->errorResponse('Error al crear el usuario, intente mas tarde.');
         } catch (ClientException $e) {
             DB::rollBack();
-            Log::error('Okta user creation failed: ' . $e->getMessage());
+            Log::error('Okta user creation failed: '.$e->getMessage());
 
             return $this->errorResponse('Error al crear el usuario en Okta.');
         } catch (Exception $e) {
             DB::rollBack();
-            Log::error('Okta user creation failed: ' . $e->getMessage());
+            Log::error('Okta user creation failed: '.$e->getMessage());
 
             return $this->errorResponse('Error al crear el usuario, intente mas tarde.');
         }
@@ -129,7 +129,7 @@ class OktaController extends BaseController
         return [
             'Content-Type' => 'application/json',
             'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . $token['access_token'],
+            'Authorization' => 'Bearer '.$token['access_token'],
         ];
     }
 
@@ -155,7 +155,7 @@ class OktaController extends BaseController
                 'timeout' => $config->timeout ?? 30.0,
             ]);
 
-            $client->delete('api/v2/users/' . $user->auth0, [
+            $client->delete('api/v2/users/'.$user->auth0, [
                 'headers' => $this->buildAuthHeaders($token),
             ]);
 
@@ -167,12 +167,12 @@ class OktaController extends BaseController
             return $this->redirectBackSuccessMessage('Usuario eliminado con exito.');
         } catch (ClientException $e) {
             DB::rollBack();
-            Log::error('Okta user deletion failed: ' . $e->getMessage());
+            Log::error('Okta user deletion failed: '.$e->getMessage());
 
             return $this->errorResponse('Error al eliminar el usuario en Okta.');
         } catch (Exception $e) {
             DB::rollBack();
-            Log::error('Okta user deletion failed: ' . $e->getMessage());
+            Log::error('Okta user deletion failed: '.$e->getMessage());
 
             return $this->errorResponse('Error al eliminar el usuario, intente mas tarde.');
         }

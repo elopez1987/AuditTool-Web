@@ -7,7 +7,6 @@ use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Configuration\TablesDataBase\SystemColumn;
 use App\Models\Security\Fuctions\SecurityFunction;
 use App\Traits\Web\General\GetParameters;
-use DB;
 
 class SelectDynamicController extends Controller
 {

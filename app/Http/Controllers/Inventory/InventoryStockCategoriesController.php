@@ -68,8 +68,5 @@ class InventoryStockCategoriesController extends BaseController
         return $this->redirectBackSuccess();
     }
 
-	public function show(string $inventorystockcategory)
-	{
-
-	}
+    public function show(string $inventorystockcategory) {}
 }

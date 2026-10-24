@@ -20,12 +20,12 @@ trait StorageWebPhotoTrait
 
     public function saveFileToModel($file, $centerid, $module, $submodule, $folder)
     {
-        $imageName = Str::random(10) . $file->getClientOriginalName();
+        $imageName = Str::random(10).$file->getClientOriginalName();
         $directory = $this->createDirectoryPath($centerid, $module, $submodule, $folder);
-        $basePath = public_path('storage/' . $directory . $imageName);
+        $basePath = public_path('storage/'.$directory.$imageName);
         $this->resizeImage($file, $basePath);
 
-        return $directory . $imageName;
+        return $directory.$imageName;
     }
 
     public function resizeImage($file, $basePath)
@@ -58,7 +58,7 @@ trait StorageWebPhotoTrait
     private function createDirectoryPath($centerId, $module, $submodule, $folder)
     {
         $year = Carbon::now()->year;
-        $directory = 'public/' . $centerId . '/' . $year . '/' . $module . '/' . $submodule . '/' . $folder . '/';
+        $directory = 'public/'.$centerId.'/'.$year.'/'.$module.'/'.$submodule.'/'.$folder.'/';
         if (! Storage::exists($directory)) {
             \Storage::makeDirectory($directory);
         }

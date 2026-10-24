@@ -135,12 +135,12 @@ class MensajeDeCapacidadDePatio extends Command
                     'parameters' => [
                         ['type' => 'text', 'text' => (string) $totalCapacidad],
                         ['type' => 'text', 'text' => (string) $totalUnit],
-                        ['type' => 'text', 'text' => number_format($capacidadUsada, 2) . '%'],
+                        ['type' => 'text', 'text' => number_format($capacidadUsada, 2).'%'],
                         ['type' => 'text', 'text' => (string) Carbon::now()],
                     ],
                 ],
             ],
-            'phone' => '1' . $contact->phonenumber,
+            'phone' => '1'.$contact->phonenumber,
         ];
     }
 }

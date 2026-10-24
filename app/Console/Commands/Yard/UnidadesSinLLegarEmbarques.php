@@ -139,7 +139,7 @@ class UnidadesSinLLegarEmbarques extends Command
                     ],
                 ],
             ],
-            'phone' => '1' . $contact->phonenumber,
+            'phone' => '1'.$contact->phonenumber,
         ];
     }
 

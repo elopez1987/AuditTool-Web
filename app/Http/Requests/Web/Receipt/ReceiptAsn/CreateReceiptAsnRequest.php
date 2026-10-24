@@ -89,12 +89,9 @@
 
 namespace App\Http\Requests\Web\Receipt\ReceiptAsn;
 
-use App\Models\Configuration\Folios\SystemFolio;
 use App\Models\Configuration\Warehouses\SystemWarehouse;
-use App\Models\Yard\Carriers\ShipmentCarrier;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
 
 class CreateReceiptAsnRequest extends FormRequest
 {
@@ -139,10 +136,7 @@ class CreateReceiptAsnRequest extends FormRequest
             return;
         }
 
-
     }
-
-
 
     /**
      * Verifica si debe generar shipmentid automáticamente
@@ -184,7 +178,6 @@ class CreateReceiptAsnRequest extends FormRequest
 
         return $baseRule.'|unique:receiptasn,shipmentid';
     }
-
 
     /**
      * Mensajes de validación personalizados

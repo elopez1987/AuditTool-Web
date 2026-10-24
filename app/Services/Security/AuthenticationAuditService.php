@@ -269,9 +269,9 @@ class AuthenticationAuditService
         $logData = [
             'username' => $auditData['username'],
             'ip' => $auditData['ip_address'],
-            'location' => ($auditData['city'] ?? 'Unknown') . ', ' . ($auditData['country'] ?? 'Unknown'),
+            'location' => ($auditData['city'] ?? 'Unknown').', '.($auditData['country'] ?? 'Unknown'),
             'reason' => $auditData['reason'],
-            'device_fingerprint' => substr($auditData['device_fingerprint'], 0, 12) . '...',
+            'device_fingerprint' => substr($auditData['device_fingerprint'], 0, 12).'...',
             'path' => $auditData['request_path'],
             'processing_time_ms' => $auditData['processing_time_ms'],
         ];
@@ -328,9 +328,9 @@ class AuthenticationAuditService
 
         if ($recentLocation && $recentLocation->country !== $location['country']) {
             $this->logSuspiciousActivity($user->id, 'NEW_LOCATION', [
-                'previous_location' => $recentLocation->city . ', ' . $recentLocation->country,
-                'new_location' => $location['city'] . ', ' . $location['country'],
-                'time_between' => Carbon::parse($recentLocation->created_at)->diffInHours(Carbon::now()) . ' hours',
+                'previous_location' => $recentLocation->city.', '.$recentLocation->country,
+                'new_location' => $location['city'].', '.$location['country'],
+                'time_between' => Carbon::parse($recentLocation->created_at)->diffInHours(Carbon::now()).' hours',
             ]);
         }
     }
@@ -349,7 +349,7 @@ class AuthenticationAuditService
 
         if (! $knownDevice) {
             $this->logSuspiciousActivity($user->id, 'NEW_DEVICE', [
-                'device_fingerprint' => substr($deviceFingerprint, 0, 12) . '...',
+                'device_fingerprint' => substr($deviceFingerprint, 0, 12).'...',
                 'first_seen' => Carbon::now()->toISOString(),
             ]);
         }
@@ -402,8 +402,8 @@ class AuthenticationAuditService
 
             if ($timeDiff < 30) { // Suspicious if location changed in less than 30 minutes
                 $this->logSuspiciousActivity($user->id, 'RAPID_LOCATION_CHANGE', [
-                    'previous_location' => $recentLogin->city . ', ' . $recentLogin->country,
-                    'new_location' => $currentLocation['city'] . ', ' . $currentLocation['country'],
+                    'previous_location' => $recentLogin->city.', '.$recentLogin->country,
+                    'new_location' => $currentLocation['city'].', '.$currentLocation['country'],
                     'time_between_minutes' => $timeDiff,
                 ]);
             }

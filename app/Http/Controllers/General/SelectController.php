@@ -23,7 +23,6 @@ use App\Traits\ResponseApi;
 use App\Traits\Web\General\Responser;
 use Auth;
 
-
 class SelectController extends Controller
 {
     use ResponseApi;
@@ -109,8 +108,6 @@ class SelectController extends Controller
         return $this->showAll('searchLocationForZone', StorageLocationResource::collection($data));
     }
 
-
-
     //	Modelo ReceiptProviders
     public function searchProviderForWarehouse($warehouseid)
     {
@@ -153,6 +150,4 @@ class SelectController extends Controller
 
         return response()->json($warehouses);
     }
-
-
 }

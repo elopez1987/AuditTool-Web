@@ -72,13 +72,7 @@ class StorageDestinationController extends BaseController
             ->Name($request->get('name'))->get();
     }
 
-	public function show(string $storagedestination)
-	{
+    public function show(string $storagedestination) {}
 
-	}
-
-	public function destroy(string $storagedestination)
-	{
-
-	}
+    public function destroy(string $storagedestination) {}
 }

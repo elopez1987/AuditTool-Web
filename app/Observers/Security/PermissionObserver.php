@@ -68,13 +68,13 @@ class PermissionObserver
 
         } catch (\Exception $e) {
             // Si todo falla, registrar el error pero no romper la aplicación
-            \Log::warning('Failed to clear permissions cache: ' . $e->getMessage());
+            \Log::warning('Failed to clear permissions cache: '.$e->getMessage());
 
             // Último recurso: intentar limpiar todo el cache
             try {
                 Cache::flush();
             } catch (\Exception $e) {
-                \Log::error('Failed to flush entire cache: ' . $e->getMessage());
+                \Log::error('Failed to flush entire cache: '.$e->getMessage());
             }
         }
     }
@@ -92,7 +92,7 @@ class PermissionObserver
 
             if (file_exists($cachePath) && is_dir($cachePath)) {
                 // Buscar archivos que contengan 'permissions_data_' en su nombre
-                $files = glob($cachePath . '/*');
+                $files = glob($cachePath.'/*');
 
                 foreach ($files as $file) {
                     if (is_file($file)) {

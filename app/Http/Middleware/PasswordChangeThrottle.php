@@ -25,7 +25,7 @@ class PasswordChangeThrottle
         }
 
         // Clave para el rate limiting
-        $throttleKey = 'password_change_attempts_' . $user->id;
+        $throttleKey = 'password_change_attempts_'.$user->id;
         $attempts = Cache::get($throttleKey, 0);
 
         // Límite: máximo 3 intentos por hora

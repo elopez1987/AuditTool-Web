@@ -1,28 +1,17 @@
 <?php
 
-use App\Http\Controllers\Receipt\AddPlanReceiptController;
-use App\Http\Controllers\Receipt\AssignStageController;
 use App\Http\Controllers\Receipt\EventReceiptController;
 use App\Http\Controllers\Receipt\ImportDataReceiptController;
 use App\Http\Controllers\Receipt\MonitorReceiptPlantController;
-use App\Http\Controllers\Receipt\MonitorTransport\MonitorTransportReceiptController;
 use App\Http\Controllers\Receipt\ReceiptAsnsController;
 use App\Http\Controllers\Receipt\ReceiptAsnStockController;
 use App\Http\Controllers\Receipt\ReceiptContainersController;
 use App\Http\Controllers\Receipt\ReportReceiptsController;
 use App\Http\Controllers\Receipt\ScheduleReceiptController;
-use App\Http\Controllers\Receipt\SchedulleV2\DownloadScheduleController;
-use App\Http\Controllers\Receipt\SchedulleV2\EventSchedulleController;
 use App\Http\Controllers\Receipt\StorageCheckListReceiptAsnController;
-use App\Http\Controllers\Receipt\StorageReceiptPeriods\StorageReceiptPeriodsController;
-use App\Http\Controllers\Yard\Carriers\ContactsCarriersController;
-use App\Http\Controllers\Yard\Carriers\ImportCarriersController;
-use App\Http\Controllers\Yard\Carriers\ParameterCarrierController;
-use App\Http\Controllers\Yard\Carriers\ShipmentCarrierController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->group(function () {
-
 
     //  Monitor de descarga
     Route::resource('receiptasn', ReceiptAsnsController::class);
@@ -74,8 +63,5 @@ Route::middleware(['auth'])->group(function () {
     //    Monitos de arribos de planta
     Route::get('monitorreceiptplant', [MonitorReceiptPlantController::class, 'index'])->name('monitorreceiptplant');
     Route::get('getReceiptInTransit', [MonitorReceiptPlantController::class, 'getReceiptInTransit'])->name('getReceiptInTransit');
-
-
-
 
 });

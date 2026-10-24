@@ -46,8 +46,8 @@ class NameSystemController extends BaseController
     public function update(Request $request, NameSystem $namesystem): RedirectResponse
     {
         $namesystem->update($request->all());
-        if (Storage::exists('storage/' . $namesystem->auxiliary05)) {
-            Storage::delete('storage/' . $namesystem->auxiliary05);
+        if (Storage::exists('storage/'.$namesystem->auxiliary05)) {
+            Storage::delete('storage/'.$namesystem->auxiliary05);
         }
         if ($request->hasFile('file')) {
             $path = $this->addMediaToModel($request, 'ImageProfile');

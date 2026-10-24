@@ -100,7 +100,7 @@ class GetEvidenceFromRControl extends Command
 
             $this->info("Encontrados {$shipments->count()} embarques en centro {$center->centerid}.");
 
-            $url = self::EVIDENCE_ENDPOINT . 'token=' . $token;
+            $url = self::EVIDENCE_ENDPOINT.'token='.$token;
             $client = new Client(['timeout' => 30]);
 
             $processed = 0;
@@ -196,11 +196,11 @@ class GetEvidenceFromRControl extends Command
         $format = 'Shipments.MonitorPods.pdf';
         $pdf = PDF::loadView($format, compact('files', 'shipment'));
 
-        $storagePath = storage_path() . '/app/public/' . $center->centerid . '/EvidenceShipment/';
-        $fileName = $shipment->shipmentid . '-' . Str::random(10) . '.pdf';
-        $pdf->save($storagePath . '/' . $fileName);
+        $storagePath = storage_path().'/app/public/'.$center->centerid.'/EvidenceShipment/';
+        $fileName = $shipment->shipmentid.'-'.Str::random(10).'.pdf';
+        $pdf->save($storagePath.'/'.$fileName);
 
-        $relativePath = 'public/' . $center->centerid . '/EvidenceShipment/' . $fileName;
+        $relativePath = 'public/'.$center->centerid.'/EvidenceShipment/'.$fileName;
         $this->createRegisterPOD($shipment, $relativePath);
 
         //        Log::info('Evidencia almacenada exitosamente', [
@@ -230,7 +230,7 @@ class GetEvidenceFromRControl extends Command
             $config = $this->getDataApi($centerid);
 
             $endpoint = 'GetUserToken?';
-            $url = $config->url . $endpoint . 'arg00=' . $config->userid . '&arg01=' . $config->password;
+            $url = $config->url.$endpoint.'arg00='.$config->userid.'&arg01='.$config->password;
 
             $response = Http::timeout(30)->post($url);
 

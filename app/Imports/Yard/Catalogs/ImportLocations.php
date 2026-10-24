@@ -14,7 +14,7 @@ class ImportLocations implements ToCollection, WithHeadingRow, WithValidation
     use Responser;
 
     public function collection(Collection $rows): void
-	{
+    {
 
         foreach ($rows as $row) {
 

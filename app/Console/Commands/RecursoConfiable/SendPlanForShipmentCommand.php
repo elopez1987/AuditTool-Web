@@ -257,7 +257,7 @@ class SendPlanForShipmentCommand extends Command
             $config = EdiConfig::where('edi', self::EDI_SYSTEM)->firstOrFail();
 
             $endpoint = 'GetUserToken?';
-            $url = $config->url . $endpoint . 'arg00=' . $config->userid . '&arg01=' . $config->password;
+            $url = $config->url.$endpoint.'arg00='.$config->userid.'&arg01='.$config->password;
 
             $response = Http::timeout(30)->post($url);
 
@@ -290,7 +290,7 @@ class SendPlanForShipmentCommand extends Command
 
     private function processShipments($shipments, string $token): void
     {
-        $url = 'https://app.rcontrol.com.mx/Japi/load_appointments_rest_service?token=' . $token;
+        $url = 'https://app.rcontrol.com.mx/Japi/load_appointments_rest_service?token='.$token;
         $client = new Client(['timeout' => 30]);
 
         $processed = 0;

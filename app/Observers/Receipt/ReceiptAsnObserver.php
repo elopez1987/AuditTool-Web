@@ -6,11 +6,7 @@ use App\Models\Receipt\ReceiptAsn;
 
 class ReceiptAsnObserver
 {
-    public function created(ReceiptAsn $receiptAsn): void
-    {
-
-
-    }
+    public function created(ReceiptAsn $receiptAsn): void {}
 
     public function updated(ReceiptAsn $receiptAsn): void {}
 

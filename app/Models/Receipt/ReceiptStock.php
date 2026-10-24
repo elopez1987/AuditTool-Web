@@ -2,17 +2,9 @@
 
 namespace App\Models\Receipt;
 
-use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
-use App\Models\Configuration\Warehouses\SystemWarehouse;
-use App\Models\Inventory\Categories\InventoryPartNumberCategory01;
-use App\Models\Inventory\Categories\InventoryPartNumberCategory02;
 use App\Models\Inventory\PartNumber\InventoryPartnumber;
-use App\Models\Security\Users\SecurityAccessWarehouse;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Carbon;
 use Spatie\Activitylog\LogOptions;
-use Spatie\Activitylog\Models\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 class ReceiptStock extends Model
@@ -38,7 +30,6 @@ class ReceiptStock extends Model
     {
         return LogOptions::defaults()->logFillable();
     }
-
 
     //    Relaciones entre modelos
     public function partnumber()

@@ -89,7 +89,7 @@ class ObtenerETAdeRecursoConfiable extends Command
                 return;
             }
 
-            $this->info('Encontrados ' . count($journeys) . " journeys en centro {$center->centerid}.");
+            $this->info('Encontrados '.count($journeys)." journeys en centro {$center->centerid}.");
 
             $this->fetchAndUpdateETAs($journeys, $token, $center->centerid);
 
@@ -104,7 +104,7 @@ class ObtenerETAdeRecursoConfiable extends Command
 
     private function fetchAndUpdateETAs(array $journeys, string $token, string $centerid): void
     {
-        $url = self::ETA_ENDPOINT . 'token=' . $token;
+        $url = self::ETA_ENDPOINT.'token='.$token;
         $client = new Client(['timeout' => 30]);
         $contentBody = $this->createJsonFilter($journeys);
 
@@ -227,7 +227,7 @@ class ObtenerETAdeRecursoConfiable extends Command
             $config = $this->getDataApi($centerid);
 
             $endpoint = 'GetUserToken?';
-            $url = $config->url . $endpoint . 'arg00=' . $config->userid . '&arg01=' . $config->password;
+            $url = $config->url.$endpoint.'arg00='.$config->userid.'&arg01='.$config->password;
 
             $response = Http::timeout(30)->post($url);
 

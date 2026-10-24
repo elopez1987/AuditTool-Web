@@ -172,7 +172,7 @@ class ServiceSystemCenterDistribution
      */
     public function getDirectories(string $centerid): array
     {
-        return Storage::directories('public/' . $centerid);
+        return Storage::directories('public/'.$centerid);
     }
 
     /**

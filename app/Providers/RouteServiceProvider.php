@@ -68,7 +68,6 @@ class RouteServiceProvider extends ServiceProvider
             ->group(base_path('routes/web.php'));
     }
 
-
     protected function mapInventoryRoutes()
     {
         Route::middleware('web')
@@ -90,8 +89,6 @@ class RouteServiceProvider extends ServiceProvider
             ->group(base_path('routes/Receipt.php'));
     }
 
-
-
     protected function mapConfigurationRoutes()
     {
         Route::middleware('web')
@@ -105,8 +102,6 @@ class RouteServiceProvider extends ServiceProvider
             ->namespace($this->namespace)
             ->group(base_path('routes/Security.php'));
     }
-
-
 
     protected function mapSelectRoutes()
     {

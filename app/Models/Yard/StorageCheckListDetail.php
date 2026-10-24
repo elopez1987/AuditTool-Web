@@ -14,10 +14,10 @@ class StorageCheckListDetail extends Model
     use LogsActivity;
     use Notifiable;
 
-	public function getActivitylogOptions(): LogOptions
-	{
-		return LogOptions::defaults()->logFillable();
-	}
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
     protected $table = 'storagechecklistdetails';
 
@@ -45,20 +45,18 @@ class StorageCheckListDetail extends Model
         'schemaid' => 'STS',
     ];
 
-
-
     public function status(): BelongsTo
     {
         return $this->belongsTo(SystemStatus::class, 'statusid', 'statusid');
     }
 
     public function checklist(): BelongsTo
-	{
+    {
         return $this->belongsTo(StorageCheckList::class, 'checklistid');
     }
 
     public function scopeName($query, $name): void
-	{
+    {
         if (trim($name) != '') {
             $query->where('name', 'like', "%{$name}%");
         }

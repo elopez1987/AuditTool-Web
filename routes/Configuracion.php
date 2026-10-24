@@ -42,7 +42,6 @@ use Rap2hpoutre\LaravelLogViewer\LogViewerController;
 
 Route::middleware(['auth'])->group(function () {
 
-
     //    ---------------------------------------------------- Nombre del sistema ------------------------------------------
     Route::resource('namesystem', NameSystemController::class)->except('show', 'destroy');
 
@@ -228,6 +227,5 @@ Route::group(['middleware' => ['role:ADMINISTRADOR']], function () {
     Route::resource('label-dictionary', UiLabelsController::class)->except('show');
 
     Route::get('logs', [LogViewerController::class, 'index']);
-
 
 });

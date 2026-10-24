@@ -53,20 +53,20 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => env('APP_URL') . '/storage',
+            'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
         'Media' => [
             'driver' => 'local',
             'root' => storage_path('app'),
-            'url' => env('APP_URL') . '/storage',
+            'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
 
         'Logs' => [
             'driver' => 'local',
             'root' => storage_path('logs'),
-            'url' => env('APP_URL') . '/storage',
+            'url' => env('APP_URL').'/storage',
         ],
 
         's3' => [

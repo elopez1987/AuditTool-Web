@@ -59,7 +59,7 @@ class TiempoExcedidoParaSalirDePatio extends Command
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
             ]);
-            $this->error('Error al ejecutar el comando: ' . $e->getMessage());
+            $this->error('Error al ejecutar el comando: '.$e->getMessage());
 
             return Command::FAILURE;
         }
@@ -202,7 +202,7 @@ class TiempoExcedidoParaSalirDePatio extends Command
                     ],
                 ],
             ],
-            'phone' => '1' . $contact->phonenumber,
+            'phone' => '1'.$contact->phonenumber,
         ];
     }
 

@@ -40,7 +40,7 @@ class SystemMailController extends BaseController
         $mail = new SystemMail($request->validated());
         $mail->save();
 
-        return redirect('systemmails/' . $mail->mailid . '/createMailDetail');
+        return redirect('systemmails/'.$mail->mailid.'/createMailDetail');
     }
 
     public function edit(SystemMail $systemmail)

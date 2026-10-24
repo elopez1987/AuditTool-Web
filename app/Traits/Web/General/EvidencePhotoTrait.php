@@ -30,13 +30,11 @@ trait EvidencePhotoTrait
         return redirect()->back()->with(session()->flash('success', 'Fotografia eliminado con exito!!'));
     }
 
-
-
     public static function addMediaToModel(Request $request, $file)
     {
-        $nombre = Str::random(10) . $request->file('file')->getClientOriginalName();
-        $path = storage_path() . '/app/public/' . $file . '/' . $nombre;
-        $pathdb = 'public/' . $file . '/' . $nombre;
+        $nombre = Str::random(10).$request->file('file')->getClientOriginalName();
+        $path = storage_path().'/app/public/'.$file.'/'.$nombre;
+        $pathdb = 'public/'.$file.'/'.$nombre;
         if ($path) {
             Image::make($request->file('file'))
                 ->resize(1200, 1200, function ($constraint) {
@@ -52,9 +50,9 @@ trait EvidencePhotoTrait
         $image = $file;
         $image = str_replace('data:image/png;base64,', '', $image);
         $image = str_replace(' ', '+', $image);
-        $imageName = $model->id . '-' . Str::random(15) . '.png';
-        File::put(public_path('storage/public/' . $model->centerid . '/' . $folder . '/' . $imageName), base64_decode($image));
-        $path = 'public/' . $model->centerid . '/' . $folder . '/' . $imageName;
+        $imageName = $model->id.'-'.Str::random(15).'.png';
+        File::put(public_path('storage/public/'.$model->centerid.'/'.$folder.'/'.$imageName), base64_decode($image));
+        $path = 'public/'.$model->centerid.'/'.$folder.'/'.$imageName;
         if ($location === 'ModelEvidence') {
             self::createEvidencePhoto($modelName, $model->id, $path, $typeid, $model);
         } else {

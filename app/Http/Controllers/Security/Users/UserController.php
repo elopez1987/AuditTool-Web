@@ -68,7 +68,7 @@ class UserController extends BaseController
             $error = $e->getMessage();
             DB::rollback();
 
-            return Redirect::back()->withInput()->with(session()->flash('success', 'No se pudieron guardar los datos!!' . $error));
+            return Redirect::back()->withInput()->with(session()->flash('success', 'No se pudieron guardar los datos!!'.$error));
         }
 
     }
@@ -118,7 +118,7 @@ class UserController extends BaseController
             ]);
 
             if ($status === Password::RESET_LINK_SENT) {
-                return redirect()->back()->with('success', 'Se ha enviado un correo de reinicio de contraseña a: ' . $user->email);
+                return redirect()->back()->with('success', 'Se ha enviado un correo de reinicio de contraseña a: '.$user->email);
             }
 
             return redirect()->back()->with('error', 'No se pudo enviar el correo de reinicio. Por favor, inténtelo de nuevo.');

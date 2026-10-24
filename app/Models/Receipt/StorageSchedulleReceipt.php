@@ -70,7 +70,7 @@ class StorageSchedulleReceipt extends Model
     }
 
     public function status(): BelongsTo
-	{
+    {
         return $this->belongsTo(SystemStatus::class, 'statusid');
     }
 

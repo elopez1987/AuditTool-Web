@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->group(function () {
 
-
     //	Modelos InventoryPartNumber
     Route::get('inventory-partnumbers/{prtnum}/search', [SelectController::class, 'searchBySku'])->name('inventory-partnumbers.search');
     //	Modelos SystemWarehouses
@@ -20,6 +19,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('storage-locations/{zoneid}/search', [SelectController::class, 'searchLocationForZone'])->name('storage-locations.search');
     //	Modelo ReceiptProviders
     Route::get('receipt-providers/{warehouseid}/search', [SelectController::class, 'searchProviderForWarehouse'])->name('receipt-providers.search');
-
 
 });

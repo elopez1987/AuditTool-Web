@@ -56,7 +56,7 @@ class EventUserController extends BaseController
             );
         } catch (Throwable $exception) {
             return $this->errorResponse(
-                'No se pudo procesar el archivo de importación: ' . $exception->getMessage()
+                'No se pudo procesar el archivo de importación: '.$exception->getMessage()
             );
         }
 

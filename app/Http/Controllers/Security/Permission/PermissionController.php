@@ -24,7 +24,7 @@ class PermissionController extends BaseController
     public function getDataPermissions(Request $request)
     {
         // Generar clave única basada en los parámetros de filtrado
-        $cacheKey = 'permissions_data_' . md5(json_encode([
+        $cacheKey = 'permissions_data_'.md5(json_encode([
             'moduleid' => $request->get('moduleid'),
             'functionid' => $request->get('functionid'),
             'name' => $request->get('name'),
@@ -118,8 +118,5 @@ class PermissionController extends BaseController
             });
     }
 
-	public function show(string $securitypermission)
-	{
-
-	}
+    public function show(string $securitypermission) {}
 }

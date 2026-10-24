@@ -85,8 +85,8 @@ class TokenManagementService
 
         if (! $refreshTokenData) {
             Log::channel('security')->warning('Invalid refresh token used', [
-                'refresh_token' => substr($refreshToken, 0, 10) . '...',
-                'device_fingerprint' => substr($deviceFingerprint, 0, 12) . '...',
+                'refresh_token' => substr($refreshToken, 0, 10).'...',
+                'device_fingerprint' => substr($deviceFingerprint, 0, 12).'...',
                 'ip' => request()->ip(),
             ]);
 
@@ -247,7 +247,7 @@ class TokenManagementService
         if ($revokedCount > 0) {
             Log::channel('security')->info('Device tokens revoked', [
                 'user_id' => $user->id,
-                'device_fingerprint' => substr($deviceFingerprint, 0, 12) . '...',
+                'device_fingerprint' => substr($deviceFingerprint, 0, 12).'...',
                 'tokens_revoked' => $revokedCount,
             ]);
         }
@@ -280,7 +280,7 @@ class TokenManagementService
         return array_map(function ($session) {
             return [
                 'token_id' => $session->token_id,
-                'device_fingerprint' => substr($session->device_fingerprint, 0, 12) . '...',
+                'device_fingerprint' => substr($session->device_fingerprint, 0, 12).'...',
                 'ip_address' => $session->ip_address,
                 'created_at' => $session->created_at,
                 'last_used_at' => $session->last_used_at,
@@ -367,8 +367,8 @@ class TokenManagementService
             $issues[] = 'DEVICE_FINGERPRINT_MISMATCH';
             Log::channel('security')->warning('Token device fingerprint mismatch', [
                 'token_id' => $tokenId,
-                'stored_fingerprint' => substr($metadata['device_fingerprint'], 0, 12) . '...',
-                'current_fingerprint' => substr($currentDeviceFingerprint, 0, 12) . '...',
+                'stored_fingerprint' => substr($metadata['device_fingerprint'], 0, 12).'...',
+                'current_fingerprint' => substr($currentDeviceFingerprint, 0, 12).'...',
             ]);
         }
 

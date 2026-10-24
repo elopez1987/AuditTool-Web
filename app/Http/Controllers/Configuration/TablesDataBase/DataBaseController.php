@@ -45,6 +45,6 @@ class DataBaseController extends BaseController
             return Redirect::back()->with(session()->flash('success', 'Movimiento ejecutado con exito!!'));
         }
 
-        return Redirect::back()->with(session()->flash('error', 'Movimiento no ejecutado:!!' . $error));
+        return Redirect::back()->with(session()->flash('error', 'Movimiento no ejecutado:!!'.$error));
     }
 }

@@ -7,14 +7,10 @@ use App\Http\Controllers\Yard\Carriers\ShipmentCarrierController;
 use App\Http\Controllers\Yard\Customers\ImportCustomerController;
 use App\Http\Controllers\Yard\Customers\OrderCustomerController;
 use App\Http\Controllers\Yard\Customers\ParameterCustomerController;
-use App\Http\Controllers\Yard\DashboardYardController;
 use App\Http\Controllers\Yard\Destination\StorageDestinationController;
 use App\Http\Controllers\Yard\ReceiptProviders\ImportProvidersController;
 use App\Http\Controllers\Yard\ReceiptProviders\ReceiptProviderContactsController;
 use App\Http\Controllers\Yard\ReceiptProviders\ReceiptProvidersController;
-use App\Http\Controllers\Yard\ShipmentTruck\ImportShipmentTruckController;
-use App\Http\Controllers\Yard\ShipmentTruck\ShipmentTruckController;
-use App\Http\Controllers\Yard\ShipmentTruck\ShipmentTruckToleranceController;
 use App\Http\Controllers\Yard\StorageAreasController;
 use App\Http\Controllers\Yard\StorageCheckLists\Imports\ImportCheckListDetailsController;
 use App\Http\Controllers\Yard\StorageCheckLists\StorageCheckListDetailsController;
@@ -26,8 +22,6 @@ use App\Http\Controllers\Yard\StorageLocations\StorageLocationController;
 use App\Http\Controllers\Yard\StorageOperators\StorageOperatorsController;
 use App\Http\Controllers\Yard\StorageZone\ParameterZonesController;
 use App\Http\Controllers\Yard\StorageZone\StorageZoneController;
-use App\Http\Controllers\Yard\UnitStatus\StorageUnitStatusesController;
-use App\Models\Yard\StorageAreas;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->group(function () {

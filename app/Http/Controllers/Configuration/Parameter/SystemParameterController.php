@@ -45,7 +45,7 @@ class SystemParameterController extends BaseController
         $this->authorize('systemparameters.create');
         $parameter = $this->parameterService->store($request->validated());
 
-        return redirect('detailparameter/' . $parameter->parameterid . '/add');
+        return redirect('detailparameter/'.$parameter->parameterid.'/add');
     }
 
     public function edit(SystemParameter $systemparameter)

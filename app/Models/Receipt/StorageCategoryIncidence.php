@@ -44,7 +44,7 @@ class StorageCategoryIncidence extends Model
     }
 
     public function center(): BelongsTo
-	{
+    {
         return $this->belongsTo(SystemCenterDistribution::class, 'centerid');
     }
 
@@ -54,7 +54,7 @@ class StorageCategoryIncidence extends Model
     }
 
     public function status(): BelongsTo
-	{
+    {
         return $this->belongsTo(SystemStatus::class, 'statusid');
     }
 

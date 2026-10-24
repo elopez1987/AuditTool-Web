@@ -46,5 +46,4 @@ class StorageCheckListDetailsController extends BaseController
 
         return $this->redirectBackSuccess();
     }
-
 }

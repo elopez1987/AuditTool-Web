@@ -140,7 +140,7 @@ class EnviarDatosIzelWmsCommand extends Command
         ];
 
         return isset($endpoints[$type])
-            ? rtrim($config->url, '/') . '/' . $endpoints[$type]
+            ? rtrim($config->url, '/').'/'.$endpoints[$type]
             : null;
     }
 
@@ -166,7 +166,7 @@ class EnviarDatosIzelWmsCommand extends Command
     private function getTokenWms(EdiConfig $config): ?string
     {
         try {
-            $url = rtrim($config->url, '/') . '/gettoken';
+            $url = rtrim($config->url, '/').'/gettoken';
             $credentials = [
                 'userid' => $config->userid,
                 'password' => $config->password,

@@ -103,7 +103,7 @@ class ImportPartNumbers implements ToCollection, WithChunkReading, WithHeadingRo
         }
 
         if ($this->prtnumIsInteger && ! $this->isValidIntegerPrtnum($prtnum)) {
-            $this->failedRows[] = "prtnum '{$prtnum}' no es válido para la columna numérica de esta base de datos (máx. " . self::MAX_INT . ').';
+            $this->failedRows[] = "prtnum '{$prtnum}' no es válido para la columna numérica de esta base de datos (máx. ".self::MAX_INT.').';
 
             return null;
         }
@@ -182,7 +182,7 @@ class ImportPartNumbers implements ToCollection, WithChunkReading, WithHeadingRo
                 'total_filas' => count($upsertData),
                 'error' => $e->getMessage(),
             ]);
-            $this->failedRows[] = 'No se pudo guardar un lote de ' . count($upsertData) . ' fila(s): ' . $e->getMessage();
+            $this->failedRows[] = 'No se pudo guardar un lote de '.count($upsertData).' fila(s): '.$e->getMessage();
         }
     }
 

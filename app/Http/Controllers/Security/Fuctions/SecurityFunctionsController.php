@@ -24,7 +24,7 @@ class SecurityFunctionsController extends BaseController
 
     public function getDataFunctions(Request $request)
     {
-        $cacheKey = 'security_functions_ids_' . md5(json_encode([
+        $cacheKey = 'security_functions_ids_'.md5(json_encode([
             'moduleid' => $request->moduleid,
             'description' => $request->description,
         ]));
@@ -67,7 +67,7 @@ class SecurityFunctionsController extends BaseController
         $function = new SecurityFunction($request->all());
         $function->save();
 
-        return redirect('securityfunctions/' . $function->functionid . '/edit');
+        return redirect('securityfunctions/'.$function->functionid.'/edit');
     }
 
     public function edit(SecurityFunction $securityfunction)
@@ -92,7 +92,7 @@ class SecurityFunctionsController extends BaseController
             foreach ($routes as $route) {
                 $description = $this->getPermissionDescription($route);
                 Permission::create([
-                    'name' => $request['name'] . '.' . $route,
+                    'name' => $request['name'].'.'.$route,
                     'description' => $description,
                     'moduleid' => $securityfunction->moduleid,
                     'functionid' => $securityfunction->functionid,

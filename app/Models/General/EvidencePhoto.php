@@ -8,8 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
-use Storage;
-
 
 class EvidencePhoto extends Model
 {
@@ -49,10 +47,8 @@ class EvidencePhoto extends Model
         return EvidencePhoto::where('model_id', $id)->where('model_type', '=', $model)->get();
     }
 
-
-
     protected static function boot(): void
-	{
+    {
         parent::boot();
         if (! app()->runningInConsole()) {
             self::creating(function (EvidencePhoto $model) {

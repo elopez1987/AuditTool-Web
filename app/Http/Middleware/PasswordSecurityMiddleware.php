@@ -75,7 +75,7 @@ class PasswordSecurityMiddleware
      */
     private function isRateLimited(Request $request, $user): bool
     {
-        $throttleKey = 'password_change_attempts_' . $user->id;
+        $throttleKey = 'password_change_attempts_'.$user->id;
         $attempts = Cache::get($throttleKey, 0);
         $maxAttempts = 3;
         $decayMinutes = 60;

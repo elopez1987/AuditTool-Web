@@ -16,10 +16,11 @@ class StorageLocationController extends BaseController
     {
         $this->authorize('storagelocations.index');
         $status = $this->getStatusSTS();
-		$zones = StorageZone::controlAccessUser()->where('statusid', 'E')
-			->select(['id', 'name'])->get();
+        $zones = StorageZone::controlAccessUser()->where('statusid', 'E')
+            ->select(['id', 'name'])->get();
+
         return view('Yards.StorageLocations.index',
-            compact('status','zones'));
+            compact('status', 'zones'));
     }
 
     public function getDataLocations(Request $request)

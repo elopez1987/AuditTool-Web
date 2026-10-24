@@ -55,7 +55,7 @@ class RoleController extends BaseController
         $role = Role::create($request->all());
         $role->save();
 
-        return redirect('securityroles/' . $role->id . '/edit');
+        return redirect('securityroles/'.$role->id.'/edit');
     }
 
     public function edit(Role $securityrole)

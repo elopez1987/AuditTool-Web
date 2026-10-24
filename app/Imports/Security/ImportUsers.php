@@ -44,7 +44,7 @@ class ImportUsers implements SkipsEmptyRows, SkipsOnFailure, ToCollection, WithH
     {
         DB::table('logimports')->delete();
 
-        $this->createLog('Inicio de importación de usuarios. Filas recibidas: ' . $rows->count());
+        $this->createLog('Inicio de importación de usuarios. Filas recibidas: '.$rows->count());
 
         foreach ($rows as $index => $row) {
             $rowNumber = (int) $index + 2;
@@ -76,8 +76,8 @@ class ImportUsers implements SkipsEmptyRows, SkipsOnFailure, ToCollection, WithH
                 $warehouseid = trim((string) ($data['warehouseid'] ?? ''));
                 $this->createLog(
                     "Fila #{$rowNumber}: usuario [{$user->username}] procesado correctamente"
-                    . ($roleAssigned ? ' (rol asignado)' : ' (sin rol)')
-                    . ", acceso {$centerid}/{$warehouseid}."
+                    .($roleAssigned ? ' (rol asignado)' : ' (sin rol)')
+                    .", acceso {$centerid}/{$warehouseid}."
                 );
             } catch (Throwable $exception) {
                 $this->skipped++;

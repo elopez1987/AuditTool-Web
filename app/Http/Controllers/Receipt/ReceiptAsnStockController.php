@@ -40,7 +40,7 @@ class ReceiptAsnStockController extends BaseController
             Log::info($e->getMessage());
             DB::rollback();
 
-            return $this->errorResponse('No se pudo agregar el stock, favor de validar.' . $error);
+            return $this->errorResponse('No se pudo agregar el stock, favor de validar.'.$error);
         }
     }
 
