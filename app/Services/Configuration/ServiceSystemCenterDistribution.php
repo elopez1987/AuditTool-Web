@@ -122,8 +122,7 @@ class ServiceSystemCenterDistribution
             $parameter = $data['parameter'] ?? [];
 
             $this->repository->update($systemcenterdistribution, [
-                'auxiliary05' => $parameter,
-                'notificationsflags' => $parameter,
+                'mobileflags' => $parameter,
             ]);
 
             DB::commit();
