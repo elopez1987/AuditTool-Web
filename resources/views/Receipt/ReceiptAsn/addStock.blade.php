@@ -68,20 +68,20 @@
                         </div>
                     </form>
                 </div>
-                <div class="card-footer">
-                    @if($receiptasn->statusid != 'IG')
-                        <a href="" data-target="#modal-uploaddata-{{$receiptasn->id}}" data-toggle="modal"
-                           data-placement="top">
-                            <button type="button"
-                                    class="btn waves-effect waves-light btn-outline-info btn-md"
-                                    data-toggle="tooltip" data-placement="top" title="Importar archivo">
-                                <img src="{{asset('/ico/uploadcsv.png')}}" alt="" class="img-16">
-                                <span class="text-button"> Importar datos </span>
-                            </button>
-                        </a>
-                        @include('Receipt.ReceiptAsn.uploaddata')
-                    @endif
-                </div>
+{{--                <div class="card-footer">--}}
+{{--                    @if($receiptasn->statusid != 'IG')--}}
+{{--                        <a href="" data-target="#modal-uploaddata-{{$receiptasn->id}}" data-toggle="modal"--}}
+{{--                           data-placement="top">--}}
+{{--                            <button type="button"--}}
+{{--                                    class="btn waves-effect waves-light btn-outline-info btn-md"--}}
+{{--                                    data-toggle="tooltip" data-placement="top" title="Importar archivo">--}}
+{{--                                <img src="{{asset('/ico/uploadcsv.png')}}" alt="" class="img-16">--}}
+{{--                                <span class="text-button"> Importar datos </span>--}}
+{{--                            </button>--}}
+{{--                        </a>--}}
+{{--                        @include('Receipt.ReceiptAsn.uploaddata')--}}
+{{--                    @endif--}}
+{{--                </div>--}}
             </div>
         </div>
     </div>
@@ -94,7 +94,7 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-lg-8">
+                        <div class="col-lg-12">
                             <table class="table table-bordered table-condensed tablegeneral ">
                                 <thead>
                                 <tr>
@@ -103,6 +103,8 @@
                                     <th>F.Producción</th>
                                     <th>Lote</th>
                                     <th>Cantidad</th>
+                                    <th>Rotativa</th>
+                                    <th>Definitiva</th>
                                     <th>Opciones</th>
                                 </tr>
                                 </thead>
@@ -113,7 +115,9 @@
                                         <td>{{$stock->partnumber->lngdsc}}</td>
                                         <td>{{$stock->productiondate}}</td>
                                         <td>{{$stock->expirecode}}</td>
-                                        <td>{{$stock->quantitytrue}}</td>
+                                        <td>{{$stock->quantity}}</td>
+                                        <td>{{$stock->rotary}}</td>
+                                        <td>{{$stock->definitive}}</td>
                                         <td>
                                             <a href="" data-target="#modal-updatequantity-{{$stock->id}}"
                                                data-toggle="modal" data-placement="top">
@@ -168,7 +172,6 @@
 
             const prtnum = document.getElementById("prtnum");
             const lngdsc = document.getElementById("lngdsc");
-            const untpal = document.getElementById("untpal");
 
             prtnum.addEventListener("blur", async () => {
 
@@ -198,13 +201,11 @@
 
                         prtnum.value = "";
                         lngdsc.value = "";
-                        untpal.value = "";
                         return;
                     }
 
                     // Llenar campos
                     lngdsc.value = data.Data.lngdsc ?? "";
-                    untpal.value = data.Data.untpal ?? "";
 
                 } catch (error) {
                     console.error("Error en la petición:", error);

@@ -346,10 +346,6 @@
                                         class="hidden-sm-up"><i class="ti-comment"></i></span> <span
                                         class="hidden-xs-down">Comentarios</span></a>
                         </li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view05" role="tab"><span
-                                        class="hidden-sm-up"><i class="ti-comment"></i></span> <span
-                                        class="hidden-xs-down">Detalle de contenedores</span></a>
-                        </li>
                     </ul>
                     <!-- Tab panes -->
                     <div class="tab-content">
@@ -593,64 +589,6 @@
                                                     </div>
                                                 </div>
                                             @endforeach
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane " id="view05" role="tabpanel">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <table
-                                                    class="table table-condensed  table-bordered table-hover">
-                                                <thead>
-                                                <tr>
-                                                    <th>Número de parte</th>
-                                                    <th>Descripción</th>
-                                                    <th>Cantidad</th>
-                                                    <th>Lote</th>
-                                                    <th>Fecha de caducidad</th>
-                                                    <th>Lpn</th>
-                                                    <th>Usuario</th>
-                                                    <th>Fecha de creación</th>
-                                                    <th></th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                @foreach($totalContainers as $container)
-                                                    <tr>
-                                                        <td>{{$container->partnumber ? $container->partnumber->prtnum : ''}}</td>
-                                                        <td>{{$container->partnumber ? $container->partnumber->lngdsc : ''}}</td>
-                                                        <td>{{$container->quantity }}</td>
-                                                        <td>{{$container->batch}}</td>
-                                                        <td>{{$container->expiredate}}</td>
-                                                        <td>{{$container->lpnid}}</td>
-                                                        <td>{{$container->user ? $container->user->name : ''}}</td>
-                                                        <td>{{$container->created_at}}</td>
-                                                        <td>
-                                                            @if($receiptasn->statusid != 'IG')
-                                                                <button class="btn btn-sm btn-outline-info"
-                                                                        onclick="deleteLpnOfReceipt( {!! $container->recordid!!} )">
-                                                                    Eliminar
-                                                                </button>
-
-                                                                <a href=""
-                                                                   data-target="#modal-updatequantity-{{$container->recordid}}"
-                                                                   data-toggle="modal" data-placement="top">
-                                                                    <button type="button"
-                                                                            class="btn waves-effect waves-light btn-outline-info btn-sm ml-2">
-                                                                        Modificar
-                                                                    </button>
-                                                                </a>
-                                                                @include('Receipt.ReceiptAsn.editquantitycontainer')
-                                                            @endif
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                                </tbody>
-                                            </table>
                                         </div>
                                     </div>
                                 </div>

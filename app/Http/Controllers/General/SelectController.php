@@ -23,7 +23,6 @@ class SelectController extends Controller
 {
     use ResponseApi;
 
-
     //	Modelo SystemWarehouse
     public function searchWarehouseForCenter($centerid)
     {

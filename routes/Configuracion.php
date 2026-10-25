@@ -6,6 +6,7 @@ use App\Http\Controllers\Configuration\CenterDistribution\SystemCenterDistributi
 use App\Http\Controllers\Configuration\CenterDistribution\SystemCenterDistributionFolderController;
 use App\Http\Controllers\Configuration\CommandJobs\CommandController;
 use App\Http\Controllers\Configuration\EdiConfig\EdiConfigController;
+use App\Http\Controllers\Configuration\EdiShipment\EdiShipmentsController;
 use App\Http\Controllers\Configuration\EdiToken\EdiTokenController;
 use App\Http\Controllers\Configuration\Folios\SystemFoliosController;
 use App\Http\Controllers\Configuration\Labels\InventoryLabelDetailsController;
@@ -227,5 +228,7 @@ Route::group(['middleware' => ['role:ADMINISTRADOR']], function () {
     Route::resource('label-dictionary', UiLabelsController::class)->except('show');
 
     Route::get('logs', [LogViewerController::class, 'index']);
+
+    Route::resource('edishipments', EdiShipmentsController::class)->only('index', 'destroy');
 
 });

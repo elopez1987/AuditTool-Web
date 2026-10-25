@@ -484,13 +484,13 @@
                                                             class="hide-menu"> Configuración de interfaces</span></a>
                                             </li>
                                         @endcan
-{{--                                        @can('edishipments.index')--}}
-{{--                                            <li class="sidebar-item"><a href="{{route('edishipments.index')}}"--}}
-{{--                                                                        class="sidebar-link"><i--}}
-{{--                                                            class="mdi mdi-file-document-box"></i><span--}}
-{{--                                                            class="hide-menu"> Monitor de interfaces</span></a>--}}
-{{--                                            </li>--}}
-{{--                                        @endcan--}}
+                                        @can('edishipments.index')
+                                            <li class="sidebar-item"><a href="{{route('edishipments.index')}}"
+                                                                        class="sidebar-link"><i
+                                                            class="mdi mdi-file-document-box"></i><span
+                                                            class="hide-menu"> Monitor de interfaces</span></a>
+                                            </li>
+                                        @endcan
                                         @can('webservicelog')
                                             <li class="sidebar-item"><a href="{{route('webservicelog.index')}}"
                                                                         class="sidebar-link"><i

@@ -2,7 +2,6 @@
 
 namespace App\Traits\Api;
 
-use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 
@@ -28,6 +27,4 @@ trait ResponseApi
             'Data' => $data,
         ], '200');
     }
-
-
 }

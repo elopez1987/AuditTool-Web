@@ -8,7 +8,6 @@ use App\Models\General\EvidencePhoto;
 use App\Models\General\StorageComment;
 use App\Models\Inventory\Origin\InventoryStockCategory;
 use App\Models\Receipt\ReceiptAsn;
-use App\Models\Receipt\ReceiptContainer;
 use App\Models\Receipt\ReceiptIncidenceStock;
 use App\Models\Receipt\ReceiptStock;
 use App\Models\Yard\StorageReason;
@@ -137,12 +136,11 @@ class ReceiptAsnsController extends BaseController
         $evidences = EvidencePhoto::getPhotosForModel($receiptasn->id, 'ReceiptAsn');
         $incidences = ReceiptIncidenceStock::with(['partnumber', 'categoryincidence', 'subcategoryincidence'])
             ->where('receiptid', $receiptasn->id)->get();
-        $totalContainers = ReceiptContainer::getContainersForReceipt($receiptasn->id);
 
         return view(
             'Receipt.ReceiptAsn.show',
             compact('receiptasn', 'stocks', 'coments',
-                'evidences', 'incidences', 'totalContainers'),
+                'evidences', 'incidences'),
         );
     }
 
@@ -160,7 +158,7 @@ class ReceiptAsnsController extends BaseController
             'inventorypartnumbers.lngdsc',
             'receiptstock.id',
             'receiptstock.expirecode',
-            'receiptstock.quantitytrue',
+            'receiptstock.quantity',
             'inventoryunitsmeasure.description as unidadmedida',
             DB::raw('(SUM(receiptcontainers.quantity)) as totalescaneado'),
         )
@@ -178,7 +176,7 @@ class ReceiptAsnsController extends BaseController
                 'inventorypartnumbers.lngdsc',
                 'receiptstock.id',
                 'receiptstock.expirecode',
-                'receiptstock.quantitytrue',
+                'receiptstock.quantity',
                 'inventorypartnumbers.untcas',
                 'inventoryunitsmeasure.description',
             )

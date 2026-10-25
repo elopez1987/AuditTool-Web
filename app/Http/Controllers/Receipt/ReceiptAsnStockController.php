@@ -32,7 +32,19 @@ class ReceiptAsnStockController extends BaseController
         DB::beginTransaction();
         try {
             $receipt = ReceiptAsn::controlAccessUser()->findOrFail($id);
-            $this->createReceiptStock($request, $receipt);
+
+            $sku = InventoryPartnumber::controlAccessUser()->wherePrtnum($request['prtnum'])->first();
+            if (empty($sku)) {
+                return $this->errorResponse('El número de parte no existe, favor de validar.');
+
+            }
+            $totalProduct = $request['rotary'] + $request['definitive'];
+            if ($totalProduct > $request['quantity']) {
+                return $this->errorResponse('La cantidad de producto a devolver no puede se mayor a la cantidad.');
+
+            }
+
+            $this->createReceiptStock($request, $receipt, $sku);
             DB::commit();
 
             return $this->redirectBackSuccessMessage('Stock agregado con exito.');
@@ -44,14 +56,8 @@ class ReceiptAsnStockController extends BaseController
         }
     }
 
-    private function createReceiptStock($request, $receipt): void
+    private function createReceiptStock($request, $receipt, $sku)
     {
-        $sku = InventoryPartnumber::controlAccessUser()->wherePrtnum($request['prtnum'])->first();
-        if (empty($sku)) {
-            $this->errorResponse('El número de parte no existe, favor de validar.');
-
-            return;
-        }
         $expiredate = Carbon::parse($request['productiondate'])->addDays((int) $sku->shelflife)->format('Y-m-d');
         ReceiptStock::create([
             'receiptid' => $receipt->id,
@@ -59,14 +65,16 @@ class ReceiptAsnStockController extends BaseController
             'expirecode' => $request['batch'],
             'expiredate' => $expiredate,
             'productiondate' => $request['productiondate'],
-            'quantitytrue' => $request['quantity'],
+            'quantity' => $request['quantity'],
+            'rotary' => $request['rotary'],
+            'definitive' => $request['definitive'],
         ]);
     }
 
     public function updateQuantityStock($id, Request $request)
     {
         $stock = ReceiptStock::findOrFail($id);
-        $stock->quantitytrue = $request['quantitytrue'];
+        $stock->quantity = $request['quantity'];
         $stock->expirecode = $request['expirecode'];
         $stock->save();
 
