@@ -1,25 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Receipt;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Receipt\ReceiptAsn\CreateReceiptAsnRequest;
-use App\Models\General\EvidencePhoto;
-use App\Models\General\StorageComment;
-use App\Models\Inventory\Origin\InventoryStockCategory;
 use App\Models\Receipt\ReceiptAsn;
-use App\Models\Receipt\ReceiptIncidenceStock;
 use App\Models\Receipt\ReceiptStock;
-use App\Models\Yard\StorageReason;
+use App\Services\Receipt\ReceiptAsnShowService;
+use App\ViewModels\Receipt\ReceiptAsnShowViewModel;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Log;
 use Yajra\DataTables\Facades\DataTables;
 
 class ReceiptAsnsController extends BaseController
 {
+    public function __construct(
+        private readonly ReceiptAsnShowService $showService,
+        private readonly ReceiptAsnShowViewModel $showViewModel,
+    ) {}
+
     public function index()
     {
         $this->authorize('receiptasn.index');
@@ -33,23 +39,20 @@ class ReceiptAsnsController extends BaseController
     {
         $data = ReceiptAsn::controlAccessUser()
             ->with(['status:statusid,name', 'center:centerid,name,description',
-                'warehouse:warehouseid,name', 'provider:id,providerid,name',
-                'reason:id,name', 'inventorystock:id,description',
+                'warehouse:warehouseid,name', 'provider:id,providerid,name', 'operator:id,name',
             ])
             ->select([
                 'receiptasn.id',
+                'receiptasn.uuid_asn',
                 'receiptasn.centerid',
                 'receiptasn.warehouseid',
-                'receiptasn.folionumber',
                 'receiptasn.shipmentid',
-                'receiptasn.billoflading',
                 'receiptasn.providerid',
-                'receiptasn.razonstatusid',
-                'receiptasn.stockcategoryid',
                 'receiptasn.addasndate',
                 'receiptasn.goodissuedate',
                 'receiptasn.cancellationdate',
                 'receiptasn.statusid',
+                'receiptasn.operatorid',
             ]);
 
         return DataTables::of($data)
@@ -64,16 +67,13 @@ class ReceiptAsnsController extends BaseController
         $centers = $this->getCenterForSelect();
         $warehouses = $this->getWarehouseForSelect();
         $providers = $this->getReceiptProviderForSelect();
-        $categorystocks = InventoryStockCategory::controlAccessUser()
-            ->select('description', 'id')->where('statusid', 'E')->get();
-        $reasons = StorageReason::select('id', 'name')->whereRaw("charindex('RES-02', configurationflag) > 0")->get();
+        $operators = $this->getOperators();
 
         return view('Receipt.ReceiptAsn.create', compact(
             'centers',
             'warehouses',
             'providers',
-            'reasons',
-            'categorystocks',
+            'operators',
         ));
     }
 
@@ -106,19 +106,20 @@ class ReceiptAsnsController extends BaseController
         }
     }
 
-    public function edit(ReceiptAsn $receiptasn)
+    public function edit($id)
     {
         $this->authorize('receiptasn.edit');
+        $receiptasn = ReceiptAsn::controlAccessUser()->where('uuid_asn', $id)->first();
+
+        if (empty($receiptasn)) {
+            return $this->errorResponse('No existe el número de recibo solicitado.');
+        }
+
         $providers = $this->getReceiptProviderForSelect();
-        $categorystocks = InventoryStockCategory::select('description', 'id')
-            ->where('statusid', 'E')->get();
-        $reasons = StorageReason::select('id', 'name')->whereRaw("charindex('RES-02', configurationflag) > 0")->get();
 
         return view('Receipt.ReceiptAsn.edit', compact(
             'receiptasn',
             'providers',
-            'reasons',
-            'categorystocks',
         ));
     }
 
@@ -129,19 +130,14 @@ class ReceiptAsnsController extends BaseController
         return $this->infoResponse('schedulereceipt.index');
     }
 
-    public function show(ReceiptAsn $receiptasn)
+    public function show(string $id): View|RedirectResponse
     {
-        $stocks = $this->getTotalsReceipt($receiptasn->id);
-        $coments = StorageComment::getCommentForModel($receiptasn->id, 'ReceiptAsn');
-        $evidences = EvidencePhoto::getPhotosForModel($receiptasn->id, 'ReceiptAsn');
-        $incidences = ReceiptIncidenceStock::with(['partnumber', 'categoryincidence', 'subcategoryincidence'])
-            ->where('receiptid', $receiptasn->id)->get();
+        $details = $this->showService->details($id);
+        if ($details === null) {
+            return $this->errorResponse('No se encuentra el número de recibo solicitado.');
+        }
 
-        return view(
-            'Receipt.ReceiptAsn.show',
-            compact('receiptasn', 'stocks', 'coments',
-                'evidences', 'incidences'),
-        );
+        return view('Receipt.ReceiptAsn.show', $this->showViewModel->toArray($details));
     }
 
     public function destroy(ReceiptAsn $receiptasn)
@@ -151,35 +147,9 @@ class ReceiptAsnsController extends BaseController
         return $this->successResponse('receiptasn.index');
     }
 
-    public function getTotalsReceipt($receiptid)
+    /** @return Collection<int, ReceiptStock> */
+    public function getTotalsReceipt(int $receiptid): Collection
     {
-        return ReceiptStock::select(
-            'inventorypartnumbers.prtnum',
-            'inventorypartnumbers.lngdsc',
-            'receiptstock.id',
-            'receiptstock.expirecode',
-            'receiptstock.quantity',
-            'inventoryunitsmeasure.description as unidadmedida',
-            DB::raw('(SUM(receiptcontainers.quantity)) as totalescaneado'),
-        )
-            ->leftJoin('inventorypartnumbers', function ($join) {
-                $join->on('receiptstock.partnumberid', '=', 'inventorypartnumbers.id');
-            })
-            ->leftJoin('receiptcontainers', function ($join) {
-                $join->on('receiptstock.receiptid', '=', 'receiptcontainers.receiptid')
-                    ->on('receiptstock.partnumberid', '=', 'receiptcontainers.partnumberid');
-            })
-            ->leftJoin('inventoryunitsmeasure', 'receiptstock.unitmeasureid', '=', 'inventoryunitsmeasure.id')
-            ->where('receiptstock.receiptid', '=', $receiptid)
-            ->groupBy(
-                'inventorypartnumbers.prtnum',
-                'inventorypartnumbers.lngdsc',
-                'receiptstock.id',
-                'receiptstock.expirecode',
-                'receiptstock.quantity',
-                'inventorypartnumbers.untcas',
-                'inventoryunitsmeasure.description',
-            )
-            ->get();
+        return $this->showService->stocks($receiptid);
     }
 }

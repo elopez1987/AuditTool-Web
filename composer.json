@@ -13,6 +13,7 @@
         "ext-zip": "*",
         "auth0/login": "^7.8",
         "barryvdh/laravel-dompdf": "^3.0",
+        "dedoc/scramble": "^0.13",
         "guzzlehttp/guzzle": "^7.8",
         "intervention/image": "^2.7",
         "kreait/laravel-firebase": "^7.2",

@@ -7,7 +7,7 @@ use App\Http\Resources\IzelWms\CheckOutResource;
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Configuration\EDI\EdiConfig;
 use App\Models\Configuration\EDI\SystemEventWebService;
-use App\Models\Shipments\EdiShipment;
+use App\Models\Configuration\EdiShipment;
 use App\Models\Yard\ReceiptUnit;
 use Exception;
 use Illuminate\Console\Command;

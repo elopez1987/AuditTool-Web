@@ -26,8 +26,11 @@ abstract class TestCase extends BaseTestCase
                     'testing' => ['driver' => 'sqlite', 'database' => ':memory:', 'prefix' => ''],
                 ],
                 'cache.default' => 'array',
+                'cache.limiter' => 'array',
                 'session.driver' => 'array',
                 'activitylog.enabled' => false,
+                'local_auth.client_id' => null,
+                'passport.connection' => null,
             ]);
         });
         $app->make(Kernel::class)->bootstrap();

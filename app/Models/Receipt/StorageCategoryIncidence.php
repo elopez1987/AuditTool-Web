@@ -15,7 +15,7 @@ class StorageCategoryIncidence extends Model
 
     protected $table = 'storagecategoryincidences';
 
-    protected $primaryKey = 'categoryincid';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
         'centerid',
@@ -58,7 +58,7 @@ class StorageCategoryIncidence extends Model
         return $this->belongsTo(SystemStatus::class, 'statusid');
     }
 
-    public function scopeForDescription($query, $description)
+    public function scopeForDescription($query, $description): void
     {
         if (trim($description) != '') {
             $query->where('storagecategoryincidences.description', 'like', "%{$description}%");

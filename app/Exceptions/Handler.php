@@ -33,6 +33,10 @@ class Handler extends ExceptionHandler
     protected $dontFlash = [
         'password',
         'password_confirmation',
+        'refreshToken',
+        'refresh_token',
+        'access_token',
+        'TOKEN_APP',
     ];
 
     /**
@@ -45,7 +49,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
-        if ($request->is('api/v1/auth/*')) {
+        if ($request->is('api/v1/auth/*') || $exception instanceof LocalAuthException) {
             return $this->renderLocalAuth($request, $exception);
         }
 
@@ -74,16 +78,28 @@ class Handler extends ExceptionHandler
 
     private function renderLocalAuth(Request $request, Throwable $exception): LocalAuthResponse
     {
+        if ($exception instanceof LocalAuthException) {
+            $request->attributes->set('local_auth_failure_reason', $exception->reason);
+            if ($exception->userId !== null) {
+                $request->attributes->set('local_auth_user_id', $exception->userId);
+            }
+            if ($exception->familyId !== null) {
+                $request->attributes->set('local_auth_family_id', $exception->familyId);
+            }
+        }
         $service = match ($request->route()?->getName()) {
             'v1.auth.refresh' => 'refresh-user',
             'v1.auth.me' => 'current-user',
-            default => 'login-user',
+            'v1.auth.logout' => 'logout-user',
+            'v1.auth.logout-all' => 'logout-all-user',
+            'v1.auth.login' => 'login-user',
+            default => 'api-service',
         };
 
         return match (true) {
             $exception instanceof HttpResponseException && $exception->getResponse() instanceof LocalAuthResponse => $exception->getResponse(),
             $exception instanceof LocalAuthException => new LocalAuthResponse(
-                $exception->status, $exception->getMessage(), null, $service
+                $exception->status, $exception->getMessage(), null, $service, $exception->headers
             ),
             $exception instanceof ValidationException => new LocalAuthResponse(
                 422, 'Los datos proporcionados no son válidos.', ['errors' => $exception->errors()], $service

@@ -4,8 +4,12 @@ namespace App\Http\Controllers\Inventory\InventoryPartNumbers;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Inventory\InventoryPartNumber\CreatePartNumberRequest;
+use App\Models\Inventory\Categories\InventoryPartNumberCategory01;
+use App\Models\Inventory\Categories\InventoryPartNumberCategory02;
 use App\Models\Inventory\PartNumber\InventoryPartnumber;
 use App\Models\Inventory\UnitMeasure\InventoryUnitMeasure;
+use App\Models\Security\Users\SecurityAccessWarehouse;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 
@@ -84,4 +88,26 @@ class InventoryPartnumbersController extends BaseController
     }
 
     public function show(string $inventorypartnumber) {}
+
+    private function getCategoryInv01(): Collection
+    {
+        $centers = SecurityAccessWarehouse::Centers();
+        $warehouses = SecurityAccessWarehouse::Warehouses();
+
+        return InventoryPartNumberCategory01::whereStatusid('E')
+            ->whereIn('centerid', $centers)
+            ->whereIn('warehouseid', $warehouses)
+            ->select('description', 'id')->get();
+    }
+
+    private function getCategoryInv02(): Collection
+    {
+        $centers = SecurityAccessWarehouse::Centers();
+        $warehouses = SecurityAccessWarehouse::Warehouses();
+
+        return InventoryPartNumberCategory02::whereStatusid('E')
+            ->whereIn('centerid', $centers)
+            ->whereIn('warehouseid', $warehouses)
+            ->select(['description', 'id'])->get();
+    }
 }

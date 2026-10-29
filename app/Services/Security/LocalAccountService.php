@@ -36,8 +36,13 @@ final class LocalAccountService
         if (! $valid || $user === null || $user->statusid !== 'E' || $user->trashed()) {
             throw new LocalAuthException('Credenciales inválidas o usuario no habilitado.');
         }
+        $locked = $this->users->findById($user->id, lock: true);
+        if ($locked === null || $locked->statusid !== 'E' || $locked->trashed()
+            || ! hash_equals((string) $user->password, (string) $locked->password)) {
+            throw new LocalAuthException('Credenciales inválidas o usuario no habilitado.');
+        }
 
-        return $user;
+        return $locked;
     }
 
     public function fromId(string|int $id): LocalAppUser

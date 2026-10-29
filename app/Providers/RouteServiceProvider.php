@@ -2,9 +2,9 @@
 
 namespace App\Providers;
 
+use App\Http\Controllers\Auth\LogoutController;
 use Auth0\Laravel\Controllers\CallbackController;
 use Auth0\Laravel\Controllers\LoginController;
-use Auth0\Laravel\Controllers\LogoutController;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
 

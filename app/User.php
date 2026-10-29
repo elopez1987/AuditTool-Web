@@ -174,7 +174,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     public function getActivitylogOptions(): LogOptions
     {
-        return LogOptions::defaults()->logFillable();
+        return LogOptions::defaults()->logFillable()->logExcept(['password', 'remember_token', 'api_token']);
     }
 
     public function getNameAttribute($value)

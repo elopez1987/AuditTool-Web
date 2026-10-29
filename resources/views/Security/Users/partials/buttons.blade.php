@@ -40,12 +40,6 @@
             </a>
         @endcan
 
-        @can('securityusers.accessorigin')
-            <a href="{{url('securityusers/' . $uuiduser . '/origins')}}" class="dropdown-item">
-                <img src="{{asset('/ico/storageproviders.png')}}" alt="" class="img-16 ml-2">
-                <span style="text-transform: capitalize;">Vincular Origen de transporte</span>
-            </a>
-        @endcan
 
         @can('securityusers.parameter')
             <a href="{{url('securityusers/' . $uuiduser. '/parameter')}}" class="dropdown-item">

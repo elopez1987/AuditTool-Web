@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Receipt;
 use App\Http\Controllers\BaseController;
 use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Receipt\ReceiptAsn;
-use App\Models\Yard\StorageReason;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -16,29 +15,26 @@ class ScheduleReceiptController extends BaseController
         $this->authorize('schedulereceipt.index');
         $status = SystemStatus::whereSchemaid('SRE')->whereNotIn('statusid', ['CE', 'IG'])
             ->select('name', 'statusid')->get();
-        $providers = $this->getReceiptProviderForSelect();
         $warehouses = $this->getWarehouseForSelect();
-        $reasons = StorageReason::select('id', 'name')->whereRaw("charindex('RES-02', configurationflag) > 0")->get();
 
         return view(
             'Receipt.ScheduleReceipt.index',
-            compact('status', 'providers', 'warehouses', 'reasons'),
+            compact('status', 'warehouses'),
         );
     }
 
     public function getDataReceipt(Request $request)
     {
-        $data = ReceiptAsn::controlAccessUser()->with(['status', 'provider', 'carrier', 'turn'])
+        $data = ReceiptAsn::controlAccessUser()->with(['status', 'provider'])
             ->leftjoin('systemwarehouses', 'receiptasn.warehouseid', '=', 'systemwarehouses.warehouseid')
             ->leftJoin('receiptproviders', 'receiptasn.providerid', '=', 'receiptproviders.id')
-            ->leftJoin('inventorystockcategories', 'receiptasn.stockcategoryid', '=', 'inventorystockcategories.id')
             ->whereNotIn('receiptasn.statusid', ['CE', 'IG', 'PG'])
             ->select([
                 'receiptasn.id', 'receiptasn.workday', 'receiptasn.shipmentid', 'receiptasn.addasndate',
                 'receiptasn.billoflading', 'receiptproviders.name as providername',
-                'inventorystockcategories.description as type',  'receiptasn.statusid', 'receiptasn.cancellationdate',
+                'receiptasn.statusid', 'receiptasn.cancellationdate',
                 'receiptasn.goodissuedate', 'receiptasn.statusid',
-                'systemwarehouses.name as warehouse', 'receiptasn.centerid',
+                'systemwarehouses.name as warehouse', 'receiptasn.centerid', 'receiptasn.uuid_asn',
             ]);
 
         return DataTables::of($data)

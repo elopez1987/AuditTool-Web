@@ -178,7 +178,8 @@
                                 </div>
                             </div>
                             <a class="dropdown-item" href="{{route('logout')}}"><i
-                                        class="fa fa-power-off mr-1 ml-1 text-danger font-14"></i> Cerrar Sesión</a>
+                                        class="fa fa-power-off mr-1 ml-1 text-danger font-14"></i> Cerrar Sesión
+                            </a>
                         </div>
                     @endauth
                 </li>

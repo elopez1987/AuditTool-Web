@@ -30,27 +30,9 @@
                                 <div class="col-lg-2 col-md-6 col-sm-12">
                                     <div class="d-flex flex-row comment-row m-t-0">
                                         <div class="comment-text w-100">
-                                            <h6 class="font-weight-light">Embarque:</h6>
+                                            <h6 class="font-weight-light text-danger font-14">Embarque:</h6>
                                             <span
                                                 class="m-b-15 d-block"> {{$receiptasn->shipmentid}}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-2 col-md-6 col-sm-12">
-                                    <div class="d-flex flex-row comment-row m-t-0">
-                                        <div class="comment-text w-100">
-                                            <h6 class="font-weight-light">Factura:</h6>
-                                            <span
-                                                class="m-b-15 d-block"> {{$receiptasn->billoflading}}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-2 col-md-6 col-sm-12">
-                                    <div class="d-flex flex-row comment-row m-t-0">
-                                        <div class="comment-text w-100">
-                                            <h6 class="font-weight-light">Orden de compra:</h6>
-                                            <span
-                                                class="m-b-15 d-block"> {{$receiptasn->oc}}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -68,20 +50,6 @@
                         </div>
                     </form>
                 </div>
-{{--                <div class="card-footer">--}}
-{{--                    @if($receiptasn->statusid != 'IG')--}}
-{{--                        <a href="" data-target="#modal-uploaddata-{{$receiptasn->id}}" data-toggle="modal"--}}
-{{--                           data-placement="top">--}}
-{{--                            <button type="button"--}}
-{{--                                    class="btn waves-effect waves-light btn-outline-info btn-md"--}}
-{{--                                    data-toggle="tooltip" data-placement="top" title="Importar archivo">--}}
-{{--                                <img src="{{asset('/ico/uploadcsv.png')}}" alt="" class="img-16">--}}
-{{--                                <span class="text-button"> Importar datos </span>--}}
-{{--                            </button>--}}
-{{--                        </a>--}}
-{{--                        @include('Receipt.ReceiptAsn.uploaddata')--}}
-{{--                    @endif--}}
-{{--                </div>--}}
             </div>
         </div>
     </div>
@@ -100,8 +68,6 @@
                                 <tr>
                                     <th>Material</th>
                                     <th>Description</th>
-                                    <th>F.Producción</th>
-                                    <th>Lote</th>
                                     <th>Cantidad</th>
                                     <th>Rotativa</th>
                                     <th>Definitiva</th>
@@ -113,8 +79,6 @@
                                     <tr>
                                         <td>{{$stock->partnumber->prtnum}}</td>
                                         <td>{{$stock->partnumber->lngdsc}}</td>
-                                        <td>{{$stock->productiondate}}</td>
-                                        <td>{{$stock->expirecode}}</td>
                                         <td>{{$stock->quantity}}</td>
                                         <td>{{$stock->rotary}}</td>
                                         <td>{{$stock->definitive}}</td>
@@ -172,10 +136,16 @@
 
             const prtnum = document.getElementById("prtnum");
             const lngdsc = document.getElementById("lngdsc");
+            if (!prtnum || !lngdsc) {
+                return;
+            }
+
+            const searchUrl = {{ Illuminate\Support\Js::from(route('inventory-partnumbers.search', ['prtnum' => '__PRTNUM__'], false)) }};
 
             prtnum.addEventListener("blur", async () => {
 
                 const code = prtnum.value.trim();
+                lngdsc.value = "";
 
                 if (code === "") {
                     Swal.fire({
@@ -187,12 +157,17 @@
                 }
 
                 try {
-                    const url = `../../inventory-partnumbers/${encodeURIComponent(code)}/search`;
+                    const url = searchUrl.replace("__PRTNUM__", encodeURIComponent(code));
 
-                    const response = await fetch(url);
+                    const response = await fetch(url, {
+                        headers: { Accept: "application/json" },
+                    });
+
+                    if (!response.ok && response.status !== 404) {
+                        throw new Error(`SKU search failed: ${response.status}`);
+                    }
                     const data = await response.json();
-
-                    if (!data?.Data) {
+                    if (response.status === 404 || !data?.Data) {
                         Swal.fire({
                             icon: "error",
                             title: "Oops...",
@@ -204,8 +179,7 @@
                         return;
                     }
 
-                    // Llenar campos
-                    lngdsc.value = data.Data.lngdsc ?? "";
+                    lngdsc.value = data.Data.description ?? "";
 
                 } catch (error) {
                     console.error("Error en la petición:", error);

@@ -1,6 +1,6 @@
 <div class="modal fade bs-example-modal-lg" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true"
-     style="display: none;" id="modal-delete-{{$parameterid}}">
-    <form method="POST" action="{{url('systemparameters/' . $parameterid)}}">
+     style="display: none;" id="modal-delete-{{$id}}">
+    <form method="POST" action="{{url('systemparameters/' . $id)}}">
         {{ method_field('DELETE') }}
         @csrf
         <div class="modal-dialog modal-lg">

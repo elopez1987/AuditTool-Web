@@ -16,9 +16,22 @@ final class LocalLoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'username' => ['required', 'string', 'max:50'],
+            /**
+             * Nombre de usuario de la cuenta local.
+             *
+             * @example operator
+             */
+            'username' => ['required', 'string', 'max:20'],
+            /**
+             * Contraseña de la cuenta local. No debe registrarse ni almacenarse en el cliente.
+             */
             'password' => ['required', 'string', 'max:1024'],
-            'serialnumber' => ['nullable', 'string', 'max:60'],
+            /**
+             * Número de serie del dispositivo; omitirlo no impide iniciar sesión.
+             *
+             * @example DEVICE-001
+             */
+            'serialnumber' => ['nullable', 'string', 'max:30'],
         ];
     }
 }

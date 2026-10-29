@@ -49,6 +49,14 @@
                                                         <span class="hide-menu"> Planeación </span></a>
                                                 </li>
                                             @endcan
+                                            @can('schedulereceipt')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('schedulereceipt.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-layers"></i>
+                                                        <span class="hide-menu"> Horario </span></a>
+                                                </li>
+                                            @endcan
                                         </ul>
                                     </li>
                                 @endcan
@@ -81,23 +89,6 @@
                                                     class="hide-menu">Catalogos</span>
                                         </a>
                                         <ul aria-expanded="false" class="collapse second-level">
-
-{{--                                            @can('ordercustomers.index')--}}
-{{--                                                <li class="sidebar-item"><a--}}
-{{--                                                            href="{{route('ordercustomers.index')}}"--}}
-{{--                                                            class="sidebar-link">--}}
-{{--                                                        <i class="lni lni-customer"></i>--}}
-{{--                                                        <span class="hide-menu"> Clientes</span></a>--}}
-{{--                                                </li>--}}
-{{--                                            @endcan--}}
-{{--                                            @can('storageareas.index')--}}
-{{--                                                <li class="sidebar-item"><a--}}
-{{--                                                            href="{{route('storageareas.index')}}"--}}
-{{--                                                            class="sidebar-link">--}}
-{{--                                                        <i class="lni lni-text-align-left"></i>--}}
-{{--                                                        <span class="hide-menu"> Areas</span></a>--}}
-{{--                                                </li>--}}
-{{--                                            @endcan--}}
                                             @can('storageoperators.index')
                                                 <li class="sidebar-item"><a
                                                             href="{{route('storageoperators.index')}}"

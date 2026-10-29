@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits\Api\Response;
+namespace App\Traits\Api;
 
 use Illuminate\Support\Facades\Auth;
 

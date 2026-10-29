@@ -15,6 +15,11 @@ final class LocalRefreshRequest extends FormRequest
 
     public function rules(): array
     {
-        return ['refreshToken' => ['required', 'string', 'max:8192']];
+        return [
+            /**
+             * Refresh token emitido al iniciar sesión o renovar la sesión.
+             */
+            'refreshToken' => ['required', 'string', 'max:8192'],
+        ];
     }
 }

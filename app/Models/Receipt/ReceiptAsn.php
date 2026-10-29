@@ -5,15 +5,15 @@ namespace App\Models\Receipt;
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Configuration\Warehouses\SystemWarehouse;
-use App\Models\Inventory\Origin\InventoryStockCategory;
 use App\Models\Security\Users\SecurityAccessWarehouse;
-use App\Models\Yard\StorageReason;
+use App\Models\Yard\StorageOperator;
 use App\Observers\Receipt\ReceiptAsnObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Auth;
+use Ramsey\Uuid\Uuid;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -22,24 +22,25 @@ class ReceiptAsn extends Model
 {
     use LogsActivity;
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
+
     protected $table = 'receiptasn';
 
     protected $dateFormat = 'Y-m-d H:i:s';
 
     protected $fillable = [
+        'uuid_asn',
         'centerid', 'warehouseid', 'providerid', 'shipmentid', 'billoflading',
         'addasndate', 'cancellationdate', 'goodissuedate', 'created_by', 'closed_by',
-        'razonstatusid', 'folionumber', 'stockcategoryid', 'statusid', 'workday',
+        'statusid', 'workday', 'operatorid',
     ];
 
     protected $attributes = [
         'schemaid' => 'SRE',
     ];
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
 
     public static function controlAccessUser(): Builder
     {
@@ -81,14 +82,9 @@ class ReceiptAsn extends Model
         return $this->belongsTo(ReceiptProvider::class, 'providerid');
     }
 
-    public function reason(): BelongsTo
+    public function operator(): BelongsTo
     {
-        return $this->belongsTo(StorageReason::class, 'razonstatusid', 'id');
-    }
-
-    public function inventorystock(): BelongsTo
-    {
-        return $this->belongsTo(InventoryStockCategory::class, 'stockcategoryid', 'id');
+        return $this->belongsTo(StorageOperator::class, 'operatorid', 'id');
     }
 
     public function timereceipt(): BelongsTo
@@ -104,6 +100,7 @@ class ReceiptAsn extends Model
         if (! app()->runningInConsole()) {
             self::creating(function (ReceiptAsn $model) {
                 $model->created_by = Auth::id();
+                $model->uuid_asn = Uuid::uuid7()->toString();
             });
         }
     }

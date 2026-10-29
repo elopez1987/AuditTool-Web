@@ -168,7 +168,7 @@ namespace App\Console\Commands\RecursoConfiable;
 
 use App\Models\Configuration\EDI\EdiConfig;
 use App\Models\Configuration\EDI\SystemEventWebService;
-use App\Models\Shipments\EdiShipment;
+use App\Models\Configuration\EdiShipment;
 use App\Models\Shipments\OrderDeliverie;
 use App\Traits\Web\General\GetParameters;
 use Exception;

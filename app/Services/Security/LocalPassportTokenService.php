@@ -10,6 +10,7 @@ use App\Auth\LocalRefreshTokenGrant;
 use App\Exceptions\LocalAuthException;
 use App\Models\Security\LocalAppUser;
 use App\Repositories\Security\LocalPassportClientRepository;
+use DateTimeImmutable;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\ServerRequest;
 use Illuminate\Contracts\Config\Repository;
@@ -45,13 +46,13 @@ final class LocalPassportTokenService
     /**
      * @return array{user: LocalAppUser, auth: array<string, mixed>}
      */
-    public function refresh(#[\SensitiveParameter] string $refreshToken): array
+    public function refresh(#[\SensitiveParameter] string $refreshToken, DateTimeImmutable $sessionExpiresAt): array
     {
         $grant = new LocalRefreshTokenGrant($this->refreshTokens, $this->accounts);
         $auth = $this->exchange($grant, [
             'grant_type' => 'refresh_token',
             'refresh_token' => $refreshToken,
-        ]);
+        ], $sessionExpiresAt);
 
         return ['user' => $grant->user, 'auth' => $auth];
     }
@@ -60,7 +61,7 @@ final class LocalPassportTokenService
      * @param  array<string, string>  $parameters
      * @return array<string, mixed>
      */
-    private function exchange(AbstractGrant $grant, #[\SensitiveParameter] array $parameters): array
+    private function exchange(AbstractGrant $grant, #[\SensitiveParameter] array $parameters, ?DateTimeImmutable $sessionExpiresAt = null): array
     {
         $id = $this->config->get('local_auth.client_id');
         $client = is_string($id) || is_int($id) ? $this->clients->findActive($id) : null;
@@ -73,7 +74,7 @@ final class LocalPassportTokenService
             'client_id' => (string) $client->id,
             'client_secret' => hash('sha256', (string) $this->config->get('local_auth.token_app')),
         ]);
-        $response = $this->servers->make($grant)->respondToAccessTokenRequest($request, new Response);
+        $response = $this->servers->make($grant, $sessionExpiresAt)->respondToAccessTokenRequest($request, new Response);
 
         return json_decode((string) $response->getBody(), true, 512, JSON_THROW_ON_ERROR);
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits\Request;
+namespace App\Traits\Api;
 
 use Carbon\Carbon;
 use Illuminate\Contracts\Validation\Validator;

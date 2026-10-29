@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Configuration\Labels;
 
 use App\Http\Controllers\BaseController;
-use App\Http\Requests\Web\Yard\Labels\CreateLabels;
+use App\Http\Requests\Web\Configuration\Labels\CreateLabels;
 use App\Models\Configuration\Labels\InventoryLabel;
 use Illuminate\Http\Request;
 

@@ -20,5 +20,4 @@ Route::post('password/reset', [CustomResetPasswordController::class, 'reset'])
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/home', 'HomeController@index')->name('home');
-    Route::get('logout', 'HomeController@logout')->name('logout');
 });

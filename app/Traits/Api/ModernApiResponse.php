@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits\Request;
+namespace App\Traits\Api;
 
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
@@ -154,6 +154,20 @@ trait ModernApiResponse
             message: $message,
             serviceName: $serviceName,
             httpStatus: 500
+        );
+    }
+
+    /**
+     * Return a server created response with modern structure.
+     */
+    protected function modernCreatedResponse(
+        string $message = 'Recurso creado exitosamente.',
+        string $serviceName = 'api-service-created'
+    ): JsonResponse {
+        return $this->modernErrorResponse(
+            message: $message,
+            serviceName: $serviceName,
+            httpStatus: 201
         );
     }
 

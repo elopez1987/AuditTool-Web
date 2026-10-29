@@ -79,7 +79,6 @@ class StorageOperator extends Model
     protected $fillable = [
         'centerid',
         'barcode',
-        'carrierid',
         'drivernumber',
         'phone',
         'name',
@@ -112,7 +111,7 @@ class StorageOperator extends Model
     }
 
     //    Relations with models
-    public function center()
+    public function center(): BelongsTo
     {
         return $this->belongsTo(SystemCenterDistribution::class, 'centerid');
     }
@@ -120,11 +119,6 @@ class StorageOperator extends Model
     public function status(): BelongsTo
     {
         return $this->belongsTo(SystemStatus::class, 'statusid', 'statusid');
-    }
-
-    public function carrier()
-    {
-        return $this->belongsTo(ShipmentCarrier::class, 'carrierid', 'id');
     }
 
     //    Filters Scope to model
@@ -139,13 +133,6 @@ class StorageOperator extends Model
     {
         if (trim($barcode) !== '') {
             $query->where('storageoperators.barcode', '=', $barcode);
-        }
-    }
-
-    public function scopeForCarrierOperator($q, $carrier)
-    {
-        if (! empty($carrier)) {
-            $q->whereIn('storageoperators.carrierid', $carrier);
         }
     }
 

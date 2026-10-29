@@ -5,17 +5,15 @@ namespace App\Traits\Web\General;
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Configuration\Warehouses\SystemWarehouse;
-use App\Models\Inventory\Categories\InventoryPartNumberCategory01;
-use App\Models\Inventory\Categories\InventoryPartNumberCategory02;
 use App\Models\Receipt\ReceiptProvider;
-use App\Models\Security\Users\AccessCarrier;
 use App\Models\Security\Users\AccessProvider;
 use App\Models\Security\Users\SecurityAccessWarehouse;
-use App\Models\Yard\Carriers\ShipmentCarrier;
+use App\Models\Yard\StorageOperator;
 use Auth;
 use Cache;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -51,7 +49,7 @@ trait Responser
         return redirect()->back()->with(session()->flash('info', 'Registro modificado con exito'));
     }
 
-    public function responseSuccessAjax($value01, $value02)
+    public function responseSuccessAjax($value01, $value02): JsonResponse
     {
         return response()->json([
             'ProcessDate' => Carbon::now()->format('Y-m-d H:m:s'),
@@ -61,7 +59,7 @@ trait Responser
         ], '200');
     }
 
-    public function showDataToView($data, $buttons)
+    public function showDataToView($data, $buttons): JsonResponse
     {
         return DataTables::of($data)
             ->addColumn('btn', $buttons)
@@ -69,28 +67,12 @@ trait Responser
             ->toJson();
     }
 
-    //	-----------------------------------------------------------------------------
-
-    //	Eliminar
-
     public function getStatusForSchema($schemaid)
     {
         return SystemStatus::whereSchemaid($schemaid)
             ->select(['statusid', 'name', 'comment'])
             ->orderBy('statusid')
             ->get();
-    }
-
-    public function getCenterForUser()
-    {
-        return SecurityAccessWarehouse::where('username', Auth::user()
-            ->username)->value('centerid');
-    }
-
-    public function getWarehouseForUser()
-    {
-        return SecurityAccessWarehouse::where('username', Auth::user()
-            ->username)->value('warehouseid');
     }
 
     public function getCenterForSelect(): Collection
@@ -108,26 +90,6 @@ trait Responser
             ->whereIn('systemwarehouses.centerid', $centers)
             ->whereIn('systemwarehouses.warehouseid', $warehouses)
             ->select(['name', 'warehouseid'])->get();
-    }
-
-    public function getCarriersForSelect()
-    {
-        $carriers = $this->getCarrierForUser();
-
-        return ShipmentCarrier::controlAccessUser()->whereStatusid('E')
-            ->Carriers($carriers)
-            ->select(['name', 'id'])->get();
-    }
-
-    public function getCarriersForSelectStock()
-    {
-        $carriersFilter = $this->getCarrierForUser();
-
-        return ShipmentCarrier::controlAccessUser()
-            ->whereStatusid('E')
-            ->Carriers($carriersFilter)
-            ->whereIn('id', ReceiptUnit::controlAccessUser()->select('carrierid')->distinct())
-            ->select(['name', 'id'])->get();
     }
 
     public function getReceiptProviderForSelect()
@@ -162,36 +124,14 @@ trait Responser
             ->get();
     }
 
-    public function getCategoryInv01(): Collection
-    {
-        $centers = SecurityAccessWarehouse::Centers();
-        $warehouses = SecurityAccessWarehouse::Warehouses();
-
-        return InventoryPartNumberCategory01::whereStatusid('E')
-            ->whereIn('centerid', $centers)
-            ->whereIn('warehouseid', $warehouses)
-            ->select('description', 'id')->get();
-    }
-
-    public function getCategoryInv02(): Collection
-    {
-        $centers = SecurityAccessWarehouse::Centers();
-        $warehouses = SecurityAccessWarehouse::Warehouses();
-
-        return InventoryPartNumberCategory02::whereStatusid('E')
-            ->whereIn('centerid', $centers)
-            ->whereIn('warehouseid', $warehouses)
-            ->select(['description', 'id'])->get();
-    }
-
     public function getAccessForUser()
     {
         return SecurityAccessWarehouse::where('username', Auth::user()->username)->first();
     }
 
-    public function getCarrierForUser()
+    public function getOperators()
     {
-        return AccessCarrier::where('username', Auth::user()->username)
-            ->select('carrierid')->get()->toArray();
+        return StorageOperator::controlAccessUser()->where('statusid', 'E')
+            ->select('id', 'name')->get();
     }
 }

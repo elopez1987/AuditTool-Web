@@ -9,11 +9,11 @@
                 <div class="card-body">
                     <div class="row mb-1">
                         <div class="col-lg-12">
-                            <a href="{{ url()->previous() }}">
+                            <a href="{{route('receiptasn.index')}}">
                                 @include('buttons.back')
                             </a>
-                            @if($receiptasn->statusid != 'IG')
-                                @if($receiptasn->statusid != 'CE')
+                            @if($receiptasn->statusid != 'TR')
+                                @if($receiptasn->statusid != 'CA')
                                     @can('cancellationReceipt')
                                         <a href="" data-target="#modal-cancellationreceipt-{{$receiptasn->id}}"
                                            data-toggle="modal">
@@ -27,8 +27,8 @@
                                     @endcan
                                 @endif
                             @endif
-                            @if($receiptasn->statusid != 'IG')
-                                @if($receiptasn->statusid != 'CE')
+                            @if($receiptasn->statusid != 'TR')
+                                @if($receiptasn->statusid != 'CA')
                                     @can('receiptasn.destroy')
                                         <a href="" data-target="#modal-destroy-{{$receiptasn->id}}" data-toggle="modal">
                                             <button type="button"
@@ -41,8 +41,8 @@
                                     @endcan
                                 @endif
                             @endif
-                            @if($receiptasn->statusid != 'IG')
-                                @if($receiptasn->statusid != 'CE')
+                            @if($receiptasn->statusid != 'TR')
+                                @if($receiptasn->statusid != 'CA')
                                     @can('receiptasn.closereceipt')
                                         <a href="" data-target="#modal-closereceipt-{{$receiptasn->id}}"
                                            data-toggle="modal">
@@ -73,7 +73,7 @@
                             @endif
 
 
-                            @if ($receiptasn->statusid == 'IG')
+                            @if ($receiptasn->statusid == 'TR')
                                 @can('receiptasn.kardex')
                                     <a href="{{url('receiptasn/' . $receiptasn->id . '/kardex')}}">
                                         <button type="button"
@@ -85,7 +85,7 @@
                                 @endcan
                             @endif
 
-                            @if ($receiptasn->statusid != 'IG')
+                            @if ($receiptasn->statusid != 'TR')
                                 <a href="" data-target="#modal-addnote-{{$receiptasn->id}}" data-toggle="modal">
                                     <button type="button"
                                             class="btn waves-effect waves-light btn-outline-info btn-md">
@@ -94,104 +94,7 @@
                                     </button>
                                 </a>
                                 @include('Receipt.ScheduleReceipt.options.addnote')
-                                @if(!empty($receiptasn->folionumber))
-                                    @if($receiptasn->unloadstartdate == null)
-                                        @can('receiptasn.startprocess')
-                                            <a href="" data-target="#modal-startprocess-{{$receiptasn->id}}"
-                                               data-toggle="modal">
-                                                <button type="button"
-                                                        class="btn waves-effect waves-light btn-outline-info btn-md">
-                                                    <img src="{{asset('/ico/storageturns.png')}}" alt=""
-                                                         class="img-16 ml-1">
-                                                    <span class="text-button"> Iniciar Proceso</span>
-                                                </button>
-                                            </a>
-                                            @include('Receipt.SchedulleV2.Events.startprocess')
-                                        @endcan
-                                    @endif
-                                @endif
-                                @if(!empty($receiptasn->folionumber))
-                                    @if($receiptasn->unloadstartdate != null)
-                                        @if($receiptasn->unloadfinishdate == null)
-                                            @can('receiptasn.finishprocess')
-                                                <a href="" data-target="#modal-finishprocess-{{$receiptasn->id}}"
-                                                   data-toggle="modal">
-                                                    <button type="button"
-                                                            class="btn waves-effect waves-light btn-outline-info btn-md">
-                                                        <img src="{{asset('/ico/storageturns.png')}}" alt=""
-                                                             class="img-16 ml-1">
-                                                        <span class="text-button"> Finalizar Proceso</span>
-                                                    </button>
-                                                </a>
-                                                @include('Receipt.SchedulleV2.Events.finishprocess')
-                                            @endcan
-                                        @endif
-                                    @endif
-                                @endif
-
-                                @can('receiptasn.send_to_billing')
-                                    @if($receiptasn->unloadfinishdate != null)
-                                        @if($receiptasn->timereceipt?->send_to_billing == null)
-                                            <a href="" data-target="#modal-send-to-billing-{{$receiptasn->id}}"
-                                               data-toggle="modal">
-                                                <button type="button"
-                                                        class="btn waves-effect waves-light btn-outline-info btn-md">
-                                                    <img src="{{asset('/ico/storageturns.png')}}" alt=""
-                                                         class="img-16 ml-1">
-                                                    <span class="text-button"> Enviar a facturación</span>
-                                                </button>
-                                            </a>
-                                            @include('Receipt.SchedulleV2.Events.send-to-billing')
-                                        @endif
-                                    @endif
-                                @endcan
-
-                                @can('receiptasn.start_billing')
-                                    @if($receiptasn->timereceipt?->send_to_billing != null)
-                                        @if($receiptasn->timereceipt?->start_billing == null)
-                                            <a href="" data-target="#modal-start-billing-{{$receiptasn->id}}"
-                                               data-toggle="modal">
-                                                <button type="button"
-                                                        class="btn waves-effect waves-light btn-outline-info btn-md">
-                                                    <img src="{{asset('/ico/storageturns.png')}}" alt=""
-                                                         class="img-16 ml-1">
-                                                    <span class="text-button"> Inicio de facturación</span>
-                                                </button>
-                                            </a>
-                                            @include('Receipt.SchedulleV2.Events.start-billing')
-                                        @endif
-                                    @endif
-                                @endcan
-
-                                @can('receiptasn.finish_billing')
-                                    @if($receiptasn->timereceipt?->start_billing != null)
-                                        @if($receiptasn->timereceipt?->finish_billing == null)
-                                            <a href="" data-target="#modal-finish-billing-{{$receiptasn->id}}"
-                                               data-toggle="modal">
-                                                <button type="button"
-                                                        class="btn waves-effect waves-light btn-outline-info btn-md">
-                                                    <img src="{{asset('/ico/storageturns.png')}}" alt=""
-                                                         class="img-16 ml-1">
-                                                    <span class="text-button"> Fin de facturación</span>
-                                                </button>
-                                            </a>
-                                            @include('Receipt.SchedulleV2.Events.finish-billing')
-                                        @endif
-                                    @endif
-                                @endcan
                             @endif
-
-                            @if($receiptasn->folionumber != null)
-                                <a href="{{url('tracereceiptunit/' . $receiptasn->folionumber)}}" target="_blank">
-                                    <button type="button" class="btn waves-effect waves-light btn-outline-info btn-md">
-                                        <img
-                                                src="{{asset('/ico/data_hosting_information_internet_security_server_storage_icon_127051.png')}}"
-                                                alt="" class="img-16 ml-2 mr-2">
-                                        <span class="text-button"> Karde de Folio</span>
-                                    </button>
-                                </a>
-                            @endif
-
 
                         </div>
                     </div>
@@ -215,24 +118,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-2 col-md-6 col-sm-12">
-                            <div class="d-flex flex-row comment-row m-t-0">
-                                <div class="comment-text w-100">
-                                    <h6 class="font-weight-light">Categoría:</h6>
-                                    <span
-                                            class="m-b-15 d-block font-12"> {{$receiptasn->inventorystock ? $receiptasn->inventorystock->description : ''}}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-2 col-md-6 col-sm-12">
-                            <div class="d-flex flex-row comment-row m-t-0">
-                                <div class="comment-text w-100">
-                                    <h6 class="font-weight-light">Evento:</h6>
-                                    <span
-                                            class="m-b-15 d-block font-12"> {{$receiptasn->reason ? $receiptasn->reason->name : ''}}</span>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-2 col-md-6 col-sm-12">
@@ -246,31 +131,7 @@
                         <div class="col-lg-2 col-md-6 col-sm-12">
                             <div class="d-flex flex-row comment-row m-t-0">
                                 <div class="comment-text w-100">
-                                    <h6 class="font-weight-light">Factura:</h6>
-                                    <span class="m-b-15 d-block font-12"> {{$receiptasn->billoflading}}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-2 col-md-6 col-sm-12">
-                            <div class="d-flex flex-row comment-row m-t-0">
-                                <div class="comment-text w-100">
-                                    <h6 class="font-weight-light">Orden de compra:</h6>
-                                    <span class="m-b-15 d-block font-12"> {{$receiptasn->oc}}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-2 col-md-6 col-sm-12">
-                            <div class="d-flex flex-row comment-row m-t-0">
-                                <div class="comment-text w-100">
-                                    <h6 class="font-weight-light">PO:</h6>
-                                    <span class="m-b-15 d-block font-12"> {{$receiptasn->po}}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-2 col-md-6 col-sm-12">
-                            <div class="d-flex flex-row comment-row m-t-0">
-                                <div class="comment-text w-100">
-                                    <h6 class="font-weight-light">Proveedor:</h6>
+                                    <h6 class="font-weight-light">Ruta:</h6>
                                     <span
                                             class="m-b-15 d-block font-12"> {{$receiptasn->provider ? $receiptasn->provider->name : ''}}</span>
                                 </div>
@@ -365,7 +226,6 @@
                                                         <tr>
                                                             <th>Material</th>
                                                             <th>Description</th>
-                                                            {{--                                                            <th>Lote</th>--}}
                                                             <th>Cantidad esperada</th>
                                                             <th>Cantidad escaneada</th>
                                                             <th>Unidad de medida</th>
@@ -377,11 +237,10 @@
                                                             <tr>
                                                                 <td>{{$stock->prtnum}}</td>
                                                                 <td>{{$stock->lngdsc}}</td>
-                                                                {{--                                                                <td>{{$stock->expirecode}}</td>--}}
-                                                                <td>{{$stock->quantitytrue}}</td>
+                                                                <td>{{$stock->quantity}}</td>
                                                                 <td>
                                                                     @if(!empty($stock->totalescaneado))
-                                                                        @if($stock->quantitytrue != $stock->totalescaneado)
+                                                                        @if($stock->quantity != $stock->totalescaneado)
                                                                             <span class="badge badge-danger"
                                                                                   style="padding: 5px 10px">
                                                                                 {{$stock->totalescaneado}}
@@ -396,7 +255,7 @@
                                                                 </td>
                                                                 <td>{{$stock->unidadmedida}}</td>
                                                                 <td>
-                                                                    @if($receiptasn->statusid != 'IG')
+                                                                    @if($receiptasn->statusid != 'IG' && $receiptasn->statusid != 'CE')
                                                                         <a href=""
                                                                            data-target="#modal-updatequantity-{{$stock->id}}"
                                                                            data-toggle="modal" data-placement="top">
@@ -599,21 +458,11 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <div id="map"></div>
-        </div>
-    </div>
+
     @include('layouts.Partials.Errors')
 @endsection
 
 @section('css')
-    <style>
-        #map {
-            height: 900px;
-            width: 100%;
-        }
-    </style>
     <link rel="stylesheet" href="{{asset('/theme/assets/extra-libs/prism/prism.css')}}">
     <link rel="stylesheet" href="{{asset('/theme/assets/libs/magnific-popup/dist/magnific-popup.css')}}">
 @endsection
@@ -677,44 +526,5 @@
             });
         })
     </script>
-    <script>
-        function deleteLpnOfReceipt($id) {
-            Swal.fire({
-                title: '¿Estas seguro?',
-                text: "El siguiente evento eliminara el numero de lpn  seleccionado!",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Si, eliminar Lpn!'
-            }).then((result) => {
-                if (result.value) {
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    });
-                    $.ajax({
-                        data: {
-                            id: $id,
-                        },
-                        url: '{!! route('deleteLpnOfReceipt') !!}',
-                        type: "POST",
-                        dataType: 'json',
-                        success: data => {
-                            Swal.fire({
-                                type: 'success',
-                                title: `Evento procesado correctamente`,
-                                width: 350,
-                            })
-                            setTimeout(function () {
-                                window.location.reload()
-                            }, 2000)
-                        },
-                    })
 
-                }
-            })
-        }
-    </script>
 @endsection

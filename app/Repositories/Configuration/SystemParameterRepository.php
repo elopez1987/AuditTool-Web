@@ -24,12 +24,12 @@ class SystemParameterRepository
         return SystemParameter::create($data);
     }
 
-    public function update(array $data): SystemParameter
+    public function update(array $data): bool
     {
         return SystemParameter::update($data);
     }
 
-    public function destroy(SystemParameter $systemParameter)
+    public function destroy(SystemParameter $systemParameter): void
     {
         $systemParameter->update([
             'statusid' => 'D',

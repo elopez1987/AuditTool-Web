@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Configuration\EdiShipment;
 
 use App\Http\Controllers\BaseController;
-use App\Models\Shipments\EdiShipment;
+use App\Models\Configuration\EdiShipment;
 
 class EdiShipmentsController extends BaseController
 {

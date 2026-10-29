@@ -204,15 +204,9 @@ class AuthenticationAuditService
      */
     private function sanitizeHeaders(array $headers): array
     {
-        $sensitiveHeaders = ['authorization', 'cookie', 'x-api-key', 'x-auth-token'];
-
-        foreach ($headers as $key => $value) {
-            if (in_array(strtolower($key), $sensitiveHeaders)) {
-                $headers[$key] = ['***REDACTED***'];
-            }
-        }
-
-        return $headers;
+        return array_intersect_key(array_change_key_case($headers, CASE_LOWER), array_flip([
+            'accept', 'accept-language', 'content-type', 'user-agent',
+        ]));
     }
 
     /**
@@ -554,17 +548,6 @@ class AuthenticationAuditService
      */
     private function sanitizeRequestData(array $requestData): array
     {
-        $sanitized = $requestData;
-
-        // Remove or mask sensitive fields
-        $sensitiveFields = ['password', 'password_confirmation', 'token', 'api_key'];
-
-        foreach ($sensitiveFields as $field) {
-            if (isset($sanitized[$field])) {
-                $sanitized[$field] = '***REDACTED***';
-            }
-        }
-
-        return $sanitized;
+        return array_intersect_key($requestData, array_flip(['username', 'serialnumber']));
     }
 }

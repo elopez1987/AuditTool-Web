@@ -27,8 +27,6 @@
             {data: 'warehouse'},
             {data: 'shipmentid'},
             {data: 'billoflading'},
-            {data: 'providername',name: 'providername'},
-            {data: 'type'},
             {
                 data: 'status.name', name: 'status.name',
                 createdCell: function (td, cellData, rowData) {
@@ -45,8 +43,6 @@
             {"width": "180px", "targets": 2},
             {"width": "180px", "targets": 3},
             {"width": "320px", "targets": 4},
-            {"width": "180px", "targets": 5},
-            {"width": "180px", "targets": 6},
         ],
         "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
         "lengthMenu": [[1,5,10, 30, 50, 100, 150, 200, 250, -1], [1,5,10, 30, 50, 100, 150, 200, 250, "Todos"]],

@@ -174,6 +174,9 @@ class TokenManagementService
             DB::table('oauth_access_tokens')
                 ->where('id', $tokenId)
                 ->update(['revoked' => true]);
+            DB::table('oauth_refresh_tokens')
+                ->where('access_token_id', $tokenId)
+                ->update(['revoked' => true]);
 
             // Revoke all refresh tokens for this access token
             DB::table('refresh_tokens')
@@ -319,6 +322,7 @@ class TokenManagementService
 
             // Clean up expired token metadata
             $stats['expired_metadata'] = DB::table('token_metadata')
+                ->whereNull('session_family_id')
                 ->whereExists(function ($query) {
                     $query->select(DB::raw(1))
                         ->from('oauth_access_tokens')

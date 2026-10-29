@@ -8,7 +8,7 @@
                     Modificar Parametro
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{{url('systemparameters/' . $systemparameter->parameterid)}}">
+                    <form method="POST" action="{{url('systemparameters/' . $systemparameter->id)}}">
                         {{ method_field('PUT') }}
                         @csrf
                         <div class="row">

@@ -11,7 +11,7 @@ class SystemDetailParametersController extends BaseController
 {
     public function adddetailparameter(SystemParameter $systemparameter)
     {
-        $details = SystemDetailParameter::whereParameterid($systemparameter->parameterid)->get();
+        $details = SystemDetailParameter::whereParameterid($systemparameter->id)->get();
 
         return view(
             'Configuration.SystemParameters.createdetail',
@@ -21,7 +21,8 @@ class SystemDetailParametersController extends BaseController
 
     public function savedetailparameter(Request $request, SystemParameter $systemparameter)
     {
-        $detailParameter = new SystemDetailParameter($request->all() + ['parameterid' => $systemparameter->parameterid]);
+
+        $detailParameter = new SystemDetailParameter($request->all() + ['parameterid' => $systemparameter->id]);
         $detailParameter->save();
 
         return $this->redirectBackSuccess();

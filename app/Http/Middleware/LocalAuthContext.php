@@ -19,6 +19,8 @@ final class LocalAuthContext
         $service = match ($request->route()?->getName()) {
             'v1.auth.refresh' => 'refresh-user',
             'v1.auth.me' => 'current-user',
+            'v1.auth.logout' => 'logout-user',
+            'v1.auth.logout-all' => 'logout-all-user',
             default => 'login-user',
         };
         $expected = $this->config->get('local_auth.token_app');

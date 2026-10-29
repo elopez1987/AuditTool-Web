@@ -16,7 +16,6 @@ use App\Http\Controllers\Security\Roles\RoleController;
 use App\Http\Controllers\Security\Roles\StorageCategoryRoleController;
 use App\Http\Controllers\Security\Users\AccessWarehouse\AccessCarrierController;
 use App\Http\Controllers\Security\Users\AccessWarehouse\AccessCustomerController;
-use App\Http\Controllers\Security\Users\AccessWarehouse\AccessOriginController;
 use App\Http\Controllers\Security\Users\AccessWarehouse\AccessProviderController;
 use App\Http\Controllers\Security\Users\AccessWarehouse\LevelWarehouseController;
 use App\Http\Controllers\Security\Users\Eventos\EventUserController;
@@ -73,11 +72,6 @@ Route::middleware(['auth'])->group(function () {
     Route::put('securityaccess-providers/{id}', [AccessProviderController::class, 'update'])->name('securityaccess-providers');
     //    Borrar asignacion de clientes a usuarios
     Route::delete('deleteaccess-providers/{id}', [AccessProviderController::class, 'destroy'])->name('deleteaccess-providers');
-
-    //    Acceso para filtro por origen de unidad
-    Route::get('securityusers/{id}/origins', [AccessOriginController::class, 'index'])->name('access-origin');
-    Route::put('securityaccess-origins/{id}', [AccessOriginController::class, 'update'])->name('securityaccess-origins');
-    Route::delete('securityaccess-origin-delete/{id}', [AccessOriginController::class, 'destroy'])->name('securityaccess-origin-delete');
 
     //    ----------------------------------------------- Roles---------------------------------------------------------------------
     //    Perfiles de usuario

@@ -7,7 +7,6 @@ use App\Http\Requests\Web\Receipt\ReceiptAsn\CreateReceiptStockRequest;
 use App\Models\Inventory\PartNumber\InventoryPartnumber;
 use App\Models\Receipt\ReceiptAsn;
 use App\Models\Receipt\ReceiptStock;
-use Carbon\Carbon;
 use DB;
 use Exception;
 use Illuminate\Http\Request;
@@ -17,8 +16,11 @@ class ReceiptAsnStockController extends BaseController
 {
     public function addstock($id)
     {
-        $receiptasn = ReceiptAsn::controlAccessUser()->whereId($id)->first();
-        $stocks = ReceiptStock::whereReceiptid($id)->get();
+        $receiptasn = ReceiptAsn::controlAccessUser()->where('uuid_asn', $id)->first();
+        if (empty($receiptasn)) {
+            return $this->errorResponse('No existe el número de recibo solicitado.');
+        }
+        $stocks = ReceiptStock::whereReceiptid($receiptasn->id)->get();
 
         return view(
             'Receipt.ReceiptAsn.addStock',
@@ -31,17 +33,14 @@ class ReceiptAsnStockController extends BaseController
         $error = null;
         DB::beginTransaction();
         try {
-            $receipt = ReceiptAsn::controlAccessUser()->findOrFail($id);
+            $receipt = ReceiptAsn::controlAccessUser()->where('id', $id)->first();
+            if (empty($receipt)) {
+                return $this->errorResponse('No existe número de recibo solicitado.');
+            }
 
             $sku = InventoryPartnumber::controlAccessUser()->wherePrtnum($request['prtnum'])->first();
             if (empty($sku)) {
                 return $this->errorResponse('El número de parte no existe, favor de validar.');
-
-            }
-            $totalProduct = $request['rotary'] + $request['definitive'];
-            if ($totalProduct > $request['quantity']) {
-                return $this->errorResponse('La cantidad de producto a devolver no puede se mayor a la cantidad.');
-
             }
 
             $this->createReceiptStock($request, $receipt, $sku);
@@ -58,14 +57,10 @@ class ReceiptAsnStockController extends BaseController
 
     private function createReceiptStock($request, $receipt, $sku)
     {
-        $expiredate = Carbon::parse($request['productiondate'])->addDays((int) $sku->shelflife)->format('Y-m-d');
         ReceiptStock::create([
             'receiptid' => $receipt->id,
             'partnumberid' => $sku->id,
-            'expirecode' => $request['batch'],
-            'expiredate' => $expiredate,
-            'productiondate' => $request['productiondate'],
-            'quantity' => $request['quantity'],
+            'quantity' => $request['rotary'] + $request['definitive'],
             'rotary' => $request['rotary'],
             'definitive' => $request['definitive'],
         ]);

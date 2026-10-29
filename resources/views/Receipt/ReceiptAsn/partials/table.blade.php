@@ -26,10 +26,8 @@
             {data: 'center.description', name: 'center.description'},
             {data: 'warehouse.name', name: 'warehouse.name'},
             {data: 'shipmentid'},
-            {data: 'billoflading'},
             {data: 'provider.name', name: 'provider.name'},
-            {data: 'reason.name', name: 'reason.name'},
-            {data: 'inventorystock.description', name: 'inventorystock.description'},
+            {data: 'operator.name', name: 'operator.name'},
             {
                 data: 'status.name', name: 'status.name',
                 createdCell: function (td, cellData, rowData) {
@@ -49,12 +47,10 @@
             {"width": "150px", "targets": 4},
             {"width": "150px", "targets": 5},
             {"width": "250px", "targets": 6},
-            {"width": "250px", "targets": 7},
-            {"width": "200px", "targets": 8},
         ],
 
         "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
-        "lengthMenu": [[10,25,50,100], [10,25,50,100]],
+        "lengthMenu": [[10, 25, 50, 100], [10, 25, 50, 100]],
 
         buttons: [
             {

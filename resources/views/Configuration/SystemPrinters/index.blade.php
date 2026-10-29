@@ -50,7 +50,6 @@
                                     <th>C.Distribución</th>
                                     <th>Impresora</th>
                                     <th>IP</th>
-                                    <th>Comando</th>
                                     <th>Auxiliar 01</th>
                                     <th>Auxiliar 02</th>
 {{--                                    <th>Auxiliar 03</th>--}}

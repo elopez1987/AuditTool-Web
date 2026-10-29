@@ -19,12 +19,13 @@ final class LocalLoginRepository
      */
     public function findByUsername(string $username): Collection
     {
-        return LocalAppUser::withTrashed()->where('username', $username)->limit(2)->lockForUpdate()->get();
+        return LocalAppUser::withTrashed()->where('username', $username)->limit(2)->get();
     }
 
-    public function findById(string|int $id): ?LocalAppUser
+    public function findById(string|int $id, bool $lock = false): ?LocalAppUser
     {
-        return LocalAppUser::withTrashed()->whereKey($id)->lockForUpdate()->first();
+        return LocalAppUser::withTrashed()->whereKey($id)
+            ->when($lock, static fn (Builder $query): Builder => $query->lockForUpdate())->first();
     }
 
     public function defaultAccess(string $username): ?SecurityAccessWarehouse
@@ -65,5 +66,10 @@ final class LocalLoginRepository
             ['username' => $userId, 'serialnumber' => $serialNumber],
             ['created_at' => now()->toDateTimeString()]
         );
+    }
+
+    public function deviceExists(int $userId, int $deviceId): bool
+    {
+        return StorageUserDevice::query()->whereKey($deviceId)->where('username', $userId)->exists();
     }
 }

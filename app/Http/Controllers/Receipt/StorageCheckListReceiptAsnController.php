@@ -3,13 +3,11 @@
 namespace App\Http\Controllers\Receipt;
 
 use App\Http\Controllers\BaseController;
-use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Receipt\ReceiptAsn;
 use App\Models\Receipt\ReceiptAsnCheckList;
 use App\Models\Yard\StorageCheckList;
 use App\Models\Yard\StorageCheckListDetail;
 use Auth;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -17,7 +15,11 @@ class StorageCheckListReceiptAsnController extends BaseController
 {
     public function index($id)
     {
-        $receipt = ReceiptAsn::findOrFail($id);
+        $receipt = ReceiptAsn::controlAccessUser()->where('uuid_asn', $id)->first();
+        if (empty($receipt)) {
+            return $this->errorResponse('No existe el número de recibo solicitado.');
+        }
+
         $checklist = StorageCheckList::controlAccessUser()->where('type', '=', 'REC')
             ->where('statusid', '=', 'E')->first(['id', 'name']);
         if (empty($checklist)) {
@@ -29,30 +31,20 @@ class StorageCheckListReceiptAsnController extends BaseController
             ->where('statusid', '=', 'E')
             ->get();
 
-        $categories = SystemStatus::where('schemaid', 'CRE')
-            ->where('centerid', $receipt->centerid)
-            ->where('warehouseid', $receipt->warehouseid)
-            ->select(['name', 'statusid'])->get();
-
-        if ($categories->isEmpty()) {
-            return $this->errorResponse('No existe categoria de material en el esquema CRE.');
-        }
-        $actives = ReceiptAsnCheckList::where('receiptid', $id)
+        $actives = ReceiptAsnCheckList::where('receiptid', $receipt->id)
             ->where('typeid', 'AR')->where('checklistid', $checklist->id)
             ->select('checklistdetailid')->get();
 
         return view(
             'Receipt.ScheduleReceipt.partials.checklist',
-            compact('receipt', 'details', 'checklist', 'categories', 'actives')
+            compact('receipt', 'details', 'checklist', 'actives'),
         );
     }
 
     public function addchecklistAR($id, Request $request)
     {
-        $receipt = ReceiptAsn::findOrFail($id);
-        $receipt->auxiliary03 = $request['categoryid']; // Categoria de material esquema CRE
-        $receipt->auxiliary08 = Auth::user()->username;
-        $receipt->save();
+        $receipt = ReceiptAsn::where('id', $id)->first();
+
         $this->destroyCheckListOfReceipt($receipt, $request);
         $this->createCheckListReceipt($request, $receipt);
 
@@ -70,20 +62,32 @@ class StorageCheckListReceiptAsnController extends BaseController
 
     private function createCheckListReceipt(Request $request, $receipt): void
     {
-        $reg = $request->input('checklistdetailid');
-        if ($reg !== null) {
-            $registros = count($reg) - 1;
-            for ($i = 0; $i <= $registros; $i++) {
-                ReceiptAsnCheckList::create([
-                    'receiptid' => $receipt->id,
-                    'centerid' => $receipt->centerid,
-                    'checklistid' => $request['checklistid'],
-                    'typeid' => $request['typeid'],
-                    'checklistdetailid' => $request['checklistdetailid'][$i],
-                    'createuser' => Auth::user()->username,
-                    'created_at' => Carbon::now(),
-                ]);
-            }
+        $detailIds = $request->input('checklistdetailid');
+
+        if (empty($detailIds)) {
+            return;
         }
+
+        $now = now();
+        $username = Auth::user()->username;
+
+        $base = [
+            'receiptid' => $receipt->id,
+            'checklistid' => $request->input('checklistid'),
+            'typeid' => $request->input('typeid'),
+            'createuser' => $username,
+            'created_at' => $now,
+        ];
+
+        $rows = array_map(
+            fn ($detailId) => $base + ['checklistdetailid' => $detailId],
+            array_values($detailIds)
+        );
+
+        DB::transaction(function () use ($rows) {
+            foreach (array_chunk($rows, 200) as $chunk) {
+                ReceiptAsnCheckList::insert($chunk);
+            }
+        });
     }
 }
