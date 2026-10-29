@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Apis\Catalogs\LocationController;
+use App\Http\Controllers\Apis\Catalogs\OperatorController;
+use App\Http\Controllers\Apis\Catalogs\RoutesController;
 use App\Http\Controllers\Apis\Inventory\InventoryPartNumberController;
 use App\Http\Controllers\Auth\LocalAuthController;
 use App\Http\Middleware\AuditLocalAuthentication;
@@ -29,7 +32,10 @@ Route::withoutMiddleware(AuthorizerMiddleware::class)
         Route::prefix('v1')->name('v1.')->group(function () {
 
             Route::prefix('catalogs')->name('catalogs.')->group(function () {
-                Route::apiResource('products', InventoryPartNumberController::class);
+                Route::apiResource('products', InventoryPartNumberController::class)->only('index', 'show');
+                Route::apiResource('locations', LocationController::class)->only('index');
+                Route::apiResource('operators', OperatorController::class)->only('index');
+                Route::apiResource('routes', RoutesController::class)->only('index');
 
             });
 

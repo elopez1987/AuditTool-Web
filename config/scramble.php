@@ -13,8 +13,8 @@ return [
         'version' => '1.0.0',
         'description' => 'API de autenticación local y catálogos de inventario. '
             .'Los endpoints de autenticación requieren X-App-Token; el perfil y los catálogos '
-            .'requieren además un access token Bearer de Passport. '
-            .'Las operaciones de escritura de productos están registradas, pero no implementadas.',
+            .'requieren un access token Bearer de Passport. '
+            .'Los catálogos de productos, ubicaciones, operadores y rutas son de solo lectura.',
     ],
     'ui' => [
         'title' => 'Audittool API',

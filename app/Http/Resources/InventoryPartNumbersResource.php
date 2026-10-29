@@ -19,17 +19,17 @@ class InventoryPartNumbersResource extends JsonResource
              *
              * @example 1
              */
-            'partnumberId' => $this->id,
+            'PartnumberId' => $this->id,
             /**
              * Código del número de parte utilizado en el parámetro de la búsqueda GET.
              *
              * @example SKU-001
              */
-            'partnumberCode' => $this->prtnum,
+            'PartnumberCode' => $this->prtnum,
             /**
              * Descripción del producto.
              */
-            'description' => $this->lngdsc,
+            'Description' => $this->lngdsc,
         ];
     }
 }

@@ -10,9 +10,9 @@ class SystemWarehouseResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'center' => $this->center,
-            'warehouseid' => $this->warehouseid,
-            'warehousename' => $this->name,
+            'Center' => $this->center,
+            'WarehouseId' => $this->warehouseid,
+            'WarehouseName' => $this->name,
         ];
     }
 }

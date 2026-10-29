@@ -10,9 +10,9 @@ class StorageZoneResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'zoneid' => $this->zoneid,
-            'name' => $this->name,
+            'Id' => $this->id,
+            'ZoneId' => $this->zoneid,
+            'Name' => $this->name,
         ];
     }
 }

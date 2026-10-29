@@ -10,11 +10,13 @@ class StorageOperatorResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            /** @var int */
             'id' => $this->id,
+            /** @var string|null */
             'barcode' => $this->barcode,
             'name' => $this->name,
-            'drivernumber' => $this->drivernumber,
-            'phone' => $this->phone,
+            //            'drivernumber' => $this->drivernumber,
+            //            'phone' => $this->phone,
         ];
     }
 }

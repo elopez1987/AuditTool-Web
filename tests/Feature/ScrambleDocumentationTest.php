@@ -19,7 +19,7 @@ it('generates API contracts with the correct credentials responses and product p
     expect($specification['openapi'])->toStartWith('3.1.');
     expect($specification['components']['securitySchemes']['http']['scheme'])->toBe('bearer');
     expect($specification['security'])->toBe([['http' => []]]);
-    expect($paths)->toHaveCount(7);
+    expect($paths)->toHaveCount(10);
     expect(array_sum(array_map(count(...), $paths)))->toBe(10);
 
     foreach (['login', 'refresh'] as $action) {
@@ -47,11 +47,45 @@ it('generates API contracts with the correct credentials responses and product p
     expect($product['parameters'][0]['schema']['type'])->toBe('string');
     expect($product['responses'][404]['content']['application/json']['schema']['properties']['data']['type'])->toBe('null');
 
-    expect($paths['/v1/catalogs/products']['post']['summary'])->toContain('no implementado');
-    expect($paths['/v1/catalogs/products/{product}']['put']['summary'])->toContain('no implementado');
-    expect($paths['/v1/catalogs/products/{product}']['delete']['summary'])->toContain('no implementado');
+    $catalogs = [
+        'products' => ['listInventoryProducts', 'InventoryPartNumbersResource', ['PartnumberId', 'PartnumberCode', 'Description']],
+        'locations' => ['listCatalogLocations', 'StorageLocationResource', ['Id', 'Name', 'LocationId', 'BarCode']],
+        'operators' => ['listCatalogOperators', 'StorageOperatorResource', ['id', 'barcode', 'name']],
+        'routes' => ['listCatalogRoutes', 'ReceiptProviderResource', ['CenterId', 'WarehouseId', 'Id', 'Name', 'RouteId']],
+    ];
+
+    foreach ($catalogs as $catalog => [$operationId, $resource, $fields]) {
+        $path = $paths['/v1/catalogs/'.$catalog];
+        expect(array_keys($path))->toBe(['get']);
+
+        $operation = $path['get'];
+        expect($operation['operationId'])->toBe($operationId);
+        expect($operation['tags'])->toContain('Catálogos de inventario');
+        expect($operation['security'] ?? $specification['security'])->toBe([['http' => []]]);
+        expect(array_keys($operation['responses']))->toContain(200, 401, 403);
+
+        $schema = $operation['responses'][200]['content']['application/json']['schema'];
+        expect($schema['required'])->toBe(['success', 'code', 'message', 'meta', 'data']);
+        expect($schema['properties']['data']['properties'][$catalog]['type'])->toBe('array');
+        expect($schema['properties']['data']['properties'][$catalog]['items']['$ref'])
+            ->toBe('#/components/schemas/'.$resource);
+        expect($specification['components']['schemas'][$resource]['required'])->toBe($fields);
+
+        foreach ([401, 403] as $status) {
+            expect($operation['responses'][$status]['content']['application/json']['schema']['properties']['data']['type'])
+                ->toBe('null');
+        }
+    }
+
+    expect(array_keys($paths['/v1/catalogs/products/{product}']))->toBe(['get']);
+    expect(array_keys($product['responses']))->toContain(200, 401, 403, 404);
+    expect($product['parameters'][0]['example'])->toBe('SKU-001');
     expect($specification['components']['schemas']['InventoryPartNumbersResource']['required'])
-        ->toBe(['partnumberId', 'partnumberCode', 'description']);
+        ->toBe(['PartnumberId', 'PartnumberCode', 'Description']);
+    expect($specification['components']['schemas']['StorageLocationResource']['properties']['LocationId']['type'])
+        ->toBe(['string', 'null']);
+    expect($specification['components']['schemas']['StorageOperatorResource']['properties']['id']['type'])
+        ->toBe('integer');
 });
 
 it('restricts both documentation endpoints outside the local environment', function (): void {
