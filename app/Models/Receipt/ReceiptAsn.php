@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Auth;
 use Ramsey\Uuid\Uuid;
 use Spatie\Activitylog\LogOptions;
@@ -85,6 +86,11 @@ class ReceiptAsn extends Model
     public function operator(): BelongsTo
     {
         return $this->belongsTo(StorageOperator::class, 'operatorid', 'id');
+    }
+
+    public function stockplan(): HasMany
+    {
+        return $this->hasMany(ReceiptStock::class, 'receiptid', 'id');
     }
 
     public function timereceipt(): BelongsTo

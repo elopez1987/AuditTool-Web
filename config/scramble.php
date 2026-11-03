@@ -11,10 +11,12 @@ return [
     'export_path' => 'api.json',
     'info' => [
         'version' => '1.0.0',
-        'description' => 'API de autenticación local y catálogos de inventario. '
+        'description' => 'API de autenticación local, catálogos de inventario y verificación de recibos. '
             .'Los endpoints de autenticación requieren X-App-Token; el perfil y los catálogos '
             .'requieren un access token Bearer de Passport. '
-            .'Los catálogos de productos, ubicaciones, operadores y rutas son de solo lectura.',
+            .'Los catálogos de productos, ubicaciones, operadores, rutas y categorías son de solo lectura. '
+            .'La verificación permite buscar vouchers e iniciar su proceso con ubicación y temperatura; '
+            .'requiere un access token Bearer de Passport.',
     ],
     'ui' => [
         'title' => 'Audittool API',

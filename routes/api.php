@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\Apis\Catalogs\CategoriesController;
 use App\Http\Controllers\Apis\Catalogs\LocationController;
 use App\Http\Controllers\Apis\Catalogs\OperatorController;
 use App\Http\Controllers\Apis\Catalogs\RoutesController;
 use App\Http\Controllers\Apis\Inventory\InventoryPartNumberController;
+use App\Http\Controllers\Apis\Verification\SearchVoucherController;
 use App\Http\Controllers\Auth\LocalAuthController;
 use App\Http\Middleware\AuditLocalAuthentication;
 use App\Http\Middleware\AuthenticateLocalApp;
@@ -36,6 +38,13 @@ Route::withoutMiddleware(AuthorizerMiddleware::class)
                 Route::apiResource('locations', LocationController::class)->only('index');
                 Route::apiResource('operators', OperatorController::class)->only('index');
                 Route::apiResource('routes', RoutesController::class)->only('index');
+                Route::apiResource('categories', CategoriesController::class)->only('index');
+
+            });
+
+            Route::prefix('verification')->name('verification')->group(function () {
+                Route::post('search-voucher', [SearchVoucherController::class, 'index'])->name('search-voucher');
+                Route::post('start-voucher', [SearchVoucherController::class, 'saveStartVerification'])->name('start-voucher');
 
             });
 

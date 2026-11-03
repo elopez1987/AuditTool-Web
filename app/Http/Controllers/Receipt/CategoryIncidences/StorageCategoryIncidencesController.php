@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Shipments\CategoryIncidences;
+namespace App\Http\Controllers\Receipt\CategoryIncidences;
 
 use App\Http\Controllers\BaseController;
-use App\Http\Requests\Web\Shipments\CaregoryIncidence\CreateCategoryIncidenceRequest;
+use App\Http\Requests\Api\Inventory\CreateCategoryIncidenceRequest;
 use App\Models\Receipt\StorageCategoryIncidence;
 use Illuminate\Http\Request;
 
@@ -13,61 +13,57 @@ class StorageCategoryIncidencesController extends BaseController
     {
         $this->authorize('storagecategoryincidences.index');
 
-        return view('Shipments.CategoryIncidences.index');
+        return view('Receipt.CategoryIncidences.index');
     }
 
     public function getdatacategoryincidences(Request $request)
     {
         $data = StorageCategoryIncidence::controlAccessUser()
-            ->ForDescription($request->input('description'))
             ->leftJoin('systemstatus as se', 'storagecategoryincidences.statusid', '=', 'se.statusid')
             ->leftJoin('systemcenterdistributions as cd', 'storagecategoryincidences.centerid', '=', 'cd.centerid')
-            ->leftjoin('systemwarehouses as sw', 'storagecategoryincidences.warehouseid', '=', 'sw.warehouseid')
             ->select(['se.name as status',
                 'cd.description as center',
-                'sw.name as warehousename',
-                'storagecategoryincidences.categoryincid',
+                'storagecategoryincidences.id',
                 'storagecategoryincidences.centerid',
-                'storagecategoryincidences.warehouseid',
                 'storagecategoryincidences.description',
                 'storagecategoryincidences.statusid',
                 'storagecategoryincidences.auxiliary01',
             ]);
 
-        return $this->showDataToView($data, 'Shipments.CategoryIncidences.partials.buttons');
+        return $this->showDataToView($data, 'Receipt.CategoryIncidences.partials.buttons');
     }
 
     public function create()
     {
         $this->authorize('storagecategoryincidences.create');
         $centers = $this->getCenterForSelect();
-        $warehouses = $this->getWarehouseForSelect();
 
-        return view('Shipments.CategoryIncidences.create', compact('centers', 'warehouses'));
+        return view('Receipt.CategoryIncidences.create', compact('centers'));
     }
 
     public function store(CreateCategoryIncidenceRequest $request)
     {
-        $category = new StorageCategoryIncidence($request->all());
+        $category = new StorageCategoryIncidence($request->validated());
         $category->save();
 
-        return redirect('storagecategoryincidences/'.$category->categoryincid.'/adddetail');
+        return $this->redirectBackSuccessMessage('Categoria registrada con exito.');
+        //        return redirect('storagecategoryincidences/'.$category->categoryincid.'/adddetail');
     }
 
-    public function edit(StorageCategoryIncidence $storagecategoryincidence)
+    public function edit(StorageCategoryIncidence $categories_incident)
     {
         $this->authorize('storagecategoryincidences.edit');
         $status = $this->getStatusForSchema('STS');
 
         return view(
-            'Shipments.CategoryIncidences.edit',
-            compact('storagecategoryincidence', 'status')
+            'Receipt.CategoryIncidences.edit',
+            compact('categories_incident', 'status'),
         );
     }
 
-    public function update(Request $request, StorageCategoryIncidence $storagecategoryincidence)
+    public function update(Request $request, StorageCategoryIncidence $categories_incident)
     {
-        $storagecategoryincidence->update($request->except('centerid', 'warehouseid'));
+        $categories_incident->update($request->except('centerid', 'warehouseid'));
 
         return $this->redirectBackSuccess();
     }

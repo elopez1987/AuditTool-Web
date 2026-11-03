@@ -139,6 +139,14 @@
                                                         <span class="hide-menu"> Check List</span></a>
                                                 </li>
                                             @endcan
+                                            @can('categories-incidents.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('categories-incidents.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Categorias de daños</span></a>
+                                                </li>
+                                            @endcan
                                         </ul>
                                     </li>
                                 @endcan

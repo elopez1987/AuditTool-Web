@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Receipt\CategoryIncidences\StorageCategoryIncidencesController;
 use App\Http\Controllers\Receipt\EventReceiptController;
 use App\Http\Controllers\Receipt\ImportDataReceiptController;
 use App\Http\Controllers\Receipt\MonitorReceiptPlantController;
@@ -54,5 +55,9 @@ Route::middleware(['auth'])->group(function () {
     //    Monitos de arribos de planta
     Route::get('monitorreceiptplant', [MonitorReceiptPlantController::class, 'index'])->name('monitorreceiptplant');
     Route::get('getReceiptInTransit', [MonitorReceiptPlantController::class, 'getReceiptInTransit'])->name('getReceiptInTransit');
+
+    //	Categorias de incidencias en recepcion
+    Route::resource('categories-incidents', StorageCategoryIncidencesController::class)->except('destroy', 'show');
+    Route::get('getdatacategoryincidences', [StorageCategoryIncidencesController::class, 'getdatacategoryincidences'])->name('getdatacategoryincidences');
 
 });

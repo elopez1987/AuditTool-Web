@@ -24,13 +24,12 @@ class ReceiptStock extends Model
     protected $fillable = [
         'receiptid',
         'partnumberid',
-        'stockcategoryid',
-        'expirecode',
-        'expiredate',
-        'productiondate',
         'quantity',
         'rotary',
         'definitive',
+        'productiondate',
+        'expiredate',
+        'expirecode',
     ];
 
     //    Relaciones entre modelos

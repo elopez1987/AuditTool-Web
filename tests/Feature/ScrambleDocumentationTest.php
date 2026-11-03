@@ -19,8 +19,8 @@ it('generates API contracts with the correct credentials responses and product p
     expect($specification['openapi'])->toStartWith('3.1.');
     expect($specification['components']['securitySchemes']['http']['scheme'])->toBe('bearer');
     expect($specification['security'])->toBe([['http' => []]]);
-    expect($paths)->toHaveCount(10);
-    expect(array_sum(array_map(count(...), $paths)))->toBe(10);
+    expect($paths)->toHaveCount(13);
+    expect(array_sum(array_map(count(...), $paths)))->toBe(13);
 
     foreach (['login', 'refresh'] as $action) {
         $operation = $paths['/v1/auth/'.$action]['post'];
@@ -52,6 +52,7 @@ it('generates API contracts with the correct credentials responses and product p
         'locations' => ['listCatalogLocations', 'StorageLocationResource', ['Id', 'Name', 'LocationId', 'BarCode']],
         'operators' => ['listCatalogOperators', 'StorageOperatorResource', ['id', 'barcode', 'name']],
         'routes' => ['listCatalogRoutes', 'ReceiptProviderResource', ['CenterId', 'WarehouseId', 'Id', 'Name', 'RouteId']],
+        'categories' => ['listCatalogCategories', 'CategoriesResource', ['CenterId', 'CategoryId', 'CategoryName']],
     ];
 
     foreach ($catalogs as $catalog => [$operationId, $resource, $fields]) {
@@ -86,6 +87,39 @@ it('generates API contracts with the correct credentials responses and product p
         ->toBe(['string', 'null']);
     expect($specification['components']['schemas']['StorageOperatorResource']['properties']['id']['type'])
         ->toBe('integer');
+
+    foreach ([
+        'search-voucher' => ['searchVerificationVoucher', ['VoucherId'], [200, 401, 403, 422]],
+        'start-voucher' => ['startVerificationVoucher', ['AsnId', 'LocationId', 'Temperature'], [200, 401, 403, 404, 409, 422]],
+    ] as $action => [$operationId, $fields, $statuses]) {
+        $path = $paths['/v1/verification/'.$action];
+        expect(array_keys($path))->toBe(['post']);
+        $operation = $path['post'];
+        expect($operation['operationId'])->toBe($operationId);
+        expect($operation['tags'])->toContain('Verificación de recibos');
+        expect($operation['security'] ?? $specification['security'])->toBe([['http' => []]]);
+        expect(array_keys($operation['responses']))->toContain(...$statuses);
+
+        $body = $operation['requestBody']['content']['application/json']['schema'];
+        if (isset($body['allOf'])) {
+            $body = $body['allOf'][0];
+        }
+        if (isset($body['$ref'])) {
+            $body = $specification['components']['schemas'][basename($body['$ref'])];
+        }
+        expect($body['required'])->toBe($fields);
+        expect(array_keys($body['properties']))->toBe($fields);
+        expect($operation['responses'][422]['content']['application/json']['schema']['properties']['data']['properties'])
+            ->toHaveKey('errors');
+    }
+
+    $voucher = $paths['/v1/verification/search-voucher']['post']['responses'][200]['content']['application/json']['schema'];
+    expect($voucher['properties']['data']['properties']['Voucher']['$ref'])
+        ->toBe('#/components/schemas/ReeceiptAsnResource');
+    expect($specification['components']['schemas']['ReeceiptAsnResource']['required'])
+        ->toBe(['CenterId', 'WarehouseId', 'AsnId', 'VoucherId', 'RouteName', 'RouteId', 'OperatorName', 'OperatorId', 'Products']);
+    expect($specification['components']['schemas']['ReceiptStockResource']['required'])
+        ->toBe(['PartNumberId', 'PartNumberCode', 'Description', 'BarCode', 'Rotary', 'Definitive']);
 });
 
 it('restricts both documentation endpoints outside the local environment', function (): void {

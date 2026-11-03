@@ -12,8 +12,8 @@
                         {{csrf_field()}}
                         <div class="row">
                             <div class="col-md-12">
-                                @can('storagecategoryincidences.create')
-                                    <a href="{{route('storagecategoryincidences.create')}}">
+                                @can('categories-incidents.create')
+                                    <a href="{{route('categories-incidents.create')}}">
                                         @include('buttons.add')
                                     </a>
                                 @endcan
@@ -23,7 +23,7 @@
                                 <a>
                                     @include('buttons.reloadajax')
                                 </a>
-                                <a href="{{route('menushipment')}}">
+                                <a href="{{route('home')}}">
                                     @include('buttons.cancel')
                                 </a>
                             </div>
@@ -48,7 +48,6 @@
                                         <thead>
                                         <tr>
                                             <th>C.Distribución</th>
-                                            <th>Bodega</th>
                                             <th>Nombre</th>
                                             <th>Tipo</th>
                                             <th>Estatus</th>
@@ -69,7 +68,7 @@
 @endsection
 
 @section('script')
-    @include('Shipments.CategoryIncidences.partials.table')
+    @include('Receipt.CategoryIncidences.partials.table')
     <script>
         function reloadtable() {
             $('#table-categories').DataTable().ajax.reload();

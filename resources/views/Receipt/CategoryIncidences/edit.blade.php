@@ -9,7 +9,7 @@
                 </div>
                 <div class="card-body">
                     <form method="POST"
-                          action="{{url('storagecategoryincidences/' . $storagecategoryincidence->categoryincid)}}"
+                          action="{{url('categories-incidents/' . $categories_incident->id)}}"
                           enctype="multipart/form-data">
                         {{ method_field('PUT') }}
                         @csrf
@@ -18,7 +18,7 @@
                                 <a href="">
                                     @include('buttons.save')
                                 </a>
-                                <a href="{{route('storagecategoryincidences.index')}}">
+                                <a href="{{route('categories-incidents.index')}}">
                                     @include('buttons.back')
                                 </a>
                             </div>
@@ -27,12 +27,10 @@
                         @include('Receipt.CategoryIncidences.partials.formEdit')
                     </form>
                 </div>
-                <div class="row">
-                    @include('layouts.Partials.Errors')
-                </div>
             </div>
         </div>
     </div>
+    @include('layouts.Partials.Errors')
 @endsection
 
 @section('script')
