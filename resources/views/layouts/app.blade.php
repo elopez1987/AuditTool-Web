@@ -579,17 +579,15 @@
             <div class="row d-flex justify-content-center">
                 <div class="col-lg-3">
                     @auth
-                        @php
-                            $centerId = Auth::user()->access?->center?->centerid;
-                            $logo = config("center_logos.$centerId");
-                        @endphp
-                        @if($logo)
-                            <img
-                                    src="{{ asset('img/' . $logo['image']) }}"
-                                    alt="Logo"
-                                    style="width: {{ $logo['width'] }}; height: {{ $logo['height'] }}"
-                            >
-                        @endif
+                        @production
+                            @php
+                                $centerId = Auth::user()->access?->center?->centerid;
+                                $logo = config("center_logos.$centerId");
+                            @endphp
+                            @if($logo)
+                                <img src="{{ asset('img/' . $logo['image']) }}" alt="Logo" style="width: {{ $logo['width'] }}; height: {{ $logo['height'] }}">
+                            @endif
+                        @endproduction
                     @endauth
                 </div>
             </div>

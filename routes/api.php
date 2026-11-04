@@ -45,6 +45,7 @@ Route::withoutMiddleware(AuthorizerMiddleware::class)
             Route::prefix('verification')->name('verification')->group(function () {
                 Route::post('search-voucher', [SearchVoucherController::class, 'index'])->name('search-voucher');
                 Route::post('start-voucher', [SearchVoucherController::class, 'saveStartVerification'])->name('start-voucher');
+                Route::post('finish-voucher', [SearchVoucherController::class, 'saveFinishVerification'])->name('finish-voucher');
 
             });
 

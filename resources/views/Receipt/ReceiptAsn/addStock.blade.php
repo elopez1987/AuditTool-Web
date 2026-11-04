@@ -178,8 +178,8 @@
                         lngdsc.value = "";
                         return;
                     }
-
-                    lngdsc.value = data.Data.description ?? "";
+                    console.log(data)
+                    lngdsc.value = data.Data.Description ?? "";
 
                 } catch (error) {
                     console.error("Error en la petición:", error);

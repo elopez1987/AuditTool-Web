@@ -32,7 +32,7 @@ class ReceiptAsnRepository
             ->first();
     }
 
-    public function updateLocationAsn(array $data, ReceiptAsn $receiptAsn): void
+    public function updateStartLocationAsn(array $data, ReceiptAsn $receiptAsn): void
     {
         ReceiptAsnTime::updateOrCreate([
             'receiptid' => $receiptAsn->id,
@@ -50,6 +50,18 @@ class ReceiptAsnRepository
 
         $receiptAsn->update([
             'statusid' => self::STATUS_IN_PROCESS,
+        ]);
+    }
+
+    public function updateFinishLocationAsn(ReceiptAsn $receiptAsn): void
+    {
+        ReceiptAsnTime::where('receiptid', $receiptAsn->id)
+            ->update([
+                'unloadfinishdate' => Carbon::now(),
+            ]);
+
+        $receiptAsn->update([
+            'statusid' => self::STATUS_PREDESCARGA,
         ]);
 
     }

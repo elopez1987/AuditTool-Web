@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Apis\Verification;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\Verification\saveFinishProcessRequest;
 use App\Http\Requests\Api\Verification\SaveStartProcessRequest;
 use App\Http\Requests\Api\Verification\SearchvoucherRequest;
 use App\Http\Resources\ReeceiptAsnResource;
@@ -94,10 +95,19 @@ class SearchVoucherController extends Controller
     #[Response(422, 'AsnId, LocationId o Temperature no cumplen las reglas de validación.', type: 'array{success: false, code: 422, message: string, meta: array{version: string, service: string, processDate: string}, data: array{errors: array<string, list<string>>}}')]
     public function saveStartVerification(SaveStartProcessRequest $request)
     {
-        $this->receiptAsnService->updateLocationAsn($request->validated());
+        $this->receiptAsnService->updateStartAsn($request->validated());
 
         return $this->modernSuccessResponse(
-            data: []
+            data: [],
+        );
+    }
+
+    public function saveFinishVerification(saveFinishProcessRequest $request)
+    {
+        $this->receiptAsnService->updateFinishAsn($request->validated());
+
+        return $this->modernSuccessResponse(
+            data: [],
         );
     }
 }
