@@ -19,8 +19,8 @@ it('generates API contracts with the correct credentials responses and product p
     expect($specification['openapi'])->toStartWith('3.1.');
     expect($specification['components']['securitySchemes']['http']['scheme'])->toBe('bearer');
     expect($specification['security'])->toBe([['http' => []]]);
-    expect($paths)->toHaveCount(13);
-    expect(array_sum(array_map(count(...), $paths)))->toBe(13);
+    expect($paths)->toHaveCount(14);
+    expect(array_sum(array_map(count(...), $paths)))->toBe(14);
 
     foreach (['login', 'refresh'] as $action) {
         $operation = $paths['/v1/auth/'.$action]['post'];
@@ -91,6 +91,7 @@ it('generates API contracts with the correct credentials responses and product p
     foreach ([
         'search-voucher' => ['searchVerificationVoucher', ['VoucherId'], [200, 401, 403, 422]],
         'start-voucher' => ['startVerificationVoucher', ['AsnId', 'LocationId', 'Temperature'], [200, 401, 403, 404, 409, 422]],
+        'finish-voucher' => ['finishVerificationVoucher', ['AsnId'], [200, 401, 403, 404, 409, 422]],
     ] as $action => [$operationId, $fields, $statuses]) {
         $path = $paths['/v1/verification/'.$action];
         expect(array_keys($path))->toBe(['post']);
@@ -111,6 +112,15 @@ it('generates API contracts with the correct credentials responses and product p
         expect(array_keys($body['properties']))->toBe($fields);
         expect($operation['responses'][422]['content']['application/json']['schema']['properties']['data']['properties'])
             ->toHaveKey('errors');
+    }
+
+    $finish = $paths['/v1/verification/finish-voucher']['post'];
+    $finishSuccess = $finish['responses'][200]['content']['application/json']['schema'];
+    expect($finishSuccess['required'])->toBe(['success', 'code', 'message', 'meta', 'data']);
+    expect($finishSuccess['properties']['data']['type'])->toBe('array');
+    foreach ([401, 403, 404, 409] as $status) {
+        expect($finish['responses'][$status]['content']['application/json']['schema']['properties']['data']['type'])
+            ->toBe('null');
     }
 
     $voucher = $paths['/v1/verification/search-voucher']['post']['responses'][200]['content']['application/json']['schema'];

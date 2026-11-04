@@ -34,15 +34,17 @@ Route::withoutMiddleware(AuthorizerMiddleware::class)
         Route::prefix('v1')->name('v1.')->group(function () {
 
             Route::prefix('catalogs')->name('catalogs.')->group(function () {
-                Route::apiResource('products', InventoryPartNumberController::class)->only('index', 'show');
-                Route::apiResource('locations', LocationController::class)->only('index');
-                Route::apiResource('operators', OperatorController::class)->only('index');
-                Route::apiResource('routes', RoutesController::class)->only('index');
-                Route::apiResource('categories', CategoriesController::class)->only('index');
+
+                Route::get('products', [InventoryPartNumberController::class, 'index'])->middleware('permission:catalogs.products.list');
+                Route::get('locations', [LocationController::class, 'index'])->middleware('permission:catalogs.locations.list');
+                Route::get('operators', [OperatorController::class, 'index'])->middleware('permission.catalogs.operators');
+                Route::get('routes', [RoutesController::class, 'index'])->middleware('permission.catalogs.routes.list');
+                Route::get('categories', [CategoriesController::class, 'index'])->middleware('permission.catalogs.categories.list');
 
             });
 
             Route::prefix('verification')->name('verification')->group(function () {
+
                 Route::post('search-voucher', [SearchVoucherController::class, 'index'])->name('search-voucher');
                 Route::post('start-voucher', [SearchVoucherController::class, 'saveStartVerification'])->name('start-voucher');
                 Route::post('finish-voucher', [SearchVoucherController::class, 'saveFinishVerification'])->name('finish-voucher');

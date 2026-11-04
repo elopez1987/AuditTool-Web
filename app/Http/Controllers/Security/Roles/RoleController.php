@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Security\Roles;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Security\Roles\CreateRoleRequest;
-use App\Models\Configuration\Parameters\SystemDetailParameter;
 use App\Models\Security\Permission\Permission;
 use App\Models\Security\Roles\Role;
 use App\Models\Security\Roles\RoleHasPermission;
@@ -68,7 +67,6 @@ class RoleController extends BaseController
         $access = $this->getPermissionForRole($securityrole->id);
         $status = $this->getStatusForSchema('STS');
         $menus = $this->getStructureMenus();
-        $checkMtn = SystemDetailParameter::where('value02', $securityrole->id)->where('parameterid', 'ROLE-TRUCK')->count();
 
         return view('Security.Roles.edit', compact(
             'securityrole',
@@ -79,7 +77,6 @@ class RoleController extends BaseController
             'assings',
             'status',
             'menus',
-            'checkMtn'
         ));
     }
 

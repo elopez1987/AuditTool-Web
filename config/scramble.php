@@ -15,7 +15,8 @@ return [
             .'Los endpoints de autenticación requieren X-App-Token; el perfil y los catálogos '
             .'requieren un access token Bearer de Passport. '
             .'Los catálogos de productos, ubicaciones, operadores, rutas y categorías son de solo lectura. '
-            .'La verificación permite buscar vouchers e iniciar su proceso con ubicación y temperatura; '
+            .'La verificación permite buscar vouchers, iniciar su proceso con ubicación y temperatura '
+            .'y finalizarlo para pasar a predescarga; '
             .'requiere un access token Bearer de Passport.',
     ],
     'ui' => [

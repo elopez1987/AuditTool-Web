@@ -102,6 +102,34 @@ class SearchVoucherController extends Controller
         );
     }
 
+    /**
+     * Finalizar verificación de un voucher.
+     *
+     * Requiere un recibo accesible al usuario en estatus en proceso (IP).
+     * Registra la fecha de fin de descarga y cambia el estatus a predescarga (PR).
+     * AsnId corresponde a receiptasn.uuid_asn, no al número de voucher.
+     * No requiere ubicación ni temperatura.
+     * Devuelve 404 si el recibo no está disponible para el usuario o no está
+     * en un estatus consultable (PG, IP o PR).
+     * Devuelve 409 si ya está en predescarga o no se encuentra en proceso.
+     * En éxito data es un arreglo vacío y meta.service es api-service.
+     *
+     * @operationId finishVerificationVoucher
+     *
+     * @response array{
+     *     success: true,
+     *     code: 200,
+     *     message: string,
+     *     meta: array{version: string, service: string, processDate: string},
+     *     data: list<mixed>
+     * }
+     */
+    #[BodyParameter('AsnId', description: 'Identificador uuid_asn de un recibo existente en proceso.', required: true, type: 'string', example: 'a8d50b98-d09b-44a8-ab54-5a18449de916')]
+    #[Response(401, 'Access token ausente, inválido, expirado o revocado.', type: 'array{success: false, code: 401, message: string, meta: array{version: string, service: string, processDate: string}, data: null}')]
+    #[Response(403, 'Cuenta o centro de distribución no disponibles.', type: 'array{success: false, code: 403, message: string, meta: array{version: string, service: string, processDate: string}, data: null}')]
+    #[Response(404, 'El recibo no existe o no está disponible para el usuario o por su estatus.', type: 'array{success: false, code: 404, message: string, meta: array{version: string, service: string, processDate: string}, data: null}')]
+    #[Response(409, 'El vale ya se encuentra en PRE-DESCARGA o el recibo no se encuentra en estatus EN PROCESO.', type: 'array{success: false, code: 409, message: string, meta: array{version: string, service: string, processDate: string}, data: null}')]
+    #[Response(422, 'AsnId ausente, de tipo inválido o inexistente.', type: 'array{success: false, code: 422, message: string, meta: array{version: string, service: string, processDate: string}, data: array{errors: array<string, list<string>>}}')]
     public function saveFinishVerification(saveFinishProcessRequest $request)
     {
         $this->receiptAsnService->updateFinishAsn($request->validated());
