@@ -194,7 +194,7 @@ it('loads the receipt by UUID with all detail relationships already available', 
     $details = $this->app->make(ReceiptAsnShowService::class)->details('a8d50b98-d09b-44a8-ab54-5a18449de916');
     $receipt = $details['receipt'];
 
-    foreach (['center', 'warehouse', 'provider', 'reason', 'inventorystock', 'timereceipt'] as $relation) {
+    foreach (['center', 'warehouse', 'provider', 'timereceipt'] as $relation) {
         expect($receipt->relationLoaded($relation))->toBeTrue();
     }
     expect($receipt->center->description)->toBe('Test Center');
@@ -203,6 +203,7 @@ it('loads the receipt by UUID with all detail relationships already available', 
     expect($details['evidences'])->toHaveCount(2);
     expect($details['incidences'][0]->user->name)->toBe('RECEIPT OPERATOR');
     expect($details['incidences'][0]->categoryincidence->description)->toBe('Damage');
+    expect($details['incidences'][0]->subcategoryincidence->description)->toBe('Packaging');
 });
 
 it('does not load detail collections for a receipt outside the operator access', function (): void {

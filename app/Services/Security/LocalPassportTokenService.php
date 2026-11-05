@@ -48,7 +48,7 @@ final class LocalPassportTokenService
      */
     public function refresh(#[\SensitiveParameter] string $refreshToken, DateTimeImmutable $sessionExpiresAt): array
     {
-        $grant = new LocalRefreshTokenGrant($this->refreshTokens, $this->accounts);
+        $grant = new LocalRefreshTokenGrant($this->refreshTokens, $this->accounts, $sessionExpiresAt);
         $auth = $this->exchange($grant, [
             'grant_type' => 'refresh_token',
             'refresh_token' => $refreshToken,

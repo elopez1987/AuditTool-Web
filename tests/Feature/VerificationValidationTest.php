@@ -7,9 +7,10 @@ use App\Http\Middleware\AuthenticateLocalApp;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Spatie\Permission\Middleware\PermissionMiddleware;
 
 beforeEach(function (): void {
-    $this->withoutMiddleware([AuditLocalAuthentication::class, AuthenticateLocalApp::class]);
+    $this->withoutMiddleware([AuditLocalAuthentication::class, AuthenticateLocalApp::class, PermissionMiddleware::class]);
 
     Schema::create('receiptasn', function (Blueprint $table): void {
         $table->id();

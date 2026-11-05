@@ -17,9 +17,13 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
+use Laravel\Passport\Bridge\AccessTokenRepository;
 use Laravel\Passport\Passport;
 use Lcobucci\JWT\Encoding\JoseEncoder;
 use Lcobucci\JWT\Token\Parser;
+use League\OAuth2\Server\Entities\AccessTokenEntityInterface;
+use League\OAuth2\Server\Entities\ClientEntityInterface;
+use Mockery\MockInterface;
 
 function localPassportTestKeys(): array
 {
@@ -148,6 +152,51 @@ beforeEach(function (): void {
     ]);
 });
 
+it('caps persisted and signed tokens even when issuance crosses a clock boundary', function (int $remainingSeconds): void {
+    $login = $this->postJson('/api/v1/auth/login', [
+        'username' => 'mobile.user', 'password' => 'local-test-password',
+    ])->assertOk();
+    $deadline = now('UTC')->addSeconds($remainingSeconds)->startOfSecond();
+    DB::table('token_metadata')->update(['session_expires_at' => $deadline->format('Y-m-d H:i:s')]);
+
+    $repository = $this->app->make(AccessTokenRepository::class);
+    $this->mock(AccessTokenRepository::class, function (MockInterface $mock) use ($repository, $remainingSeconds): void {
+        $mock->shouldReceive('getNewToken')->once()->andReturnUsing(
+            function (ClientEntityInterface $client, array $scopes, ?string $userIdentifier) use ($repository): AccessTokenEntityInterface {
+                sleep(2);
+
+                return $repository->getNewToken($client, $scopes, $userIdentifier);
+            }
+        );
+        $mock->shouldReceive('persistNewAccessToken')->times($remainingSeconds > 2 ? 1 : 0)
+            ->andReturnUsing($repository->persistNewAccessToken(...));
+        $mock->shouldReceive('revokeAccessToken')->andReturnUsing($repository->revokeAccessToken(...));
+        $mock->shouldReceive('isAccessTokenRevoked')->andReturnUsing($repository->isAccessTokenRevoked(...));
+    });
+
+    $renewed = $this->postJson('/api/v1/auth/refresh', [
+        'refreshToken' => $login->json('data.auth.refreshToken'),
+    ]);
+    if ($remainingSeconds <= 2) {
+        $renewed->assertUnauthorized();
+        expect(DB::table('oauth_access_tokens')->count())->toBe(1);
+        expect(DB::table('oauth_refresh_tokens')->count())->toBe(1);
+        expect(DB::table('oauth_access_tokens')->where('revoked', false)->count())->toBe(1);
+
+        return;
+    }
+    $renewed->assertOk();
+    $token = (new Parser(new JoseEncoder))->parse($renewed->json('data.auth.accessToken'));
+    $refresh = $this->app->make(LocalRefreshTokenDecoder::class)->decode($renewed->json('data.auth.refreshToken'));
+
+    expect($token->claims()->get('exp')->getTimestamp())->toBe($deadline->timestamp);
+    expect($refresh['expire_time'])->toBe($deadline->timestamp);
+    expect(Carbon::parse(DB::table('oauth_access_tokens')->where('id', $token->claims()->get('jti'))->value('expires_at'), 'UTC')->timestamp)
+        ->toBe($deadline->timestamp);
+    expect(Carbon::parse(DB::table('oauth_refresh_tokens')->where('id', $refresh['refresh_token_id'])->value('expires_at'), 'UTC')->timestamp)
+        ->toBe($deadline->timestamp);
+})->with([120, 2]);
+
 it('keeps an existing web user untouched when another local user logs in', function (): void {
     $webUser = new User;
     $webUser->forceFill(['id' => 999, 'name' => 'Web User', 'username' => 'web.user']);
@@ -223,19 +272,20 @@ it('prepares an isolated environment idempotently without revealing or rotating 
 });
 
 it('issues native Passport tokens using local username and password without an Auth0 identity', function (): void {
+    $expectedLifetime = config('local_auth.access_token_minutes') * 60;
     $response = $this->postJson('/api/v1/auth/login', ['username' => 'mobile.user', 'password' => 'local-test-password']);
     $response->assertOk()->assertJsonPath('success', true)->assertJsonPath('code', 200)
         ->assertJsonPath('message', 'Sesión iniciada correctamente')
         ->assertJsonPath('meta.version', '1.0.0')->assertJsonPath('meta.service', 'login-user')
         ->assertJsonPath('data.user', ['name' => 'MOBILE USER', 'centerId' => 'BRIDCUE', 'centerName' => 'BRIDGESTONE CUERNAVACA'])
-        ->assertJsonPath('data.auth.tokenType', 'Bearer')->assertJsonPath('data.auth.expiresIn', 900)
+        ->assertJsonPath('data.auth.tokenType', 'Bearer')->assertJsonPath('data.auth.expiresIn', $expectedLifetime)
         ->assertJsonPath('data.parameters.app', ['APP-03', 'APP-04'])
         ->assertJsonPath('data.parameters.user', ['USR-01'])
         ->assertJsonPath('data.parameters.warehouse', ['MX10APT' => ['SWH-01', 'SWH-02']])
         ->assertJsonPath('data.device', ['registered' => false, 'is_new' => false, 'warning' => 'No se proporcionó número de serie del dispositivo'])
         ->assertHeader('Cache-Control', 'no-store, private')->assertHeaderMissing('Set-Cookie');
     $token = (new Parser(new JoseEncoder))->parse($response->json('data.auth.accessToken'));
-    expect($token->claims()->get('exp')->getTimestamp() - $token->claims()->get('iat')->getTimestamp())->toBe(900);
+    expect($token->claims()->get('exp')->getTimestamp() - $token->claims()->get('iat')->getTimestamp())->toBe($expectedLifetime);
     expect($response->json('data.auth.expiresAt'))->toBe(Carbon::instance($token->claims()->get('exp'))->utc()->format('Y-m-d H:i:s'));
     expect(DB::table('oauth_access_tokens')->count())->toBe(1);
     expect(DB::table('oauth_refresh_tokens')->count())->toBe(1);
@@ -327,6 +377,10 @@ it('validates the issued Passport bearer token on its isolated profile endpoint'
 });
 
 it('accepts a login access token on products without redirecting to the web login', function (): void {
+    DB::table('permissions')->insert(['id' => 1, 'name' => 'catalogs.products.list', 'guard_name' => 'web']);
+    DB::table('model_has_permissions')->insert([
+        'permission_id' => 1, 'model_type' => User::class, 'model_id' => User::value('id'),
+    ]);
     $login = $this->postJson('/api/v1/auth/login', [
         'username' => 'mobile.user', 'password' => 'local-test-password',
     ])->assertOk();
@@ -349,9 +403,9 @@ it('accepts a login access token on products without redirecting to the web logi
         ->assertJsonPath('code', 200)
         ->assertJsonPath('meta.service', 'products')
         ->assertJsonCount(1, 'data.products')
-        ->assertJsonPath('data.products.0.partnumberId', 1)
-        ->assertJsonPath('data.products.0.partnumberCode', 'PRODUCT-001')
-        ->assertJsonPath('data.products.0.description', 'Test product');
+        ->assertJsonPath('data.products.0.PartnumberId', 1)
+        ->assertJsonPath('data.products.0.PartnumberCode', 'PRODUCT-001')
+        ->assertJsonPath('data.products.0.Description', 'Test product');
 });
 
 it('rejects missing invalid or revoked access tokens on products', function (string $tokenState): void {
@@ -606,6 +660,35 @@ it('enforces absolute expiry in UTC rather than the server local timezone', func
     DB::table('token_metadata')->update(['session_expires_at' => now('UTC')->subSecond()->format('Y-m-d H:i:s')]);
     $this->withToken($login->json('data.auth.accessToken'))->getJson('/api/v1/auth/me')->assertUnauthorized();
 });
+it('denies authenticated requests without the required permission', function (string $method, string $path): void {
+    $login = $this->postJson('/api/v1/auth/login', [
+        'username' => 'mobile.user', 'password' => 'local-test-password',
+    ])->assertOk();
+
+    $this->withToken($login->json('data.auth.accessToken'))
+        ->json($method, $path)
+        ->assertForbidden();
+})->with([
+    ['GET', '/api/v1/catalogs/products'],
+    ['POST', '/api/v1/verification/search-voucher'],
+    ['POST', '/api/v1/verification/start-voucher'],
+    ['POST', '/api/v1/verification/finish-voucher'],
+]);
+
+it('validates verification requests after granting the required permission', function (string $endpoint): void {
+    DB::table('permissions')->insert(['id' => 1, 'name' => 'verification.'.$endpoint, 'guard_name' => 'web']);
+    DB::table('model_has_permissions')->insert([
+        'permission_id' => 1, 'model_type' => User::class, 'model_id' => User::value('id'),
+    ]);
+    $login = $this->postJson('/api/v1/auth/login', [
+        'username' => 'mobile.user', 'password' => 'local-test-password',
+    ])->assertOk();
+
+    $this->withToken($login->json('data.auth.accessToken'))
+        ->postJson('/api/v1/verification/'.$endpoint, [])
+        ->assertUnprocessable()
+        ->assertJsonPath('meta.service', 'verification'.$endpoint);
+})->with(['search-voucher', 'start-voucher', 'finish-voucher']);
 
 it('caps new tokens at the remaining absolute session lifetime', function (): void {
     $login = $this->postJson('/api/v1/auth/login', ['username' => 'mobile.user', 'password' => 'local-test-password'])->assertOk();
@@ -616,6 +699,8 @@ it('caps new tokens at the remaining absolute session lifetime', function (): vo
     $data = $this->app->make(LocalRefreshTokenDecoder::class)
         ->decode($renewed->json('data.auth.refreshToken'));
     expect($data['expire_time'])->toBeLessThanOrEqual($deadline->timestamp);
+    $token = (new Parser(new JoseEncoder))->parse($renewed->json('data.auth.accessToken'));
+    expect($token->claims()->get('exp')->getTimestamp())->toBeLessThanOrEqual($deadline->timestamp);
 });
 
 it('rolls back rotation when profile authorization fails without consuming the original refresh', function (): void {

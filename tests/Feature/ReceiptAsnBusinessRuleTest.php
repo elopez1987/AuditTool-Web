@@ -14,45 +14,45 @@ use Illuminate\Support\Facades\Route;
 it('rejects a receipt already in process without updating it', function (): void {
     $receipt = new ReceiptAsn(['statusid' => 'IP']);
     $repository = Mockery::mock(ReceiptAsnRepository::class);
-    $repository->shouldReceive('findForLocationUpdate')->once()->with('ASN-ID')->andReturn($receipt);
-    $repository->shouldNotReceive('updateLocationAsn');
+    $repository->shouldReceive('findByUuid')->once()->with('ASN-ID')->andReturn($receipt);
+    $repository->shouldNotReceive('updateStartLocationAsn');
 
-    expect(fn () => (new ReceiptAsnService($repository))->updateLocationAsn([
-        'AsnId' => 'ASN-ID', 'Temperature' => 5,
+    expect(fn () => (new ReceiptAsnService($repository))->updateStartAsn([
+        'AsnId' => 'ASN-ID', 'Temperature' => 5, 'LocationId' => 1,
     ]))->toThrow(ApiBusinessRuleException::class, 'El recibo ya está en estatus en proceso.');
 });
 
 it('updates a receipt when its status allows starting the process', function (string $status): void {
     $receipt = new ReceiptAsn(['statusid' => $status]);
-    $data = ['AsnId' => 'ASN-ID', 'Temperature' => 5];
+    $data = ['AsnId' => 'ASN-ID', 'Temperature' => 5, 'LocationId' => 1];
     $repository = Mockery::mock(ReceiptAsnRepository::class);
-    $repository->shouldReceive('findForLocationUpdate')->once()->with('ASN-ID')->andReturn($receipt);
-    $repository->shouldReceive('updateLocationAsn')->once()->with($data, $receipt);
+    $repository->shouldReceive('findByUuid')->once()->with('ASN-ID')->andReturn($receipt);
+    $repository->shouldReceive('updateStartLocationAsn')->once()->with($data, $receipt);
 
-    (new ReceiptAsnService($repository))->updateLocationAsn($data);
+    (new ReceiptAsnService($repository))->updateStartAsn($data);
 })->with(['PG', 'PR']);
 
 it('rejects a missing or inaccessible receipt without updating it', function (): void {
     $repository = Mockery::mock(ReceiptAsnRepository::class);
-    $repository->shouldReceive('findForLocationUpdate')->once()->with('MISSING')->andReturnNull();
-    $repository->shouldNotReceive('updateLocationAsn');
+    $repository->shouldReceive('findByUuid')->once()->with('MISSING')->andReturnNull();
+    $repository->shouldNotReceive('updateStartLocationAsn');
 
-    expect(fn () => (new ReceiptAsnService($repository))->updateLocationAsn([
-        'AsnId' => 'MISSING', 'Temperature' => 5,
+    expect(fn () => (new ReceiptAsnService($repository))->updateStartAsn([
+        'AsnId' => 'MISSING', 'Temperature' => 5, 'LocationId' => 1,
     ]))->toThrow(ApiEntityNotFoundException::class, 'El recibo no existe o no está disponible para iniciar el proceso.');
 });
 
 it('returns the receipt business rule message using the modern API structure', function (): void {
     $repository = Mockery::mock(ReceiptAsnRepository::class);
-    $repository->shouldReceive('findForLocationUpdate')
+    $repository->shouldReceive('findByUuid')
         ->once()->with('ASN-ID')->andReturn(new ReceiptAsn(['statusid' => 'IP']));
-    $repository->shouldNotReceive('updateLocationAsn');
+    $repository->shouldNotReceive('updateStartLocationAsn');
     $this->app->instance(ReceiptAsnRepository::class, $repository);
     Route::post('/api/test-receipt-start', function (Request $request, ReceiptAsnService $service): void {
-        $service->updateLocationAsn($request->all());
+        $service->updateStartAsn($request->all());
     })->name('test.receipt-start');
 
-    $this->post('/api/test-receipt-start', ['AsnId' => 'ASN-ID', 'Temperature' => 5])
+    $this->post('/api/test-receipt-start', ['AsnId' => 'ASN-ID', 'Temperature' => 5, 'LocationId' => 1])
         ->assertStatus(409)
         ->assertHeader('Content-Type', 'application/json')
         ->assertJsonPath('success', false)
