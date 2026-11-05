@@ -19,8 +19,9 @@
     <div class="col-lg-2 col-md-6 col-sm-12">
         <div class="form-group">
             <label for="client_secret">Token </label>
-            <input type="text" class="form-control" id="client_secret" name="client_secret" maxlength="100"
-                   aria-describedby="client_secret" value="{{$token->client_secret}}">
+            <input type="password" class="form-control" id="client_secret" name="client_secret" maxlength="190"
+                   autocomplete="new-password" aria-describedby="client-secret-help">
+            <small id="client-secret-help" class="form-text text-muted">Deja vacío para conservar la credencial actual.</small>
         </div>
     </div>
     <div class="col-lg-2 col-md-6 col-sm-12">

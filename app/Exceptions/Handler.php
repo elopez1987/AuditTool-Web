@@ -41,6 +41,7 @@ class Handler extends ExceptionHandler
         'refreshToken',
         'refresh_token',
         'access_token',
+        'client_secret',
         'TOKEN_APP',
     ];
 

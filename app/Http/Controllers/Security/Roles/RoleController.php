@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Security\Roles;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Security\Roles\CreateRoleRequest;
+use App\Http\Requests\Web\Security\Roles\UpdateRoleRequest;
 use App\Models\Security\Permission\Permission;
 use App\Models\Security\Roles\Role;
 use App\Models\Security\Roles\RoleHasPermission;
@@ -51,7 +52,7 @@ class RoleController extends BaseController
 
     public function store(CreateRoleRequest $request)
     {
-        $role = Role::create($request->all());
+        $role = Role::create($request->validated());
         $role->save();
 
         return redirect('securityroles/'.$role->id.'/edit');
@@ -80,9 +81,9 @@ class RoleController extends BaseController
         ));
     }
 
-    public function update(Request $request, Role $securityrole): RedirectResponse
+    public function update(UpdateRoleRequest $request, Role $securityrole): RedirectResponse
     {
-        $securityrole->update($request->all());
+        $securityrole->update($request->validated());
 
         return $this->redirectBackSuccess();
     }

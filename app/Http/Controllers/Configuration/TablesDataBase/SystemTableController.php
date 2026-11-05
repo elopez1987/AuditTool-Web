@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Configuration\TablesDataBase;
 
 use App\Http\Controllers\BaseController;
+use App\Http\Requests\Web\Configuration\TablesDataBase\UpdateSystemTableRequest;
 use App\Models\Configuration\TablesDataBase\SystemColumn;
 use App\Models\Configuration\TablesDataBase\SystemTable;
 use DB;
@@ -31,9 +32,9 @@ class SystemTableController extends BaseController
         return view('Configuration.SystemTables.edit', compact('systemtable'));
     }
 
-    public function update(Request $request, SystemTable $systemtable)
+    public function update(UpdateSystemTableRequest $request, SystemTable $systemtable)
     {
-        $systemtable->update($request->all());
+        $systemtable->update($request->validated());
 
         return $this->infoResponse('systemtables.index');
     }

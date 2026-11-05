@@ -3,12 +3,13 @@
 namespace App\Http\Requests\Web\Security\Roles;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 
 class CreateRoleRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true;
+        return Gate::allows('securityroles.create');
     }
 
     public function rules(): array

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Configuration\EdiToken;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Configuration\EdiToken\CreateEdiTokenRequest;
+use App\Http\Requests\Web\Configuration\EdiToken\UpdateEdiTokenRequest;
 use App\Models\Configuration\EDI\EdiToken;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -46,10 +47,10 @@ class EdiTokenController extends BaseController
         return view('Configuration.EdiToken.edit', compact('token'));
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateEdiTokenRequest $request, $id)
     {
         $token = EdiToken::findOrFail($id);
-        $token->update($request->all());
+        $token->update($request->validated());
 
         return $this->redirectBackSuccessMessage('Token actualizado con exito.');
     }

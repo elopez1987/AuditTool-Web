@@ -52,8 +52,10 @@ class EdiToken extends Model
         'servicetype',
     ];
 
+    protected $hidden = ['client_secret'];
+
     public function getActivitylogOptions(): LogOptions
     {
-        return LogOptions::defaults()->logFillable();
+        return LogOptions::defaults()->logFillable()->logExcept(['client_secret']);
     }
 }

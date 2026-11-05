@@ -15,7 +15,11 @@ return [
     */
 
     'telegram-bot-api' => [
-        'token' => env('TELEGRAM_BOT_TOKEN', '1600800943:AAGsmu5a2WHpFy5MQacRAvzItRCpx0KjzCI'),
+        'token' => env('TELEGRAM_BOT_TOKEN'),
+    ],
+
+    'whatsapp_yard' => [
+        'token' => env('WHATSAPP_YARD_TOKEN'),
     ],
 
     'telegram_yard' => env('TELEGRAM_ID', '-1001172693424'),

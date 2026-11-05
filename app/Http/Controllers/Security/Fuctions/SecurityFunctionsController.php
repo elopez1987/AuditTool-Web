@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Security\Fuctions;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Security\Funciones\CreateFunction;
+use App\Http\Requests\Web\Security\Funciones\UpdateFunctionRequest;
 use App\Models\Security\Fuctions\SecurityFunction;
 use App\Models\Security\Fuctions\SecurityFunctionsMenuStructure;
 use App\Models\Security\Modules\SecurityModule;
@@ -64,7 +65,7 @@ class SecurityFunctionsController extends BaseController
 
     public function store(CreateFunction $request)
     {
-        $function = new SecurityFunction($request->all());
+        $function = new SecurityFunction($request->validated());
         $function->save();
 
         return redirect('securityfunctions/'.$function->functionid.'/edit');
@@ -84,19 +85,20 @@ class SecurityFunctionsController extends BaseController
         );
     }
 
-    public function update(Request $request, SecurityFunction $securityfunction)
+    public function update(UpdateFunctionRequest $request, SecurityFunction $securityfunction)
     {
-        $securityfunction->update($request->all());
-        $routes = $request->input('route');
+        $validated = $request->validated();
+        $securityfunction->update($request->safe()->only(['moduleid', 'description']));
+        $routes = $validated['route'] ?? null;
         if ($routes !== null) {
             foreach ($routes as $route) {
                 $description = $this->getPermissionDescription($route);
                 Permission::create([
-                    'name' => $request['name'].'.'.$route,
+                    'name' => $validated['name'].'.'.$route,
                     'description' => $description,
                     'moduleid' => $securityfunction->moduleid,
                     'functionid' => $securityfunction->functionid,
-                    'guard_name' => $request['typeid'],
+                    'guard_name' => $validated['typeid'],
                 ]);
             }
         }

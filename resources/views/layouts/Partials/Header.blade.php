@@ -40,7 +40,7 @@
                         <span class="d-none d-md-block text-white ">BIENVENIDO:
                          @if(Auth::check())
                                 {{Auth::user()->name}}
-                                ||  {!! Auth::user()->access ? Auth::user()->access->center->name : '' !!}
+                                ||  {{ Auth::user()->access ? Auth::user()->access->center->name : '' }}
                                 ||
                                 @if(App::environment('production'))
                                     <span class="badge badge-success ml-2" style="font-style: italic; text-transform: uppercase;font-size: 11px;padding-left: 10px !important;padding-right: 10px !important;font-weight: lighter">

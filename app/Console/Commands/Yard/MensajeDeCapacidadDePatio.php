@@ -121,8 +121,13 @@ class MensajeDeCapacidadDePatio extends Command
 
     public function getBodyData($totalUnit, $totalCapacidad, $capacidadUsada, $contact)
     {
+        $token = config('services.whatsapp_yard.token');
+        if (! is_string($token) || $token === '') {
+            throw new \RuntimeException('The yard messaging credential is not configured.');
+        }
+
         return [
-            'token' => 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbnN0YW5jZUlkIjoiSEVJNTIzNDgyOTg2IiwidG9rZW4iOiJtaGVaTTh4cTQ2a2RadjZ0Q0NJeXZydGo4dkc3bnlOeCIsImlzcyI6IjFtc2cuaW8iLCJpYXQiOjE3NTU2MTU3NTZ9.PNJB7YjZbqerW-s-r8TOSTlPOS_6OddKHxVbwfsQ9GY',
+            'token' => $token,
             'namespace' => '3686dca6_3e5f_4dc5_a838_74a7716b881c',
             'template' => 'capacidadpatio',
             'language' => [

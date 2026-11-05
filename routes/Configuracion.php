@@ -167,10 +167,10 @@ Route::middleware(['auth'])->group(function () {
 
 // ---------------------------------------- Procesar interfaces --------------------------------------------------
 
-Route::get('senddatatorcontrol', [CommandController::class, 'senddatatorcontrol'])->name('senddatatorcontrol');
-Route::get('senddatatoizel', [CommandController::class, 'senddatatoizel'])->name('senddatatoizel');
+Route::group(['middleware' => ['auth:auth0-session', 'role:ADMINISTRADOR']], function () {
+    Route::post('senddatatorcontrol', [CommandController::class, 'senddatatorcontrol'])->name('senddatatorcontrol')->middleware('can:system.commands.senddatatorcontrol');
+    Route::post('senddatatoizel', [CommandController::class, 'senddatatoizel'])->name('senddatatoizel')->middleware('can:system.commands.senddatatoizel');
 
-Route::group(['middleware' => ['role:ADMINISTRADOR']], function () {
     Route::resource('databaseupdate', DataBaseController::class)->only(['index', 'store']);
     //    ---------------------------------------------------- Log de errores del sistema  ----------------------------------------------------
     Route::get('logsystems', [LogViewerController::class, 'index'])->name('logsystems');
@@ -184,26 +184,26 @@ Route::group(['middleware' => ['role:ADMINISTRADOR']], function () {
     Route::put('updatecolumntotable/{id}', [SystemTableController::class, 'updatecolumntotable'])->name('updatecolumntotable');
 
     //    ---------------------------------------------------- Comandos del sistema  ----------------------------------------------------
-    Route::get('commandmenu', [CommandController::class, 'commandmenu'])->name('commandmenu');
-    Route::get('clearcachesystem', [CommandController::class, 'clearcachesystem'])->name('clearcachesystem');
-    Route::get('cleartablelogwebservice', [CommandController::class, 'cleartablelogwebservice'])->name('cleartablelogwebservice');
-    Route::get('newincidencejourneys', [CommandController::class, 'newincidencejourneys'])->name('newincidencejourneys');
-    Route::get('sendmessagenotarriveunittoshipment', [CommandController::class, 'sendmessagenotarriveunittoshipment'])->name('sendmessagenotarriveunittoshipment');
-    Route::get('getevidencesfromrcontrol', [CommandController::class, 'getevidencesfromrcontrol'])->name('getevidencesfromrcontrol');
-    Route::get('sendMessageExitUnitTime', [CommandController::class, 'sendMessageExitUnitTime'])->name('sendMessageExitUnitTime');
-    Route::get('getETAForShipment', [CommandController::class, 'getETAForShipment'])->name('getETAForShipment');
-    Route::get('deletelogwhatsapp', [CommandController::class, 'deletelogwhatsapp'])->name('deletelogwhatsapp');
-    Route::get('deleteusers', [CommandController::class, 'deleteusers'])->name('deleteusers');
-    Route::get('clearReceiptAsn', [CommandController::class, 'clearReceiptAsn'])->name('clearReceiptAsn');
-    Route::get('sendmessagefornewarrivereceipt', [CommandController::class, 'sendmessagefornewarrivereceipt'])->name('sendmessagefornewarrivereceipt');
-    Route::get('sendmailfornewarrivereceipt', [CommandController::class, 'sendmailfornewarrivereceipt'])->name('sendmailfornewarrivereceipt');
-    Route::get('sendmaiilfordifferenceweight', [CommandController::class, 'sendmaiilfordifferenceweight'])->name('sendmaiilfordifferenceweight');
-    Route::get('sendmessagefordifferenceweight', [CommandController::class, 'sendmessagefordifferenceweight'])->name('sendmessagefordifferenceweight');
-    Route::get('createuuidtouser', [CommandController::class, 'createuuidtouser'])->name('createuuidtouser');
+    Route::get('commandmenu', [CommandController::class, 'commandmenu'])->name('commandmenu')->middleware('can:system.commands.commandmenu');
+    Route::post('clearcachesystem', [CommandController::class, 'clearcachesystem'])->name('clearcachesystem')->middleware('can:system.commands.clearcachesystem');
+    Route::post('cleartablelogwebservice', [CommandController::class, 'cleartablelogwebservice'])->name('cleartablelogwebservice')->middleware('can:system.commands.cleartablelogwebservice');
+    Route::post('newincidencejourneys', [CommandController::class, 'newincidencejourneys'])->name('newincidencejourneys')->middleware('can:system.commands.newincidencejourneys');
+    Route::post('sendmessagenotarriveunittoshipment', [CommandController::class, 'sendmessagenotarriveunittoshipment'])->name('sendmessagenotarriveunittoshipment')->middleware('can:system.commands.sendmessagenotarriveunittoshipment');
+    Route::post('getevidencesfromrcontrol', [CommandController::class, 'getevidencesfromrcontrol'])->name('getevidencesfromrcontrol')->middleware('can:system.commands.getevidencesfromrcontrol');
+    Route::post('sendMessageExitUnitTime', [CommandController::class, 'sendMessageExitUnitTime'])->name('sendMessageExitUnitTime')->middleware('can:system.commands.sendMessageExitUnitTime');
+    Route::post('getETAForShipment', [CommandController::class, 'getETAForShipment'])->name('getETAForShipment')->middleware('can:system.commands.getETAForShipment');
+    Route::post('deletelogwhatsapp', [CommandController::class, 'deletelogwhatsapp'])->name('deletelogwhatsapp')->middleware('can:system.commands.deletelogwhatsapp');
+    Route::post('deleteusers', [CommandController::class, 'deleteusers'])->name('deleteusers')->middleware('can:system.commands.deleteusers');
+    Route::post('clearReceiptAsn', [CommandController::class, 'clearReceiptAsn'])->name('clearReceiptAsn')->middleware('can:system.commands.clearReceiptAsn');
+    Route::post('sendmessagefornewarrivereceipt', [CommandController::class, 'sendmessagefornewarrivereceipt'])->name('sendmessagefornewarrivereceipt')->middleware('can:system.commands.sendmessagefornewarrivereceipt');
+    Route::post('sendmailfornewarrivereceipt', [CommandController::class, 'sendmailfornewarrivereceipt'])->name('sendmailfornewarrivereceipt')->middleware('can:system.commands.sendmailfornewarrivereceipt');
+    Route::post('sendmaiilfordifferenceweight', [CommandController::class, 'sendmaiilfordifferenceweight'])->name('sendmaiilfordifferenceweight')->middleware('can:system.commands.sendmaiilfordifferenceweight');
+    Route::post('sendmessagefordifferenceweight', [CommandController::class, 'sendmessagefordifferenceweight'])->name('sendmessagefordifferenceweight')->middleware('can:system.commands.sendmessagefordifferenceweight');
+    Route::post('createuuidtouser', [CommandController::class, 'createuuidtouser'])->name('createuuidtouser')->middleware('can:system.commands.createuuidtouser');
 
     //	Jobs
-    Route::get('clearJobs', [CommandController::class, 'clearJobs'])->name('clearJobs');
-    Route::get('clear-failed-jobs', [CommandController::class, 'clear_failed_jobs'])->name('clear-failed-jobs');
+    Route::post('clearJobs', [CommandController::class, 'clearJobs'])->name('clearJobs')->middleware('can:system.commands.clearJobs');
+    Route::post('clear-failed-jobs', [CommandController::class, 'clear_failed_jobs'])->name('clear-failed-jobs')->middleware('can:system.commands.clear-failed-jobs');
 
     //    -------------------------------------  Logs de inicio de sesion de dispositivos  ----------------------------------------------------
     Route::get('logdeviceforuser', [LogDeviceForUserController::class, 'index'])->name('logdeviceuser');
