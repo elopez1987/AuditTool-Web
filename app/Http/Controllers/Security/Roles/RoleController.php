@@ -10,9 +10,9 @@ use App\Models\Security\Roles\Role;
 use App\Models\Security\Roles\RoleHasPermission;
 use App\Services\Security\ServiceRole;
 use App\Traits\Web\Security\QuerySecurityRoles;
-use Artisan;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 
 class RoleController extends BaseController
 {

@@ -24,9 +24,11 @@ class SystemParameterRepository
         return SystemParameter::create($data);
     }
 
-    public function update(array $data): bool
+    public function update(SystemParameter $systemParameter, array $data): SystemParameter
     {
-        return SystemParameter::update($data);
+        $systemParameter->update($data);
+
+        return $systemParameter;
     }
 
     public function destroy(SystemParameter $systemParameter): void

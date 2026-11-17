@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Configuration\TablesDataBase;
 
 use App\Http\Controllers\BaseController;
 use App\Models\Configuration\TablesDataBase\SystemTable;
-use DB;
 use Illuminate\Http\Request;
-use Redirect;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 
 class DataBaseController extends BaseController
 {

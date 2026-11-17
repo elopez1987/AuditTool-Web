@@ -9,12 +9,12 @@ use App\Models\Receipt\ReceiptProvider;
 use App\Models\Security\Users\AccessProvider;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\Models\Yard\StorageOperator;
-use Auth;
-use Cache;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Yajra\DataTables\Facades\DataTables;
 
 trait Responser

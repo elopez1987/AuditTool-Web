@@ -6,8 +6,8 @@ namespace App\Imports\Inventario\PartNumbers;
 
 use App\Models\Inventory\Categories\InventoryPartNumberCategory01;
 use App\Models\Inventory\Categories\InventoryPartNumberCategory02;
-use Auth;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;

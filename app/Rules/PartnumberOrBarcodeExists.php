@@ -2,8 +2,8 @@
 
 namespace App\Rules;
 
-use DB;
 use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Support\Facades\DB;
 
 class PartnumberOrBarcodeExists implements Rule
 {

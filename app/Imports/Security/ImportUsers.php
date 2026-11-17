@@ -2,8 +2,8 @@
 
 namespace App\Imports\Security;
 
+use App\Models\Configuration\EDI\EdiLog;
 use App\Models\Security\Users\SecurityAccessWarehouse;
-use App\Models\Shipments\OrderDelivery\LogImportFile;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
@@ -234,7 +234,7 @@ class ImportUsers implements SkipsEmptyRows, SkipsOnFailure, ToCollection, WithH
 
     private function createLog(string $message): void
     {
-        LogImportFile::create([
+        EdiLog::create([
             'message' => $message,
             'created_at' => Carbon::now(),
         ]);

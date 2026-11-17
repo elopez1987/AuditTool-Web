@@ -20,7 +20,7 @@ class SelectDynamicController extends Controller
     public function getColumnForTable($table)
     {
         $columns = SystemColumn::where('tableid', $table)->select(['columnid'])->get()->toArray();
-        array_unshift($columns, ['columnid' => '', 'columnid' => 'Seleccione una opción']);
+        array_unshift($columns, ['columnid' => 'Seleccione una opción']);
 
         return response()->json($columns);
     }

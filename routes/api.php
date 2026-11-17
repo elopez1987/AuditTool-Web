@@ -6,6 +6,7 @@ use App\Http\Controllers\Apis\Catalogs\OperatorController;
 use App\Http\Controllers\Apis\Catalogs\RoutesController;
 use App\Http\Controllers\Apis\Inventory\InventoryPartNumberController;
 use App\Http\Controllers\Apis\Verification\SearchVoucherController;
+use App\Http\Controllers\Apis\Verification\VerificationController;
 use App\Http\Controllers\Auth\LocalAuthController;
 use App\Http\Middleware\AuditLocalAuthentication;
 use App\Http\Middleware\AuthenticateLocalApp;
@@ -37,9 +38,9 @@ Route::withoutMiddleware(AuthorizerMiddleware::class)
 
                 Route::get('products', [InventoryPartNumberController::class, 'index'])->middleware('permission:catalogs.products.list');
                 Route::get('locations', [LocationController::class, 'index'])->middleware('permission:catalogs.locations.list');
-                Route::get('operators', [OperatorController::class, 'index'])->middleware('permission.catalogs.operators');
-                Route::get('routes', [RoutesController::class, 'index'])->middleware('permission.catalogs.routes.list');
-                Route::get('categories', [CategoriesController::class, 'index'])->middleware('permission.catalogs.categories.list');
+                Route::get('operators', [OperatorController::class, 'index'])->middleware('permission:catalogs.operators.list');
+                Route::get('routes', [RoutesController::class, 'index'])->middleware('permission:catalogs.routes.list');
+                Route::get('categories', [CategoriesController::class, 'index'])->middleware('permission:catalogs.categories.list');
 
             });
 
@@ -48,7 +49,7 @@ Route::withoutMiddleware(AuthorizerMiddleware::class)
                 Route::post('search-voucher', [SearchVoucherController::class, 'index'])->middleware('permission:verification.search-voucher')->name('search-voucher');
                 Route::post('start-voucher', [SearchVoucherController::class, 'saveStartVerification'])->middleware('permission:verification.start-voucher')->name('start-voucher');
                 Route::post('finish-voucher', [SearchVoucherController::class, 'saveFinishVerification'])->middleware('permission:verification.finish-voucher')->name('finish-voucher');
-
+                Route::post('verification', [VerificationController::class, 'saveVerification'])->middleware('permission:verification.saveverification')->name('verification');
             });
 
         });

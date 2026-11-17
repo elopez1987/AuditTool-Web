@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
 /**
- * @method static where(string $string, mixed $schemaid)
- * @method static create(array $array)
- * @method static whereSchemaid(string $string)
+ * @method static Builder<static> where(string $column, mixed $value)
+ * @method static static create(array<string, mixed> $attributes)
+ * @method static Builder<static> whereSchemaid(string $schemaid)
  *
  * @property string|null $centerid
  * @property string|null $warehouseid

@@ -4,6 +4,8 @@ namespace App\Observers\Security;
 
 use App\Models\Security\Fuctions\SecurityFunction;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class SecurityFunctionObserver
 {
@@ -68,13 +70,13 @@ class SecurityFunctionObserver
 
         } catch (\Exception $e) {
             // Si todo falla, registrar el error pero no romper la aplicación
-            \Log::warning('Failed to clear security functions cache: '.$e->getMessage());
+            Log::warning('Failed to clear security functions cache: '.$e->getMessage());
 
             // Último recurso: intentar limpiar todo el cache
             try {
                 Cache::flush();
             } catch (\Exception $e) {
-                \Log::error('Failed to flush entire cache: '.$e->getMessage());
+                Log::error('Failed to flush entire cache: '.$e->getMessage());
             }
         }
     }
@@ -112,12 +114,12 @@ class SecurityFunctionObserver
                 // Esto es aceptable para file cache ya que es local y se regenera rápido
                 Cache::flush();
             } catch (\Exception $e) {
-                \Log::warning('Failed to clear specific cache keys, flushing all: '.$e->getMessage());
+                Log::warning('Failed to clear specific cache keys, flushing all: '.$e->getMessage());
                 Cache::flush();
             }
         } elseif ($cacheDriver === 'database') {
             // Para database cache podemos buscar por patrón en la columna key
-            \DB::table(config('cache.stores.database.table', 'cache'))
+            DB::table(config('cache.stores.database.table', 'cache'))
                 ->where(function ($query) {
                     $query->where('key', 'like', '%security_functions_data_%')
                         ->orWhere('key', 'like', '%security_functions_ids_%');

@@ -7,6 +7,7 @@ use App\Models\Configuration\Warehouses\SystemWarehouse;
 use App\Models\Security\Users\SecurityAccessWarehouse;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Auth;
 
 class Shipmentcarrierscontact extends Model
 {
@@ -30,7 +31,7 @@ class Shipmentcarrierscontact extends Model
         parent::boot();
         if (! app()->runningInConsole()) {
             self::creating(function (Shipmentcarrierscontact $model) {
-                $model->userid = \Auth::user()->id;
+                $model->userid = Auth::user()->id;
             });
         }
     }

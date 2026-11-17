@@ -4,6 +4,8 @@ namespace App\Observers\Security;
 
 use App\Models\Security\Permission\Permission;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class PermissionObserver
 {
@@ -68,13 +70,13 @@ class PermissionObserver
 
         } catch (\Exception $e) {
             // Si todo falla, registrar el error pero no romper la aplicación
-            \Log::warning('Failed to clear permissions cache: '.$e->getMessage());
+            Log::warning('Failed to clear permissions cache: '.$e->getMessage());
 
             // Último recurso: intentar limpiar todo el cache
             try {
                 Cache::flush();
             } catch (\Exception $e) {
-                \Log::error('Failed to flush entire cache: '.$e->getMessage());
+                Log::error('Failed to flush entire cache: '.$e->getMessage());
             }
         }
     }
@@ -107,7 +109,7 @@ class PermissionObserver
             }
         } elseif ($cacheDriver === 'database') {
             // Para database cache
-            \DB::table(config('cache.stores.database.table', 'cache'))
+            DB::table(config('cache.stores.database.table', 'cache'))
                 ->where('key', 'like', '%permissions_data_%')
                 ->delete();
         } else {

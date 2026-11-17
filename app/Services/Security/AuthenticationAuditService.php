@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Stevebauman\Location\Facades\Location;
+
+// use Stevebauman\Location\Facades\Location;
 
 class AuthenticationAuditService
 {

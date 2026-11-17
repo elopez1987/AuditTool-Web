@@ -4,7 +4,7 @@ namespace App\Exports\Receipt\ReceiptAsn;
 
 use App\Models\Receipt\ReceiptAsn;
 use Carbon\Carbon;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;

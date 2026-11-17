@@ -4,8 +4,8 @@ namespace App\Imports\Yard\Catalogs;
 
 use App\Models\Receipt\ReceiptProvider;
 use App\Traits\Web\General\Responser;
-use Auth;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;

@@ -63,7 +63,7 @@ class SystemParameterController extends BaseController
         SystemParameter $systemparameter
     ): RedirectResponse {
         $this->authorize('systemparameters.edit');
-        $systemparameter->update($request->validated());
+        $this->parameterService->update($systemparameter, $request->validated());
 
         return $this->infoResponse('systemparameters.index');
     }

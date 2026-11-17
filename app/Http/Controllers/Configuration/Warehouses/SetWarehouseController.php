@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Configuration\Warehouses;
 use App\Http\Controllers\BaseController;
 use App\Services\Security\ServiceSecurityAccessWarehouse;
 use App\ViewModels\Configuration\SecurityAccessWarehouseViewModel;
-use Auth;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Throwable;
 
 class SetWarehouseController extends BaseController

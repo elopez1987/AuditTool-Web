@@ -20,11 +20,6 @@ class SystemSchema extends Model
     protected $fillable = [
         'schemaid',
         'name',
-        'auxiliary01',
-        'auxiliary02',
-        'auxiliary03',
-        'auxiliary04',
-        'auxiliary05',
     ];
 
     protected $hidden = [

@@ -11,7 +11,7 @@ use Spatie\Activitylog\Models\Activity;
 /**
  * App\Models\Security\Permission
  *
- * @method static create(array<string> $array)
+ * @method static static create(array<string, mixed> $attributes)
  *
  * @property int $id
  * @property string $name

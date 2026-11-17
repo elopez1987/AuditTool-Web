@@ -3,8 +3,8 @@
 namespace App\Console\Commands\Receipt;
 
 use Carbon\Carbon;
-use DB;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 
 class MoveReceiptToThirdTurn extends Command
 {

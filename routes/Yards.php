@@ -16,7 +16,6 @@ use App\Http\Controllers\Yard\StorageCheckLists\Imports\ImportCheckListDetailsCo
 use App\Http\Controllers\Yard\StorageCheckLists\StorageCheckListDetailsController;
 use App\Http\Controllers\Yard\StorageCheckLists\StorageCheckListsController;
 use App\Http\Controllers\Yard\StorageLocations\ImportLocationsController;
-use App\Http\Controllers\Yard\StorageLocations\OptimizeLocationsController;
 use App\Http\Controllers\Yard\StorageLocations\ParameterLocationsController;
 use App\Http\Controllers\Yard\StorageLocations\StorageLocationController;
 use App\Http\Controllers\Yard\StorageOperators\StorageOperatorsController;
@@ -69,7 +68,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('uploadfilelocations', [ImportLocationsController::class, 'importlocations'])->name('uploadfilelocations');
     Route::get('uploadfilelocations/template', [ImportLocationsController::class, 'downloadTemplate'])->name('uploadfilelocations.template');
     //    Optimizar usuario
-    Route::get('optimizelocations', [OptimizeLocationsController::class, 'optimizelocations'])->name('optimizelocations');
     //    Parametrizar las ubicaciones
     Route::get('storagelocations/{id}/parameters', [ParameterLocationsController::class, 'index'])->name('storagelocations.parameters');
     Route::put('storagelocationsparameters/{id}', [ParameterLocationsController::class, 'storagelocationsparameters'])->name('storagelocationsparameters');

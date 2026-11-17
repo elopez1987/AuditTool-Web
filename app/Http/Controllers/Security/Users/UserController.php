@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Password;
-use Redirect;
+use Illuminate\Support\Facades\Redirect;
 use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends BaseController
@@ -124,8 +124,7 @@ class UserController extends BaseController
             return redirect()->back()->with('error', 'No se pudo enviar el correo de reinicio. Por favor, inténtelo de nuevo.');
         } catch (Exception $e) {
             Log::error('Error al enviar correo de reset de contraseña', [
-                'user_uuid' => $uuiduser,
-                'name' => $user->name,
+                'user_id' => $id,
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
             ]);

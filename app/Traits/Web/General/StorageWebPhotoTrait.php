@@ -62,7 +62,7 @@ trait StorageWebPhotoTrait
         $year = Carbon::now()->year;
         $directory = 'public/'.$centerId.'/'.$year.'/'.$module.'/'.$submodule.'/'.$folder.'/';
         if (! Storage::exists($directory)) {
-            \Storage::makeDirectory($directory);
+            Storage::makeDirectory($directory);
         }
 
         return $directory;

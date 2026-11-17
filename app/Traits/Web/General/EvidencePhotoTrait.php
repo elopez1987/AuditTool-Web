@@ -3,9 +3,9 @@
 namespace App\Traits\Web\General;
 
 use App\Models\General\EvidencePhoto;
-use Auth;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;

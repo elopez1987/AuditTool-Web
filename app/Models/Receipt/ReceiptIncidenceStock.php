@@ -4,10 +4,10 @@ namespace App\Models\Receipt;
 
 use App\Models\Inventory\PartNumber\InventoryPartnumber;
 use App\User;
-use Auth;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Auth;
 
 class ReceiptIncidenceStock extends Model
 {

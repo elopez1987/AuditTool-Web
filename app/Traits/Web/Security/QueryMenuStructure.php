@@ -3,7 +3,7 @@
 namespace App\Traits\Web\Security;
 
 use App\Models\Security\MenuStructure\SecurityMenu;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 trait QueryMenuStructure
 {

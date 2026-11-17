@@ -113,7 +113,7 @@ class PushNotificationService
      */
     public function sendToTopic(string $topic, string $title, string $body, array $data = [])
     {
-        $message = CloudMessage::withTarget('topic', $topic)
+        $message = CloudMessage::new()->withTopic($topic)
             ->withNotification(FirebaseNotification::create($title, $body))
             ->withData($data);
 

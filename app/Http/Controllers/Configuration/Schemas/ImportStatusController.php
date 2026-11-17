@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Configuration\Schemas;
 use App\Http\Controllers\BaseController;
 use App\Imports\Configuration\StatusImport;
 use App\Models\Configuration\Schemas\SystemSchema;
-use Excel;
 use Illuminate\Http\Request;
-use Validator;
+use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ImportStatusController extends BaseController
 {

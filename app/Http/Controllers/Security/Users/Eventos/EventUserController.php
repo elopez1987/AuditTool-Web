@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Security\Users\Eventos;
 use App\Exports\Security\ExportUsersTemplate;
 use App\Http\Controllers\BaseController;
 use App\Imports\Security\ImportUsers;
-use App\Models\Shipments\OrderDelivery\LogImportFile;
 use App\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -60,9 +59,7 @@ class EventUserController extends BaseController
             );
         }
 
-        $data = LogImportFile::query()->orderByDesc('id')->get();
-
-        return view('Configuration.EdiLogs.LogImportFile.index', compact('data'));
+        return view('Configuration.EdiLogs.LogImportFile.index');
     }
 
     public function parameter($uuiduser)

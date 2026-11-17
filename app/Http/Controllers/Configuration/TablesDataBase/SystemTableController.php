@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Configuration\TablesDataBase;
 
 use App\Http\Controllers\BaseController;
+use App\Http\Requests\Web\Configuration\TableDataBase\CreateColumnTableRequest;
 use App\Http\Requests\Web\Configuration\TablesDataBase\UpdateSystemTableRequest;
 use App\Models\Configuration\TablesDataBase\SystemColumn;
 use App\Models\Configuration\TablesDataBase\SystemTable;
-use DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SystemTableController extends BaseController
 {

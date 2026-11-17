@@ -7,10 +7,10 @@ use App\Http\Requests\Web\Receipt\ReceiptAsn\CreateReceiptStockRequest;
 use App\Models\Inventory\PartNumber\InventoryPartnumber;
 use App\Models\Receipt\ReceiptAsn;
 use App\Models\Receipt\ReceiptStock;
-use DB;
 use Exception;
 use Illuminate\Http\Request;
-use Log;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ReceiptAsnStockController extends BaseController
 {

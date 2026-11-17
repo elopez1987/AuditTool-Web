@@ -7,8 +7,8 @@ use App\Models\Receipt\ReceiptAsn;
 use App\Models\Receipt\ReceiptAsnCheckList;
 use App\Models\Yard\StorageCheckList;
 use App\Models\Yard\StorageCheckListDetail;
-use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class StorageCheckListReceiptAsnController extends BaseController
