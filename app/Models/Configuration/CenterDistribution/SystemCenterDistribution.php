@@ -4,6 +4,7 @@ namespace App\Models\Configuration\CenterDistribution;
 
 use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Security\Users\SecurityAccessWarehouse;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Auth;
@@ -27,19 +28,13 @@ class SystemCenterDistribution extends Model
         'description',
         'name',
         'code',
-        'capacityyard',
-        'url',
-        'userapi',
-        'passwordapi',
-        'formatinvoice',
         'auxiliary01',
         'auxiliary02',
         'auxiliary03',
-        'auxiliary04',
-        'auxiliary05',
         'statusid',
         'configurationflag',
         'notificationsflags',
+        'mobileflags',
     ];
 
     protected $hidden = [
@@ -55,10 +50,10 @@ class SystemCenterDistribution extends Model
     protected $casts = [
         'configurationflag' => 'array',
         'notificationsflags' => 'array',
-        'auxiliary05' => 'array',
+        'mobileflags' => 'array',
     ];
 
-    public static function controlAccessUser()
+    public static function controlAccessUser(): Builder
     {
 
         $username = Auth::user()->username;

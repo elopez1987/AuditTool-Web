@@ -42,7 +42,7 @@ class SystemPrintersController extends BaseController
 
     public function store(CreatePrinter $request)
     {
-        $printer = new SystemPrinter($request->all());
+        $printer = new SystemPrinter($request->validated());
         $printer->save();
 
         return $this->redirectBackSuccess();

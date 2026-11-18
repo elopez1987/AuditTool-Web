@@ -62,4 +62,6 @@ class InventoryPartNumberCategory01sController extends BaseController
 
         return $this->infoResponse('inventorypartnumbercategory01.index');
     }
+
+    public function show(string $inventorypartnumbercategory01) {}
 }

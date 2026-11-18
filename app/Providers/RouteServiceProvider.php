@@ -2,9 +2,9 @@
 
 namespace App\Providers;
 
+use App\Http\Controllers\Auth\LogoutController;
 use Auth0\Laravel\Controllers\CallbackController;
 use Auth0\Laravel\Controllers\LoginController;
-use Auth0\Laravel\Controllers\LogoutController;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
 
@@ -68,7 +68,6 @@ class RouteServiceProvider extends ServiceProvider
             ->group(base_path('routes/web.php'));
     }
 
-
     protected function mapInventoryRoutes()
     {
         Route::middleware('web')
@@ -90,8 +89,6 @@ class RouteServiceProvider extends ServiceProvider
             ->group(base_path('routes/Receipt.php'));
     }
 
-
-
     protected function mapConfigurationRoutes()
     {
         Route::middleware('web')
@@ -105,8 +102,6 @@ class RouteServiceProvider extends ServiceProvider
             ->namespace($this->namespace)
             ->group(base_path('routes/Security.php'));
     }
-
-
 
     protected function mapSelectRoutes()
     {

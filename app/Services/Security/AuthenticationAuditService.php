@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Stevebauman\Location\Facades\Location;
+
+// use Stevebauman\Location\Facades\Location;
 
 class AuthenticationAuditService
 {
@@ -204,15 +205,9 @@ class AuthenticationAuditService
      */
     private function sanitizeHeaders(array $headers): array
     {
-        $sensitiveHeaders = ['authorization', 'cookie', 'x-api-key', 'x-auth-token'];
-
-        foreach ($headers as $key => $value) {
-            if (in_array(strtolower($key), $sensitiveHeaders)) {
-                $headers[$key] = ['***REDACTED***'];
-            }
-        }
-
-        return $headers;
+        return array_intersect_key(array_change_key_case($headers, CASE_LOWER), array_flip([
+            'accept', 'accept-language', 'content-type', 'user-agent',
+        ]));
     }
 
     /**
@@ -269,9 +264,9 @@ class AuthenticationAuditService
         $logData = [
             'username' => $auditData['username'],
             'ip' => $auditData['ip_address'],
-            'location' => ($auditData['city'] ?? 'Unknown') . ', ' . ($auditData['country'] ?? 'Unknown'),
+            'location' => ($auditData['city'] ?? 'Unknown').', '.($auditData['country'] ?? 'Unknown'),
             'reason' => $auditData['reason'],
-            'device_fingerprint' => substr($auditData['device_fingerprint'], 0, 12) . '...',
+            'device_fingerprint' => substr($auditData['device_fingerprint'], 0, 12).'...',
             'path' => $auditData['request_path'],
             'processing_time_ms' => $auditData['processing_time_ms'],
         ];
@@ -328,9 +323,9 @@ class AuthenticationAuditService
 
         if ($recentLocation && $recentLocation->country !== $location['country']) {
             $this->logSuspiciousActivity($user->id, 'NEW_LOCATION', [
-                'previous_location' => $recentLocation->city . ', ' . $recentLocation->country,
-                'new_location' => $location['city'] . ', ' . $location['country'],
-                'time_between' => Carbon::parse($recentLocation->created_at)->diffInHours(Carbon::now()) . ' hours',
+                'previous_location' => $recentLocation->city.', '.$recentLocation->country,
+                'new_location' => $location['city'].', '.$location['country'],
+                'time_between' => Carbon::parse($recentLocation->created_at)->diffInHours(Carbon::now()).' hours',
             ]);
         }
     }
@@ -349,7 +344,7 @@ class AuthenticationAuditService
 
         if (! $knownDevice) {
             $this->logSuspiciousActivity($user->id, 'NEW_DEVICE', [
-                'device_fingerprint' => substr($deviceFingerprint, 0, 12) . '...',
+                'device_fingerprint' => substr($deviceFingerprint, 0, 12).'...',
                 'first_seen' => Carbon::now()->toISOString(),
             ]);
         }
@@ -402,8 +397,8 @@ class AuthenticationAuditService
 
             if ($timeDiff < 30) { // Suspicious if location changed in less than 30 minutes
                 $this->logSuspiciousActivity($user->id, 'RAPID_LOCATION_CHANGE', [
-                    'previous_location' => $recentLogin->city . ', ' . $recentLogin->country,
-                    'new_location' => $currentLocation['city'] . ', ' . $currentLocation['country'],
+                    'previous_location' => $recentLogin->city.', '.$recentLogin->country,
+                    'new_location' => $currentLocation['city'].', '.$currentLocation['country'],
                     'time_between_minutes' => $timeDiff,
                 ]);
             }
@@ -554,17 +549,6 @@ class AuthenticationAuditService
      */
     private function sanitizeRequestData(array $requestData): array
     {
-        $sanitized = $requestData;
-
-        // Remove or mask sensitive fields
-        $sensitiveFields = ['password', 'password_confirmation', 'token', 'api_key'];
-
-        foreach ($sensitiveFields as $field) {
-            if (isset($sanitized[$field])) {
-                $sanitized[$field] = '***REDACTED***';
-            }
-        }
-
-        return $sanitized;
+        return array_intersect_key($requestData, array_flip(['username', 'serialnumber']));
     }
 }

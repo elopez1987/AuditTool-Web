@@ -15,7 +15,7 @@
                                 <a href="">
                                     @include('buttons.search')
                                 </a>
-                                <a href="{{route('menuyard')}}">
+                                <a href="{{route('home')}}">
                                     @include('buttons.cancel')
                                 </a>
                             </div>
@@ -35,16 +35,16 @@
                             <table id="table-logs" class="table table-bordered  table-condensed">
                                 <thead>
                                 <tr>
-                                    <th class="bg-inverse text-white">C.Distribución</th>
-                                    <th class="bg-inverse text-white">Bodega</th>
-                                    <th class="bg-inverse text-white">Folio</th>
-                                    <th class="bg-inverse text-white">Servicio</th>
-                                    <th class="bg-inverse text-white">Código</th>
-                                    <th class="bg-inverse text-white">Mensaje</th>
-                                    <th class="bg-inverse text-white">Tipo</th>
-                                    <th class="bg-inverse text-white">Evento</th>
-                                    <th class="bg-inverse text-white">F.Creación</th>
-                                    <th class="bg-inverse text-white">Opciones</th>
+                                    <th>C.Distribución</th>
+                                    <th>Bodega</th>
+                                    <th>Referencia</th>
+                                    <th>Servicio</th>
+                                    <th>Código</th>
+                                    <th>Mensaje</th>
+                                    <th>Tipo</th>
+                                    <th>Evento</th>
+                                    <th>F.Creación</th>
+                                    <th>Opciones</th>
                                 </tr>
                                 </thead>
                             </table>

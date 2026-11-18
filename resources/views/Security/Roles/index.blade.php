@@ -23,7 +23,7 @@
                                 <a>
                                     @include('buttons.reloadajax')
                                 </a>
-                                <a href="{{route('menusecurity')}}">
+                                <a href="{{route('home')}}">
                                     @include('buttons.cancel')
                                 </a>
                             </div>

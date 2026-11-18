@@ -44,7 +44,7 @@ class SystemSchemaController extends BaseController
     {
         $schema = $this->service->newSchema($request->validated());
 
-        return redirect('systemschemas/' . $schema->schemaid . '/createstatus');
+        return redirect('systemschemas/'.$schema->schemaid.'/createstatus');
     }
 
     public function edit(SystemSchema $systemschema)

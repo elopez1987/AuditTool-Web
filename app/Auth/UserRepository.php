@@ -38,7 +38,7 @@ final class UserRepository extends UserRepositoryAbstract implements UserReposit
             return null;
         }
 
-        $cached = Cache::get(self::CACHE_PREFIX . $identifier);
+        $cached = Cache::get(self::CACHE_PREFIX.$identifier);
 
         if ($cached instanceof Authenticatable) {
             return $cached;
@@ -56,7 +56,7 @@ final class UserRepository extends UserRepositoryAbstract implements UserReposit
             return null;
         }
 
-        Cache::put(self::CACHE_PREFIX . $identifier, $localUser, self::CACHE_TTL_SECONDS);
+        Cache::put(self::CACHE_PREFIX.$identifier, $localUser, self::CACHE_TTL_SECONDS);
 
         return $localUser;
     }

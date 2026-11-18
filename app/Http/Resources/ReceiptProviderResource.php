@@ -10,11 +10,12 @@ class ReceiptProviderResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'centerid' => $this->centerid,
-            'warehouseid' => $this->warehouseid,
-            'id' => $this->id,
-            'name' => $this->name,
-            'providerid' => $this->providerid,
+            'CenterId' => $this->centerid,
+            'WarehouseId' => $this->warehouseid,
+            /** @var int */
+            'Id' => $this->id,
+            'Name' => $this->name,
+            'RouteId' => $this->providerid,
         ];
     }
 }

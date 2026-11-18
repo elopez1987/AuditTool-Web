@@ -4,15 +4,15 @@ namespace App\Http\Controllers\Security\Roles;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Security\Roles\CreateRoleRequest;
-use App\Models\Configuration\Parameters\SystemDetailParameter;
+use App\Http\Requests\Web\Security\Roles\UpdateRoleRequest;
 use App\Models\Security\Permission\Permission;
 use App\Models\Security\Roles\Role;
 use App\Models\Security\Roles\RoleHasPermission;
 use App\Services\Security\ServiceRole;
 use App\Traits\Web\Security\QuerySecurityRoles;
-use Artisan;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 
 class RoleController extends BaseController
 {
@@ -52,10 +52,10 @@ class RoleController extends BaseController
 
     public function store(CreateRoleRequest $request)
     {
-        $role = Role::create($request->all());
+        $role = Role::create($request->validated());
         $role->save();
 
-        return redirect('securityroles/' . $role->id . '/edit');
+        return redirect('securityroles/'.$role->id.'/edit');
     }
 
     public function edit(Role $securityrole)
@@ -68,7 +68,6 @@ class RoleController extends BaseController
         $access = $this->getPermissionForRole($securityrole->id);
         $status = $this->getStatusForSchema('STS');
         $menus = $this->getStructureMenus();
-        $checkMtn = SystemDetailParameter::where('value02', $securityrole->id)->where('parameterid', 'ROLE-TRUCK')->count();
 
         return view('Security.Roles.edit', compact(
             'securityrole',
@@ -79,13 +78,12 @@ class RoleController extends BaseController
             'assings',
             'status',
             'menus',
-            'checkMtn'
         ));
     }
 
-    public function update(Request $request, Role $securityrole): RedirectResponse
+    public function update(UpdateRoleRequest $request, Role $securityrole): RedirectResponse
     {
-        $securityrole->update($request->all());
+        $securityrole->update($request->validated());
 
         return $this->redirectBackSuccess();
     }

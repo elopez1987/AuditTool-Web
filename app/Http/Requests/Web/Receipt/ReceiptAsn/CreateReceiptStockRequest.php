@@ -10,9 +10,8 @@ class CreateReceiptStockRequest extends FormRequest
     {
         return [
             'prtnum' => 'required|string|exists:inventorypartnumbers,prtnum',
-            'quantity' => 'required|integer|min:1',
-            'productiondate' => 'required|date',
-            'batch' => 'required',
+            'rotary' => ['required', 'int'],
+            'definitive' => ['required', 'int'],
         ];
     }
 

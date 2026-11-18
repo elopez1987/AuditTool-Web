@@ -3,12 +3,20 @@
 namespace App\Observers\Receipt;
 
 use App\Models\Receipt\ReceiptAsn;
+use App\Models\Receipt\ReceiptAsnData;
+use App\Models\Receipt\ReceiptAsnTime;
 
 class ReceiptAsnObserver
 {
     public function created(ReceiptAsn $receiptAsn): void
     {
-
+        //        ReceiptAsnData::create([
+        //            'receiptid' => $receiptAsn->id,
+        //        ]);
+        //
+        //        ReceiptAsnTime::create([
+        //            'receiptid' => $receiptAsn->id,
+        //        ]);
 
     }
 

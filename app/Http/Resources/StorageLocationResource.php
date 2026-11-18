@@ -10,10 +10,13 @@ class StorageLocationResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'locationid' => $this->locationid,
-            'barcode' => $this->barcode,
+            /** @var int */
+            'Id' => $this->id,
+            'Name' => $this->name,
+            /** @var string|null */
+            'LocationId' => $this->locationid,
+            /** @var string|null */
+            'BarCode' => $this->barcode,
         ];
     }
 }

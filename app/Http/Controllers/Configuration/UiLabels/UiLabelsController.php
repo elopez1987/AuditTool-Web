@@ -92,7 +92,7 @@ class UiLabelsController extends BaseController
 
             return response()->json([
                 'success' => false,
-                'message' => 'Error al crear la etiqueta: ' . $e->getMessage(),
+                'message' => 'Error al crear la etiqueta: '.$e->getMessage(),
             ], 500);
         }
     }
@@ -154,7 +154,7 @@ class UiLabelsController extends BaseController
 
             return response()->json([
                 'success' => false,
-                'message' => 'Error al actualizar la etiqueta: ' . $e->getMessage(),
+                'message' => 'Error al actualizar la etiqueta: '.$e->getMessage(),
             ], 500);
         }
     }
@@ -184,7 +184,7 @@ class UiLabelsController extends BaseController
 
             return response()->json([
                 'success' => false,
-                'message' => 'Error al eliminar la etiqueta: ' . $e->getMessage(),
+                'message' => 'Error al eliminar la etiqueta: '.$e->getMessage(),
             ], 500);
         }
     }

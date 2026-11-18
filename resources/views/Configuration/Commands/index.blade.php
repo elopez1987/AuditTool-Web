@@ -23,45 +23,45 @@
                                 <tr>
                                     <td class="font-12"> Limpiar sistama</td>
                                     <td>
-                                        <a href="{{url('clearcachesystem')}}">
+                                        <x-maintenance-action :action="url('clearcachesystem')">
                                             <img src="{{asset('/ico/systemfunctions.png')}}" alt="" class="img-25 ml-1">
-                                        </a>
+                                        </x-maintenance-action>
                                     </td>
                                     <td>General</td>
                                 </tr>
                                 <tr>
                                     <td class="font-12"> Enviar datos a RControl</td>
                                     <td>
-                                        <a href="{{url('senddatatorcontrol')}}">
+                                        <x-maintenance-action :action="url('senddatatorcontrol')">
                                             <img src="{{asset('/ico/systemfunctions.png')}}" alt="" class="img-25 ml-1">
-                                        </a>
+                                        </x-maintenance-action>
                                     </td>
                                     <td></td>
                                 </tr>
                                 <tr>
                                     <td class="font-12"> Enviar datos a Izel</td>
                                     <td>
-                                        <a href="{{url('senddatatoizel')}}">
+                                        <x-maintenance-action :action="url('senddatatoizel')">
                                             <img src="{{asset('/ico/systemfunctions.png')}}" alt="" class="img-25 ml-1">
-                                        </a>
+                                        </x-maintenance-action>
                                     </td>
                                     <td>General</td>
                                 </tr>
                                 <tr>
                                     <td class="font-12"> Limpiar tabla de log de webservice</td>
                                     <td>
-                                        <a href="{{url('cleartablelogwebservice')}}">
+                                        <x-maintenance-action :action="url('cleartablelogwebservice')">
                                             <img src="{{asset('/ico/systemfunctions.png')}}" alt="" class="img-25 ml-1">
-                                        </a>
+                                        </x-maintenance-action>
                                     </td>
                                     <td>General</td>
                                 </tr>
                                 <tr>
                                     <td class="font-12"> Enviar mensajes de nuevas incidencias.</td>
                                     <td>
-                                        <a href="{{url('newincidencejourneys')}}">
+                                        <x-maintenance-action :action="url('newincidencejourneys')">
                                             <img src="{{asset('/ico/systemfunctions.png')}}" alt="" class="img-25 ml-1">
-                                        </a>
+                                        </x-maintenance-action>
                                     </td>
                                     <td></td>
                                 </tr>
@@ -69,27 +69,27 @@
                                 <tr>
                                     <td class="font-12"> Enviar mensajes de unidades sin arrivar a carga.</td>
                                     <td>
-                                        <a href="{{url('sendmessagenotarriveunittoshipment')}}">
+                                        <x-maintenance-action :action="url('sendmessagenotarriveunittoshipment')">
                                             <img src="{{asset('/ico/systemfunctions.png')}}" alt="" class="img-25 ml-1">
-                                        </a>
+                                        </x-maintenance-action>
                                     </td>
                                     <td></td>
                                 </tr>
                                 <tr>
                                     <td class="font-12"> Obtener PODs de RControl.</td>
                                     <td>
-                                        <a href="{{url('getevidencesfromrcontrol')}}">
+                                        <x-maintenance-action :action="url('getevidencesfromrcontrol')">
                                             <img src="{{asset('/ico/systemfunctions.png')}}" alt="" class="img-25 ml-1">
-                                        </a>
+                                        </x-maintenance-action>
                                     </td>
                                     <td></td>
                                 </tr>
                                 <tr>
                                     <td class="font-12"> Enviar mensaje de cajas autorizadas sin salir</td>
                                     <td>
-                                        <a href="{{url('sendMessageExitUnitTime')}}">
+                                        <x-maintenance-action :action="url('sendMessageExitUnitTime')">
                                             <img src="{{asset('/ico/systemfunctions.png')}}" alt="" class="img-25 ml-1">
-                                        </a>
+                                        </x-maintenance-action>
                                     </td>
                                     <td></td>
                                 </tr>
@@ -105,81 +105,81 @@
                                 <tr>
                                     <td class="font-12"> Obtener la ETA de los embaques</td>
                                     <td>
-                                        <a href="{{url('getETAForShipment')}}">
+                                        <x-maintenance-action :action="url('getETAForShipment')">
                                             <img src="{{asset('/ico/systemfunctions.png')}}" alt="" class="img-25 ml-1">
-                                        </a>
+                                        </x-maintenance-action>
                                     </td>
                                     <td></td>
                                 </tr>
                                 <tr>
                                     <td class="font-12"> Borra el log de envios de mensajes de whatsapp.</td>
                                     <td>
-                                        <a href="{{url('deletelogwhatsapp')}}">
+                                        <x-maintenance-action :action="url('deletelogwhatsapp')">
                                             <img src="{{asset('/ico/systemfunctions.png')}}" alt="" class="img-25 ml-1">
-                                        </a>
+                                        </x-maintenance-action>
                                     </td>
                                     <td>General</td>
                                 </tr>
                                 <tr>
                                     <td class="font-12"> Eliminar usuarios sin inicio de sesion.</td>
                                     <td>
-                                        <a href="{{url('deleteusers')}}">
+                                        <x-maintenance-action :action="url('deleteusers')">
                                             <img src="{{asset('/ico/systemfunctions.png')}}" alt="" class="img-25 ml-1">
-                                        </a>
+                                        </x-maintenance-action>
                                     </td>
                                     <td>General</td>
                                 </tr>
                                 <tr>
                                     <td class="font-12"> Cancelar recibos programados.</td>
                                     <td>
-                                        <a href="{{url('clearReceiptAsn')}}">
+                                        <x-maintenance-action :action="url('clearReceiptAsn')">
                                             <img src="{{asset('/ico/systemfunctions.png')}}" alt="" class="img-25 ml-1">
-                                        </a>
+                                        </x-maintenance-action>
                                     </td>
                                     <td>General</td>
                                 </tr>
                                 <tr>
                                     <td class="font-12"> Enviar mensaje de whatsapp de arribo de proveedor.</td>
                                     <td>
-                                        <a href="{{url('sendmessagefornewarrivereceipt')}}">
+                                        <x-maintenance-action :action="url('sendmessagefornewarrivereceipt')">
                                             <img src="{{asset('/ico/systemfunctions.png')}}" alt="" class="img-25 ml-1">
-                                        </a>
+                                        </x-maintenance-action>
                                     </td>
                                     <td>Notificaciones</td>
                                 </tr>
                                 <tr>
                                     <td class="font-12"> Enviar correo de arribo de proveedor.</td>
                                     <td>
-                                        <a href="{{url('sendmessagefornewarrivereceipt')}}">
+                                        <x-maintenance-action :action="url('sendmailfornewarrivereceipt')">
                                             <img src="{{asset('/ico/systemfunctions.png')}}" alt="" class="img-25 ml-1">
-                                        </a>
+                                        </x-maintenance-action>
                                     </td>
                                     <td>Notificaciones</td>
                                 </tr>
                                 <tr>
                                     <td class="font-12"> Enviar correo de unidad con diferencia de peso.</td>
                                     <td>
-                                        <a href="{{url('sendmaiilfordifferenceweight')}}">
+                                        <x-maintenance-action :action="url('sendmaiilfordifferenceweight')">
                                             <img src="{{asset('/ico/systemfunctions.png')}}" alt="" class="img-25 ml-1">
-                                        </a>
+                                        </x-maintenance-action>
                                     </td>
                                     <td>Notificaciones</td>
                                 </tr>
                                 <tr>
                                     <td class="font-12"> Enviar mensaje de unidad con diferencia de peso.</td>
                                     <td>
-                                        <a href="{{url('sendmessagefordifferenceweight')}}">
+                                        <x-maintenance-action :action="url('sendmessagefordifferenceweight')">
                                             <img src="{{asset('/ico/systemfunctions.png')}}" alt="" class="img-25 ml-1">
-                                        </a>
+                                        </x-maintenance-action>
                                     </td>
                                     <td>Notificaciones</td>
                                 </tr>
                                 <tr>
                                     <td class="font-12">Crear UUID a Usuario</td>
                                     <td>
-                                        <a href="{{url('createuuidtouser')}}">
+                                        <x-maintenance-action :action="url('createuuidtouser')">
                                             <img src="{{asset('/ico/systemfunctions.png')}}" alt="" class="img-25 ml-1">
-                                        </a>
+                                        </x-maintenance-action>
                                     </td>
                                     <td>Notificaciones</td>
                                 </tr>

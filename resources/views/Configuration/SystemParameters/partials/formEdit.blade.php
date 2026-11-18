@@ -57,13 +57,6 @@
                            aria-describedby="auxiliary05" value="{{$systemparameter->auxiliary05}}">
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6 col-sm-12">
-                <div class="form-group">
-                    <label for="name">Auxiliar 06 </label>
-                    <input type="text" class="form-control" id="auxiliary06" name="auxiliary06" maxlength="100"
-                           aria-describedby="auxiliary06" value="{{$systemparameter->auxiliary06}}">
-                </div>
-            </div>
         </div>
     </div>
 </div>

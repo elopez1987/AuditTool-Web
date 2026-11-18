@@ -21,7 +21,6 @@ class SystemWarehouseRepository implements SystemWarehouseRepositoryInterface
                 'systemcenterdistributions.name as centername',
                 'systemwarehouses.warehouseid',
                 'systemwarehouses.name',
-                'systemwarehouses.center',
                 'systemwarehouses.auxiliary01',
                 'systemwarehouses.auxiliary02',
                 'systemwarehouses.auxiliary03',

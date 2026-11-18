@@ -10,7 +10,7 @@ class CreateOperatorRequest extends FormRequest
     {
         return [
             'centerid' => 'required|exists:systemcenterdistributions,centerid',
-			'barcode' => ['required','unique:storageoperators,barcode'],
+            'barcode' => ['required', 'unique:storageoperators,barcode'],
             'name' => 'required|string|max:70',
             'drivernumber' => 'nullable|max:100',
             'phone' => 'nullable|numeric|max_digits:10',

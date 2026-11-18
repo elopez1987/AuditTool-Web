@@ -19,11 +19,6 @@ class UpdateParameterRequest extends FormRequest
             'auxiliary03' => ['nullable', 'string'],
             'auxiliary04' => ['nullable', 'string'],
             'auxiliary05' => ['nullable', 'string'],
-            'auxiliary06' => ['nullable', 'string'],
-            'auxiliary07' => ['nullable', 'string'],
-            'auxiliary08' => ['nullable', 'string'],
-            'auxiliary00' => ['nullable', 'string'],
-            'auxiliary10' => ['nullable', 'string'],
         ];
     }
 

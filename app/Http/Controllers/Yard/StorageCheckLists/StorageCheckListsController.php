@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Yard\StorageCheckLists;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Yard\CheckList\CreateCheckListRequest;
 use App\Models\Yard\StorageCheckList;
-use App\Models\Yard\StorageReason;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -49,7 +48,7 @@ class StorageCheckListsController extends BaseController
         $warehouses = $this->getWarehouseForSelect();
 
         return view('Yards.StorageCheckLists.create',
-			compact('centers', 'warehouses'));
+            compact('centers', 'warehouses'));
     }
 
     public function store(CreateCheckListRequest $request)
@@ -65,7 +64,6 @@ class StorageCheckListsController extends BaseController
         $this->authorize('storagechecklists.edit');
         $status = $this->getStatusSTS();
         $warehouses = $this->getWarehouseForSelect();
-
 
         return view('Yards.StorageCheckLists.edit',
             compact('storagechecklist', 'status', 'warehouses'));

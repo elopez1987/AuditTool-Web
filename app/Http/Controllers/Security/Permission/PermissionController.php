@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Security\Permission;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Security\Permission\CreatePermissionRequest;
+use App\Http\Requests\Web\Security\Permission\UpdatePermissionRequest;
 use App\Models\Security\Fuctions\SecurityFunction;
 use App\Models\Security\Modules\SecurityModule;
 use App\Models\Security\Permission\Permission;
@@ -24,7 +25,7 @@ class PermissionController extends BaseController
     public function getDataPermissions(Request $request)
     {
         // Generar clave única basada en los parámetros de filtrado
-        $cacheKey = 'permissions_data_' . md5(json_encode([
+        $cacheKey = 'permissions_data_'.md5(json_encode([
             'moduleid' => $request->get('moduleid'),
             'functionid' => $request->get('functionid'),
             'name' => $request->get('name'),
@@ -76,9 +77,9 @@ class PermissionController extends BaseController
         );
     }
 
-    public function update(Request $request, Permission $securitypermission)
+    public function update(UpdatePermissionRequest $request, Permission $securitypermission)
     {
-        $securitypermission->update($request->all());
+        $securitypermission->update($request->validated());
 
         return $this->redirectBackSuccess();
     }
@@ -117,4 +118,6 @@ class PermissionController extends BaseController
                 return $permission;
             });
     }
+
+    public function show(string $securitypermission) {}
 }

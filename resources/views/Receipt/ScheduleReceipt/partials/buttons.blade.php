@@ -8,17 +8,17 @@
     <div class="dropdown-menu animated flipInX">
 
         @can('receiptasn.edit')
-            @if ($statusid == 'RE'  || $statusid == 'TA')
-                <a href="{{url('receiptasn/' . $id . '/edit')}}" class="dropdown-item">
+            @if ($statusid == 'PG')
+                <a href="{{url('receiptasn/' . $uuid_asn . '/edit')}}" class="dropdown-item">
                     <img src="{{asset('/ico/edit-validated_40458.png')}}" alt="" class="img-16 ml-2 mr-2">
                     <span class="text-capitalize">Modificar registro</span>
                 </a>
             @endif
         @endcan
 
-        @if ($statusid != 'IG')
+        @if ($statusid != 'TR')
             @can('receiptasn.checklistant')
-                <a href="{{url('receiptasn/' . $id . '/checklist')}}" class="dropdown-item">
+                <a href="{{url('receiptasn/' . $uuid_asn . '/checklist')}}" class="dropdown-item">
                     <img src="{{asset('/ico/checklistin.png')}}" alt="" class="img-16 ml-2 mr-2">
                     <span class="text-capitalize">Realizar check list de documentos</span>
                 </a>
@@ -26,37 +26,21 @@
         @endif
 
         @can('addstock')
-            @if ($statusid != 'IG' )
-                <a href="{{url('receiptasn/' . $id . '/addstock')}}" class="dropdown-item">
+            @if ($statusid != 'TR' )
+                <a href="{{url('receiptasn/' . $uuid_asn . '/addstock')}}" class="dropdown-item">
                     <img src="{{asset('/ico/storageareas1.png')}}" alt="" class="img-16 ml-2 mr-2">
                     <span class="text-capitalize">Registrar solicitud de pedido</span>
                 </a>
             @endif
         @endcan
 
-        @can('receiptasn.addpallets')
-            <a href="{{url('receiptasn/' . $id . '/addpallets')}}" class="dropdown-item">
-                <img src="{{asset('/ico/chep.jpg')}}" alt="" class="img-16 ml-2 mr-2">
-                <span class="text-capitalize">Registrar recepción de tarimas</span>
-            </a>
-        @endcan
 
         @can('receiptasn.show')
-            <a href="{{url('receiptasn/' . $id )}}" class="dropdown-item">
+            <a href="{{url('receiptasn/' . $uuid_asn )}}" class="dropdown-item">
                 <img src="{{asset('/ico/viewdetail.png')}}" alt="" class="img-16 ml-2 mr-2">
                 <span class="text-capitalize">Detalle del recibo</span>
             </a>
         @endcan
-
-
-        @if($statusid == 'TA')
-            @can('receiptasn.addstage')
-                <a href="{{url('receiptasnstage/' . $id )}}" class="dropdown-item">
-                    <img src="{{asset('/ico/import.png')}}" alt="" class="img-16 ml-2 mr-2">
-                    <span class="text-capitalize">Registrar cortina anticipada</span>
-                </a>
-            @endcan
-        @endif
 
 
     </div>

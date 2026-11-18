@@ -122,8 +122,7 @@ class ServiceSystemCenterDistribution
             $parameter = $data['parameter'] ?? [];
 
             $this->repository->update($systemcenterdistribution, [
-                'auxiliary05' => $parameter,
-                'notificationsflags' => $parameter,
+                'mobileflags' => $parameter,
             ]);
 
             DB::commit();
@@ -172,7 +171,7 @@ class ServiceSystemCenterDistribution
      */
     public function getDirectories(string $centerid): array
     {
-        return Storage::directories('public/' . $centerid);
+        return Storage::directories('public/'.$centerid);
     }
 
     /**

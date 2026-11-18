@@ -3,19 +3,20 @@
 namespace App\Http\Requests\Web\Security\Funciones;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 
 class CreateFunction extends FormRequest
 {
-    public function rules()
+    public function rules(): array
     {
         return [
-            'moduleid' => 'required',
+            'moduleid' => 'required|integer|exists:securitymodules,moduleid',
             'description' => 'required|string|max:100',
         ];
     }
 
-    public function authorize()
+    public function authorize(): bool
     {
-        return true;
+        return Gate::allows('securityfunctions.create');
     }
 }

@@ -2,8 +2,8 @@
 
 namespace App\Imports\Security;
 
+use App\Models\Configuration\EDI\EdiLog;
 use App\Models\Security\Users\SecurityAccessWarehouse;
-use App\Models\Shipments\OrderDelivery\LogImportFile;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
@@ -44,7 +44,7 @@ class ImportUsers implements SkipsEmptyRows, SkipsOnFailure, ToCollection, WithH
     {
         DB::table('logimports')->delete();
 
-        $this->createLog('Inicio de importación de usuarios. Filas recibidas: ' . $rows->count());
+        $this->createLog('Inicio de importación de usuarios. Filas recibidas: '.$rows->count());
 
         foreach ($rows as $index => $row) {
             $rowNumber = (int) $index + 2;
@@ -76,8 +76,8 @@ class ImportUsers implements SkipsEmptyRows, SkipsOnFailure, ToCollection, WithH
                 $warehouseid = trim((string) ($data['warehouseid'] ?? ''));
                 $this->createLog(
                     "Fila #{$rowNumber}: usuario [{$user->username}] procesado correctamente"
-                    . ($roleAssigned ? ' (rol asignado)' : ' (sin rol)')
-                    . ", acceso {$centerid}/{$warehouseid}."
+                    .($roleAssigned ? ' (rol asignado)' : ' (sin rol)')
+                    .", acceso {$centerid}/{$warehouseid}."
                 );
             } catch (Throwable $exception) {
                 $this->skipped++;
@@ -234,7 +234,7 @@ class ImportUsers implements SkipsEmptyRows, SkipsOnFailure, ToCollection, WithH
 
     private function createLog(string $message): void
     {
-        LogImportFile::create([
+        EdiLog::create([
             'message' => $message,
             'created_at' => Carbon::now(),
         ]);

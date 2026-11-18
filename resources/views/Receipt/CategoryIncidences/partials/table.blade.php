@@ -19,7 +19,6 @@
         },
         "columns": [
             {data: 'center'},
-            {data: 'warehousename'},
             {data: 'description'},
             {data: 'auxiliary01'},
             {data: 'status'},
@@ -31,7 +30,6 @@
             {"width": "350px", "targets": 2},
             {"width": "320px", "targets": 3},
             {"width": "220px", "targets": 4},
-            {"width": "220px", "targets": 5},
         ],
 
         "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',

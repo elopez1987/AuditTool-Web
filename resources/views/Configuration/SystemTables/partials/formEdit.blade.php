@@ -2,7 +2,7 @@
     <div class="col-lg-3 col-md-6 col-sm-12">
         <div class="form-group">
             <label for="tableid">Nombre de tabla <span style="color: red">*</span></label>
-            <input type="text" class="form-control" id="tableid" name="tableid"
+            <input type="text" class="form-control" id="tableid" name="tableid" readonly
                    value="{{$systemtable->tableid}}"
             >
         </div>

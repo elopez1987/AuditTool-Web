@@ -48,20 +48,6 @@
                                                 placeholder="Número de recibo o contenedor"
                                                 colClass="col-lg-2 col-md-4 col-md-12"
                                         />
-                                        <x-text-input
-                                                name="delivery"
-                                                label="Factura"
-                                                type="text"
-                                                placeholder="Número de factura"
-                                                colClass="col-lg-2 col-md-4 col-md-12"
-                                        />
-{{--                                        <x-text-input--}}
-{{--                                                name="folionumber"--}}
-{{--                                                label="Número de folio de control de patios."--}}
-{{--                                                type="text"--}}
-{{--                                                placeholder="Número de recibo o contenedor"--}}
-{{--                                                colClass="col-lg-2 col-md-4 col-md-12"--}}
-{{--                                        />--}}
                                         <x-select2
                                                 name="statusid"
                                                 label="Estatus del recibo."
@@ -69,14 +55,6 @@
                                                 valueField="statusid"
                                                 textField="name"
                                                 placeholder="Seleccione una estatus"
-                                        />
-                                        <x-select2
-                                                name="providerid"
-                                                label="Proveedor."
-                                                :options="$providers"
-                                                valueField="providerid"
-                                                textField="name"
-                                                placeholder="Seleccione una proveedor"
                                         />
 
                                     </div>
@@ -95,15 +73,13 @@
                 <div class="card">
                     <div class="card-header"></div>
                     <div class="card-body">
-                        <table id="tablereceipt" class="table table-condensed table-bordered table-hover">
+                        <table id="tablereceipt" class="table table-condensed table-bordered table-hover" width="100%">
                             <thead>
                             <tr>
                                 <th>Opciones</th>
                                 <th>Bodega</th>
-                                <th>Embarque</th>
-                                <th>Factura</th>
-                                <th>Proveedor</th>
-                                <th>Tipo</th>
+                                <th>Recibo</th>
+                                <th>Cortina</th>
                                 <th>Estatus del recibo</th>
                             </tr>
                             </thead>

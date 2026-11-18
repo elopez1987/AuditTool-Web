@@ -98,8 +98,5 @@ class OrderCustomerController extends BaseController
         return $this->responseSuccessAjax('', now());
     }
 
-	public function show(string $ordercustomer)
-	{
-
-	}
+    public function show(string $ordercustomer) {}
 }

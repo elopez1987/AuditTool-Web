@@ -35,42 +35,7 @@
     </div>
 </div>
 
-<div class="row">
-    <div class="col-lg-10">
-        <div class="card">
-            <div class="card-header">
-                Datos de configuración
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-lg-4 col-md-6 col-sm-12">
-                        <div class="form-group">
-                            <label for="name">Código de planta ( SAP ) <span style="color: red">*</span></label>
-                            <input type="text" class="form-control"  id="code" name="code" maxlength="15"
-                                   aria-describedby="code" onKeyUp=this.value=this.value.toUpperCase(); value="{{old('code', $systemcenterdistribution->code)}}">
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12">
-                        <div class="form-group">
-                            <label for="name">Nombre del formato del folio de patios </label>
-                            <input type="text" class="form-control"  id="formatinvoice" name="formatinvoice" maxlength="50"
-                                   aria-describedby="formatinvoice"
-                                   value="{{old('formatinvoice', $systemcenterdistribution->formatinvoice)}}">
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12">
-                        <div class="form-group">
-                            <label for="name">Capacidad maxima de patio.</label>
-                            <input type="number" class="form-control numeric"  id="capacityyard" name="capacityyard"
-                                   maxlength="15"
-                                   aria-describedby="code" onKeyUp=this.value=this.value.toUpperCase(); value="{{old('capacityyard', $systemcenterdistribution->capacityyard)}}">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <div class="row">
     <div class="col-lg-10">

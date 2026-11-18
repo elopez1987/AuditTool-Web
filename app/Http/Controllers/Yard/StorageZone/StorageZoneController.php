@@ -96,13 +96,10 @@ class StorageZoneController extends BaseController
         } catch (\Throwable $th) {
             return response()->json([
                 'success' => false,
-                'message' => 'Error al eliminar el registro: ' . $th->getMessage(),
+                'message' => 'Error al eliminar el registro: '.$th->getMessage(),
             ], 500);
         }
     }
 
-	public function show(string $storagezone)
-	{
-
-	}
+    public function show(string $storagezone) {}
 }

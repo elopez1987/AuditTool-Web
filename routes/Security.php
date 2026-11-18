@@ -16,7 +16,6 @@ use App\Http\Controllers\Security\Roles\RoleController;
 use App\Http\Controllers\Security\Roles\StorageCategoryRoleController;
 use App\Http\Controllers\Security\Users\AccessWarehouse\AccessCarrierController;
 use App\Http\Controllers\Security\Users\AccessWarehouse\AccessCustomerController;
-use App\Http\Controllers\Security\Users\AccessWarehouse\AccessOriginController;
 use App\Http\Controllers\Security\Users\AccessWarehouse\AccessProviderController;
 use App\Http\Controllers\Security\Users\AccessWarehouse\LevelWarehouseController;
 use App\Http\Controllers\Security\Users\Eventos\EventUserController;
@@ -27,9 +26,6 @@ use App\Http\Controllers\Security\Users\UsersForTRansportController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('menusecurity', function () {
-        return view('layouts.Menu.Security.menusecurity');
-    })->name('menusecurity');
 
     //    ----------------------------------------------- Modulo de usuarios---------------------------------------------------------------------
     Route::resource('securityusers', UserController::class)->except('show');
@@ -76,11 +72,6 @@ Route::middleware(['auth'])->group(function () {
     Route::put('securityaccess-providers/{id}', [AccessProviderController::class, 'update'])->name('securityaccess-providers');
     //    Borrar asignacion de clientes a usuarios
     Route::delete('deleteaccess-providers/{id}', [AccessProviderController::class, 'destroy'])->name('deleteaccess-providers');
-
-    //    Acceso para filtro por origen de unidad
-    Route::get('securityusers/{id}/origins', [AccessOriginController::class, 'index'])->name('access-origin');
-    Route::put('securityaccess-origins/{id}', [AccessOriginController::class, 'update'])->name('securityaccess-origins');
-    Route::delete('securityaccess-origin-delete/{id}', [AccessOriginController::class, 'destroy'])->name('securityaccess-origin-delete');
 
     //    ----------------------------------------------- Roles---------------------------------------------------------------------
     //    Perfiles de usuario
@@ -137,8 +128,9 @@ Route::group(['middleware' => ['role:ADMINISTRADOR']], function () {
     Route::get('usersfortransportdata', [UsersForTRansportController::class, 'usersfortransportdata'])->name('usersfortransportdata');
 
     //	Usuarios activo
-    Route::resource('activeusers', ActiveUsersController::class);
+    Route::resource('activeusers', ActiveUsersController::class)->only('index', 'destroy');
     Route::get('getactiveusers', [ActiveUsersController::class, 'getactiveusers'])->name('getactiveusers');
-    Route::get('clearsessions', [ActiveUsersController::class, 'clearsessions'])->name('clearsessions');
+    Route::post('clearsessions', [ActiveUsersController::class, 'clearsessions'])
+        ->middleware(['auth:auth0-session', 'can:activeusers.clearsessions'])->name('clearsessions');
 
 });

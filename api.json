@@ -1,0 +1,1745 @@
+{
+    "openapi": "3.1.2",
+    "info": {
+        "title": "Audittool API",
+        "version": "1.0.0",
+        "description": "API de autenticaci\u00f3n local y cat\u00e1logos de inventario. Los endpoints de autenticaci\u00f3n requieren X-App-Token; el perfil y los cat\u00e1logos requieren adem\u00e1s un access token Bearer de Passport. Las operaciones de escritura de productos est\u00e1n registradas, pero no implementadas."
+    },
+    "servers": [
+        {
+            "url": "https://audittool.test/api"
+        }
+    ],
+    "security": [
+        {
+            "http": []
+        }
+    ],
+    "paths": {
+        "/v1/auth/login": {
+            "post": {
+                "operationId": "loginLocalApp",
+                "description": "Valida las credenciales locales y emite access y refresh tokens de Passport.\nRequiere X-App-Token, pero no un token Bearer previo.\nserialnumber es opcional; si se omite, device.warning informa que no se registr\u00f3 dispositivo.\nRespuestas de error: 401 por credenciales o token de aplicaci\u00f3n inv\u00e1lidos,\n403 por cuenta o centro no disponibles, 422 por validaci\u00f3n, 429 por l\u00edmite\nde intentos y 503 si el servicio no est\u00e1 disponible.\nLas respuestas usan success, code, message, meta y data; no deben almacenarse en cach\u00e9.",
+                "summary": "Iniciar sesi\u00f3n",
+                "tags": [
+                    "Autenticaci\u00f3n local",
+                    "LocalAuth"
+                ],
+                "parameters": [
+                    {
+                        "name": "X-App-Token",
+                        "in": "header",
+                        "required": true,
+                        "description": "Token de aplicaci\u00f3n proporcionado por el administrador.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LocalLoginRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "const": 200
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "version": {
+                                                    "type": "string"
+                                                },
+                                                "service": {
+                                                    "type": "string"
+                                                },
+                                                "processDate": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "version",
+                                                "service",
+                                                "processDate"
+                                            ]
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "user": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "name": {
+                                                            "type": "string"
+                                                        },
+                                                        "centerId": {
+                                                            "type": "string"
+                                                        },
+                                                        "centerName": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "name",
+                                                        "centerId",
+                                                        "centerName"
+                                                    ]
+                                                },
+                                                "permissions": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "parameters": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "app": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "string"
+                                                            }
+                                                        },
+                                                        "user": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "string"
+                                                            }
+                                                        },
+                                                        "warehouse": {
+                                                            "type": "object",
+                                                            "additionalProperties": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "type": "string"
+                                                                }
+                                                            }
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "app",
+                                                        "user",
+                                                        "warehouse"
+                                                    ]
+                                                },
+                                                "device": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "registered": {
+                                                            "type": "boolean"
+                                                        },
+                                                        "is_new": {
+                                                            "type": "boolean"
+                                                        },
+                                                        "warning": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "registered",
+                                                        "is_new",
+                                                        "warning"
+                                                    ]
+                                                },
+                                                "auth": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "accessToken": {
+                                                            "type": "string"
+                                                        },
+                                                        "tokenType": {
+                                                            "type": "string"
+                                                        },
+                                                        "expiresIn": {
+                                                            "type": "integer"
+                                                        },
+                                                        "expiresAt": {
+                                                            "type": "string"
+                                                        },
+                                                        "refreshToken": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "accessToken",
+                                                        "tokenType",
+                                                        "expiresIn",
+                                                        "expiresAt",
+                                                        "refreshToken"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "user",
+                                                "permissions",
+                                                "parameters",
+                                                "device",
+                                                "auth"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "success",
+                                        "code",
+                                        "message",
+                                        "meta",
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Los datos proporcionados no son v\u00e1lidos.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "const": 422
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "version": {
+                                                    "type": "string"
+                                                },
+                                                "service": {
+                                                    "type": "string"
+                                                },
+                                                "processDate": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "version",
+                                                "service",
+                                                "processDate"
+                                            ]
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "errors": {
+                                                    "type": "object",
+                                                    "additionalProperties": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "required": [
+                                                "errors"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "success",
+                                        "code",
+                                        "message",
+                                        "meta",
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Credenciales o token de aplicaci\u00f3n inv\u00e1lidos.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "const": 401
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "version": {
+                                                    "type": "string"
+                                                },
+                                                "service": {
+                                                    "type": "string"
+                                                },
+                                                "processDate": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "version",
+                                                "service",
+                                                "processDate"
+                                            ]
+                                        },
+                                        "data": {
+                                            "type": "null"
+                                        }
+                                    },
+                                    "required": [
+                                        "success",
+                                        "code",
+                                        "message",
+                                        "meta",
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "El usuario no tiene un centro de distribuci\u00f3n activo asignado.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "const": 403
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "version": {
+                                                    "type": "string"
+                                                },
+                                                "service": {
+                                                    "type": "string"
+                                                },
+                                                "processDate": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "version",
+                                                "service",
+                                                "processDate"
+                                            ]
+                                        },
+                                        "data": {
+                                            "type": "null"
+                                        }
+                                    },
+                                    "required": [
+                                        "success",
+                                        "code",
+                                        "message",
+                                        "meta",
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "L\u00edmite de solicitudes excedido.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "const": 429
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "version": {
+                                                    "type": "string"
+                                                },
+                                                "service": {
+                                                    "type": "string"
+                                                },
+                                                "processDate": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "version",
+                                                "service",
+                                                "processDate"
+                                            ]
+                                        },
+                                        "data": {
+                                            "type": "null"
+                                        }
+                                    },
+                                    "required": [
+                                        "success",
+                                        "code",
+                                        "message",
+                                        "meta",
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "503": {
+                        "description": "El servicio de autenticaci\u00f3n local no est\u00e1 disponible.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "const": 503
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "version": {
+                                                    "type": "string"
+                                                },
+                                                "service": {
+                                                    "type": "string"
+                                                },
+                                                "processDate": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "version",
+                                                "service",
+                                                "processDate"
+                                            ]
+                                        },
+                                        "data": {
+                                            "type": "null"
+                                        }
+                                    },
+                                    "required": [
+                                        "success",
+                                        "code",
+                                        "message",
+                                        "meta",
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
+        "/v1/auth/refresh": {
+            "post": {
+                "operationId": "refreshLocalAppSession",
+                "description": "Intercambia refreshToken por un nuevo par de tokens y devuelve el contexto del usuario.\nRequiere X-App-Token, pero no un access token Bearer vigente.\nRespuestas de error: 401 por token inv\u00e1lido, 403 por cuenta o centro no\ndisponibles, 422 por validaci\u00f3n, 429 por l\u00edmite de solicitudes y 503 por\nindisponibilidad del servicio. meta.service es refresh-user.",
+                "summary": "Renovar sesi\u00f3n",
+                "tags": [
+                    "Autenticaci\u00f3n local",
+                    "LocalAuth"
+                ],
+                "parameters": [
+                    {
+                        "name": "X-App-Token",
+                        "in": "header",
+                        "required": true,
+                        "description": "Token de aplicaci\u00f3n proporcionado por el administrador.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LocalRefreshRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "const": 200
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "version": {
+                                                    "type": "string"
+                                                },
+                                                "service": {
+                                                    "type": "string"
+                                                },
+                                                "processDate": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "version",
+                                                "service",
+                                                "processDate"
+                                            ]
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "user": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "name": {
+                                                            "type": "string"
+                                                        },
+                                                        "centerId": {
+                                                            "type": "string"
+                                                        },
+                                                        "centerName": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "name",
+                                                        "centerId",
+                                                        "centerName"
+                                                    ]
+                                                },
+                                                "permissions": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "parameters": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "app": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "string"
+                                                            }
+                                                        },
+                                                        "user": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "string"
+                                                            }
+                                                        },
+                                                        "warehouse": {
+                                                            "type": "object",
+                                                            "additionalProperties": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "type": "string"
+                                                                }
+                                                            }
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "app",
+                                                        "user",
+                                                        "warehouse"
+                                                    ]
+                                                },
+                                                "device": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "registered": {
+                                                            "type": "boolean"
+                                                        },
+                                                        "is_new": {
+                                                            "type": "boolean"
+                                                        },
+                                                        "warning": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "registered",
+                                                        "is_new",
+                                                        "warning"
+                                                    ]
+                                                },
+                                                "auth": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "accessToken": {
+                                                            "type": "string"
+                                                        },
+                                                        "tokenType": {
+                                                            "type": "string"
+                                                        },
+                                                        "expiresIn": {
+                                                            "type": "integer"
+                                                        },
+                                                        "expiresAt": {
+                                                            "type": "string"
+                                                        },
+                                                        "refreshToken": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "accessToken",
+                                                        "tokenType",
+                                                        "expiresIn",
+                                                        "expiresAt",
+                                                        "refreshToken"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "user",
+                                                "permissions",
+                                                "parameters",
+                                                "device",
+                                                "auth"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "success",
+                                        "code",
+                                        "message",
+                                        "meta",
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Los datos proporcionados no son v\u00e1lidos.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "const": 422
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "version": {
+                                                    "type": "string"
+                                                },
+                                                "service": {
+                                                    "type": "string"
+                                                },
+                                                "processDate": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "version",
+                                                "service",
+                                                "processDate"
+                                            ]
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "errors": {
+                                                    "type": "object",
+                                                    "additionalProperties": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "required": [
+                                                "errors"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "success",
+                                        "code",
+                                        "message",
+                                        "meta",
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Token de renovaci\u00f3n o token de aplicaci\u00f3n inv\u00e1lidos.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "const": 401
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "version": {
+                                                    "type": "string"
+                                                },
+                                                "service": {
+                                                    "type": "string"
+                                                },
+                                                "processDate": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "version",
+                                                "service",
+                                                "processDate"
+                                            ]
+                                        },
+                                        "data": {
+                                            "type": "null"
+                                        }
+                                    },
+                                    "required": [
+                                        "success",
+                                        "code",
+                                        "message",
+                                        "meta",
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "El usuario no tiene un centro de distribuci\u00f3n activo asignado.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "const": 403
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "version": {
+                                                    "type": "string"
+                                                },
+                                                "service": {
+                                                    "type": "string"
+                                                },
+                                                "processDate": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "version",
+                                                "service",
+                                                "processDate"
+                                            ]
+                                        },
+                                        "data": {
+                                            "type": "null"
+                                        }
+                                    },
+                                    "required": [
+                                        "success",
+                                        "code",
+                                        "message",
+                                        "meta",
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "L\u00edmite de solicitudes excedido.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "const": 429
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "version": {
+                                                    "type": "string"
+                                                },
+                                                "service": {
+                                                    "type": "string"
+                                                },
+                                                "processDate": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "version",
+                                                "service",
+                                                "processDate"
+                                            ]
+                                        },
+                                        "data": {
+                                            "type": "null"
+                                        }
+                                    },
+                                    "required": [
+                                        "success",
+                                        "code",
+                                        "message",
+                                        "meta",
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "503": {
+                        "description": "El servicio de autenticaci\u00f3n local no est\u00e1 disponible.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "const": 503
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "version": {
+                                                    "type": "string"
+                                                },
+                                                "service": {
+                                                    "type": "string"
+                                                },
+                                                "processDate": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "version",
+                                                "service",
+                                                "processDate"
+                                            ]
+                                        },
+                                        "data": {
+                                            "type": "null"
+                                        }
+                                    },
+                                    "required": [
+                                        "success",
+                                        "code",
+                                        "message",
+                                        "meta",
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
+        "/v1/auth/me": {
+            "get": {
+                "operationId": "getLocalAppProfile",
+                "description": "Requiere X-App-Token y Authorization: Bearer con un access token de la aplicaci\u00f3n local.\nDevuelve usuario, permisos y par\u00e1metros; no emite tokens ni incluye data.auth.\nRespuestas de error: 401 por token ausente o inv\u00e1lido, 403 por cuenta o\ncentro no disponibles, 429 por l\u00edmite de solicitudes y 503 por\nindisponibilidad del servicio. meta.service es current-user.",
+                "summary": "Consultar el usuario autenticado",
+                "tags": [
+                    "Autenticaci\u00f3n local",
+                    "LocalAuth"
+                ],
+                "parameters": [
+                    {
+                        "name": "X-App-Token",
+                        "in": "header",
+                        "required": true,
+                        "description": "Token de aplicaci\u00f3n proporcionado por el administrador.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "const": 200
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "version": {
+                                                    "type": "string"
+                                                },
+                                                "service": {
+                                                    "type": "string"
+                                                },
+                                                "processDate": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "version",
+                                                "service",
+                                                "processDate"
+                                            ]
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "user": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "name": {
+                                                            "type": "string"
+                                                        },
+                                                        "centerId": {
+                                                            "type": "string"
+                                                        },
+                                                        "centerName": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "name",
+                                                        "centerId",
+                                                        "centerName"
+                                                    ]
+                                                },
+                                                "permissions": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "parameters": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "app": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "string"
+                                                            }
+                                                        },
+                                                        "user": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "string"
+                                                            }
+                                                        },
+                                                        "warehouse": {
+                                                            "type": "object",
+                                                            "additionalProperties": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "type": "string"
+                                                                }
+                                                            }
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "app",
+                                                        "user",
+                                                        "warehouse"
+                                                    ]
+                                                },
+                                                "device": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "registered": {
+                                                            "type": "boolean"
+                                                        },
+                                                        "is_new": {
+                                                            "type": "boolean"
+                                                        },
+                                                        "warning": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "registered",
+                                                        "is_new",
+                                                        "warning"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "user",
+                                                "permissions",
+                                                "parameters",
+                                                "device"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "success",
+                                        "code",
+                                        "message",
+                                        "meta",
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Access token ausente o inv\u00e1lido, o token de aplicaci\u00f3n inv\u00e1lido.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "const": 401
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "version": {
+                                                    "type": "string"
+                                                },
+                                                "service": {
+                                                    "type": "string"
+                                                },
+                                                "processDate": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "version",
+                                                "service",
+                                                "processDate"
+                                            ]
+                                        },
+                                        "data": {
+                                            "type": "null"
+                                        }
+                                    },
+                                    "required": [
+                                        "success",
+                                        "code",
+                                        "message",
+                                        "meta",
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "El usuario no tiene un centro de distribuci\u00f3n activo asignado.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "const": 403
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "version": {
+                                                    "type": "string"
+                                                },
+                                                "service": {
+                                                    "type": "string"
+                                                },
+                                                "processDate": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "version",
+                                                "service",
+                                                "processDate"
+                                            ]
+                                        },
+                                        "data": {
+                                            "type": "null"
+                                        }
+                                    },
+                                    "required": [
+                                        "success",
+                                        "code",
+                                        "message",
+                                        "meta",
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "L\u00edmite de solicitudes excedido.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "const": 429
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "version": {
+                                                    "type": "string"
+                                                },
+                                                "service": {
+                                                    "type": "string"
+                                                },
+                                                "processDate": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "version",
+                                                "service",
+                                                "processDate"
+                                            ]
+                                        },
+                                        "data": {
+                                            "type": "null"
+                                        }
+                                    },
+                                    "required": [
+                                        "success",
+                                        "code",
+                                        "message",
+                                        "meta",
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "503": {
+                        "description": "El servicio de autenticaci\u00f3n local no est\u00e1 disponible.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "const": 503
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "version": {
+                                                    "type": "string"
+                                                },
+                                                "service": {
+                                                    "type": "string"
+                                                },
+                                                "processDate": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "version",
+                                                "service",
+                                                "processDate"
+                                            ]
+                                        },
+                                        "data": {
+                                            "type": "null"
+                                        }
+                                    },
+                                    "required": [
+                                        "success",
+                                        "code",
+                                        "message",
+                                        "meta",
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/catalogs/products": {
+            "get": {
+                "operationId": "listInventoryProducts",
+                "description": "Devuelve los productos activos de los centros accesibles al usuario.\nLa lista no est\u00e1 paginada y puede estar vac\u00eda. meta.service es products.\nSin un token Bearer v\u00e1lido, una solicitud JSON recibe HTTP 401.",
+                "summary": "Listar productos",
+                "tags": [
+                    "Cat\u00e1logos de inventario",
+                    "InventoryPartNumber"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "const": 200
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "version": {
+                                                    "type": "string"
+                                                },
+                                                "service": {
+                                                    "type": "string"
+                                                },
+                                                "processDate": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "version",
+                                                "service",
+                                                "processDate"
+                                            ]
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "products": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/components/schemas/InventoryPartNumbersResource"
+                                                    }
+                                                }
+                                            },
+                                            "required": [
+                                                "products"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "success",
+                                        "code",
+                                        "message",
+                                        "meta",
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/AuthenticationException"
+                    }
+                }
+            },
+            "post": {
+                "operationId": "createInventoryProduct",
+                "description": "La ruta POST est\u00e1 registrada, pero la acci\u00f3n est\u00e1 vac\u00eda: no valida ni\npersiste datos. No debe utilizarse como una operaci\u00f3n de alta disponible.",
+                "summary": "Crear producto (no implementado)",
+                "tags": [
+                    "Cat\u00e1logos de inventario",
+                    "InventoryPartNumber"
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/AuthenticationException"
+                    }
+                }
+            }
+        },
+        "/v1/catalogs/products/{product}": {
+            "get": {
+                "operationId": "getInventoryProductByPartNumber",
+                "description": "El par\u00e1metro de ruta {product} contiene el c\u00f3digo prtnum, no el ID num\u00e9rico.\nBusca \u00fanicamente productos activos de los centros accesibles al usuario.\nDevuelve HTTP 404 con success=false, code=404, message, meta y data=null\ncuando el c\u00f3digo no existe o no est\u00e1 disponible para el usuario.\nSin un token Bearer v\u00e1lido, una solicitud JSON recibe HTTP 401.\nmeta.service es api-service en \u00e9xito y show en el error de recurso no encontrado.",
+                "summary": "Buscar producto por n\u00famero de parte",
+                "tags": [
+                    "Cat\u00e1logos de inventario",
+                    "InventoryPartNumber"
+                ],
+                "parameters": [
+                    {
+                        "name": "product",
+                        "in": "path",
+                        "required": true,
+                        "description": "C\u00f3digo prtnum del producto, no su ID interno.",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "SKU-001"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "const": 200
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "version": {
+                                                    "type": "string"
+                                                },
+                                                "service": {
+                                                    "type": "string"
+                                                },
+                                                "processDate": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "version",
+                                                "service",
+                                                "processDate"
+                                            ]
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "product": {
+                                                    "$ref": "#/components/schemas/InventoryPartNumbersResource"
+                                                }
+                                            },
+                                            "required": [
+                                                "product"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "success",
+                                        "code",
+                                        "message",
+                                        "meta",
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/AuthenticationException"
+                    },
+                    "404": {
+                        "description": "Producto no encontrado o no disponible para el usuario.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "const": 404
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "version": {
+                                                    "type": "string"
+                                                },
+                                                "service": {
+                                                    "type": "string"
+                                                },
+                                                "processDate": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "version",
+                                                "service",
+                                                "processDate"
+                                            ]
+                                        },
+                                        "data": {
+                                            "type": "null"
+                                        }
+                                    },
+                                    "required": [
+                                        "success",
+                                        "code",
+                                        "message",
+                                        "meta",
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "operationId": "updateInventoryProduct",
+                "description": "Las rutas PUT y PATCH est\u00e1n registradas, pero la acci\u00f3n est\u00e1 vac\u00eda.\nEl enlace impl\u00edcito del modelo usa su ID, a diferencia de la b\u00fasqueda GET.\nNo valida ni modifica datos.",
+                "summary": "Actualizar producto (no implementado)",
+                "tags": [
+                    "Cat\u00e1logos de inventario",
+                    "InventoryPartNumber"
+                ],
+                "parameters": [
+                    {
+                        "name": "product",
+                        "in": "path",
+                        "required": true,
+                        "description": "The product ID",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ModelNotFoundException"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/AuthenticationException"
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "deleteInventoryProduct",
+                "description": "La ruta DELETE est\u00e1 registrada, pero la acci\u00f3n est\u00e1 vac\u00eda.\nEl enlace impl\u00edcito del modelo usa su ID y no se elimina ning\u00fan registro.",
+                "summary": "Eliminar producto (no implementado)",
+                "tags": [
+                    "Cat\u00e1logos de inventario",
+                    "InventoryPartNumber"
+                ],
+                "parameters": [
+                    {
+                        "name": "product",
+                        "in": "path",
+                        "required": true,
+                        "description": "The product ID",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ModelNotFoundException"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/AuthenticationException"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "http": {
+                "type": "http",
+                "scheme": "bearer"
+            }
+        },
+        "schemas": {
+            "InventoryPartNumbersResource": {
+                "type": "object",
+                "properties": {
+                    "partnumberId": {
+                        "type": "integer",
+                        "description": "Identificador interno del producto; no es el c\u00f3digo usado en la b\u00fasqueda GET.",
+                        "examples": [
+                            1
+                        ]
+                    },
+                    "partnumberCode": {
+                        "type": "string",
+                        "description": "C\u00f3digo del n\u00famero de parte utilizado en el par\u00e1metro de la b\u00fasqueda GET.",
+                        "examples": [
+                            "SKU-001"
+                        ]
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "Descripci\u00f3n del producto."
+                    }
+                },
+                "required": [
+                    "partnumberId",
+                    "partnumberCode",
+                    "description"
+                ],
+                "title": "InventoryPartNumbersResource"
+            },
+            "LocalLoginRequest": {
+                "type": "object",
+                "properties": {
+                    "username": {
+                        "type": "string",
+                        "description": "Nombre de usuario de la cuenta local.",
+                        "examples": [
+                            "operator"
+                        ],
+                        "maxLength": 50
+                    },
+                    "password": {
+                        "type": "string",
+                        "description": "Contrase\u00f1a de la cuenta local. No debe registrarse ni almacenarse en el cliente.",
+                        "maxLength": 1024
+                    },
+                    "serialnumber": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "description": "N\u00famero de serie del dispositivo; omitirlo no impide iniciar sesi\u00f3n.",
+                        "examples": [
+                            "DEVICE-001"
+                        ],
+                        "maxLength": 60
+                    }
+                },
+                "required": [
+                    "username",
+                    "password"
+                ],
+                "title": "LocalLoginRequest"
+            },
+            "LocalRefreshRequest": {
+                "type": "object",
+                "properties": {
+                    "refreshToken": {
+                        "type": "string",
+                        "description": "Refresh token emitido al iniciar sesi\u00f3n o renovar la sesi\u00f3n.",
+                        "maxLength": 8192
+                    }
+                },
+                "required": [
+                    "refreshToken"
+                ],
+                "title": "LocalRefreshRequest"
+            }
+        },
+        "responses": {
+            "AuthenticationException": {
+                "description": "Unauthenticated",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "description": "Error overview."
+                                }
+                            },
+                            "required": [
+                                "message"
+                            ]
+                        }
+                    }
+                }
+            },
+            "ModelNotFoundException": {
+                "description": "Not found",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "description": "Error overview."
+                                }
+                            },
+                            "required": [
+                                "message"
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

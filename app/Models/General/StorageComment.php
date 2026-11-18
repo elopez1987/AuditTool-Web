@@ -3,17 +3,17 @@
 namespace App\Models\General;
 
 use App\User;
-use Auth;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Models\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
- * @method static where(string $string, mixed $id)
+ * @method static \Illuminate\Database\Eloquent\Builder<static> where(string $column, mixed $value)
  *
  * @property int $id
  * @property string $modeltype

@@ -10,8 +10,12 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-12">
-                            <a href="{{route('clearJobs')}}" class="btn btn-danger"> <i class="fas fa-trash ml-2 mr-2"></i> Limpiar Jobs Pendientes</a>
-                            <a href="{{route('clear-failed-jobs')}}" class="btn btn-danger"> <i class="fas fa-trash ml-2 mr-2"></i> Limpiar Jobs Fallidos</a>
+                            <x-maintenance-action :action="route('clearJobs')">
+                                <i class="fas fa-trash ml-2 mr-2"></i> Limpiar Jobs Pendientes
+                            </x-maintenance-action>
+                            <x-maintenance-action :action="route('clear-failed-jobs')">
+                                <i class="fas fa-trash ml-2 mr-2"></i> Limpiar Jobs Fallidos
+                            </x-maintenance-action>
                         </div>
                     </div>
                     <hr class="mb-3">

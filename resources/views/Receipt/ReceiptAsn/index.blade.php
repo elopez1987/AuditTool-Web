@@ -77,10 +77,8 @@
                                     <th class="bg-inverse text-white">{{ ui_label('receiptasn_cdistribucion_index','C.Distribución') }}</th>
                                     <th class="bg-inverse text-white">{{ ui_label('receiptasn_warehouse_index','Bodega') }}</th>
                                     <th class="bg-inverse text-white">{{ ui_label('receiptasn_shipmentid_index','Recibo') }}</th>
-                                    <th class="bg-inverse text-white">{{ ui_label('receiptasn_delivery_index','Factura') }}</th>
-                                    <th class="bg-inverse text-white">{{ ui_label('receiptasn_provider_index','Proveedor') }}</th>
-                                    <th class="bg-inverse text-white">{{ ui_label('receiptasn_typeentry_index','Tipo de entrada') }}</th>
-                                    <th class="bg-inverse text-white">{{ ui_label('receiptasn_origin_index','Origen') }}</th>
+                                    <th class="bg-inverse text-white">{{ ui_label('receiptasn_provider_index','Ruta') }}</th>
+                                    <th class="bg-inverse text-white">{{ ui_label('receiptasn_delivery_index','Operador') }}</th>
                                     <th class="bg-inverse text-white">{{ ui_label('receiptasn_statusid_index','Estatus') }}</th>
                                     <th class="bg-inverse text-white">Opciones</th>
                                 </tr>

@@ -13,13 +13,6 @@
                    aria-describedby="command" value="{{$systemprinter->ip}}">
         </div>
     </div>
-    <div class="col-lg-2 col-md-6 col-sm-12">
-        <div class="form-group">
-            <label for="command">Comando </label>
-            <input type="text" class="form-control" required id="command" name="command" maxlength="100"
-                   aria-describedby="command" value="{{$systemprinter->command}}">
-        </div>
-    </div>
 </div>
 
 <div class="row">

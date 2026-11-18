@@ -21,7 +21,6 @@
             {data: 'center.name', name: 'center.name'},
             {data: 'description'},
             {data: 'ip'},
-            {data: 'command'},
             {data: 'auxiliary01'},
             {data: 'auxiliary02'},
             // {data: 'auxiliary03'},

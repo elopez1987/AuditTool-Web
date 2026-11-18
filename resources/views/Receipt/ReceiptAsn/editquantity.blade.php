@@ -33,9 +33,9 @@
                     <div class="row">
                         <div class="col-lg-4 col-md-6 col-sm-12">
                             <div class="form-group">
-                                <label for="quantitytrue">Cantidad <span style="color: red">*</span></label>
-                                <input type="text" class="form-control numeric" required id="quantitytrue" name="quantitytrue"
-                                       value="{{$stock->quantitytrue}}"
+                                <label for="quantity">Cantidad <span style="color: red">*</span></label>
+                                <input type="text" class="form-control numeric" required id="quantity" name="quantity"
+                                       value="{{$stock->quantity}}"
                                 >
                             </div>
                         </div>

@@ -7,7 +7,6 @@ use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Configuration\TablesDataBase\SystemColumn;
 use App\Models\Security\Fuctions\SecurityFunction;
 use App\Traits\Web\General\GetParameters;
-use DB;
 
 class SelectDynamicController extends Controller
 {
@@ -21,7 +20,7 @@ class SelectDynamicController extends Controller
     public function getColumnForTable($table)
     {
         $columns = SystemColumn::where('tableid', $table)->select(['columnid'])->get()->toArray();
-        array_unshift($columns, ['columnid' => '', 'columnid' => 'Seleccione una opción']);
+        array_unshift($columns, ['columnid' => 'Seleccione una opción']);
 
         return response()->json($columns);
     }

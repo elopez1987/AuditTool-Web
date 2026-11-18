@@ -7,34 +7,23 @@ use App\Http\Controllers\Yard\Carriers\ShipmentCarrierController;
 use App\Http\Controllers\Yard\Customers\ImportCustomerController;
 use App\Http\Controllers\Yard\Customers\OrderCustomerController;
 use App\Http\Controllers\Yard\Customers\ParameterCustomerController;
-use App\Http\Controllers\Yard\DashboardYardController;
 use App\Http\Controllers\Yard\Destination\StorageDestinationController;
 use App\Http\Controllers\Yard\ReceiptProviders\ImportProvidersController;
 use App\Http\Controllers\Yard\ReceiptProviders\ReceiptProviderContactsController;
 use App\Http\Controllers\Yard\ReceiptProviders\ReceiptProvidersController;
-use App\Http\Controllers\Yard\ShipmentTruck\ImportShipmentTruckController;
-use App\Http\Controllers\Yard\ShipmentTruck\ShipmentTruckController;
-use App\Http\Controllers\Yard\ShipmentTruck\ShipmentTruckToleranceController;
 use App\Http\Controllers\Yard\StorageAreasController;
 use App\Http\Controllers\Yard\StorageCheckLists\Imports\ImportCheckListDetailsController;
 use App\Http\Controllers\Yard\StorageCheckLists\StorageCheckListDetailsController;
 use App\Http\Controllers\Yard\StorageCheckLists\StorageCheckListsController;
 use App\Http\Controllers\Yard\StorageLocations\ImportLocationsController;
-use App\Http\Controllers\Yard\StorageLocations\OptimizeLocationsController;
 use App\Http\Controllers\Yard\StorageLocations\ParameterLocationsController;
 use App\Http\Controllers\Yard\StorageLocations\StorageLocationController;
 use App\Http\Controllers\Yard\StorageOperators\StorageOperatorsController;
 use App\Http\Controllers\Yard\StorageZone\ParameterZonesController;
 use App\Http\Controllers\Yard\StorageZone\StorageZoneController;
-use App\Http\Controllers\Yard\UnitStatus\StorageUnitStatusesController;
-use App\Models\Yard\StorageAreas;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->group(function () {
-    //    **************************************************** RUTAS DE DASHBOARDS ***********************************************************
-    Route::get('dashboardyard', [DashboardYardController::class, 'index'])->name('dashboardyard');
-    Route::post('getDashboardData', [DashboardYardController::class, 'getDashboardData'])->name('getDashboardData');
-    Route::post('getTotalForZone', [DashboardYardController::class, 'getTotalForZone'])->name('getTotalForZone');
 
     //    **************************************************** CATALOGOS ***********************************************************
     //    ---------------------------------------------- Lineas de transporte ----------------------------------------------------
@@ -79,7 +68,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('uploadfilelocations', [ImportLocationsController::class, 'importlocations'])->name('uploadfilelocations');
     Route::get('uploadfilelocations/template', [ImportLocationsController::class, 'downloadTemplate'])->name('uploadfilelocations.template');
     //    Optimizar usuario
-    Route::get('optimizelocations', [OptimizeLocationsController::class, 'optimizelocations'])->name('optimizelocations');
     //    Parametrizar las ubicaciones
     Route::get('storagelocations/{id}/parameters', [ParameterLocationsController::class, 'index'])->name('storagelocations.parameters');
     Route::put('storagelocationsparameters/{id}', [ParameterLocationsController::class, 'storagelocationsparameters'])->name('storagelocationsparameters');
@@ -90,20 +78,6 @@ Route::middleware(['auth'])->group(function () {
     //    Parametros de zonas
     Route::get('storagezones/{id}/parameters', [ParameterZonesController::class, 'parameters'])->name('storagezones.parameters');
     Route::put('storagezonesparameters/{id}', [ParameterZonesController::class, 'storagezonesparameters'])->name('storagezonesparameters');
-
-    //    ---------------------------------------------------- Medidas de unidad (Cajas de 53, 20Ft, etc.) ------------------------------
-    Route::resource('shipmenttrucks', ShipmentTruckController::class);
-    Route::get('getDataTrucks', [ShipmentTruckController::class, 'getDataTrucks'])->name('getDataTrucks');
-    //    Importar tipo de unidad
-    Route::post('uploadfileshipmenttrucks', [ImportShipmentTruckController::class, 'importshipmenttrucks'])->name('uploadfileshipmenttrucks');
-    Route::get('uploadfileshipmenttrucks/template', [ImportShipmentTruckController::class, 'downloadTemplate'])->name('uploadfileshipmenttrucks.template');
-    //    Tolerancia de tipos de unidad
-    Route::get('shipmenttrucks/{id}/tolerance', [ShipmentTruckToleranceController::class, 'index'])->name('shipmenttrucks.tolerance');
-    Route::put('shipmenttruckstolerance/{id}', [ShipmentTruckToleranceController::class, 'update'])->name('shipmenttruckstolerance');
-
-    //  --------------------------------------------  Estatus de unidad (Vacio / Cargado )-----------------------------------------------
-    Route::resource('storageunitstatus', StorageUnitStatusesController::class);
-    Route::get('getDataUnitStatus', [StorageUnitStatusesController::class, 'getDataUnitStatus'])->name('getDataUnitStatus');
 
     //  -----------------------------------------------------  Operadores  --------------------------------------------------------------
     Route::resource('storageoperators', StorageOperatorsController::class);

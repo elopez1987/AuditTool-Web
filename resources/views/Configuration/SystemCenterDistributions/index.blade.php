@@ -23,7 +23,7 @@
                                 <a href="{{route('systemcenterdistributions.index')}}">
                                     @include('buttons.reload')
                                 </a>
-                                <a href="{{route('menuconfiguration')}}">
+                                <a href="{{route('home')}}">
                                     @include('buttons.cancel')
                                 </a>
                             </div>
@@ -61,10 +61,6 @@
                                     <th class="bg-inverse text-white">{{ ui_label('centerid', 'C.Distribución') }}</th>
                                     <th class="bg-inverse text-white">{{ ui_label('name', 'Nombre') }}</th>
                                     <th class="bg-inverse text-white">{{ ui_label('description', 'Descripción') }}</th>
-                                    <th class="bg-inverse text-white">{{ ui_label('yard_capacity', 'Capacidad de Patio') }}</th>
-{{--                                    <th class="bg-inverse text-white">{{ ui_label('wms_url', 'Url Web Service WMS') }}</th>--}}
-{{--                                    <th class="bg-inverse text-white">{{ ui_label('wms_user', 'Usuario Web Service WMS') }}</th>--}}
-{{--                                    <th class="bg-inverse text-white">{{ ui_label('wms_password', 'Contraseña Web Service WMS') }}</th>--}}
                                     <th class="bg-inverse text-white">{{ ui_label('status', 'Estatus') }}</th>
                                     <th class="bg-inverse text-white">{{ ui_label('options', 'Opciones') }}</th>
                                 </tr>

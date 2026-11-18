@@ -11,15 +11,11 @@ class SystemParameter extends Model
 {
     use SoftDeletes;
 
-    public $incrementing = false;
-
-    public $keyType = 'string';
+    public $incrementing = true;
 
     protected $table = 'systemparameters';
 
-    protected $primaryKey = 'parameterid';
-
-    protected $dateFormat = 'Y-m-d H:i:s';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
         'parameterid',
@@ -40,26 +36,10 @@ class SystemParameter extends Model
     protected $hidden = [
         'created_at',
         'updated_at',
-        'schemaid',
     ];
-
-    protected $attributes = [
-        'statusid' => 'E',
-        'schemaid' => 'STS',
-    ];
-
-    public function getNameAttribute($value)
-    {
-        return strtoupper($value);
-    }
 
     public function status(): BelongsTo
     {
         return $this->belongsTo(SystemStatus::class, 'statusid', 'statusid');
-    }
-
-    public function detailparameter()
-    {
-        return $this->hasMany(SystemDetailParameter::class, 'parameterid', 'parameterid');
     }
 }

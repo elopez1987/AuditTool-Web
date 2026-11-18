@@ -13,6 +13,7 @@
         "ext-zip": "*",
         "auth0/login": "^7.8",
         "barryvdh/laravel-dompdf": "^3.0",
+        "dedoc/scramble": "^0.13",
         "guzzlehttp/guzzle": "^7.8",
         "intervention/image": "^2.7",
         "kreait/laravel-firebase": "^7.2",
@@ -22,7 +23,6 @@
         "laravel/ui": "^4.4",
         "maatwebsite/excel": "^3.1",
         "milon/barcode": "^13.0",
-        "pion/laravel-chunk-upload": "^1.5",
         "rap2hpoutre/laravel-log-viewer": "^3.0",
         "spatie/laravel-activitylog": "^4.12",
         "spatie/laravel-permission": "^6.2.0",
@@ -30,6 +30,7 @@
         "yajra/laravel-datatables-oracle": "^13.0"
     },
     "require-dev": {
+        "larastan/larastan": "^3.14",
         "laravel/boost": "^2.0",
         "laravel/pint": "^1.25",
         "mockery/mockery": "^1.6",
@@ -37,41 +38,9 @@
         "nunomaduro/phpinsights": "^2.13",
         "pestphp/pest": "^4.1",
         "pestphp/pest-plugin-laravel": "^4.0",
-        "spatie/laravel-ignition": "^2.4"
+        "spatie/laravel-ignition": "^2.4",
+        "vimeo/psalm": "^6.20"
     },
-    "repositories": [
-        {
-            "type": "package",
-            "package": {
-                "name": "pion/laravel-chunk-upload",
-                "version": "1.5.6",
-                "source": {
-                    "type": "git",
-                    "url": "https://github.com/pionl/laravel-chunk-upload.git",
-                    "reference": "master"
-                },
-                "require": {
-                    "php": ">=7.1",
-                    "illuminate/http": "5.2 - 5.8 | ^6.0 | ^7.0 | ^8.0 | ^9.0 | ^10.0 | ^11.0 | ^12.0 | ^13.0",
-                    "illuminate/console": "5.2 - 5.8 | ^6.0 | ^7.0 | ^8.0 | ^9.0 | ^10.0 | ^11.0 | ^12.0 | ^13.0",
-                    "illuminate/support": "5.2 - 5.8 | ^6.0 | ^7.0 | ^8.0 | ^9.0 | ^10.0 | ^11.0 | ^12.0 | ^13.0",
-                    "illuminate/filesystem": "5.2 - 5.8 | ^6.0 | ^7.0 | ^8.0 | ^9.0 | ^10.0 | ^11.0 | ^12.0 | ^13.0"
-                },
-                "autoload": {
-                    "psr-4": {
-                        "Pion\\Laravel\\ChunkUpload\\": "src/"
-                    }
-                },
-                "extra": {
-                    "laravel": {
-                        "providers": [
-                            "Pion\\Laravel\\ChunkUpload\\Providers\\ChunkUploadServiceProvider"
-                        ]
-                    }
-                }
-            }
-        }
-    ],
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",

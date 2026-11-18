@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Web\Configuration\EdiToken;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 
 class CreateEdiTokenRequest extends FormRequest
 {
@@ -21,6 +22,6 @@ class CreateEdiTokenRequest extends FormRequest
 
     public function authorize(): bool
     {
-        return true;
+        return Gate::allows('editokens.create');
     }
 }

@@ -103,8 +103,5 @@ class StorageAreasController extends BaseController
         }
     }
 
-	public function show(string $storagearea)
-	{
-
-	}
+    public function show(string $storagearea) {}
 }

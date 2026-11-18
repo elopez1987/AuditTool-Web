@@ -14,7 +14,7 @@ use Spatie\Activitylog\Models\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
- * @method static whereStatusid(string $string)
+ * @method static \Illuminate\Database\Eloquent\Builder<static> whereStatusid(string $statusid)
  *
  * @property int $id
  * @property string $name

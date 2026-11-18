@@ -52,121 +52,39 @@
         <div class="card" style="border: 2px solid #a3b0c9;border-radius: 4px;">
             <div class="card-header">Datos del recibo</div>
             <div class="card-body">
-                <div class="row mt-3">
-                    <div class="col-lg-3 col-md-6 col-sm-12">
-                        <div class="form-group">
-                            <label for="razonstatusid">{{ ui_label('razonstatusid_receiptasn_create','Tipo de entrada') }}
-                                @error("razonstatusid")
-                                <span class="message-error">{{$message}}</span>
-                                @enderror
-                                <span style="color: red">*</span>
-                            </label>
-                            <select name="razonstatusid" required class="form-control select2">
-                                <option value="" selected>Seleccione una opción</option>
-                                @foreach($reasons as $model)
-                                    <option
-                                            value="{{$model->id}}" {{ old('razonstatusid') == $model->id ? 'selected' : '' }}> {{$model->name}} </option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-12">
-                        <div class="form-group">
-                            <label for="stockcategoryid">{{ ui_label('stockcategoryid_receiptasn_create','Origen de la descarga') }}
-                                @error("stockcategoryid")
-                                <span class="message-error">{{$message}}</span>
-                                @enderror
-                                <span style="color: red">*</span></label>
-                            <select name="stockcategoryid" required class="form-control select2">
-                                <option value="" selected>Seleccione una opción</option>
-                                @foreach($categorystocks as $model)
-                                    <option
-                                            value="{{$model->id}}" {{ old('stockcategoryid') == $model->id ? 'selected' : '' }}> {{$model->description}} </option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-12">
-                        <div class="form-group">
-                            <label for="providerid">{{ ui_label('providerid_receiptasn_create','Ruta') }}
-                                @error("providerid")
-                                <span class="message-error">{{$message}}</span>
-                                @enderror
-                                <span style="color: red">*</span>
-                            </label>
-                            <select name="providerid" id='providerid' required class="form-control select2">
-                                <option value="" selected>Seleccione una opción</option>
-                                @foreach($providers as $model)
-                                    <option
-                                            value="{{$model->id}}" {{ old('providerid') == $model->id ? 'selected' : '' }}> {{$model->name}} </option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                </div>
                 <div class="row">
-                    @if(ui_visible('shipmentid_receiptasn_create'))
-                    <div class="col-lg-3 col-md-6 col-sm-12">
-                        <div class="form-group">
-                            <label for="shipmentid">{{ ui_label('shipmentid_receiptasn_create','Número de recibo') }}
-                                @error("shipmentid")
-                                <span class="message-error">{{$message}}</span>
-                                @enderror
-                                </label>
-                            <input type="text" class="form-control @error('shipmentid') is-invalid @enderror" id="shipmentid" name="shipmentid"
-                                   aria-describedby="shipmentid" onKeyUp=this.value=this.value.toUpperCase();
-                                   value="{{old('shipmentid')}}"
-                            >
-                            @error('shipmentid')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-                    @endif
-                    <div class="col-lg-3 col-md-6 col-sm-12">
-                        <div class="form-group">
-                            <label for="billoflading">{{ ui_label('billoflading_receiptasn_create','Factura') }}</label>
-                            <input type="text" class="form-control @error('billoflading') is-invalid @enderror"
-                                   id="billoflading" name="billoflading"
-                                   aria-describedby="billoflading" onKeyUp=this.value=this.value.toUpperCase();
-                                   value="{{old('billoflading')}}"
-                            >
-                            @error('billoflading')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
+                    <x-text-input
+                            name="shipmentid"
+                            label="Número de vale de recepción"
+                            type="text"
+                            required
+                            placeholder="6374"
+                            colClass="col-lg-3 col-md-12"
+                    />
+                </div>
+                <div class="row mt-3">
+                    <x-select2
+                            name="providerid"
+                            label="Nombre de la ruta"
+                            :options="$providers"
+                            valueField="id"
+                            textField="name"
+                            :required="true"
+                            colClass="col-lg-3 col-md-12"
+                    />
+                    <x-select2
+                            name="operatorid"
+                            label="Nombre del operador"
+                            :options="$operators"
+                            valueField="id"
+                            textField="name"
+                            :required="true"
+                            colClass="col-lg-3 col-md-12"
+                    />
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="row">
-    <div class="col-lg-8">
-        <div class="card" style="border: 2px solid #a3b0c9;border-radius: 4px;">
-            <div class="card-header">Datos del transporte</div>
-            <div class="card-body">
-                <div class="row mt-3">
-                    @if(ui_visible('folionumber_receiptasn_create'))
-                        <div class="col-lg-3 col-md-6 col-sm-12">
-                            <div class="form-group">
-                                <label for="folionumber">{{ ui_label('folionumber_receiptasn_create','Folio de control de patios') }}
-                                    @error("folionumber")
-                                    <span class="message-error">{{$message}}</span>
-                                    @enderror
-                                </label>
-                                <input type="text" class="form-control @error('folionumber') is-invalid @enderror"
-                                       id="folionumber" name="folionumber"
-                                       aria-describedby="folionumber"
-                                       value="{{old('folionumber')}}"
-                                >
-                            </div>
-                        </div>
-                    @endif
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 

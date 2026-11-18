@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Configuration\TablesDataBase;
 
 use App\Http\Controllers\BaseController;
 use App\Models\Configuration\TablesDataBase\SystemTable;
-use DB;
 use Illuminate\Http\Request;
-use Redirect;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 
 class DataBaseController extends BaseController
 {
@@ -45,6 +45,6 @@ class DataBaseController extends BaseController
             return Redirect::back()->with(session()->flash('success', 'Movimiento ejecutado con exito!!'));
         }
 
-        return Redirect::back()->with(session()->flash('error', 'Movimiento no ejecutado:!!' . $error));
+        return Redirect::back()->with(session()->flash('error', 'Movimiento no ejecutado:!!'.$error));
     }
 }

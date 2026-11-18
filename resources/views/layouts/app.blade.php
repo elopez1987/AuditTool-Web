@@ -49,6 +49,14 @@
                                                         <span class="hide-menu"> Planeación </span></a>
                                                 </li>
                                             @endcan
+                                            @can('schedulereceipt')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('schedulereceipt.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-layers"></i>
+                                                        <span class="hide-menu"> Horario </span></a>
+                                                </li>
+                                            @endcan
                                         </ul>
                                     </li>
                                 @endcan
@@ -81,23 +89,6 @@
                                                     class="hide-menu">Catalogos</span>
                                         </a>
                                         <ul aria-expanded="false" class="collapse second-level">
-
-{{--                                            @can('ordercustomers.index')--}}
-{{--                                                <li class="sidebar-item"><a--}}
-{{--                                                            href="{{route('ordercustomers.index')}}"--}}
-{{--                                                            class="sidebar-link">--}}
-{{--                                                        <i class="lni lni-customer"></i>--}}
-{{--                                                        <span class="hide-menu"> Clientes</span></a>--}}
-{{--                                                </li>--}}
-{{--                                            @endcan--}}
-{{--                                            @can('storageareas.index')--}}
-{{--                                                <li class="sidebar-item"><a--}}
-{{--                                                            href="{{route('storageareas.index')}}"--}}
-{{--                                                            class="sidebar-link">--}}
-{{--                                                        <i class="lni lni-text-align-left"></i>--}}
-{{--                                                        <span class="hide-menu"> Areas</span></a>--}}
-{{--                                                </li>--}}
-{{--                                            @endcan--}}
                                             @can('storageoperators.index')
                                                 <li class="sidebar-item"><a
                                                             href="{{route('storageoperators.index')}}"
@@ -146,6 +137,14 @@
                                                             class="sidebar-link">
                                                         <i class="lni lni-list"></i>
                                                         <span class="hide-menu"> Check List</span></a>
+                                                </li>
+                                            @endcan
+                                            @can('categories-incidents.index')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('categories-incidents.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-list"></i>
+                                                        <span class="hide-menu"> Categorias de daños</span></a>
                                                 </li>
                                             @endcan
                                         </ul>
@@ -484,13 +483,13 @@
                                                             class="hide-menu"> Configuración de interfaces</span></a>
                                             </li>
                                         @endcan
-{{--                                        @can('edishipments.index')--}}
-{{--                                            <li class="sidebar-item"><a href="{{route('edishipments.index')}}"--}}
-{{--                                                                        class="sidebar-link"><i--}}
-{{--                                                            class="mdi mdi-file-document-box"></i><span--}}
-{{--                                                            class="hide-menu"> Monitor de interfaces</span></a>--}}
-{{--                                            </li>--}}
-{{--                                        @endcan--}}
+                                        @can('edishipments.index')
+                                            <li class="sidebar-item"><a href="{{route('edishipments.index')}}"
+                                                                        class="sidebar-link"><i
+                                                            class="mdi mdi-file-document-box"></i><span
+                                                            class="hide-menu"> Monitor de interfaces</span></a>
+                                            </li>
+                                        @endcan
                                         @can('webservicelog')
                                             <li class="sidebar-item"><a href="{{route('webservicelog.index')}}"
                                                                         class="sidebar-link"><i
@@ -580,17 +579,15 @@
             <div class="row d-flex justify-content-center">
                 <div class="col-lg-3">
                     @auth
-                        @php
-                            $centerId = Auth::user()->access?->center?->centerid;
-                            $logo = config("center_logos.$centerId");
-                        @endphp
-                        @if($logo)
-                            <img
-                                    src="{{ asset('img/' . $logo['image']) }}"
-                                    alt="Logo"
-                                    style="width: {{ $logo['width'] }}; height: {{ $logo['height'] }}"
-                            >
-                        @endif
+                        @production
+                            @php
+                                $centerId = Auth::user()->access?->center?->centerid;
+                                $logo = config("center_logos.$centerId");
+                            @endphp
+                            @if($logo)
+                                <img src="{{ asset('img/' . $logo['image']) }}" alt="Logo" style="width: {{ $logo['width'] }}; height: {{ $logo['height'] }}">
+                            @endif
+                        @endproduction
                     @endauth
                 </div>
             </div>

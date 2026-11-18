@@ -24,7 +24,7 @@ class CreateParameterRequest extends FormRequest
             'auxiliary06' => ['nullable', 'string'],
             'auxiliary07' => ['nullable', 'string'],
             'auxiliary08' => ['nullable', 'string'],
-            'auxiliary00' => ['nullable', 'string'],
+            'auxiliary09' => ['nullable', 'string'],
             'auxiliary10' => ['nullable', 'string'],
         ];
     }

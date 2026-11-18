@@ -6,6 +6,7 @@ use App\Exports\Inventory\PartNumbers\ExportPartNumbersTemplate;
 use App\Http\Controllers\BaseController;
 use App\Imports\Inventario\PartNumbers\ImportPartNumbers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
@@ -21,7 +22,7 @@ class ImportPartNumbersController extends BaseController
 
     public function importPartNumber(Request $request)
     {
-        $validator = \Validator::make($request->all(), [
+        $validator = Validator::make($request->all(), [
             'file' => 'required|mimes:excel,xlsx',
         ]);
         if ($validator->fails()) {

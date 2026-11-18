@@ -4,22 +4,31 @@ namespace App\Models\Receipt;
 
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Configuration\Schemas\SystemStatus;
-use App\Models\Configuration\Warehouses\SystemWarehouse;
 use App\Models\Security\Users\SecurityAccessWarehouse;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Auth;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class StorageCategoryIncidence extends Model
 {
+    use LogsActivity;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
+
     public $timestamps = false;
 
     protected $table = 'storagecategoryincidences';
 
-    protected $primaryKey = 'categoryincid';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
         'centerid',
-        'warehouseid',
         'description',
         'auxiliary01',
         'auxiliary02',
@@ -34,34 +43,26 @@ class StorageCategoryIncidence extends Model
         'statusid' => 'E',
     ];
 
-    public static function controlAccessUser()
+    public static function controlAccessUser(): Builder
     {
-        $centers = SecurityAccessWarehouse::Centers();
-        $warehouses = SecurityAccessWarehouse::Warehouses();
+        $username = Auth::user()->username;
 
-        return StorageCategoryIncidence::whereIn('storagecategoryincidences.centerid', $centers)
-            ->whereIn('storagecategoryincidences.warehouseid', $warehouses);
+        return StorageCategoryIncidence::query()
+            ->whereIn(
+                'storagecategoryincidences.centerid',
+                SecurityAccessWarehouse::query()
+                    ->where('username', $username)
+                    ->select('centerid'),
+            );
     }
 
     public function center(): BelongsTo
-	{
+    {
         return $this->belongsTo(SystemCenterDistribution::class, 'centerid');
     }
 
-    public function warehouse(): BelongsTo
-    {
-        return $this->belongsTo(SystemWarehouse::class, 'warehouseid', 'warehouseid');
-    }
-
     public function status(): BelongsTo
-	{
-        return $this->belongsTo(SystemStatus::class, 'statusid');
-    }
-
-    public function scopeForDescription($query, $description)
     {
-        if (trim($description) != '') {
-            $query->where('storagecategoryincidences.description', 'like', "%{$description}%");
-        }
+        return $this->belongsTo(SystemStatus::class, 'statusid');
     }
 }

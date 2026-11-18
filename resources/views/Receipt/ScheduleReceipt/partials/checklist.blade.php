@@ -17,7 +17,7 @@
                                 <a href="">
                                     @include('buttons.save')
                                 </a>
-                                <a href="{{ url()->previous() }}">
+                                <a href="{{route('receiptasn.index')}}">
                                 @include('buttons.back')
                                 </a>
                             </div>
@@ -30,21 +30,6 @@
                                     <input type="text" class="form-control" readonly  id="checklistname" name="checklistname"
                                            value="{{$checklist->name}}"
                                     >
-                                </div>
-                            </div>
-                            <div class="col-lg-2 col-md-6 col-sm-12">
-                                <div class="form-group">
-                                    <label for="categoryid">Categoria</label>
-                                    <select name="categoryid" id='categoryid' required class="form-control select2">
-                                        @foreach($categories as $model)
-                                            <option value="{{$model->statusid}}"
-                                                    @if($model->statusid == $receipt->auxiliary03)
-                                                        selected="selected"
-                                                @endif>
-                                                {{$model->name}}
-                                            </option>
-                                        @endforeach
-                                    </select>
                                 </div>
                             </div>
                         </div>

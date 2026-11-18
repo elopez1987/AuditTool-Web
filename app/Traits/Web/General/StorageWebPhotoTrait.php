@@ -6,11 +6,12 @@ use App\Models\General\EvidencePhoto;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
 trait StorageWebPhotoTrait
 {
+    use ValidatesImageUploads;
+
     //    Esta funcion guarda la imagen y devuelve el path para guardarlo en una columna de la tabla
     //    $file = El archivo a guardar (Imagen)
     //    $centerid = Representa el centro de distribucion para guardar la imagen
@@ -20,12 +21,13 @@ trait StorageWebPhotoTrait
 
     public function saveFileToModel($file, $centerid, $module, $submodule, $folder)
     {
-        $imageName = Str::random(10) . $file->getClientOriginalName();
+        $this->validateImagePathSegments([$centerid, $module, $submodule, $folder]);
+        $imageName = $this->validatedImageName($file);
         $directory = $this->createDirectoryPath($centerid, $module, $submodule, $folder);
-        $basePath = public_path('storage/' . $directory . $imageName);
+        $basePath = public_path('storage/'.$directory.$imageName);
         $this->resizeImage($file, $basePath);
 
-        return $directory . $imageName;
+        return $directory.$imageName;
     }
 
     public function resizeImage($file, $basePath)
@@ -33,7 +35,7 @@ trait StorageWebPhotoTrait
         Image::make($file)
             ->resize(1200, 1200, function ($constraint) {
                 $constraint->aspectRatio();
-            })->save($basePath);
+            })->encode('png')->save($basePath);
     }
 
     //    $modeltype = Representa el tipo de modelo
@@ -58,9 +60,9 @@ trait StorageWebPhotoTrait
     private function createDirectoryPath($centerId, $module, $submodule, $folder)
     {
         $year = Carbon::now()->year;
-        $directory = 'public/' . $centerId . '/' . $year . '/' . $module . '/' . $submodule . '/' . $folder . '/';
+        $directory = 'public/'.$centerId.'/'.$year.'/'.$module.'/'.$submodule.'/'.$folder.'/';
         if (! Storage::exists($directory)) {
-            \Storage::makeDirectory($directory);
+            Storage::makeDirectory($directory);
         }
 
         return $directory;

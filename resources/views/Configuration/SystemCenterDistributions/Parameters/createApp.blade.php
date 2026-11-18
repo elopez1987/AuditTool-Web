@@ -65,8 +65,8 @@
                                                 <input
                                                     type="checkbox"
                                                     value="{{$parameter->statusid}}"
-                                                    @if(!empty($center->auxiliary05))
-                                                        @foreach ($center->auxiliary05 as $check)
+                                                    @if(!empty($center->mobileflags))
+                                                        @foreach ($center->mobileflags as $check)
                                                             @if ($check == $parameter->statusid)
                                                                 checked
                                                              @endif

@@ -4,7 +4,7 @@ namespace App\Console\Commands\General;
 
 use App\User;
 use Illuminate\Console\Command;
-use Str;
+use Illuminate\Support\Str;
 
 class CreateUuidToUserCommand extends Command
 {

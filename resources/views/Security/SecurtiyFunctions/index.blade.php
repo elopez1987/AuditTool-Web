@@ -23,7 +23,7 @@
                                         <span class="text-button"> <i class="fa fa-trash mr-2"></i>Limpiar</span>
                                     </button>
                                 </a>
-                                <a href="{{route('menusecurity')}}">
+                                <a href="{{route('home')}}">
                                     @include('buttons.cancel')
                                 </a>
                             </div>

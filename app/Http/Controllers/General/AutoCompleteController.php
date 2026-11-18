@@ -26,8 +26,6 @@ class AutoCompleteController extends Controller
         return response()->json($tables);
     }
 
-
-
     public function autocompletesku(Request $request)
     {
         $query = $request->get('query');

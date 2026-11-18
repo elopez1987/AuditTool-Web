@@ -22,9 +22,9 @@ readonly class SystemParameterService
         return $this->parameterRepository->store($data);
     }
 
-    public function update(array $data): SystemParameter
+    public function update(SystemParameter $systemParameter, array $data): SystemParameter
     {
-        return $this->parameterRepository->update($data);
+        return $this->parameterRepository->update($systemParameter, $data);
     }
 
     public function destroy(SystemParameter $systemParameter)

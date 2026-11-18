@@ -8,7 +8,7 @@
                     Agregar detalle del parametro
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{{url('savedetailparameter/' . $systemparameter->parameterid)}}">
+                    <form method="POST" action="{{url('savedetailparameter/' . $systemparameter->id)}}">
                         {{ method_field('PUT') }}
                         @csrf
                         <div class="row">

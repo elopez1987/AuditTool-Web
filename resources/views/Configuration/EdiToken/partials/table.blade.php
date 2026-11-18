@@ -19,7 +19,7 @@
         "columns": [
             {data: 'baseuri'},
             {data: 'client_id'},
-            {data: 'client_secret'},
+            {data: null, defaultContent: 'Protegido', orderable: false, searchable: false},
             {data: 'timeout'},
             {data: 'tokentype'},
             {data: 'servicetype'},

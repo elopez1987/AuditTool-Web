@@ -22,8 +22,8 @@ class WebServiceLogController extends BaseController
     {
         $data = SystemEventWebService::controlAccessUser()
             ->with(['center:centerid,name,description', 'warehouse:warehouseid,name'])
-            ->when($request->filled('folionumber'), function ($query) use ($request) {
-                $query->where('systemeventwebserviceizel.folionumber', $request->folionumber);
+            ->when($request->filled('reference'), function ($query) use ($request) {
+                $query->where('systemeventwebservice.reference', $request->reference);
             });
 
         return DataTables::of($data)

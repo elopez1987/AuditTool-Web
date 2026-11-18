@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
 /**
- * @method static get()
+ * @method static \Illuminate\Database\Eloquent\Collection<int, static> get(array|string $columns = ['*'])
  *
  * @property int $id
  * @property string $name

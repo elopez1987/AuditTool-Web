@@ -6,10 +6,10 @@ use App\Http\Controllers\BaseController;
 use App\Models\Security\Fuctions\SecurityFunctionsMenuStructure;
 use App\Models\Security\MenuStructure\SecurityDetailsMenuStructure;
 use App\Models\Security\MenuStructure\SecurityMenu;
-use DB;
 use Exception;
 use Illuminate\Http\Request;
-use Log;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class SecurityDetailMenuController extends BaseController
 {

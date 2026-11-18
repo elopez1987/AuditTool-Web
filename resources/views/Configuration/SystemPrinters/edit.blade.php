@@ -8,7 +8,7 @@
                     Catalogo de impresoras - Modificar
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{{url('systemprinters/' . $systemprinter->printerid)}}">
+                    <form method="POST" action="{{url('systemprinters/' . $systemprinter->id)}}">
                         {{ method_field('PUT') }}
                         @csrf
                         <div class="row">
@@ -28,6 +28,7 @@
             </div>
         </div>
     </div>
+    @include('layouts.Partials.Errors')
 @endsection
 
 @section('script')
