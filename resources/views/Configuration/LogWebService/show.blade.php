@@ -38,7 +38,7 @@
                                         <div class="col-lg-4 col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label for="auxiliary01">Referencia </label>
-                                                <input type="text" class="form-control"  value="{{$log->folionumber}}" disabled>
+                                                <input type="text" class="form-control"  value="{{$log->reference}}" disabled>
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6 col-sm-12">

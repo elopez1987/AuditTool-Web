@@ -226,8 +226,14 @@
                                                         <tr>
                                                             <th>Material</th>
                                                             <th>Description</th>
-                                                            <th>Cantidad esperada</th>
-                                                            <th>Cantidad escaneada</th>
+{{--                                                            <th>Cantidad esperada</th>--}}
+                                                            <th>Rotativa</th>
+                                                            <th>Definitiva</th>
+                                                            <th>Facturas</th>
+                                                            <th>Venta</th>
+                                                            <th>Nota de cargo</th>
+                                                            <th>Cortesias</th>
+                                                            <th>Cantidad surtida</th>
                                                             <th>Unidad de medida</th>
                                                             <th>Opciones</th>
                                                         </tr>
@@ -237,22 +243,14 @@
                                                             <tr>
                                                                 <td>{{$stock->prtnum}}</td>
                                                                 <td>{{$stock->lngdsc}}</td>
-                                                                <td>{{$stock->quantity}}</td>
-                                                                <td>
-                                                                    @if(!empty($stock->totalescaneado))
-                                                                        @if($stock->quantity != $stock->totalescaneado)
-                                                                            <span class="badge badge-danger"
-                                                                                  style="padding: 5px 10px">
-                                                                                {{$stock->totalescaneado}}
-                                                                            </span>
-                                                                        @else
-                                                                            <span class="badge badge-success"
-                                                                                  style="padding: 5px 10px">
-                                                                                {{$stock->totalescaneado}}
-                                                                            </span>
-                                                                        @endif
-                                                                    @endif
-                                                                </td>
+{{--                                                                <td>{{$stock->quantity}}</td>--}}
+                                                                <td>{{$stock->rotary}}</td>
+                                                                <td>{{$stock->definitive}}</td>
+                                                                <td>{{$stock->invoice}}</td>
+                                                                <td>{{$stock->selled}}</td>
+                                                                <td>{{$stock->creditnote}}</td>
+                                                                <td>{{$stock->gifts}}</td>
+                                                                <td>{{$stock->loaded}}</td>
                                                                 <td>{{$stock->unidadmedida}}</td>
                                                                 <td>
                                                                     @if($receiptasn->statusid != 'IG' && $receiptasn->statusid != 'CE')

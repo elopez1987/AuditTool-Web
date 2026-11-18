@@ -26,11 +26,11 @@ class SystemEventWebService extends Model
     protected $fillable = [
         'centerid',
         'warehouseid',
-        'folionumber',
-        'boxnumber',
+        'reference',
         'servicename',
         'processdate',
         'code',
+        'type',
         'message',
         'messagejson',
         'messagejsonresponse',
@@ -39,7 +39,6 @@ class SystemEventWebService extends Model
         'value03',
         'value04',
         'value05',
-        'type',
     ];
 
     protected $casts = [
@@ -63,13 +62,13 @@ class SystemEventWebService extends Model
 
         return SystemEventWebService::query()
             ->whereIn(
-                'systemeventwebserviceizel.centerid',
+                'systemeventwebservice.centerid',
                 SecurityAccessWarehouse::query()
                     ->where('username', $username)
                     ->select('centerid'),
             )
             ->whereIn(
-                'systemeventwebserviceizel.warehouseid',
+                'systemeventwebservice.warehouseid',
                 SecurityAccessWarehouse::query()
                     ->where('username', $username)
                     ->select('warehouseid'),

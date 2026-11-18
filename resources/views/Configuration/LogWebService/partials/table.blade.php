@@ -17,7 +17,7 @@
         "columns": [
             {data: 'center.description',name:'center.description'},
             {data: 'warehouse.name',name:'warehouse.name'},
-            {data: 'folionumber'},
+            {data: 'reference'},
             {data: 'servicename'},
             {data: 'code'},
             {data: 'message'},

@@ -7,12 +7,10 @@ namespace App\Repositories\Receipt;
 use App\Models\General\EvidencePhoto;
 use App\Models\General\StorageComment;
 use App\Models\Receipt\ReceiptAsn;
-use App\Models\Receipt\ReceiptContainer;
 use App\Models\Receipt\ReceiptIncidenceStock;
 use App\Models\Receipt\ReceiptStock;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Query\JoinClause;
 
 final class ReceiptAsnShowRepository
 {
@@ -32,28 +30,25 @@ final class ReceiptAsnShowRepository
     /** @return Builder<ReceiptStock> */
     public function stockQuery(int $receiptId): Builder
     {
-        $scanned = ReceiptContainer::query()
-            ->select('receiptid', 'partnumberid')
-            ->selectRaw('SUM(quantity) AS scanned_quantity')
-            ->where('receiptid', $receiptId)
-            ->groupBy('receiptid', 'partnumberid');
 
         return ReceiptStock::query()
             ->select([
                 'receiptstock.id',
                 'receiptstock.expirecode',
                 'receiptstock.quantity',
+                'receiptstock.rotary',
+                'receiptstock.definitive',
+                'receiptstock.invoice',
+                'receiptstock.selled',
+                'receiptstock.creditnote',
+                'receiptstock.gifts',
+                'receiptstock.loaded',
                 'inventorypartnumbers.prtnum',
                 'inventorypartnumbers.lngdsc',
                 'inventoryunitsmeasure.description as unidadmedida',
             ])
-            ->selectRaw('COALESCE(scanned.scanned_quantity, 0) AS totalescaneado')
             ->leftJoin('inventorypartnumbers', 'receiptstock.partnumberid', '=', 'inventorypartnumbers.id')
             ->leftJoin('inventoryunitsmeasure', 'receiptstock.unitmeasureid', '=', 'inventoryunitsmeasure.id')
-            ->leftJoinSub($scanned, 'scanned', function (JoinClause $join): void {
-                $join->on('receiptstock.receiptid', '=', 'scanned.receiptid')
-                    ->on('receiptstock.partnumberid', '=', 'scanned.partnumberid');
-            })
             ->where('receiptstock.receiptid', $receiptId)
             ->orderBy('receiptstock.id');
     }

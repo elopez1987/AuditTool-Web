@@ -8,7 +8,6 @@ use App\Models\General\EvidencePhoto;
 use App\Models\General\StorageComment;
 use App\Models\Receipt\ReceiptAsn;
 use App\Models\Receipt\ReceiptAsnCheckList;
-use App\Models\Receipt\ReceiptContainer;
 use App\Models\Receipt\ReceiptIncidenceStock;
 use App\Models\Receipt\ReceiptStock;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
@@ -74,7 +73,6 @@ class EventReceiptController extends BaseController
                 ->where('receiptid', $id)
                 ->get(),
 
-            ReceiptContainer::getContainersForReceipt($id),
         ];
 
         $stocks = $this->getTotalsReceipt($id);
