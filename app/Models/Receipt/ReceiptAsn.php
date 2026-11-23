@@ -98,6 +98,11 @@ class ReceiptAsn extends Model
         return $this->belongsTo(ReceiptAsnTime::class, 'id', 'receiptid');
     }
 
+    public function receiptdata(): BelongsTo
+    {
+        return $this->belongsTo(ReceiptAsnData::class, 'receiptid', 'id');
+    }
+
     //  -----------------------------------------  Funciones auxiliares -------------------------------------------------
 
     protected static function boot(): void
