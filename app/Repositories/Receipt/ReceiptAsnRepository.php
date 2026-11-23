@@ -19,6 +19,7 @@ class ReceiptAsnRepository
     public function findByShipmentid(string $VoucherId): ?ReceiptAsn
     {
         return ReceiptAsn::controlAccessUser()
+            ->with('receiptdata.location')
             ->where('shipmentid', $VoucherId)
             ->whereIn('statusid', [self::STATUS_PROGRAMADO, self::STATUS_IN_PROCESS, self::STATUS_PREDESCARGA])
             ->first();

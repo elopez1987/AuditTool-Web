@@ -26,10 +26,13 @@ class ReeceiptAsnResource extends JsonResource
             'StatusName' => $this->status->name ?? '',
 
             'Products' => ReceiptStockResource::collection($this->stockplan),
+
             'AsnData' => [
-                'Temperature' => $this->receiptdata->temperature ?? '',
-                'Door' => $this->receiptdata->location->name ?? '',
+                'Temperature' => $this->receiptdata?->temperature ?? '',
+                'Door' => $this->receiptdata?->location?->name ?? '',
+                'StartTime' => $this->timereceipt->unloadstartdate ?? '',
             ],
+
         ];
     }
 }
