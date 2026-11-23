@@ -24,8 +24,8 @@ class SystemWarehouse extends Model
         'centerid',
         'warehouseid',
         'name',
-		'center',
-		'warehouse',
+        'center',
+        'warehouse',
         'auxiliary01',
         'auxiliary02',
         'auxiliary03',
@@ -57,7 +57,7 @@ class SystemWarehouse extends Model
     ];
 
     public static function controlAccessUser(): SystemWarehouse
-	{
+    {
         $warehouses = app(SystemWarehouseRepositoryInterface::class)->getAccessibleWarehouseIds();
 
         return static::whereIn('systemwarehouses.warehouseid', $warehouses);
