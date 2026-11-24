@@ -10,31 +10,31 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class ReceiptAsnData extends Model
 {
-	use LogsActivity;
+    use LogsActivity;
 
-	public function getActivitylogOptions(): LogOptions
-	{
-		return LogOptions::defaults()->logFillable();
-	}
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 
-	protected $table = 'receiptasndata';
+    protected $table = 'receiptasndata';
 
-	public $timestamps = false;
+    public $timestamps = false;
 
-	protected $fillable = [
-		'receiptid', 'temperature', 'temperatureprod',
-		'locationid',
-		'user_verification',
-		'user_receiver',
-	];
+    protected $fillable = [
+        'receiptid', 'temperature', 'temperatureprod',
+        'locationid',
+        'user_verification',
+        'user_receiver',
+    ];
 
-	public function receipt(): BelongsTo
-	{
-		return $this->belongsTo(ReceiptAsn::class, 'receiptid');
-	}
+    public function receipt(): BelongsTo
+    {
+        return $this->belongsTo(ReceiptAsn::class, 'receiptid');
+    }
 
-	public function location(): BelongsTo
-	{
-		return $this->belongsTo(StorageLocation::class, 'locationid', 'id');
-	}
+    public function location(): BelongsTo
+    {
+        return $this->belongsTo(StorageLocation::class, 'locationid', 'id');
+    }
 }
