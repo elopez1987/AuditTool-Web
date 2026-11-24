@@ -45,6 +45,7 @@ class ReceiptAsnRepository
             'receiptid' => $receiptAsn->id,
         ], [
             'temperature' => $data['Temperature'],
+            'temperatureprod' => $data['TemperatureProd'],
             'locationid' => $data['LocationId'],
             'user_verification' => Auth::id(),
         ]);

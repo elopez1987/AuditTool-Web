@@ -17,6 +17,12 @@ class SaveStartProcessRequest extends FormRequest
                 'between:-40,100',
                 'decimal:0,2',
             ],
+            'TemperatureProd' => [
+                'required',
+                'numeric',
+                'between:-40,100',
+                'decimal:0,2',
+            ],
         ];
     }
 

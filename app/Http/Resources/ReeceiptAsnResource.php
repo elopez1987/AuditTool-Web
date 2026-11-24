@@ -29,6 +29,7 @@ class ReeceiptAsnResource extends JsonResource
 
             'AsnData' => [
                 'Temperature' => $this->receiptdata?->temperature ?? '',
+                'TemperatureProd' => $this->receiptdata?->temperatureprod ?? '',
                 'Door' => $this->receiptdata?->location?->name ?? '',
                 'StartTime' => $this->timereceipt->unloadstartdate ?? '',
             ],
