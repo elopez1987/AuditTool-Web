@@ -57,24 +57,12 @@ class VerificationController extends Controller
         }
 
         if ($request->validated('TypeId') === 'TRP-01') {
-
             ReceiptVerification::create([
                 'receiptasn_id' => $receiptAsn->id,
                 'inventorypartnumber_id' => $partNumber->id,
                 'quantity' => $request->validated('Quantity'),
                 'type_id' => $request->validated('TypeId'),
             ]);
-
-            //            $totalVerified = ReceiptVerification::where('receiptasn_id', $receiptAsn->id)
-            //                ->where('inventorypartnumber_id', $partNumber->id)
-            //                ->where('type_id', 'TRP-01')
-            //                ->sum('quantity');
-            //
-            //            $totalProcessed = $totalVerified + $request->validated('Quantity');
-            //
-            //            if ($totalProcessed > $totalRequest) {
-            //                return $this->modernValidationErrorResponse('La cantidad a verificar no puede ser mayor a la solicidata.', 'Verification process');
-            //            }
         }
 
         return $this->modernSuccessResponse(
