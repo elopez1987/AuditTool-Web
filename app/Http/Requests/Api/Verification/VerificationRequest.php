@@ -13,7 +13,7 @@ class VerificationRequest extends FormRequest
     {
         return [
             'AsnId' => ['required', 'string', 'exists:receiptasn,uuid_asn'],
-            'PartNumberCode' => ['required', 'integer', 'exists:inventorypartnumbers,prtnum'],
+            'PartNumberCode' => ['required', 'string', 'exists:inventorypartnumbers,prtnum'],
             'Quantity' => ['required', 'integer', 'min:1'],
             'TypeId' => ['required', 'string', 'exists:systemstatus,statusid'],
             'UnitsMeasureId' => ['required', 'integer', 'exists:inventoryunitsmeasure,id'],
