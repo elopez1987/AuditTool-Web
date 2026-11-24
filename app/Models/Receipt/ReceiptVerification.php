@@ -66,7 +66,7 @@ class ReceiptVerification extends Model
     {
         parent::boot();
         if (! app()->runningInConsole()) {
-            self::creating(function (ReceiptAsn $model) {
+            self::creating(function (ReceiptVerification $model): void {
                 $model->created_by = Auth::id();
             });
         }
