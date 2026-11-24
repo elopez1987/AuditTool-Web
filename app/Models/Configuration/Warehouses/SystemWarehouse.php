@@ -56,7 +56,7 @@ class SystemWarehouse extends Model
         'notificationsflags' => 'array',
     ];
 
-    public static function controlAccessUser(): SystemWarehouse
+    public static function controlAccessUser()
     {
         $warehouses = app(SystemWarehouseRepositoryInterface::class)->getAccessibleWarehouseIds();
 
