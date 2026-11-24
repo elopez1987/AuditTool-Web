@@ -16,7 +16,6 @@ class VerificationRequest extends FormRequest
             'PartNumberCode' => ['required', 'string', 'exists:inventorypartnumbers,prtnum'],
             'Quantity' => ['required', 'integer', 'min:1'],
             'TypeId' => ['required', 'string', 'exists:systemstatus,statusid'],
-            'UnitsMeasureId' => ['required', 'integer', 'exists:inventoryunitsmeasure,id'],
             'ProductionDate' => ['nullable', 'date', 'date_format:Y-m-d'],
             'ExpireDate' => ['nullable', 'date', 'date_format:Y-m-d'],
             'ExpireCode' => ['nullable', 'string', 'max:20'],

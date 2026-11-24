@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Verification\VerificationRequest;
 use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Inventory\PartNumber\InventoryPartnumber;
-use App\Models\Inventory\UnitMeasure\InventoryUnitMeasure;
 use App\Models\Receipt\ReceiptAsn;
 use App\Models\Receipt\ReceiptStock;
 use App\Models\Receipt\ReceiptVerification;
@@ -42,13 +41,6 @@ class VerificationController extends Controller
             return $this->modernNotFoundResponse('Tipo de ingreso no valido.', 'Verification process');
         }
 
-        $unitMeasure = InventoryUnitMeasure::where('id', $request->validated('UnitMeasureId'))
-            ->select('id')->first();
-
-        if (is_null($unitMeasure)) {
-            return $this->modernNotFoundResponse('Unidad de medida no valida.', 'Verification process');
-        }
-
         if ($request->validated('ProductionDate') > Carbon::now()->format('Y-m-d')) {
             return $this->modernValidationErrorResponse('La fecha de produccion no puede ser mayor a la fecha actual', 'Verification process');
         }
@@ -64,21 +56,25 @@ class VerificationController extends Controller
             return $this->modernNotFoundResponse('Producto no solicitado en el vale.', 'Verification process');
         }
 
-        $totalRequest = ReceiptStock::where('receiptid', $receiptAsn->id)
-            ->where('partnumberid', $partNumber->id)->select('quantity');
-
         if ($request->validated('TypeId') === 'TRP-01') {
 
-            $totalVerified = ReceiptVerification::where('receiptasn_id', $receiptAsn->id)
-                ->where('inventorypartnumber_id', $partNumber->id)
-                ->where('type_id', 'TRP-01')
-                ->sum('quantity');
+            ReceiptVerification::create([
+                'receiptasn_id' => $receiptAsn->id,
+                'inventorypartnumber_id' => $partNumber->id,
+                'quantity' => $request->validated('Quantity'),
+                'type_id' => $request->validated('TypeId'),
+            ]);
 
-            $totalProcessed = $totalVerified + $request->validated('Quantity');
-
-            if ($totalProcessed > $totalRequest) {
-                return $this->modernValidationErrorResponse('La cantidad a verificar no puede ser mayor a la solicidata.', 'Verification process');
-            }
+            //            $totalVerified = ReceiptVerification::where('receiptasn_id', $receiptAsn->id)
+            //                ->where('inventorypartnumber_id', $partNumber->id)
+            //                ->where('type_id', 'TRP-01')
+            //                ->sum('quantity');
+            //
+            //            $totalProcessed = $totalVerified + $request->validated('Quantity');
+            //
+            //            if ($totalProcessed > $totalRequest) {
+            //                return $this->modernValidationErrorResponse('La cantidad a verificar no puede ser mayor a la solicidata.', 'Verification process');
+            //            }
         }
 
         return $this->modernSuccessResponse(
