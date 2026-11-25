@@ -1,22 +1,21 @@
-// Fonts
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&display=swap');
-
-// Logo palette and Bootstrap theme.
-$brand-blue: #23479f;
-$brand-blue-dark: #193578;
+// Shared design tokens and Bootstrap theme.
+$brand-blue: #0085a3;
+$brand-blue-dark: #00657d;
 $brand-red: #f11723;
 $brand-red-dark: #c4111c;
 $brand-white: #fff;
-$brand-ink: #1d2d50;
-$brand-muted: #5c6b85;
-$brand-border: #cad5ed;
-$brand-light: #edf2fc;
-$brand-background: #f5f7fc;
+$brand-ink: #263244;
+$brand-muted: #697586;
+$brand-border: #e4e7ec;
+$brand-light: #f3f6f9;
+$brand-background: #f7f8fa;
+$surface-radius: .875rem;
+$control-radius: .5rem;
+$surface-shadow: 0 1px 2px rgba(16, 24, 40, .04);
 
 $primary: $brand-blue;
-$secondary: #52617e;
-$info: #006bb6;
+$secondary: #667085;
+$info: $brand-blue;
 $danger: $brand-red-dark;
 $light: $brand-light;
 $dark: $brand-ink;
@@ -28,11 +27,27 @@ $border-color: $brand-border;
 $component-active-bg: $brand-blue;
 $input-border-color: $brand-border;
 $input-focus-border-color: $brand-blue;
-$input-focus-box-shadow: 0 0 0 .2rem rgba($brand-blue, .2);
-$card-cap-bg: $brand-blue;
-$card-cap-color: $brand-white;
-$table-striped-bg: rgba($brand-blue, .035);
-$table-hover-bg: rgba($brand-blue, .08);
+$input-focus-box-shadow: 0 0 0 .2rem rgba($brand-blue, .12);
+$font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+$font-size-base: .875rem;
+$border-radius: $control-radius;
+$border-radius-sm: .375rem;
+$border-radius-lg: $surface-radius;
+$card-border-radius: $surface-radius;
+$card-cap-bg: $brand-white;
+$card-cap-color: $brand-ink;
+$card-spacer-x: 1.25rem;
+$card-spacer-y: 1.25rem;
+$input-bg: $brand-white;
+$input-padding-y: .5rem;
+$input-padding-x: .75rem;
+$input-placeholder-color: #8b95a5;
+$table-cell-padding-y: .65rem;
+$table-cell-padding-x: .75rem;
+$table-bg: $brand-white;
+$table-striped-bg: #fafbfc;
+$table-hover-bg: #f1f7f9;
+$headings-font-weight: 600;
 $min-contrast-ratio: 4.5;
 
 @import '~bootstrap/scss/bootstrap';
@@ -46,25 +61,14 @@ $min-contrast-ratio: 4.5;
 }
 
 body {
-  font-family: Sans-Serif !important;
-  //font-size: 0.925rem !important;
+  font-family: $font-family-sans-serif !important;
+  font-size: $font-size-base;
   line-height: 1.5;
   color: $brand-ink !important;
   margin: 0;
   padding: 0;
   background: $brand-background;
-  background-image: radial-gradient(circle at top right,
-          rgba($brand-blue, .08) 0px,
-          transparent 400px),
-  radial-gradient(circle at bottom left,
-                  rgba($brand-red, .04) 0px,
-                  transparent 350px);
-
-  background-repeat: no-repeat;
-  background-size: 600px 600px, 500px 500px;
-
-  background-position: top right, bottom left;
-
+  -webkit-font-smoothing: antialiased;
 }
 
 a {
@@ -73,18 +77,18 @@ a {
 }
 
 .nav-link {
-  color: $brand-blue !important;
+  color: $brand-muted;
 }
 
 //Colores principales
 #main-wrapper[data-layout="horizontal"] .topbar .navbar-collapse[data-navbarbg="skin1"],
 #main-wrapper[data-layout="horizontal"] .topbar[data-navbarbg="skin1"] {
-  background: $brand-blue !important;
+  background: #90a4ae !important;
   text-decoration: none;
 }
 
 #main-wrapper[data-layout="horizontal"] .topbar .top-navbar .navbar-header[data-logobg="skin1"] {
-  background: $brand-blue;
+  background: $brand-white;
 }
 
 #main-wrapper[data-layout="horizontal"] .left-sidebar[data-sidebarbg="skin6"] .sidebar-nav ul .sidebar-item .sidebar-link {
@@ -93,8 +97,7 @@ a {
 
 #main-wrapper[data-layout="vertical"] .left-sidebar[data-sidebarbg="skin6"],
 #main-wrapper[data-layout="horizontal"] .left-sidebar[data-sidebarbg="skin6"] {
-  background: rgba(255, 255, 255, 0.9) !important; /* transparencia */
-  backdrop-filter: blur(10px) !important;          /* efecto cristal */
+  background: $brand-white !important;
   border: 1px solid $brand-border;
 }
 
@@ -119,9 +122,9 @@ a {
 }
 
 .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
-  color: $brand-white !important;
-  background-color: $brand-blue;
-  border-color: $brand-blue;
+  color: $brand-blue !important;
+  background-color: $brand-white;
+  border-color: $brand-border $brand-border $brand-white;
 }
 
 .tooltip-inner {
@@ -150,7 +153,7 @@ a {
 
 .wizard > .steps .current a, .wizard > .steps .current a:hover, .wizard > .steps .current a:active {
   background: $brand-blue;
-  color: #fff;
+  color: $brand-white;
   cursor: default;
 }
 
@@ -288,22 +291,22 @@ label {
 }
 
 input[type=text], input[type=password], input[type=email], input[type=tel], input[type=number], input[type=select] {
-  height: 26px !important;
-  border-radius: 3px;
+  min-height: 36px;
+  border-radius: $control-radius;
   border-color: $brand-border;
 }
 
 .input-group-prepend, .input-group-append {
-  height: 26px;
+  display: flex;
   border-color: $brand-border;
 }
 
 .select2-container--classic .select2-selection--single, .select2-container--default .select2-selection--single,
-.select2-container--default .select2-selection--single .select2-selection__rendered,
-.select2-container--default .select2-selection--single .select2-selection__arrow,
 .select2-container--default .select2-selection--multiple {
   border-color: $brand-border;
-  height: 26px !important;
+  border-radius: $control-radius;
+  min-height: 36px;
+  height: auto;
   vertical-align: middle;
 }
 
@@ -316,37 +319,30 @@ div.dataTables_wrapper div.dataTables_filter input {
 
 div.dataTables_wrapper div.dataTables_length select {
   display: inline-block;
-  width: 200px;
+  width: auto;
   border-color: $brand-border;
 }
 
-table.dataTable tbody tr td {
-  border: 1px solid $brand-border !important;
-  //text-transform: uppercase !important;
-}
-
-table tbody tr td {
-  border: 1px solid $brand-border !important;
-}
-
-thead, tbody, tfoot, tr, td, th {
-  border-style: none;
+table.table > tbody > tr > td,
+table.dataTable > tbody > tr > td {
+  border: 0;
+  border-bottom: 1px solid $brand-border;
 }
 
 table.dataTable thead th {
-  color: $brand-white !important;
-  padding: 6px;
-  background: $brand-blue;
+  color: $brand-muted !important;
+  padding: .75rem;
+  background: $brand-light;
   border-color: $brand-border;
-  text-transform: uppercase !important;
+  font-weight: 600;
 }
 
 table.table-striped > tbody > tr:nth-of-type(odd) > * {
-  background-color: rgba($brand-blue, .035);
+  --bs-table-striped-bg: #{$table-striped-bg};
 }
 
 .page-item.disabled .page-link {
-  padding: 6px;
+  color: $brand-muted;
 }
 
 .flex-wrap {
@@ -362,9 +358,9 @@ table.table-striped > tbody > tr:nth-of-type(odd) > * {
 }
 
 .btn-group-sm > .btn, .btn-sm {
-  padding: .25rem .3rem;
+  padding: .3rem .55rem;
   line-height: 1.5;
-  border-radius: 3px;
+  border-radius: $control-radius;
 }
 
 span.select2 {
@@ -555,8 +551,9 @@ span.select2-container {
   color: $brand-ink;
   white-space: normal;
   line-height: 25px;
-  font-weight: lighter !important;
-  opacity: 3 !important;
+  font-weight: 400;
+  opacity: 1;
+  border-radius: $control-radius;
 }
 
 /* Ancho dinamico de las etiquetas del menu: el texto largo se ajusta
@@ -575,8 +572,7 @@ span.select2-container {
 }
 
 .sidebar-nav ul .sidebar-item .first-level .sidebar-item.active .sidebar-link {
-  opacity: 0.7 !important;
-  margin-left: 10px;
+  opacity: 1;
 }
 
 .sidebar-nav .has-arrow::after {
@@ -609,27 +605,17 @@ span.select2-container {
 }
 
 .card-foto {
-  border: 3px solid $brand-border !important;
+  border: 1px solid $brand-border !important;
 }
-
-//.card-header {
-//  background: rgba(255, 255, 255, 0.6);
-//  background: -moz-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
-//  background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(255, 255, 255, 1)), color-stop(47%, rgba(246, 246, 246, 1)), color-stop(100%, rgba(237, 237, 237, 1)));
-//  background: -webkit-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
-//  background: -o-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
-//  background: -ms-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
-//  background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
-//  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed', GradientType=0);
-//}
 
 .card-footer {
   border-top: 1px solid $brand-border !important;
-  background: $brand-light;
+  background: $brand-white;
 }
 
 .card-block {
   border: 1px solid $brand-border;
+  border-radius: $surface-radius;
 }
 
 ul, #myUL {
@@ -694,16 +680,17 @@ ul, #myUL {
 }
 
 .dropdown-item {
-  padding: 12px !important;
+  padding: .5rem .75rem !important;
+  border-radius: $border-radius-sm;
 }
 
 .border-card-top {
-  border-top: 3px solid $brand-red;
-  border-radius: 10px
+  border-top: 1px solid $brand-border;
+  border-radius: $surface-radius;
 }
 
 .modal-content {
-  border-radius: 10px !important;
+  border-radius: $surface-radius !important;
 }
 
 .modal-title {
@@ -712,9 +699,10 @@ ul, #myUL {
 
 .card-input {
   border: 1px solid $brand-border;
-  border-radius: 10px;
-  padding: 10px;
-  margin-top: 10px;
+  border-radius: $surface-radius;
+  padding: 1rem;
+  margin-top: 1rem;
+  background: $brand-white;
 }
 
 .swal2-popup .swal2-title {
@@ -732,11 +720,11 @@ ul, #myUL {
   box-sizing: border-box;
   flex-direction: column;
   justify-content: center;
-  border-top: 6px solid $brand-red;
+  border: 1px solid $brand-border;
   width: 32em;
   max-width: 100%;
   padding: 1.25em;
-  border-radius: .3125em;
+  border-radius: $surface-radius;
   background: #fff;
   font-family: inherit;
   font-size: 1rem;
@@ -779,17 +767,15 @@ main {
 }
 
 main h1 {
-  text-transform: uppercase;
   text-align: center;
-  font-size: 40px;
-  color: $brand-blue;
+  font-size: 1.75rem;
+  color: $brand-ink;
 }
 
 .name-menu {
-  text-transform: uppercase;
   text-align: center;
   font-size: 20px;
-  color: $brand-blue;
+  color: $brand-ink;
   margin-top: 50px;
 }
 
@@ -820,23 +806,18 @@ main h1 {
   justify-content: center;
   flex-direction: column;
   cursor: pointer;
-  transition: all 300ms ease;
+  transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease;
   position: relative;
-  background: rgba(255, 255, 255, 0.6); /* transparencia */
-  backdrop-filter: blur(10px);          /* efecto cristal */
+  background: $brand-white;
   border: 1px solid $brand-border;
-  -webkit-backdrop-filter: blur(10px);  /* Safari */
-  border-radius: 6px;                  /* bordes redondeados grandes */
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05); /* sombra ligera */
+  border-radius: $surface-radius;
+  box-shadow: $surface-shadow;
 }
 
 .box:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 30px -15px rgba(0, 0, 0, 0.5);
-  background: $brand-blue;
-  z-index: 1;
-  border-bottom: 2px solid;
-  border-bottom-color: $brand-red;
+  box-shadow: 0 2px 6px rgba(16, 24, 40, .06);
+  background: $brand-light;
+  border-color: rgba($brand-blue, .4);
 }
 
 .box i {
@@ -846,36 +827,39 @@ main h1 {
 }
 
 .box:hover i {
-  color: $brand-white !important;
+  color: $brand-blue-dark !important;
 }
 
 .box h5 {
   margin-top: 10px;
   text-transform: capitalize;
   font-size: 0.975rem !important;
-  font-family: sans-serif;
+  font-family: inherit;
 }
 
 .box:hover h5 {
-  color: #fff;
+  color: $brand-blue-dark;
+}
+
+.box:has(h4):hover h5,
+.box:has(h4):focus-visible h5 {
   opacity: 0;
 }
 
 .box h4 {
   text-transform: capitalize;
   font-size: 0.995rem !important;
-  color: #fff;
+  color: $brand-muted;
   position: absolute;
   bottom: 8px;
-  filter: blur(5px);
-  opacity: 1;
+  opacity: 0;
 }
 
-.box:hover h4 {
+.box:hover h4,
+.box:focus-visible h4 {
   opacity: 1;
-  filter: blur(0px);
-  color: #fff;
-  transition: all 600ms ease;
+  color: $brand-blue-dark;
+  transition: opacity .15s ease;
 }
 
 
@@ -902,18 +886,20 @@ ul.list-style-none li a {
 }
 
 .select2-container--default .select2-selection--multiple {
-  line-height: 15px !important;
+  line-height: 1.5;
+  padding: .125rem .375rem;
 }
 
 .select2-container--classic .select2-selection--multiple .select2-selection__choice, .select2-container--default .select2-selection--multiple .select2-selection__choice, .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
-  background-color: $brand-blue;
-  border-color: $brand-blue;
-  color: #fff;
+  background-color: $brand-light;
+  border-color: $brand-border;
+  border-radius: $border-radius-sm;
+  color: $brand-ink;
 }
 
 .select2-container--default .select2-selection--multiple {
   border-color: $brand-border;
-  height: 26px !important;
+  height: auto;
   vertical-align: middle;
 }
 
@@ -921,14 +907,14 @@ ul.list-style-none li a {
   box-sizing: border-box;
   cursor: pointer;
   display: block;
-  min-height: 26px;
+  min-height: 36px;
   user-select: none;
   -webkit-user-select: none;
 }
 
 .sidebar-nav ul .sidebar-item .sidebar-link {
-  opacity: 0.9;
-  font-weight: bold;
+  opacity: 1;
+  font-weight: 400;
 }
 
 tfoot input {
@@ -970,12 +956,13 @@ tfoot input {
 
 .c-dashboardInfo .wrap {
   background: #ffffff;
-  box-shadow: 2px 10px 20px rgba(0, 0, 0, 0.1);
-  border-radius: 7px;
+  border: 1px solid $brand-border;
+  box-shadow: $surface-shadow;
+  border-radius: $surface-radius;
   text-align: center;
   position: relative;
   overflow: hidden;
-  padding: 40px 25px 20px;
+  padding: 1.25rem;
   height: 100%;
 }
 
@@ -1002,7 +989,7 @@ tfoot input {
   top: 0;
   left: 0;
   width: 100%;
-  height: 10px;
+  height: 2px;
   content: "";
 }
 
@@ -1113,15 +1100,53 @@ tfoot input {
 .dropdown-menu,
 .select2-dropdown,
 .c-dashboardInfo .wrap {
-  border-color: $brand-border;
+  border: 1px solid $brand-border;
+  border-radius: $surface-radius;
   background-color: $brand-white;
+  box-shadow: $surface-shadow;
+}
+
+.card {
+  margin-bottom: 1.25rem;
+  min-width: 0;
+}
+
+.card-body {
+  padding: 1.25rem;
+}
+
+.card-title,
+.modal-title {
+  font-weight: 600;
+  letter-spacing: -.015em;
 }
 
 .card-header,
 .modal-header {
-  background: $brand-blue;
-  color: $brand-white;
-  border-bottom: 3px solid $brand-red;
+  padding: 1rem 1.25rem;
+  background: $brand-white;
+  color: $brand-ink;
+  border-bottom: 1px solid $brand-border;
+  font-weight: 600;
+}
+
+.card-header:first-child,
+.modal-header {
+  border-radius: $surface-radius $surface-radius 0 0;
+}
+
+.card-footer:last-child,
+.modal-footer {
+  border-radius: 0 0 $surface-radius $surface-radius;
+}
+
+.modal-footer {
+  border-top: 1px solid $brand-border;
+}
+
+.dropdown-menu {
+  padding: .375rem;
+  box-shadow: 0 8px 24px rgba(16, 24, 40, .08);
 }
 
 .card-header .card-title,
@@ -1131,13 +1156,48 @@ tfoot input {
 }
 
 .modal-header .btn-close {
-  filter: invert(1) grayscale(100%) brightness(200%);
+  filter: none;
+}
+
+#main-wrapper .topbar,
+#main-wrapper .topbar .navbar-header,
+#main-wrapper .topbar .navbar-collapse {
+  background: $brand-white !important;
+}
+
+.topbar {
+  border-bottom: 1px solid $brand-border;
+  box-shadow: none;
 }
 
 .topbar .nav-link,
 .topbar .navbar-brand,
-.topbar .sidebartoggler {
-  color: $brand-white !important;
+.topbar .sidebartoggler,
+.topbar .nav-toggler,
+.topbar .topbartoggler,
+.topbar .nav-link .text-white,
+.topbar .navbar-brand .text-white {
+  color: $brand-ink !important;
+}
+
+.topbar .nav-link:hover {
+  color: $brand-blue !important;
+}
+
+#main-wrapper .sidebar-nav ul .sidebar-item > .sidebar-link {
+  margin: .125rem .375rem;
+}
+
+.page-breadcrumb,
+.footer {
+  background: transparent;
+  color: $brand-muted;
+}
+
+.page-breadcrumb .page-title {
+  color: $brand-ink;
+  font-size: 1.125rem;
+  font-weight: 600;
 }
 
 #main-wrapper .sidebar-nav ul .sidebar-item > .sidebar-link.active,
@@ -1145,7 +1205,7 @@ tfoot input {
 #main-wrapper .sidebar-nav ul .sidebar-item.active > .sidebar-link {
   background: $brand-light;
   color: $brand-blue !important;
-  box-shadow: inset 3px 0 $brand-red;
+  box-shadow: none;
 }
 
 .nav-pills .nav-link.active,
@@ -1164,7 +1224,7 @@ tfoot input {
   --bs-btn-active-border-color: #{$brand-blue-dark};
   --bs-btn-disabled-color: #{$brand-blue};
   --bs-btn-disabled-border-color: #{$brand-border};
-  --bs-btn-focus-shadow-rgb: 35, 71, 159;
+  --bs-btn-focus-shadow-rgb: 0, 133, 163;
 
   &:focus-visible,
   &:active,
@@ -1191,21 +1251,150 @@ tfoot input {
   box-shadow: $input-focus-box-shadow;
 }
 
+.form-control,
+.form-select {
+  border-radius: $control-radius;
+  background-color: $brand-white;
+  color: $brand-ink;
+  font-size: inherit;
+}
+
+.form-control:not(textarea):not([type="file"]):not([type="range"]):not([type="color"]),
+.form-select {
+  min-height: 36px;
+  height: auto;
+}
+
+textarea.form-control {
+  min-height: 96px;
+}
+
+.form-control:disabled,
+.form-select:disabled,
+.form-control[readonly] {
+  background-color: $brand-light;
+  color: $brand-muted;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group > label,
+.form-label {
+  margin-bottom: .375rem;
+  font-size: .8125rem;
+  font-weight: 500;
+}
+
+.input-group-text {
+  border-color: $brand-border;
+  background: $brand-light;
+  color: $brand-muted;
+}
+
+.select2-container--classic .select2-selection--single .select2-selection__rendered,
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  padding-left: .75rem;
+  line-height: 34px;
+  color: $brand-ink;
+}
+
+.select2-container--classic .select2-selection--single .select2-selection__arrow,
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+  height: 34px;
+}
+
+.select2-container--default.select2-container--disabled .select2-selection--single,
+.select2-container--default.select2-container--disabled .select2-selection--multiple {
+  background: $brand-light;
+}
+
+.btn {
+  border-radius: $control-radius;
+  font-weight: 500;
+  box-shadow: none;
+}
+
+.btn:focus-visible,
+.box:focus-visible,
+.sidebar-link:focus-visible {
+  outline: 2px solid $brand-blue;
+  outline-offset: 2px;
+}
+
+.btn-circle {
+  border-radius: 50%;
+}
+
+.nav-tabs .nav-link,
+.nav-pills .nav-link {
+  border-radius: $control-radius $control-radius 0 0;
+  font-weight: 500;
+}
+
+.nav-pills .nav-link {
+  border-radius: $control-radius;
+}
+
 // Bootstrap tables use cell-level variables that also cover DataTables.
 .table > thead > tr > th,
 .table > thead > tr > td,
 table.dataTable thead th,
 .bg-thead-table-monitor {
-  --bs-table-bg: #{$brand-blue};
-  --bs-table-color: #{$brand-white};
+  --bs-table-bg: #{$brand-light};
+  --bs-table-color: #{$brand-muted};
   --bs-table-accent-bg: transparent;
   --bs-table-bg-type: transparent;
   --bs-table-bg-state: transparent;
-  --bs-table-color-type: #{$brand-white};
-  --bs-table-color-state: #{$brand-white};
-  background-color: $brand-blue;
-  color: $brand-white !important;
-  border-color: rgba($brand-white, .25);
+  --bs-table-color-type: #{$brand-muted};
+  --bs-table-color-state: #{$brand-muted};
+  background-color: $brand-light !important;
+  color: $brand-muted !important;
+  border: 0;
+  border-bottom: 1px solid $brand-border;
+  font-weight: 600;
+  font-size: .8125rem;
+}
+
+.table,
+table.dataTable {
+  --bs-table-border-color: #{$brand-border};
+  border-color: $brand-border;
+}
+
+.table-bordered > :not(caption) > * {
+  border-width: 0;
+}
+
+.table > :not(caption) > * > * {
+  border-left: 0;
+  border-right: 0;
+}
+
+.table > thead > tr:first-child > :first-child {
+  border-top-left-radius: $control-radius;
+}
+
+.table > thead > tr:first-child > :last-child {
+  border-top-right-radius: $control-radius;
+}
+
+div.dataTables_wrapper .dataTables_info,
+div.dataTables_wrapper .dataTables_length,
+div.dataTables_wrapper .dataTables_filter {
+  color: $brand-muted;
+  font-size: .8125rem;
+}
+
+div.dataTables_wrapper .dataTables_length,
+div.dataTables_wrapper .dataTables_filter,
+div.dataTables_wrapper .dt-buttons {
+  margin-bottom: .75rem;
+}
+
+div.dataTables_wrapper div.dataTables_filter input {
+  max-width: 100%;
 }
 
 .table > thead a {
@@ -1215,6 +1404,22 @@ table.dataTable thead th,
 .page-link {
   color: $brand-blue;
   border-color: $brand-border;
+  border-radius: $control-radius;
+  padding: .375rem .65rem;
+}
+
+.pagination {
+  gap: .25rem;
+}
+
+.page-item:not(:first-child) .page-link {
+  margin-left: 0;
+}
+
+.page-item.active .page-link {
+  color: $brand-blue !important;
+  background: rgba($brand-blue, .08);
+  border-color: rgba($brand-blue, .2);
 }
 
 .page-link:hover,
@@ -1239,3 +1444,19 @@ table.dataTable thead th,
   box-shadow: $input-focus-box-shadow;
 }
 
+@media (max-width: 575.98px) {
+  .page-wrapper > .container-fluid {
+    padding: 12px;
+  }
+
+  .card-body,
+  .card-header,
+  .modal-header,
+  .card-input {
+    padding: 1rem;
+  }
+
+  div.dataTables_wrapper div.dataTables_filter input {
+    width: 160px;
+  }
+}

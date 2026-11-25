@@ -27,7 +27,10 @@ class ReeceiptAsnResource extends JsonResource
             'StatusId' => $this->statusid,
             'StatusName' => $this->status->name ?? '',
 
-            'Products' => ReceiptStockResource::collection($this->stockplan),
+            'Products' => array_merge(
+                ReceiptStockResource::collection($this->stockplan)->resolve($request),
+                ReceiptStockCreditResource::collection($this->stockcredits)->resolve($request),
+            ),
             'ExpectedLines' => $this->verification_summary ?? [],
 
             'AsnData' => [

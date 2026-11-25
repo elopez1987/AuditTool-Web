@@ -373,6 +373,28 @@ it('exposes both origins with shared balances and flags unresolved historical da
         ->and($summary[1]['RemainingTotal'])->toBe('20.0000');
 });
 
+it('includes stock and credit products in the search voucher response', function (): void {
+    Schema::table('receiptasn', function (Blueprint $table): void {
+        $table->string('shipmentid')->nullable();
+    });
+    Schema::create('receiptasndata', function (Blueprint $table): void {
+        $table->id();
+        $table->unsignedBigInteger('receiptid');
+        $table->unsignedBigInteger('locationid')->nullable();
+    });
+    DB::table('receiptasn')->where('id', 1)->update(['shipmentid' => '1020']);
+    createVerificationCredit();
+
+    $this->postJson('/api/v1/verification/search-voucher', ['VoucherId' => '1020'])
+        ->assertOk()
+        ->assertJsonCount(2, 'data.Voucher.Products')
+        ->assertJsonPath('data.Voucher.Products.0.Source', 'StockRoute')
+        ->assertJsonPath('data.Voucher.Products.1.Source', 'CreditNote')
+        ->assertJsonPath('data.Voucher.Products.1.ExpectedLineId', 1)
+        ->assertJsonPath('data.Voucher.Products.1.PartNumberCode', 'SKU-001')
+        ->assertJsonCount(2, 'data.Voucher.ExpectedLines');
+});
+
 it('keeps historical reconciliation read-only by default and applies only unambiguous links', function (): void {
     ReceiptVerification::query()->create([
         'receiptasn_id' => 1, 'inventorypartnumber_id' => 1, 'quantity' => 3,
