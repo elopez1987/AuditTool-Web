@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Resources;
 
 use App\Models\Receipt\ReceiptAsn;
@@ -19,13 +21,14 @@ class ReeceiptAsnResource extends JsonResource
             'AsnId' => $this->uuid_asn,
             'VoucherId' => $this->shipmentid,
             'RouteName' => $this->provider->name ?? '',
-            'RouteId' => $this->provider->providerid,
-            'OperatorName' => $this->operator->name,
-            'OperatorId' => $this->operator->barcode,
+            'RouteId' => $this->provider?->providerid,
+            'OperatorName' => $this->operator?->name,
+            'OperatorId' => $this->operator?->barcode,
             'StatusId' => $this->statusid,
             'StatusName' => $this->status->name ?? '',
 
             'Products' => ReceiptStockResource::collection($this->stockplan),
+            'ExpectedLines' => $this->verification_summary ?? [],
 
             'AsnData' => [
                 'Temperature' => $this->receiptdata?->temperature ?? '',

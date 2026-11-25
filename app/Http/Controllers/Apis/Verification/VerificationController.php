@@ -1,77 +1,58 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Apis\Verification;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Verification\VerificationRequest;
-use App\Models\Configuration\Schemas\SystemStatus;
-use App\Models\Inventory\PartNumber\InventoryPartnumber;
-use App\Models\Receipt\ReceiptAsn;
-use App\Models\Receipt\ReceiptStock;
-use App\Models\Receipt\ReceiptVerification;
+use App\Services\Receipt\SaveVerificationData;
+use App\Services\Receipt\VerificationService;
 use App\Traits\Api\ModernApiResponse;
-use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 
 class VerificationController extends Controller
 {
     use ModernApiResponse;
 
-    public function saveVerification(VerificationRequest $request)
+    public function __construct(private readonly VerificationService $service) {}
+
+    /**
+     * Register an incremental physical receipt.
+     *
+     * Send Quantity as a decimal string to preserve precision.
+     * Source and ExpectedLineId must be supplied together; omission is allowed
+     * temporarily only when the product has exactly one expected line.
+     * Reuse ClientOperationId on retries; identical operations return HTTP 200.
+     *
+     * @tags Verificación de recibos
+     *
+     * @operationId saveReceiptVerification
+     *
+     * @response array{
+     *   success: true, code: int, message: string,
+     *   meta: array{version: string, service: string, processDate: string},
+     *   data: array{
+     *     receiptAsn: array<string, mixed>,
+     *     verification: array<string, mixed>,
+     *     balance: array<string, mixed>,
+     *     replayed: bool
+     *   }
+     * }
+     */
+    public function saveVerification(VerificationRequest $request): JsonResponse
     {
-        $receiptAsn = ReceiptAsn::controlAccessUser()
-            ->where('uuid_asn', $request->validated('AsnId'))
-            ->whereNotIn('statusid', ['CA', 'TR'])
-            ->first();
-
-        if (is_null($receiptAsn)) {
-            return $this->modernNotFoundResponse('Vale no encontrado', 'Verification process');
-        }
-
-        $partNumber = InventoryPartnumber::where('prtnum', $request->validated('PartNumberCode'))
-            ->select('id')->first();
-
-        if (is_null($partNumber)) {
-            return $this->modernNotFoundResponse('Producto no encontrado.', 'Verification process');
-        }
-
-        $typeMaterial = SystemStatus::where('statusid', $request->validated('TypeId'))
-            ->select('statusid')->first();
-
-        if (is_null($typeMaterial)) {
-            return $this->modernNotFoundResponse('Tipo de ingreso no valido.', 'Verification process');
-        }
-
-        if ($request->validated('ProductionDate') > Carbon::now()->format('Y-m-d')) {
-            return $this->modernValidationErrorResponse('La fecha de produccion no puede ser mayor a la fecha actual', 'Verification process');
-        }
-
-        if ($request->validated('ExpireDate') < $request->validated('ProductionDate')) {
-            return $this->modernValidationErrorResponse('La fecha de caducidad no puede ser menor a la fecha de producción.', 'Verification process');
-        }
-
-        $validationProduct = ReceiptStock::where('receiptid', $receiptAsn->id)
-            ->where('partnumberid', $partNumber->id)->first();
-
-        if (is_null($validationProduct)) {
-            return $this->modernNotFoundResponse('Producto no solicitado en el vale.', 'Verification process');
-        }
-
-        if ($request->validated('TypeId') === 'TRP-01') {
-            ReceiptVerification::create([
-                'receiptasn_id' => $receiptAsn->id,
-                'inventorypartnumber_id' => $partNumber->id,
-                'quantity' => $request->validated('Quantity'),
-                'type_id' => $request->validated('TypeId'),
-            ]);
-        }
+        $result = $this->service->save(SaveVerificationData::fromArray(
+            $request->validated(),
+            (int) $request->user()->getAuthIdentifier(),
+            (string) $request->user()->username,
+        ));
 
         return $this->modernSuccessResponse(
-            data: [
-                'receiptAsn' => $receiptAsn,
-            ],
+            data: $result,
             message: 'Registro procesado exitosamente',
             serviceName: 'verification',
-            httpStatus: 201,
+            httpStatus: $result['replayed'] ? 200 : 201,
         );
 
     }

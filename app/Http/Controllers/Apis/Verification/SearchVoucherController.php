@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Apis\Verification;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\Verification\saveFinishProcessRequest;
+use App\Http\Requests\Api\Verification\SaveFinishProcessRequest;
 use App\Http\Requests\Api\Verification\SaveStartProcessRequest;
 use App\Http\Requests\Api\Verification\SearchvoucherRequest;
 use App\Http\Resources\ReeceiptAsnResource;
@@ -133,9 +135,13 @@ class SearchVoucherController extends Controller
     #[Response(404, 'El recibo no existe o no está disponible para el usuario o por su estatus.', type: 'array{success: false, code: 404, message: string, meta: array{version: string, service: string, processDate: string}, data: null}')]
     #[Response(409, 'El vale ya se encuentra en PRE-DESCARGA o el recibo no se encuentra en estatus EN PROCESO.', type: 'array{success: false, code: 409, message: string, meta: array{version: string, service: string, processDate: string}, data: null}')]
     #[Response(422, 'AsnId ausente, de tipo inválido o inexistente.', type: 'array{success: false, code: 422, message: string, meta: array{version: string, service: string, processDate: string}, data: array{errors: array<string, list<string>>}}')]
-    public function saveFinishVerification(saveFinishProcessRequest $request)
+    public function saveFinishVerification(SaveFinishProcessRequest $request)
     {
-        $this->receiptAsnService->updateFinishAsn($request->validated());
+        $this->receiptAsnService->updateFinishAsn([
+            ...$request->validated(),
+            'Username' => (string) $request->user()->username,
+            'UserId' => (int) $request->user()->getAuthIdentifier(),
+        ]);
 
         return $this->modernSuccessResponse(
             data: [],

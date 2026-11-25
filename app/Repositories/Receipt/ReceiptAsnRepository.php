@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repositories\Receipt;
 
 use App\Models\Receipt\ReceiptAsn;
@@ -19,7 +21,7 @@ class ReceiptAsnRepository
     public function findByShipmentid(string $VoucherId): ?ReceiptAsn
     {
         return ReceiptAsn::controlAccessUser()
-            ->with('receiptdata.location')
+            ->with(['receiptdata.location', 'stockplan.partnumber', 'stockcredits.inventorypartnumber', 'provider', 'operator', 'status', 'timereceipt'])
             ->where('shipmentid', $VoucherId)
             ->whereIn('statusid', [self::STATUS_PROGRAMADO, self::STATUS_IN_PROCESS, self::STATUS_PREDESCARGA])
             ->first();
@@ -30,6 +32,7 @@ class ReceiptAsnRepository
         return ReceiptAsn::controlAccessUser()
             ->whereIn('statusid', [self::STATUS_PROGRAMADO, self::STATUS_IN_PROCESS, self::STATUS_PREDESCARGA])
             ->where('uuid_asn', $asnId)
+            ->lockForUpdate()
             ->first();
     }
 

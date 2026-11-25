@@ -8,6 +8,7 @@ use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Receipt\ReceiptAsn\CreateReceiptAsnRequest;
 use App\Models\Receipt\ReceiptAsn;
 use App\Models\Receipt\ReceiptStock;
+use App\Services\Receipt\ExpectedReceiptMutationService;
 use App\Services\Receipt\ReceiptAsnShowService;
 use App\ViewModels\Receipt\ReceiptAsnShowViewModel;
 use Carbon\Carbon;
@@ -140,9 +141,9 @@ class ReceiptAsnsController extends BaseController
         return view('Receipt.ReceiptAsn.show', $this->showViewModel->toArray($details));
     }
 
-    public function destroy(ReceiptAsn $receiptasn)
+    public function destroy(ReceiptAsn $receiptasn, Request $request, ExpectedReceiptMutationService $service)
     {
-        $receiptasn->delete();
+        $service->deleteAsn((int) $receiptasn->id, (string) $request->user()->username);
 
         return $this->successResponse('receiptasn.index');
     }
