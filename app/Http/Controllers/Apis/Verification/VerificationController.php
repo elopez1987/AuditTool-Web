@@ -24,7 +24,7 @@ class VerificationController extends Controller
      * Source and ExpectedLineId must be supplied together; omission is allowed
      * temporarily only when the product has exactly one expected line.
      * Reuse ClientOperationId on retries; identical operations return HTTP 200.
-	 *
+     *
      *
      * @tags Verificación de recibos
      *

@@ -1,11 +1,11 @@
 // Shared design tokens and Bootstrap theme.
-$brand-blue: #0085a3;
+$brand-blue: #00758f;
 $brand-blue-dark: #00657d;
 $brand-red: #f11723;
 $brand-red-dark: #c4111c;
 $brand-white: #fff;
-$brand-ink: #263244;
-$brand-muted: #697586;
+$brand-ink: #1f2937;
+$brand-muted: #475569;
 $brand-border: #e4e7ec;
 $brand-light: #f3f6f9;
 $brand-background: #f7f8fa;
@@ -21,6 +21,9 @@ $light: $brand-light;
 $dark: $brand-ink;
 $body-bg: $brand-background;
 $body-color: $brand-ink;
+$body-secondary-color: $brand-muted;
+$body-tertiary-color: $brand-muted;
+$text-muted: $brand-muted;
 $link-color: $brand-blue;
 $link-hover-color: $brand-blue-dark;
 $border-color: $brand-border;
@@ -41,7 +44,7 @@ $card-spacer-y: 1.25rem;
 $input-bg: $brand-white;
 $input-padding-y: .5rem;
 $input-padding-x: .75rem;
-$input-placeholder-color: #8b95a5;
+$input-placeholder-color: #64748b;
 $table-cell-padding-y: .65rem;
 $table-cell-padding-x: .75rem;
 $table-bg: $brand-white;
@@ -77,7 +80,7 @@ a {
 }
 
 .nav-link {
-  color: $brand-muted;
+  color: $brand-ink;
 }
 
 //Colores principales
@@ -87,19 +90,19 @@ a {
   text-decoration: none;
 }
 
-#main-wrapper[data-layout="horizontal"] .topbar .top-navbar .navbar-header[data-logobg="skin1"] {
-  background: $brand-white;
-}
+//#main-wrapper[data-layout="horizontal"] .topbar .top-navbar .navbar-header[data-logobg="skin1"] {
+//  background: $brand-white;
+//}
 
-#main-wrapper[data-layout="horizontal"] .left-sidebar[data-sidebarbg="skin6"] .sidebar-nav ul .sidebar-item .sidebar-link {
-  color: $brand-ink;
-}
+//#main-wrapper[data-layout="horizontal"] .left-sidebar[data-sidebarbg="skin6"] .sidebar-nav ul .sidebar-item .sidebar-link {
+//  color: $brand-ink;
+//}
 
-#main-wrapper[data-layout="vertical"] .left-sidebar[data-sidebarbg="skin6"],
-#main-wrapper[data-layout="horizontal"] .left-sidebar[data-sidebarbg="skin6"] {
-  background: $brand-white !important;
-  border: 1px solid $brand-border;
-}
+//#main-wrapper[data-layout="vertical"] .left-sidebar[data-sidebarbg="skin6"],
+//#main-wrapper[data-layout="horizontal"] .left-sidebar[data-sidebarbg="skin6"] {
+//  background: $brand-white !important;
+//  border: 1px solid $brand-border;
+//}
 
 @media(min-width: 768px){
   #main-wrapper[data-layout="horizontal"] .sidebar-nav #sidebarnav > .sidebar-item ul{
@@ -330,7 +333,7 @@ table.dataTable > tbody > tr > td {
 }
 
 table.dataTable thead th {
-  color: $brand-muted !important;
+  color: $brand-ink !important;
   padding: .75rem;
   background: $brand-light;
   border-color: $brand-border;
@@ -1117,6 +1120,7 @@ tfoot input {
 
 .card-title,
 .modal-title {
+  color: $brand-blue-dark;
   font-weight: 600;
   letter-spacing: -.015em;
 }
@@ -1125,7 +1129,7 @@ tfoot input {
 .modal-header {
   padding: 1rem 1.25rem;
   background: $brand-white;
-  color: $brand-ink;
+  color: $brand-blue-dark;
   border-bottom: 1px solid $brand-border;
   font-weight: 600;
 }
@@ -1224,7 +1228,7 @@ tfoot input {
   --bs-btn-active-border-color: #{$brand-blue-dark};
   --bs-btn-disabled-color: #{$brand-blue};
   --bs-btn-disabled-border-color: #{$brand-border};
-  --bs-btn-focus-shadow-rgb: 0, 133, 163;
+  --bs-btn-focus-shadow-rgb: 0, 117, 143;
 
   &:focus-visible,
   &:active,
@@ -1284,7 +1288,7 @@ textarea.form-control {
 .form-label {
   margin-bottom: .375rem;
   font-size: .8125rem;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .input-group-text {
@@ -1312,7 +1316,7 @@ textarea.form-control {
 
 .btn {
   border-radius: $control-radius;
-  font-weight: 500;
+  font-weight: 600;
   box-shadow: none;
 }
 
@@ -1343,14 +1347,14 @@ textarea.form-control {
 table.dataTable thead th,
 .bg-thead-table-monitor {
   --bs-table-bg: #{$brand-light};
-  --bs-table-color: #{$brand-muted};
+  --bs-table-color: #{$brand-ink};
   --bs-table-accent-bg: transparent;
   --bs-table-bg-type: transparent;
   --bs-table-bg-state: transparent;
-  --bs-table-color-type: #{$brand-muted};
-  --bs-table-color-state: #{$brand-muted};
+  --bs-table-color-type: #{$brand-ink};
+  --bs-table-color-state: #{$brand-ink};
   background-color: $brand-light !important;
-  color: $brand-muted !important;
+  color: $brand-ink !important;
   border: 0;
   border-bottom: 1px solid $brand-border;
   font-weight: 600;

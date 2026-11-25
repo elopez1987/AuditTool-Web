@@ -8,7 +8,7 @@
 {{--                                    SGIO--}}
                                </span>
 {{--                <link rel="icon" type="image/ta" sizes="16x16" href=" {{asset('/img/verde.png')}}">--}}
-                <img src="{{asset('img/taxion-logistic.png')}}" alt="" style="width: 150px;height: 35px">
+                <img src="{{asset('img/taxion-logistic.png')}}" alt="" style="max-width: 180px !important;height: 65px">
             </a>
             <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)"
                data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
