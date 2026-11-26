@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-lg-8">
-        <div class="card" style="border: 2px solid #a3b0c9;border-radius: 4px;">
+        <div class="card" >
             <div class="card-header">Datos Generales</div>
             <div class="card-body">
                 <div class="row">
@@ -49,7 +49,7 @@
 
 <div class="row">
     <div class="col-lg-8">
-        <div class="card" style="border: 2px solid #a3b0c9;border-radius: 4px;">
+        <div class="card" >
             <div class="card-header">Datos del recibo</div>
             <div class="card-body">
                 <div class="row">

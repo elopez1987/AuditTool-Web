@@ -183,7 +183,7 @@ final class VerificationRepository
             'modelid' => $receiptId,
             'createuser' => $userId,
             'comment' => $reason,
-            'auxiliary01' => 'VERIFICATION_SHORTAGE',
+            'type' => 'VERIFICATION_SHORTAGE',
         ]);
     }
 

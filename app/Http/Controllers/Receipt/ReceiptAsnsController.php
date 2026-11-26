@@ -42,7 +42,7 @@ class ReceiptAsnsController extends BaseController
     public function getDataAsns(Request $request)
     {
         $data = ReceiptAsn::controlAccessUser()
-            ->with(['status:statusid,name', 'center:centerid,name,description',
+            ->with(['status:statusid,name,auxiliary01', 'center:centerid,name,description',
                 'warehouse:warehouseid,name', 'provider:id,providerid,name', 'operator:id,name',
             ])
             ->select([

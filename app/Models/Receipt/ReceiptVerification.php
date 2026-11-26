@@ -68,6 +68,11 @@ class ReceiptVerification extends Model
         return $this->belongsTo(User::class, 'created_by', 'id');
     }
 
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(StorageCategoryIncidence::class, 'catetory_incidence_id', 'id');
+    }
+
     protected function casts(): array
     {
         return [

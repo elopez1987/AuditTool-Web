@@ -100,44 +100,86 @@
                     </div>
                     <hr class="m-t-1">
                     <div class="row">
-                        <div class="col-lg-2 col-md-6 col-sm-12">
-                            <div class="d-flex flex-row comment-row m-t-0">
-                                <div class="comment-text w-100">
-                                    <h6 class="font-weight-light">Centro de distribución:</h6>
-                                    <span
-                                            class="m-b-15 d-block font-12"> {{$receiptasn->center ? $receiptasn->center->description :''}}</span>
+
+                        <div class="col-lg-10">
+                            <div class="row">
+                                <div class="col-lg-2 col-md-6 col-sm-12">
+                                    <div class="d-flex flex-row comment-row m-t-0">
+                                        <div class="comment-text w-100">
+                                            <h6 class="font-weight-light">Centro de distribución:</h6>
+                                            <span
+                                                    class="m-b-15 d-block font-12"> {{$receiptasn->center ? $receiptasn->center->description :''}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-6 col-sm-12">
+                                    <div class="d-flex flex-row comment-row m-t-0">
+                                        <div class="comment-text w-100">
+                                            <h6 class="font-weight-light">Bodega:</h6>
+                                            <span
+                                                    class="m-b-15 d-block font-12"> {{$receiptasn->warehouse ? $receiptasn->warehouse->name : ''}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-2 col-md-6 col-sm-12">
+                                    <div class="d-flex flex-row comment-row m-t-0">
+                                        <div class="comment-text w-100">
+                                            <h6 class="font-weight-light">Embarque:</h6>
+                                            <span class="m-b-15 d-block font-12"> {{$receiptasn->shipmentid}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-6 col-sm-12">
+                                    <div class="d-flex flex-row comment-row m-t-0">
+                                        <div class="comment-text w-100">
+                                            <h6 class="font-weight-light">Ruta:</h6>
+                                            <span
+                                                    class="m-b-15 d-block font-12"> {{$receiptasn->provider ? $receiptasn->provider->name : ''}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-2 col-md-6 col-sm-12">
+                                    <div class="d-flex flex-row comment-row m-t-0">
+                                        <div class="comment-text w-100">
+                                            <h6 class="font-weight-light">Inicio de descarga:</h6>
+                                            <span class="m-b-15 d-block font-12 font-12"> {{$receiptasn->timereceipt->unloadstartdate ?? ''}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-6 col-sm-12">
+                                    <div class="d-flex flex-row comment-row m-t-0">
+                                        <div class="comment-text w-100">
+                                            <h6 class="font-weight-light">Fin de descarga:</h6>
+                                            <span
+                                                    class="m-b-15 d-block font-12"> {{$receiptasn->timereceipt->unloadfinishdate ?? ''}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-6 col-sm-12">
+                                    <div class="d-flex flex-row comment-row m-t-0">
+                                        <div class="comment-text w-100">
+                                            <h6 class="font-weight-light">Inicio de receipción:</h6>
+                                            <span class="m-b-15 d-block font-12 font-12"> {{$receiptasn->timereceipt->verifystartdate ?? ''}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-6 col-sm-12">
+                                    <div class="d-flex flex-row comment-row m-t-0">
+                                        <div class="comment-text w-100">
+                                            <h6 class="font-weight-light">Fin de recepción:</h6>
+                                            <span
+                                                    class="m-b-15 d-block font-12"> {{$receiptasn->timereceipt->verifyfinishdate ?? ''}}</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-2 col-md-6 col-sm-12">
-                            <div class="d-flex flex-row comment-row m-t-0">
-                                <div class="comment-text w-100">
-                                    <h6 class="font-weight-light">Bodega:</h6>
-                                    <span
-                                            class="m-b-15 d-block font-12"> {{$receiptasn->warehouse ? $receiptasn->warehouse->name : ''}}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-2 col-md-6 col-sm-12">
-                            <div class="d-flex flex-row comment-row m-t-0">
-                                <div class="comment-text w-100">
-                                    <h6 class="font-weight-light">Embarque:</h6>
-                                    <span class="m-b-15 d-block font-12"> {{$receiptasn->shipmentid}}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-2 col-md-6 col-sm-12">
-                            <div class="d-flex flex-row comment-row m-t-0">
-                                <div class="comment-text w-100">
-                                    <h6 class="font-weight-light">Ruta:</h6>
-                                    <span
-                                            class="m-b-15 d-block font-12"> {{$receiptasn->provider ? $receiptasn->provider->name : ''}}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-2 col-md-6 col-sm-12">
+                        <div class="col-lg-2">
                             <div class="d-flex flex-row comment-row m-t-0">
                               <span style="margin: auto;display: block;text-align: left">
                                     {!! DNS2D::getBarcodeHTML((string)$receiptasn->shipmentid, 'QRCODE',4,4) !!}
@@ -145,42 +187,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-2 col-md-6 col-sm-12">
-                            <div class="d-flex flex-row comment-row m-t-0">
-                                <div class="comment-text w-100">
-                                    <h6 class="font-weight-light">Inicio de descarga:</h6>
-                                    <span class="m-b-15 d-block font-12 font-12"> {{$receiptasn->unloadstartdate}}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-2 col-md-6 col-sm-12">
-                            <div class="d-flex flex-row comment-row m-t-0">
-                                <div class="comment-text w-100">
-                                    <h6 class="font-weight-light">Fin de descarga:</h6>
-                                    <span
-                                            class="m-b-15 d-block font-12"> {{$receiptasn->unloadfinishdate}}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-2 col-md-6 col-sm-12">
-                            <div class="d-flex flex-row comment-row m-t-0">
-                                <div class="comment-text w-100">
-                                    <h6 class="font-weight-light">Inicio de verificación:</h6>
-                                    <span class="m-b-15 d-block font-12 font-12"> {{$receiptasn->verifystartdate}}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-2 col-md-6 col-sm-12">
-                            <div class="d-flex flex-row comment-row m-t-0">
-                                <div class="comment-text w-100">
-                                    <h6 class="font-weight-light">Fin de verificación:</h6>
-                                    <span
-                                            class="m-b-15 d-block font-12"> {{$receiptasn->verifyfinishdate}}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -311,11 +318,11 @@
                                                          style="height: 200px; max-height: 200px"/>
                                                 </div>
                                                 <div class="el-card-content">
-                                                    <h4 class="m-b-0 font-10 font-weight-light">
-                                                        {{$verification->inventorypartnumber->prtnum}}
+                                                    <h4 class="m-b-0 font-10 font-weight-light">{{$verification->inventorypartnumber->prtnum}}
                                                     </h4>
-                                                    <span class="text-muted">
-                                                        {{$verification->inventorypartnumber->lngdsc}}
+                                                    <span class="text-muted">{{$verification->inventorypartnumber->lngdsc}}
+                                                    </span>
+                                                    <span class="text-muted">{{$verification->category->name ?? ''}}
                                                     </span>
                                                 </div>
                                             </div>

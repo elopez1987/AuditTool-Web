@@ -294,9 +294,14 @@ label {
 }
 
 input[type=text], input[type=password], input[type=email], input[type=tel], input[type=number], input[type=select] {
-  min-height: 36px;
+  height: 30px !important;
   border-radius: $control-radius;
-  border-color: $brand-border;
+  border-color: #90a4ae !important;
+}
+
+.form-control:not(textarea):not([type=file]):not([type=range]):not([type=color]), .form-select {
+  min-height: 30px !important;
+  height: auto;
 }
 
 .input-group-prepend, .input-group-append {
@@ -306,10 +311,9 @@ input[type=text], input[type=password], input[type=email], input[type=tel], inpu
 
 .select2-container--classic .select2-selection--single, .select2-container--default .select2-selection--single,
 .select2-container--default .select2-selection--multiple {
-  border-color: $brand-border;
+  border-color: #90a4ae !important;
   border-radius: $control-radius;
-  min-height: 36px;
-  height: auto;
+  height: 30px !important;
   vertical-align: middle;
 }
 
@@ -1128,7 +1132,7 @@ tfoot input {
 .card-header,
 .modal-header {
   padding: 1rem 1.25rem;
-  background: $brand-white;
+  background: #b0bec5 !important;
   color: $brand-blue-dark;
   border-bottom: 1px solid $brand-border;
   font-weight: 600;

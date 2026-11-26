@@ -68,25 +68,27 @@
                             </div>
                         </div>
                     </form>
+                    <hr class="mb-3">
                     <div class="row">
                         <div class="col-12">
                             <table id="table-receipts"
-                                   class="table table-bordered  table-condensed table-hover" width="100%">
+                                   class="table table-bordered  table-condensed table-hover table-striped" width="100%">
                                 <thead>
                                 <tr>
-                                    <th class="bg-inverse text-white">{{ ui_label('receiptasn_cdistribucion_index','C.Distribución') }}</th>
-                                    <th class="bg-inverse text-white">{{ ui_label('receiptasn_warehouse_index','Bodega') }}</th>
-                                    <th class="bg-inverse text-white">{{ ui_label('receiptasn_shipmentid_index','Recibo') }}</th>
-                                    <th class="bg-inverse text-white">{{ ui_label('receiptasn_provider_index','Ruta') }}</th>
-                                    <th class="bg-inverse text-white">{{ ui_label('receiptasn_delivery_index','Operador') }}</th>
-                                    <th class="bg-inverse text-white">{{ ui_label('receiptasn_statusid_index','Estatus') }}</th>
-                                    <th class="bg-inverse text-white">Opciones</th>
+                                    <th>{{ ui_label('receiptasn_cdistribucion_index','C.Distribución') }}</th>
+                                    <th>{{ ui_label('receiptasn_warehouse_index','Bodega') }}</th>
+                                    <th>{{ ui_label('receiptasn_shipmentid_index','Recibo') }}</th>
+                                    <th>{{ ui_label('receiptasn_provider_index','Ruta') }}</th>
+                                    <th>{{ ui_label('receiptasn_delivery_index','Operador') }}</th>
+                                    <th>{{ ui_label('receiptasn_statusid_index','Estatus') }}</th>
+                                    <th>Opciones</th>
                                 </tr>
                                 </thead>
                             </table>
                         </div>
                     </div>
                 </div>
+                <div class="card-footer"></div>
             </div>
         </div>
     </div>
