@@ -14,11 +14,11 @@
                             <div class="col-lg-10">
                                 <div class="row">
                                     <div class="col-lg-10">
-                                        @can('receiptasn.create')
-                                            <a href="{{route('receiptasn.create')}}">
-                                                @include('buttons.add')
-                                            </a>
-                                        @endcan
+{{--                                        @can('receiptasn.create')--}}
+{{--                                            <a href="{{route('receiptasn.create')}}">--}}
+{{--                                                @include('buttons.add')--}}
+{{--                                            </a>--}}
+{{--                                        @endcan--}}
                                         <a href="">
                                             @include('buttons.search')
                                         </a>

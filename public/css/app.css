@@ -12243,13 +12243,13 @@ table.dataTable > tbody > tr > td {
 table.dataTable thead th {
   color: #1f2937 !important;
   padding: 0.75rem;
-  background: #f3f6f9;
+  background: #cfd8dc !important;
   border-color: #e4e7ec;
   font-weight: 600;
 }
 
 table.table-striped > tbody > tr:nth-of-type(odd) > * {
-  --bs-table-striped-bg: #fafbfc;
+  --bs-table-striped-bg: #F7F9FA !important;
 }
 
 .page-item.disabled .page-link {

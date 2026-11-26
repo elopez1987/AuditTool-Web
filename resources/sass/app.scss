@@ -339,13 +339,14 @@ table.dataTable > tbody > tr > td {
 table.dataTable thead th {
   color: $brand-ink !important;
   padding: .75rem;
-  background: $brand-light;
+  background: #cfd8dc !important;
   border-color: $brand-border;
   font-weight: 600;
 }
 
 table.table-striped > tbody > tr:nth-of-type(odd) > * {
-  --bs-table-striped-bg: #{$table-striped-bg};
+  //--bs-table-striped-bg: #{$table-striped-bg};
+  --bs-table-striped-bg: #F7F9FA !important;
 }
 
 .page-item.disabled .page-link {
