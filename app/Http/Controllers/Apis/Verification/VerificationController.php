@@ -6,14 +6,17 @@ namespace App\Http\Controllers\Apis\Verification;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Verification\VerificationRequest;
+use App\Models\Receipt\ReceiptAsn;
+use App\Models\Receipt\ReceiptVerification;
 use App\Services\Receipt\SaveVerificationData;
 use App\Services\Receipt\VerificationService;
 use App\Traits\Api\ModernApiResponse;
+use App\Traits\Web\General\EvidencePhotoTrait;
 use Illuminate\Http\JsonResponse;
 
 class VerificationController extends Controller
 {
-    use ModernApiResponse;
+    use EvidencePhotoTrait, ModernApiResponse;
 
     public function __construct(private readonly VerificationService $service) {}
 
@@ -43,11 +46,24 @@ class VerificationController extends Controller
      */
     public function saveVerification(VerificationRequest $request): JsonResponse
     {
-        $result = $this->service->save(SaveVerificationData::fromArray(
+        $data = SaveVerificationData::fromArray(
             $request->validated(),
             (int) $request->user()->getAuthIdentifier(),
             (string) $request->user()->username,
-        ));
+        );
+        $result = $this->service->save(
+            $data,
+            $data->evidencePath === null ? null : function (ReceiptAsn $asn) use ($data): string {
+                return $this->saveFileToModelBase64(
+                    $data->evidencePath,
+                    ReceiptVerification::class,
+                    $asn,
+                    'receipt-verifications',
+                    $data->type->value,
+                    'ReceiptVerification',
+                );
+            },
+        );
 
         return $this->modernSuccessResponse(
             data: $result,

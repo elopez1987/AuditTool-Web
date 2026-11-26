@@ -27,6 +27,9 @@ class VerificationRequest extends FormRequest
                 ['after_or_equal:ProductionDate'],
             )],
             'ExpireCode' => ['nullable', 'string', 'max:255'],
+
+            'CategoryId' => ['nullable', 'integer', 'required_if:TypeId,TRP-02'],
+            'EvidencePath' => ['nullable', 'string', 'required_if:TypeId,TRP-02'],
         ];
     }
 

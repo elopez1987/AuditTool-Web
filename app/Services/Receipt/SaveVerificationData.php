@@ -17,6 +17,8 @@ final readonly class SaveVerificationData
         public ?string $productionDate,
         public ?string $expireDate,
         public ?string $expireCode,
+        public ?int $categoryId,
+        public ?string $evidencePath,
         public int $userId,
         public string $username,
     ) {}
@@ -35,6 +37,8 @@ final readonly class SaveVerificationData
             $data['ProductionDate'] ?? null,
             $data['ExpireDate'] ?? null,
             $data['ExpireCode'] ?? null,
+            isset($data['CategoryId']) ? (int) $data['CategoryId'] : null,
+            $data['EvidencePath'] ?? null,
             $userId,
             $username,
         );

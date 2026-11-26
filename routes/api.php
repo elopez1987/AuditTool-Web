@@ -51,6 +51,7 @@ Route::withoutMiddleware(AuthorizerMiddleware::class)
                 Route::post('start-voucher', [SearchVoucherController::class, 'saveStartVerification'])->middleware('permission:verification.start-voucher')->name('start-voucher');
                 Route::post('finish-voucher', [SearchVoucherController::class, 'saveFinishVerification'])->middleware('permission:verification.finish-voucher')->name('finish-voucher');
                 Route::post('verification', [VerificationController::class, 'saveVerification'])->middleware('permission:verification.saveverification')->name('verification');
+
             });
 
         });

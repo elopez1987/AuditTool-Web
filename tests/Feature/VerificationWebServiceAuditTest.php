@@ -185,6 +185,14 @@ it('redacts credentials recursively without recording bearer headers', function 
     ])->and($event->getRawOriginal('messagejson'))->not->toContain('not-a-real-');
 });
 
+it('logs the audit termination and its successful persistence result', function (): void {
+    Log::spy();
+
+    $this->postJson('/api/v1/verification/verification', [])->assertUnprocessable();
+
+    Log::shouldHaveReceived('debug')->twice();
+});
+
 it('preserves the original response if audit persistence fails', function (): void {
     Log::spy();
     Schema::drop('systemeventwebservice');
@@ -198,4 +206,5 @@ it('preserves the original response if audit persistence fails', function (): vo
             && $context['status'] === 422
             && ! array_key_exists('message', $context)),
     );
+    Log::shouldHaveReceived('debug')->twice();
 });

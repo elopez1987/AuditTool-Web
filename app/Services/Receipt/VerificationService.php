@@ -6,7 +6,9 @@ namespace App\Services\Receipt;
 
 use App\Exceptions\ApiBusinessRuleException;
 use App\Exceptions\ApiEntityNotFoundException;
+use App\Models\Receipt\ReceiptAsn;
 use App\Repositories\Receipt\VerificationRepository;
+use Closure;
 use Illuminate\Database\ConnectionInterface;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
@@ -18,10 +20,13 @@ final readonly class VerificationService
         private ConnectionInterface $connection,
     ) {}
 
-    /** @return array{receiptAsn: array<string, mixed>, verification: array<string, mixed>, balance: array<string, mixed>, replayed: bool} */
-    public function save(SaveVerificationData $data): array
+    /**
+     * @param  null|Closure(ReceiptAsn): string  $storeEvidence
+     * @return array{receiptAsn: array<string, mixed>, verification: array<string, mixed>, balance: array<string, mixed>, replayed: bool}
+     */
+    public function save(SaveVerificationData $data, ?Closure $storeEvidence = null): array
     {
-        return $this->connection->transaction(function () use ($data): array {
+        return $this->connection->transaction(function () use ($data, $storeEvidence): array {
             $asn = $this->repository->lockAsn($data->asnId, $data->username);
 
             if ($asn === null) {
@@ -32,6 +37,8 @@ final readonly class VerificationService
                 $data->partNumberCode, $data->quantity, $data->type->value,
                 $data->source?->value, $data->lineId,
                 $data->productionDate, $data->expireDate, $data->expireCode,
+                $data->categoryId,
+                $data->evidencePath === null ? null : hash('sha256', $data->evidencePath),
             ], JSON_THROW_ON_ERROR));
             $previous = $data->operationId === null ? null : $this->repository->operation((int) $asn->id, $data->operationId);
 
@@ -85,6 +92,26 @@ final readonly class VerificationService
                 throw ValidationException::withMessages(['Quantity' => ['La unidad PZ no admite cantidades fraccionadas.']]);
             }
 
+            $quantityMissing = null;
+            $creditRotary = null;
+            $creditDefinitive = null;
+            if ($line->source === VerificationSource::CreditNote) {
+                $quantityMissing = ReceiptQuantity::expected($line->quantityMissing);
+                $creditRotary = ReceiptQuantity::expected($line->rotary);
+                $creditDefinitive = ReceiptQuantity::expected($line->definitive);
+
+                if ($quantity->isGreaterThan($quantityMissing)) {
+                    throw ValidationException::withMessages([
+                        'Quantity' => ['La cantidad registrada excede la cantidad pendiente de la nota de crédito.'],
+                    ]);
+                }
+
+                match ($data->type) {
+                    VerificationType::Rotary => $creditRotary = $creditRotary->plus($quantity),
+                    VerificationType::Definitive => $creditDefinitive = $creditDefinitive->plus($quantity),
+                };
+            }
+
             $balances = $this->repository->balances((int) $asn->id);
             $balance = $this->balance($line, $balances[$line->key()] ?? []);
 
@@ -97,6 +124,7 @@ final readonly class VerificationService
             $totals = $balances[$line->key()] ?? [];
             $totals[$data->type->value] = (string) ReceiptQuantity::decimal($totals[$data->type->value] ?? '0')->plus($quantity);
             $newBalance = $this->balance($line, $totals);
+            $evidencePath = $data->evidencePath === null ? null : $storeEvidence($asn);
             $verification = $this->repository->create([
                 'receiptasn_id' => $asn->id,
                 'inventorypartnumber_id' => $line->productId,
@@ -107,11 +135,22 @@ final readonly class VerificationService
                 'productiondate' => $data->productionDate,
                 'expiredate' => $data->expireDate,
                 'expirecode' => $data->expireCode,
+                'catetory_incidence_id' => $data->categoryId,
+                'evidence_path' => $evidencePath,
                 'created_by' => $data->userId,
                 'client_operation_id' => $data->operationId ?? (string) Str::uuid(),
                 'request_fingerprint' => $fingerprint,
                 'balance_snapshot' => $newBalance,
             ]);
+
+            if ($quantityMissing !== null) {
+                $this->repository->updateCreditBalances(
+                    $line->id,
+                    (string) $quantityMissing->minus($quantity),
+                    (string) $creditRotary,
+                    (string) $creditDefinitive,
+                );
+            }
 
             return [
                 'receiptAsn' => $asn->toArray(),

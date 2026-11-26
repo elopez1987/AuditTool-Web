@@ -7,6 +7,7 @@ namespace App\Http\Middleware;
 use App\Services\Receipt\VerificationWebServiceAuditService;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
 final class AuditVerificationWebService
@@ -21,16 +22,28 @@ final class AuditVerificationWebService
     public function terminate(Request $request, Response $response): void
     {
         $content = $response->getContent();
+        $context = [
+            'endpoint' => basename($request->path()),
+            'status' => $response->getStatusCode(),
+            'path' => $request->path(),
+        ];
 
-        $this->audit->record(
+        Log::debug('Verification web service audit termination started.', $context);
+
+        $persisted = $this->audit->record(
             payload: $request->all(),
             response: is_string($content) ? (json_decode($content, true) ?? $content) : null,
-            status: $response->getStatusCode(),
-            endpoint: basename($request->path()),
+            status: $context['status'],
+            endpoint: $context['endpoint'],
             username: $request->attributes->get('local_auth_username') ?? $request->user()?->username,
             method: $request->method(),
-            path: $request->path(),
+            path: $context['path'],
             ipAddress: $request->ip(),
         );
+
+        Log::debug('Verification web service audit persistence completed.', [
+            ...$context,
+            'persisted' => $persisted,
+        ]);
     }
 }

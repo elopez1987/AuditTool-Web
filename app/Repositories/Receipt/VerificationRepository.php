@@ -23,6 +23,21 @@ final class VerificationRepository
         return $this->accessibleAsn($username)->where('uuid_asn', $uuid)->lockForUpdate()->first();
     }
 
+    public function updateCreditBalances(
+        int $creditId,
+        string $quantityMissing,
+        string $rotary,
+        string $definitive,
+    ): void {
+        ReceiptStockCredit::query()
+            ->whereKey($creditId)
+            ->update([
+                'quantity_missing' => $quantityMissing,
+                'rotary' => $rotary,
+                'definitive' => $definitive,
+            ]);
+    }
+
     public function lockAccessibleReceiptId(int $id, string $username): ?ReceiptAsn
     {
         return $this->accessibleAsn($username)->whereKey($id)->lockForUpdate()->first();
@@ -108,6 +123,7 @@ final class VerificationRepository
                     $this->rawQuantity($line->getRawOriginal('quantity')),
                     $this->rawQuantity($line->getRawOriginal('rotary')),
                     $this->rawQuantity($line->getRawOriginal('definitive')),
+                    $stock ? null : $this->rawQuantity($line->getRawOriginal('quantity_missing')),
                     (string) $product?->prtnum,
                     $unit?->unitmeasureid,
                     $product?->lngdsc,

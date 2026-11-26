@@ -52,6 +52,9 @@ beforeEach(function (): void {
     Schema::create('systemstatus', function (Blueprint $table): void {
         $table->string('statusid')->primary();
     });
+    Schema::create('storagecategoryincidences', function (Blueprint $table): void {
+        $table->id();
+    });
     Schema::create('receiptstock', function (Blueprint $table): void {
         $table->id();
         $table->unsignedBigInteger('receiptid');
@@ -83,6 +86,7 @@ beforeEach(function (): void {
     (require database_path('migrations/2026_11_10_160934_create_receipt_verifications_table.php'))->up();
     (require database_path('migrations/2026_11_17_162645_create_receipt_stock_credits_table.php'))->up();
     (require database_path('migrations/2026_11_25_105202_add_expected_line_references_to_receipt_verifications.php'))->up();
+    (require database_path('migrations/2026_11_25_151700_add_category_to_receipt_verifications.php'))->up();
 
     DB::table('securityaccesswarehouses')->insert([
         'username' => 'verification.operator',
@@ -101,6 +105,7 @@ beforeEach(function (): void {
         ['statusid' => 'TRP-01'],
         ['statusid' => 'TRP-02'],
     ]);
+    DB::table('storagecategoryincidences')->insert(['id' => 1]);
     DB::table('receiptstock')->insert([
         'receiptid' => 1,
         'partnumberid' => 1,
@@ -182,7 +187,7 @@ it('shares the expected limit across both verification types', function (): void
 
 it('allows complete bidirectional reclassification without changing expected quantities', function (string $type): void {
     $this->postJson('/api/v1/verification/verification', [
-        ...verificationPayload('10.0000'), 'TypeId' => $type,
+        ...verificationPayload('10.0000', $type),
     ])->assertCreated()
         ->assertJsonPath('data.balance.RemainingTotal', '0.0000')
         ->assertJsonPath('data.balance.VerifiedTotal', '10.0000');
@@ -202,10 +207,38 @@ it('receives a credit-only product with a shared limit despite zero planned clas
     $this->postJson('/api/v1/verification/verification', verificationPayload(12))
         ->assertCreated()->assertJsonPath('data.balance.Source', 'CreditNote');
     $this->postJson('/api/v1/verification/verification', [
-        ...verificationPayload(8), 'TypeId' => 'TRP-02',
+        ...verificationPayload(8, 'TRP-02'),
     ])->assertCreated()->assertJsonPath('data.balance.RemainingTotal', '0.0000');
     $this->postJson('/api/v1/verification/verification', verificationPayload(1))->assertUnprocessable();
-    $this->assertDatabaseHas('receipt_stock_credits', ['id' => 1, 'quantity_missing' => 20]);
+    $this->assertDatabaseHas('receipt_stock_credits', [
+        'id' => 1,
+        'quantity_missing' => 0,
+        'rotary' => 12,
+        'definitive' => 8,
+    ]);
+});
+
+it('accumulates credit-note captures in the classification selected by the verification type', function (): void {
+    DB::table('receiptstock')->delete();
+    createVerificationCredit();
+    DB::table('receipt_stock_credits')->where('id', 1)->update([
+        'rotary' => 2,
+        'definitive' => 3,
+    ]);
+
+    $this->postJson('/api/v1/verification/verification', [
+        ...verificationPayload(4), 'Source' => 'CreditNote', 'ExpectedLineId' => 1,
+    ])->assertCreated();
+    $this->postJson('/api/v1/verification/verification', [
+        ...verificationPayload(5, 'TRP-02'), 'Source' => 'CreditNote', 'ExpectedLineId' => 1,
+    ])->assertCreated();
+
+    $this->assertDatabaseHas('receipt_stock_credits', [
+        'id' => 1,
+        'quantity_missing' => 11,
+        'rotary' => 6,
+        'definitive' => 8,
+    ]);
 });
 
 it('requires explicit origin for an ambiguous product and maintains independent balances', function (): void {
@@ -228,7 +261,7 @@ it('persists fractional kilograms with dates lot unit and authenticated user', f
         'ProductionDate' => '2025-12-01', 'ExpireDate' => '2026-12-01', 'ExpireCode' => str_repeat('L', 100),
     ])->assertCreated()->assertJsonPath('data.balance.RemainingTotal', '2.9999');
     $this->postJson('/api/v1/verification/verification', [
-        ...verificationPayload('2.9999'), 'TypeId' => 'TRP-02',
+        ...verificationPayload('2.9999', 'TRP-02'),
     ])->assertCreated()->assertJsonPath('data.balance.RemainingTotal', '0.0000');
 
     $record = ReceiptVerification::query()->firstOrFail();
@@ -265,7 +298,10 @@ it('replays an identical operation after closure without a second insert', funct
 it('rejects operation reuse with a changed payload', function (): void {
     $payload = [...verificationPayload(3), 'ClientOperationId' => 'b8d50b98-d09b-44a8-ab54-5a18449de916'];
     $this->postJson('/api/v1/verification/verification', $payload)->assertCreated();
-    $this->postJson('/api/v1/verification/verification', [...$payload, 'TypeId' => 'TRP-02'])->assertConflict();
+    $this->postJson('/api/v1/verification/verification', [
+        ...verificationPayload(3, 'TRP-02'),
+        'ClientOperationId' => 'b8d50b98-d09b-44a8-ab54-5a18449de916',
+    ])->assertConflict();
     $this->assertDatabaseCount('receipt_verifications', 1);
 });
 
@@ -471,6 +507,13 @@ function verificationExpectedBody(): array
     ];
 }
 
+function verificationEvidencePath(): string
+{
+    return 'data:image/png;base64,'.base64_encode(
+        file_get_contents(public_path('ico/3_icon-icons.com_68888.png')),
+    );
+}
+
 function createVerificationCredit(): void
 {
     DB::table('receipt_stock_credits')->insert([
@@ -480,12 +523,47 @@ function createVerificationCredit(): void
     ]);
 }
 
-function verificationPayload(int|string $quantity): array
+it('rejects a credit-note capture that exceeds its remaining missing quantity', function (): void {
+    DB::table('receiptstock')->delete();
+    createVerificationCredit();
+    $this->postJson('/api/v1/verification/verification', [
+        ...verificationPayload(15), 'Source' => 'CreditNote', 'ExpectedLineId' => 1,
+    ])->assertCreated();
+    $this->postJson('/api/v1/verification/verification', [
+        ...verificationPayload(6), 'Source' => 'CreditNote', 'ExpectedLineId' => 1,
+    ])->assertUnprocessable()
+        ->assertJsonPath('data.errors.Quantity.0', 'La cantidad registrada excede la cantidad pendiente de la nota de crédito.');
+    $this->assertDatabaseHas('receipt_stock_credits', ['id' => 1, 'quantity_missing' => 5]);
+});
+
+it('requires and persists category and evidence for definitive verifications', function (): void {
+    $this->postJson('/api/v1/verification/verification', [
+        ...verificationPayload(1), 'TypeId' => 'TRP-02',
+    ])->assertUnprocessable()
+        ->assertJsonValidationErrors(['CategoryId', 'EvidencePath'], 'data.errors');
+
+    $this->postJson('/api/v1/verification/verification', [
+        ...verificationPayload(1, 'TRP-02'),
+    ])->assertCreated();
+
+    $verification = ReceiptVerification::query()->sole();
+    expect($verification->catetory_incidence_id)->toBe(1)
+        ->and($verification->evidence_path)->toStartWith('public/CENTER/receipt-verifications/')
+        ->and(is_file(public_path('storage/'.$verification->evidence_path)))->toBeTrue();
+});
+function verificationPayload(int|string $quantity, string $type = 'TRP-01'): array
 {
-    return [
+    $payload = [
         'AsnId' => 'a8d50b98-d09b-44a8-ab54-5a18449de916',
         'PartNumberCode' => 'SKU-001',
         'Quantity' => $quantity,
-        'TypeId' => 'TRP-01',
+        'TypeId' => $type,
     ];
+
+    if ($type === 'TRP-02') {
+        $payload['CategoryId'] = 1;
+        $payload['EvidencePath'] = verificationEvidencePath();
+    }
+
+    return $payload;
 }

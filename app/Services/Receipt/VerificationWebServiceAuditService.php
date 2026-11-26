@@ -25,7 +25,7 @@ final class VerificationWebServiceAuditService
         string $method,
         string $path,
         ?string $ipAddress,
-    ): void {
+    ): bool {
         try {
             $asnId = $this->reference($payload['AsnId'] ?? null);
             $voucherId = $this->reference($payload['VoucherId'] ?? null);
@@ -46,12 +46,16 @@ final class VerificationWebServiceAuditService
                 'value03' => $ipAddress !== null ? mb_substr($ipAddress, 0, 60) : null,
                 'value04' => mb_substr($path, 0, 100),
             ]);
+
+            return true;
         } catch (Throwable $exception) {
             $this->logger->error('Verification web service audit persistence failed.', [
                 'exception_type' => $exception::class,
                 'endpoint' => $endpoint,
                 'status' => $status,
             ]);
+
+            return false;
         }
     }
 

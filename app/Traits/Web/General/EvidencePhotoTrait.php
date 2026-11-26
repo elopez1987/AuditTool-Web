@@ -70,7 +70,9 @@ trait EvidencePhotoTrait
             throw ValidationException::withMessages(['image' => 'Invalid image content or dimensions.']);
         }
         $imageName = Str::uuid().'.png';
-        File::put(public_path('storage/public/'.$model->centerid.'/'.$folder.'/'.$imageName), (string) $decodedImage->encode('png'));
+        $directory = public_path('storage/public/'.$model->centerid.'/'.$folder);
+        File::ensureDirectoryExists($directory);
+        File::put($directory.'/'.$imageName, (string) $decodedImage->encode('png'));
         $path = 'public/'.$model->centerid.'/'.$folder.'/'.$imageName;
         if ($location === 'ModelEvidence') {
             self::createEvidencePhoto($modelName, $model->id, $path, $typeid, $model);

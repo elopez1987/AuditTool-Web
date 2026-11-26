@@ -44,6 +44,8 @@ class ReceiptVerification extends Model
         'client_operation_id',
         'request_fingerprint',
         'balance_snapshot',
+        'catetory_incidence_id',
+        'evidence_path',
     ];
 
     public function receiptasn(): BelongsTo

@@ -15,6 +15,7 @@ final readonly class ExpectedReceiptLine
         public ?string $quantity,
         public ?string $rotary,
         public ?string $definitive,
+        public ?string $quantityMissing,
         public string $partNumberCode,
         public ?string $unitCode,
         public ?string $description,
