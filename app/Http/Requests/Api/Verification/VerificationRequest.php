@@ -1,30 +1,40 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests\Api\Verification;
 
-use App\Traits\Api\ApiValidationResponse;
+use App\Services\Receipt\VerificationSource;
+use App\Services\Receipt\VerificationType;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class VerificationRequest extends FormRequest
 {
-    use ApiValidationResponse;
-
     public function rules(): array
     {
         return [
-            'AsnId' => ['required', 'string', 'exists:receiptasn,uuid_asn'],
-            'PartNumberCode' => ['required', 'integer', 'exists:inventorypartnumbers,prtnum'],
-            'Quantity' => ['required', 'integer', 'min:1'],
-            'TypeId' => ['required', 'string', 'exists:systemstatus,statusid'],
-            'UnitsMeasureId' => ['required', 'integer', 'exists:inventoryunitsmeasure,id'],
-            'ProductionDate' => ['nullable', 'date', 'date_format:Y-m-d'],
-            'ExpireDate' => ['nullable', 'date', 'date_format:Y-m-d'],
-            'ExpireCode' => ['nullable', 'string', 'max:20'],
+            'AsnId' => ['required', 'uuid'],
+            'PartNumberCode' => ['required', 'string', 'max:255'],
+            'Quantity' => ['bail', 'required', 'numeric', 'regex:/^\d{1,14}(?:\.\d{1,4})?$/', 'gt:0'],
+            'TypeId' => ['required', Rule::enum(VerificationType::class)],
+            'Source' => ['nullable', 'required_with:ExpectedLineId', Rule::enum(VerificationSource::class)],
+            'ExpectedLineId' => ['nullable', 'required_with:Source', 'integer', 'min:1'],
+            'ClientOperationId' => ['nullable', 'uuid'],
+            'ProductionDate' => ['nullable', 'date_format:Y-m-d', 'before_or_equal:today'],
+            'ExpireDate' => ['nullable', 'date_format:Y-m-d', Rule::when(
+                $this->filled('ProductionDate'),
+                ['after_or_equal:ProductionDate'],
+            )],
+            'ExpireCode' => ['nullable', 'string', 'max:255'],
+
+            'CategoryId' => ['nullable', 'integer', 'required_if:TypeId,TRP-02'],
+            'EvidencePath' => ['nullable', 'string', 'required_if:TypeId,TRP-02'],
         ];
     }
 
     public function authorize(): bool
     {
-        return true;
+        return $this->user() !== null;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models\Receipt;
 
+use App\Models\Yard\StorageLocation;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Activitylog\LogOptions;
@@ -21,7 +22,7 @@ class ReceiptAsnData extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'receiptid', 'temperature',
+        'receiptid', 'temperature', 'temperatureprod',
         'locationid',
         'user_verification',
         'user_receiver',
@@ -30,5 +31,10 @@ class ReceiptAsnData extends Model
     public function receipt(): BelongsTo
     {
         return $this->belongsTo(ReceiptAsn::class, 'receiptid');
+    }
+
+    public function location(): BelongsTo
+    {
+        return $this->belongsTo(StorageLocation::class, 'locationid', 'id');
     }
 }

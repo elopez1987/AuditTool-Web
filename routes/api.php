@@ -9,6 +9,7 @@ use App\Http\Controllers\Apis\Verification\SearchVoucherController;
 use App\Http\Controllers\Apis\Verification\VerificationController;
 use App\Http\Controllers\Auth\LocalAuthController;
 use App\Http\Middleware\AuditLocalAuthentication;
+use App\Http\Middleware\AuditVerificationWebService;
 use App\Http\Middleware\AuthenticateLocalApp;
 use App\Http\Middleware\LocalAuthContext;
 use App\Http\Middleware\ThrottleLocalLogin;
@@ -44,12 +45,13 @@ Route::withoutMiddleware(AuthorizerMiddleware::class)
 
             });
 
-            Route::prefix('verification')->name('verification')->group(function () {
+            Route::prefix('verification')->name('verification')->middleware(AuditVerificationWebService::class)->group(function () {
 
                 Route::post('search-voucher', [SearchVoucherController::class, 'index'])->middleware('permission:verification.search-voucher')->name('search-voucher');
                 Route::post('start-voucher', [SearchVoucherController::class, 'saveStartVerification'])->middleware('permission:verification.start-voucher')->name('start-voucher');
                 Route::post('finish-voucher', [SearchVoucherController::class, 'saveFinishVerification'])->middleware('permission:verification.finish-voucher')->name('finish-voucher');
                 Route::post('verification', [VerificationController::class, 'saveVerification'])->middleware('permission:verification.saveverification')->name('verification');
+
             });
 
         });

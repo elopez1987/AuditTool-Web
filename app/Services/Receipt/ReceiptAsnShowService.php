@@ -9,6 +9,7 @@ use App\Models\General\StorageComment;
 use App\Models\Receipt\ReceiptAsn;
 use App\Models\Receipt\ReceiptIncidenceStock;
 use App\Models\Receipt\ReceiptStock;
+use App\Models\Receipt\ReceiptVerification;
 use App\Repositories\Receipt\ReceiptAsnShowRepository;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -22,6 +23,7 @@ final readonly class ReceiptAsnShowService
      *     stocks: Collection<int, ReceiptStock>,
      *     comments: Collection<int, StorageComment>,
      *     evidences: Collection<int, EvidencePhoto>,
+     *     definitiveVerificationEvidences: Collection<int, ReceiptVerification>,
      *     incidences: Collection<int, ReceiptIncidenceStock>
      * }|null
      */
@@ -40,6 +42,7 @@ final readonly class ReceiptAsnShowService
             'stocks' => $this->stocks($receiptId),
             'comments' => $this->repository->comments($receiptId),
             'evidences' => $this->repository->evidences($receiptId),
+            'definitiveVerificationEvidences' => $this->repository->definitiveVerificationEvidences($receiptId),
             'incidences' => $this->repository->incidences($receiptId),
         ];
     }

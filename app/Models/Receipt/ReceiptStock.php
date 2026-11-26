@@ -1,14 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Receipt;
 
 use App\Casts\TrimmedDecimal;
 use App\Models\Inventory\PartNumber\InventoryPartnumber;
+use App\Models\Inventory\UnitMeasure\InventoryUnitMeasure;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+/**
+ * @property int $id
+ * @property int $receiptid
+ * @property int $partnumberid
+ */
 class ReceiptStock extends Model
 {
     use LogsActivity;
@@ -33,6 +42,7 @@ class ReceiptStock extends Model
         'creditnote',
         'gifts',
         'loaded',
+        'unitmeasureid',
         'productiondate',
         'expiredate',
         'expirecode',
@@ -56,5 +66,15 @@ class ReceiptStock extends Model
     public function partnumber(): BelongsTo
     {
         return $this->belongsTo(InventoryPartnumber::class, 'partnumberid', 'id');
+    }
+
+    public function unitmeasure(): BelongsTo
+    {
+        return $this->belongsTo(InventoryUnitMeasure::class, 'unitmeasureid');
+    }
+
+    public function verifications(): HasMany
+    {
+        return $this->hasMany(ReceiptVerification::class, 'receiptstock_id');
     }
 }

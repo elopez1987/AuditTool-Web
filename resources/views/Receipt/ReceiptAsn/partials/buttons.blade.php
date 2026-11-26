@@ -1,8 +1,8 @@
 @if($statusid != 'TR')
     @if($statusid != 'CA')
         @can('receiptasn.edit')
-            <a href="{{url('receiptasn/' . $uuid_asn . '/edit')}}">
-                @include('buttons.edit')
+            <a href="{{url('receiptasn/' . $uuid_asn . '/edit')}}" class="btn waves-effect waves-light btn-outline-info btn-sm ml-2 mr-2">
+                <i class="mdi mdi-pencil font-12"></i>
             </a>
         @endcan
     @endif
@@ -10,8 +10,8 @@
 @if ($statusid != 'TR')
     @if($statusid != 'CA')
         @can('receiptasn.checklistant')
-            <a href="{{url('receiptasn/' . $uuid_asn . '/checklist')}}">
-                <img src="{{asset('/ico/checklistin.png')}}" alt="" class="img-16 ml-1 mr-1">
+            <a href="{{url('receiptasn/' . $uuid_asn . '/checklist')}}"  class="btn waves-effect waves-light btn-outline-info btn-sm ml-2 mr-2">
+                <i class="mdi mdi-view-list font-12"></i>
             </a>
         @endcan
     @endif
@@ -19,15 +19,15 @@
 @can('addstock')
     @if ($statusid != 'TR' )
         @if($statusid != 'CA')
-            <a href="{{url('receiptasn/' . $uuid_asn . '/addstock')}}">
-                <img src="{{asset('/ico/storageareas1.png')}}" alt="" class="img-16 ml-1 mr-1">
+            <a href="{{url('receiptasn/' . $uuid_asn . '/addstock')}}"  class="btn waves-effect waves-light btn-outline-info btn-sm ml-2 mr-2">
+                <i class="mdi mdi-shopping font-12"></i>
             </a>
         @endif
     @endif
 @endcan
 @can('receiptasn.show')
-    <a href="{{url('receiptasn/' . $uuid_asn )}}">
-        <img src="{{asset('/ico/viewdetail.png')}}" alt="" class="img-16 ml-1">
+    <a href="{{url('receiptasn/' . $uuid_asn )}}" class="btn waves-effect waves-light btn-outline-info btn-sm ml-2 mr-2">
+        <i class="mdi mdi-account-search font-12 "></i>
     </a>
 @endcan
 

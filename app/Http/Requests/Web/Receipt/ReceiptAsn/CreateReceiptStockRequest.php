@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests\Web\Receipt\ReceiptAsn;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -10,8 +12,8 @@ class CreateReceiptStockRequest extends FormRequest
     {
         return [
             'prtnum' => 'required|string|exists:inventorypartnumbers,prtnum',
-            'rotary' => ['required', 'int'],
-            'definitive' => ['required', 'int'],
+            'rotary' => ['required', 'numeric', 'regex:/^\d{1,14}(?:\.\d{1,4})?$/'],
+            'definitive' => ['required', 'numeric', 'regex:/^\d{1,14}(?:\.\d{1,4})?$/'],
         ];
     }
 

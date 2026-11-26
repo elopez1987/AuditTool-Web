@@ -29,12 +29,26 @@
             {data: 'provider.name', name: 'provider.name'},
             {data: 'operator.name', name: 'operator.name'},
             {
-                data: 'status.name', name: 'status.name',
-                createdCell: function (td, cellData, rowData) {
-                    $(td).css({
-                        'background-color': (rowData.status.auxiliary01),
-                        'color': 'black'
-                    });
+                data: 'status.name',
+                name: 'status.name',
+                render: function (data, type, row) {
+                    if (type !== 'display') {
+                        return data;
+                    }
+
+                    const color = (row.status && row.status.auxiliary01) ? row.status.auxiliary01 : '#e9ecef';
+                    const name  = $('<div>').text(data ?? '').html(); // escapa HTML
+
+                    return `<span style="
+                    display: inline-block;
+                    padding: 4px 10px;
+                    border-radius: 8px;
+                    font-size: 10px !important;
+                    font-weight: 400;
+                    line-height: 1.2;
+                    white-space: nowrap;
+                    background-color: ${color};
+                    color: black;">${name}</span>`;
                 }
             },
             {data: 'btn'},

@@ -54,8 +54,7 @@ class StorageComment extends Model
     protected $table = 'storagecomments';
 
     protected $fillable = [
-        'modeltype', 'modelid', 'comment', 'createuser',
-        'auxiliary01', 'auxiliary02', 'auxiliary03', 'auxiliary04',
+        'modeltype', 'modelid', 'comment', 'createuser', 'type',
     ];
 
     public function getActivitylogOptions(): LogOptions
@@ -68,12 +67,7 @@ class StorageComment extends Model
         return $this->belongsTo(User::class, 'createuser', 'id')->withTrashed();
     }
 
-    public static function getCommentForModel($id, $model)
-    {
-        return StorageComment::where('modelid', $id)->where('modeltype', $model)->get();
-    }
-
-    public static function createCommentary($model, $key, $request)
+    public static function createCommentary($model, $key, $request): void
     {
         StorageComment::create([
             'modeltype' => $model,

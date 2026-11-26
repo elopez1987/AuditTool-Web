@@ -1,19 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Receipt;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Receipt\ReceiptAsn\CreateReceiptStockRequest;
-use App\Models\Inventory\PartNumber\InventoryPartnumber;
+use App\Http\Requests\Web\Receipt\ReceiptAsn\UpdateReceiptStockRequest;
 use App\Models\Receipt\ReceiptAsn;
 use App\Models\Receipt\ReceiptStock;
-use Exception;
+use App\Services\Receipt\ExpectedReceiptMutationService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 class ReceiptAsnStockController extends BaseController
 {
+    public function __construct(private readonly ExpectedReceiptMutationService $service) {}
+
     public function addstock($id)
     {
         $receiptasn = ReceiptAsn::controlAccessUser()->where('uuid_asn', $id)->first();
@@ -30,56 +32,21 @@ class ReceiptAsnStockController extends BaseController
 
     public function addstockstore(CreateReceiptStockRequest $request, $id)
     {
-        $error = null;
-        DB::beginTransaction();
-        try {
-            $receipt = ReceiptAsn::controlAccessUser()->where('id', $id)->first();
-            if (empty($receipt)) {
-                return $this->errorResponse('No existe número de recibo solicitado.');
-            }
+        $this->service->addStock((int) $id, (string) $request->user()->username, $request->validated());
 
-            $sku = InventoryPartnumber::controlAccessUser()->wherePrtnum($request['prtnum'])->first();
-            if (empty($sku)) {
-                return $this->errorResponse('El número de parte no existe, favor de validar.');
-            }
-
-            $this->createReceiptStock($request, $receipt, $sku);
-            DB::commit();
-
-            return $this->redirectBackSuccessMessage('Stock agregado con exito.');
-        } catch (Exception $e) {
-            Log::info($e->getMessage());
-            DB::rollback();
-
-            return $this->errorResponse('No se pudo agregar el stock, favor de validar.'.$error);
-        }
+        return $this->redirectBackSuccessMessage('Stock agregado con exito.');
     }
 
-    private function createReceiptStock($request, $receipt, $sku)
+    public function updateQuantityStock($id, UpdateReceiptStockRequest $request)
     {
-        ReceiptStock::create([
-            'receiptid' => $receipt->id,
-            'partnumberid' => $sku->id,
-            'quantity' => $request['rotary'] + $request['definitive'],
-            'rotary' => $request['rotary'],
-            'definitive' => $request['definitive'],
-        ]);
-    }
-
-    public function updateQuantityStock($id, Request $request)
-    {
-        $stock = ReceiptStock::findOrFail($id);
-        $stock->quantity = $request['quantity'];
-        $stock->expirecode = $request['expirecode'];
-        $stock->save();
+        $this->service->updateStock((int) $id, (string) $request->user()->username, $request->validated());
 
         return $this->redirectBackSuccess();
     }
 
-    public function deletestock($id)
+    public function deletestock($id, Request $request)
     {
-        $stock = ReceiptStock::findOrFail($id);
-        $stock->delete();
+        $this->service->deleteStock((int) $id, (string) $request->user()->username);
 
         return $this->redirectBackSuccess();
     }

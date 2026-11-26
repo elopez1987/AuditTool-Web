@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Receipt;
 
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
 use App\Models\Configuration\Schemas\SystemStatus;
 use App\Models\Configuration\Warehouses\SystemWarehouse;
-use App\Models\Security\Users\SecurityAccessWarehouse;
 use App\Models\Yard\StorageOperator;
 use App\Observers\Receipt\ReceiptAsnObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
@@ -13,11 +14,19 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Support\Facades\Auth;
 use Ramsey\Uuid\Uuid;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+/**
+ * @property int $id
+ * @property string $uuid_asn
+ * @property string $centerid
+ * @property string $warehouseid
+ * @property string $statusid
+ */
 #[ObservedBy([ReceiptAsnObserver::class])]
 class ReceiptAsn extends Model
 {
@@ -43,23 +52,17 @@ class ReceiptAsn extends Model
         'schemaid' => 'SRE',
     ];
 
+    /** @return Builder<static> */
     public static function controlAccessUser(): Builder
     {
         $username = Auth::user()->username;
 
-        return ReceiptAsn::query()
-            ->whereIn(
-                'receiptasn.centerid',
-                SecurityAccessWarehouse::query()
-                    ->where('username', $username)
-                    ->select('centerid'),
-            )
-            ->whereIn(
-                'receiptasn.warehouseid',
-                SecurityAccessWarehouse::query()
-                    ->where('username', $username)
-                    ->select('warehouseid'),
-            );
+        return ReceiptAsn::query()->whereExists(function (QueryBuilder $query) use ($username): void {
+            $query->selectRaw('1')->from('securityaccesswarehouses')
+                ->where('username', $username)
+                ->whereColumn('securityaccesswarehouses.centerid', 'receiptasn.centerid')
+                ->whereColumn('securityaccesswarehouses.warehouseid', 'receiptasn.warehouseid');
+        });
     }
 
     //    ------------------------------ Relaciones ------------------------------------------
@@ -93,9 +96,24 @@ class ReceiptAsn extends Model
         return $this->hasMany(ReceiptStock::class, 'receiptid', 'id');
     }
 
+    public function stockcredits(): HasMany
+    {
+        return $this->hasMany(ReceiptStockCredit::class, 'receiptasn_id');
+    }
+
+    public function verifications(): HasMany
+    {
+        return $this->hasMany(ReceiptVerification::class, 'receiptasn_id');
+    }
+
     public function timereceipt(): BelongsTo
     {
         return $this->belongsTo(ReceiptAsnTime::class, 'id', 'receiptid');
+    }
+
+    public function receiptdata(): BelongsTo
+    {
+        return $this->belongsTo(ReceiptAsnData::class, 'id', 'receiptid');
     }
 
     //  -----------------------------------------  Funciones auxiliares -------------------------------------------------

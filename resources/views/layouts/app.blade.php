@@ -17,7 +17,7 @@
                 <ul id="sidebarnav">
 
                     <li class="sidebar-item"><a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                                href="{{route('home')}}" aria-expanded="false">
+                                                href="{{route('dashboard')}}" aria-expanded="false">
                             <img src="{{asset('ico/dashboard.png')}}"
                                  alt="" class="img-16 ml-2 mr-2">
                             <span class="hide-menu">Dashboard</span></a>
@@ -55,6 +55,14 @@
                                                             class="sidebar-link">
                                                         <i class="lni lni-layers"></i>
                                                         <span class="hide-menu"> Horario </span></a>
+                                                </li>
+                                            @endcan
+                                            @can('schedulereceipt')
+                                                <li class="sidebar-item"><a
+                                                            href="{{route('receiptpanel.index')}}"
+                                                            class="sidebar-link">
+                                                        <i class="lni lni-layers"></i>
+                                                        <span class="hide-menu"> Panel de seguimiento </span></a>
                                                 </li>
                                             @endcan
                                         </ul>
@@ -585,7 +593,8 @@
                                 $logo = config("center_logos.$centerId");
                             @endphp
                             @if($logo)
-                                <img src="{{ asset('img/' . $logo['image']) }}" alt="Logo" style="width: {{ $logo['width'] }}; height: {{ $logo['height'] }}">
+                                <img src="{{ asset('img/' . $logo['image']) }}" alt="Logo"
+                                     style="width: {{ $logo['width'] }}; height: {{ $logo['height'] }}">
                             @endif
                         @endproduction
                     @endauth

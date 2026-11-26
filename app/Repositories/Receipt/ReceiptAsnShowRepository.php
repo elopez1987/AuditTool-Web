@@ -9,6 +9,8 @@ use App\Models\General\StorageComment;
 use App\Models\Receipt\ReceiptAsn;
 use App\Models\Receipt\ReceiptIncidenceStock;
 use App\Models\Receipt\ReceiptStock;
+use App\Models\Receipt\ReceiptVerification;
+use App\Services\Receipt\VerificationType;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -22,6 +24,8 @@ final class ReceiptAsnShowRepository
                 'warehouse:warehouseid,name',
                 'provider:id,name',
                 'timereceipt',
+                'stockplan.partnumber',
+                'stockcredits.inventorypartnumber',
             ])
             ->where('uuid_asn', $uuid)
             ->first();
@@ -80,6 +84,19 @@ final class ReceiptAsnShowRepository
             ->where('model_type', 'ReceiptAsn')
             ->whereIn('auxiliary01', ['DES', 'INC'])
             ->orderByDesc('created_at')
+            ->orderByDesc('id')
+            ->get();
+    }
+
+    /** @return Collection<int, ReceiptVerification> */
+    public function definitiveVerificationEvidences(int $receiptId): Collection
+    {
+        return ReceiptVerification::query()
+            ->with('inventorypartnumber:id,prtnum,lngdsc')
+            ->where('receiptasn_id', $receiptId)
+            ->where('type_id', VerificationType::Definitive->value)
+            ->whereNotNull('evidence_path')
+            ->where('evidence_path', '!=', '')
             ->orderByDesc('id')
             ->get();
     }

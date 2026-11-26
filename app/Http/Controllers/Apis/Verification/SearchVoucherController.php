@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Apis\Verification;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\Verification\saveFinishProcessRequest;
+use App\Http\Requests\Api\Verification\SaveFinishProcessRequest;
 use App\Http\Requests\Api\Verification\SaveStartProcessRequest;
 use App\Http\Requests\Api\Verification\SearchvoucherRequest;
 use App\Http\Resources\ReeceiptAsnResource;
@@ -66,11 +68,13 @@ class SearchVoucherController extends Controller
     /**
      * Iniciar verificación de un voucher.
      *
-     * Registra la ubicación, temperatura, usuario verificador y fecha de inicio
+     * Registra la ubicación, temperaturas, usuario verificador y fecha de inicio
      * de descarga del recibo y cambia su estatus a en proceso (IP).
      * AsnId corresponde a receiptasn.uuid_asn, no al número de voucher.
      * LocationId debe existir en storagelocations.id.
      * Temperature admite valores entre -40 y 100 con hasta dos decimales.
+     * TemperatureProd es la temperatura del producto, es obligatoria y admite
+     * valores entre -40 y 100 con hasta dos decimales.
      * Devuelve 404 si el recibo no está disponible para el usuario o su estatus
      * no permite iniciar; devuelve 409 si ya está en proceso.
      * En éxito data es un arreglo vacío y meta.service es api-service.
@@ -88,11 +92,12 @@ class SearchVoucherController extends Controller
     #[BodyParameter('AsnId', description: 'Identificador uuid_asn de un recibo existente.', required: true, type: 'string', example: 'a8d50b98-d09b-44a8-ab54-5a18449de916')]
     #[BodyParameter('LocationId', description: 'ID entero de una ubicación existente.', required: true, type: 'int', example: 1)]
     #[BodyParameter('Temperature', description: 'Temperatura entre -40 y 100, con cero a dos decimales.', required: true, type: 'float', example: 4.5)]
+    #[BodyParameter('TemperatureProd', description: 'Temperatura del producto entre -40 y 100, con cero a dos decimales.', required: true, type: 'float', example: 4.5)]
     #[Response(401, 'Access token ausente, inválido, expirado o revocado.', type: 'array{success: false, code: 401, message: string, meta: array{version: string, service: string, processDate: string}, data: null}')]
     #[Response(403, 'Cuenta o centro de distribución no disponibles.', type: 'array{success: false, code: 403, message: string, meta: array{version: string, service: string, processDate: string}, data: null}')]
     #[Response(404, 'El recibo no existe o no está disponible para iniciar el proceso.', type: 'array{success: false, code: 404, message: string, meta: array{version: string, service: string, processDate: string}, data: null}')]
     #[Response(409, 'El recibo ya está en estatus en proceso.', type: 'array{success: false, code: 409, message: string, meta: array{version: string, service: string, processDate: string}, data: null}')]
-    #[Response(422, 'AsnId, LocationId o Temperature no cumplen las reglas de validación.', type: 'array{success: false, code: 422, message: string, meta: array{version: string, service: string, processDate: string}, data: array{errors: array<string, list<string>>}}')]
+    #[Response(422, 'AsnId, LocationId, Temperature o TemperatureProd no cumplen las reglas de validación.', type: 'array{success: false, code: 422, message: string, meta: array{version: string, service: string, processDate: string}, data: array{errors: array<string, list<string>>}}')]
     public function saveStartVerification(SaveStartProcessRequest $request)
     {
         $this->receiptAsnService->updateStartAsn($request->validated());
@@ -130,9 +135,13 @@ class SearchVoucherController extends Controller
     #[Response(404, 'El recibo no existe o no está disponible para el usuario o por su estatus.', type: 'array{success: false, code: 404, message: string, meta: array{version: string, service: string, processDate: string}, data: null}')]
     #[Response(409, 'El vale ya se encuentra en PRE-DESCARGA o el recibo no se encuentra en estatus EN PROCESO.', type: 'array{success: false, code: 409, message: string, meta: array{version: string, service: string, processDate: string}, data: null}')]
     #[Response(422, 'AsnId ausente, de tipo inválido o inexistente.', type: 'array{success: false, code: 422, message: string, meta: array{version: string, service: string, processDate: string}, data: array{errors: array<string, list<string>>}}')]
-    public function saveFinishVerification(saveFinishProcessRequest $request)
+    public function saveFinishVerification(SaveFinishProcessRequest $request)
     {
-        $this->receiptAsnService->updateFinishAsn($request->validated());
+        $this->receiptAsnService->updateFinishAsn([
+            ...$request->validated(),
+            'Username' => (string) $request->user()->username,
+            'UserId' => (int) $request->user()->getAuthIdentifier(),
+        ]);
 
         return $this->modernSuccessResponse(
             data: [],

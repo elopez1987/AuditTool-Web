@@ -3,7 +3,7 @@
             data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
         <i class="ti ti-settings"></i>
-        <span>  Acciones </span>
+        <span class="font-12">  Acciones </span>
     </button>
     <div class="dropdown-menu animated flipInX">
 
@@ -11,7 +11,7 @@
             @if ($statusid == 'PG')
                 <a href="{{url('receiptasn/' . $uuid_asn . '/edit')}}" class="dropdown-item">
                     <img src="{{asset('/ico/edit-validated_40458.png')}}" alt="" class="img-16 ml-2 mr-2">
-                    <span class="text-capitalize">Modificar registro</span>
+                    <span class="text-capitalize font-12" >Modificar registro</span>
                 </a>
             @endif
         @endcan
@@ -20,7 +20,7 @@
             @can('receiptasn.checklistant')
                 <a href="{{url('receiptasn/' . $uuid_asn . '/checklist')}}" class="dropdown-item">
                     <img src="{{asset('/ico/checklistin.png')}}" alt="" class="img-16 ml-2 mr-2">
-                    <span class="text-capitalize">Realizar check list de documentos</span>
+                    <span class="text-capitalize font-12">Realizar check list de documentos</span>
                 </a>
             @endcan
         @endif
@@ -29,7 +29,7 @@
             @if ($statusid != 'TR' )
                 <a href="{{url('receiptasn/' . $uuid_asn . '/addstock')}}" class="dropdown-item">
                     <img src="{{asset('/ico/storageareas1.png')}}" alt="" class="img-16 ml-2 mr-2">
-                    <span class="text-capitalize">Registrar solicitud de pedido</span>
+                    <span class="text-capitalize font-12">Registrar solicitud de pedido</span>
                 </a>
             @endif
         @endcan
@@ -38,7 +38,7 @@
         @can('receiptasn.show')
             <a href="{{url('receiptasn/' . $uuid_asn )}}" class="dropdown-item">
                 <img src="{{asset('/ico/viewdetail.png')}}" alt="" class="img-16 ml-2 mr-2">
-                <span class="text-capitalize">Detalle del recibo</span>
+                <span class="text-capitalize font-12">Detalle del recibo</span>
             </a>
         @endcan
 

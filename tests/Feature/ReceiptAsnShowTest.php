@@ -56,7 +56,34 @@ beforeEach(function (): void {
         $table->string('partnumberid');
         $table->string('expirecode')->nullable();
         $table->double('quantity');
+        $table->double('rotary')->nullable();
+        $table->double('definitive')->nullable();
+        $table->double('invoice')->nullable();
+        $table->double('selled')->nullable();
+        $table->double('creditnote')->nullable();
+        $table->double('gifts')->nullable();
+        $table->double('loaded')->nullable();
         $table->bigInteger('unitmeasureid')->nullable();
+    });
+    Schema::create('receipt_stock_credits', function (Blueprint $table): void {
+        $table->id();
+        $table->bigInteger('receiptasn_id');
+        $table->bigInteger('inventorypartnumber_id');
+        $table->double('quantity');
+        $table->double('rotary')->nullable();
+        $table->double('definitive')->nullable();
+        $table->double('quantity_missing')->nullable();
+        $table->bigInteger('inventoryunitsmeasure_id')->nullable();
+    });
+    Schema::create('receipt_verifications', function (Blueprint $table): void {
+        $table->id();
+        $table->bigInteger('receiptasn_id');
+        $table->bigInteger('inventorypartnumber_id');
+        $table->bigInteger('receiptstock_id')->nullable();
+        $table->bigInteger('receipt_stock_credit_id')->nullable();
+        $table->double('quantity');
+        $table->string('type_id');
+        $table->string('evidence_path')->nullable();
     });
     Schema::create('receiptcontainers', function (Blueprint $table): void {
         $table->id();
@@ -68,9 +95,11 @@ beforeEach(function (): void {
         $table->id();
         $table->string('prtnum');
         $table->string('lngdsc');
+        $table->string('barcode')->nullable();
     });
     Schema::create('inventoryunitsmeasure', function (Blueprint $table): void {
         $table->id();
+        $table->string('unitmeasureid')->nullable();
         $table->string('description');
     });
     Schema::create('storagecomments', function (Blueprint $table): void {
@@ -122,13 +151,13 @@ beforeEach(function (): void {
     ]);
     DB::table('receiptasntimes')->insert(['receiptid' => 1, 'send_to_billing' => '2026-01-01 10:00:00']);
     DB::table('inventorypartnumbers')->insert([
-        ['id' => 1, 'prtnum' => 'SKU-001', 'lngdsc' => 'Material One'],
-        ['id' => 2, 'prtnum' => 'SKU-002', 'lngdsc' => 'Material Two'],
+        ['id' => 1, 'prtnum' => 'SKU-001', 'lngdsc' => 'Material One', 'barcode' => '750000000001'],
+        ['id' => 2, 'prtnum' => 'SKU-002', 'lngdsc' => 'Material Two', 'barcode' => '750000000002'],
     ]);
-    DB::table('inventoryunitsmeasure')->insert(['id' => 1, 'description' => 'Pieces']);
+    DB::table('inventoryunitsmeasure')->insert(['id' => 1, 'unitmeasureid' => 'PZ', 'description' => 'Pieces']);
     DB::table('receiptstock')->insert([
-        ['id' => 1, 'receiptid' => 1, 'partnumberid' => '1', 'quantity' => 7, 'unitmeasureid' => 1, 'expirecode' => 'LOT-A'],
-        ['id' => 2, 'receiptid' => 1, 'partnumberid' => '2', 'quantity' => 12.5, 'unitmeasureid' => 1, 'expirecode' => 'LOT-B'],
+        ['id' => 1, 'receiptid' => 1, 'partnumberid' => '1', 'quantity' => 7, 'rotary' => 3, 'definitive' => 4, 'unitmeasureid' => 1, 'expirecode' => 'LOT-A'],
+        ['id' => 2, 'receiptid' => 1, 'partnumberid' => '2', 'quantity' => 12.5, 'rotary' => 4.5, 'definitive' => 8, 'unitmeasureid' => 1, 'expirecode' => 'LOT-B'],
     ]);
     DB::table('receiptcontainers')->insert([
         ['receiptid' => 1, 'partnumberid' => 1, 'quantity' => 3],
@@ -275,10 +304,109 @@ it('provides the data contract required by the restored original view', function
     expect($view->name())->toBe('Receipt.ReceiptAsn.show');
     $data = $view->getData();
 
-    expect($data)->toHaveKeys(['receiptasn', 'stocks', 'coments', 'evidences', 'incidences']);
+    expect($data)->toHaveKeys([
+        'receiptasn',
+        'stocks',
+        'coments',
+        'evidences',
+        'definitiveVerificationEvidences',
+        'incidences',
+        'expectedProducts',
+        'verificationLines',
+    ]);
     expect($data['evidences'])->toHaveCount(2);
     expect((float) $data['stocks'][0]->quantitytrue)->toBe(7.0);
     expect((float) $data['stocks'][1]->quantitytrue)->toBe(12.5);
+});
+
+it('includes route and credit-note expected lines with their verification detail', function (): void {
+    DB::table('receipt_stock_credits')->insert([
+        'id' => 1,
+        'receiptasn_id' => 1,
+        'inventorypartnumber_id' => 1,
+        'quantity' => 10,
+        'rotary' => 0,
+        'definitive' => 10,
+        'quantity_missing' => 10,
+        'inventoryunitsmeasure_id' => 1,
+    ]);
+    DB::table('receipt_verifications')->insert([
+        'receiptasn_id' => 1,
+        'inventorypartnumber_id' => 1,
+        'receiptstock_id' => 1,
+        'quantity' => 2,
+        'type_id' => 'TRP-01',
+    ]);
+    DB::table('receipt_verifications')->insert([
+        'receiptasn_id' => 1,
+        'inventorypartnumber_id' => 1,
+        'receipt_stock_credit_id' => 1,
+        'quantity' => 3,
+        'type_id' => 'TRP-02',
+    ]);
+
+    $view = $this->app->make(ReceiptAsnsController::class)
+        ->show('a8d50b98-d09b-44a8-ab54-5a18449de916');
+    $data = $view->getData();
+
+    expect($data['expectedProducts'])->toHaveCount(3)
+        ->and($data['expectedProducts'][0])->toMatchArray([
+            'Source' => 'StockRoute',
+            'PartNumberCode' => 'SKU-001',
+            'UoMBase' => 'PZ',
+            'ExpectedTotal' => '7.0000',
+            'ExpectedRotary' => '3.0000',
+            'ExpectedDefinitive' => '4.0000',
+        ])
+        ->and($data['expectedProducts'][2])->toMatchArray([
+            'Source' => 'CreditNote',
+            'PartNumberCode' => 'SKU-001',
+            'UoMBase' => 'PZ',
+            'ExpectedTotal' => '10.0000',
+            'ExpectedRotary' => '0.0000',
+            'ExpectedDefinitive' => '10.0000',
+        ])
+        ->and($data['verificationLines'][0]['Source'])->toBe('StockRoute')
+        ->and($data['verificationLines'][0]['VerifiedTotal'])->toBe('2.0000')
+        ->and($data['verificationLines'][0]['VerifiedRotary'])->toBe('2.0000')
+        ->and($data['verificationLines'][0]['VerifiedDefinitive'])->toBe('0.0000')
+        ->and($data['verificationLines'][0]['RemainingTotal'])->toBe('5.0000')
+        ->and($data['verificationLines'][2]['Source'])->toBe('CreditNote')
+        ->and($data['verificationLines'][2]['VerifiedTotal'])->toBe('3.0000')
+        ->and($data['verificationLines'][2]['VerifiedRotary'])->toBe('0.0000')
+        ->and($data['verificationLines'][2]['VerifiedDefinitive'])->toBe('3.0000')
+        ->and($data['verificationLines'][2]['RemainingTotal'])->toBe('7.0000');
+});
+
+it('exposes only definitive verification evidence with its product', function (): void {
+    DB::table('receipt_verifications')->insert([
+        'receiptasn_id' => 1,
+        'inventorypartnumber_id' => 1,
+        'receiptstock_id' => 1,
+        'quantity' => 2,
+        'type_id' => 'TRP-01',
+        'evidence_path' => 'public/CENTER/receipt-verifications/rotary.png',
+    ]);
+    DB::table('receipt_verifications')->insert([
+        'receiptasn_id' => 1,
+        'inventorypartnumber_id' => 2,
+        'receiptstock_id' => 2,
+        'quantity' => 4,
+        'type_id' => 'TRP-02',
+        'evidence_path' => 'public/CENTER/receipt-verifications/definitive.png',
+    ]);
+
+    $view = $this->app->make(ReceiptAsnsController::class)
+        ->show('a8d50b98-d09b-44a8-ab54-5a18449de916');
+    $data = $view->getData();
+
+    expect($data['definitiveVerificationEvidences'])->toHaveCount(1)
+        ->and($data['definitiveVerificationEvidences'][0]->type_id)->toBe('TRP-02')
+        ->and($data['definitiveVerificationEvidences'][0]->evidence_path)
+        ->toBe('public/CENTER/receipt-verifications/definitive.png')
+        ->and($data['definitiveVerificationEvidences'][0]->relationLoaded('inventorypartnumber'))->toBeTrue()
+        ->and($data['definitiveVerificationEvidences'][0]->inventorypartnumber->prtnum)->toBe('SKU-002')
+        ->and($data['definitiveVerificationEvidences'][0]->inventorypartnumber->lngdsc)->toBe('Material Two');
 });
 
 it('preserves receipt status for the original view action conditions', function (string $status): void {

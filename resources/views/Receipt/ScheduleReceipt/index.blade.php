@@ -78,7 +78,10 @@
                             <tr>
                                 <th>Opciones</th>
                                 <th>Bodega</th>
-                                <th>Recibo</th>
+                                <th>Vale de recepción</th>
+                                <th>Clave de Ruta</th>
+                                <th>Nombre de Ruta</th>
+                                <th>Operador</th>
                                 <th>Cortina</th>
                                 <th>Estatus del recibo</th>
                             </tr>

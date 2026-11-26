@@ -4,6 +4,7 @@ use App\Http\Controllers\Receipt\CategoryIncidences\StorageCategoryIncidencesCon
 use App\Http\Controllers\Receipt\EventReceiptController;
 use App\Http\Controllers\Receipt\ImportDataReceiptController;
 use App\Http\Controllers\Receipt\MonitorReceiptPlantController;
+use App\Http\Controllers\Receipt\PanelController;
 use App\Http\Controllers\Receipt\ReceiptAsnsController;
 use App\Http\Controllers\Receipt\ReceiptAsnStockController;
 use App\Http\Controllers\Receipt\ReportReceiptsController;
@@ -55,6 +56,10 @@ Route::middleware(['auth'])->group(function () {
     //    Monitos de arribos de planta
     Route::get('monitorreceiptplant', [MonitorReceiptPlantController::class, 'index'])->name('monitorreceiptplant');
     Route::get('getReceiptInTransit', [MonitorReceiptPlantController::class, 'getReceiptInTransit'])->name('getReceiptInTransit');
+
+    //  Panel de seguimiento de recibos en proceso
+    Route::get('receiptpanel', [PanelController::class, 'index'])->name('receiptpanel.index');
+    Route::get('receiptpanel/data', [PanelController::class, 'getReceiptProcesses'])->name('receiptpanel.data');
 
     //	Categorias de incidencias en recepcion
     Route::resource('categories-incidents', StorageCategoryIncidencesController::class)->except('destroy', 'show');
