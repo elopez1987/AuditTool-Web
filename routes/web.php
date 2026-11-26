@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\CustomResetPasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/', function () {
@@ -20,4 +21,7 @@ Route::post('password/reset', [CustomResetPasswordController::class, 'reset'])
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard/receipt-metrics', [DashboardController::class, 'receiptMetrics'])
+        ->name('dashboard.receipt-metrics');
 });

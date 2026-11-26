@@ -17,7 +17,7 @@
                 <ul id="sidebarnav">
 
                     <li class="sidebar-item"><a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                                href="{{route('home')}}" aria-expanded="false">
+                                                href="{{route('dashboard')}}" aria-expanded="false">
                             <img src="{{asset('ico/dashboard.png')}}"
                                  alt="" class="img-16 ml-2 mr-2">
                             <span class="hide-menu">Dashboard</span></a>
