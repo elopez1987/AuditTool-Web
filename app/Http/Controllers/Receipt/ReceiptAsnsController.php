@@ -6,10 +6,12 @@ namespace App\Http\Controllers\Receipt;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Web\Receipt\ReceiptAsn\CreateReceiptAsnRequest;
+use App\Http\Resources\ReeceiptAsnResource;
 use App\Models\Receipt\ReceiptAsn;
 use App\Models\Receipt\ReceiptStock;
 use App\Services\Receipt\ExpectedReceiptMutationService;
 use App\Services\Receipt\ReceiptAsnShowService;
+use App\Services\Receipt\VerificationService;
 use App\ViewModels\Receipt\ReceiptAsnShowViewModel;
 use Carbon\Carbon;
 use Exception;
@@ -25,6 +27,7 @@ class ReceiptAsnsController extends BaseController
     public function __construct(
         private readonly ReceiptAsnShowService $showService,
         private readonly ReceiptAsnShowViewModel $showViewModel,
+        private readonly VerificationService $verificationService,
     ) {}
 
     public function index()
@@ -138,7 +141,14 @@ class ReceiptAsnsController extends BaseController
             return $this->errorResponse('No se encuentra el número de recibo solicitado.');
         }
 
-        return view('Receipt.ReceiptAsn.show', $this->showViewModel->toArray($details));
+        $receipt = $details['receipt'];
+        $receipt->setAttribute(
+            'verification_summary',
+            $this->verificationService->summary((int) $receipt->id),
+        );
+        $receiptData = ReeceiptAsnResource::make($receipt)->resolve(request());
+
+        return view('Receipt.ReceiptAsn.show', $this->showViewModel->toArray($details, $receiptData));
     }
 
     public function destroy(ReceiptAsn $receiptasn, Request $request, ExpectedReceiptMutationService $service)

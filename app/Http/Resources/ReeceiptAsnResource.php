@@ -15,17 +15,24 @@ class ReeceiptAsnResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
+        $provider = $this->loadedRelation('provider');
+        $operator = $this->loadedRelation('operator');
+        $status = $this->loadedRelation('status');
+        $receiptData = $this->loadedRelation('receiptdata');
+        $location = $receiptData?->relationLoaded('location') ? $receiptData->getRelation('location') : null;
+        $timeReceipt = $this->loadedRelation('timereceipt');
+
         return [
             'CenterId' => $this->centerid,
             'WarehouseId' => $this->warehouseid,
             'AsnId' => $this->uuid_asn,
             'VoucherId' => $this->shipmentid,
-            'RouteName' => $this->provider->name ?? '',
-            'RouteId' => $this->provider?->providerid,
-            'OperatorName' => $this->operator?->name,
-            'OperatorId' => $this->operator?->barcode,
+            'RouteName' => $provider?->name ?? '',
+            'RouteId' => $provider?->providerid,
+            'OperatorName' => $operator?->name,
+            'OperatorId' => $operator?->barcode,
             'StatusId' => $this->statusid,
-            'StatusName' => $this->status->name ?? '',
+            'StatusName' => $status?->name ?? '',
 
             'Products' => array_merge(
                 ReceiptStockResource::collection($this->stockplan)->resolve($request),
@@ -34,12 +41,19 @@ class ReeceiptAsnResource extends JsonResource
             'ExpectedLines' => $this->verification_summary ?? [],
 
             'AsnData' => [
-                'Temperature' => $this->receiptdata?->temperature ?? '',
-                'TemperatureProd' => $this->receiptdata?->temperatureprod ?? '',
-                'Door' => $this->receiptdata?->location?->name ?? '',
-                'StartTime' => $this->timereceipt->unloadstartdate ?? '',
+                'Temperature' => $receiptData?->temperature ?? '',
+                'TemperatureProd' => $receiptData?->temperatureprod ?? '',
+                'Door' => $location?->name ?? '',
+                'StartTime' => $timeReceipt?->unloadstartdate ?? '',
             ],
 
         ];
+    }
+
+    private function loadedRelation(string $relation): mixed
+    {
+        return $this->resource->relationLoaded($relation)
+            ? $this->resource->getRelation($relation)
+            : null;
     }
 }

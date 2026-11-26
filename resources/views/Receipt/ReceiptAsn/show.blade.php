@@ -193,19 +193,16 @@
                         <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#view01"
                                                 role="tab"><span
                                         class="hidden-sm-up"><i class="ti-home"></i></span> <span
-                                        class="hidden-xs-down">Detalle</span></a>
+                                        class="hidden-xs-down">Programado</span></a>
                         </li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view02" role="tab"><span
-                                        class="hidden-sm-up"><i class="ti-camera"></i></span> <span
-                                        class="hidden-xs-down">Evidencia</span></a>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view02"
+                                                role="tab"><span
+                                        class="hidden-sm-up"><i class="ti-home"></i></span> <span
+                                        class="hidden-xs-down">Verificado</span></a>
                         </li>
                         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view03" role="tab"><span
-                                        class="hidden-sm-up"><i class="ti-list"></i></span> <span
-                                        class="hidden-xs-down">Incidencias</span></a>
-                        </li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#view04" role="tab"><span
-                                        class="hidden-sm-up"><i class="ti-comment"></i></span> <span
-                                        class="hidden-xs-down">Comentarios</span></a>
+                                        class="hidden-sm-up"><i class="ti-camera"></i></span> <span
+                                        class="hidden-xs-down">Evidencia</span></a>
                         </li>
                     </ul>
                     <!-- Tab panes -->
@@ -221,69 +218,32 @@
                                         <div class="card-body">
                                             <div class="row mt-3">
                                                 <div class="col-lg-12">
-                                                    <table class="table table-bordered table-condensed  tablegeneral ">
+                                                    <table class="table table-bordered table-condensed tablegeneral">
                                                         <thead>
                                                         <tr>
-                                                            <th>Material</th>
-                                                            <th>Description</th>
-{{--                                                            <th>Cantidad esperada</th>--}}
+                                                            <th>Tipo</th>
+                                                            <th>SKU</th>
+                                                            <th>Descripción</th>
+                                                            <th>Unidad de medida</th>
+                                                            <th>Cantidad</th>
                                                             <th>Rotativa</th>
                                                             <th>Definitiva</th>
-                                                            <th>Facturas</th>
-                                                            <th>Venta</th>
-                                                            <th>Nota de cargo</th>
-                                                            <th>Cortesias</th>
-                                                            <th>Cantidad surtida</th>
-                                                            <th>Unidad de medida</th>
-                                                            <th>Opciones</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
-                                                        @foreach($stocks as $stock)
+                                                        @foreach($expectedProducts as $product)
                                                             <tr>
-                                                                <td>{{$stock->prtnum}}</td>
-                                                                <td>{{$stock->lngdsc}}</td>
-{{--                                                                <td>{{$stock->quantity}}</td>--}}
-                                                                <td>{{$stock->rotary}}</td>
-                                                                <td>{{$stock->definitive}}</td>
-                                                                <td>{{$stock->invoice}}</td>
-                                                                <td>{{$stock->selled}}</td>
-                                                                <td>{{$stock->creditnote}}</td>
-                                                                <td>{{$stock->gifts}}</td>
-                                                                <td>{{$stock->loaded}}</td>
-                                                                <td>{{$stock->unidadmedida}}</td>
-                                                                <td>
-                                                                    @if($receiptasn->statusid != 'IG' && $receiptasn->statusid != 'CE')
-                                                                        <a href=""
-                                                                           data-target="#modal-updatequantity-{{$stock->id}}"
-                                                                           data-toggle="modal" data-placement="top">
-                                                                            <button type="button"
-                                                                                    class="btn waves-effect waves-light btn-outline-info btn-sm">
-                                                                                <img src="{{asset('/ico/adedit.png')}}"
-                                                                                     alt=""
-                                                                                     class="img-16">
-                                                                            </button>
-                                                                        </a>
-                                                                        @include('Receipt.ReceiptAsn.editquantity')
-                                                                        <a href=""
-                                                                           data-target="#modal-deletestock-{{$stock->id}}"
-                                                                           data-toggle="modal" data-placement="top">
-                                                                            <button type="button"
-                                                                                    class="btn waves-effect waves-light btn-outline-info btn-sm">
-                                                                                <img
-                                                                                        src="{{asset('/ico/closemodal.png')}}"
-                                                                                        alt=""
-                                                                                        class="img-16">
-                                                                            </button>
-                                                                        </a>
-                                                                        @include('Receipt.ReceiptAsn.deletestock')
-                                                                    @endif
-                                                                </td>
+                                                                <td>{{$product['Source']}}</td>
+                                                                <td>{{$product['PartNumberCode']}}</td>
+                                                                <td>{{$product['Description']}}</td>
+                                                                <td>{{$product['UoMBase']}}</td>
+                                                                <td>{{$product['ExpectedTotal']}}</td>
+                                                                <td>{{$product['ExpectedRotary']}}</td>
+                                                                <td>{{$product['ExpectedDefinitive']}}</td>
                                                             </tr>
                                                         @endforeach
                                                         </tbody>
                                                     </table>
-
                                                 </div>
                                             </div>
                                         </div>
@@ -291,166 +251,85 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane  p-20" id="view02" role="tabpanel">
-                            @if (!empty($evidences))
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <div class="row el-element-overlay">
-                                                    @foreach($evidences as $photo)
-                                                        @if($photo->auxiliary01 == 'DES')
-                                                            <div class="col-lg-3 col-md-6">
-                                                                <div class="card">
-                                                                    <div class="el-card-item">
-                                                                        <div
-                                                                                class="el-card-avatar el-overlay-1">
-                                                                            <img
-                                                                                    src="{{asset('storage/' . $photo->path)}}"
-                                                                                    alt="Evidencia"
-                                                                                    style="height: 200px;max-height: 200px"/>
-                                                                            <div class="el-overlay">
-                                                                                <ul class="list-style-none el-info">
-                                                                                    <li class="el-item">
-                                                                                        <a href="{{url('downloadphoto/' . $photo->id)}}"
-                                                                                           data-togggle="tooltip"
-                                                                                           title="Descargar"
-                                                                                           class="btn default btn-outline el-link">
-                                                                                            <i class="mdi mdi-download"></i>
-                                                                                        </a>
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div
-                                                                                class="el-card-content">
-                                                                            <h4 class="m-b-0 font-10 font-weight-light"> {{$photo->user->name}} </h4>
-                                                                            <span
-                                                                                    class="text-muted">{{$photo->created_at}}
-                                                                        </span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        @endif
-                                                    @endforeach
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endif
-                        </div>
-                        <div class="tab-pane " id="view03" role="tabpanel">
+
+                        <div class="tab-pane" id="view02" role="tabpanel">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <table id="table-incidencedetails"
-                                           class="table table-condensed table-bordered  table-hover">
-                                        <thead>
-                                        <tr>
-                                            <th>Número de parte</th>
-                                            <th>Descripción</th>
-                                            <th>Cantidad</th>
-                                            <th>Categoría</th>
-                                            <th>Sub Categoría</th>
-                                            <th>Lpn</th>
-                                            <th>Verificador</th>
-                                            <th>Fecha de creación</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        @foreach($incidences as $incidence)
-                                            <tr>
-                                                <td>{{$incidence->partnumber ? $incidence->partnumber->prtnum : ''}}</td>
-                                                <td>{{$incidence->partnumber ? $incidence->partnumber->lngdsc : ''}}</td>
-                                                <td>{{$incidence->quantity}}</td>
-                                                <td>{{$incidence->categoryincidence ? $incidence->categoryincidence->description : ''}}</td>
-                                                <td>{{$incidence->subcategoryincidence ? $incidence->subcategoryincidence->description : ''}}</td>
-                                                <td>{{$incidence->lpnid ?? ''}}</td>
-                                                <td>{{$incidence->user ? $incidence->user->name : ''}}</td>
-                                                <td>{{$incidence->created_at}}</td>
-                                            </tr>
-                                        @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            @if (!empty($evidences))
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <div class="row el-element-overlay">
-                                                    @foreach($evidences as $photo)
-                                                        @if($photo->auxiliary01 == 'INC')
-                                                            <div class="col-lg-3 col-md-6">
-                                                                <div class="card">
-                                                                    <div class="el-card-item">
-                                                                        <div
-                                                                                class="el-card-avatar el-overlay-1">
-                                                                            <img
-                                                                                    src="{{asset('storage/' . $photo->path)}}"
-                                                                                    alt="Evidencia"
-                                                                                    style="height: 200px;max-height: 200px"/>
-                                                                            <div class="el-overlay">
-                                                                                <ul class="list-style-none el-info">
-                                                                                    <li class="el-item">
-                                                                                        <a href="{{url('downloadphoto/' . $photo->id)}}"
-                                                                                           data-togggle="tooltip"
-                                                                                           title="Descargar"
-                                                                                           class="btn default btn-outline el-link">
-                                                                                            <i class="mdi mdi-download"></i>
-                                                                                        </a>
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div
-                                                                                class="el-card-content">
-                                                                            <h4 class="m-b-0 font-10 font-weight-light"> {{$photo->user->name}} </h4>
-                                                                            <span
-                                                                                    class="text-muted">{{$photo->created_at}}
-                                                                        </span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        @endif
-                                                    @endforeach
+                                    <div class="card">
+                                        <div class="card-header">
+                                            Detalle de material
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row mt-3">
+                                                <div class="col-lg-12">
+                                                    <table class="table table-bordered table-condensed tablegeneral">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>Tipo</th>
+                                                            <th>SKU</th>
+                                                            <th>Descripción</th>
+                                                            <th>Unidad de medida</th>
+                                                            <th>Cantidad esperada</th>
+                                                            <th>Cantidad verificada</th>
+                                                            <th>Rotativa</th>
+                                                            <th>Definitiva</th>
+                                                            <th>Pendiente</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @foreach($verificationLines as $line)
+                                                            <tr>
+                                                                <td>{{$line['Source']}}</td>
+                                                                <td>{{$line['PartNumberCode']}}</td>
+                                                                <td>{{$line['Description']}}</td>
+                                                                <td>{{$line['UoMBase']}}</td>
+                                                                <td>{{$line['ExpectedTotal']}}</td>
+                                                                <td>{{$line['VerifiedTotal']}}</td>
+                                                                <td>{{$line['VerifiedRotary']}}</td>
+                                                                <td>{{$line['VerifiedDefinitive']}}</td>
+                                                                <td>{{$line['RemainingTotal']}}</td>
+                                                            </tr>
+                                                        @endforeach
+                                                        </tbody>
+                                                    </table>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            @endif
-                        </div>
-                        <div class="tab-pane " id="view04" role="tabpanel">
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            @foreach($coments as $item)
-                                                <div class="d-flex flex-row comment-row">
-                                                    <div class="comment-text active w-100">
-                                                        <h6 class="font-weight-light">
-                                                            {{$item->user->name}}
-                                                        </h6>
-                                                        <span
-                                                                class="text-muted float-right">{{$item->created_at}}</span>
-                                                        <span class="m-b-15 d-block">
-                                                            {{$item->comment}}
-                                                        </span>
-                                                        <div class="comment-footer ">
-                                                            <hr class="mt-2">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
+                        <div class="tab-pane p-20" id="view03" role="tabpanel">
+                            <div class="row">
+                                @forelse($definitiveVerificationEvidences as $verification)
+                                    <div class="col-lg-3 col-md-6">
+                                        <div class="card">
+                                            <div class="el-card-item">
+                                                <div class="el-card-avatar el-overlay-1">
+                                                    <img src="{{asset('storage/' . $verification->evidence_path)}}"
+                                                         alt="Evidencia de {{$verification->inventorypartnumber->prtnum}}"
+                                                         style="height: 200px; max-height: 200px"/>
+                                                </div>
+                                                <div class="el-card-content">
+                                                    <h4 class="m-b-0 font-10 font-weight-light">
+                                                        {{$verification->inventorypartnumber->prtnum}}
+                                                    </h4>
+                                                    <span class="text-muted">
+                                                        {{$verification->inventorypartnumber->lngdsc}}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @empty
+                                    <div class="col-12">
+                                        <p class="mb-0 text-muted">No hay evidencias de productos definitivos.</p>
+                                    </div>
+                                @endforelse
+                            </div>
+                        </div>
+
+
                     </div>
                 </div>
             </div>

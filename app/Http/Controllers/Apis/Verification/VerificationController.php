@@ -21,7 +21,7 @@ class VerificationController extends Controller
     public function __construct(private readonly VerificationService $service) {}
 
     /**
-     * Register an incremental physical receipt.
+     * Verificación de producto.
      *
      * Send Quantity as a decimal string to preserve precision.
      * Source and ExpectedLineId must be supplied together; omission is allowed
