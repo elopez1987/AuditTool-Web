@@ -26,14 +26,31 @@
             {data: 'btn', "orderable": false},
             {data: 'warehouse'},
             {data: 'shipmentid'},
-            {data: 'billoflading'},
+            {data: 'providerid'},
+            {data: 'providername'},
+            {data: 'operatorname'},
+            {data: 'locationname'},
             {
-                data: 'status.name', name: 'status.name',
-                createdCell: function (td, cellData, rowData) {
-                    $(td).css({
-                        'background-color': (rowData.status.auxiliary01),
-                        'color': 'black'
-                    });
+                data: 'status.name',
+                name: 'status.name',
+                render: function (data, type, row) {
+                    if (type !== 'display') {
+                        return data;
+                    }
+
+                    const color = (row.status && row.status.auxiliary01) ? row.status.auxiliary01 : '#e9ecef';
+                    const name  = $('<div>').text(data ?? '').html(); // escapa HTML
+
+                    return `<span style="
+                    display: inline-block;
+                    padding: 4px 10px;
+                    border-radius: 8px;
+                    font-size: 10px !important;
+                    font-weight: 400;
+                    line-height: 1.2;
+                    white-space: nowrap;
+                    background-color: ${color};
+                    color: black;">${name}</span>`;
                 }
             },
         ],
@@ -43,9 +60,12 @@
             {"width": "180px", "targets": 2},
             {"width": "180px", "targets": 3},
             {"width": "320px", "targets": 4},
+            {"width": "320px", "targets": 5},
+            {"width": "320px", "targets": 6},
+            {"width": "320px", "targets": 7},
         ],
         "dom": '<"row mb-3"<"col-sm-4"B><"col-sm-4 d-flex justify-content-center"l><"col-sm-4 d-flex justify-content-end"f>>rt<"row"<"col-sm-5"i><"col-sm-7"p>>',
-        "lengthMenu": [[1,5,10, 30, 50, 100, 150, 200, 250, -1], [1,5,10, 30, 50, 100, 150, 200, 250, "Todos"]],
+        "lengthMenu": [[10, 30, 50, 100, 150, 200, 250, -1], [10, 30, 50, 100, 150, 200, 250, "Todos"]],
         buttons: [
             {
                 "extend": "colvis",

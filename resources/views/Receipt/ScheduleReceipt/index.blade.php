@@ -14,11 +14,11 @@
                             <div class="col-lg-10">
                                 <div class="row">
                                     <div class="col-lg-10">
-{{--                                        @can('receiptasn.create')--}}
-{{--                                            <a href="{{route('receiptasn.create')}}">--}}
-{{--                                                @include('buttons.add')--}}
-{{--                                            </a>--}}
-{{--                                        @endcan--}}
+                                        @can('receiptasn.create')
+                                            <a href="{{route('receiptasn.create')}}">
+                                                @include('buttons.add')
+                                            </a>
+                                        @endcan
                                         <a href="">
                                             @include('buttons.search')
                                         </a>
@@ -78,7 +78,10 @@
                             <tr>
                                 <th>Opciones</th>
                                 <th>Bodega</th>
-                                <th>Recibo</th>
+                                <th>Vale de recepción</th>
+                                <th>Clave de Ruta</th>
+                                <th>Nombre de Ruta</th>
+                                <th>Operador</th>
                                 <th>Cortina</th>
                                 <th>Estatus del recibo</th>
                             </tr>
