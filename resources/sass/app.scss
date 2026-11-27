@@ -86,23 +86,11 @@ a {
 //Colores principales
 #main-wrapper[data-layout="horizontal"] .topbar .navbar-collapse[data-navbarbg="skin1"],
 #main-wrapper[data-layout="horizontal"] .topbar[data-navbarbg="skin1"] {
-  background: #90a4ae !important;
+  background: #546e7a !important;
   text-decoration: none;
 }
 
-//#main-wrapper[data-layout="horizontal"] .topbar .top-navbar .navbar-header[data-logobg="skin1"] {
-//  background: $brand-white;
-//}
 
-//#main-wrapper[data-layout="horizontal"] .left-sidebar[data-sidebarbg="skin6"] .sidebar-nav ul .sidebar-item .sidebar-link {
-//  color: $brand-ink;
-//}
-
-//#main-wrapper[data-layout="vertical"] .left-sidebar[data-sidebarbg="skin6"],
-//#main-wrapper[data-layout="horizontal"] .left-sidebar[data-sidebarbg="skin6"] {
-//  background: $brand-white !important;
-//  border: 1px solid $brand-border;
-//}
 
 @media(min-width: 768px){
   #main-wrapper[data-layout="horizontal"] .sidebar-nav #sidebarnav > .sidebar-item ul{
@@ -1133,7 +1121,7 @@ tfoot input {
 .card-header,
 .modal-header {
   padding: 1rem 1.25rem;
-  background: #b0bec5 !important;
+  background: #fafafa !important;
   color: $brand-blue-dark;
   border-bottom: 1px solid $brand-border;
   font-weight: 600;
@@ -1368,6 +1356,7 @@ table.dataTable thead th,
 
 .table,
 table.dataTable {
+  //--bs-table-border-color: #{$brand-border};
   --bs-table-border-color: #{$brand-border};
   border-color: $brand-border;
 }

@@ -16,7 +16,7 @@ class DeleteUserCommand extends Command
     public function handle(): void
     {
         $now = now();
-        $inactiveSince = $now->copy()->subDays(45);
+        $inactiveSince = $now->copy()->subDays(30);
         $neverLoggedSince = $now->copy()->subDays(10);
 
         $sessions = fn () => DB::table('securityuserssessions')

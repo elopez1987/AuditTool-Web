@@ -45,6 +45,7 @@ class ReeceiptAsnResource extends JsonResource
                 'TemperatureProd' => $receiptData?->temperatureprod ?? '',
                 'Door' => $location?->name ?? '',
                 'StartTime' => $timeReceipt?->unloadstartdate ?? '',
+                'EndTime' => $timeReceipt?->unloadfinishdate ?? '',
             ],
 
         ];

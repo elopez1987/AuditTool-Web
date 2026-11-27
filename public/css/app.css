@@ -12026,7 +12026,7 @@ a {
 
 #main-wrapper[data-layout=horizontal] .topbar .navbar-collapse[data-navbarbg=skin1],
 #main-wrapper[data-layout=horizontal] .topbar[data-navbarbg=skin1] {
-  background: #90a4ae !important;
+  background: #546e7a !important;
   text-decoration: none;
 }
 
@@ -13035,7 +13035,7 @@ tfoot input {
 .card-header,
 .modal-header {
   padding: 1rem 1.25rem;
-  background: #b0bec5 !important;
+  background: #fafafa !important;
   color: #00657d;
   border-bottom: 1px solid #e4e7ec;
   font-weight: 600;
