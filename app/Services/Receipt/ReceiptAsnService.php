@@ -9,6 +9,7 @@ use App\Exceptions\ApiEntityNotFoundException;
 use App\Models\Receipt\ReceiptAsn;
 use App\Repositories\Receipt\ReceiptAsnRepository;
 use App\Repositories\Receipt\VerificationRepository;
+use App\Services\Configuration\EdiShipmentPayloadService;
 use Illuminate\Database\ConnectionInterface;
 
 readonly class ReceiptAsnService
@@ -21,6 +22,7 @@ readonly class ReceiptAsnService
         private ReceiptAsnRepository $asnRepository,
         private VerificationRepository $verificationRepository,
         private VerificationService $verificationService,
+        private EdiShipmentPayloadService $ediShipmentPayloadService,
         private ConnectionInterface $connection,
     ) {}
 
@@ -85,6 +87,7 @@ readonly class ReceiptAsnService
                 $data['ShortageReason'] ?? null,
                 $data['UserId'],
             );
+            $this->ediShipmentPayloadService->createPendingFor($receiptAsn);
             $this->asnRepository->updateFinishLocationAsn($receiptAsn);
         }, 3);
     }

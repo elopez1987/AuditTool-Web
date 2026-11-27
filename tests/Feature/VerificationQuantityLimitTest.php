@@ -30,16 +30,44 @@ beforeEach(function (): void {
         $table->uuid('uuid_asn');
         $table->string('centerid');
         $table->string('warehouseid');
+        $table->unsignedBigInteger('providerid')->nullable();
+        $table->unsignedBigInteger('operatorid')->nullable();
+        $table->string('shipmentid')->nullable();
         $table->string('statusid');
         $table->timestamps();
     });
     Schema::create('inventoryunitsmeasure', function (Blueprint $table): void {
         $table->id();
         $table->string('unitmeasureid');
+        $table->string('ediunitmeasurecode')->nullable();
         $table->string('centerid')->default('CENTER');
         $table->string('warehouseid')->default('WAREHOUSE');
     });
-    DB::table('inventoryunitsmeasure')->insert(['id' => 1, 'unitmeasureid' => 'PZ']);
+    Schema::create('systemwarehouses', function (Blueprint $table): void {
+        $table->string('warehouseid')->primary();
+        $table->string('center');
+        $table->string('warehouse');
+    });
+    Schema::create('receiptproviders', function (Blueprint $table): void {
+        $table->id();
+        $table->string('providerid');
+        $table->string('name');
+    });
+    Schema::create('storageoperators', function (Blueprint $table): void {
+        $table->id();
+        $table->string('barcode');
+        $table->string('name');
+    });
+    Schema::create('edishipments', function (Blueprint $table): void {
+        $table->id();
+        $table->string('centerid');
+        $table->string('warehouseid');
+        $table->string('shipmentid');
+        $table->text('request_payload');
+        $table->string('status');
+        $table->timestamps();
+    });
+    DB::table('inventoryunitsmeasure')->insert(['id' => 1, 'unitmeasureid' => 'PZ', 'ediunitmeasurecode' => 'PZ']);
     Schema::create('inventorypartnumbers', function (Blueprint $table): void {
         $table->id();
         $table->string('prtnum');
@@ -79,6 +107,7 @@ beforeEach(function (): void {
         $table->string('modeltype');
         $table->unsignedBigInteger('modelid');
         $table->unsignedBigInteger('createuser');
+        $table->string('type')->nullable();
         $table->string('comment');
         $table->string('auxiliary01')->nullable();
         $table->timestamps();
@@ -98,9 +127,20 @@ beforeEach(function (): void {
         'uuid_asn' => 'a8d50b98-d09b-44a8-ab54-5a18449de916',
         'centerid' => 'CENTER',
         'warehouseid' => 'WAREHOUSE',
+        'providerid' => 1,
+        'operatorid' => 1,
+        'shipmentid' => '1020',
         'statusid' => 'IP',
     ]);
-    DB::table('inventorypartnumbers')->insert(['id' => 1, 'prtnum' => 'SKU-001']);
+    DB::table('systemwarehouses')->insert(['warehouseid' => 'WAREHOUSE', 'center' => '4154', 'warehouse' => '41541']);
+    DB::table('receiptproviders')->insert(['id' => 1, 'providerid' => '4154003205', 'name' => '4154003205']);
+    DB::table('storageoperators')->insert(['id' => 1, 'barcode' => '336071', 'name' => 'Juan Lopez Hernandez']);
+    DB::table('inventorypartnumbers')->insert([
+        'id' => 1,
+        'prtnum' => '001005',
+        'lngdsc' => 'Leche Past Lala Entera 1Lt Car',
+        'barcode' => '7501020526066',
+    ]);
     DB::table('systemstatus')->insert([
         ['statusid' => 'TRP-01'],
         ['statusid' => 'TRP-02'],
@@ -113,6 +153,11 @@ beforeEach(function (): void {
         'definitive' => 4,
         'quantity' => 10,
         'unitmeasureid' => 1,
+        'invoice' => 0,
+        'creditnote' => 0,
+        'gifts' => 0,
+        'selled' => 0,
+        'loaded' => 10,
     ]);
 });
 
@@ -340,27 +385,97 @@ it('blocks capture when historical records have no linked expected line', functi
     $this->postJson('/api/v1/verification/verification', verificationPayload(1))->assertConflict();
 });
 
-it('requires explicit shortage confirmation before finishing and records its reason', function (): void {
+it('keeps the receipt in process when its confirmed shortage fails EDI reconciliation', function (): void {
     $this->postJson('/api/v1/verification/verification', verificationPayload(3))->assertCreated();
     $payload = ['AsnId' => verificationPayload(1)['AsnId']];
     $this->postJson('/api/v1/verification/finish-voucher', $payload)->assertUnprocessable();
     $this->assertDatabaseHas('receiptasn', ['id' => 1, 'statusid' => 'IP']);
     $this->postJson('/api/v1/verification/finish-voucher', [
         ...$payload, 'ConfirmShortages' => true, 'ShortageReason' => 'Physical delivery short by seven pieces.',
-    ])->assertOk();
-    $this->assertDatabaseHas('receiptasn', ['id' => 1, 'statusid' => 'PR']);
-    $this->assertDatabaseHas('storagecomments', [
-        'modelid' => 1, 'createuser' => auth()->id(),
-        'auxiliary01' => 'VERIFICATION_SHORTAGE',
-        'comment' => 'Physical delivery short by seven pieces.',
-    ]);
+    ])->assertConflict()
+        ->assertJsonPath('message', 'El producto 001005 no cumple la conciliación de QuantityLoaded.');
+    $this->assertDatabaseHas('receiptasn', ['id' => 1, 'statusid' => 'IP']);
+    $this->assertDatabaseCount('storagecomments', 0);
+    $this->assertDatabaseCount('edishipments', 0);
 });
 
 it('finishes a completely reclassified receipt without false shortages', function (): void {
-    $this->postJson('/api/v1/verification/verification', verificationPayload(10))->assertCreated();
+    $this->postJson('/api/v1/verification/verification', [
+        ...verificationPayload(10),
+        'Source' => 'StockRoute',
+        'ExpectedLineId' => 1,
+    ])->assertCreated();
     $this->postJson('/api/v1/verification/finish-voucher', ['AsnId' => verificationPayload(1)['AsnId']])->assertOk();
     $this->assertDatabaseCount('storagecomments', 0);
+    $this->assertDatabaseHas('edishipments', [
+        'centerid' => 'CENTER',
+        'warehouseid' => 'WAREHOUSE',
+        'shipmentid' => '1020',
+        'status' => 'Pending',
+    ]);
+
+    $payload = json_decode((string) DB::table('edishipments')->value('request_payload'), true, 512, JSON_THROW_ON_ERROR);
+
+    $product = $payload['MessageBody']['StockRoute']['Items']['Product'][0];
+
+    expect($payload['CenterId'])->toBe('4154')
+        ->and($payload['WarehouseId'])->toBe('41541')
+        ->and($payload['ShipmentId'])->toBe('1020')
+        ->and($payload['RouteId'])->toBe('4154003205')
+        ->and($payload['RouteName'])->toBe('4154003205')
+        ->and($payload['EmployeeId'])->toBe('336071')
+        ->and($payload['EmployeeName'])->toBe('JUAN LOPEZ HERNANDEZ')
+        ->and($payload['PostingDate'])->toMatch('/^\d{4}-\d{2}-\d{2}$/')
+        ->and($payload['SalesDate'])->toMatch('/^\d{4}-\d{2}-\d{2}$/')
+        ->and($payload['MessageBody'])->not->toHaveKey('CreditNote')
+        ->and($product['PartNumberId'])->toBe('001005')
+        ->and($product['QuantityRotary'])->toBe(10)
+        ->and($product['QuantityDefinitive'])->toBe(0)
+        ->and($product['QuantityLoaded'])->toBe(10)
+        ->and($product['UoMBase'])->toBe('PZ');
 });
+
+it('includes CreditNote products with their final verification balances', function (): void {
+    createVerificationCredit();
+
+    $this->postJson('/api/v1/verification/verification', [
+        ...verificationPayload(10),
+        'Source' => 'StockRoute',
+        'ExpectedLineId' => 1,
+    ])->assertCreated();
+    $this->postJson('/api/v1/verification/verification', [
+        ...verificationPayload(20),
+        'Source' => 'CreditNote',
+        'ExpectedLineId' => 1,
+    ])->assertCreated();
+    $this->postJson('/api/v1/verification/finish-voucher', ['AsnId' => verificationPayload(1)['AsnId']])->assertOk();
+
+    $payload = json_decode((string) DB::table('edishipments')->value('request_payload'), true, 512, JSON_THROW_ON_ERROR);
+    $credit = $payload['MessageBody']['CreditNote']['Items']['Product'][0];
+
+    expect($credit['PartNumberId'])->toBe('001005')
+        ->and($credit['Quantity'])->toBe(20)
+        ->and($credit['QuantityRotary'])->toBe(20)
+        ->and($credit['QuantityDefinitive'])->toBe(0)
+        ->and($credit['QuantityMissing'])->toBe(0)
+        ->and($credit['UoMBase'])->toBe('PZ');
+});
+
+it('blocks closing when a StockRoute EDI quantity rule fails', function (array $quantities, string $message): void {
+    DB::table('receiptstock')->update($quantities);
+    $this->postJson('/api/v1/verification/verification', verificationPayload(10))->assertCreated();
+
+    $this->postJson('/api/v1/verification/finish-voucher', ['AsnId' => verificationPayload(1)['AsnId']])
+        ->assertConflict()
+        ->assertJsonPath('message', $message);
+
+    $this->assertDatabaseHas('receiptasn', ['id' => 1, 'statusid' => 'IP']);
+    $this->assertDatabaseCount('edishipments', 0);
+})->with([
+    [['creditnote' => 11], 'El producto 001005 no cumple QuantityRotary + QuantityDefinitive >= QuantityCreditNote.'],
+    [['gifts' => 1], 'El producto 001005 excede la cantidad permitida para venta.'],
+    [['loaded' => 11], 'El producto 001005 no cumple la conciliación de QuantityLoaded.'],
+]);
 
 it('enforces composite line identity at database level', function (): void {
     DB::table('inventorypartnumbers')->insert(['id' => 2, 'prtnum' => 'OTHER']);
@@ -410,9 +525,6 @@ it('exposes both origins with shared balances and flags unresolved historical da
 });
 
 it('includes stock and credit products in the search voucher response', function (): void {
-    Schema::table('receiptasn', function (Blueprint $table): void {
-        $table->string('shipmentid')->nullable();
-    });
     Schema::create('receiptasndata', function (Blueprint $table): void {
         $table->id();
         $table->unsignedBigInteger('receiptid');
@@ -427,7 +539,7 @@ it('includes stock and credit products in the search voucher response', function
         ->assertJsonPath('data.Voucher.Products.0.Source', 'StockRoute')
         ->assertJsonPath('data.Voucher.Products.1.Source', 'CreditNote')
         ->assertJsonPath('data.Voucher.Products.1.ExpectedLineId', 1)
-        ->assertJsonPath('data.Voucher.Products.1.PartNumberCode', 'SKU-001')
+        ->assertJsonPath('data.Voucher.Products.1.PartNumberCode', '001005')
         ->assertJsonCount(2, 'data.Voucher.ExpectedLines');
 });
 
@@ -496,12 +608,12 @@ function verificationExpectedBody(): array
 {
     return [
         'StockRoute' => ['Items' => ['Product' => [[
-            'PartNumberId' => 'SKU-001', 'Description' => 'Expected milk', 'BarCode' => '0012345',
+            'PartNumberId' => '001005', 'Description' => 'Expected milk', 'BarCode' => '0012345',
             'QuantityRotary' => 4, 'QuantityDefinitive' => 8, 'QuantityInvoice' => 4,
             'QuantityCreditNote' => 4, 'QuantityGifts' => 4, 'QuantitySelled' => 8, 'QuantityLoaded' => 24, 'UoMBase' => 'PZ',
         ]]]],
         'CreditNote' => ['Items' => ['Product' => [[
-            'PartNumberId' => 'SKU-001', 'Quantity' => 20,
+            'PartNumberId' => '001005', 'Quantity' => 20,
             'QuantityRotary' => 0, 'QuantityDefinitive' => 0, 'QuantityMissing' => 20, 'UoMBase' => 'PZ',
         ]]]],
     ];
@@ -555,7 +667,7 @@ function verificationPayload(int|string $quantity, string $type = 'TRP-01'): arr
 {
     $payload = [
         'AsnId' => 'a8d50b98-d09b-44a8-ab54-5a18449de916',
-        'PartNumberCode' => 'SKU-001',
+        'PartNumberCode' => '001005',
         'Quantity' => $quantity,
         'TypeId' => $type,
     ];

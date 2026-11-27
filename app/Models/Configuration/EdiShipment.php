@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Configuration;
 
 use App\Models\Configuration\CenterDistribution\SystemCenterDistribution;
@@ -48,6 +50,16 @@ class EdiShipment extends Model
         'last_retry_at',
         'status',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'request_payload' => 'array',
+            'response_payload' => 'array',
+            'processed_at' => 'datetime',
+            'last_retry_at' => 'datetime',
+        ];
+    }
 
     public static function controlAccessUser()
     {
