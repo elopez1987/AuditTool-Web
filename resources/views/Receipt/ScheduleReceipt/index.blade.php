@@ -73,7 +73,7 @@
                 <div class="card">
                     <div class="card-header"></div>
                     <div class="card-body">
-                        <table id="tablereceipt" class="table table-condensed table-bordered table-hover" width="100%">
+                        <table id="tablereceipt" class="table table-condensed table-bordered table-hover table-striped" width="100%">
                             <thead>
                             <tr>
                                 <th>Opciones</th>

@@ -2,9 +2,9 @@
 
 namespace App\Console;
 
-use App\Console\Commands\General\ClearLocationCommand;
 use App\Console\Commands\General\DeleteHistLogWebServiceIzel;
 use App\Console\Commands\General\DeleteLogWhatsApp;
+use App\Console\Commands\General\DeleteUserCommand;
 use App\Console\Commands\Receipt\ClearReceiptAsnCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -20,7 +20,7 @@ class Kernel extends ConsoleKernel
         DeleteHistLogWebServiceIzel::class,
         DeleteLogWhatsApp::class,
         ClearReceiptAsnCommand::class,
-        ClearLocationCommand::class,
+        DeleteUserCommand::class,
 
     ];
 
@@ -30,8 +30,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         //      Comandos generales
+        $schedule->command('system:deleteuser')->daily();
         $schedule->command('command:deletehistlogwebserviceizel')->weekly();
-        $schedule->command('command:CloseValidateQRReceipt')->everyTwoHours();
         $schedule->command('whatsapp:deletelog')->daily();
 
     }

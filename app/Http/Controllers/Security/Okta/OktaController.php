@@ -91,7 +91,7 @@ class OktaController extends BaseController
                     'name' => $user->name,
                     'nickname' => $user->username,
                     'connection' => $config->audience,
-                    'password' => 'Temporal12##',
+                    'password' => 'mI?Dci@5w8*0a0Yi',
                     'verify_email' => true,
                     'username' => $user->username,
                 ],

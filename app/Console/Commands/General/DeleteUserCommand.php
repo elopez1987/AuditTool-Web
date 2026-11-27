@@ -3,8 +3,9 @@
 namespace App\Console\Commands\General;
 
 use App\User;
-use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class DeleteUserCommand extends Command
 {
@@ -14,27 +15,45 @@ class DeleteUserCommand extends Command
 
     public function handle(): void
     {
-        $now = Carbon::now();
+        $now = now();
+        $inactiveSince = $now->copy()->subDays(45);
+        $neverLoggedSince = $now->copy()->subDays(10);
 
-        //  Elimina los usuarios que no tengan registros de inicio de sesion en 45 días
-        User::leftJoin('securityuserssessions', 'users.username', '=', 'securityuserssessions.username')
-            ->where('users.statusid', 'E')
-            ->whereNotNull('securityuserssessions.lastsessiondate')
-            ->whereNull('users.deleted_at')
-            ->where('securityuserssessions.lastsessiondate', '<=', $now->copy()->subDays(45))
-            ->update([
-                'users.statusid' => 'D',
-                'users.deleted_at' => $now,
-            ]);
+        $sessions = fn () => DB::table('securityuserssessions')
+            ->whereColumn('securityuserssessions.username', 'users.username')
+            ->whereNotNull('securityuserssessions.lastsessiondate');
 
-        //  Elimina el usuario que no iniciaron sesion en 10 días después de la creacion del usuario
-        User::leftJoin('securityuserssessions', 'users.username', '=', 'securityuserssessions.username')
-            ->where('users.statusid', 'E')
-            ->whereNull('securityuserssessions.lastsessiondate')
-            ->where('users.created_at', '<=', $now->copy()->subDays(10))
-            ->update([
-                'users.statusid' => 'D',
-                'users.deleted_at' => $now,
+        $total = 0;
+
+        do {
+            // Lote de ids (máx. 1000 para no acercarnos al límite de 2100 parámetros)
+            $ids = User::query()
+                ->where('users.statusid', 'E')
+                ->whereNull('users.deleted_at')
+                ->where(function ($q) use ($sessions, $inactiveSince, $neverLoggedSince) {
+                    $q->where(function ($q) use ($sessions, $inactiveSince) {
+                        $q->whereExists($sessions())
+                            ->whereNotExists(
+                                $sessions()->where('securityuserssessions.lastsessiondate', '>', $inactiveSince)
+                            );
+                    })->orWhere(function ($q) use ($sessions, $neverLoggedSince) {
+                        $q->where('users.created_at', '<=', $neverLoggedSince)
+                            ->whereNotExists($sessions());
+                    });
+                })
+                ->limit(1000)
+                ->pluck('users.id');   // ajusta al nombre de tu PK
+
+            if ($ids->isEmpty()) {
+                break;
+            }
+
+            $total += User::whereIn('id', $ids)->update([
+                'statusid' => 'D',
+                'deleted_at' => $now,
             ]);
+        } while (true);
+
+        Log::info("Limpieza de usuarios: {$total} usuarios dados de baja.");
     }
 }

@@ -17,7 +17,7 @@ class DeleteLogWhatsApp extends Command
         parent::__construct();
     }
 
-    public function handle()
+    public function handle(): void
     {
         $ninetyDaysAgo = Carbon::now()->subDays(30);
         LogMessageWhatsApp::where('created_at', '<', $ninetyDaysAgo)->delete();

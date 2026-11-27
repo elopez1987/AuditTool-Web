@@ -17,7 +17,7 @@ class DeleteHistLogWebServiceIzel extends Command
         parent::__construct();
     }
 
-    public function handle()
+    public function handle(): void
     {
         $date = Carbon::today()->subDays(30);
         DB::table('systemeventwebserviceizel')->where('created_at', '<', $date)->delete();
